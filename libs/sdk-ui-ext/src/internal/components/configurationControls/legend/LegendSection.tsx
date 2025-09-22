@@ -2,8 +2,6 @@
 
 import { memo } from "react";
 
-import { noop } from "lodash-es";
-
 import LegendPositionControl from "./LegendPositionControl.js";
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -22,7 +20,7 @@ const LegendSection = memo(function LegendSection({
     properties = {},
     propertiesMeta = {},
     defaultLegendEnabled = true,
-    pushData = noop,
+    pushData = () => {},
 }: ILegendSection) {
     const legendEnabled = properties?.controls?.["legend"]?.enabled ?? defaultLegendEnabled;
     const legendPosition = properties?.controls?.["legend"]?.position ?? "auto";

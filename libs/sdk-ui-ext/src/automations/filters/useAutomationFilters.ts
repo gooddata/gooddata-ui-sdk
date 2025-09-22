@@ -11,7 +11,12 @@ import { useFilterOptions } from "./FilterOptionsContext.js";
 import { AUTOMATION_FILTER_EXCLUDE_THRESHOLD } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
 import { messages } from "../messages.js";
-import { AutomationsPreselectedFilters, IAutomationFilter } from "../types.js";
+import {
+    AutomationsAvailableFilters,
+    AutomationsFilterName,
+    AutomationsPreselectedFilters,
+    IAutomationFilter,
+} from "../types.js";
 import { useUser } from "../UserContext.js";
 
 //generic filter hook
@@ -181,23 +186,41 @@ const useStatusFilter = (preselectedValues: Array<string> | undefined) => {
     return { statusFilter, statusFilterQuery };
 };
 
-export const useAutomationFilters = (preselectedFilters: AutomationsPreselectedFilters) => {
+export const useAutomationFilters = (
+    preselectedFilters: AutomationsPreselectedFilters,
+    availableFilters: AutomationsAvailableFilters,
+) => {
     const { dashboardFilter, dashboardFilterQuery } = useDashboardFilter(preselectedFilters.dashboard);
     const { recipientsFilter, recipientsFilterQuery } = useRecipientsFilter(preselectedFilters.recipients);
     const { createdByFilter, createdByFilterQuery } = useCreatedByFilter(preselectedFilters.createdBy);
     const { statusFilter, statusFilterQuery } = useStatusFilter(preselectedFilters.status);
     const { workspacesFilter, workspacesFilterQuery } = useWorkspacesFilter(preselectedFilters.workspace);
 
-    return {
+    const filters = useMemo(() => {
+        const filterMapping: Record<AutomationsFilterName, UiAsyncTableFilter> = {
+            dashboard: dashboardFilter,
+            createdBy: createdByFilter,
+            recipients: recipientsFilter,
+            status: statusFilter,
+            workspace: workspacesFilter,
+        };
+
+        return availableFilters.map((filterName) => filterMapping[filterName]).filter(Boolean);
+    }, [
+        availableFilters,
         dashboardFilter,
-        dashboardFilterQuery,
-        recipientsFilter,
-        recipientsFilterQuery,
         createdByFilter,
-        createdByFilterQuery,
+        recipientsFilter,
         statusFilter,
-        statusFilterQuery,
         workspacesFilter,
+    ]);
+
+    return {
+        filters,
+        dashboardFilterQuery,
+        recipientsFilterQuery,
+        createdByFilterQuery,
+        statusFilterQuery,
         workspacesFilterQuery,
     };
 };

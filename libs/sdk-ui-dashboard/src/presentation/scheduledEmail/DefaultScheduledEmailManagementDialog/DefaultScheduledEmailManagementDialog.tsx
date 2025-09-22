@@ -7,7 +7,7 @@ import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { Automations } from "@gooddata/sdk-ui-ext";
+import { Automations, AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
 import {
     AddButton,
     Button,
@@ -31,6 +31,7 @@ import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
     selectExecutionTimestamp,
+    selectExternalRecipient,
     selectIsWhiteLabeled,
     selectTimezone,
     useAutomationsInvalidateRef,
@@ -72,6 +73,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
@@ -102,6 +104,10 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
         () => isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode,
         [isLoadingScheduleData, maxAutomationsReached, isExecutionTimestampMode],
     );
+
+    const availableFilters = externalRecipientOverride
+        ? (["dashboard", "status"] as AutomationsAvailableFilters)
+        : undefined;
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
@@ -146,7 +152,11 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 editAutomation={handleScheduleEdit}
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
+                                    recipients: externalRecipientOverride
+                                        ? [externalRecipientOverride]
+                                        : undefined,
                                 }}
+                                availableFilters={availableFilters}
                                 locale={intl.locale}
                                 invalidateItemsRef={invalidateItemsRef}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}

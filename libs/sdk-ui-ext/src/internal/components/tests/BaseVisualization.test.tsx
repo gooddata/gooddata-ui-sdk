@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -36,9 +35,7 @@ class DummyClass extends AbstractPluggableVisualization {
         super(props);
     }
 
-    public override update(opts?: IVisProps) {
-        noop(opts);
-    }
+    public override update(_opts?: IVisProps) {}
 
     protected renderConfigurationPanel(_insight: IInsightDefinition): void {
         return;
@@ -97,14 +94,14 @@ describe("BaseVisualization", () => {
         backend: dummyBackend(),
         referencePoint: emptyReferencePoint,
         drillableItems: [],
-        onError: noop,
-        onExportReady: noop,
-        onLoadingChanged: noop,
-        afterRender: noop,
-        pushData: noop,
+        onError: () => {},
+        onExportReady: () => {},
+        onLoadingChanged: () => {},
+        afterRender: () => {},
+        pushData: () => {},
         visualizationCatalog: defaultVisualizationsCatalog,
-        onExtendedReferencePointChanged: noop,
-        onNewDerivedBucketItemsPlaced: noop,
+        onExtendedReferencePointChanged: () => {},
+        onNewDerivedBucketItemsPlaced: () => {},
     };
 
     function createComponent(props: IBaseVisualizationProps) {

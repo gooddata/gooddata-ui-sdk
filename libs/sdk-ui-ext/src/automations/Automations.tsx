@@ -10,7 +10,7 @@ import {
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { AutomationsCore } from "./AutomationsCore.js";
-import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE } from "./constants.js";
+import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE, defaultAvailableFilters } from "./constants.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
@@ -31,6 +31,7 @@ export function Automations({
     timezone = "UTC",
     selectedColumnDefinitions,
     preselectedFilters = {},
+    availableFilters = defaultAvailableFilters[scope],
     maxHeight = DEFAULT_MAX_HEIGHT,
     pageSize = DEFAULT_PAGE_SIZE,
     type = "schedule",
@@ -51,6 +52,7 @@ export function Automations({
                                     <AutomationsCore
                                         selectedColumnDefinitions={selectedColumnDefinitions}
                                         preselectedFilters={preselectedFilters}
+                                        availableFilters={availableFilters}
                                         type={type}
                                         scope={scope}
                                         timezone={timezone}

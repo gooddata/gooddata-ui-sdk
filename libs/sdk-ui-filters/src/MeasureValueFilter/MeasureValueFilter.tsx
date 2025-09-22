@@ -2,8 +2,6 @@
 
 import { Fragment, memo, useCallback, useRef, useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 
 import MeasureValueFilterButton from "./MeasureValueFilterButton.js";
@@ -29,7 +27,7 @@ export interface IMeasureValueFilterState {
  * @beta
  */
 export const MeasureValueFilter = memo(function MeasureValueFilter({
-    onCancel = noop,
+    onCancel = () => {},
     filter,
     measureIdentifier,
     buttonTitle,

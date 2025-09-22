@@ -3,7 +3,7 @@
 import { CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
-import { cloneDeep, flatMap, isEmpty, isEqual, isNil } from "lodash-es";
+import { cloneDeep, flatMap, isEmpty, isEqual } from "lodash-es";
 import Measure from "react-measure";
 
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -480,7 +480,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         const clientHeight = contentRect.client.height;
 
                         const pivotWrapperStyle: CSSProperties = {
-                            height: isNil(height) ? "100%" : height,
+                            height: height === null || height === undefined ? "100%" : height,
                             textAlign: "left",
                             display: "flex",
                             flex: "1 1 auto",

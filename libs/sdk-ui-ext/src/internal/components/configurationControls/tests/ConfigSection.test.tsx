@@ -2,7 +2,6 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { DefaultLocale } from "@gooddata/sdk-ui";
@@ -17,7 +16,7 @@ describe("ConfigSection", () => {
         propertiesMeta: {},
         title: "properties.legend.title",
         intl: createInternalIntl(DefaultLocale),
-        pushData: noop,
+        pushData: () => {},
     };
 
     function createComponent(customProps: Partial<IConfigSectionOwnProps> = {}) {

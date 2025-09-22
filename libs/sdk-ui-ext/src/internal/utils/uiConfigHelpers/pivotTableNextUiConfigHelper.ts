@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { cloneDeep, forEach, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ISettings } from "@gooddata/sdk-model";
@@ -41,7 +41,7 @@ function setPivotTableNextBucketWarningMessages(referencePoint: IExtendedReferen
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
     const hasColumns = !hasNoColumns(buckets);
-    forEach(buckets, (bucket) => {
+    buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
 

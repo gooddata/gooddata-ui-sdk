@@ -3,7 +3,6 @@
 import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -38,8 +37,8 @@ export function LegacySingleSelectListItem({
     source,
     selected,
     onSelect,
-    onMouseOver = noop,
-    onMouseOut = noop,
+    onMouseOver = () => {},
+    onMouseOut = () => {},
 }: ILegacySingleSelectListItemProps): ReactElement {
     const [isOverflowed, setIsOverflowed] = useState(false);
     const nodeRef = useRef<HTMLSpanElement>(null);

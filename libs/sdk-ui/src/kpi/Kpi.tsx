@@ -2,7 +2,6 @@
 
 import { ComponentType } from "react";
 
-import { isNil } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -98,7 +97,7 @@ const getMeasureData = (result: DataViewFacade) => {
     const dataValue = data?.[0];
     const measure = Array.isArray(dataValue) ? dataValue?.[0] : dataValue;
 
-    if (isNil(measure)) {
+    if (measure === null || measure === undefined) {
         return "";
     }
 

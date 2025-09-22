@@ -3,7 +3,6 @@
 import { ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { noop } from "lodash-es";
 
 import {
     CancelledSdkError,
@@ -229,11 +228,11 @@ export function withExecutionLoading<TProps>(
                 const currentProps = latestPropsRef.current;
                 const _events = typeof events === "function" ? events(currentProps) : events;
                 const {
-                    onError = noop,
-                    onLoadingChanged = noop,
-                    onLoadingFinish = noop,
-                    onLoadingStart = noop,
-                    onExportReady = noop,
+                    onError = () => {},
+                    onLoadingChanged = () => {},
+                    onLoadingFinish = () => {},
+                    onLoadingStart = () => {},
+                    onExportReady = () => {},
                 } = _events;
 
                 return {
@@ -268,7 +267,7 @@ export function withExecutionLoading<TProps>(
 
                     onError(error, currentProps);
                     onLoadingChanged(false, currentProps);
-                    onExportReady(createExportErrorFunction(error));
+                    onExportReady(createExportErrorFunction(error), undefined as TProps);
 
                     setState((state) => ({
                         ...state,
@@ -287,7 +286,7 @@ export function withExecutionLoading<TProps>(
 
                     onLoadingFinish(result, currentProps);
                     onLoadingChanged(false, currentProps);
-                    onExportReady(createExportFunction(result.result(), title));
+                    onExportReady(createExportFunction(result.result(), title), undefined as TProps);
 
                     // Important: set effectiveProps to current props, matching class component behavior
                     effectivePropsRef.current = currentProps;

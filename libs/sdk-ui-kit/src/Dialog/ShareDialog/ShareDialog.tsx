@@ -2,8 +2,6 @@
 
 import { useCallback, useMemo } from "react";
 
-import { noop } from "lodash-es";
-
 import {
     BackendProvider,
     IntlWrapper,
@@ -39,7 +37,7 @@ export function ShareDialog(props: IShareDialogProps) {
         onApply,
         onCancel,
         onError,
-        onInteraction = noop,
+        onInteraction = () => {},
         isLockingSupported,
         isCurrentUserWorkspaceManager,
         isGranteeShareLoading,

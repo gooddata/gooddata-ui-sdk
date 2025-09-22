@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { first, groupBy, takeWhile } from "lodash-es";
+import { groupBy, takeWhile } from "lodash-es";
 
 import { IDateDataset, IDateDatasetHeader } from "./typings.js";
 
@@ -87,7 +87,7 @@ export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T
         return null;
     }
 
-    return first(sortByRelevanceAndTitle(items));
+    return sortByRelevanceAndTitle(items).at(0);
 }
 
 /**

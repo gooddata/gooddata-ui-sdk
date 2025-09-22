@@ -7,7 +7,7 @@ import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { Automations } from "@gooddata/sdk-ui-ext";
+import { Automations, AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
 import {
     Button,
     ContentDivider,
@@ -26,6 +26,7 @@ import {
     selectCanCreateAutomation,
     selectDashboardId,
     selectEnableAutomationManagement,
+    selectExternalRecipient,
     selectIsAlertingDialogOpen,
     selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
@@ -65,6 +66,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
 
@@ -114,6 +116,10 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const handleAddAlert = useCallback(() => {
         onAdd?.();
     }, [onAdd]);
+
+    const availableFilters = externalRecipientOverride
+        ? (["dashboard", "status"] as AutomationsAvailableFilters)
+        : undefined;
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
@@ -165,7 +171,11 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 editAutomation={handleAlertEdit}
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
+                                    recipients: externalRecipientOverride
+                                        ? [externalRecipientOverride]
+                                        : undefined,
                                 }}
+                                availableFilters={availableFilters}
                                 locale={intl.locale}
                                 invalidateItemsRef={invalidateItemsRef}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}

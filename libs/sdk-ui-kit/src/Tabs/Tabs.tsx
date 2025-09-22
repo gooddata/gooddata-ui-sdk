@@ -3,7 +3,6 @@
 import { KeyboardEvent, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
@@ -51,7 +50,7 @@ export interface ITabsState {
 export function Tabs(props: ITabsProps): ReactElement {
     const {
         className = "",
-        onTabSelect = noop,
+        onTabSelect = () => {},
         selectedTabId: propSelectedTabId = "",
         tabs = [] as ITab[],
     } = props;

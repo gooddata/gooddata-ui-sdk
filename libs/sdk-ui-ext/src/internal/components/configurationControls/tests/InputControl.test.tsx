@@ -2,7 +2,6 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper, createInternalIntl } from "../../../utils/internalIntlProvider.js";
@@ -14,7 +13,7 @@ describe("InputControl", () => {
         properties: {},
         intl: createInternalIntl(),
         propertiesMeta: {},
-        pushData: noop,
+        pushData: () => {},
         placeholder: "properties.auto_placeholder",
         labelText: "properties.canvas.gridline", // pick something what exists in the dictionary
     };

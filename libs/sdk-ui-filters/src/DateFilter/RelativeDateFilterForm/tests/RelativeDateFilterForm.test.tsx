@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -29,7 +28,7 @@ const relativeFormOption: IRelativeDateFilterFormProps["selectedFilterOption"] =
 const createForm = (props?: Partial<IRelativeDateFilterFormProps>) => {
     const defaultProps: IRelativeDateFilterFormProps = {
         availableGranularities,
-        onSelectedFilterOptionChange: noop,
+        onSelectedFilterOptionChange: () => {},
         selectedFilterOption: relativeFormOption,
         isMobile: false,
     };

@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import { isNil } from "lodash-es";
 
 import {
     selectCommittedSelection,
@@ -21,7 +20,7 @@ const changeSelection: AttributeFilterReducer<
         state.selection.working.irrelevantKeys = action.payload.irrelevantSelection;
     }
 
-    if (!isNil(action.payload.isInverted)) {
+    if (!(action.payload.isInverted === null || action.payload.isInverted === undefined)) {
         state.selection.working.isInverted = action.payload.isInverted;
     }
 };

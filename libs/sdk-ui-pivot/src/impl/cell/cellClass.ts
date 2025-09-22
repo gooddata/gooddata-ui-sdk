@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { CellClassParams } from "ag-grid-community";
 import cx from "classnames";
-import { isEmpty, last } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
@@ -76,7 +76,7 @@ export function cellClassFactory(
         }
 
         const colIndex = table.tableDescriptor.getAbsoluteLeafColIndex(col);
-        const measureIndex = isSeriesCol(col) ? last(col.fullIndexPathToHere) : undefined;
+        const measureIndex = isSeriesCol(col) ? col.fullIndexPathToHere.at(-1) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();
         const hiddenCell = !isPinnedRow && table.getGroupingProvider().isRepeatedValue(col.id, rowIndex);
         const rowSeparator = !hiddenCell && table.getGroupingProvider().isGroupBoundary(rowIndex);

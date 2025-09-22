@@ -2,7 +2,6 @@
 
 import { KeyboardEvent, RefObject, useState } from "react";
 
-import { noop } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -181,7 +180,7 @@ export function AutomationFiltersSelect({
                     })}
                     {isExpanded || !isExpandable ? (
                         <AttributesDropdown
-                            onClose={noop}
+                            onClose={() => {}}
                             onSelect={(value) => {
                                 handleAddFilter(value, attributes, dateDatasets);
                                 setIsExpanded(true);

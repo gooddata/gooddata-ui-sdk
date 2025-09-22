@@ -15,9 +15,9 @@ import { ErrorCodes, buildAutomationUrl, convertError, navigate } from "@gooddat
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
-import { AutomationColumnDefinition, AutomationsScope, AutomationsType } from "./types.js";
+import { AutomationColumnDefinitions, AutomationsScope, AutomationsType } from "./types.js";
 
-export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<AutomationColumnDefinition> => {
+export const getDefaultColumnDefinitions = (scope: AutomationsScope): AutomationColumnDefinitions => {
     return [
         { name: "title" },
         { name: scope === "workspace" ? "dashboard" : "workspace" },

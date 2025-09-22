@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
-import { isEmpty, last } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { IPagedResource } from "@gooddata/sdk-backend-spi/esm/common/paging";
 import { IAnalyticalWorkspace, IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi/esm/workspace";
@@ -29,7 +29,7 @@ const filterWorkspaces = (workspaces: IWorkspaceDescriptor[], filter?: RegExp) =
 
 const getFirstWorkspace = (workspaces: IWorkspaceDescriptor[]) => {
     if (workspaces.length) {
-        return last(workspaces[0].id.split("/"));
+        return workspaces[0].id.split("/").at(-1);
     }
     return undefined;
 };

@@ -2,7 +2,7 @@
 
 import { PureComponent, RefObject, createRef } from "react";
 
-import { isEmpty, isEqual, noop, omit } from "lodash-es";
+import { isEmpty, isEqual, omit } from "lodash-es";
 import { Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -97,8 +97,8 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         visualizationCatalog: FullVisualizationCatalog,
         newDerivedBucketItems: [],
         referencePoint: null,
-        onExtendedReferencePointChanged: noop,
-        onNewDerivedBucketItemsPlaced: noop,
+        onExtendedReferencePointChanged: () => {},
+        onNewDerivedBucketItemsPlaced: () => {},
         isMdObjectValid: true,
         configPanelClassName: ConfigPanelClassName,
         featureFlags: {},

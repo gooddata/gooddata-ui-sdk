@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isEqual, isNil } from "lodash-es";
+import { isEqual } from "lodash-es";
 
 import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
@@ -81,15 +81,18 @@ export class DashboardLayoutSectionFacade<TContent> implements IDashboardLayoutS
     }
 
     public hasHeader(): boolean {
-        return !isNil(this.header());
+        const header = this.header();
+        return !(header === null || header === undefined);
     }
 
     public hasTitle(): boolean {
-        return !isNil(this.title());
+        const title = this.title();
+        return !(title === null || title === undefined);
     }
 
     public hasDescription(): boolean {
-        return !isNil(this.description());
+        const description = this.description();
+        return !(description === null || description === undefined);
     }
 
     public titleEquals(title: string): boolean {

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { cloneDeep, isNil, range, set } from "lodash-es";
+import { cloneDeep, range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -1456,7 +1456,9 @@ describe("chartOptionsBuilder", () => {
                     const { measureGroup } = getMVS(dv);
                     const heatmapSeries = getHeatmapSeries(dv, measureGroup);
                     const heatmapDataPoints = heatmapSeries[0].data;
-                    const firstEmptyCellIndex = heatmapDataPoints.findIndex((point) => isNil(point.value));
+                    const firstEmptyCellIndex = heatmapDataPoints.findIndex(
+                        (point) => point.value === null || point.value === undefined,
+                    );
 
                     it("should return only one series", () => {
                         expect(heatmapSeries.length).toBe(1);

@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import { cloneDeep, forEach, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -23,7 +23,7 @@ function setWaterfallChartBucketWarningMessages(referencePoint: IExtendedReferen
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
-    forEach(buckets, (bucket) => {
+    buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
 

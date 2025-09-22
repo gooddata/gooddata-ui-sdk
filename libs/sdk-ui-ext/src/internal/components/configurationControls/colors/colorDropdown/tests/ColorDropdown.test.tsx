@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { IColor } from "@gooddata/sdk-model";
@@ -23,7 +23,7 @@ const defaultProps: IColorDropdownOwnProps = {
     },
     colorPalette,
     showCustomPicker: false,
-    onColorSelected: noop,
+    onColorSelected: () => {},
 };
 
 const MockItem = memo(function MockItem({ isSelected, position }: IMockItemProps) {

@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { IntlDecorator } from "./IntlDecorators.js";
@@ -33,10 +32,10 @@ const renderComponent = (props?: Partial<IDateRangePickerProps>) => {
             <DateRangePicker
                 dateFormat={defaultDateFormat}
                 range={getDefaultRange()}
-                onRangeChange={noop}
+                onRangeChange={() => {}}
                 isMobile={false}
                 isTimeEnabled={false}
-                submitForm={noop}
+                submitForm={() => {}}
                 {...props}
             />,
         ),

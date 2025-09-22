@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -78,8 +77,8 @@ describe("ChartTransformation", () => {
             },
             legendLayout: "horizontal",
         },
-        onDataTooLarge: noop,
-        onNegativeValues: noop,
+        onDataTooLarge: () => {},
+        onNegativeValues: () => {},
     };
 
     function createComponent(customProps: any = {}) {
@@ -297,7 +296,7 @@ describe("ChartTransformation", () => {
                     type,
                     ...chartConfig,
                 },
-                onDataTooLarge: noop,
+                onDataTooLarge: () => {},
             };
             return render(createComponent(props));
         }
@@ -329,7 +328,7 @@ describe("ChartTransformation", () => {
                     type: VisualizationTypes.BAR,
                     ...chartConfig,
                 },
-                onDataTooLarge: noop,
+                onDataTooLarge: () => {},
             };
             return render(
                 <IntlWrapper>

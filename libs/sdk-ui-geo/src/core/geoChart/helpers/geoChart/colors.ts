@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isString, range } from "lodash-es";
+import { range } from "lodash-es";
 
 import { IRgbColorValue } from "@gooddata/sdk-model";
 
@@ -39,7 +39,7 @@ function getCalculatedColors(
 }
 
 function getRGBColorCode(color: string | IRgbColorValue): IRgbColorValue {
-    if (isString(color)) {
+    if (typeof color === "string") {
         const { R: r, G: g, B: b } = parseRGBColorCode(color);
         return {
             r,

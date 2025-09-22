@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
-
 import {
     ComponentTable,
     IUiNavigationBypassProps,
@@ -13,7 +11,7 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
     label: "Navigation Skip",
-    onItemClick: noop,
+    onItemClick: (..._: any[]) => {},
 } as IUiNavigationBypassProps);
 
 const allItems = propCombination("items", [

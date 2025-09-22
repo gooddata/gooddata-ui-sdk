@@ -2,7 +2,6 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
@@ -27,7 +26,7 @@ const Wrapper = withIntlForTest(HeaderAccount, "en-US", mockTranslation);
 describe("HeaderAccount", () => {
     it("should render username", () => {
         const userName = "John Doe";
-        render(<Wrapper items={menuItems} onMenuItemClick={noop} userName={userName} />);
+        render(<Wrapper items={menuItems} onMenuItemClick={() => {}} userName={userName} />);
         expect(screen.getByText(`${userName}`)).toBeInTheDocument();
     });
 

@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { isDate, isString } from "lodash-es";
+
+import { isDate } from "lodash-es";
 import moment from "moment";
 
 import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
@@ -20,7 +21,7 @@ export const convertDateToPlatformDateString = (
 export const convertPlatformDateStringToDate = (
     platformDate: string | Date | undefined | null,
 ): Date | undefined | null => {
-    if (!isString(platformDate)) {
+    if (!(typeof platformDate === "string")) {
         return platformDate;
     }
 

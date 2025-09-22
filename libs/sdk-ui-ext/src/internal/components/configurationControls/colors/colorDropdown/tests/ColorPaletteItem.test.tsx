@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem.js";
@@ -17,7 +17,7 @@ const defaultProps: IColorPaletteItemProps = {
             b: 0,
         },
     },
-    onColorSelected: noop,
+    onColorSelected: () => {},
 };
 
 function createComponent(customProps: Partial<IColorPaletteItemProps> = {}) {

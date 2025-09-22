@@ -1,7 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -52,8 +51,8 @@ const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {
         ...singleNormalAttributeSortConfig,
         bucketItems: bucketItems,
-        onApply: noop,
-        onCancel: noop,
+        onApply: () => {},
+        onCancel: () => {},
     };
 
     return render(

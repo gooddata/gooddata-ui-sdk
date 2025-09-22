@@ -12,7 +12,6 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
 import stringify from "json-stable-stringify";
-import { isNil } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -308,7 +307,10 @@ function MeasureCellRenderer({
                 `gd-text-wrapping-${textWrapping}`,
             )}
         >
-            {measureDataPoints.find((point) => !isNil(point.value))?.formattedValue}
+            {
+                measureDataPoints.find((point) => !(point.value === null || point.value === undefined))
+                    ?.formattedValue
+            }
         </div>
     );
 }

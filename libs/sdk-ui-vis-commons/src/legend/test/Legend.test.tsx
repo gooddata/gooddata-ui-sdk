@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -40,8 +39,8 @@ describe("Legend", () => {
         const props: ILegendProps = {
             enableBorderRadius: false,
             series,
-            onItemClick: noop,
-            validateOverHeight: noop,
+            onItemClick: () => {},
+            validateOverHeight: () => {},
             position: "top",
             contentDimensions: { width: 440, height: 440 },
             ...userProps,

@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import { format } from "date-fns";
-import { flow, isEmpty, noop } from "lodash-es";
+import { flow, isEmpty } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
@@ -195,7 +195,7 @@ export function DateFilterCore({
     );
 
     const handleKeyDown = useCallback(
-        (event: KeyboardEvent, closeDropdown = noop) => {
+        (event: KeyboardEvent, closeDropdown = () => {}) => {
             const keyboardHandler = createDateFilterKeyboardHandler({
                 dateFilterContainerRef,
                 dateFilterBodyRef,
@@ -218,7 +218,7 @@ export function DateFilterCore({
                             isOpen: boolean = false,
                             buttonRef: MutableRefObject<HTMLElement | null> = null,
                             dropdownId: string = "",
-                            toggleDropdown = noop,
+                            toggleDropdown = () => {},
                         ) => (
                             <DateFilterButtonLocalized
                                 disabled={disabled}
@@ -263,7 +263,7 @@ export function DateFilterCore({
                                 onOpenStateChanged={handleOpenStateChanged}
                                 overlayPositionType={overlayPositionType}
                                 renderButton={({ isOpen, buttonRef, dropdownId, toggleDropdown }) => (
-                                    <span onClick={disabled ? noop : toggleDropdown}>
+                                    <span onClick={disabled ? () => {} : toggleDropdown}>
                                         {dateFilterButton(isOpen, buttonRef, dropdownId, toggleDropdown)}
                                     </span>
                                 )}

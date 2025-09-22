@@ -16,7 +16,6 @@
  */
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { isNil } from "lodash-es";
 
 import { isLineChart } from "../../chartTypes/_util/common.js";
 import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
@@ -66,7 +65,12 @@ function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
  *      1: move zero index to right
  */
 export function getDirection(primaryAxis: Axis, secondaryAxis: Axis): number {
-    if (isNil(primaryAxis) || isNil(secondaryAxis)) {
+    if (
+        primaryAxis === null ||
+        primaryAxis === undefined ||
+        secondaryAxis === null ||
+        secondaryAxis === undefined
+    ) {
         return ALIGNED;
     }
 
@@ -298,7 +302,7 @@ export function customAdjustTickAmount(this: any): void {
 
     // The finalTickAmt property is set in getTickAmount
     const { finalTickAmt } = axis;
-    if (!isNil(finalTickAmt)) {
+    if (!(finalTickAmt === null || finalTickAmt === undefined)) {
         const len = axis.tickPositions.length;
         let i = len;
         while (i--) {

@@ -5,7 +5,6 @@ import { CSSProperties, ChangeEvent, Component, createRef } from "react";
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
-import { noop } from "lodash-es";
 
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { findRelativeDateFilterOptionByValue } from "./utils.js";
@@ -64,7 +63,7 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
         IDynamicSelectProps,
         "onChange" | "initialIsOpen" | "visibleItemsRange"
     > = {
-        onChange: noop,
+        onChange: () => {},
         initialIsOpen: false,
         visibleItemsRange: defaultVisibleItemsRange,
     };

@@ -39,7 +39,6 @@ import { ConfigDelegates, createConfigDelegates } from "./components/utils/confi
 import {
     AGGRID_ON_RESIZE_TIMEOUT,
     PIVOT_TABLE_DEFAULT_PROPS,
-    noop,
 } from "./components/utils/pivotTableDefaults.js";
 import { TableConfigAccessors } from "./impl/config/index.js";
 import {
@@ -881,7 +880,7 @@ export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICoreP
             getResizingConfig: this.getResizingConfig,
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
-            onExportReady: this.props.onExportReady ?? noop,
+            onExportReady: this.props.onExportReady ?? (() => {}),
             pushData: this.pushDataGuard,
             onPageLoaded: this.onPageLoaded,
             onExecutionTransformed: this.onExecutionTransformed,

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { first, partition } from "lodash-es";
+import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -94,7 +94,7 @@ export function getBrokenAlertFiltersBasicInfo(
     });
 
     // date filter
-    const alertDateFilter = first(alertDateFilters);
+    const alertDateFilter = alertDateFilters.at(0);
     if (alertDateFilter) {
         const isIrrelevantNow = isDateFilterIrrelevant(kpi);
         if (isIrrelevantNow) {

@@ -9,8 +9,10 @@ export type {
     ScheduleAutomationsColumnName,
     CommonAutomationsColumnName,
     AutomationColumnDefinition,
-    AutomationsPreselectedFilters,
+    AutomationColumnDefinitions,
     AutomationsFilterName,
+    AutomationsPreselectedFilters,
+    AutomationsAvailableFilters,
     AutomationsInvalidateItemsRef,
 } from "./types.js";
 export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";

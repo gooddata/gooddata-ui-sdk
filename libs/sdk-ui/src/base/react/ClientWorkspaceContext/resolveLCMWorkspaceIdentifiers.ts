@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { last, partial } from "lodash-es";
+import { partial } from "lodash-es";
 
 import { IClientWorkspaceIdentifiers } from "./interfaces.js";
 
@@ -54,7 +54,7 @@ function getBackendAuthApiCallPrivateMethod(backend: any): AuthApiCall {
 async function extractDomainIdFromPrincipal(getPrincipal: () => Promise<any>) {
     const principal = await getPrincipal();
     const domainLink: string = principal.userMeta?.links?.domain ?? "";
-    return last(domainLink.split("/")) ?? null;
+    return domainLink.split("/").at(-1) ?? null;
 }
 
 async function getBearClientProjectLcmIdentifiersMethod(

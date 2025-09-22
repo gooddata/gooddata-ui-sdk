@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ArrowButton } from "../ArrowButton.js";
@@ -9,7 +8,7 @@ import { ArrowButton } from "../ArrowButton.js";
 describe("ArrowButton", () => {
     describe("when not disabled", () => {
         it("should not disable the button", () => {
-            render(<ArrowButton onClick={noop} arrowDirection="increment" />);
+            render(<ArrowButton onClick={() => {}} arrowDirection="increment" />);
 
             expect(screen.getByRole("button", { hidden: true })).not.toBeDisabled();
         });
@@ -26,7 +25,7 @@ describe("ArrowButton", () => {
 
     describe("when disabled", () => {
         it("should disable the button", () => {
-            render(<ArrowButton onClick={noop} arrowDirection="increment" disabled={true} />);
+            render(<ArrowButton onClick={() => {}} arrowDirection="increment" disabled={true} />);
 
             expect(screen.getByRole("button", { hidden: true })).toBeDisabled();
         });

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import { isEmpty, isNumber, isString } from "lodash-es";
+
+import { isEmpty, isNumber } from "lodash-es";
 
 import { ILowerBoundedFilter, IUpperBoundedFilter, ObjRef, idRef } from "@gooddata/sdk-model";
 
@@ -69,7 +70,7 @@ function validateDataSet(dataSet: ObjQualifier | undefined): boolean {
     }
 
     const { uri, identifier } = getObjectUriIdentifier(dataSet);
-    return isString(uri) || isString(identifier);
+    return typeof uri === "string" || typeof identifier === "string";
 }
 
 export function isValidDateFilterFormat(
@@ -86,8 +87,8 @@ export function isValidDateFilterFormat(
         const valueFormatRegex = isTimeSupported ? DATE_FORMAT_REGEX_TIME_SUPPORT : DATE_FORMAT_REGEX;
         return (
             isValidDataSet &&
-            isString(from) &&
-            isString(to) &&
+            typeof from === "string" &&
+            typeof to === "string" &&
             valueFormatRegex.test(from) &&
             valueFormatRegex.test(to)
         );
@@ -121,7 +122,7 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
             selectionMode === "single" ? attributeElements.length <= 1 : attributeElements.length !== 0;
 
         return (
-            (isString(uri) || isString(identifier)) &&
+            (typeof uri === "string" || typeof identifier === "string") &&
             Array.isArray(attributeElements) &&
             validElementsForSelectionMode
         );
@@ -135,7 +136,9 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
         const validSelectionMode = selectionMode === "multi";
         // attributeElements could be empty in case of setting All Value
         return (
-            (isString(uri) || isString(identifier)) && Array.isArray(attributeElements) && validSelectionMode
+            (typeof uri === "string" || typeof identifier === "string") &&
+            Array.isArray(attributeElements) &&
+            validSelectionMode
         );
     }
 }
@@ -191,11 +194,11 @@ export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
     if (isRemoveDateFilter(filterItem)) {
         const { dataSet } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(dataSet);
-        return isString(uri) || isString(identifier);
+        return typeof uri === "string" || typeof identifier === "string";
     } else if (isRemoveAttributeFilter(filterItem)) {
         const { displayForm } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
-        return isString(uri) || isString(identifier);
+        return typeof uri === "string" || typeof identifier === "string";
     } else if (isRemoveRankingFilter(filterItem)) {
         return true;
     }

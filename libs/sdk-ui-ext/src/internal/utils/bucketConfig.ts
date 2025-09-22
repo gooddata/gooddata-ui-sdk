@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { cloneDeep, forEach, includes, isEmpty, isEqual, set } from "lodash-es";
+import { cloneDeep, includes, isEmpty, isEqual, set } from "lodash-es";
 
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
@@ -46,7 +46,7 @@ export function configureOverTimeComparison(
     const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters, weekFiltersEnabled);
     const originalBuckets = cloneDeep(buckets);
 
-    forEach(buckets, (bucket) => {
+    buckets.forEach((bucket) => {
         let newItems = bucket.items;
 
         if (!comparisonOverTimeAllowed) {
@@ -81,7 +81,7 @@ export function configurePercent(
     extendedReferencePoint: IExtendedReferencePoint,
     percentDisabled: boolean = false,
 ): IExtendedReferencePoint {
-    forEach(extendedReferencePoint.buckets, (bucket) => {
+    extendedReferencePoint.buckets.forEach((bucket) => {
         const showInPercentEnabled =
             !percentDisabled &&
             isShowInPercentAllowed(

@@ -4,7 +4,6 @@ import { CSSProperties, ComponentClass, ReactElement } from "react";
 
 import cx from "classnames";
 import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
-import { noop } from "lodash-es";
 
 import { SelectButton } from "./SelectButton.js";
 import { SelectMenu } from "./SelectMenu.js";
@@ -27,7 +26,7 @@ const DEFAULT_STYLES: CSSProperties = {};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export function Select<V extends {}>({
-    onChange = noop,
+    onChange = () => {},
     value,
     items = DEFAULT_ITEMS,
     initialIsOpen = false,

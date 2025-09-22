@@ -2,7 +2,6 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ISaveAsDialogRendererOwnProps, SaveAsDialogRenderer } from "../SaveAsDialogRenderer.js";
@@ -15,8 +14,8 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         isKpiWidgetEnabled: true,
         isScheduleEmailsEnabled: true,
         locale: "en-US",
-        onCancel: noop,
-        onSubmit: noop,
+        onCancel: () => {},
+        onSubmit: () => {},
         isInEditMode: false,
     };
 

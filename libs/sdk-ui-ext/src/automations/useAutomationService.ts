@@ -48,6 +48,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                             params?.recipientsFilterQuery?.value,
                             params?.recipientsFilterQuery?.type,
                         )
+                        .withAuthor(params?.createdByFilterQuery?.value, params?.createdByFilterQuery?.type)
                         .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
                         .withSorting([`${params.sortBy},${params.sortDirection}`])
                         .withType(params?.type)
@@ -71,6 +72,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                             params?.recipientsFilterQuery?.value,
                             params?.recipientsFilterQuery?.type,
                         )
+                        .withAuthor(params?.createdByFilterQuery?.value, params?.createdByFilterQuery?.type)
                         .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
                         .withSorting([`${params.sortBy},${params.sortDirection}`])
                         .withType(params?.type)

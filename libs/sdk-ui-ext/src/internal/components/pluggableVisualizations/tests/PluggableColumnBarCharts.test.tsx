@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -42,12 +42,12 @@ describe("PluggableColumnBarCharts", () => {
         element: () => document.querySelector("body"),
         configPanelElement: (): HTMLElement | null => null,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
+            afterRender: () => {},
+            pushData: () => {},
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: () => {},
     } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {

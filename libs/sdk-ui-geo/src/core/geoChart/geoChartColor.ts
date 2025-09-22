@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { isEmpty, isFinite, range } from "lodash-es";
+import { isEmpty, range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -17,7 +17,7 @@ const DEFAULT_SEGMENT_ITEM = "default_segment_item";
 const DEFAULT_COLOR_INDEX_IN_PALETTE = DEFAULT_PUSHPIN_COLOR_SCALE - 1;
 
 export function getColorIndexInPalette(value: number | null, min: number, max: number): number {
-    if (value === null || !isFinite(value) || min === max || value === min) {
+    if (value === null || !Number.isFinite(value) || min === max || value === min) {
         return 0;
     }
 
@@ -99,7 +99,9 @@ export function getPushpinColors(
         });
     }
 
-    const colorsWithoutNull = colorValues.filter((value) => value !== null && isFinite(value)) as number[];
+    const colorsWithoutNull = colorValues.filter(
+        (value) => value !== null && Number.isFinite(value),
+    ) as number[];
     const { min, max } = getMinMax(colorsWithoutNull);
 
     if (min === max && !segmentValues.length) {
@@ -112,7 +114,7 @@ export function getPushpinColors(
     }
 
     return colorValues.map((color: number | null, index: number): IPushpinColor => {
-        const value = color !== null && isFinite(color) ? color : min;
+        const value = color !== null && Number.isFinite(color) ? color : min;
         const colorIndex = getColorIndexInPalette(value!, min!, max!);
         const segmentItemName = segmentNames[index] || DEFAULT_SEGMENT_ITEM;
         const palette = colorPaletteMapping[segmentItemName];

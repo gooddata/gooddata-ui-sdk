@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IUser } from "@gooddata/sdk-model";
@@ -75,7 +74,7 @@ export function UserDetailsView({ user, isAdmin, isBootstrapUser, mode, onChange
                 value={user.login}
                 mode={mode}
                 disabled={true}
-                onChange={noop}
+                onChange={() => {}}
             />
         </div>
     );

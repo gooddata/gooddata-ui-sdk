@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { head, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IColorDescriptor, ITheme } from "@gooddata/sdk-model";
@@ -127,7 +127,7 @@ function separateLegendItems(series: any[]) {
 }
 
 export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: ISeriesItem[] } {
-    const primaryType = head(series)?.type;
+    const primaryType = series.at(0)?.type;
 
     return series.reduce(
         (result: Record<string, ISeriesItem[]>, item: ISeriesItem) => {
@@ -148,8 +148,8 @@ export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: 
 
 export function getComboChartSeries(series: any[]): any[] {
     const { primaryItems, secondaryItems } = groupSeriesItemsByType(series);
-    const primaryItem: ISeriesItem = head(primaryItems) || {};
-    const secondaryItem: ISeriesItem = head(secondaryItems) || {};
+    const primaryItem: ISeriesItem = primaryItems.at(0) || {};
+    const secondaryItem: ISeriesItem = secondaryItems.at(0) || {};
     const primaryType: string = primaryItem.type || VisualizationTypes.COLUMN;
     const secondaryType: string = secondaryItem.type || VisualizationTypes.LINE;
     const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS["combo"];

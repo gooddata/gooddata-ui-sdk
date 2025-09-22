@@ -3,7 +3,7 @@
 import { ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { isEqual, isFunction, noop, omitBy } from "lodash-es";
+import { isEqual, isFunction, omitBy } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
@@ -81,9 +81,9 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
         dataView,
         height,
         width,
-        afterRender = noop,
+        afterRender = () => {},
         onDrill = (): boolean => true,
-        onLegendReady = noop,
+        onLegendReady = () => {},
         locale,
         intl,
         theme,
@@ -91,7 +91,7 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
         drillableItems = [],
         onDataTooLarge,
         onNegativeValues = null,
-        pushData = noop,
+        pushData = () => {},
     } = props;
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);

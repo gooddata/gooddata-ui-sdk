@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { noop } from "lodash-es";
 
 import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "@gooddata/sdk-ui";
 
@@ -20,11 +19,11 @@ const defaultCoreChartProps: Pick<
 > = {
     locale: "en-US",
     drillableItems: [],
-    afterRender: noop,
-    pushData: noop,
+    afterRender: () => {},
+    pushData: () => {},
     onError: defaultErrorHandler,
-    onExportReady: noop,
-    onLoadingChanged: noop,
+    onExportReady: () => {},
+    onLoadingChanged: () => {},
     onDrill: () => true,
     ErrorComponent,
     LoadingComponent,

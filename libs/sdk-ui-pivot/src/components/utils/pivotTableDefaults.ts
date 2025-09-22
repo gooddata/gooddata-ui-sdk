@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
-
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
 import { ICorePivotTableProps } from "../../publicTypes.js";
@@ -28,26 +26,21 @@ export const PIVOT_TABLE_DEFAULT_PROPS: Pick<
 > = {
     locale: "en-US",
     drillableItems: [],
-    afterRender: noop,
-    pushData: noop,
-    onExportReady: noop,
-    onLoadingChanged: noop,
-    onError: noop,
-    onDataView: noop,
+    afterRender: () => {},
+    pushData: () => {},
+    onExportReady: () => {},
+    onLoadingChanged: () => {},
+    onError: () => {},
+    onDataView: () => {},
     onDrill: () => true,
     ErrorComponent,
     LoadingComponent,
     pageSize: 100,
     config: {},
-    onColumnResized: noop,
+    onColumnResized: () => {},
 };
 
 /**
  * Default timeout for ag-grid resize operations
  */
 export const AGGRID_ON_RESIZE_TIMEOUT = 300;
-
-/**
- * Export noop for convenience
- */
-export { noop } from "lodash-es";

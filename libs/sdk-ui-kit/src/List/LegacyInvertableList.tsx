@@ -3,7 +3,7 @@
 import { ElementType, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { has, keyBy, noop, take } from "lodash-es";
+import { has, keyBy, take } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
@@ -108,9 +108,9 @@ export function LegacyInvertableList<T>({
     maxSelectionSize,
     noItemsFound,
     noItemsFoundClass: NoItemsFoundClass = injectIntl(NoItemsFound),
-    onRangeChange = noop,
+    onRangeChange = () => {},
     onSearch,
-    onSelect = noop,
+    onSelect = () => {},
     searchPlaceholder = "",
     searchString = "",
     selection = [] as any[],

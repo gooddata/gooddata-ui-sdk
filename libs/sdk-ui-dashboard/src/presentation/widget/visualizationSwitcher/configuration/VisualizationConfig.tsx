@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
-
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
@@ -61,7 +59,7 @@ function VisualizationConfigContent({
             items={menuItems}
             renderMode={renderMode}
             isOpen={true}
-            onClose={noop}
+            onClose={() => {}}
         />
     );
 }

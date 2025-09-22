@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 
-import { noop } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -43,7 +42,7 @@ function XirrTransformation({
     drillableItems = [],
     config = {},
     onDrill = () => true,
-    onAfterRender = noop,
+    onAfterRender = () => {},
     dataView,
 }: IXirrTransformationProps & WrappedComponentProps) {
     const getDisableDrillUnderlineFromConfig = useCallback(

@@ -3,7 +3,6 @@
 import { ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { LabelSize } from "./typings.js";
 
@@ -33,7 +32,7 @@ export const Checkbox = memo(function Checkbox({
     title = "",
     value = false,
     labelSize = "small",
-    onChange = noop,
+    onChange = () => {},
     id,
 }: CheckboxProps) {
     const handleChange = useCallback(

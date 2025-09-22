@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { cloneDeep, isEmpty, isNil, isNumber } from "lodash-es";
+import { cloneDeep, isEmpty, isNumber } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -68,7 +68,10 @@ export function createHeadlineDataItem(
     return {
         localIdentifier: executionDataItem.measureHeaderItem.localIdentifier,
         title: executionDataItem.measureHeaderItem.name,
-        value: isNil(executionDataItem.value) ? null : String(executionDataItem.value),
+        value:
+            executionDataItem.value === null || executionDataItem.value === undefined
+                ? null
+                : String(executionDataItem.value),
         format: executionDataItem.measureHeaderItem.format,
         isDrillable: !!isDrillable,
     };

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { compact, first, flow, identity, partition } from "lodash-es";
+import { compact, identity, partition } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -687,7 +687,9 @@ function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: Objec
     );
 }
 
-const firstDefined = flow(compact, first);
+function firstDefined<T>(arr: T[]): T | undefined {
+    return compact(arr).at(0);
+}
 
 function elementsCacheKey(
     ref: ObjRef,

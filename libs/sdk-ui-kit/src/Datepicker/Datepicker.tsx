@@ -32,7 +32,7 @@ import {
     tr,
     zhCN,
 } from "date-fns/locale";
-import { debounce, noop } from "lodash-es";
+import { debounce } from "lodash-es";
 import { ClassNames, DayEventHandler, DayPicker, DayPickerProps } from "react-day-picker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -160,13 +160,13 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         className: "",
         date: new Date(),
         placeholder: "",
-        onChange: noop,
-        onBlur: noop,
+        onChange: () => {},
+        onBlur: () => {},
         resetOnInvalidValue: false,
         size: "",
         tabIndex: 0,
         alignPoints: [{ align: "bl tl" }, { align: "br tr" }, { align: "tl bl" }, { align: "tr br" }],
-        onAlign: noop,
+        onAlign: () => {},
         dateFormat: DEFAULT_DATE_FORMAT,
         weekStart: "Sunday" as const,
     };

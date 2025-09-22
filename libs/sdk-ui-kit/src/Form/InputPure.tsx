@@ -3,7 +3,6 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, PureComponent, ReactNode } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { runAutofocus } from "./focus.js";
 import { IconType } from "../@ui/@types/icon.js";
@@ -55,7 +54,7 @@ export interface InputPureProps extends IDomNativeProps {
  */
 export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement;
-    private autofocusDispatcher: () => void = noop;
+    private autofocusDispatcher: () => void = () => {};
 
     static defaultProps = {
         autofocus: false,
@@ -67,11 +66,11 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         isSearch: false,
         isSmall: false,
         maxlength: 255,
-        onChange: noop,
-        onEscKeyPress: noop,
-        onEnterKeyPress: noop,
-        onBlur: noop,
-        onFocus: noop,
+        onChange: (..._: any[]) => {},
+        onEscKeyPress: (..._: any[]) => {},
+        onEnterKeyPress: (..._: any[]) => {},
+        onBlur: (..._: any[]) => {},
+        onFocus: (..._: any[]) => {},
         placeholder: "",
         prefix: "",
         readonly: false,

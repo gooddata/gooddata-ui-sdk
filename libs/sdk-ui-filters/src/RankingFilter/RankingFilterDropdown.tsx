@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
@@ -51,7 +49,7 @@ function RankingFilterDropdownComponent({
     attributeItems,
     filter,
     onApply,
-    onCancel = noop,
+    onCancel = () => {},
     anchorEl,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,

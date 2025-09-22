@@ -2,8 +2,6 @@
 
 import { ReactElement, ReactNode, createContext, useContext, useMemo } from "react";
 
-import { noop } from "lodash-es";
-
 import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 
 /**
@@ -18,8 +16,8 @@ export interface IDashboardEventsContext {
  * @alpha
  */
 const DashboardEventsContext = createContext<IDashboardEventsContext>({
-    registerHandler: noop,
-    unregisterHandler: noop,
+    registerHandler: () => {},
+    unregisterHandler: () => {},
 });
 DashboardEventsContext.displayName = "DashboardEventsContext";
 

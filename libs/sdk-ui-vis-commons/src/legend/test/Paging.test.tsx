@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -13,8 +12,8 @@ describe("Paging", () => {
         const props: IPagingProps = {
             page: 1,
             pagesCount: 2,
-            showNextPage: noop,
-            showPrevPage: noop,
+            showNextPage: () => {},
+            showPrevPage: () => {},
             ...customProps,
         };
         const Wrapped = withIntl(Paging);

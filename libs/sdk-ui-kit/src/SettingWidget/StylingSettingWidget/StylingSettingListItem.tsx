@@ -3,7 +3,6 @@
 import { ReactElement, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ObjRef } from "@gooddata/sdk-model";
@@ -40,7 +39,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
     onClick,
     onEdit,
     onDelete,
-    onMenuToggle = noop,
+    onMenuToggle = () => {},
 }: IStylingSettingListItemProps<T>): ReactElement {
     const intl = useIntl();
 

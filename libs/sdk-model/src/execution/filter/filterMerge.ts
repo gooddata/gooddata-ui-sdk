@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { compact, groupBy, last } from "lodash-es";
+import { compact, groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -124,7 +124,7 @@ function mergeDateFilters(
     Object.values(grouped).forEach((filtersForDimension) => {
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
-        const lastFilterForDimension = last(filtersForDimension)!;
+        const lastFilterForDimension = filtersForDimension.at(-1)!;
 
         const commonDateFilter = commonDateFilterId
             ? filtersForDimension.find((f) => filterLocalIdentifier(f) === commonDateFilterId)
@@ -157,5 +157,5 @@ function mergeMeasureValueFilters(
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
 
-    return Object.values(grouped).map((filters) => last(filters)!);
+    return Object.values(grouped).map((filters) => filters.at(-1)!);
 }

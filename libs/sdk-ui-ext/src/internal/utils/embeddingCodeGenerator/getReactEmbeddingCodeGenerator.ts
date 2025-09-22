@@ -6,7 +6,6 @@ import {
     groupBy,
     isEmpty,
     isFunction,
-    isString,
     join,
     map,
     partition,
@@ -138,7 +137,7 @@ function walkProps<TProps>(
 
     // get variable declaration for each prop to render outside of the component
     const propDeclarations = propPairs.map(([key, { value, meta }]) => {
-        if (isString(value)) {
+        if (typeof value === "string") {
             return `const ${key} = "${value}";`;
         }
 
@@ -193,7 +192,7 @@ export function getReactEmbeddingCodeGenerator<TProps extends object>(
         const imports = compact([REACT_IMPORT_INFO, ...importsUsed, component]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
-        const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
+        const stringifiedHeight = typeof height === "string" ? `"${height}"` : height.toString();
 
         const componentBody = `<${component.name}\n${indent(propUsages.join("\n"), 1)}\n/>`;
 

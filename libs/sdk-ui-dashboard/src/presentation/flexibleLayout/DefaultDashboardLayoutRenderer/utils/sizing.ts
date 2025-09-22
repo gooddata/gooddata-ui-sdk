@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { clamp, flatten, isEqual, isNil, round } from "lodash-es";
+import { clamp, isEqual, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -94,10 +94,8 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
             screen,
         );
 
-        return flatten(
-            itemsAsFutureGridRows.map((futureGridRow) =>
-                unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
-            ),
+        return itemsAsFutureGridRows.flatMap((futureGridRow) =>
+            unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
         );
     }, itemsWithSizeForAllScreens);
 }
@@ -162,7 +160,10 @@ const updateDashboardLayoutItemHeight = <TWidget>(
 
     if (
         !itemSizeForCurrentScreen?.gridHeight &&
-        !isNil(itemSizeForCurrentScreen?.heightAsRatio) &&
+        !(
+            itemSizeForCurrentScreen?.heightAsRatio === null ||
+            itemSizeForCurrentScreen?.heightAsRatio === undefined
+        ) &&
         itemSizeForCurrentScreen?.heightAsRatio !== heightAsRatio
     ) {
         if (isWidget(updatedColumn.widget) || isWidgetDefinition(updatedColumn.widget)) {

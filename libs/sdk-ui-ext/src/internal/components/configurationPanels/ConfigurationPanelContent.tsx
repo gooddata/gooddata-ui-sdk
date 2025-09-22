@@ -2,8 +2,6 @@
 
 import { PureComponent, ReactNode } from "react";
 
-import { noop } from "lodash-es";
-
 import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
@@ -62,7 +60,7 @@ export default abstract class ConfigurationPanelContent<
         isError: false,
         isLoading: false,
         insight: null,
-        pushData: noop,
+        pushData: () => {},
         featureFlags: {},
         axis: null,
         panelConfig: {},

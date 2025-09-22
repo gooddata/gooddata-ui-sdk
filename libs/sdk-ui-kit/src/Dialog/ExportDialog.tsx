@@ -2,8 +2,6 @@
 
 import { memo } from "react";
 
-import { noop } from "lodash-es";
-
 import { ExportDialogBase } from "./ExportDialogBase.js";
 import { IExportDialogProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
@@ -35,8 +33,8 @@ export const ExportDialog = memo<IExportDialogProps>(function ExportDialog({
     mergeHeadersText = "Keep attribute cells merged",
     mergeHeadersTitle = "CELLS",
 
-    onCancel = noop,
-    onSubmit = noop,
+    onCancel = () => {},
+    onSubmit = () => {},
 }) {
     return (
         <Overlay

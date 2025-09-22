@@ -4,7 +4,7 @@ import { PureComponent, ReactElement, Suspense, lazy } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { noop, throttle } from "lodash-es";
+import { throttle } from "lodash-es";
 import { WrappedComponentProps } from "react-intl";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import { invariant } from "ts-invariant";
@@ -368,10 +368,10 @@ export class GeoChartInner extends PureComponent<IGeoChartInnerProps, IGeoChartI
             config = DefaultGeoConfig,
             dataView,
             drillableItems = [],
-            afterRender = noop,
-            onCenterPositionChanged = noop,
-            onDrill = noop,
-            onZoomChanged = noop,
+            afterRender = () => {},
+            onCenterPositionChanged = () => {},
+            onDrill = () => {},
+            onZoomChanged = () => {},
             intl,
             onError,
         } = this.props;

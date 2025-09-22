@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { UiAsyncTableBulkAction, UiAsyncTableFilter } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
@@ -21,6 +21,7 @@ export const useAutomationsState = ({
     timezone,
     selectedColumnDefinitions,
     pageSize,
+    availableFilters,
     preselectedFilters,
     dashboardUrlBuilder,
     widgetUrlBuilder,
@@ -84,15 +85,13 @@ export const useAutomationsState = ({
         setPendingAction,
     });
     const {
-        dashboardFilter,
+        filters,
         dashboardFilterQuery,
-        recipientsFilter,
         recipientsFilterQuery,
-        statusFilter,
+        createdByFilterQuery,
         statusFilterQuery,
-        workspacesFilter,
         workspacesFilterQuery,
-    } = useAutomationFilters(preselectedFilters);
+    } = useAutomationFilters(preselectedFilters, availableFilters);
 
     const { status: dataLoadingStatus, error } = useLoadAutomations({
         type,
@@ -102,6 +101,7 @@ export const useAutomationsState = ({
         recipientsFilterQuery,
         workspacesFilterQuery,
         statusFilterQuery,
+        createdByFilterQuery,
         includeAutomationResult,
         scope,
         setState,
@@ -164,6 +164,8 @@ export const useAutomationsState = ({
         dashboardFilterQuery.type,
         recipientsFilterQuery.value,
         recipientsFilterQuery.type,
+        createdByFilterQuery.value,
+        createdByFilterQuery.type,
         workspacesFilterQuery.value,
         workspacesFilterQuery.type,
         statusFilterQuery.value,
@@ -256,22 +258,18 @@ export const useAutomationsState = ({
             state.search ||
             dashboardFilterQuery?.value ||
             recipientsFilterQuery?.value ||
+            createdByFilterQuery?.value ||
             workspacesFilterQuery?.value ||
             statusFilterQuery?.value
         );
-    }, [state.search, dashboardFilterQuery, recipientsFilterQuery, workspacesFilterQuery, statusFilterQuery]);
-
-    const filters = useMemo(() => {
-        const filtersList: Array<UiAsyncTableFilter> = [];
-        if (scope === "workspace") {
-            filtersList.push(dashboardFilter);
-        }
-        if (scope === "organization") {
-            filtersList.push(workspacesFilter);
-        }
-        filtersList.push(recipientsFilter, statusFilter);
-        return filtersList;
-    }, [dashboardFilter, recipientsFilter, statusFilter, workspacesFilter, scope]);
+    }, [
+        state.search,
+        dashboardFilterQuery,
+        recipientsFilterQuery,
+        createdByFilterQuery,
+        workspacesFilterQuery,
+        statusFilterQuery,
+    ]);
 
     return {
         state,

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { isEmpty, isEqual, noop, xorWith } from "lodash-es";
+import { isEmpty, isEqual, xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { IRankingFilter, ObjRefInScope, areObjRefsEqual, newRankingFilter } from "@gooddata/sdk-model";
@@ -46,7 +46,7 @@ export function RankingFilterDropdownBody({
     attributeItems,
     filter,
     onApply,
-    onCancel = noop,
+    onCancel = () => {},
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,

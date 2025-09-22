@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isEmpty, isEqual, isNil, omitBy } from "lodash-es";
+import { isEmpty, isEqual, omitBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
@@ -216,7 +216,7 @@ export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): I
                 ...referencePoint.properties,
                 sortItems: null,
             },
-            isNil,
+            (value) => value === null || value === undefined,
         );
 
         return {

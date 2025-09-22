@@ -2,7 +2,7 @@
 
 import { ReactElement, useMemo } from "react";
 
-import { flatMap, last } from "lodash-es";
+import { flatMap } from "lodash-es";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -94,7 +94,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                 .asGridRows(screen)
                 .map(
                     (itemsInRow) =>
-                        [getItemIndex(last(itemsInRow)!.index()), itemsInRow] as [
+                        [getItemIndex(itemsInRow.at(-1)!.index()), itemsInRow] as [
                             number,
                             IDashboardLayoutItemFacade<TWidget>[],
                         ],

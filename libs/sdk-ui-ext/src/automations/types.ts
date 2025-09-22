@@ -31,7 +31,8 @@ export interface IAutomationsProps {
     organization?: string;
     locale?: string;
     timezone?: string;
-    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    selectedColumnDefinitions?: AutomationColumnDefinitions;
+    availableFilters?: AutomationsAvailableFilters;
     preselectedFilters?: AutomationsPreselectedFilters;
     maxHeight?: number;
     pageSize?: number;
@@ -85,7 +86,7 @@ export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
  * Automation filter names
  * @internal
  */
-export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
+export type AutomationsFilterName = "dashboard" | "workspace" | "createdBy" | "recipients" | "status";
 
 /**
  * Automation scope
@@ -94,10 +95,16 @@ export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "
 export type AutomationsScope = "workspace" | "organization";
 
 /**
- * Preselected filters
+ * Preselected filters configuration
  * @internal
  */
 export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
+
+/**
+ * Available filters configuration
+ * @internal
+ */
+export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
 
 /**
  * All available automation column names
@@ -115,10 +122,10 @@ export type AutomationColumnDefinition = {
 };
 
 /**
- * Common automation filters available for all automation types
+ * Automation column definitions
  * @internal
  */
-export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "state" | "workspace";
+export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 /**
  * Ref to invalidate items from outside the component
@@ -130,7 +137,8 @@ export interface IAutomationsCoreProps {
     type: AutomationsType;
     scope: AutomationsScope;
     timezone?: string;
-    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    selectedColumnDefinitions?: AutomationColumnDefinitions;
+    availableFilters: AutomationsAvailableFilters;
     preselectedFilters: AutomationsPreselectedFilters;
     maxHeight: number;
     pageSize: number;
@@ -203,6 +211,7 @@ export interface IUseLoadAutomationsProps {
     recipientsFilterQuery: IAutomationFilterQuery;
     workspacesFilterQuery: IAutomationFilterQuery;
     statusFilterQuery: IAutomationFilterQuery;
+    createdByFilterQuery: IAutomationFilterQuery;
     includeAutomationResult: boolean;
     scope: AutomationsScope;
     setState: Dispatch<SetStateAction<IAutomationsState>>;
@@ -221,7 +230,7 @@ export interface IUseAutomationBulkActionsProps {
 export interface IUseAutomationColumnsProps {
     type: AutomationsType;
     timezone?: string;
-    columnDefinitions: Array<AutomationColumnDefinition>;
+    columnDefinitions: AutomationColumnDefinitions;
     automationsType: AutomationsType;
     deleteAutomation: AutomationAction;
     unsubscribeFromAutomation: AutomationAction;
@@ -276,6 +285,7 @@ export interface IAutomationsQueryParams {
     recipientsFilterQuery?: IAutomationFilterQuery;
     workspacesFilterQuery?: IAutomationFilterQuery;
     statusFilterQuery?: IAutomationFilterQuery;
+    createdByFilterQuery?: IAutomationFilterQuery;
     sortBy?: string;
     sortDirection?: SortDirection;
     type?: AutomationsType;

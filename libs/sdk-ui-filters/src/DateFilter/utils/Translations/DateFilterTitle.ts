@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { format } from "date-fns";
-import { capitalize, isString } from "lodash-es";
+import { capitalize } from "lodash-es";
 import moment from "moment";
 
 import {
@@ -50,7 +50,7 @@ const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
     dateTo.getMinutes() === 59;
 
 const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime = DAY_START_TIME) => {
-    if (!isString(date)) {
+    if (!(typeof date === "string")) {
         return date;
     }
 

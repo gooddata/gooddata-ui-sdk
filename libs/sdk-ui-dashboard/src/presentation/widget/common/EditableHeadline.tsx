@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
-
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 interface IEditableHeadlineProps {
@@ -18,8 +16,8 @@ export function EditableHeadline({
     originalTitle,
     text,
     onTitleChange,
-    onTitleEditingCancel = noop,
-    onTitleEditingStart = noop,
+    onTitleEditingCancel = () => {},
+    onTitleEditingStart = () => {},
 }: IEditableHeadlineProps) {
     return (
         <EditableLabel

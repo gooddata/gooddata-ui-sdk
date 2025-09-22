@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { newRankingFilter } from "@gooddata/sdk-model";
@@ -20,8 +19,8 @@ const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
         measureItems: Mock.measureItems,
         attributeItems: Mock.attributeItems,
         filter: Mock.defaultFilter,
-        onApply: noop,
-        onCancel: noop,
+        onApply: () => {},
+        onCancel: () => {},
     };
     const Wrapped = withIntl(RankingFilterDropdown);
     return render(<Wrapped {...defaultProps} {...props} />);

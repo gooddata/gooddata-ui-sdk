@@ -3,7 +3,6 @@
 import { ReactNode } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -27,7 +26,7 @@ interface IDrillTargetTypeListItemProps extends ISingleSelectListItemProps {
 
 function DrillTargetTypeListItem({ item, icon, isSelected, onClick }: IDrillTargetTypeListItemProps) {
     const { formatMessage } = useIntl();
-    const handleClick = item.disabled ? noop : onClick;
+    const handleClick = item.disabled ? () => {} : onClick;
     const className = cx(icon, {
         "is-disabled s-is-disable": item.disabled,
     });

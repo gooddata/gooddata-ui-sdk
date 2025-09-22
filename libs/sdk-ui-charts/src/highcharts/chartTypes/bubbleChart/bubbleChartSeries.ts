@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { last } from "lodash-es";
 
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -42,7 +41,7 @@ export function getBubbleChartSeries(
                     y: secondaryMeasuresBucketEmpty ? 0 : parseValue(resData[1 - emptyBucketsCount]),
                     // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
                     z: parseFloat(resData[2 - emptyBucketsCount]),
-                    format: unwrap(last(measureGroup.items)).format, // only for dataLabel format
+                    format: unwrap(measureGroup.items.at(-1)).format, // only for dataLabel format
                 },
             ];
             return {

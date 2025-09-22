@@ -3,7 +3,6 @@
 import { KeyboardEvent, useCallback } from "react";
 
 import { CellClickedEvent, CellKeyDownEvent } from "ag-grid-enterprise";
-import { isNil } from "lodash-es";
 
 import {
     IDrillEvent,
@@ -40,7 +39,7 @@ export function useDrillingProps(): (agGridReactProps: AgGridProps) => AgGridPro
             }
 
             const { data, rowIndex, colDef } = event;
-            if (!data || !colDef || isNil(rowIndex)) {
+            if (!data || !colDef || rowIndex === null || rowIndex === undefined) {
                 return false;
             }
 

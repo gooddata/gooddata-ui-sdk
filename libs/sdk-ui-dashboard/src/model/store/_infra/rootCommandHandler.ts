@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { noop } from "lodash-es";
+
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
 
@@ -45,9 +45,9 @@ export function commandEnvelope<TCommand extends IDashboardCommand, TResult>(
     return {
         type: `${CommandEnvelopeActionPrefix}(${command.type})`,
         command,
-        onError: eventHandlers?.onError ?? noop,
-        onStart: eventHandlers?.onStart ?? noop,
-        onSuccess: eventHandlers?.onSuccess ?? noop,
+        onError: eventHandlers?.onError ?? (() => {}),
+        onStart: eventHandlers?.onStart ?? (() => {}),
+        onSuccess: eventHandlers?.onSuccess ?? (() => {}),
     };
 }
 

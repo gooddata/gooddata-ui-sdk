@@ -10,7 +10,7 @@
  * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
-import { compact, isNil, partial, sum, zip } from "lodash-es";
+import { compact, partial, sum, zip } from "lodash-es";
 
 import { StackingType } from "../../constants/stacking.js";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
@@ -168,7 +168,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
 
 export function getMinMaxInfo(config: any, stacking: StackingType, type: string): IMinMaxInfo[] {
     const { series, yAxis } = config;
-    const isStackedChart = !isNil(stacking);
+    const isStackedChart = !(stacking === null || stacking === undefined);
 
     return yAxis.map((axis: IHighChartAxis, axisIndex: number): IMinMaxInfo => {
         const isLineChartOnAxis = isLineChartType(series, axisIndex, type);
@@ -182,8 +182,8 @@ export function getMinMaxInfo(config: any, stacking: StackingType, type: string)
 
         return {
             id: axisIndex,
-            min: isNil(min) ? dataMin : min,
-            max: isNil(max) ? dataMax : max,
+            min: min === null || min === undefined ? dataMin : min,
+            max: max === null || max === undefined ? dataMax : max,
             isSetMin: min !== undefined,
             isSetMax: max !== undefined,
         };

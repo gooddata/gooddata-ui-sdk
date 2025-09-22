@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-import { noop } from "lodash-es";
-
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import { uiActions } from "../store/ui/index.js";
 
@@ -14,7 +12,7 @@ import { uiActions } from "../store/ui/index.js";
  * @alpha
  */
 export const useAutomationsInvalidateRef = () => {
-    const invalidateItemsRef = useRef<() => void>(noop);
+    const invalidateItemsRef = useRef<() => void>(() => {});
     const dispatch = useDashboardDispatch();
 
     useEffect(() => {

@@ -13,7 +13,6 @@ import {
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 import DefaultMeasure from "react-measure";
 
@@ -310,7 +309,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             actionHandlers: {
                 selectItem: handleSelectItemKeyboard,
                 only: handleSelectOnly,
-                questionMark: () => noop,
+                questionMark: () => () => {},
             },
             focusedIndex,
             isSimple: true,

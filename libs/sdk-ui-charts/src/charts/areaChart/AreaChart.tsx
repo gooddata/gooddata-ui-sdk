@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { isNil } from "lodash-es";
-
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -69,7 +67,10 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
 
 function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
     const { stackMeasures, stackMeasuresToPercent } = config;
-    if (isNil(stackMeasures) && isNil(stackMeasuresToPercent)) {
+    if (
+        (stackMeasures === null || stackMeasures === undefined) &&
+        (stackMeasuresToPercent === null || stackMeasuresToPercent === undefined)
+    ) {
         return config;
     }
     return {

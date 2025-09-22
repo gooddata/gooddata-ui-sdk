@@ -3,7 +3,6 @@
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -78,7 +77,7 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>(
         onItemDelete,
         className,
         onHelpClick,
-        onItemSelect = noop,
+        onItemSelect = () => {},
         onItemMenuToggle,
         isEditingSupported = true,
         isSavingActionInProgress = false,

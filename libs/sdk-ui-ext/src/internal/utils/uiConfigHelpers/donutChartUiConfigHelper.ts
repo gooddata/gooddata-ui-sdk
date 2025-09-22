@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { assign, cloneDeep, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -16,7 +16,7 @@ const donutViewIcon = "local:donut/bucket-title-view.svg";
 export function setDonutChartUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 
-    assign(referencePointConfigured[UICONFIG], disabledOpenAsReportConfig);
+    Object.assign(referencePointConfigured[UICONFIG], disabledOpenAsReportConfig);
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], donutMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], donutViewIcon);

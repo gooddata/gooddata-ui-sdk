@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { escape, isEmpty, isFinite } from "lodash-es";
+import { escape, isEmpty } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
 import { IntlShape } from "react-intl";
 
@@ -23,14 +23,14 @@ function isTooltipItemValid(item: IGeoTooltipItem): boolean {
 }
 
 function escapeAttributeValue(value: number | string): number | string {
-    return isFinite(value) ? value : escape(String(value));
+    return Number.isFinite(value) ? value : escape(String(value));
 }
 
 function formatMeasure(item: IGeoTooltipItem, separators?: ISeparators): IGeoTooltipItem {
     const { title, value, format } = item;
     return {
         title,
-        value: isFinite(value) ? formatValueForTooltip(value, format, separators) : NULL_TOOLTIP_VALUE,
+        value: Number.isFinite(value) ? formatValueForTooltip(value, format, separators) : NULL_TOOLTIP_VALUE,
     };
 }
 

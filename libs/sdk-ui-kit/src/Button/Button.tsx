@@ -3,7 +3,6 @@
 import { MouseEventHandler, ReactNode, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { ValidationContextStore } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
@@ -33,7 +32,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
         className,
         describedByFromValidation: isDescribedByFromValidation = false,
         disabled = false,
-        onClick = noop,
+        onClick = () => {},
         tabIndex = 0,
         tagName = "button",
         type = "button",

@@ -11,8 +11,6 @@ import {
     useState,
 } from "react";
 
-import { noop } from "lodash-es";
-
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
@@ -79,7 +77,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     onSelect,
     onFocus,
     onClose,
-    onUnhandledKeyDown = noop,
+    onUnhandledKeyDown = () => {},
 
     selectedItemId,
 

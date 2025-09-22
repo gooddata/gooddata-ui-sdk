@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { bindAll, debounce, isEqual, noop, pick } from "lodash-es";
+import { bindAll, debounce, isEqual, pick } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
@@ -102,8 +102,8 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         onClick: stopPropagation,
         onMouseOver: stopPropagation,
         onMouseUp: stopPropagation,
-        onAlign: noop,
-        onClose: noop,
+        onAlign: () => {},
+        onClose: () => {},
     };
 
     private readonly id: string;

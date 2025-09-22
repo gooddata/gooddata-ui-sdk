@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, Reducer, combineReducers } from "@reduxjs/toolkit";
-import { compact, fromPairs, keyBy, noop } from "lodash-es";
+import { compact, fromPairs, keyBy } from "lodash-es";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
 
@@ -70,9 +70,9 @@ export function queryEnvelope<TQuery extends IDashboardQuery, TQueryResult>(
         type: `${QueryEnvelopeActionPrefix}(${query.type})`,
         query,
         refresh,
-        onError: eventHandlers?.onError ?? noop,
-        onStart: eventHandlers?.onStart ?? noop,
-        onSuccess: eventHandlers?.onSuccess ?? noop,
+        onError: eventHandlers?.onError ?? (() => {}),
+        onStart: eventHandlers?.onStart ?? (() => {}),
+        onSuccess: eventHandlers?.onSuccess ?? (() => {}),
     };
 }
 

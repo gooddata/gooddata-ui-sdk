@@ -2,8 +2,6 @@
 
 import { useRef } from "react";
 
-import { noop } from "lodash-es";
-
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
 import { UiTagDef, UiTagsProps } from "./types.js";
@@ -35,9 +33,9 @@ export function UiTags({
     canDeleteTags = true,
     canCreateTag = true,
     readOnly = false,
-    onTagClick = noop,
-    onTagAdd = noop,
-    onTagRemove = noop,
+    onTagClick = () => {},
+    onTagAdd = () => {},
+    onTagRemove = () => {},
     accessibilityConfig = defaultAccessibilityConfig,
 }: UiTagsProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);

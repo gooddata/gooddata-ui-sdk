@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 import { OptionsLandmarkVerbosityValue, Point } from "highcharts";
-import { compact, isEmpty, isNil, isString, map, merge, noop, partial, pickBy } from "lodash-es";
+import { compact, isEmpty, map, merge, partial, pickBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
@@ -505,7 +505,7 @@ function getInteractionMessage(isDrillable: boolean, chartConfig: IChartConfig, 
 
 function formatLabel(value: any, format: string, config: IChartConfig = {}) {
     // no labels for missing values
-    if (isNil(value)) {
+    if (value === null || value === undefined) {
         return null;
     }
 
@@ -573,7 +573,7 @@ function level2LabelsFormatter(this: { point: IExtendedPoint }, config?: IChartC
 
 function labelFormatterBubble(this: { point: IExtendedPoint } & Highcharts.Point, config?: IChartConfig) {
     const value = this.point?.z;
-    if (isNil(value) || isNaN(value)) {
+    if (value === null || value === undefined || isNaN(value)) {
         return null;
     }
 
@@ -583,10 +583,10 @@ function labelFormatterBubble(this: { point: IExtendedPoint } & Highcharts.Point
     const yAxisMax = this.series?.yAxis?.max;
 
     if (
-        (!isNil(xAxisMax) && this.x > xAxisMax) ||
-        (!isNil(xAxisMin) && this.x < xAxisMin) ||
-        (!isNil(yAxisMax) && this.y > yAxisMax) ||
-        (!isNil(yAxisMin) && this.y < yAxisMin)
+        (!(xAxisMax === null || xAxisMax === undefined) && this.x > xAxisMax) ||
+        (!(xAxisMin === null || xAxisMin === undefined) && this.x < xAxisMin) ||
+        (!(xAxisMax === null || xAxisMax === undefined) && this.y > yAxisMax) ||
+        (!(xAxisMin === null || xAxisMin === undefined) && this.y < yAxisMin)
     ) {
         return null;
     } else {
@@ -857,13 +857,13 @@ function getDataLabelsConfiguration(
             sankey: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: noop,
+                    formatter: () => {},
                 },
             },
             dependencywheel: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: noop,
+                    formatter: () => {},
                 },
             },
         },
@@ -923,7 +923,9 @@ function getStackingConfiguration(
 
     // extra space allocation for total labels if available
     const totalsVisibleByLabelsConfig =
-        isNil(chartConfig?.dataLabels?.totalsVisible) && !!chartConfig?.dataLabels?.visible;
+        (chartConfig?.dataLabels?.totalsVisible === null ||
+            chartConfig?.dataLabels?.totalsVisible === undefined) &&
+        !!chartConfig?.dataLabels?.visible;
     const totalLabelsExtention =
         isBarChart(type) &&
         chartConfig?.enableSeparateTotalLabels &&
@@ -1002,7 +1004,7 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
 
 export function escapeCategories(dataCategories: any): any {
     return map(dataCategories, (category: any) => {
-        return isString(category)
+        return typeof category === "string"
             ? escapeAngleBrackets(category)
             : {
                   name: escapeAngleBrackets(category.name),
@@ -1105,7 +1107,7 @@ function getHeatMapHoverColor(config: any) {
 }
 
 function getHoverStyles({ type }: any, config: any) {
-    let seriesMapFn = noop;
+    let seriesMapFn = (..._: any[]) => {};
 
     switch (type) {
         case VisualizationTypes.LINE:

@@ -12,8 +12,6 @@ import {
     useRef,
 } from "react";
 
-import { noop } from "lodash-es";
-
 import { usePropState } from "@gooddata/sdk-ui";
 
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
@@ -336,9 +334,9 @@ export function Dropdown(props: IDropdownProps) {
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
                 onClose={closeDropdown}
                 // Overlay prevents event propagation by default using defaultProps for these
-                onClick={enableEventPropagation ? noop : undefined}
-                onMouseOver={enableEventPropagation ? noop : undefined}
-                onMouseUp={enableEventPropagation ? noop : undefined}
+                onClick={enableEventPropagation ? () => {} : undefined}
+                onMouseOver={enableEventPropagation ? () => {} : undefined}
+                onMouseUp={enableEventPropagation ? () => {} : undefined}
                 zIndex={overlayZIndex}
             >
                 <UiFocusManager

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatten, identity, isEmpty, map, zip } from "lodash-es";
+import { identity, isEmpty, map, zip } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -234,26 +234,26 @@ function findColumnKey(key: string): boolean {
  * @returns [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
 export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point[] {
-    return flatten(
-        // 'column0' is primary axis and 'column1' is secondary axis
-        zip(
-            ...stacks.map((item: any) => {
-                const columnKey = Object.keys(item).find(findColumnKey);
-                return Object.values<any>(item[columnKey]);
-            }),
-        ),
-    ).filter(identity);
+    // 'column0' is primary axis and 'column1' is secondary axis
+    return zip(
+        ...stacks.map((item: any) => {
+            const columnKey = Object.keys(item).find(findColumnKey);
+            return Object.values<any>(item[columnKey]);
+        }),
+    )
+        .flat()
+        .filter(identity);
 }
 
 export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
-    return flatten(
-        yAxis.map((axis: Highcharts.Axis) => {
+    return yAxis
+        .flatMap((axis: Highcharts.Axis) => {
             if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
                 return (axis as UnsafeInternals)?.stacking.stackTotalGroup;
             }
             return axis.series.map((serie: Highcharts.Series) => (serie as UnsafeInternals).dataLabelsGroup);
-        }),
-    ).filter(identity);
+        })
+        .filter(identity);
 }
 
 function toggleStackedLabelsForDualAxis(this: any) {
@@ -368,17 +368,15 @@ export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highch
 }
 
 export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {
-    return flatten(
-        yAxis.map((axis: Highcharts.Axis): IStackItem[] => {
-            if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
-                return (axis as UnsafeInternals)?.stacking.stacks;
-            }
-            const series = axis.series;
-            return series.map((serie: Highcharts.Series) => {
-                return {
-                    column: { ...serie.data },
-                };
-            });
-        }),
-    );
+    return yAxis.flatMap((axis: Highcharts.Axis): IStackItem[] => {
+        if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
+            return (axis as UnsafeInternals)?.stacking.stacks;
+        }
+        const series = axis.series;
+        return series.map((serie: Highcharts.Series) => {
+            return {
+                column: { ...serie.data },
+            };
+        });
+    });
 }

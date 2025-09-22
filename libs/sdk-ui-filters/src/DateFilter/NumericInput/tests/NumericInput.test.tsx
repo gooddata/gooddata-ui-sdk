@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { NumericInput } from "../NumericInput.js";
@@ -23,31 +22,31 @@ const getInput = () => {
 
 describe("NumericInput", () => {
     it("should display the value passed", () => {
-        render(<NumericInput onChange={noop} value={42} />);
+        render(<NumericInput onChange={() => {}} value={42} />);
 
         expect(screen.getByDisplayValue("42")).toBeInTheDocument();
     });
 
     it("should disable the increment button when max is reached", () => {
-        render(<NumericInput onChange={noop} max={5} value={5} />);
+        render(<NumericInput onChange={() => {}} max={5} value={5} />);
 
         expect(getIncrementButton()).toBeDisabled();
     });
 
     it("should disable the increment button when max is exceeded", () => {
-        render(<NumericInput onChange={noop} max={5} value={50} />);
+        render(<NumericInput onChange={() => {}} max={5} value={50} />);
 
         expect(getIncrementButton()).toBeDisabled();
     });
 
     it("should disable the decrement button when min is reached", () => {
-        render(<NumericInput onChange={noop} min={5} value={5} />);
+        render(<NumericInput onChange={() => {}} min={5} value={5} />);
 
         expect(getDecrementButton()).toBeDisabled();
     });
 
     it("should disable the decrement button when min is exceeded", () => {
-        render(<NumericInput onChange={noop} min={5} value={0} />);
+        render(<NumericInput onChange={() => {}} min={5} value={0} />);
 
         expect(getDecrementButton()).toBeDisabled();
     });

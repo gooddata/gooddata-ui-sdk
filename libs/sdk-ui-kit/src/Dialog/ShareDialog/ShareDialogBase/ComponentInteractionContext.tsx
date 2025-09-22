@@ -2,7 +2,6 @@
 
 import { ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
-import { noop } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import { AccessGranularPermission, IUser, ShareStatus } from "@gooddata/sdk-model";
@@ -26,7 +25,7 @@ type ComponentInteractionContextType = {
 };
 
 const defaultContext: ComponentInteractionContextType = {
-    onInteraction: noop,
+    onInteraction: () => {},
     currentUser: undefined,
 };
 

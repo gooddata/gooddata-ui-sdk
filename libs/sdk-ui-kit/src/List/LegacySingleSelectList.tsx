@@ -3,7 +3,7 @@
 import { ElementType, ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { noop, pick } from "lodash-es";
+import { pick } from "lodash-es";
 
 import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
@@ -45,13 +45,13 @@ export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>
         items = [] as T[],
         itemsCount = 0,
         listItemClass = LegacySingleSelectListItem,
-        onItemMouseOut = noop,
-        onItemMouseOver = noop,
-        onItemMouseEnter = noop,
-        onItemMouseLeave = noop,
-        onRangeChange = noop,
-        onScrollStart = noop,
-        onSelect = noop,
+        onItemMouseOut = () => {},
+        onItemMouseOver = () => {},
+        onItemMouseEnter = () => {},
+        onItemMouseLeave = () => {},
+        onRangeChange = () => {},
+        onScrollStart = () => {},
+        onSelect = () => {},
         rowItem = null as ReactElement,
         scrollToSelected = false,
         selection = {},
