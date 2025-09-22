@@ -1,6 +1,46 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Sep 2025 07:36:12 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Sep 2025 08:18:19 GMT and should not be manually modified.
+
+## 11.0.0
+
+Mon, 22 Sep 2025 08:18:19 GMT
+
+### Minor changes
+
+- Added GenAI Memory management types and interfaces - new IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType from sdk-model and IMemoryService interface from sdk-backend-spi for CRUD operations on AI memory items
+
+### Updates
+
+- sdk-ui-catalog: Fix mismatch typo between `visualizationType` property and its type in the `ICatalogItem` interface
+- sdk-backend: Implement GenAI Analytics Catalog service
+- sdk-ui-catalog: Add support for tags filtering
+- sdk-ui-catalog: Update the tooltip text content for the catalog help icon.
+- sdk-ui-kit: Extend `DropdownInvertableSelect` with `header` prop to support custom header in the dropdown.
+- sdk-ui-kit: Extend `DropdownInvertableSelect` with `renderNoData` prop
+- sdk-ui-kit: Extend `DropdownInvertableSelect` with `alignPoints` prop to support custom alignment.
+- sdk-ui-catalog: Improve responsiveness on smaller screens.
+- sdk-ui-catalog: Render `createdAt` in the table as a fallback when `updatedAt` is not defined in the measure metadata object.
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- sdk-ui-catalog: Update wording and detail page, Support [space] in tag management
+- [sdk-ui-kit]: Update design of async table to match figma specifications
+- [sdk-gen-ai]: Added sorting for top / bottom ranking filter
+- [sdk-ui-kit]: Support override empty state in async table, default component exported
+- [sdk-ui-catalog] Update designs of empty table
+- [sdk-ui-catalog] Support theming in workspace catalog page
+- [sdk-ui-gen-ai] Cannot move cursor back with keyboard after selecting an object from AutoComplete.
+- [sdk-backend-tiger] Fix message resolution when reach limit size of request
+- Improved accessibility of saved views and attribute filter
+- Improve accessibility of the saved views list
+- Use proper color for pattern fill chart tooltips
+- Add cron-parser to sdk-ui-ext
+- Remove code related to the obsolete enableKDWidgetCustomHeight setting
+- remove legacy code related to the old layouting
+- Prevent re-mounting of automation date filter button
+- propagate properly onExportReady callback in Headline
+- enable charts accessibility improvements by default
+- Add support for React 19 and drop support for older React versions (16, 17). See [migration guide](https://www.gooddata.com/docs/gooddata-ui/latest/quick_start/#update-from-v10-to-v11).
 
 ## 10.43.0
 

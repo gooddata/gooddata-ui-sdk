@@ -2,6 +2,107 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.0.0",
+            "tag": "@gooddata/sdk-ui-all_v11.0.0",
+            "date": "Mon, 22 Sep 2025 08:18:19 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-catalog: Fix mismatch typo between `visualizationType` property and its type in the `ICatalogItem` interface"
+                    },
+                    {
+                        "comment": "sdk-backend: Implement GenAI Analytics Catalog service"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for tags filtering"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Update the tooltip text content for the catalog help icon."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Extend `DropdownInvertableSelect` with `header` prop to support custom header in the dropdown."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Extend `DropdownInvertableSelect` with  `renderNoData` prop"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Extend `DropdownInvertableSelect` with `alignPoints` prop to support custom alignment."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Improve responsiveness on smaller screens."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Render `createdAt` in the table as a fallback when `updatedAt` is not defined in the measure metadata object."
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Update wording and detail page, Support [space] in tag management"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit]: Update design of async table to match figma specifications"
+                    },
+                    {
+                        "comment": "[sdk-gen-ai]: Added sorting for top / bottom ranking filter"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit]: Support override empty state in async table, default component exported"
+                    },
+                    {
+                        "comment": "[sdk-ui-catalog] Update designs of empty table"
+                    },
+                    {
+                        "comment": "[sdk-ui-catalog] Support theming in workspace catalog page"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai] Cannot move cursor back with keyboard after selecting an object from AutoComplete."
+                    },
+                    {
+                        "comment": "[sdk-backend-tiger] Fix message resolution when reach limit size of request"
+                    },
+                    {
+                        "comment": "Improved accessibility of saved views and attribute filter"
+                    },
+                    {
+                        "comment": "Improve accessibility of the saved views list"
+                    },
+                    {
+                        "comment": "Use proper color for pattern fill chart tooltips"
+                    },
+                    {
+                        "comment": "Add cron-parser to sdk-ui-ext"
+                    },
+                    {
+                        "comment": "Remove code related to the obsolete enableKDWidgetCustomHeight setting"
+                    },
+                    {
+                        "comment": "remove legacy code related to the old layouting "
+                    },
+                    {
+                        "comment": "Prevent re-mounting of automation date filter button"
+                    },
+                    {
+                        "comment": "propagate properly onExportReady callback in Headline"
+                    },
+                    {
+                        "comment": "enable charts accessibility improvements by default"
+                    },
+                    {
+                        "comment": "Add support for React 19 and drop support for older React versions (16, 17). See [migration guide](https://www.gooddata.com/docs/gooddata-ui/latest/quick_start/#update-from-v10-to-v11)."
+                    }
+                ],
+                "minor": [
+                    {
+                        "comment": "Added GenAI Memory management types and interfaces - new IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType from sdk-model and IMemoryService interface from sdk-backend-spi for CRUD operations on AI memory items"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.43.0",
             "tag": "@gooddata/sdk-ui-all_v10.43.0",
             "date": "Thu, 11 Sep 2025 07:36:12 GMT",
