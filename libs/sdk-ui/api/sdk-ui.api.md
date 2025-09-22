@@ -23,7 +23,6 @@ import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IContextStore as IContextStore_2 } from '../contextStore.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -2372,7 +2371,7 @@ export const useWorkspace: (workspace?: string) => string | undefined;
 export const useWorkspaceStrict: (workspace?: string, context?: string) => string;
 
 // @internal (undocumented)
-export const ValidationContextStore: IContextStore_2<IValidationContextValue<any>>;
+export const ValidationContextStore: IContextStore<IValidationContextValue<any>>;
 
 // @internal (undocumented)
 export const validationSeverity: ["info", "warning", "error"];

@@ -1,9 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { omit } from "lodash-es";
+
 import { ICoreChartProps } from "@gooddata/sdk-ui-charts";
-import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
+import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution", "onError"];
 const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "intl", "onError"];

@@ -532,7 +532,7 @@
     },
     {
       "name": "@vitejs/plugin-react",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@vitejs/plugin-react-swc",
@@ -1149,10 +1149,6 @@
     {
       "name": "reselect",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "rimraf",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "sass",

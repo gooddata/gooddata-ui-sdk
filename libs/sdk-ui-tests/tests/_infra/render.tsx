@@ -1,12 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { render } from "@testing-library/react";
+import { omit } from "lodash-es";
+
 import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { render } from "@testing-library/react";
 
+import { ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
 import { IScenario, VisProps } from "../../src/index.js";
-import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
-import { omit } from "lodash-es";
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {

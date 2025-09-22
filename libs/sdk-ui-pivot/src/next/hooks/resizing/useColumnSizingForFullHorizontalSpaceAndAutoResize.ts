@@ -28,13 +28,13 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
     const isColumnSizingForGrowToFitAndAutoResize =
         shouldAdaptSizeToCellContent && shouldFillFullHorizontalSpace;
 
-    const { containerWidth } = useAgGridApi();
+    const { containerWidth, autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            if (params.source !== "autosizeColumns") {
+            if (params.source !== "autosizeColumns" || autoSizeInitialized) {
                 return;
             }
 
@@ -57,10 +57,10 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
                         flex: width,
                     };
                 }
+
                 //Keep content-sized width
                 return {
                     ...colDef,
-                    width: width,
                     flex: undefined,
                 };
             });
@@ -68,8 +68,17 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
+
+            // Mark autosize as initialized to prevent future runs
+            setAutoSizeInitialized(true);
         },
-        [getAgGridColumns, updateAgGridColumnDefs, containerWidth],
+        [
+            getAgGridColumns,
+            updateAgGridColumnDefs,
+            containerWidth,
+            autoSizeInitialized,
+            setAutoSizeInitialized,
+        ],
     );
 
     return isColumnSizingForGrowToFitAndAutoResize

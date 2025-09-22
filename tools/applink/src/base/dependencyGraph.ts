@@ -2,7 +2,7 @@
 
 import path from "path";
 
-import { difference, flatMap, fromPairs, groupBy, intersection } from "lodash-es";
+import { difference, groupBy, intersection } from "lodash-es";
 
 import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types.js";
 import { readJsonSync } from "./utils.js";
@@ -124,8 +124,7 @@ export function findDependingPackages(
              * For all remaining packages to investigate, check out which packages are depending on them,
              * add them to result and then prepare for the next cycle
              */
-            const depending = flatMap(
-                remaining,
+            const depending = remaining.flatMap(
                 (p) => graph.incoming[p]?.filter((d) => depTypes.includes(d.type)).map((d) => d.from) ?? [],
             );
 
@@ -154,7 +153,7 @@ export function determinePackageBuildOrder(
      * The algorithm to achieve this does 'shave' the packages from the leaves up to the roots. The package
      * can only be shaved-off if all packages which it depends on have already been shaved off.
      */
-    const allShavedOffDependencies: Record<string, string[]> = fromPairs(
+    const allShavedOffDependencies: Record<string, string[]> = Object.fromEntries(
         graph.nodes.map((node) => [node, []]),
     );
     const groups: string[][] = [];

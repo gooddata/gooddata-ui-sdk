@@ -17,7 +17,6 @@ import {
     NoOptionsMessageRenderer,
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadUsersOptionsPromise } from "./backend/loadUsersOptionsPromise.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import {
@@ -27,6 +26,7 @@ import {
     isSelectErrorOption,
     isUserItem,
 } from "../types.js";
+import { loadUsersOptionsPromise } from "./backend/loadUsersOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 

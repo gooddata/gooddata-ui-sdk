@@ -9,6 +9,8 @@ type IAgGridApiContext = {
     setAgGridApi: (api: AgGridApi | null) => void;
     containerWidth: number;
     setContainerWidth: (width: number) => void;
+    autoSizeInitialized: boolean;
+    setAutoSizeInitialized: (value: boolean) => void;
 };
 
 const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined);
@@ -19,6 +21,7 @@ const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined)
 export function AgGridApiProvider({ children }: { children: ReactNode }) {
     const [agGridApi, setAgGridApi] = useState<AgGridApi | null>(null);
     const [containerWidth, setContainerWidth] = useState(0);
+    const [autoSizeInitialized, setAutoSizeInitialized] = useState(false);
 
     return (
         <AgGridApiContext.Provider
@@ -27,6 +30,8 @@ export function AgGridApiProvider({ children }: { children: ReactNode }) {
                 setAgGridApi,
                 containerWidth,
                 setContainerWidth,
+                autoSizeInitialized,
+                setAutoSizeInitialized,
             }}
         >
             {children}

@@ -46,50 +46,50 @@ export type AbstractMeasureValueFilter = AfmComparisonMeasureValueFilter | AfmRa
 
 // @public
 export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
-    allPlatformUsage(options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
-    availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AvailableAssignees, any>>;
-    checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
-    cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DashboardPermissions, any>>;
-    deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
-    getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
-    getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
-    getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any>>;
-    inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
-    inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any>>;
+    allPlatformUsage(options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any, {}>>;
+    availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AvailableAssignees, any, {}>>;
+    checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
+    cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DashboardPermissions, any, {}>>;
+    deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any, {}>>;
+    getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any, {}>>;
+    getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any, {}>>;
+    getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any, {}>>;
+    inheritedEntityConflicts(requestParameters: ActionsApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
+    inheritedEntityPrefixes(requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any, {}>>;
     // (undocumented)
-    listWorkspaceUserGroups(requestParameters: ActionsApiListWorkspaceUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<WorkspaceUserGroups, any>>;
+    listWorkspaceUserGroups(requestParameters: ActionsApiListWorkspaceUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<WorkspaceUserGroups, any, {}>>;
     // (undocumented)
-    listWorkspaceUsers(requestParameters: ActionsApiListWorkspaceUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<WorkspaceUsers, any>>;
-    manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
-    particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
-    pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    resolveAllEntitlements(options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any>>;
-    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
-    resolveRequestedEntitlements(requestParameters: ActionsApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any>>;
-    resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
-    retrieveTranslations(requestParameters: ActionsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Xliff, any>>;
-    setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeAutomation(requestParameters: ActionsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
-    workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
+    listWorkspaceUsers(requestParameters: ActionsApiListWorkspaceUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<WorkspaceUsers, any, {}>>;
+    manageDashboardPermissions(requestParameters: ActionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
+    particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any, {}>>;
+    pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    resolveAllEntitlements(options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any, {}>>;
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
+    resolveRequestedEntitlements(requestParameters: ActionsApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any, {}>>;
+    resolveSettingsWithoutWorkspace(requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
+    retrieveTranslations(requestParameters: ActionsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Xliff, any, {}>>;
+    setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeAutomation(requestParameters: ActionsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
+    workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
 }
 
 // @public
@@ -727,13 +727,13 @@ export interface ActionsApiWorkspaceResolveSettingsRequest {
 
 // @public
 export class ActionsAutomation extends AutomationBaseAPI implements ActionsAutomationInterface {
-    getNotifications(requestParameters?: ActionsAutomationGetNotificationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationNotifications, any>>;
-    markAsReadNotification(requestParameters: ActionsAutomationMarkAsReadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    markAsReadNotificationAll(requestParameters?: ActionsAutomationMarkAsReadNotificationAllRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    testExistingNotificationChannel(requestParameters: ActionsAutomationTestExistingNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any>>;
-    testNotificationChannel(requestParameters: ActionsAutomationTestNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any>>;
-    triggerAutomation(requestParameters: ActionsAutomationTriggerAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    triggerExistingAutomation(requestParameters: ActionsAutomationTriggerExistingAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getNotifications(requestParameters?: ActionsAutomationGetNotificationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationNotifications, any, {}>>;
+    markAsReadNotification(requestParameters: ActionsAutomationMarkAsReadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    markAsReadNotificationAll(requestParameters?: ActionsAutomationMarkAsReadNotificationAllRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    testExistingNotificationChannel(requestParameters: ActionsAutomationTestExistingNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any, {}>>;
+    testNotificationChannel(requestParameters: ActionsAutomationTestNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any, {}>>;
+    triggerAutomation(requestParameters: ActionsAutomationTriggerAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    triggerExistingAutomation(requestParameters: ActionsAutomationTriggerExistingAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -824,20 +824,20 @@ export interface ActionsAutomationTriggerExistingAutomationRequest {
 
 // @public
 export class ActionsExport extends ExportBaseAPI implements ActionsExportInterface {
-    createDashboardExportRequest(requestParameters: ActionsExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
+    createDashboardExportRequest(requestParameters: ActionsExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createImageExport(requestParameters: ActionsExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
 }
 
 // @public
@@ -1046,30 +1046,30 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
 
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
-    aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatResult, any>>;
-    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatHistoryResult, any>>;
-    aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<object[], any>>;
-    aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatUsageResponse, any>>;
-    aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SearchResult, any>>;
-    anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
-    anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult, any>>;
-    cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmCancelTokens, any>>;
-    clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
-    clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ClusteringResult, any>>;
-    computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ElementsResponse, any>>;
-    computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmExecutionResponse, any>>;
-    computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidDescendantsResponse, any>>;
-    computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidObjectsResponse, any>>;
-    explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
-    forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ForecastResult, any>>;
-    keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResponse, any>>;
-    keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResult, any>>;
-    resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedLlmEndpoints, any>>;
-    retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any>>;
-    retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any>>;
-    validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any>>;
-    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any>>;
+    aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatResult, any, {}>>;
+    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatHistoryResult, any, {}>>;
+    aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<object[], any, {}>>;
+    aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatUsageResponse, any, {}>>;
+    aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SearchResult, any, {}>>;
+    anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any, {}>>;
+    anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult, any, {}>>;
+    cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmCancelTokens, any, {}>>;
+    clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any, {}>>;
+    clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ClusteringResult, any, {}>>;
+    computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ElementsResponse, any, {}>>;
+    computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmExecutionResponse, any, {}>>;
+    computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidDescendantsResponse, any, {}>>;
+    computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidObjectsResponse, any, {}>>;
+    explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any, {}>>;
+    forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ForecastResult, any, {}>>;
+    keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResponse, any, {}>>;
+    keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResult, any, {}>>;
+    resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedLlmEndpoints, any, {}>>;
+    retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any, {}>>;
+    retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any, {}>>;
+    validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
+    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
 }
 
 // @public
@@ -1884,8 +1884,8 @@ export interface AfmValidObjectsResponse {
 
 // @public
 export class AIApi extends MetadataBaseApi implements AIApiInterface {
-    metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -1958,8 +1958,8 @@ export { AnalyticalDashboardModelV2 }
 
 // @public
 export class AnalyticsModelApi extends MetadataBaseApi implements AnalyticsModelApiInterface {
-    getAnalyticsModel(requestParameters: AnalyticsModelApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics, any>>;
-    setAnalyticsModel(requestParameters: AnalyticsModelApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getAnalyticsModel(requestParameters: AnalyticsModelApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics, any, {}>>;
+    setAnalyticsModel(requestParameters: AnalyticsModelApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -2106,10 +2106,10 @@ export type ApiEntitlementNameEnum = (typeof ApiEntitlementNameEnum)[keyof typeo
 
 // @public
 export class APITokensApi extends MetadataBaseApi implements APITokensApiInterface {
-    createEntityApiTokens(requestParameters: APITokensApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
-    deleteEntityApiTokens(requestParameters: APITokensApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesApiTokens(requestParameters: APITokensApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any>>;
-    getEntityApiTokens(requestParameters: APITokensApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
+    createEntityApiTokens(requestParameters: APITokensApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
+    deleteEntityApiTokens(requestParameters: APITokensApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesApiTokens(requestParameters: APITokensApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any, {}>>;
+    getEntityApiTokens(requestParameters: APITokensApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
 }
 
 // @public
@@ -2176,18 +2176,18 @@ export interface APITokensApiInterface {
 
 // @public
 export class AppearanceApi extends MetadataBaseApi implements AppearanceApiInterface {
-    createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesColorPalettes(requestParameters?: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any>>;
-    getAllEntitiesThemes(requestParameters?: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any>>;
-    getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
+    createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesColorPalettes(requestParameters?: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any, {}>>;
+    getAllEntitiesThemes(requestParameters?: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any, {}>>;
+    getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
 }
 
 // @public
@@ -2518,12 +2518,12 @@ export type AttributeHeaderAttributeHeaderValueTypeEnum = (typeof AttributeHeade
 
 // @public
 export class AttributeHierarchiesApi extends MetadataBaseApi implements AttributeHierarchiesApiInterface {
-    createEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    deleteEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesAttributeHierarchies(requestParameters: AttributeHierarchiesApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any>>;
-    getEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    patchEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    updateEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
+    createEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    deleteEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesAttributeHierarchies(requestParameters: AttributeHierarchiesApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any, {}>>;
+    getEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    patchEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    updateEntityAttributeHierarchies(requestParameters: AttributeHierarchiesApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
 }
 
 // @public
@@ -2654,8 +2654,8 @@ export interface AttributeResultHeader {
 
 // @public
 export class AttributesApi extends MetadataBaseApi implements AttributesApiInterface {
-    getAllEntitiesAttributes(requestParameters: AttributesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any>>;
-    getEntityAttributes(requestParameters: AttributesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any>>;
+    getAllEntitiesAttributes(requestParameters: AttributesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any, {}>>;
+    getEntityAttributes(requestParameters: AttributesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any, {}>>;
 }
 
 // @public
@@ -3805,7 +3805,7 @@ export interface AutomationNotificationsMetaTotal {
 
 // @public
 export class AutomationOrganizationViewControllerApi extends MetadataBaseApi implements AutomationOrganizationViewControllerApiInterface {
-    getAllAutomationsWorkspaceAutomations(requestParameters?: AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any>>;
+    getAllAutomationsWorkspaceAutomations(requestParameters?: AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any, {}>>;
 }
 
 // @public
@@ -4172,26 +4172,26 @@ export interface AutomationRequestArgs {
 
 // @public
 export class AutomationsApi extends MetadataBaseApi implements AutomationsApiInterface {
-    createEntityAutomations(requestParameters: AutomationsApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    deleteEntityAutomations(requestParameters: AutomationsApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteOrganizationAutomations(requestParameters: AutomationsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteWorkspaceAutomations(requestParameters: AutomationsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllAutomationsWorkspaceAutomations(requestParameters?: AutomationsApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any>>;
-    getAllEntitiesAutomations(requestParameters: AutomationsApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any>>;
-    getAutomations(requestParameters: AutomationsApiGetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAutomation[], any>>;
-    getEntityAutomations(requestParameters: AutomationsApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    patchEntityAutomations(requestParameters: AutomationsApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    pauseOrganizationAutomations(requestParameters: AutomationsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    pauseWorkspaceAutomations(requestParameters: AutomationsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setAutomations(requestParameters: AutomationsApiSetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unpauseOrganizationAutomations(requestParameters: AutomationsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unpauseWorkspaceAutomations(requestParameters: AutomationsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeAutomation(requestParameters: AutomationsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeOrganizationAutomations(requestParameters: AutomationsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeSelectedWorkspaceAutomations(requestParameters: AutomationsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    unsubscribeWorkspaceAutomations(requestParameters: AutomationsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    updateEntityAutomations(requestParameters: AutomationsApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
+    createEntityAutomations(requestParameters: AutomationsApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    deleteEntityAutomations(requestParameters: AutomationsApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteOrganizationAutomations(requestParameters: AutomationsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteWorkspaceAutomations(requestParameters: AutomationsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllAutomationsWorkspaceAutomations(requestParameters?: AutomationsApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any, {}>>;
+    getAllEntitiesAutomations(requestParameters: AutomationsApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any, {}>>;
+    getAutomations(requestParameters: AutomationsApiGetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAutomation[], any, {}>>;
+    getEntityAutomations(requestParameters: AutomationsApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    patchEntityAutomations(requestParameters: AutomationsApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    pauseOrganizationAutomations(requestParameters: AutomationsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    pauseWorkspaceAutomations(requestParameters: AutomationsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setAutomations(requestParameters: AutomationsApiSetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unpauseOrganizationAutomations(requestParameters: AutomationsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unpauseWorkspaceAutomations(requestParameters: AutomationsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeAllAutomations(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeAutomation(requestParameters: AutomationsApiUnsubscribeAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeOrganizationAutomations(requestParameters: AutomationsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeSelectedWorkspaceAutomations(requestParameters: AutomationsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    unsubscribeWorkspaceAutomations(requestParameters: AutomationsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    updateEntityAutomations(requestParameters: AutomationsApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
 }
 
 // @public
@@ -4425,8 +4425,8 @@ export interface AutomationsApiUpdateEntityAutomationsRequest {
 
 // @public
 export class AutomationsAutomation extends AutomationBaseAPI implements AutomationsAutomationInterface {
-    triggerAutomation(requestParameters: AutomationsAutomationTriggerAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    triggerExistingAutomation(requestParameters: AutomationsAutomationTriggerExistingAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    triggerAutomation(requestParameters: AutomationsAutomationTriggerAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    triggerExistingAutomation(requestParameters: AutomationsAutomationTriggerExistingAutomationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -4766,7 +4766,7 @@ export interface AvailableAssignees {
 export class AvailableDriversApi extends MetadataBaseApi implements AvailableDriversApiInterface {
     getDataSourceDrivers(options?: AxiosRequestConfig): Promise<AxiosResponse<    {
     [key: string]: string;
-    }, any>>;
+    }, any, {}>>;
 }
 
 // @public
@@ -5197,12 +5197,12 @@ export interface ContentSlideTemplate {
 
 // @public
 export class ContextFiltersApi extends MetadataBaseApi implements ContextFiltersApiInterface {
-    createEntityFilterContexts(requestParameters: ContextFiltersApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    deleteEntityFilterContexts(requestParameters: ContextFiltersApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesFilterContexts(requestParameters: ContextFiltersApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any>>;
-    getEntityFilterContexts(requestParameters: ContextFiltersApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    patchEntityFilterContexts(requestParameters: ContextFiltersApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    updateEntityFilterContexts(requestParameters: ContextFiltersApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
+    createEntityFilterContexts(requestParameters: ContextFiltersApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    deleteEntityFilterContexts(requestParameters: ContextFiltersApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesFilterContexts(requestParameters: ContextFiltersApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any, {}>>;
+    getEntityFilterContexts(requestParameters: ContextFiltersApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    patchEntityFilterContexts(requestParameters: ContextFiltersApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    updateEntityFilterContexts(requestParameters: ContextFiltersApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
 }
 
 // @public
@@ -5303,9 +5303,9 @@ export interface ContextFiltersApiUpdateEntityFilterContextsRequest {
 
 // @public
 export class CookieSecurityConfigurationApi extends MetadataBaseApi implements CookieSecurityConfigurationApiInterface {
-    getEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    patchEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    updateEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
+    getEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    patchEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    updateEntityCookieSecurityConfigurations(requestParameters: CookieSecurityConfigurationApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
 }
 
 // @public
@@ -5404,12 +5404,12 @@ export type CreatedVisualizationVisualizationTypeEnum = (typeof CreatedVisualiza
 
 // @public
 export class CSPDirectivesApi extends MetadataBaseApi implements CSPDirectivesApiInterface {
-    createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesCspDirectives(requestParameters?: CSPDirectivesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any>>;
-    getEntityCspDirectives(requestParameters: CSPDirectivesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    patchEntityCspDirectives(requestParameters: CSPDirectivesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    updateEntityCspDirectives(requestParameters: CSPDirectivesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
+    createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesCspDirectives(requestParameters?: CSPDirectivesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any, {}>>;
+    getEntityCspDirectives(requestParameters: CSPDirectivesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    patchEntityCspDirectives(requestParameters: CSPDirectivesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    updateEntityCspDirectives(requestParameters: CSPDirectivesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
 }
 
 // @public
@@ -5711,12 +5711,12 @@ export type DashboardPermissionsAssignmentPermissionsEnum = (typeof DashboardPer
 
 // @public
 export class DashboardsApi extends MetadataBaseApi implements DashboardsApiInterface {
-    createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesAnalyticalDashboards(requestParameters: DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any>>;
-    getEntityAnalyticalDashboards(requestParameters: DashboardsApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    patchEntityAnalyticalDashboards(requestParameters: DashboardsApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    updateEntityAnalyticalDashboards(requestParameters: DashboardsApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
+    createEntityAnalyticalDashboards(requestParameters: DashboardsApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    deleteEntityAnalyticalDashboards(requestParameters: DashboardsApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesAnalyticalDashboards(requestParameters: DashboardsApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any, {}>>;
+    getEntityAnalyticalDashboards(requestParameters: DashboardsApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    patchEntityAnalyticalDashboards(requestParameters: DashboardsApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    updateEntityAnalyticalDashboards(requestParameters: DashboardsApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
 }
 
 // @public
@@ -5872,26 +5872,26 @@ export interface DataColumnLocators {
 
 // @public
 export class DataFiltersApi extends MetadataBaseApi implements DataFiltersApiInterface {
-    createEntityUserDataFilters(requestParameters: DataFiltersApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    createEntityWorkspaceDataFilters(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    createEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    deleteEntityUserDataFilters(requestParameters: DataFiltersApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilters(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesUserDataFilters(requestParameters: DataFiltersApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any>>;
-    getAllEntitiesWorkspaceDataFilters(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any>>;
-    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any>>;
-    getEntityUserDataFilters(requestParameters: DataFiltersApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    getEntityWorkspaceDataFilters(requestParameters: DataFiltersApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    getEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceDataFilters, any>>;
-    patchEntityUserDataFilters(requestParameters: DataFiltersApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    patchEntityWorkspaceDataFilters(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    patchEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    setWorkspaceDataFiltersLayout(requestParameters: DataFiltersApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    updateEntityUserDataFilters(requestParameters: DataFiltersApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    updateEntityWorkspaceDataFilters(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    updateEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
+    createEntityUserDataFilters(requestParameters: DataFiltersApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilters(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    deleteEntityUserDataFilters(requestParameters: DataFiltersApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilters(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesUserDataFilters(requestParameters: DataFiltersApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilters(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any, {}>>;
+    getEntityUserDataFilters(requestParameters: DataFiltersApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilters(requestParameters: DataFiltersApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceDataFilters, any, {}>>;
+    patchEntityUserDataFilters(requestParameters: DataFiltersApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilters(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    setWorkspaceDataFiltersLayout(requestParameters: DataFiltersApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    updateEntityUserDataFilters(requestParameters: DataFiltersApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilters(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilterSettings(requestParameters: DataFiltersApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -6198,8 +6198,8 @@ export type DatasetReferenceIdentifierTypeEnum = (typeof DatasetReferenceIdentif
 
 // @public
 export class DatasetsApi extends MetadataBaseApi implements DatasetsApiInterface {
-    getAllEntitiesDatasets(requestParameters: DatasetsApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any>>;
-    getEntityDatasets(requestParameters: DatasetsApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any>>;
+    getAllEntitiesDatasets(requestParameters: DatasetsApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any, {}>>;
+    getEntityDatasets(requestParameters: DatasetsApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any, {}>>;
 }
 
 // @public
@@ -6265,8 +6265,8 @@ export type DatasetWorkspaceDataFilterIdentifierTypeEnum = (typeof DatasetWorksp
 
 // @public
 export class DataSourceDeclarativeAPIsApi extends MetadataBaseApi implements DataSourceDeclarativeAPIsApiInterface {
-    getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources, any>>;
-    putDataSourcesLayout(requestParameters: DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources, any, {}>>;
+    putDataSourcesLayout(requestParameters: DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -6300,14 +6300,14 @@ export interface DataSourceDeclarativeAPIsApiPutDataSourcesLayoutRequest {
 
 // @public
 export class DataSourceEntityAPIsApi extends MetadataBaseApi implements DataSourceEntityAPIsApiInterface {
-    createEntityDataSources(requestParameters: DataSourceEntityAPIsApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    deleteEntityDataSources(requestParameters: DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesDataSourceIdentifiers(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any>>;
-    getAllEntitiesDataSources(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any>>;
-    getEntityDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any>>;
-    getEntityDataSources(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    patchEntityDataSources(requestParameters: DataSourceEntityAPIsApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    updateEntityDataSources(requestParameters: DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
+    createEntityDataSources(requestParameters: DataSourceEntityAPIsApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    deleteEntityDataSources(requestParameters: DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any, {}>>;
+    getAllEntitiesDataSources(requestParameters?: DataSourceEntityAPIsApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any, {}>>;
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any, {}>>;
+    getEntityDataSources(requestParameters: DataSourceEntityAPIsApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    patchEntityDataSources(requestParameters: DataSourceEntityAPIsApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    updateEntityDataSources(requestParameters: DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
 }
 
 // @public
@@ -7872,8 +7872,8 @@ export interface DeleteFilesRequest {
 
 // @public
 export class DependencyGraphApi extends MetadataBaseApi implements DependencyGraphApiInterface {
-    getDependentEntitiesGraph(requestParameters: DependencyGraphApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
-    getDependentEntitiesGraphFromEntryPoints(requestParameters: DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any>>;
+    getDependentEntitiesGraph(requestParameters: DependencyGraphApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any, {}>>;
+    getDependentEntitiesGraphFromEntryPoints(requestParameters: DependencyGraphApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DependentEntitiesResponse, any, {}>>;
 }
 
 // @public
@@ -8075,212 +8075,212 @@ export type ElementsResponseGranularityEnum = (typeof ElementsResponseGranularit
 
 // @public
 export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface {
-    createEntityAnalyticalDashboards(requestParameters: EntitiesApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    createEntityApiTokens(requestParameters: EntitiesApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
-    createEntityAttributeHierarchies(requestParameters: EntitiesApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    createEntityAutomations(requestParameters: EntitiesApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    createEntityColorPalettes(requestParameters: EntitiesApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    createEntityCspDirectives(requestParameters: EntitiesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    createEntityCustomApplicationSettings(requestParameters: EntitiesApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    createEntityDashboardPlugins(requestParameters: EntitiesApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    createEntityDataSources(requestParameters: EntitiesApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    createEntityExportDefinitions(requestParameters: EntitiesApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    createEntityExportTemplates(requestParameters: EntitiesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    createEntityFilterViews(requestParameters: EntitiesApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    createEntityIdentityProviders(requestParameters: EntitiesApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    createEntityJwks(requestParameters: EntitiesApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    createEntityLlmEndpoints(requestParameters: EntitiesApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    deleteEntityAnalyticalDashboards(requestParameters: EntitiesApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityApiTokens(requestParameters: EntitiesApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityAttributeHierarchies(requestParameters: EntitiesApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityAutomations(requestParameters: EntitiesApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityColorPalettes(requestParameters: EntitiesApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityCspDirectives(requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityCustomApplicationSettings(requestParameters: EntitiesApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityDashboardPlugins(requestParameters: EntitiesApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityDataSources(requestParameters: EntitiesApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityExportDefinitions(requestParameters: EntitiesApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityExportTemplates(requestParameters: EntitiesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityFilterViews(requestParameters: EntitiesApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityIdentityProviders(requestParameters: EntitiesApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityJwks(requestParameters: EntitiesApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createEntityAnalyticalDashboards(requestParameters: EntitiesApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    createEntityApiTokens(requestParameters: EntitiesApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
+    createEntityAttributeHierarchies(requestParameters: EntitiesApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    createEntityAutomations(requestParameters: EntitiesApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    createEntityColorPalettes(requestParameters: EntitiesApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    createEntityCspDirectives(requestParameters: EntitiesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    createEntityCustomApplicationSettings(requestParameters: EntitiesApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    createEntityDashboardPlugins(requestParameters: EntitiesApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    createEntityDataSources(requestParameters: EntitiesApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    createEntityExportDefinitions(requestParameters: EntitiesApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    createEntityExportTemplates(requestParameters: EntitiesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    createEntityFilterViews(requestParameters: EntitiesApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    createEntityIdentityProviders(requestParameters: EntitiesApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    createEntityJwks(requestParameters: EntitiesApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    createEntityLlmEndpoints(requestParameters: EntitiesApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    createEntityThemes(requestParameters: EntitiesApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    createEntityUserDataFilters(requestParameters: EntitiesApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    createEntityUserGroups(requestParameters: EntitiesApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    deleteEntityAnalyticalDashboards(requestParameters: EntitiesApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityApiTokens(requestParameters: EntitiesApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityAttributeHierarchies(requestParameters: EntitiesApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityAutomations(requestParameters: EntitiesApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityColorPalettes(requestParameters: EntitiesApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityCspDirectives(requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityCustomApplicationSettings(requestParameters: EntitiesApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityDashboardPlugins(requestParameters: EntitiesApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityDataSources(requestParameters: EntitiesApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityExportDefinitions(requestParameters: EntitiesApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityExportTemplates(requestParameters: EntitiesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityFilterViews(requestParameters: EntitiesApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityIdentityProviders(requestParameters: EntitiesApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityJwks(requestParameters: EntitiesApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    deleteEntityLlmEndpoints(requestParameters: EntitiesApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllAutomationsWorkspaceAutomations(requestParameters?: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any>>;
+    deleteEntityLlmEndpoints(requestParameters: EntitiesApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserDataFilters(requestParameters: EntitiesApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserGroups(requestParameters: EntitiesApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllAutomationsWorkspaceAutomations(requestParameters?: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceAutomationOutList, any, {}>>;
     // (undocumented)
-    getAllEntitiesAggregatedFacts(requestParameters: EntitiesApiGetAllEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutList, any>>;
-    getAllEntitiesAnalyticalDashboards(requestParameters: EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any>>;
-    getAllEntitiesApiTokens(requestParameters: EntitiesApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any>>;
-    getAllEntitiesAttributeHierarchies(requestParameters: EntitiesApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any>>;
-    getAllEntitiesAttributes(requestParameters: EntitiesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any>>;
-    getAllEntitiesAutomations(requestParameters: EntitiesApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any>>;
-    getAllEntitiesColorPalettes(requestParameters?: EntitiesApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any>>;
-    getAllEntitiesCspDirectives(requestParameters?: EntitiesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any>>;
-    getAllEntitiesCustomApplicationSettings(requestParameters: EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any>>;
-    getAllEntitiesDashboardPlugins(requestParameters: EntitiesApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any>>;
-    getAllEntitiesDatasets(requestParameters: EntitiesApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any>>;
-    getAllEntitiesDataSourceIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any>>;
-    getAllEntitiesDataSources(requestParameters?: EntitiesApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any>>;
-    getAllEntitiesEntitlements(requestParameters?: EntitiesApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any>>;
-    getAllEntitiesExportDefinitions(requestParameters: EntitiesApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any>>;
-    getAllEntitiesExportTemplates(requestParameters?: EntitiesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any>>;
-    getAllEntitiesFacts(requestParameters: EntitiesApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any>>;
-    getAllEntitiesFilterContexts(requestParameters: EntitiesApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any>>;
-    getAllEntitiesFilterViews(requestParameters: EntitiesApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any>>;
-    getAllEntitiesIdentityProviders(requestParameters?: EntitiesApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
-    getAllEntitiesJwks(requestParameters?: EntitiesApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any>>;
-    getAllEntitiesLabels(requestParameters: EntitiesApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any>>;
-    getAllEntitiesLlmEndpoints(requestParameters?: EntitiesApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
-    getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any>>;
+    getAllEntitiesAggregatedFacts(requestParameters: EntitiesApiGetAllEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutList, any, {}>>;
+    getAllEntitiesAnalyticalDashboards(requestParameters: EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any, {}>>;
+    getAllEntitiesApiTokens(requestParameters: EntitiesApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any, {}>>;
+    getAllEntitiesAttributeHierarchies(requestParameters: EntitiesApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any, {}>>;
+    getAllEntitiesAttributes(requestParameters: EntitiesApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any, {}>>;
+    getAllEntitiesAutomations(requestParameters: EntitiesApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any, {}>>;
+    getAllEntitiesColorPalettes(requestParameters?: EntitiesApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any, {}>>;
+    getAllEntitiesCspDirectives(requestParameters?: EntitiesApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any, {}>>;
+    getAllEntitiesCustomApplicationSettings(requestParameters: EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any, {}>>;
+    getAllEntitiesDashboardPlugins(requestParameters: EntitiesApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any, {}>>;
+    getAllEntitiesDatasets(requestParameters: EntitiesApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any, {}>>;
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any, {}>>;
+    getAllEntitiesDataSources(requestParameters?: EntitiesApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any, {}>>;
+    getAllEntitiesEntitlements(requestParameters?: EntitiesApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any, {}>>;
+    getAllEntitiesExportDefinitions(requestParameters: EntitiesApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any, {}>>;
+    getAllEntitiesExportTemplates(requestParameters?: EntitiesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any, {}>>;
+    getAllEntitiesFacts(requestParameters: EntitiesApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any, {}>>;
+    getAllEntitiesFilterContexts(requestParameters: EntitiesApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any, {}>>;
+    getAllEntitiesFilterViews(requestParameters: EntitiesApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any, {}>>;
+    getAllEntitiesIdentityProviders(requestParameters?: EntitiesApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any, {}>>;
+    getAllEntitiesJwks(requestParameters?: EntitiesApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any, {}>>;
+    getAllEntitiesLabels(requestParameters: EntitiesApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any, {}>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: EntitiesApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any, {}>>;
+    getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any, {}>>;
     // (undocumented)
-    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any>>;
-    getAllEntitiesNotificationChannels(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
-    getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any>>;
-    getAllEntitiesThemes(requestParameters?: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any>>;
-    getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any>>;
-    getAllEntitiesUserGroups(requestParameters?: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any>>;
-    getAllEntitiesUserIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any>>;
-    getAllEntitiesUsers(requestParameters?: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any>>;
-    getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any>>;
-    getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any>>;
-    getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any>>;
-    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any>>;
-    getAllEntitiesWorkspaces(requestParameters?: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any>>;
-    getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any>>;
-    getAllOptions(options?: AxiosRequestConfig): Promise<AxiosResponse<object, any>>;
+    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any, {}>>;
+    getAllEntitiesNotificationChannels(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any, {}>>;
+    getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any, {}>>;
+    getAllEntitiesThemes(requestParameters?: EntitiesApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any, {}>>;
+    getAllEntitiesUserDataFilters(requestParameters: EntitiesApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any, {}>>;
+    getAllEntitiesUserGroups(requestParameters?: EntitiesApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any, {}>>;
+    getAllEntitiesUserIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any, {}>>;
+    getAllEntitiesUsers(requestParameters?: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any, {}>>;
+    getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any, {}>>;
+    getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any, {}>>;
+    getAllEntitiesWorkspaces(requestParameters?: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any, {}>>;
+    getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any, {}>>;
+    getAllOptions(options?: AxiosRequestConfig): Promise<AxiosResponse<object, any, {}>>;
     getDataSourceDrivers(options?: AxiosRequestConfig): Promise<AxiosResponse<    {
     [key: string]: string;
-    }, any>>;
+    }, any, {}>>;
     // (undocumented)
-    getEntityAggregatedFacts(requestParameters: EntitiesApiGetEntityAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutDocument, any>>;
-    getEntityAnalyticalDashboards(requestParameters: EntitiesApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    getEntityApiTokens(requestParameters: EntitiesApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
-    getEntityAttributeHierarchies(requestParameters: EntitiesApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    getEntityAttributes(requestParameters: EntitiesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any>>;
-    getEntityAutomations(requestParameters: EntitiesApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    getEntityColorPalettes(requestParameters: EntitiesApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    getEntityCookieSecurityConfigurations(requestParameters: EntitiesApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    getEntityCspDirectives(requestParameters: EntitiesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    getEntityCustomApplicationSettings(requestParameters: EntitiesApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    getEntityDashboardPlugins(requestParameters: EntitiesApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    getEntityDatasets(requestParameters: EntitiesApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any>>;
-    getEntityDataSourceIdentifiers(requestParameters: EntitiesApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any>>;
-    getEntityDataSources(requestParameters: EntitiesApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    getEntityEntitlements(requestParameters: EntitiesApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any>>;
-    getEntityExportDefinitions(requestParameters: EntitiesApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    getEntityExportTemplates(requestParameters: EntitiesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    getEntityFacts(requestParameters: EntitiesApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any>>;
-    getEntityFilterContexts(requestParameters: EntitiesApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    getEntityFilterViews(requestParameters: EntitiesApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    getEntityIdentityProviders(requestParameters: EntitiesApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    getEntityJwks(requestParameters: EntitiesApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    getEntityLabels(requestParameters: EntitiesApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any>>;
-    getEntityLlmEndpoints(requestParameters: EntitiesApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
+    getEntityAggregatedFacts(requestParameters: EntitiesApiGetEntityAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutDocument, any, {}>>;
+    getEntityAnalyticalDashboards(requestParameters: EntitiesApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    getEntityApiTokens(requestParameters: EntitiesApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
+    getEntityAttributeHierarchies(requestParameters: EntitiesApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    getEntityAttributes(requestParameters: EntitiesApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any, {}>>;
+    getEntityAutomations(requestParameters: EntitiesApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    getEntityColorPalettes(requestParameters: EntitiesApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    getEntityCookieSecurityConfigurations(requestParameters: EntitiesApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    getEntityCspDirectives(requestParameters: EntitiesApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    getEntityCustomApplicationSettings(requestParameters: EntitiesApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    getEntityDashboardPlugins(requestParameters: EntitiesApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    getEntityDatasets(requestParameters: EntitiesApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any, {}>>;
+    getEntityDataSourceIdentifiers(requestParameters: EntitiesApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any, {}>>;
+    getEntityDataSources(requestParameters: EntitiesApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    getEntityEntitlements(requestParameters: EntitiesApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any, {}>>;
+    getEntityExportDefinitions(requestParameters: EntitiesApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    getEntityExportTemplates(requestParameters: EntitiesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    getEntityFacts(requestParameters: EntitiesApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any, {}>>;
+    getEntityFilterContexts(requestParameters: EntitiesApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    getEntityFilterViews(requestParameters: EntitiesApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    getEntityIdentityProviders(requestParameters: EntitiesApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    getEntityJwks(requestParameters: EntitiesApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    getEntityLabels(requestParameters: EntitiesApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any, {}>>;
+    getEntityLlmEndpoints(requestParameters: EntitiesApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
     // (undocumented)
-    getEntityNotificationChannelIdentifiers(requestParameters: EntitiesApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any>>;
-    getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    getEntityUserIdentifiers(requestParameters: EntitiesApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any>>;
-    getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    getOrganization(requestParameters?: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    patchEntityAnalyticalDashboards(requestParameters: EntitiesApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    patchEntityAttributeHierarchies(requestParameters: EntitiesApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    patchEntityAutomations(requestParameters: EntitiesApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    patchEntityColorPalettes(requestParameters: EntitiesApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    patchEntityCookieSecurityConfigurations(requestParameters: EntitiesApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    patchEntityCspDirectives(requestParameters: EntitiesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    patchEntityCustomApplicationSettings(requestParameters: EntitiesApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    patchEntityDashboardPlugins(requestParameters: EntitiesApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    patchEntityDataSources(requestParameters: EntitiesApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    patchEntityExportDefinitions(requestParameters: EntitiesApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    patchEntityExportTemplates(requestParameters: EntitiesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    patchEntityFilterContexts(requestParameters: EntitiesApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    patchEntityFilterViews(requestParameters: EntitiesApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    patchEntityIdentityProviders(requestParameters: EntitiesApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    patchEntityJwks(requestParameters: EntitiesApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    patchEntityLlmEndpoints(requestParameters: EntitiesApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    patchEntityMetrics(requestParameters: EntitiesApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    patchEntityNotificationChannels(requestParameters: EntitiesApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    updateEntityAnalyticalDashboards(requestParameters: EntitiesApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    updateEntityAttributeHierarchies(requestParameters: EntitiesApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    updateEntityAutomations(requestParameters: EntitiesApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    updateEntityColorPalettes(requestParameters: EntitiesApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    updateEntityCookieSecurityConfigurations(requestParameters: EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    updateEntityCspDirectives(requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    updateEntityCustomApplicationSettings(requestParameters: EntitiesApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    updateEntityDashboardPlugins(requestParameters: EntitiesApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    updateEntityDataSources(requestParameters: EntitiesApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    updateEntityExportDefinitions(requestParameters: EntitiesApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    updateEntityExportTemplates(requestParameters: EntitiesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    updateEntityFilterViews(requestParameters: EntitiesApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    updateEntityIdentityProviders(requestParameters: EntitiesApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    updateEntityJwks(requestParameters: EntitiesApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    updateEntityLlmEndpoints(requestParameters: EntitiesApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    updateEntityMetrics(requestParameters: EntitiesApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    updateEntityNotificationChannels(requestParameters: EntitiesApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
+    getEntityNotificationChannelIdentifiers(requestParameters: EntitiesApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any, {}>>;
+    getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    getEntityThemes(requestParameters: EntitiesApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    getEntityUserDataFilters(requestParameters: EntitiesApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    getEntityUserGroups(requestParameters: EntitiesApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    getEntityUserIdentifiers(requestParameters: EntitiesApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any, {}>>;
+    getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    getOrganization(requestParameters?: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    patchEntityAnalyticalDashboards(requestParameters: EntitiesApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    patchEntityAttributeHierarchies(requestParameters: EntitiesApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    patchEntityAutomations(requestParameters: EntitiesApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    patchEntityColorPalettes(requestParameters: EntitiesApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    patchEntityCookieSecurityConfigurations(requestParameters: EntitiesApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    patchEntityCspDirectives(requestParameters: EntitiesApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    patchEntityCustomApplicationSettings(requestParameters: EntitiesApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    patchEntityDashboardPlugins(requestParameters: EntitiesApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    patchEntityDataSources(requestParameters: EntitiesApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    patchEntityExportDefinitions(requestParameters: EntitiesApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    patchEntityExportTemplates(requestParameters: EntitiesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    patchEntityFilterContexts(requestParameters: EntitiesApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    patchEntityFilterViews(requestParameters: EntitiesApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    patchEntityIdentityProviders(requestParameters: EntitiesApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    patchEntityJwks(requestParameters: EntitiesApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    patchEntityLlmEndpoints(requestParameters: EntitiesApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    patchEntityMetrics(requestParameters: EntitiesApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    patchEntityNotificationChannels(requestParameters: EntitiesApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    patchEntityThemes(requestParameters: EntitiesApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    patchEntityUserDataFilters(requestParameters: EntitiesApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    updateEntityAnalyticalDashboards(requestParameters: EntitiesApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    updateEntityAttributeHierarchies(requestParameters: EntitiesApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    updateEntityAutomations(requestParameters: EntitiesApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    updateEntityColorPalettes(requestParameters: EntitiesApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    updateEntityCookieSecurityConfigurations(requestParameters: EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    updateEntityCspDirectives(requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    updateEntityCustomApplicationSettings(requestParameters: EntitiesApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    updateEntityDashboardPlugins(requestParameters: EntitiesApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    updateEntityDataSources(requestParameters: EntitiesApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    updateEntityExportDefinitions(requestParameters: EntitiesApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    updateEntityExportTemplates(requestParameters: EntitiesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    updateEntityFilterViews(requestParameters: EntitiesApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    updateEntityIdentityProviders(requestParameters: EntitiesApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    updateEntityJwks(requestParameters: EntitiesApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    updateEntityLlmEndpoints(requestParameters: EntitiesApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    updateEntityMetrics(requestParameters: EntitiesApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    updateEntityNotificationChannels(requestParameters: EntitiesApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    updateEntityThemes(requestParameters: EntitiesApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    updateEntityUserDataFilters(requestParameters: EntitiesApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    updateEntityUserGroups(requestParameters: EntitiesApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -10722,10 +10722,10 @@ export interface EntitiesApiUpdateEntityWorkspacesRequest {
 
 // @public
 export class EntitlementApi extends MetadataBaseApi implements EntitlementApiInterface {
-    getAllEntitiesEntitlements(requestParameters?: EntitlementApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any>>;
-    getEntityEntitlements(requestParameters: EntitlementApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any>>;
-    resolveAllEntitlements(options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any>>;
-    resolveRequestedEntitlements(requestParameters: EntitlementApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any>>;
+    getAllEntitiesEntitlements(requestParameters?: EntitlementApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any, {}>>;
+    getEntityEntitlements(requestParameters: EntitlementApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any, {}>>;
+    resolveAllEntitlements(options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any, {}>>;
+    resolveRequestedEntitlements(requestParameters: EntitlementApiResolveRequestedEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ApiEntitlement[], any, {}>>;
 }
 
 // @public
@@ -11413,12 +11413,12 @@ export interface ExportDateValue {
 
 // @public
 export class ExportDefinitionsApi extends MetadataBaseApi implements ExportDefinitionsApiInterface {
-    createEntityExportDefinitions(requestParameters: ExportDefinitionsApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    deleteEntityExportDefinitions(requestParameters: ExportDefinitionsApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesExportDefinitions(requestParameters: ExportDefinitionsApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any>>;
-    getEntityExportDefinitions(requestParameters: ExportDefinitionsApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    patchEntityExportDefinitions(requestParameters: ExportDefinitionsApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    updateEntityExportDefinitions(requestParameters: ExportDefinitionsApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
+    createEntityExportDefinitions(requestParameters: ExportDefinitionsApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    deleteEntityExportDefinitions(requestParameters: ExportDefinitionsApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesExportDefinitions(requestParameters: ExportDefinitionsApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any, {}>>;
+    getEntityExportDefinitions(requestParameters: ExportDefinitionsApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    patchEntityExportDefinitions(requestParameters: ExportDefinitionsApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    updateEntityExportDefinitions(requestParameters: ExportDefinitionsApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
 }
 
 // @public
@@ -12063,12 +12063,12 @@ export type ExportTabularExportRequestFormatEnum = (typeof ExportTabularExportRe
 
 // @public
 export class ExportTemplatesApi extends MetadataBaseApi implements ExportTemplatesApiInterface {
-    createEntityExportTemplates(requestParameters: ExportTemplatesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    deleteEntityExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesExportTemplates(requestParameters?: ExportTemplatesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any>>;
-    getEntityExportTemplates(requestParameters: ExportTemplatesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    patchEntityExportTemplates(requestParameters: ExportTemplatesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    updateEntityExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
+    createEntityExportTemplates(requestParameters: ExportTemplatesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    deleteEntityExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesExportTemplates(requestParameters?: ExportTemplatesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any, {}>>;
+    getEntityExportTemplates(requestParameters: ExportTemplatesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    patchEntityExportTemplates(requestParameters: ExportTemplatesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    updateEntityExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
 }
 
 // @public
@@ -12174,8 +12174,8 @@ export type FactIdentifierTypeEnum = (typeof FactIdentifierTypeEnum)[keyof typeo
 
 // @public
 export class FactsApi extends MetadataBaseApi implements FactsApiInterface {
-    getAllEntitiesFacts(requestParameters: FactsApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any>>;
-    getEntityFacts(requestParameters: FactsApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any>>;
+    getAllEntitiesFacts(requestParameters: FactsApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any, {}>>;
+    getEntityFacts(requestParameters: FactsApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any, {}>>;
 }
 
 // @public
@@ -12256,14 +12256,14 @@ export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 // @public
 export class FilterViewsApi extends MetadataBaseApi implements FilterViewsApiInterface {
-    createEntityFilterViews(requestParameters: FilterViewsApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    deleteEntityFilterViews(requestParameters: FilterViewsApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesFilterViews(requestParameters: FilterViewsApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any>>;
-    getEntityFilterViews(requestParameters: FilterViewsApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    getFilterViews(requestParameters: FilterViewsApiGetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeFilterView[], any>>;
-    patchEntityFilterViews(requestParameters: FilterViewsApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    setFilterViews(requestParameters: FilterViewsApiSetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    updateEntityFilterViews(requestParameters: FilterViewsApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
+    createEntityFilterViews(requestParameters: FilterViewsApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    deleteEntityFilterViews(requestParameters: FilterViewsApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesFilterViews(requestParameters: FilterViewsApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any, {}>>;
+    getEntityFilterViews(requestParameters: FilterViewsApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    getFilterViews(requestParameters: FilterViewsApiGetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeFilterView[], any, {}>>;
+    patchEntityFilterViews(requestParameters: FilterViewsApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    setFilterViews(requestParameters: FilterViewsApiSetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    updateEntityFilterViews(requestParameters: FilterViewsApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
 }
 
 // @public
@@ -12468,7 +12468,7 @@ export interface GenerateLdmRequest {
 
 // @public
 export class GenerateLogicalDataModelApi extends MetadataBaseApi implements GenerateLogicalDataModelApiInterface {
-    generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
+    generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any, {}>>;
 }
 
 // @public
@@ -12531,10 +12531,10 @@ export interface HeaderGroup {
 
 // @public
 export class HierarchyApi extends MetadataBaseApi implements HierarchyApiInterface {
-    checkEntityOverrides(requestParameters: HierarchyApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
-    inheritedEntityConflicts(requestParameters: HierarchyApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
-    inheritedEntityPrefixes(requestParameters: HierarchyApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any>>;
-    overriddenChildEntities(requestParameters: HierarchyApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
+    checkEntityOverrides(requestParameters: HierarchyApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
+    inheritedEntityConflicts(requestParameters: HierarchyApiInheritedEntityConflictsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
+    inheritedEntityPrefixes(requestParameters: HierarchyApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any, {}>>;
+    overriddenChildEntities(requestParameters: HierarchyApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any, {}>>;
 }
 
 // @public
@@ -12789,14 +12789,14 @@ export type IdentifierRefIdentifierTypeEnum = (typeof IdentifierRefIdentifierTyp
 
 // @public
 export class IdentityProvidersApi extends MetadataBaseApi implements IdentityProvidersApiInterface {
-    createEntityIdentityProviders(requestParameters: IdentityProvidersApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesIdentityProviders(requestParameters?: IdentityProvidersApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
-    getEntityIdentityProviders(requestParameters: IdentityProvidersApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any>>;
-    patchEntityIdentityProviders(requestParameters: IdentityProvidersApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    setIdentityProviders(requestParameters: IdentityProvidersApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    updateEntityIdentityProviders(requestParameters: IdentityProvidersApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
+    createEntityIdentityProviders(requestParameters: IdentityProvidersApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesIdentityProviders(requestParameters?: IdentityProvidersApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any, {}>>;
+    getEntityIdentityProviders(requestParameters: IdentityProvidersApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any, {}>>;
+    patchEntityIdentityProviders(requestParameters: IdentityProvidersApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    setIdentityProviders(requestParameters: IdentityProvidersApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    updateEntityIdentityProviders(requestParameters: IdentityProvidersApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
 }
 
 // @public
@@ -12934,9 +12934,9 @@ export interface ILiveFeatures {
 
 // @public
 export class ImageExportExport extends ExportBaseAPI implements ImageExportExportInterface {
-    createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -13106,7 +13106,7 @@ export interface IntroSlideTemplate {
 
 // @public
 export class InvalidateCacheApi extends MetadataBaseApi implements InvalidateCacheApiInterface {
-    registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -19793,12 +19793,12 @@ export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = (typeof JsonApiWorks
 
 // @public
 export class JWKSApi extends MetadataBaseApi implements JWKSApiInterface {
-    createEntityJwks(requestParameters: JWKSApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    deleteEntityJwks(requestParameters: JWKSApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesJwks(requestParameters?: JWKSApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any>>;
-    getEntityJwks(requestParameters: JWKSApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    patchEntityJwks(requestParameters: JWKSApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    updateEntityJwks(requestParameters: JWKSApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    createEntityJwks(requestParameters: JWKSApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    deleteEntityJwks(requestParameters: JWKSApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesJwks(requestParameters?: JWKSApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any, {}>>;
+    getEntityJwks(requestParameters: JWKSApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    patchEntityJwks(requestParameters: JWKSApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    updateEntityJwks(requestParameters: JWKSApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
 }
 
 // @public
@@ -20035,8 +20035,8 @@ export type LabelIdentifierTypeEnum = (typeof LabelIdentifierTypeEnum)[keyof typ
 
 // @public
 export class LabelsApi extends MetadataBaseApi implements LabelsApiInterface {
-    getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any>>;
-    getEntityLabels(requestParameters: LabelsApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any>>;
+    getAllEntitiesLabels(requestParameters: LabelsApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any, {}>>;
+    getEntityLabels(requestParameters: LabelsApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any, {}>>;
 }
 
 // @public
@@ -20088,48 +20088,48 @@ export interface LabelsApiInterface {
 
 // @public
 export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
-    getAnalyticsModel(requestParameters: LayoutApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics, any>>;
-    getAutomations(requestParameters: LayoutApiGetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAutomation[], any>>;
-    getDataSourcePermissions(requestParameters: LayoutApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any>>;
-    getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources, any>>;
-    getExportTemplatesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeExportTemplates, any>>;
-    getFilterViews(requestParameters: LayoutApiGetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeFilterView[], any>>;
-    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any>>;
-    getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
-    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any>>;
-    getOrganizationLayout(requestParameters?: LayoutApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization, any>>;
-    getOrganizationPermissions(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganizationPermission[], any>>;
-    getUserDataFilters(requestParameters: LayoutApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters, any>>;
-    getUserGroupPermissions(requestParameters: LayoutApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroupPermissions, any>>;
-    getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups, any>>;
-    getUserPermissions(requestParameters: LayoutApiGetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserPermissions, any>>;
-    getUsersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsers, any>>;
-    getUsersUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsersUserGroups, any>>;
-    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceDataFilters, any>>;
-    getWorkspaceLayout(requestParameters: LayoutApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceModel, any>>;
-    getWorkspacePermissions(requestParameters: LayoutApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspacePermissions, any>>;
-    getWorkspacesLayout(requestParameters?: LayoutApiGetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaces, any>>;
-    putDataSourcesLayout(requestParameters: LayoutApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    putUserGroupsLayout(requestParameters: LayoutApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    putUsersLayout(requestParameters: LayoutApiPutUsersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    putUsersUserGroupsLayout(requestParameters: LayoutApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    putWorkspaceLayout(requestParameters: LayoutApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setAnalyticsModel(requestParameters: LayoutApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setAutomations(requestParameters: LayoutApiSetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setDataSourcePermissions(requestParameters: LayoutApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setExportTemplates(requestParameters: LayoutApiSetExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setFilterViews(requestParameters: LayoutApiSetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setIdentityProviders(requestParameters: LayoutApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setNotificationChannels(requestParameters: LayoutApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setOrganizationPermissions(requestParameters: LayoutApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setUserDataFilters(requestParameters: LayoutApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setUserGroupPermissions(requestParameters: LayoutApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setUserPermissions(requestParameters: LayoutApiSetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setWorkspaceDataFiltersLayout(requestParameters: LayoutApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setWorkspacePermissions(requestParameters: LayoutApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setWorkspacesLayout(requestParameters: LayoutApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getAnalyticsModel(requestParameters: LayoutApiGetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAnalytics, any, {}>>;
+    getAutomations(requestParameters: LayoutApiGetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeAutomation[], any, {}>>;
+    getDataSourcePermissions(requestParameters: LayoutApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any, {}>>;
+    getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources, any, {}>>;
+    getExportTemplatesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeExportTemplates, any, {}>>;
+    getFilterViews(requestParameters: LayoutApiGetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeFilterView[], any, {}>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any, {}>>;
+    getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any, {}>>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any, {}>>;
+    getOrganizationLayout(requestParameters?: LayoutApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization, any, {}>>;
+    getOrganizationPermissions(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganizationPermission[], any, {}>>;
+    getUserDataFilters(requestParameters: LayoutApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters, any, {}>>;
+    getUserGroupPermissions(requestParameters: LayoutApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroupPermissions, any, {}>>;
+    getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups, any, {}>>;
+    getUserPermissions(requestParameters: LayoutApiGetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserPermissions, any, {}>>;
+    getUsersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsers, any, {}>>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsersUserGroups, any, {}>>;
+    getWorkspaceDataFiltersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceDataFilters, any, {}>>;
+    getWorkspaceLayout(requestParameters: LayoutApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceModel, any, {}>>;
+    getWorkspacePermissions(requestParameters: LayoutApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspacePermissions, any, {}>>;
+    getWorkspacesLayout(requestParameters?: LayoutApiGetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaces, any, {}>>;
+    putDataSourcesLayout(requestParameters: LayoutApiPutDataSourcesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    putUserGroupsLayout(requestParameters: LayoutApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    putUsersLayout(requestParameters: LayoutApiPutUsersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    putUsersUserGroupsLayout(requestParameters: LayoutApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    putWorkspaceLayout(requestParameters: LayoutApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setAnalyticsModel(requestParameters: LayoutApiSetAnalyticsModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setAutomations(requestParameters: LayoutApiSetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setDataSourcePermissions(requestParameters: LayoutApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setExportTemplates(requestParameters: LayoutApiSetExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setFilterViews(requestParameters: LayoutApiSetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setIdentityProviders(requestParameters: LayoutApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setNotificationChannels(requestParameters: LayoutApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setOrganizationPermissions(requestParameters: LayoutApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setUserDataFilters(requestParameters: LayoutApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setUserGroupPermissions(requestParameters: LayoutApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setUserPermissions(requestParameters: LayoutApiSetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setWorkspaceDataFiltersLayout(requestParameters: LayoutApiSetWorkspaceDataFiltersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setWorkspacePermissions(requestParameters: LayoutApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setWorkspacesLayout(requestParameters: LayoutApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -20498,8 +20498,8 @@ export interface LayoutApiSetWorkspacesLayoutRequest {
 
 // @public
 export class LDMDeclarativeAPIsApi extends MetadataBaseApi implements LDMDeclarativeAPIsApiInterface {
-    getLogicalModel(requestParameters: LDMDeclarativeAPIsApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
-    setLogicalModel(requestParameters: LDMDeclarativeAPIsApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getLogicalModel(requestParameters: LDMDeclarativeAPIsApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any, {}>>;
+    setLogicalModel(requestParameters: LDMDeclarativeAPIsApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -20546,13 +20546,13 @@ export interface ListLinks {
 
 // @public
 export class LLMEndpointsApi extends MetadataBaseApi implements LLMEndpointsApiInterface {
-    createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
     // (undocumented)
-    deleteEntityLlmEndpoints(requestParameters: LLMEndpointsApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesLlmEndpoints(requestParameters?: LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
-    getEntityLlmEndpoints(requestParameters: LLMEndpointsApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    patchEntityLlmEndpoints(requestParameters: LLMEndpointsApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    updateEntityLlmEndpoints(requestParameters: LLMEndpointsApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    deleteEntityLlmEndpoints(requestParameters: LLMEndpointsApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any, {}>>;
+    getEntityLlmEndpoints(requestParameters: LLMEndpointsApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    patchEntityLlmEndpoints(requestParameters: LLMEndpointsApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    updateEntityLlmEndpoints(requestParameters: LLMEndpointsApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
 }
 
 // @public
@@ -20653,9 +20653,9 @@ export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | Pe
 
 // @public
 export class ManagePermissionsApi extends MetadataBaseApi implements ManagePermissionsApiInterface {
-    getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any>>;
-    manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setDataSourcePermissions(requestParameters: ManagePermissionsApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any, {}>>;
+    manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setDataSourcePermissions(requestParameters: ManagePermissionsApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -20839,8 +20839,8 @@ export interface MetadataRequestArgs {
 
 // @public
 export class MetadataSyncApi extends MetadataBaseApi implements MetadataSyncApiInterface {
-    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -20903,12 +20903,12 @@ export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof 
 
 // @public
 export class MetricsApi extends MetadataBaseApi implements MetricsApiInterface {
-    createEntityMetrics(requestParameters: MetricsApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    deleteEntityMetrics(requestParameters: MetricsApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesMetrics(requestParameters: MetricsApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any>>;
-    getEntityMetrics(requestParameters: MetricsApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    patchEntityMetrics(requestParameters: MetricsApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    updateEntityMetrics(requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
+    createEntityMetrics(requestParameters: MetricsApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    deleteEntityMetrics(requestParameters: MetricsApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesMetrics(requestParameters: MetricsApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any, {}>>;
+    getEntityMetrics(requestParameters: MetricsApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    patchEntityMetrics(requestParameters: MetricsApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    updateEntityMetrics(requestParameters: MetricsApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
 }
 
 // @public
@@ -21146,20 +21146,20 @@ export type NotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | W
 
 // @public
 export class NotificationChannelsApi extends MetadataBaseApi implements NotificationChannelsApiInterface {
-    createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any>>;
-    getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
+    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any, {}>>;
+    getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any, {}>>;
     // (undocumented)
-    getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelsApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any>>;
-    getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    getExportTemplatesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeExportTemplates, any>>;
-    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any>>;
-    patchEntityNotificationChannels(requestParameters: NotificationChannelsApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    setExportTemplates(requestParameters: NotificationChannelsApiSetExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setNotificationChannels(requestParameters: NotificationChannelsApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
+    getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelsApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any, {}>>;
+    getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    getExportTemplatesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeExportTemplates, any, {}>>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any, {}>>;
+    patchEntityNotificationChannels(requestParameters: NotificationChannelsApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    setExportTemplates(requestParameters: NotificationChannelsApiSetExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setNotificationChannels(requestParameters: NotificationChannelsApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
 }
 
 // @public
@@ -21295,11 +21295,11 @@ export interface NotificationChannelsApiUpdateEntityNotificationChannelsRequest 
 
 // @public
 export class NotificationChannelsAutomation extends AutomationBaseAPI implements NotificationChannelsAutomationInterface {
-    getNotifications(requestParameters?: NotificationChannelsAutomationGetNotificationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationNotifications, any>>;
-    markAsReadNotification(requestParameters: NotificationChannelsAutomationMarkAsReadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    markAsReadNotificationAll(requestParameters?: NotificationChannelsAutomationMarkAsReadNotificationAllRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    testExistingNotificationChannel(requestParameters: NotificationChannelsAutomationTestExistingNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any>>;
-    testNotificationChannel(requestParameters: NotificationChannelsAutomationTestNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any>>;
+    getNotifications(requestParameters?: NotificationChannelsAutomationGetNotificationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationNotifications, any, {}>>;
+    markAsReadNotification(requestParameters: NotificationChannelsAutomationMarkAsReadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    markAsReadNotificationAll(requestParameters?: NotificationChannelsAutomationMarkAsReadNotificationAllRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    testExistingNotificationChannel(requestParameters: NotificationChannelsAutomationTestExistingNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any, {}>>;
+    testNotificationChannel(requestParameters: NotificationChannelsAutomationTestNotificationChannelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AutomationTestResponse, any, {}>>;
 }
 
 // @public
@@ -21381,7 +21381,7 @@ export interface ObjectLinksContainer {
 
 // @public
 export class OptionsApi extends MetadataBaseApi implements OptionsApiInterface {
-    getAllOptions(options?: AxiosRequestConfig): Promise<AxiosResponse<object, any>>;
+    getAllOptions(options?: AxiosRequestConfig): Promise<AxiosResponse<object, any, {}>>;
 }
 
 // @public
@@ -21406,7 +21406,7 @@ export interface OptionsApiInterface {
 
 // @public
 export class OrganizationApi extends MetadataBaseApi implements OrganizationApiInterface {
-    switchActiveIdentityProvider(requestParameters: OrganizationApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    switchActiveIdentityProvider(requestParameters: OrganizationApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -21464,12 +21464,12 @@ export interface OrganizationCacheUsage {
 
 // @public
 export class OrganizationControllerApi extends MetadataBaseApi implements OrganizationControllerApiInterface {
-    getEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    getEntityOrganizations(requestParameters: OrganizationControllerApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    patchEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    patchEntityOrganizations(requestParameters: OrganizationControllerApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    updateEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any>>;
-    updateEntityOrganizations(requestParameters: OrganizationControllerApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
+    getEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiGetEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    getEntityOrganizations(requestParameters: OrganizationControllerApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    patchEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiPatchEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    patchEntityOrganizations(requestParameters: OrganizationControllerApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    updateEntityCookieSecurityConfigurations(requestParameters: OrganizationControllerApiUpdateEntityCookieSecurityConfigurationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCookieSecurityConfigurationOutDocument, any, {}>>;
+    updateEntityOrganizations(requestParameters: OrganizationControllerApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
 }
 
 // @public
@@ -21565,8 +21565,8 @@ export interface OrganizationCurrentCacheUsage {
 
 // @public
 export class OrganizationDeclarativeAPIsApi extends MetadataBaseApi implements OrganizationDeclarativeAPIsApiInterface {
-    getOrganizationLayout(requestParameters?: OrganizationDeclarativeAPIsApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization, any>>;
-    setOrganizationLayout(requestParameters: OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getOrganizationLayout(requestParameters?: OrganizationDeclarativeAPIsApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization, any, {}>>;
+    setOrganizationLayout(requestParameters: OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -21605,16 +21605,16 @@ export interface OrganizationDeclarativeAPIsApiSetOrganizationLayoutRequest {
 
 // @public
 export class OrganizationEntityAPIsApi extends MetadataBaseApi implements OrganizationEntityAPIsApiInterface {
-    createEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    deleteEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any>>;
-    getEntityOrganizations(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    getEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    getOrganization(requestParameters?: OrganizationEntityAPIsApiGetOrganizationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    patchEntityOrganizations(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    patchEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    updateEntityOrganizations(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
-    updateEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
+    createEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationEntityAPIsApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any, {}>>;
+    getEntityOrganizations(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    getEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    getOrganization(requestParameters?: OrganizationEntityAPIsApiGetOrganizationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    patchEntityOrganizations(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    updateEntityOrganizations(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any, {}>>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationEntityAPIsApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -21756,95 +21756,95 @@ export type OrganizationGetEntitiesSupportingIncludedResult = JsonApiUserOutList
 
 // @public
 export class OrganizationModelControllerApi extends MetadataBaseApi implements OrganizationModelControllerApiInterface {
-    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    createEntityExportTemplates(requestParameters: OrganizationModelControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    createEntityJwks(requestParameters: OrganizationModelControllerApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityExportTemplates(requestParameters: OrganizationModelControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityJwks(requestParameters: OrganizationModelControllerApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    createEntityExportTemplates(requestParameters: OrganizationModelControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    createEntityJwks(requestParameters: OrganizationModelControllerApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityExportTemplates(requestParameters: OrganizationModelControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityJwks(requestParameters: OrganizationModelControllerApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesColorPalettes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any>>;
-    getAllEntitiesCspDirectives(requestParameters?: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any>>;
-    getAllEntitiesDataSourceIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any>>;
-    getAllEntitiesDataSources(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any>>;
-    getAllEntitiesEntitlements(requestParameters?: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any>>;
-    getAllEntitiesExportTemplates(requestParameters?: OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any>>;
-    getAllEntitiesIdentityProviders(requestParameters?: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
-    getAllEntitiesJwks(requestParameters?: OrganizationModelControllerApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any>>;
-    getAllEntitiesLlmEndpoints(requestParameters?: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
+    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesColorPalettes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutList, any, {}>>;
+    getAllEntitiesCspDirectives(requestParameters?: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutList, any, {}>>;
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutList, any, {}>>;
+    getAllEntitiesDataSources(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutList, any, {}>>;
+    getAllEntitiesEntitlements(requestParameters?: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any, {}>>;
+    getAllEntitiesExportTemplates(requestParameters?: OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutList, any, {}>>;
+    getAllEntitiesIdentityProviders(requestParameters?: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any, {}>>;
+    getAllEntitiesJwks(requestParameters?: OrganizationModelControllerApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any, {}>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any, {}>>;
     // (undocumented)
-    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any>>;
-    getAllEntitiesNotificationChannels(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
-    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any>>;
-    getAllEntitiesThemes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any>>;
-    getAllEntitiesUserGroups(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any>>;
-    getAllEntitiesUserIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any>>;
-    getAllEntitiesUsers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any>>;
-    getAllEntitiesWorkspaces(requestParameters?: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any>>;
-    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any>>;
-    getEntityDataSources(requestParameters: OrganizationModelControllerApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any>>;
-    getEntityExportTemplates(requestParameters: OrganizationModelControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    getEntityJwks(requestParameters: OrganizationModelControllerApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutList, any, {}>>;
+    getAllEntitiesNotificationChannels(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any, {}>>;
+    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any, {}>>;
+    getAllEntitiesThemes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any, {}>>;
+    getAllEntitiesUserGroups(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any, {}>>;
+    getAllEntitiesUserIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any, {}>>;
+    getAllEntitiesUsers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any, {}>>;
+    getAllEntitiesWorkspaces(requestParameters?: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any, {}>>;
+    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceIdentifierOutDocument, any, {}>>;
+    getEntityDataSources(requestParameters: OrganizationModelControllerApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any, {}>>;
+    getEntityExportTemplates(requestParameters: OrganizationModelControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    getEntityJwks(requestParameters: OrganizationModelControllerApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
     // (undocumented)
-    getEntityNotificationChannelIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any>>;
-    getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    getEntityUserIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any>>;
-    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    patchEntityExportTemplates(requestParameters: OrganizationModelControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    patchEntityJwks(requestParameters: OrganizationModelControllerApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any>>;
-    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any>>;
-    updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
-    updateEntityExportTemplates(requestParameters: OrganizationModelControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any>>;
-    updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
-    updateEntityJwks(requestParameters: OrganizationModelControllerApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
-    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
-    updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
-    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
-    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
+    getEntityNotificationChannelIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelIdentifierOutDocument, any, {}>>;
+    getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    getEntityUserIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any, {}>>;
+    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    patchEntityExportTemplates(requestParameters: OrganizationModelControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    patchEntityJwks(requestParameters: OrganizationModelControllerApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiColorPaletteOutDocument, any, {}>>;
+    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCspDirectiveOutDocument, any, {}>>;
+    updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any, {}>>;
+    updateEntityExportTemplates(requestParameters: OrganizationModelControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportTemplateOutDocument, any, {}>>;
+    updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any, {}>>;
+    updateEntityJwks(requestParameters: OrganizationModelControllerApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any, {}>>;
+    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any, {}>>;
+    updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any, {}>>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any, {}>>;
+    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any, {}>>;
+    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
 }
 
 // @public
@@ -22891,20 +22891,20 @@ export interface PdmSql {
 
 // @public
 export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInterface {
-    availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AvailableAssignees, any>>;
-    dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DashboardPermissions, any>>;
-    getOrganizationPermissions(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganizationPermission[], any>>;
-    getUserGroupPermissions(requestParameters: PermissionsApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroupPermissions, any>>;
-    getUserPermissions(requestParameters: PermissionsApiGetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserPermissions, any>>;
-    getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspacePermissions, any>>;
-    manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    availableAssignees(requestParameters: PermissionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AvailableAssignees, any, {}>>;
+    dashboardPermissions(requestParameters: PermissionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DashboardPermissions, any, {}>>;
+    getOrganizationPermissions(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganizationPermission[], any, {}>>;
+    getUserGroupPermissions(requestParameters: PermissionsApiGetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroupPermissions, any, {}>>;
+    getUserPermissions(requestParameters: PermissionsApiGetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserPermissions, any, {}>>;
+    getWorkspacePermissions(requestParameters: PermissionsApiGetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspacePermissions, any, {}>>;
+    manageDashboardPermissions(requestParameters: PermissionsApiManageDashboardPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setWorkspacePermissions(requestParameters: PermissionsApiSetWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -23133,12 +23133,12 @@ export type PlatformUsageRequestUsageItemNamesEnum = (typeof PlatformUsageReques
 
 // @public
 export class PluginsApi extends MetadataBaseApi implements PluginsApiInterface {
-    createEntityDashboardPlugins(requestParameters: PluginsApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    deleteEntityDashboardPlugins(requestParameters: PluginsApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesDashboardPlugins(requestParameters: PluginsApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any>>;
-    getEntityDashboardPlugins(requestParameters: PluginsApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    patchEntityDashboardPlugins(requestParameters: PluginsApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
+    createEntityDashboardPlugins(requestParameters: PluginsApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    deleteEntityDashboardPlugins(requestParameters: PluginsApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesDashboardPlugins(requestParameters: PluginsApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any, {}>>;
+    getEntityDashboardPlugins(requestParameters: PluginsApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    patchEntityDashboardPlugins(requestParameters: PluginsApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
 }
 
 // @public
@@ -23439,8 +23439,8 @@ export type RawExportAutomationRequestFormatEnum = (typeof RawExportAutomationRe
 
 // @public
 export class RawExportExport extends ExportBaseAPI implements RawExportExportInterface {
-    createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
+    createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
 }
 
 // @public
@@ -23647,8 +23647,8 @@ export interface RelativeWrapper {
 
 // @public
 export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {
-    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
-    resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
+    resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
 }
 
 // @public
@@ -24179,9 +24179,9 @@ export interface Skeleton {
 
 // @public
 export class SlidesExportExport extends ExportBaseAPI implements SlidesExportExportInterface {
-    createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -24424,9 +24424,9 @@ export interface TableWarning {
 
 // @public
 export class TabularExportExport extends ExportBaseAPI implements TabularExportExportInterface {
-    createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
+    createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
 }
 
 // @public
@@ -24682,10 +24682,10 @@ type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
 // @public
 export class TranslationsApi extends MetadataBaseApi implements TranslationsApiInterface {
-    cleanTranslations(requestParameters: TranslationsApiCleanTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getTranslationTags(requestParameters: TranslationsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any>>;
-    retrieveTranslations(requestParameters: TranslationsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Xliff, any>>;
-    setTranslations(requestParameters: TranslationsApiSetTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    cleanTranslations(requestParameters: TranslationsApiCleanTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getTranslationTags(requestParameters: TranslationsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<string[], any, {}>>;
+    retrieveTranslations(requestParameters: TranslationsApiRetrieveTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<Xliff, any, {}>>;
+    setTranslations(requestParameters: TranslationsApiSetTranslationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -24750,8 +24750,8 @@ export interface UploadFileResponse {
 
 // @public
 export class UsageApi extends MetadataBaseApi implements UsageApiInterface {
-    allPlatformUsage(options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
-    particularPlatformUsage(requestParameters: UsageApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
+    allPlatformUsage(options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any, {}>>;
+    particularPlatformUsage(requestParameters: UsageApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any, {}>>;
 }
 
 // @public
@@ -24799,8 +24799,8 @@ export interface UserContext {
 
 // @public
 export class UserDataFiltersApi extends MetadataBaseApi implements UserDataFiltersApiInterface {
-    getUserDataFilters(requestParameters: UserDataFiltersApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters, any>>;
-    setUserDataFilters(requestParameters: UserDataFiltersApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getUserDataFilters(requestParameters: UserDataFiltersApiGetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserDataFilters, any, {}>>;
+    setUserDataFilters(requestParameters: UserDataFiltersApiSetUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -24863,10 +24863,10 @@ export interface UserGroupPermission {
 
 // @public
 export class UserGroupsDeclarativeAPIsApi extends MetadataBaseApi implements UserGroupsDeclarativeAPIsApiInterface {
-    getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups, any>>;
-    getUsersUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsersUserGroups, any>>;
-    putUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    putUsersUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUserGroups, any, {}>>;
+    getUsersUserGroupsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsersUserGroups, any, {}>>;
+    putUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    putUsersUserGroupsLayout(requestParameters: UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -24913,12 +24913,12 @@ export interface UserGroupsDeclarativeAPIsApiPutUsersUserGroupsLayoutRequest {
 
 // @public
 export class UserGroupsEntityAPIsApi extends MetadataBaseApi implements UserGroupsEntityAPIsApiInterface {
-    createEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    deleteEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesUserGroups(requestParameters?: UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any>>;
-    getEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    patchEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
-    updateEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any>>;
+    createEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    deleteEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesUserGroups(requestParameters?: UserGroupsEntityAPIsApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutList, any, {}>>;
+    getEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    patchEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
+    updateEntityUserGroups(requestParameters: UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserGroupOutDocument, any, {}>>;
 }
 
 // @public
@@ -25008,8 +25008,8 @@ export interface UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest {
 
 // @public
 export class UserIdentifiersApi extends MetadataBaseApi implements UserIdentifiersApiInterface {
-    getAllEntitiesUserIdentifiers(requestParameters?: UserIdentifiersApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any>>;
-    getEntityUserIdentifiers(requestParameters: UserIdentifiersApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any>>;
+    getAllEntitiesUserIdentifiers(requestParameters?: UserIdentifiersApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutList, any, {}>>;
+    getEntityUserIdentifiers(requestParameters: UserIdentifiersApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserIdentifierOutDocument, any, {}>>;
 }
 
 // @public
@@ -25054,29 +25054,29 @@ export interface UserIdentifiersApiInterface {
 // @public
 export class UserManagementApi extends MetadataBaseApi implements UserManagementApiInterface {
     // (undocumented)
-    addGroupMembers(requestParameters: UserManagementApiAddGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    addGroupMembers(requestParameters: UserManagementApiAddGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    assignPermissions(requestParameters: UserManagementApiAssignPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    assignPermissions(requestParameters: UserManagementApiAssignPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    getGroupMembers(requestParameters: UserManagementApiGetGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUserGroupMembers, any>>;
+    getGroupMembers(requestParameters: UserManagementApiGetGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUserGroupMembers, any, {}>>;
     // (undocumented)
-    listPermissionsForUser(requestParameters: UserManagementApiListPermissionsForUserRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementPermissionAssignments, any>>;
+    listPermissionsForUser(requestParameters: UserManagementApiListPermissionsForUserRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementPermissionAssignments, any, {}>>;
     // (undocumented)
-    listPermissionsForUserGroup(requestParameters: UserManagementApiListPermissionsForUserGroupRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementPermissionAssignments, any>>;
+    listPermissionsForUserGroup(requestParameters: UserManagementApiListPermissionsForUserGroupRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementPermissionAssignments, any, {}>>;
     // (undocumented)
-    listUserGroups(requestParameters?: UserManagementApiListUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUserGroups, any>>;
+    listUserGroups(requestParameters?: UserManagementApiListUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUserGroups, any, {}>>;
     // (undocumented)
-    listUsers(requestParameters?: UserManagementApiListUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUsers, any>>;
+    listUsers(requestParameters?: UserManagementApiListUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<UserManagementUsers, any, {}>>;
     // (undocumented)
-    managePermissionsForUser(requestParameters: UserManagementApiManagePermissionsForUserRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    managePermissionsForUser(requestParameters: UserManagementApiManagePermissionsForUserRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    managePermissionsForUserGroup(requestParameters: UserManagementApiManagePermissionsForUserGroupRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    managePermissionsForUserGroup(requestParameters: UserManagementApiManagePermissionsForUserGroupRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    removeGroupMembers(requestParameters: UserManagementApiRemoveGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    removeGroupMembers(requestParameters: UserManagementApiRemoveGroupMembersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    removeUsersUserGroups(requestParameters: UserManagementApiRemoveUsersUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    removeUsersUserGroups(requestParameters: UserManagementApiRemoveUsersUserGroupsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    revokePermissions(requestParameters: UserManagementApiRevokePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    revokePermissions(requestParameters: UserManagementApiRevokePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -25355,15 +25355,15 @@ export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = (typeof
 
 // @public
 export class UserModelControllerApi extends MetadataBaseApi implements UserModelControllerApiInterface {
-    createEntityApiTokens(requestParameters: UserModelControllerApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
-    createEntityUserSettings(requestParameters: UserModelControllerApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    deleteEntityApiTokens(requestParameters: UserModelControllerApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserSettings(requestParameters: UserModelControllerApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesApiTokens(requestParameters: UserModelControllerApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any>>;
-    getAllEntitiesUserSettings(requestParameters: UserModelControllerApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any>>;
-    getEntityApiTokens(requestParameters: UserModelControllerApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any>>;
-    getEntityUserSettings(requestParameters: UserModelControllerApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    updateEntityUserSettings(requestParameters: UserModelControllerApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
+    createEntityApiTokens(requestParameters: UserModelControllerApiCreateEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
+    createEntityUserSettings(requestParameters: UserModelControllerApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    deleteEntityApiTokens(requestParameters: UserModelControllerApiDeleteEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserSettings(requestParameters: UserModelControllerApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesApiTokens(requestParameters: UserModelControllerApiGetAllEntitiesApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutList, any, {}>>;
+    getAllEntitiesUserSettings(requestParameters: UserModelControllerApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any, {}>>;
+    getEntityApiTokens(requestParameters: UserModelControllerApiGetEntityApiTokensRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiApiTokenOutDocument, any, {}>>;
+    getEntityUserSettings(requestParameters: UserModelControllerApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    updateEntityUserSettings(requestParameters: UserModelControllerApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -25497,8 +25497,8 @@ export interface UserPermission {
 
 // @public
 export class UsersDeclarativeAPIsApi extends MetadataBaseApi implements UsersDeclarativeAPIsApiInterface {
-    getUsersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsers, any>>;
-    putUsersLayout(requestParameters: UsersDeclarativeAPIsApiPutUsersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getUsersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeUsers, any, {}>>;
+    putUsersLayout(requestParameters: UsersDeclarativeAPIsApiPutUsersLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -25532,12 +25532,12 @@ export interface UsersDeclarativeAPIsApiPutUsersLayoutRequest {
 
 // @public
 export class UsersEntityAPIsApi extends MetadataBaseApi implements UsersEntityAPIsApiInterface {
-    createEntityUsers(requestParameters: UsersEntityAPIsApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    deleteEntityUsers(requestParameters: UsersEntityAPIsApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesUsers(requestParameters?: UsersEntityAPIsApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any>>;
-    getEntityUsers(requestParameters: UsersEntityAPIsApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    patchEntityUsers(requestParameters: UsersEntityAPIsApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
-    updateEntityUsers(requestParameters: UsersEntityAPIsApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any>>;
+    createEntityUsers(requestParameters: UsersEntityAPIsApiCreateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    deleteEntityUsers(requestParameters: UsersEntityAPIsApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesUsers(requestParameters?: UsersEntityAPIsApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutList, any, {}>>;
+    getEntityUsers(requestParameters: UsersEntityAPIsApiGetEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    patchEntityUsers(requestParameters: UsersEntityAPIsApiPatchEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
+    updateEntityUsers(requestParameters: UsersEntityAPIsApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserOutDocument, any, {}>>;
 }
 
 // @public
@@ -25627,11 +25627,11 @@ export interface UsersEntityAPIsApiUpdateEntityUsersRequest {
 
 // @public
 export class UserSettingsApi extends MetadataBaseApi implements UserSettingsApiInterface {
-    createEntityUserSettings(requestParameters: UserSettingsApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    deleteEntityUserSettings(requestParameters: UserSettingsApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesUserSettings(requestParameters: UserSettingsApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any>>;
-    getEntityUserSettings(requestParameters: UserSettingsApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
-    updateEntityUserSettings(requestParameters: UserSettingsApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any>>;
+    createEntityUserSettings(requestParameters: UserSettingsApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    deleteEntityUserSettings(requestParameters: UserSettingsApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesUserSettings(requestParameters: UserSettingsApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutList, any, {}>>;
+    getEntityUserSettings(requestParameters: UserSettingsApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
+    updateEntityUserSettings(requestParameters: UserSettingsApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -25759,9 +25759,9 @@ export interface VisibleFilter {
 
 // @public
 export class VisualExportExport extends ExportBaseAPI implements VisualExportExportInterface {
-    createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
-    getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any, {}>>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
+    getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -25820,12 +25820,12 @@ export interface VisualExportRequest {
 
 // @public
 export class VisualizationObjectApi extends MetadataBaseApi implements VisualizationObjectApiInterface {
-    createEntityVisualizationObjects(requestParameters: VisualizationObjectApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    deleteEntityVisualizationObjects(requestParameters: VisualizationObjectApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesVisualizationObjects(requestParameters: VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any>>;
-    getEntityVisualizationObjects(requestParameters: VisualizationObjectApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    patchEntityVisualizationObjects(requestParameters: VisualizationObjectApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    updateEntityVisualizationObjects(requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
+    createEntityVisualizationObjects(requestParameters: VisualizationObjectApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    deleteEntityVisualizationObjects(requestParameters: VisualizationObjectApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesVisualizationObjects(requestParameters: VisualizationObjectApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any, {}>>;
+    getEntityVisualizationObjects(requestParameters: VisualizationObjectApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    patchEntityVisualizationObjects(requestParameters: VisualizationObjectApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    updateEntityVisualizationObjects(requestParameters: VisualizationObjectApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
 }
 
 // @public
@@ -26035,102 +26035,102 @@ export type WorkspaceIdentifierTypeEnum = (typeof WorkspaceIdentifierTypeEnum)[k
 
 // @public
 export class WorkspaceObjectControllerApi extends MetadataBaseApi implements WorkspaceObjectControllerApiInterface {
-    createEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    createEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    createEntityAutomations(requestParameters: WorkspaceObjectControllerApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    createEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    createEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    createEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    createEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    createEntityFilterViews(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    createEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    deleteEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityAutomations(requestParameters: WorkspaceObjectControllerApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityFilterViews(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    createEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiCreateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    createEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiCreateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    createEntityAutomations(requestParameters: WorkspaceObjectControllerApiCreateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    createEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    createEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    createEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    createEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    createEntityFilterViews(requestParameters: WorkspaceObjectControllerApiCreateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    createEntityMetrics(requestParameters: WorkspaceObjectControllerApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    createEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    createEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    createEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    createEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    deleteEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiDeleteEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiDeleteEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityAutomations(requestParameters: WorkspaceObjectControllerApiDeleteEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityFilterViews(requestParameters: WorkspaceObjectControllerApiDeleteEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityMetrics(requestParameters: WorkspaceObjectControllerApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     // (undocumented)
-    getAllEntitiesAggregatedFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutList, any>>;
-    getAllEntitiesAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any>>;
-    getAllEntitiesAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any>>;
-    getAllEntitiesAttributes(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any>>;
-    getAllEntitiesAutomations(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any>>;
-    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any>>;
-    getAllEntitiesDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any>>;
-    getAllEntitiesDatasets(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any>>;
-    getAllEntitiesExportDefinitions(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any>>;
-    getAllEntitiesFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any>>;
-    getAllEntitiesFilterContexts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any>>;
-    getAllEntitiesFilterViews(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any>>;
-    getAllEntitiesLabels(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any>>;
-    getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any>>;
-    getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any>>;
-    getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any>>;
-    getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any>>;
-    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any>>;
-    getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any>>;
+    getAllEntitiesAggregatedFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutList, any, {}>>;
+    getAllEntitiesAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutList, any, {}>>;
+    getAllEntitiesAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutList, any, {}>>;
+    getAllEntitiesAttributes(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutList, any, {}>>;
+    getAllEntitiesAutomations(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutList, any, {}>>;
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any, {}>>;
+    getAllEntitiesDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutList, any, {}>>;
+    getAllEntitiesDatasets(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutList, any, {}>>;
+    getAllEntitiesExportDefinitions(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutList, any, {}>>;
+    getAllEntitiesFacts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutList, any, {}>>;
+    getAllEntitiesFilterContexts(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutList, any, {}>>;
+    getAllEntitiesFilterViews(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutList, any, {}>>;
+    getAllEntitiesLabels(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any, {}>>;
+    getAllEntitiesMetrics(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any, {}>>;
+    getAllEntitiesUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutList, any, {}>>;
+    getAllEntitiesVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutList, any, {}>>;
+    getAllEntitiesWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutList, any, {}>>;
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any, {}>>;
     // (undocumented)
-    getEntityAggregatedFacts(requestParameters: WorkspaceObjectControllerApiGetEntityAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutDocument, any>>;
-    getEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    getEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    getEntityAttributes(requestParameters: WorkspaceObjectControllerApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any>>;
-    getEntityAutomations(requestParameters: WorkspaceObjectControllerApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    getEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    getEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    getEntityDatasets(requestParameters: WorkspaceObjectControllerApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any>>;
-    getEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    getEntityFacts(requestParameters: WorkspaceObjectControllerApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any>>;
-    getEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    getEntityFilterViews(requestParameters: WorkspaceObjectControllerApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    getEntityLabels(requestParameters: WorkspaceObjectControllerApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any>>;
-    getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    patchEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    patchEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    patchEntityAutomations(requestParameters: WorkspaceObjectControllerApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    patchEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    patchEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    patchEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    patchEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    patchEntityFilterViews(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    patchEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    updateEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any>>;
-    updateEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any>>;
-    updateEntityAutomations(requestParameters: WorkspaceObjectControllerApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any>>;
-    updateEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    updateEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any>>;
-    updateEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any>>;
-    updateEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
-    updateEntityFilterViews(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any>>;
-    updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
-    updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any>>;
-    updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any>>;
-    updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any>>;
-    updateEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any>>;
-    updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
+    getEntityAggregatedFacts(requestParameters: WorkspaceObjectControllerApiGetEntityAggregatedFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAggregatedFactOutDocument, any, {}>>;
+    getEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiGetEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    getEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiGetEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    getEntityAttributes(requestParameters: WorkspaceObjectControllerApiGetEntityAttributesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeOutDocument, any, {}>>;
+    getEntityAutomations(requestParameters: WorkspaceObjectControllerApiGetEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    getEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    getEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiGetEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    getEntityDatasets(requestParameters: WorkspaceObjectControllerApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDatasetOutDocument, any, {}>>;
+    getEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    getEntityFacts(requestParameters: WorkspaceObjectControllerApiGetEntityFactsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFactOutDocument, any, {}>>;
+    getEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiGetEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    getEntityFilterViews(requestParameters: WorkspaceObjectControllerApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    getEntityLabels(requestParameters: WorkspaceObjectControllerApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any, {}>>;
+    getEntityMetrics(requestParameters: WorkspaceObjectControllerApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    getEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    getEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    getEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    getEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    patchEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiPatchEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    patchEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiPatchEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    patchEntityAutomations(requestParameters: WorkspaceObjectControllerApiPatchEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    patchEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    patchEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    patchEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    patchEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    patchEntityFilterViews(requestParameters: WorkspaceObjectControllerApiPatchEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    patchEntityMetrics(requestParameters: WorkspaceObjectControllerApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    patchEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    patchEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    patchEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    patchEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    updateEntityAnalyticalDashboards(requestParameters: WorkspaceObjectControllerApiUpdateEntityAnalyticalDashboardsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAnalyticalDashboardOutDocument, any, {}>>;
+    updateEntityAttributeHierarchies(requestParameters: WorkspaceObjectControllerApiUpdateEntityAttributeHierarchiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAttributeHierarchyOutDocument, any, {}>>;
+    updateEntityAutomations(requestParameters: WorkspaceObjectControllerApiUpdateEntityAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiAutomationOutDocument, any, {}>>;
+    updateEntityCustomApplicationSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    updateEntityDashboardPlugins(requestParameters: WorkspaceObjectControllerApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDashboardPluginOutDocument, any, {}>>;
+    updateEntityExportDefinitions(requestParameters: WorkspaceObjectControllerApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiExportDefinitionOutDocument, any, {}>>;
+    updateEntityFilterContexts(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any, {}>>;
+    updateEntityFilterViews(requestParameters: WorkspaceObjectControllerApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterViewOutDocument, any, {}>>;
+    updateEntityMetrics(requestParameters: WorkspaceObjectControllerApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any, {}>>;
+    updateEntityUserDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiUserDataFilterOutDocument, any, {}>>;
+    updateEntityVisualizationObjects(requestParameters: WorkspaceObjectControllerApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiVisualizationObjectOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilters(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterOutDocument, any, {}>>;
+    updateEntityWorkspaceDataFilterSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceDataFilterSettingOutDocument, any, {}>>;
+    updateEntityWorkspaceSettings(requestParameters: WorkspaceObjectControllerApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
 }
 
 // @public
@@ -27458,10 +27458,10 @@ export type WorkspacePermissionAssignmentPermissionsEnum = (typeof WorkspacePerm
 
 // @public
 export class WorkspacesDeclarativeAPIsApi extends MetadataBaseApi implements WorkspacesDeclarativeAPIsApiInterface {
-    getWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceModel, any>>;
-    getWorkspacesLayout(requestParameters?: WorkspacesDeclarativeAPIsApiGetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaces, any>>;
-    putWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    setWorkspacesLayout(requestParameters: WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiGetWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaceModel, any, {}>>;
+    getWorkspacesLayout(requestParameters?: WorkspacesDeclarativeAPIsApiGetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeWorkspaces, any, {}>>;
+    putWorkspaceLayout(requestParameters: WorkspacesDeclarativeAPIsApiPutWorkspaceLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    setWorkspacesLayout(requestParameters: WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
 }
 
 // @public
@@ -27520,12 +27520,12 @@ export interface WorkspacesDeclarativeAPIsApiSetWorkspacesLayoutRequest {
 
 // @public
 export class WorkspacesEntityAPIsApi extends MetadataBaseApi implements WorkspacesEntityAPIsApiInterface {
-    createEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    deleteEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesWorkspaces(requestParameters?: WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any>>;
-    getEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    patchEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
-    updateEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any>>;
+    createEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    deleteEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesWorkspaces(requestParameters?: WorkspacesEntityAPIsApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutList, any, {}>>;
+    getEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    patchEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
+    updateEntityWorkspaces(requestParameters: WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceOutDocument, any, {}>>;
 }
 
 // @public
@@ -27617,20 +27617,20 @@ export interface WorkspacesEntityAPIsApiUpdateEntityWorkspacesRequest {
 
 // @public
 export class WorkspacesSettingsApi extends MetadataBaseApi implements WorkspacesSettingsApiInterface {
-    createEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    createEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    deleteEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any>>;
-    getAllEntitiesWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any>>;
-    getEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    getEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    patchEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    patchEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    updateEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any>>;
-    updateEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any>>;
-    workspaceResolveAllSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
-    workspaceResolveSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any>>;
+    createEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiCreateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    createEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    deleteEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    deleteEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
+    getAllEntitiesCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutList, any, {}>>;
+    getAllEntitiesWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutList, any, {}>>;
+    getEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiGetEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    getEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    patchEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiPatchEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    patchEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    updateEntityCustomApplicationSettings(requestParameters: WorkspacesSettingsApiUpdateEntityCustomApplicationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiCustomApplicationSettingOutDocument, any, {}>>;
+    updateEntityWorkspaceSettings(requestParameters: WorkspacesSettingsApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiWorkspaceSettingOutDocument, any, {}>>;
+    workspaceResolveAllSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
+    workspaceResolveSettings(requestParameters: WorkspacesSettingsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedSetting[], any, {}>>;
 }
 
 // @public

@@ -2,8 +2,8 @@
 
 import { ReactElement } from "react";
 
-import { DashboardInsightMenu } from "./DashboardInsightMenu/index.js";
 import { IDashboardInsightMenuProps } from "../types.js";
+import { DashboardInsightMenu } from "./DashboardInsightMenu/index.js";
 
 /**
  * @alpha

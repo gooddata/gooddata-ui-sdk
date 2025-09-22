@@ -125,6 +125,7 @@ export {
     selectEnableCentralizedAutomationManagement,
     selectEnableAutomationManagement,
     selectEnableAutomationEvaluationMode,
+    selectEnableExportToPdfTabular,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -339,6 +340,7 @@ export {
     selectAllCatalogAttributeHierarchies,
     selectCatalogAttributeDisplayFormsById,
 } from "./catalog/catalogSelectors.js";
+export type { SetCatalogMeasuresAndFactsPayload, SetCatalogItemsPayload } from "./catalog/index.js";
 export { catalogActions } from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";
 export {

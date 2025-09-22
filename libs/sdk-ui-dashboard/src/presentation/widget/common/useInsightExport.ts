@@ -229,6 +229,7 @@ export const useInsightExport = (config: {
         isExportableToXlsx &&
         (useNewTabularExport && dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
+    const exportPdfTabularEnabled = !isExporting && isInsightExportable && isExportableToPdfTabular;
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
 
@@ -262,6 +263,7 @@ export const useInsightExport = (config: {
         exportCSVEnabled,
         exportXLSXEnabled,
         exportCSVRawEnabled,
+        exportPdfTabularEnabled,
         isExporting,
         isExportRawVisible,
         isExportVisible,

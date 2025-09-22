@@ -131,4 +131,10 @@ export type IconType =
     | "visualizationPushpin"
     | "visualizationRepeater"
     | "visualizationXirr"
-    | "link";
+    | "link"
+    | "fileXlsx"
+    | "filePptx"
+    | "filePdf"
+    | "fileImage"
+    | "fileCsvFormatted"
+    | "fileCsvRaw";

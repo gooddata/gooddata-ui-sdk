@@ -35,10 +35,10 @@ import {
 
 import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
 import type { IGeoChartRendererProps } from "./GeoChartRenderer.js";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 
 export type { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 

@@ -7,8 +7,8 @@ import Skeleton from "react-loading-skeleton";
 import { connect } from "react-redux";
 
 import { EmptyState } from "./EmptyState.js";
-import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
+import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 
 type MessagesComponentProps = {

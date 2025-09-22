@@ -2,13 +2,14 @@
 
 import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 
 export function createBackend(): IAnalyticalBackend {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const tiger = require("@gooddata/sdk-backend-tiger");
-    const { default: tigerFactory, TigerTokenAuthProvider } = tiger;
+    // TIGER_API_TOKEN is defined globally by Vite's define configuration
+    console.log("createBackend", TIGER_API_TOKEN);
+
     return withCaching(
-        tigerFactory().withAuthentication(new TigerTokenAuthProvider(process.env.TIGER_API_TOKEN!)),
+        tigerFactory().withAuthentication(new TigerTokenAuthProvider(TIGER_API_TOKEN || "")),
         RecommendedCachingConfiguration,
     );
 }

@@ -15,6 +15,7 @@ import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
 import { IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
+import { IFilterButtonCustomIcon } from "../shared/index.js";
 import { IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
 import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types.js";
 import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
@@ -28,7 +29,6 @@ import {
     IAttributeFilterElementsSelectItemProps,
     IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
-import { IFilterButtonCustomIcon } from "../shared/index.js";
 
 /**
  * @public

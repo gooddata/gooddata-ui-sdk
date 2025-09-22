@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { compact, initial, isEmpty, map, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
+import { compact, initial, isEmpty, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
 
 import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -49,7 +49,7 @@ export const getHiddenSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
     chart.series?.filter((s: Highcharts.Series) => !s.visible);
 
 export const getDataPoints = (series: Highcharts.Series[]): Highcharts.Point[] =>
-    compact(unzip(map(series, (s: Highcharts.Series) => s.points)).flat());
+    compact(unzip(series.map((s: Highcharts.Series) => s.points)).flat());
 
 export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highcharts.Point[] =>
     getDataPoints(getVisibleSeries(chart));

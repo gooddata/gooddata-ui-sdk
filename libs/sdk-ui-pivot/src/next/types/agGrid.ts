@@ -57,6 +57,11 @@ export type AgGridOnColumnResized = NonNullable<AgGridProps["onColumnResized"]>;
 /**
  * @internal
  */
+export type AgGridOnVirtualColumnsChanged = NonNullable<AgGridProps["onVirtualColumnsChanged"]>;
+
+/**
+ * @internal
+ */
 export type AgGridColumn = Column<string | null>;
 
 /**

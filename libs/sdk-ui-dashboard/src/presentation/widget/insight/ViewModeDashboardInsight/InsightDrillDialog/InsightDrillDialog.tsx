@@ -148,11 +148,14 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
         exportCSVEnabled,
         exportXLSXEnabled,
         exportCSVRawEnabled,
+        exportPdfTabularEnabled,
         isExportRawVisible,
         isExporting,
+        isExportPdfTabularVisible,
         onExportRawCSV,
         onExportCSV,
         onExportXLSX,
+        onExportPdfTabular,
     } = useInsightExport({
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
@@ -208,10 +211,13 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
                         exportCSVRawEnabled={exportCSVRawEnabled}
+                        exportPDFEnabled={exportPdfTabularEnabled}
+                        exportPDFVisible={isExportPdfTabularVisible}
                         enableDrillDescription={enableDrillDescription}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
                         onExportCSVRaw={onExportRawCSV}
+                        onExportPDF={onExportPdfTabular}
                         isLoading={isLoading}
                         isExporting={isExporting}
                         isExportRawVisible={isExportRawVisible}

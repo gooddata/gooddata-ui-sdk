@@ -2,6 +2,7 @@
 
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 
+import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
 import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor.js";
 import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { BubbleChartDescriptor } from "./pluggableVisualizations/bubbleChart/BubbleChartDescriptor.js";
@@ -27,7 +28,6 @@ import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDesc
 import { UnknownVisualizationDescriptor } from "./pluggableVisualizations/UnknownVisualizationDescriptor.js";
 import { WaterfallChartDescriptor } from "./pluggableVisualizations/waterfallChart/WaterfallChartDescriptor.js";
 import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor.js";
-import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will

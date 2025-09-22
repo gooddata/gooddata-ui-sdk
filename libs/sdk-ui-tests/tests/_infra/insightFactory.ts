@@ -1,12 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 
 import {
     IBucket,
     IInsightDefinition,
+    VisualizationProperties,
     isVirtualArithmeticMeasure,
     newInsightDefinition,
-    VisualizationProperties,
 } from "@gooddata/sdk-model";
 
 import { ChartInteractions } from "./backendWithCapturing.js";

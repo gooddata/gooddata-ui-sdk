@@ -3,7 +3,7 @@
 import { ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { isEqual, isFunction, omitBy } from "lodash-es";
+import { isEqual, omitBy } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
@@ -197,5 +197,8 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
  */
 const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
 export const ChartTransformation = memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
-    return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
+    return isEqual(
+        omitBy(props, (v) => typeof v === "function"),
+        omitBy(nextProps, (v) => typeof v === "function"),
+    );
 });

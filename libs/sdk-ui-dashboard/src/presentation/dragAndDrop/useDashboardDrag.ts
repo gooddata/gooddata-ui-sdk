@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "@evil-internetmann/react-dnd";
-import { isFunction } from "lodash-es";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
 import { DraggableItem } from "./types.js";
@@ -43,7 +42,7 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         CollectedProps<DragObject | undefined>
     >(
         () => {
-            const item = isFunction(dragItem) ? dragItem() : dragItem;
+            const item = typeof dragItem === "function" ? dragItem() : dragItem;
             return {
                 type: item.type,
                 item: dragItem,
@@ -73,7 +72,7 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
     useEffect(() => {
         if (collectedProps.isDragging) {
             if (!hasHandledStart.current) {
-                const item = isFunction(dragItem) ? dragItem() : dragItem;
+                const item = typeof dragItem === "function" ? dragItem() : dragItem;
                 hasHandledStart.current = true;
                 onInternalDragStart(item);
             }

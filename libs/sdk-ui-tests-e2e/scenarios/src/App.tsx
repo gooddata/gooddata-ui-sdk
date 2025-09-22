@@ -1,19 +1,23 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { BackendProvider } from "@gooddata/sdk-ui";
+import { useMemo } from "react";
 
-import { useAuth } from "./contexts/Auth";
-import { WorkspaceListProvider } from "./contexts/WorkspaceList";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+
+import { createBackend } from "./backend";
 import AppRouter from "./routes/AppRouter";
 
 function App() {
-    const { backend } = useAuth();
+    // only create the backend instance once
+    const backend = useMemo(() => {
+        return createBackend();
+    }, []);
 
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceListProvider>
+            <WorkspaceProvider workspace={WORKSPACE_ID}>
                 <AppRouter />
-            </WorkspaceListProvider>
+            </WorkspaceProvider>
         </BackendProvider>
     );
 }

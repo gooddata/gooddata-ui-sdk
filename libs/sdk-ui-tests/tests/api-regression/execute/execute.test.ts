@@ -1,11 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import { flatMap } from "lodash-es";
+import { describe, expect, it } from "vitest";
+
+import { IExecuteProps } from "@gooddata/sdk-ui";
 
 import executeScenarios from "../../../scenarios/execute/base.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
-import { IExecuteProps } from "@gooddata/sdk-ui";
-import { flatMap } from "lodash-es";
-import { describe, it, expect } from "vitest";
 
 const Component = "Execute";
 

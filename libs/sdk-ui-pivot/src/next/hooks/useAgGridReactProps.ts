@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { flow } from "lodash-es";
 
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
+import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResize.js";
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
 import { useAgGridApiProps } from "./useAgGridApiProps.js";
 import { useAutoHeight } from "./useAutoHeight.js";
@@ -37,6 +38,7 @@ export function useAgGridReactProps() {
     const enhanceWithTheme = useThemeProps();
     const enhanceWithHeaderComponents = useHeaderComponents();
     const enhanceWithAfterRender = useAfterRenderCallback();
+    const enhanceWithVirtualColumnAutoResize = useVirtualColumnAutoResize();
 
     return useMemo<AgGridProps>(() => {
         return flow(
@@ -52,6 +54,7 @@ export function useAgGridReactProps() {
             enhanceWithTheme,
             enhanceWithHeaderComponents,
             enhanceWithAfterRender,
+            enhanceWithVirtualColumnAutoResize,
         )(AG_GRID_DEFAULT_PROPS);
     }, [
         enhanceWithAgGridApi,
@@ -66,5 +69,6 @@ export function useAgGridReactProps() {
         enhanceWithTheme,
         enhanceWithHeaderComponents,
         enhanceWithAfterRender,
+        enhanceWithVirtualColumnAutoResize,
     ]);
 }

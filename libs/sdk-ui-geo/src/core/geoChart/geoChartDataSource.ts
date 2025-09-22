@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import {
@@ -7,8 +8,8 @@ import {
     PUSHPIN_SIZE_OPTIONS_MAP,
 } from "./constants/geoChart.js";
 import { getPushpinColors } from "./geoChartColor.js";
-import { getMinMax } from "./helpers/geoChart/common.js";
 import { IGeoConfig, IGeoData, IGeoLngLat, IGeoPointsConfig, IPushpinColor } from "../../GeoChart.js";
+import { getMinMax } from "./helpers/geoChart/common.js";
 
 export interface IGeoDataSourceProps {
     colorStrategy: IColorStrategy;

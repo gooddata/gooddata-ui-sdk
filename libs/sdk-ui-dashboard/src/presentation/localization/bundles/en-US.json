@@ -1148,15 +1148,19 @@
         "comment": "Detailed error message explaining that a visualization is missing and suggesting actions to resolve the issue"
     },
     "widget.drill.dialog.exportToXLSX": {
-        "value": "Export to XLSX",
+        "value": "Formatted (.xlsx)",
         "comment": "Button label for exporting widget data to XLSX format from the drill dialog"
     },
+    "widget.drill.dialog.exportToPDF": {
+        "value": "Formatted (.pdf)",
+        "comment": "Button label for exporting widget data to PDF format from the drill dialog"
+    },
     "widget.drill.dialog.exportToCSV.formatted": {
-        "value": "Export to CSV (formatted)",
+        "value": "Formatted (.csv)",
         "comment": "Button label for exporting formatted widget data to CSV format from the drill dialog"
     },
     "widget.drill.dialog.exportToCSV.raw": {
-        "value": "Export to CSV (raw)",
+        "value": "Raw (.csv)",
         "comment": "Button label for exporting raw widget data to CSV format from the drill dialog, without any formatting applied"
     },
     "share.button.text": {

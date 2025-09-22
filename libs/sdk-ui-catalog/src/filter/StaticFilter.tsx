@@ -10,9 +10,17 @@ export interface IStaticFilterProps {
     onChange: (selection: string[]) => void;
     header: ReactNode;
     noDataMessage: ReactNode;
+    initialValue?: string[];
 }
 
-export function StaticFilter({ options, onChange, dataTestId, header, noDataMessage }: IStaticFilterProps) {
+export function StaticFilter(props: IStaticFilterProps) {
+    const { options, onChange, dataTestId, header, noDataMessage, initialValue = [] } = props;
+
+    // Always use inverted mode for simplicity. Empty external value means "All".
+    const initialIsInverted = true;
+    const initialSelection =
+        initialValue.length === 0 ? [] : options.filter((item) => !initialValue.includes(item));
+
     const handleChange = (selection: string[], isInverted: boolean) => {
         const optionsSet = new Set(options);
         const selectionSet = new Set(selection);
@@ -32,6 +40,8 @@ export function StaticFilter({ options, onChange, dataTestId, header, noDataMess
     return (
         <div data-testid={dataTestId}>
             <DropdownInvertableSelect
+                initialValue={initialSelection}
+                initialIsInverted={initialIsInverted}
                 options={options}
                 alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
                 getItemTitle={(item) => item}
