@@ -97,7 +97,7 @@ export function AttributeFilterElementsSelectItem({
             aria-rowindex={index}
             aria-label={itemTitle}
         >
-            <div role={"gridcell"}>
+            <div role={"gridcell"} className="gd-attribute-filter-list-item-label">
                 <label className={labelClasses}>
                     <input
                         tabIndex={focusedAction === "selectItem" ? 0 : -1}

@@ -91,7 +91,7 @@ export function DateFilterCustomPeriodButtons({
                         }
                         accessibilityConfig={{
                             popupType: "dialog",
-                            ariaControls: absoluteFormId,
+                            popupId: absoluteFormId,
                             ariaExpanded: false,
                             ariaCurrent:
                                 selectedFilterOption.localIdentifier ===
@@ -126,8 +126,8 @@ export function DateFilterCustomPeriodButtons({
                         }
                         accessibilityConfig={{
                             popupType: "dialog",
+                            popupId: relativeFormId,
                             ariaExpanded: false,
-                            ariaControls: relativeFormId,
                             ariaCurrent:
                                 selectedFilterOption.localIdentifier ===
                                 filterOptions.relativeForm.localIdentifier,

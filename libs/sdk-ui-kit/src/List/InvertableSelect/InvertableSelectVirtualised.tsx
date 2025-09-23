@@ -410,8 +410,6 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [containerRef, setFocusedAction],
     );
 
-    const hasQuestionMark = items[0] ? isItemQuestionMarkEnabled(items[0]) : false;
-
     return (
         <ListWithActionsFocusStore value={focusStoreValue}>
             <div className="gd-invertable-select">
@@ -453,15 +451,6 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 ref={containerRef as RefObject<HTMLDivElement>}
                                                 role={"grid"}
                                                 aria-rowcount={items.length}
-                                                aria-label={
-                                                    hasQuestionMark
-                                                        ? formatMessage({
-                                                              id: "attributesDropdown.actionsHint.withQuestion",
-                                                          })
-                                                        : formatMessage({
-                                                              id: "attributesDropdown.actionsHint.noQuestion",
-                                                          })
-                                                }
                                                 aria-multiselectable={!isSingleSelect}
                                                 id={focusStoreValue.containerId}
                                             >
