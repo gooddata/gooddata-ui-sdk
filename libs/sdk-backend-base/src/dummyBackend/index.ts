@@ -872,6 +872,7 @@ class DummyOrganization implements IOrganization {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
             setMetadataLocale: () => Promise.resolve(),
+            setFormatLocale: () => Promise.resolve(),
             setSeparators: () => Promise.resolve(),
             setActiveLlmEndpoint: () => Promise.resolve(),
             deleteActiveLlmEndpoint: () => Promise.resolve(),
@@ -1042,6 +1043,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setMetadataLocale(_locale: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setFormatLocale(_locale: string): Promise<void> {
         return Promise.resolve();
     }
 

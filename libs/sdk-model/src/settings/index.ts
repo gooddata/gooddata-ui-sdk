@@ -58,6 +58,11 @@ export interface ISettings {
     weekStart?: WeekStart;
 
     /**
+     * Locale code to use for metadata.
+     */
+    metadataLocale?: string;
+
+    /**
      * Locale code to use for date formatting.
      */
     formatLocale?: string;

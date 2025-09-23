@@ -3659,6 +3659,7 @@ export interface ISettings {
     // (undocumented)
     hidePixelPerfectExperience?: boolean;
     llmEndpoint?: ILlmEndpoint;
+    metadataLocale?: string;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;
