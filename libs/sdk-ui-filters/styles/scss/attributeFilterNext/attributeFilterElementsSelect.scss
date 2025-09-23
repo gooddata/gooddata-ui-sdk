@@ -22,6 +22,13 @@
     }
 }
 
+.gd-attribute-filter-list-item-label {
+    display: block;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .gd-async-list {
     &:focus-visible,
     &:focus-within {
@@ -58,7 +65,7 @@
     min-height: 28px;
 
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
-        margin: 0;
+        margin: 0 0 0 5px;
         flex-grow: 0;
         flex-shrink: 0;
         color: var(--gd-palette-complementary-7, #6d7680);

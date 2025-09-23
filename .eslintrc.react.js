@@ -136,11 +136,11 @@ module.exports = {
                     //     importNames: ["endsWith"],
                     //     message: "Please use String.prototype.endsWith() instead."
                     // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["repeat"],
-                    //     message: "Please use String.prototype.repeat() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["repeat"],
+                        message: "Please use String.prototype.repeat() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["padStart"],

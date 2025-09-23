@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { compact, flow, groupBy, isEmpty, partition, repeat, sortBy, uniqBy } from "lodash-es";
+import { compact, flow, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -72,7 +72,7 @@ const DEFAULT_HEIGHT = 400;
 function indent(str: string, tabs: number): string {
     return str
         .split("\n")
-        .map((chunk) => `${repeat(" ", tabs * TAB_SIZE)}${chunk}`)
+        .map((chunk) => `${" ".repeat(tabs * TAB_SIZE)}${chunk}`)
         .join("\n");
 }
 
