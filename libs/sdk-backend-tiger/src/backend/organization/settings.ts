@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
@@ -31,6 +32,10 @@ export class OrganizationSettingsService
 
     public override async setMetadataLocale(locale: string): Promise<void> {
         return this.setSetting("METADATA_LOCALE", { value: locale });
+    }
+
+    public override async setFormatLocale(locale: string): Promise<void> {
+        return this.setSetting("FORMAT_LOCALE", { value: locale });
     }
 
     public async setTimezone(timezone: string): Promise<void> {

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 
 import { IUserWorkspaceSettings, IWorkspaceSettings } from "../../common/settings.js";
@@ -49,6 +50,15 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     setMetadataLocale(locale: string): Promise<void>;
+
+    /**
+     * Sets format locale for current workspace.
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setFormatLocale(locale: string): Promise<void>;
 
     /**
      * Set separators for the current workspace
