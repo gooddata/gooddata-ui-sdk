@@ -45,7 +45,7 @@
             ],
             "localIdentifier": "measures"
         },
-        { "items": [], "localIdentifier": "attribute" },
+        { "items": [], "localIdentifier": "attribute", "totals": [] },
         {
             "items": [
                 {
@@ -77,7 +77,7 @@
         }
     ],
     "dimensions": [
-        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["measureGroup"], "totals": [] },
         {
             "itemIdentifiers": ["a_f_owner.department_id", "a_f_owner.region_id"],
             "totals": [
@@ -94,6 +94,7 @@
             ]
         }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

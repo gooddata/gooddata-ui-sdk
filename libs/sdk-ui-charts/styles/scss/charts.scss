@@ -61,10 +61,16 @@
     .gd-axis-label-drilling-disabled & {
         // TODO: Drilling
         color: kit-variables.$gd-color-state-blank !important;
+        fill: kit-variables.$gd-color-state-blank !important;
         pointer-events: none;
         text-decoration: none !important; // Override Highcharts inline style
         font-weight: normal !important; // Override Highcharts inline style
-        fill: kit-variables.$gd-color-state-blank !important;
+    }
+    @media (forced-colors: active) {
+        .gd-axis-label-drilling-disabled & {
+            color: canvastext !important;
+            fill: canvastext !important;
+        }
     }
     // stylelint-enable
 }

@@ -19,6 +19,15 @@ import {
 } from "./base.js";
 import { scenariosFor } from "../../src/index.js";
 
+/**
+ * Beware that the pivot table next totals are using color-mix() function
+ * which is not supported in backstop browser. To fix this we are using
+ * a dummy polyfillic override of style which emulate the color-mix() function.
+ *
+ * Whenever some background should be changed in totals,
+ * see .storybook/pivot-table-next-color-mix.scss file.
+ */
+
 export const PivotTableWithTwoMeasuresAndTotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     totals: [
@@ -100,7 +109,7 @@ export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
 
 const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -164,8 +173,7 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
 
 const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
-    // .withDefaultTestTypes("api")
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
         config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
@@ -251,8 +259,7 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
 
 const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows & columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 }, skip: true })
-    // .withDefaultTestTypes("api")
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
     .addScenario(
         "single measure and single column/row grand total",
         PivotTableWithSingleMeasureAndRowColumnGrandTotal,

@@ -181,6 +181,7 @@
             ]
         }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

@@ -12,7 +12,6 @@ import type { ICatalogItem, ICatalogItemFeedOptions } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 import type { AsyncStatus } from "../async/index.js";
 import { useObjectTypeCounterSync } from "../objectType/index.js";
-import { useSearchState } from "../search/index.js";
 
 type Props = ICatalogItemFeedOptions & {
     children: (props: {
@@ -25,9 +24,12 @@ type Props = ICatalogItemFeedOptions & {
     }) => ReactNode;
 };
 
+// Static until the semantic search is implemented back
+const searchStatus = "idle";
+const searchItems: ISemanticSearchResultItem[] = [];
+
 export function CatalogItemFeed({ backend, workspace, children, createdBy, pageSize }: Props) {
     const intl = useIntl();
-    const { searchStatus, searchItems } = useSearchState();
     const id = useIdFilter(searchStatus, searchItems);
     const {
         items: feedItems,

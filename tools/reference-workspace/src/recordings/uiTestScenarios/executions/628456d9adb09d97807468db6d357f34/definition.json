@@ -59,6 +59,7 @@
         { "itemIdentifiers": ["a_label.f_product.product.name", "measureGroup"] },
         { "itemIdentifiers": [] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

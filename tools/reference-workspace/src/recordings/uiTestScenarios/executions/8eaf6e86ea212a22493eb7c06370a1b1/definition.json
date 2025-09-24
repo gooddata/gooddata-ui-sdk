@@ -75,6 +75,7 @@
         { "itemIdentifiers": ["a_label.f_product.product.name"] },
         { "itemIdentifiers": ["a_f_owner.region_id", "measureGroup"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { type MouseEvent, useRef, useState } from "react";
+import { type MouseEvent, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -49,7 +49,6 @@ export function Main({
     const { toggleTag } = useFilterActions();
 
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
-    const ref = useRef<HTMLElement | null>(null);
 
     const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
         onCatalogItemOpenClick,
@@ -59,7 +58,7 @@ export function Main({
     );
 
     return (
-        <section className="gd-analytics-catalog__main" ref={ref}>
+        <section className="gd-analytics-catalog__main">
             <header>
                 <FilterObjectTypeMemo />
                 <FilterGroupByMemo backend={backend} workspace={workspace} onChange={setSelectedCreatedBy} />
@@ -83,7 +82,6 @@ export function Main({
                         <CatalogDetail
                             open={open}
                             objectDefinition={openedItem}
-                            node={ref.current ?? undefined}
                             onClose={onCloseDetail}
                             onOpenClick={onOpenClick}
                             onCatalogItemUpdate={(item, changes) => {

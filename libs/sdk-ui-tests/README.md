@@ -261,7 +261,7 @@ To do filtered backstopjs execution in this project, you can follow these steps:
 1.  Make sure you have run `rush build -t sdk-ui-tests`
 2.  Make sure you have run `npm run backstop-prepare`
 3.  Navigate to the `backstop` subdirectory
-4.  Run `./run-backstop.sh test --filter="<regex>"` where regex is regular expression to filter tests by.
+4.  Run `./run-backstop-compose.sh test --filter="<regex>"` where regex is regular expression to filter tests by.
 
     Backstop will filter based on the scenario label. The scenarios are automatically created for the storybook
     stories. The scenario label is concatenation of story kind and the story name: `${storyKind} - ${storyName}`
@@ -277,7 +277,7 @@ To do filtered backstopjs execution in this project, you can follow these steps:
 
 > Note: all backstop-\* commands run build, story extraction and then the appropriate backstop command. You can
 > achieve more flexible workflows using the elementary `build-storybook` and `story-extractor` scripts combined
-> with the [run-backstop.sh](backstop/run-backstop.sh) script.
+> with the [run-backstop-compose.sh](backstop/run-backstop-compose.sh) script.
 >
 > For instance if you run `backstop-prepare` this builds the storybook and extracts stories together with their
 > backstop-specific configuration. If you are debugging some custom stories and changing their backstop configuration
@@ -318,7 +318,7 @@ on where exactly the error occurs.
 #### Visual regression hints
 
 - After every change call `npm run backstop-prepare` even when you see changes in your running storybook.
-- If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop.sh test --filter=".*legend responsive.*`
+- If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop-compose.sh test --filter=".*legend responsive.*`
 - If you use [Multiple screenshots](#multiple-screenshots) always use `ScreenshotReadyWrapper`
 - scenarios: BackstopConfig - Scenarios in one story are running form scratch they are not starting where previous ended.
 - Be aware of method overloading `clickSelector: ".s-legend-popup-icon"` - do just one action, vs `clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"]` do multiple actions/click

@@ -15,11 +15,14 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
+import {
+    ERROR_HEADERS_TOO_LARGE,
+    MAX_QUERY_LENGTH,
+    STATUS_NEVER_RUN,
+    STATUS_NEVER_RUN_RSQL_QUERY,
+} from "../../../backend/common/automations.js";
 import { convertAutomation } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-
-const STATUS_NEVER_RUN = "NEVER_RUN";
-const STATUS_NEVER_RUN_RSQL_QUERY = `automationResults.status=isnull=true`;
 
 /**
  * Organization automations query implementation for centralized automation management.
@@ -182,21 +185,38 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                         client.axios,
                     );
                     return orgController.getAllAutomationsWorkspaceAutomations(requestParams);
-                }).then((res) => {
-                    const totalCount = res.data.meta?.page?.totalElements;
-                    if (!(totalCount === null || totalCount === undefined)) {
-                        this.setTotalCount(totalCount);
-                    }
-                    // Convert workspace automation list to standard automation objects
-                    return res.data.data.map((automationObject) =>
-                        convertAutomation(
-                            automationObject,
-                            (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
-                            enableAutomationFilterContext,
-                            enableNewScheduledExport,
-                        ),
-                    );
-                });
+                })
+                    .then((res) => {
+                        const totalCount = res.data.meta?.page?.totalElements;
+                        if (!(totalCount === null || totalCount === undefined)) {
+                            this.setTotalCount(totalCount);
+                        }
+                        // Convert workspace automation list to standard automation objects
+                        return res.data.data.map((automationObject) =>
+                            convertAutomation(
+                                automationObject,
+                                (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
+                                enableAutomationFilterContext,
+                                enableNewScheduledExport,
+                            ),
+                        );
+                    })
+                    .catch((error) => {
+                        if (error.httpStatus === 400) {
+                            // Backend correctly returns 431 but only for queries longer than 50k chars.
+                            // The actual limit seems to be much lower, but backend returns generic 400.
+                            // We need to handle this case specifically.
+                            const queryString = new URLSearchParams(requestParams as any).toString();
+
+                            // Check if URL is too long
+                            if (queryString.length > MAX_QUERY_LENGTH) {
+                                throw new Error(ERROR_HEADERS_TOO_LARGE);
+                            }
+                        }
+
+                        // Re-throw original error for all other cases
+                        throw error;
+                    });
 
                 return { items, totalCount: this.totalCount! };
             },

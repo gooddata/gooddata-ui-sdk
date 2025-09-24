@@ -141,6 +141,7 @@
             ]
         }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

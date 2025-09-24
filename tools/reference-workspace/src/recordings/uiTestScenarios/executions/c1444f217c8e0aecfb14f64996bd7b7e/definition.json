@@ -79,6 +79,7 @@
         },
         { "itemIdentifiers": ["measureGroup"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

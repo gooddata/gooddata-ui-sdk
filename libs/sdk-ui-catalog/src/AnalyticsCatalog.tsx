@@ -14,7 +14,7 @@ import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { ObjectTypeProvider } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider, usePermissionsQuery } from "./permission/index.js";
-import { SearchProvider } from "./search/index.js";
+import { FullTextSearchProvider, SearchProvider } from "./search/index.js";
 
 /**
  * @internal
@@ -78,18 +78,20 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
                     <PermissionsProvider permissionsState={permissionsState}>
                         <FilterProvider>
                             <SearchProvider>
-                                <ObjectTypeProvider>
-                                    <Catalog
-                                        backend={backend}
-                                        workspace={workspace}
-                                        openCatalogItemRef={props.openCatalogItemRef}
-                                        onCatalogItemOpenClick={props.onCatalogItemOpenClick}
-                                        onCatalogDetailOpened={props.onCatalogDetailOpened}
-                                        onCatalogDetailClosed={props.onCatalogDetailClosed}
-                                        initialTab={props.initialTab}
-                                        onTabChange={props.onTabChange}
-                                    />
-                                </ObjectTypeProvider>
+                                <FullTextSearchProvider>
+                                    <ObjectTypeProvider>
+                                        <Catalog
+                                            backend={backend}
+                                            workspace={workspace}
+                                            openCatalogItemRef={props.openCatalogItemRef}
+                                            onCatalogItemOpenClick={props.onCatalogItemOpenClick}
+                                            onCatalogDetailOpened={props.onCatalogDetailOpened}
+                                            onCatalogDetailClosed={props.onCatalogDetailClosed}
+                                            initialTab={props.initialTab}
+                                            onTabChange={props.onTabChange}
+                                        />
+                                    </ObjectTypeProvider>
+                                </FullTextSearchProvider>
                             </SearchProvider>
                         </FilterProvider>
                     </PermissionsProvider>

@@ -49,6 +49,7 @@ import {
     ITooltipFactory,
     IUnsafeTooltipPositionerPointObject,
 } from "../../typings/unsafe.js";
+import { isHighContrastMode } from "../../utils/highContrastMode.js";
 import {
     supportedDualAxesChartTypes,
     supportedTooltipFollowPointerChartTypes,
@@ -1509,16 +1510,19 @@ function getAxesConfiguration(
     _intl: any,
     theme: ITheme,
 ): HighchartsOptions {
-    const axisValueColor =
-        theme?.chart?.axisValueColor ??
-        theme?.chart?.axis?.valueColor ??
-        theme?.palette?.complementary?.c6 ??
-        styleVariables.gdColorStateBlank;
-    const axisLabelColor =
-        theme?.chart?.axisLabelColor ??
-        theme?.chart?.axis?.labelColor ??
-        theme?.palette?.complementary?.c7 ??
-        styleVariables.gdColorLink;
+    const isHighContrast = isHighContrastMode();
+    const axisValueColor = isHighContrast
+        ? "CanvasText"
+        : (theme?.chart?.axisValueColor ??
+          theme?.chart?.axis?.valueColor ??
+          theme?.palette?.complementary?.c6 ??
+          styleVariables.gdColorStateBlank);
+    const axisLabelColor = isHighContrast
+        ? "CanvasText"
+        : (theme?.chart?.axisLabelColor ??
+          theme?.chart?.axis?.labelColor ??
+          theme?.palette?.complementary?.c7 ??
+          styleVariables.gdColorLink);
     const plotLineColor =
         theme?.chart?.plotLineColor ?? theme?.palette?.complementary?.c5 ?? styleVariables.gdColorPlotLine;
     return {

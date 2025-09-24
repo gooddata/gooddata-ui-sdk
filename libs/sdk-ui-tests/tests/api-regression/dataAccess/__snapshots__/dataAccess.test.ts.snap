@@ -4562,6 +4562,71 @@ exports[`DataAccess > should correctly identify series and slices for: PivotTabl
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - single measure 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - single measure with row attribute 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - two measures 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: PyramidChart - arithmetic measures 1`] = `
 {
   "seriesDigest": {

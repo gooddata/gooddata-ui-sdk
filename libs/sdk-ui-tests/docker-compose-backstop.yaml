@@ -3,7 +3,8 @@ version: "3.7"
 services:
     backstop:
         user: "$USER_UID:$USER_GID"
-        command: ["--config=/src/backstop.config.js", "${COMMAND}"]
+        entrypoint: ["/bin/sh", "-lc"]
+        command: ["backstop ${COMMAND_ARGS} --config=/src/backstop.config.js"]
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/backstopjs/backstopjs:5.1.0
         volumes:
             - ./backstop:/src

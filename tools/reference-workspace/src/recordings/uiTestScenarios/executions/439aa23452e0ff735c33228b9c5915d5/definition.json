@@ -57,7 +57,8 @@
                     }
                 }
             ],
-            "localIdentifier": "attribute"
+            "localIdentifier": "attribute",
+            "totals": []
         },
         {
             "items": [

@@ -111,6 +111,7 @@
             ]
         }
     ],
+    "executionConfig": {},
     "filters": [
         {
             "absoluteDateFilter": {

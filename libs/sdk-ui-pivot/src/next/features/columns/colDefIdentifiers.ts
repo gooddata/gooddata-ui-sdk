@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
 import { ITableColumnDefinition, ITableDataHeaderScope, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -90,7 +91,11 @@ function columnScopeToIdentifiers(
     columnScope.forEach((scope) => {
         if (scope.type === "attributeScope") {
             groups.push(scope.descriptor.attributeHeader.localIdentifier);
-            values.push(scope.header.attributeHeaderItem.uri);
+            // It is critical to differentiate between explicit null and empty string ""
+            // as BE supports both, otherwise there may be data rendering issues in the table.
+            const stringifiedUri =
+                scope.header.attributeHeaderItem.uri === null ? "null" : scope.header.attributeHeaderItem.uri;
+            values.push(stringifiedUri);
         } else if (scope.type === "attributeTotalScope") {
             groups.push(scope.descriptor.attributeHeader.localIdentifier);
             values.push(scope.header.totalHeaderItem.type);

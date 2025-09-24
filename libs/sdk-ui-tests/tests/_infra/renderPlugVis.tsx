@@ -53,6 +53,9 @@ export async function mountInsight(
     };
     const visualizationClass = createVisualizationClass(insight);
 
+    // Extract drillableItems from the test scenario props
+    const drillableItems = scenario.props["drillableItems"];
+
     /*
      * Mapbox token flies in through IGdcConfig; some value is needed for mock-rendering of
      * the Geo charts
@@ -69,6 +72,7 @@ export async function mountInsight(
             onError={() => {}}
             pushData={() => {}}
             onLoadingChanged={() => {}}
+            drillableItems={drillableItems}
             featureFlags={{
                 // explicitly turn on table transposition to keep scenarios with metrics in rows working
                 enablePivotTableTransposition: true,

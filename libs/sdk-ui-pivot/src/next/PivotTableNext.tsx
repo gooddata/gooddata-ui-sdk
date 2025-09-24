@@ -126,6 +126,7 @@ function RenderPivotTableNextAgGrid() {
             onMouseDown={stopEventWhenResizeHeader}
             onDragStart={stopEventWhenResizeHeader}
             onClick={stopEventWhenResizeHeader}
+            data-testid="pivot-table-next"
         >
             <AgGridReact {...agGridReactProps} />
         </div>

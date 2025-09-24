@@ -105,6 +105,7 @@
         { "itemIdentifiers": ["a_label.f_product.product.name", "a_f_owner.department_id", "measureGroup"] },
         { "itemIdentifiers": ["a_f_opportunitysnapshot.forecastcategory_id", "a_f_owner.region_id"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

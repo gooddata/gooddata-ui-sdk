@@ -151,8 +151,8 @@ export function ViewModeDashboardVisualizationSwitcherContent({
     }, [onScheduleEmailingManagementOpen, activeVisualization]);
 
     const onAlertingManagementOpen = useCallback(() => {
-        onAlertingManagementOpenAction(widget);
-    }, [onAlertingManagementOpenAction, widget]);
+        onAlertingManagementOpenAction(activeVisualization);
+    }, [onAlertingManagementOpenAction, activeVisualization]);
 
     const {
         isAlertingVisible,

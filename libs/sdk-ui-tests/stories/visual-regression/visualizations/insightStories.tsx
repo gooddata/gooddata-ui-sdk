@@ -104,6 +104,9 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const wrapper = (child: any) => wrapWithTheme(child, testScenario.tags); // since themes are global anyway, wrap only once
     const effectiveTheme = getTheme(testScenario.tags);
 
+    // Extract drillableItems from the test scenario props
+    const drillableItems = testScenario.props["drillableItems"];
+
     /*
      * Note: for KD rendering the story passes width&height explicitly. this is to emulate plug vis behavior where
      * context sets/determines both and sends them down.
@@ -129,6 +132,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             onLoadingChanged={action("onLoadingChanged")}
                             featureFlags={settings}
                             config={gdcConfig}
+                            drillableItems={drillableItems}
                             // AD does not support theming, so do not use the theme prop there
                         />
                     </div>
@@ -151,6 +155,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             featureFlags={settings}
                             config={gdcConfig}
                             theme={effectiveTheme}
+                            drillableItems={drillableItems}
                         />
                     </div>
 
@@ -172,6 +177,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             featureFlags={settings}
                             config={gdcConfig}
                             theme={effectiveTheme}
+                            drillableItems={drillableItems}
                         />
                     </div>
                 </div>

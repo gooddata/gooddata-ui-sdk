@@ -1503,11 +1503,29 @@ exports[`createDataAccessDigest > should find slices and series for: PivotTable 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: PivotTableNext - single measure 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: PivotTableNext - single measure with row attribute 1`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 1,
   "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: PivotTableNext - two measures 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
   "slicesIdx": 0,
 }
 `;

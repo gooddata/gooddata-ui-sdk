@@ -24,7 +24,7 @@ const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceMd.A
 
 const justManualResizing = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("manual-resizing", "no other options")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultBackendSettings({
         enableTableColumnsManualResizing: true,
@@ -72,7 +72,7 @@ const justManualResizing = scenariosFor<IPivotTableNextProps>("PivotTableNext", 
 
 const withColumnAutoresize = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("manual-resizing", "combined with column autoresize")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultBackendSettings({
         enableTableColumnsManualResizing: true,
@@ -88,7 +88,7 @@ const withColumnAutoresize = scenariosFor<IPivotTableNextProps>("PivotTableNext"
     );
 const withGrowToFit = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("manual-resizing", "combined with growToFit")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultBackendSettings({
         enableTableColumnsManualResizing: true,
@@ -104,7 +104,7 @@ const withGrowToFit = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
     );
 const withAllAutoresizing = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("manual-resizing", "combined with growToFit and autoResize")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultBackendSettings({
         enableTableColumnsManualResizing: true,
