@@ -53,6 +53,7 @@
         }
     ],
     "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["a_f_owner.region_id", "measureGroup"] }],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

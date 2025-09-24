@@ -89,7 +89,10 @@ export const getWidgetName = (automation: IAutomationMetadataObject, type: Autom
 
 export const isRequestHeaderTooLargeError = (error: unknown): boolean => {
     const sdkError = convertError(error);
-    return sdkError.getMessage() === ErrorCodes.HEADERS_TOO_LARGE;
+    if (sdkError.getMessage() === ErrorCodes.HEADERS_TOO_LARGE) {
+        return true;
+    }
+    return error instanceof Error && error.message === ErrorCodes.HEADERS_TOO_LARGE;
 };
 
 /**

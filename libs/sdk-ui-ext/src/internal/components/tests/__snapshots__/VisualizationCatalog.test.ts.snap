@@ -44827,6 +44827,4122 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - arithmetic measures 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3")),
+    newArithmeticMeasure([
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+], "difference", m => m.alias("Calculated 'Lost' measure").localId("m_9fa7cb9ce4d2947059b490e24a925317")),
+    newArithmeticMeasure([
+    "m_9fa7cb9ce4d2947059b490e24a925317",
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+], "ratio", m => m.alias("Ratio of Won and Lost").localId("m_aebe46cecdb5eb3b5c069ce97a80535f"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - empty values 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - multiple measures and no columns, with totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("min", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_f_owner.region_id", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - multiple measures and no rows, with totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - multiple measures and row attributes with metrics in rows, with drilling 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - one measure and repeating row attributes on different positions 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name_1"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with attribute and metric column size 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400),
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with attribute and metric column size 2`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400),
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with attribute and metric column size 3`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400),
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with attribute and metric column size 4`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400),
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom attribute column size 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom attribute column size 2`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom attribute column size 3`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom attribute column size 4`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAttributeColumn("a_label.f_product.product.name", 400)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom metric column size 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom metric column size 2`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom metric column size 3`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - simple table with custom metric column size 4`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable, setNewWidthForSelectedColumns } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            setNewWidthForSelectedColumns(["m_87a053b0_3947_49f3_b0c5_de53fd01f050"], [], 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single attribute 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single column 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const columns: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure 1`] = `
+"import React from "react";
+import { IAttributeOrMeasure, idRef, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and multiple column grand totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and multiple column/row grand totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and multiple grand totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and single column grand total 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_attr.f_owner.salesrep", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and single column/row grand total 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure and single grand total 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure pivot sorted by first and second row attr 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_label.f_product.product.name", "asc"),
+    newAttributeSort("a_f_owner.department_id", "desc")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure pivot sorted by first row attr 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_label.f_product.product.name", "desc")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure pivot sorted by second row attr 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_f_owner.department_id", "desc")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure pivot with both attributes and metrics in rows 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure with column attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure with row and column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure with row attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure with two row and one column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - single measure with two row and two column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - table with multiple measure columns and weak measure size 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - table with multiple measure columns and weak measure size 2`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - table with multiple measure columns and weak measure size 3`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - table with multiple measure columns and weak measure size 4`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 60)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures 1`] = `
+"import React from "react";
+import { IAttributeOrMeasure, idRef, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and column grand totals and multiple subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast"]})
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and column single grand total sorted by second attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast"]})
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_f_owner.department_id", "desc")
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and column/row grand totals and multiple subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and grand totals and multiple subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple column grand totals for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_attr.f_owner.salesrep", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple column subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast"]})
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple column/row grand totals for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_attr.f_owner.salesrep"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_attr.f_owner.salesrep", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple column/row subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple column/row subtotals with metrics in rows 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("sum", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple grand totals for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and multiple subtotals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and one column subtotal 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and one column/row subtotal 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and one subtotal 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single column grand total and single subtotal sorted by second attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast"]})
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_f_owner.department_id", "desc")
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120),
+            newWidthForAttributeColumn("a_f_owner.department_id", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single column grand total for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single column grand total for one 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ITotal, newAttribute, newMeasure, newNegativeAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const filters: IFilter[] = [
+    newNegativeAttributeFilter(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), {values: ["Include"]})
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single column/row grand total for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_attr.f_owner.salesrep"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single column/row grand total for one 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"), m => m.localId("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single grand total for each 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, newWidthForAttributeColumn, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("sum", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {
+        defaultWidth: "autoresizeAll",
+        columnWidths: [
+            newWidthForAllColumnsForMeasure("m_87a053b0_3947_49f3_b0c5_de53fd01f050", 100),
+            newWidthForAllColumnsForMeasure("m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", 100),
+            newWidthForAllColumnsForMeasure("m_e519fa2a_86c3_4e32_8313_0c03062348j3", 100),
+            newWidthForAttributeColumn("a_label.f_product.product.name", 120)
+        ]
+    },
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single grand total for one 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures and single grand total sorted by second attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort("a_f_owner.department_id", "desc")
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and column attrs on left, with totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "left"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and column attrs on top, with drilling on metrics 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "top"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and column attrs on top, with invalid drilling on attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "top"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and only column attrs on left 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "left"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and only column attrs on left, with drilling 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "left"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures in rows and only column attrs on left, with totals 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows",
+    columnHeadersPosition: "left"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with column attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with row and column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with row attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with single row attr sorted by first measure 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const sortBy: ISortItem[] = [
+    newMeasureSort("m_87a053b0_3947_49f3_b0c5_de53fd01f050", "desc")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with single row attr sorted by second measure 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const sortBy: ISortItem[] = [
+    newMeasureSort("m_e519fa2a_86c3_4e32_8313_0c03062348j3", "desc")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with single row attr with metrics in rows 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","},
+    measureGroupDimension: "rows"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with three rows and two column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with two row and one column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - two measures with two row and two column attributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with attributes without measures 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const rows: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with column attributes only and auto-resizing 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const columns: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with date filter 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAbsoluteDateFilter, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const filters: IFilter[] = [
+    newAbsoluteDateFilter(idRef("dt_activity_timestamp", "dataSet"), "2021-01-01", "2021-02-01")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with drill on all row atributes 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with drill on all row attributes and measures 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id")),
+    newAttribute(idRef("attr.f_owner.salesrep", "displayForm"), a => a.localId("a_attr.f_owner.salesrep"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with small page and auto-resizing 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("attr.f_stage.stagename", "displayForm"), a => a.localId("a_attr.f_stage.stagename")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with two measures and row attribute with auto-resizing 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with two measures and row attribute with auto-resizing and grow to fit 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with two measures, grand totals and subtotals with auto-resizing 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with two measures, grand totals and subtotals with auto-resizing and grow to fit 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+    newMeasure(idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"), m => m.localId("m_e519fa2a_86c3_4e32_8313_0c03062348j3"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name")),
+    newAttribute(idRef("f_owner.department_id", "displayForm"), a => a.localId("a_f_owner.department_id"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef("f_opportunitysnapshot.forecastcategory_id", "displayForm"), a => a.localId("a_f_opportunitysnapshot.forecastcategory_id")),
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const totals: ITotal[] = [
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for PivotTableNext - with two same dates 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef("dt_oppcreated_timestamp.year", "displayForm"), a => a.localId("a_dt_oppcreated_timestamp.year")),
+    newAttribute(idRef("dt_oppcreated_timestamp.year", "displayForm"), a => a.localId("a_dt_oppcreated_timestamp.year_1"))
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: "autoresizeAll"},
+    menu: {
+        aggregations: true,
+        aggregationsSubMenu: true,
+        aggregationsSubMenuForRows: true
+    },
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for PyramidChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";

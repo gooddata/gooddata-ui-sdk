@@ -46,7 +46,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 // Mark all grids as using legacy themes
 provideGlobalGridOptions({ theme: "legacy" });
 
-const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false };
+const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false, suppressHeaderMenuButton: true };
 
 export function RepeaterChart(props: IRepeaterChartProps) {
     const { dataView, onError, config, afterRender } = props;
@@ -200,6 +200,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                 }}
                 onColumnResized={onColumnResized}
                 onFirstDataRendered={onFirstDataRendered}
+                suppressContextMenu={true}
             />
         </div>
     );

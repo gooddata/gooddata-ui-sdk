@@ -68,6 +68,7 @@
         { "itemIdentifiers": ["measureGroup"] },
         { "itemIdentifiers": ["a_f_owner.department_id", "a_f_owner.region_id"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

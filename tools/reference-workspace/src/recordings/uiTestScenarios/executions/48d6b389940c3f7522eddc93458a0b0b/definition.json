@@ -23,6 +23,7 @@
         { "items": [], "localIdentifier": "columns" }
     ],
     "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

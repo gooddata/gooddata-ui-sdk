@@ -86,6 +86,7 @@
         { "itemIdentifiers": ["a_label.f_product.product.name", "a_f_owner.department_id", "measureGroup"] },
         { "itemIdentifiers": ["a_attr.f_stage.stagename", "a_f_owner.region_id"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

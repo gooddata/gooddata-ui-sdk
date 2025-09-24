@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import { IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
@@ -106,9 +107,14 @@ function columnScopeHeaderNames(
     columnScope.forEach((scope) => {
         if (scope.type === "attributeScope") {
             groups.push(scope.descriptor.attributeHeader.formOf.name);
+            // Differentiate between explicit null and empty string "" as BE supports both
+            // and the result would not be consistent once using "" or "(empty value)".
+            // We want to display "(empty value)" for both.
+            const nulledName =
+                scope.header.attributeHeaderItem.name === "" ? null : scope.header.attributeHeaderItem.name;
             values.push(
                 scope.header.attributeHeaderItem.formattedName ??
-                    scope.header.attributeHeaderItem.name ??
+                    nulledName ??
                     emptyHeaderTitleFromIntl(intl),
             );
         } else if (scope.type === "attributeTotalScope") {

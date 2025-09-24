@@ -853,6 +853,7 @@ export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
 export interface IFilterBaseOptions {
     createdBy?: string[];
     id?: string[];
+    search?: string;
     tags?: string[];
     title?: string;
 }

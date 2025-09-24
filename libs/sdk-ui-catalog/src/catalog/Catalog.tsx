@@ -15,7 +15,7 @@ import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
 import { MemoryMain } from "../memory/MemoryMain.js";
 import { PermissionsGate, usePermissionsState } from "../permission/index.js";
-import { Search } from "../search/Search.js";
+import { FullTextSearch } from "../search/index.js";
 
 type TabId = "catalog" | "memory";
 
@@ -79,11 +79,7 @@ export function Catalog({
                         setSelectedTabId(id);
                         onTabChange?.(id);
                     }}
-                    searchNode={
-                        selectedTabId === "catalog" ? (
-                            <Search backend={backend} workspace={workspace} />
-                        ) : undefined
-                    }
+                    searchNode={selectedTabId === "catalog" ? <FullTextSearch /> : undefined}
                 />
                 {selectedTabId === "catalog" ? (
                     <Main

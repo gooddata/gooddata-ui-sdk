@@ -26,6 +26,7 @@
         }
     ],
     "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["a_label.f_product.product.name"] }],
+    "executionConfig": {},
     "filters": [],
     "measures": [],
     "sortBy": [],

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 // import { action } from "@storybook/addon-actions";
 import { action } from "storybook/internal/actions";
 
@@ -26,7 +27,7 @@ import {
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 }, skip: true })
+    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultBackendSettings({
         enablePivotTableTransposition: true,
         enableColumnHeadersPosition: true,
@@ -136,9 +137,9 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
         config: {
             measureGroupDimension: "rows",
             columnHeadersPosition: "left",
-            // columnSizing: {
-            //     defaultWidth: "autoresizeAll",
-            // },
+            columnSizing: {
+                defaultWidth: "autoresizeAll",
+            },
         },
         totals: [
             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),

@@ -98,6 +98,14 @@ function loadedPivotTableSelector(element: HTMLElement): number {
 }
 
 /**
+ * This is a specialized element count selector for next pivot table that returns number of
+ * containers present. The container is only rendered once loading is complete.
+ */
+function loadedPivotTableNextSelector(element: HTMLElement): number {
+    return element.querySelectorAll<HTMLElement>("[data-testid='pivot-table-next']").length;
+}
+
+/**
  * This is a specialized element count selector, which returns number of repeater table that are already
  * loaded == the s-loading indicator is no longer present.
  */
@@ -112,6 +120,7 @@ const DefaultSelectors = [
     "s-headline-value",
     "s-error",
     loadedPivotTableSelector,
+    loadedPivotTableNextSelector,
     loadedRepeaterSelector,
 ];
 

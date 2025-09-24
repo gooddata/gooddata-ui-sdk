@@ -89,7 +89,7 @@
                 }
             ]
         },
-        { "items": [], "localIdentifier": "columns" }
+        { "items": [], "localIdentifier": "columns", "totals": [] }
     ],
     "dimensions": [
         {
@@ -122,8 +122,9 @@
                 }
             ]
         },
-        { "itemIdentifiers": [] }
+        { "itemIdentifiers": [], "totals": [] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

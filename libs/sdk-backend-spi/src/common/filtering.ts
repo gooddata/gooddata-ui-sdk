@@ -5,22 +5,28 @@
  */
 export interface IFilterBaseOptions {
     /**
-     * Resource id, case sensitive
+     * Resource contains the search string in any of several properties (case insensitive logical OR).
+     * @beta
+     */
+    search?: string;
+
+    /**
+     * Resource id (case sensitive).
      * @beta
      */
     id?: string[];
     /**
-     * Resource contains title case insensitive
+     * Resource contains title (case insensitive).
      * @beta
      */
     title?: string;
     /**
-     * Resource was created by user, case sensitive
+     * Resource was created by user (case sensitive).
      * @beta
      */
     createdBy?: string[];
     /**
-     * Resource contains tags, case sensitive
+     * Resource contains tags (case sensitive).
      * @beta
      */
     tags?: string[];

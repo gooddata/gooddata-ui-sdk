@@ -61,6 +61,7 @@ export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin" | 
 export interface ICatalogItemQueryOptions {
     backend: IAnalyticalBackend;
     workspace: string;
+    search?: string;
     origin: ObjectOrigin;
     id?: string[];
     createdBy?: string[];

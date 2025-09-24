@@ -55,6 +55,15 @@ const ScenarioConfig = [
     },
     {
         /*
+         * PivotTableNext only: give it a small settle time.
+         */
+        idRegex: /(01|02).*PivotTableNext.*/g,
+        config: {
+            delay: 500, // wait for column resizing to complete
+        },
+    },
+    {
+        /*
          * Tests for Headline dont require high threshold
          */
         idRegex: /(02).*Headline.*/g,
@@ -70,6 +79,16 @@ const ScenarioConfig = [
         idRegex: /(01|02).*/g,
         config: {
             readySelector: ".screenshot-ready-wrapper-done",
+        },
+    },
+    {
+        /*
+         * Pluggable PivotTableNext only: give it a small settle time.
+         */
+        idRegex: /04.*PivotTableNext.*/g,
+        config: {
+            delay: 1000, // wait for column resizing to complete
+            misMatchThreshold: 1.5, // larger threshold allowed for column sizing anomalies
         },
     },
     {

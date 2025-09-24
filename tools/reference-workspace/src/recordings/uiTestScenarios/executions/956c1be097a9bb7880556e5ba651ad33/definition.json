@@ -54,6 +54,7 @@
         { "itemIdentifiers": ["a_attr.f_stage.stagename", "a_f_owner.region_id"] },
         { "itemIdentifiers": ["a_f_owner.department_id"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [],
     "sortBy": [],

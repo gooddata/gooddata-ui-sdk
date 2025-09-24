@@ -61,6 +61,7 @@
         { "itemIdentifiers": ["a_dt_oppcreated_timestamp.year", "a_dt_oppcreated_timestamp.year_1"] },
         { "itemIdentifiers": ["measureGroup"] }
     ],
+    "executionConfig": {},
     "filters": [],
     "measures": [
         {

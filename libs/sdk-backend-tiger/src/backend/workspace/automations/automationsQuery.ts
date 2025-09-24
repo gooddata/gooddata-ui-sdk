@@ -13,10 +13,8 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { STATUS_NEVER_RUN, STATUS_NEVER_RUN_RSQL_QUERY } from "../../common/automations.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
-
-const STATUS_NEVER_RUN = "NEVER_RUN";
-const STATUS_NEVER_RUN_RSQL_QUERY = `automationResults.status=isnull=true`;
 
 export class AutomationsQuery implements IAutomationsQuery {
     private size = 100;

@@ -26,6 +26,7 @@
         { "items": [], "localIdentifier": "columns" }
     ],
     "dimensions": [{ "itemIdentifiers": ["a_label.f_product.product.name"] }, { "itemIdentifiers": [] }],
+    "executionConfig": {},
     "filters": [],
     "measures": [],
     "sortBy": [],
