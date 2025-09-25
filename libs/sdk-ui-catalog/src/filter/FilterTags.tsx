@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -35,6 +35,8 @@ export function FilterTags({ backend, workspace }: Props) {
         [backend, workspace],
     );
 
+    const options = useMemo(() => result?.tags.sort() ?? [], [result?.tags]);
+
     if (status === "loading" || status === "pending") {
         return <UiSkeleton itemsCount={1} itemWidth={92} itemHeight={27} itemBorderRadius={4} />;
     }
@@ -48,7 +50,7 @@ export function FilterTags({ backend, workspace }: Props) {
             <StaticFilter
                 key={tags.length} // Resets the filter state on explicit tags change
                 initialValue={tags}
-                options={result.tags}
+                options={options}
                 onChange={setTags}
                 dataTestId={dataTestId}
                 header={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}
