@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { getColumnWidth } from "./utils.js";
+import { getColumnHeaderId, getColumnWidth } from "./utils.js";
 import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
@@ -20,6 +20,7 @@ export function UiAsyncTableHeader<T>({
     width,
     small,
     largeRow,
+    accessibilityConfig,
 }: UiAsyncTableHeaderProps<T>) {
     const { handleKeyDown, isFocused } = useHeaderKeyboardNavigation(columns, handleColumnClick);
 
@@ -31,7 +32,9 @@ export function UiAsyncTableHeader<T>({
             onKeyDown={handleKeyDown}
             style={{ width }}
         >
-            {hasCheckbox ? <UiAsyncTableCheckbox /> : null}
+            {hasCheckbox ? (
+                <UiAsyncTableCheckbox ariaLabel={accessibilityConfig?.checkboxAllAriaLabel} />
+            ) : null}
             {columns.map((column, index) => {
                 const width = getColumnWidth(!!column.renderMenu, largeRow, column.width);
                 const sorted = sortBy && sortBy === column.key;
@@ -50,6 +53,7 @@ export function UiAsyncTableHeader<T>({
                         })}
                         style={{ width }}
                         role="columnheader"
+                        id={getColumnHeaderId(String(column.key ?? index))}
                         aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}
                     >
                         <span className={e("text")}>{column.label}</span>

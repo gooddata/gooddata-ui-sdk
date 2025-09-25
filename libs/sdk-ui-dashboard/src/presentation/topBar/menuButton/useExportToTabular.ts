@@ -9,10 +9,10 @@ import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { messages } from "../../../locales.js";
 import { exportDashboardToExcel, useDashboardCommandProcessing } from "../../../model/index.js";
 
-export const useExportDashboardToExcel = (onSuccess?: () => void) => {
+export const useExportToTabular = (onSuccess?: () => void) => {
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
     const lastExportMessageId = useRef("");
-    const { run: exportDashboard, status } = useDashboardCommandProcessing({
+    const { run: exportToTabular, status: exportToTabularStatus } = useDashboardCommandProcessing({
         commandCreator: exportDashboardToExcel,
         successEvent: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
@@ -45,7 +45,7 @@ export const useExportDashboardToExcel = (onSuccess?: () => void) => {
     });
 
     return {
-        exportDashboardToExcel: exportDashboard,
-        exportDashboardToExcelStatus: status,
+        exportToTabular,
+        exportToTabularStatus,
     };
 };

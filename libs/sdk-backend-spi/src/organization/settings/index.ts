@@ -43,6 +43,15 @@ export interface IOrganizationSettingsService {
     setMetadataLocale(locale: string): Promise<void>;
 
     /**
+     * Sets format locale for organization.
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setFormatLocale(locale: string): Promise<void>;
+
+    /**
      * Set separators for the organization
      *
      * @param separators - separators for the organization

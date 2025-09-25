@@ -2,8 +2,6 @@
 
 import { ComponentType, ReactNode, createContext, useContext } from "react";
 
-import { flowRight } from "lodash-es";
-
 import { ITheme } from "@gooddata/sdk-model";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
@@ -204,10 +202,7 @@ export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
     Component: ComponentType<T>,
 ): ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">> {
-    return flowRight(
-        wrapDisplayName("withContexts"),
-        withThemeObject,
-        withThemeIsLoading,
-        withThemeStatus,
-    )(Component);
+    return wrapDisplayName("withContexts")(
+        withThemeObject(withThemeIsLoading(withThemeStatus(Component as any))),
+    ) as ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">>;
 }

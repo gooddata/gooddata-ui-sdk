@@ -66,11 +66,11 @@ module.exports = {
                     //     importNames: ["flatMap"],
                     //     message: "Please use Array.prototype.flatMap() instead.",
                     // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["filter"],
-                    //     message: "Please use Array.prototype.filter() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["filter"],
+                        message: "Please use Array.prototype.filter() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["find"],
@@ -300,6 +300,11 @@ module.exports = {
                         group: ["lodash-es"],
                         importNames: ["toString"],
                         message: "Please use String(val) instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["flow", "flowRight"],
+                        message: "Please refactor your code instead.",
                     },
                 ],
             },

@@ -121,10 +121,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
 
         newReferencePoint = getBulletChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, true);
-        newReferencePoint = configureOverTimeComparison(
-            newReferencePoint,
-            !!this.featureFlags["enableWeekFilters"],
-        );
+        newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

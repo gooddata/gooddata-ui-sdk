@@ -5,6 +5,7 @@
 ```ts
 
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { MouseEvent as MouseEvent_2 } from 'react';
@@ -73,6 +74,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     createdAt: Date | null;
     // (undocumented)
     createdBy: string;
+    // (undocumented)
+    dataSet?: IDataSetMetadataObject;
     // (undocumented)
     description: string;
     // (undocumented)

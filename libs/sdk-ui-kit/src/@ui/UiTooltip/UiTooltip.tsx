@@ -143,14 +143,9 @@ export function UiTooltip({
         enabled: triggerBy.includes("click"),
     });
 
-    //close on escape
-    const dismiss = useDismiss(context);
-    const { getReferenceProps, getFloatingProps } = useInteractions([
-        ...(isOpenProp === undefined ? [dismiss] : []),
-        hover,
-        focus,
-        click,
-    ]);
+    // close on escape: keep interactions array length stable between renders
+    const dismiss = useDismiss(context, { enabled: isOpenProp === undefined });
+    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
 
     return (
         <>

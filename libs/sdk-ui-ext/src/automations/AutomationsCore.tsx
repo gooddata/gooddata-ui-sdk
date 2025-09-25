@@ -6,6 +6,7 @@ import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 import { AutomationConfirmDialog } from "./AutomationConfirmDialog.js";
 import { AutomationsEmptyState } from "./AutomationsEmptyState.js";
 import { IAutomationsCoreProps } from "./types.js";
+import { useAutomationsAccessibility } from "./useAutomationsAccessibility.js";
 import { useAutomationsState } from "./useAutomationsState.js";
 
 export function AutomationsCore(props: IAutomationsCoreProps) {
@@ -25,6 +26,8 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         setSelectedIds,
         setPendingAction,
     } = useAutomationsState(props);
+
+    const { accessibilityConfig } = useAutomationsAccessibility(props.type);
 
     const {
         automations,
@@ -61,6 +64,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 isSmall={props.isSmall}
                 locale={props.locale}
                 onSearch={setSearch}
+                accessibilityConfig={accessibilityConfig}
                 renderEmptyState={() => (
                     <AutomationsEmptyState
                         type={props.type}

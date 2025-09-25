@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -14,6 +14,7 @@ import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
 import { Message } from "../../../Messages/index.js";
 import { UiButton } from "../../UiButton/UiButton.js";
+import { UiChip } from "../../UiChip/UiChip.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
@@ -24,11 +25,11 @@ import { UiAsyncTableFilterOption, UiAsyncTableFilterProps } from "../types.js";
  */
 export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
     const intl = useIntl();
-    const buttonRef = useRef<HTMLButtonElement>(null);
     const {
         filteredOptions,
         searchValue,
         isApplyButtonEnabled,
+        labelWithSelected,
         setSearchValue,
         onItemClick,
         isItemSelected,
@@ -36,20 +37,13 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { label, isSmall, isMultiSelect, isFiltersTooLarge } = props;
+    const { isMultiSelect, isFiltersTooLarge } = props;
 
     return (
         <div className={e("filter")}>
             <Dropdown
-                renderButton={({ toggleDropdown }) => (
-                    <UiButton
-                        ref={buttonRef}
-                        label={label}
-                        onClick={() => toggleDropdown()}
-                        size="small"
-                        maxWidth={isSmall ? 20 : 80}
-                        iconAfter="navigateDown"
-                    />
+                renderButton={({ toggleDropdown, isOpen }) => (
+                    <UiChip label={labelWithSelected} onClick={() => toggleDropdown()} isActive={isOpen} />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (
@@ -70,7 +64,6 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                 searchPlaceholder={intl.formatMessage(messages["filterSearchPlaceholder"])}
                                 searchString={searchValue}
                                 onSearch={setSearchValue}
-                                title={label}
                                 renderVirtualisedList
                                 onKeyDownSelect={(item) => onItemClick(item, closeDropdown)}
                             />
@@ -119,6 +112,7 @@ function useAsyncTableFilterState({
     selected,
     onItemsSelect,
     isMultiSelect,
+    label,
 }: UiAsyncTableFilterProps) {
     const intl = useIntl();
     const [checkedItems, setCheckedItems] = useState<Map<string, UiAsyncTableFilterOption>>(
@@ -219,6 +213,16 @@ function useAsyncTableFilterState({
         return false;
     }, [selected, checkedItems]);
 
+    const labelWithSelected = useMemo(() => {
+        let selectedLabels;
+        if (selected?.length === options.length) {
+            selectedLabels = intl.formatMessage(messages["filterOptionAll"]);
+        } else {
+            selectedLabels = selected?.map((item) => item.label).join(", ");
+        }
+        return `${label}: ${selectedLabels}`;
+    }, [label, selected, options, intl]);
+
     const onApplyFactory = useCallback(
         (closeDropdown: () => void) => () => {
             onItemsSelect(Array.from(checkedItems.values()));
@@ -239,6 +243,7 @@ function useAsyncTableFilterState({
         filteredOptions,
         searchValue,
         isApplyButtonEnabled,
+        labelWithSelected,
         setSearchValue,
         onItemClick,
         isItemSelected,

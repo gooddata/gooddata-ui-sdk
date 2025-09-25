@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+
 import stringify from "json-stable-stringify";
-import { flow, uniqBy } from "lodash-es";
+import { uniqBy } from "lodash-es";
 
 import {
     IAbsoluteDateFilterPreset,
@@ -167,7 +168,7 @@ export function mergeDateFilterConfigs(
     config: IDateFilterConfig,
     dashboardOverrides: IDashboardDateFilterConfig,
 ): IDateFilterConfig {
-    const pipeline = flow(
+    return [
         addPresets(dashboardOverrides),
         hideAllTime(dashboardOverrides),
         hideAbsoluteForm(dashboardOverrides),
@@ -175,7 +176,5 @@ export function mergeDateFilterConfigs(
         hideRelativeFormGranularities(dashboardOverrides),
         hideAbsolutePresets(dashboardOverrides),
         hideRelativePresets(dashboardOverrides),
-    );
-
-    return pipeline(config);
+    ].reduce((acc, fn) => fn(acc), config);
 }

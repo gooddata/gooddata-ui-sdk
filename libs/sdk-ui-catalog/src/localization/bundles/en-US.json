@@ -67,6 +67,10 @@
         "value": "Title",
         "comment": "Title of the column containing the title of the object."
     },
+    "analyticsCatalog.column.title.dataSet": {
+        "value": "Dataset",
+        "comment": "Title of the column containing the dataSet of the object."
+    },
     "analyticsCatalog.column.title.createdBy": {
         "value": "Created by",
         "comment": "Title of the column containing the name of the creator of the object."

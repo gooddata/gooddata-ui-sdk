@@ -3078,5 +3078,25 @@
     "search.results.many": {
         "value": "{count} results",
         "comment": "Accessibility label for the search results. Used by screen readers."
+    },
+    "dialogs.export.pdf.headline": {
+        "value": "Export settings (.pdf)",
+        "comment": "Title of the export PDF dialog"
+    },
+    "dialogs.export.pdf.includePageExportInfo": {
+        "value": "Include page export info",
+        "comment": "Label for the include page export info checkbox in the export PDF dialog"
+    },
+    "dialogs.export.pdf.pageOrientation": {
+        "value": "Orientation",
+        "comment": "Label for the orientation dropdown in the export PDF dialog"
+    },
+    "dialogs.export.pdf.pageSize": {
+        "value": "Page size",
+        "comment": "Label for the page size dropdown in the export PDF dialog"
+    },
+    "dialogs.export.submit": {
+        "value": "Export",
+        "comment": "Start to export data to file"
     }
 }

@@ -559,7 +559,13 @@ export interface IDashboardExportPresentationOptions {
 export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
     exportInfo?: boolean;
+    format?: "XLSX" | "PDF";
     mergeHeaders?: boolean;
+    pdfConfiguration?: {
+        pageSize?: "A3" | "A4" | "LETTER";
+        pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+        showInfoPage?: boolean;
+    };
     title?: string;
     widgetIds?: string[];
 }
@@ -823,9 +829,15 @@ export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinitionMeta
 
 // @public
 export interface IExportPdfConfig {
+    pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+    pageSize?: "A3" | "A4" | "LETTER";
+    // @deprecated
     pdfPageSize?: string;
+    // @deprecated
     pdfTopLeftContent?: string;
+    // @deprecated
     pdfTopRightContent?: string;
+    showInfoPage?: boolean;
 }
 
 // @public
@@ -1232,6 +1244,7 @@ export interface IOrganizationSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
     // @alpha
@@ -1477,6 +1490,7 @@ export interface IUserSettings extends ISettings {
 // @public
 export interface IUserSettingsService {
     getSettings(): Promise<IUserSettings>;
+    setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
@@ -1795,6 +1809,7 @@ export interface IWorkspaceSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;

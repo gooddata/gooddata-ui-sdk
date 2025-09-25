@@ -200,6 +200,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
 // @beta
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
+    dataSet(value: IDataSetMetadataObject | undefined): this;
+    // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
     // (undocumented)
     drillDownStep(ref: ObjRef | undefined): this;
@@ -672,6 +674,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
+    setFormatLocale(locale: string): Promise<void>;
+    // (undocumented)
     setLocale(locale: string): Promise<void>;
     // (undocumented)
     setMetadataLocale(locale: string): Promise<void>;
@@ -802,6 +806,8 @@ export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem
 
 // @beta
 export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    dataSet(value: IDataSetMetadataObject | undefined): this;
     // (undocumented)
     isLocked(value: boolean): this;
 }

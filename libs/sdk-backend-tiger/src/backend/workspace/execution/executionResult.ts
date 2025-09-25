@@ -264,6 +264,10 @@ export class TigerExecutionResult implements IExecutionResult {
             ...(format === TabularExportRequestFormatEnum.PDF
                 ? {
                       showFilters: Boolean(options.showFilters),
+                      pageSize: options.pdfConfiguration?.pageSize,
+                      pageOrientation: options.pdfConfiguration?.pageOrientation,
+                      showInfoPage: options.pdfConfiguration?.showInfoPage,
+                      // Deprecated properties for backward compatibility
                       pdfPageSize: options.pdfConfiguration?.pdfPageSize,
                       pdfTopLeftContent: options.pdfConfiguration?.pdfTopLeftContent,
                       pdfTopRightContent: options.pdfConfiguration?.pdfTopRightContent,

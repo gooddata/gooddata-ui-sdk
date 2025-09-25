@@ -317,7 +317,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE, this.settings);
         configurePercent(newReferencePoint, false);
-        configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
+        configureOverTimeComparison(newReferencePoint);
         Object.assign(
             newReferencePoint,
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),
@@ -389,8 +389,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private createCorePivotTableProps = () => {
-        const onColumnResized = isManualResizingEnabled(this.settings) ? this.onColumnResized : undefined;
-
         return {
             intl: this.intl,
             ErrorComponent: null as any,
@@ -403,7 +401,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             onError: this.onError,
             onExportReady: this.onExportReady,
             onDataView: this.onDataView,
-            onColumnResized,
+            onColumnResized: this.onColumnResized,
         };
     };
 
@@ -641,10 +639,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 }
 
-function isManualResizingEnabled(settings: ISettings): boolean {
-    return settings.enableTableColumnsManualResizing === true;
-}
-
 function multipleDatesEnabled(settings: ISettings): boolean {
     return settings.enableMultipleDates === true;
 }
@@ -700,26 +694,19 @@ export function createPivotTableConfig(
         };
     }
 
-    const autoSize = settings.enableTableColumnsAutoResizing;
-
     // the growToFit can only be enabled in dashboards
-    const growToFit = environment === DASHBOARDS_ENVIRONMENT && settings.enableTableColumnsGrowToFit;
+    const growToFit = environment === DASHBOARDS_ENVIRONMENT;
 
-    const manualResizing = settings.enableTableColumnsManualResizing;
-
-    let columnSizing: Partial<IColumnSizing> = {};
-    if (autoSize) {
-        columnSizing = {
-            defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
-        };
-    }
+    let columnSizing: Partial<IColumnSizing> = {
+        defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
+    };
     if (growToFit) {
         columnSizing = {
             ...columnSizing,
             growToFit: true,
         };
     }
-    if (manualResizing && columnWidths && columnWidths.length > 0) {
+    if (columnWidths && columnWidths.length > 0) {
         columnSizing = {
             ...columnSizing,
             columnWidths,

@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import { flow } from "lodash-es";
 
 import { ISortItem } from "@gooddata/sdk-model";
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
@@ -32,10 +31,10 @@ export const applyAllFeaturesToColDef =
         dataViewFacade?: DataViewFacade;
     }) =>
     (colDef: AgGridColumnDef): AgGridColumnDef => {
-        return flow(
+        return [
             applyColumnWidthsToColDef(columnWidths),
             applySortByToColDef(sortBy),
             applyDrillsToColDef(drillableItems, dataViewFacade),
             applyTextWrappingToColDef(textWrapping),
-        )(colDef);
+        ].reduce((acc, fn) => fn(acc), colDef);
     };

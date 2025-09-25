@@ -75,14 +75,12 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
 
-                        {featureFlags["enableHidingOfDataPoints"] ? (
-                            <DataPointsControl
-                                pushData={pushData}
-                                properties={properties}
-                                isDisabled={controlsDisabled || isDataPointsControlDisabled}
-                                showDisabledMessage={isDataPointsControlDisabled}
-                            />
-                        ) : null}
+                        <DataPointsControl
+                            pushData={pushData}
+                            properties={properties}
+                            isDisabled={controlsDisabled || isDataPointsControlDisabled}
+                            showDisabledMessage={isDataPointsControlDisabled}
+                        />
 
                         {featureFlags["enableChartAccessibilityFeatures"] ? (
                             <DistinctPointShapesControl

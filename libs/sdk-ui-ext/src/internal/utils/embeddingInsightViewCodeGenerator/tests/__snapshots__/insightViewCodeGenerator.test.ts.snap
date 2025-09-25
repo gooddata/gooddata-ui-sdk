@@ -11,7 +11,8 @@ const config: IChartConfig = {
     legend: {
         position: "top",
         responsive: "autoPositionWithPopup"
-    }
+    },
+    dataPoints: {visible: "auto"}
 };
 const style = {height: 400};
 
@@ -65,7 +66,8 @@ const config: IChartConfig = {
     legend: {
         position: "top",
         responsive: "autoPositionWithPopup"
-    }
+    },
+    dataPoints: {visible: "auto"}
 };
 const style = {height: 400};
 

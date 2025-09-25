@@ -18,3 +18,9 @@ github.com/gooddata/gooddata-docs-theme v0.0.0-20250814105944-65486e0f9cfb h1:ac
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250814105944-65486e0f9cfb/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250821103203-74c7725a1374 h1:pdQfwqjy/PW2CBh0HlMtgnsSuNHNLP+SyWlACDhSBnU=
 github.com/gooddata/gooddata-docs-theme v0.0.0-20250821103203-74c7725a1374/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250923082246-5b1d8dd060b7 h1:Nngc10J9JAV904CUGjOyua3im6fB4biWZ34weMfSzd0=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250923082246-5b1d8dd060b7/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250923125026-872d754a05c7 h1:nvF4wBIH2xXN3sp46x//06Z/1kjj4PhippnYYpvOgp8=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250923125026-872d754a05c7/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250924092250-449ef78afca9 h1:RmQs22XW4f4rxSdOgVBKVP8t08+UoIeShLQtP8+y3yE=
+github.com/gooddata/gooddata-docs-theme v0.0.0-20250924092250-449ef78afca9/go.mod h1:VVNP6Cmo+vC37RD3T/YHjyU/QdqftGY5z4G513LYyrA=

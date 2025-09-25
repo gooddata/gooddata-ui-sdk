@@ -131,15 +131,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.configureBuckets(newReferencePoint);
 
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(
-            newReferencePoint,
-            !!this.featureFlags["enableWeekFilters"],
-        );
-        newReferencePoint = setBaseChartUiConfigRecommendations(
-            newReferencePoint,
-            this.type,
-            !!this.featureFlags["enableWeekFilters"],
-        );
+        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = setBaseChartUiConfigRecommendations(newReferencePoint, this.type);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

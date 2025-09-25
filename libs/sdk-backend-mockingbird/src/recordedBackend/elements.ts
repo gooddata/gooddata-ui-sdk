@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { flow } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -81,7 +80,7 @@ class RecordedElements implements IElementsQuery {
             );
         }
 
-        let elements = flow(
+        let elements = [
             // resolve limiting items first so that they do not need to care about the other filters
             // and have nice indexes for the limiting strategies
             resolveLimitingItems(
@@ -92,7 +91,7 @@ class RecordedElements implements IElementsQuery {
             ),
             resolveSelectedElements(this.options.elements),
             resolveStringFilter(this.options.filter),
-        )(recording.elements);
+        ].reduce((acc, fn) => fn(acc), recording.elements);
 
         if (this.options.order === "desc") {
             elements = [...elements].reverse();

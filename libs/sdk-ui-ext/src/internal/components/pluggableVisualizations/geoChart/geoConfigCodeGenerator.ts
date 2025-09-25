@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { filter, flow } from "lodash-es";
-
 import {
     IAttribute,
     IInsightDefinition,
@@ -45,16 +43,12 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
 
-    const configFromProperties = flow(
-        Object.entries,
-        (pairs) =>
-            filter(
-                pairs,
-                ([key, value]) =>
-                    supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
-            ),
-        Object.fromEntries,
-    )(withValuesFromContext) as IGeoConfig;
+    const configFromProperties = Object.fromEntries(
+        Object.entries(withValuesFromContext).filter(
+            ([key, value]) =>
+                supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
+        ),
+    ) as unknown as IGeoConfig;
 
     return {
         ...configFromProperties,

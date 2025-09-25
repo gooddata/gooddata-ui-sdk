@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
-import {
-    DataViewFacade,
-    ExplicitDrill,
-    ITableValueColumnDefinition,
-    emptyHeaderTitleFromIntl,
-} from "@gooddata/sdk-ui";
+import { DataViewFacade, ExplicitDrill, ITableValueColumnDefinition } from "@gooddata/sdk-ui";
 
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
-import { extractFormattedValue, transposedMetricCellRenderer } from "../columns/shared.js";
+import {
+    extractFormattedValue,
+    getAttributeHeaderName,
+    transposedMetricCellRenderer,
+} from "../columns/shared.js";
 import { getCellClassName } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
@@ -33,11 +33,7 @@ export function createAttributeHeaderColDef(
         context: {
             columnDefinition,
         },
-        headerName:
-            attributeHeader.attributeHeaderItem.formattedName ??
-            attributeHeader.attributeHeaderItem.name ??
-            attributeHeader.attributeHeaderItem.uri ??
-            emptyHeaderTitleFromIntl(intl),
+        headerName: getAttributeHeaderName(attributeHeader, intl),
         valueGetter: (params) => {
             return extractFormattedValue(params, colId);
         },

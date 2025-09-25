@@ -145,3 +145,41 @@ export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "access
  * @internal
  */
 export type IExportDialogData = Pick<IExportDialogBaseProps, "includeFilterContext" | "mergeHeaders">;
+
+/**
+ * @internal
+ */
+export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
+
+/**
+ * @internal
+ */
+export type PageSize = "A3" | "A4" | "LETTER";
+
+/**
+ * Data returned by PDF export dialog on submit.
+ * @internal
+ */
+export type IExportTabularPdfDialogData = {
+    pageSize?: PageSize;
+    pageOrientation?: PageOrientation;
+    showInfoPage?: boolean;
+};
+
+/**
+ * Props for the ExportTabularPdfDialog component.
+ * @internal
+ */
+export interface IExportTabularPdfDialogProps {
+    pageSize?: PageSize;
+    pageOrientation?: PageOrientation;
+    showInfoPage?: boolean;
+    isShowInfoPageVisible?: boolean;
+    displayCloseButton?: boolean;
+    isPositive?: boolean;
+    isSubmitDisabled?: boolean;
+    cancelButtonText?: string;
+    submitButtonText?: string;
+    onSubmit?: (data: IExportTabularPdfDialogData) => void;
+    onCancel?: () => void;
+}

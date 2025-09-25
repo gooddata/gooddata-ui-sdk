@@ -3,19 +3,13 @@
 import { groupBy, includes, isEmpty } from "lodash-es";
 
 import {
-    DateFilterGranularity,
-    DateGranularity,
     IDateFilterConfig,
     IDateFilterOption,
     IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
     ISettings,
 } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";
-
-const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity["week"];
-const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity["week"];
 
 function getDuplicateIdentifiers(options: IDateFilterOption[]): string[] {
     const groups = groupBy(options, (filter: IDateFilterOption) => filter.localIdentifier);
@@ -118,28 +112,6 @@ export function validateDateFilterConfig(
     return !shouldCheckSelectedOption || isSelectedOptionValid(config) ? "Valid" : "SelectedOptionInvalid";
 }
 
-/**
- * Filters out all weekly presets from the filter config.
- */
-export function filterOutWeeks(config: IDateFilterConfig): IDateFilterConfig {
-    const { relativeForm, relativePresets } = config;
-    const relativeFormProp = relativeForm
-        ? {
-              relativeForm: {
-                  ...relativeForm,
-                  availableGranularities:
-                      relativeForm?.availableGranularities?.filter(isNotWeekGranularity) ?? [],
-              },
-          }
-        : {};
-
-    return {
-        ...config,
-        ...relativeFormProp,
-        relativePresets: relativePresets?.filter(isNotWeekPreset),
-    };
-}
-
 export const FallbackToDefault: DateFilterConfigValidationResult[] = [
     "ConflictingIdentifiers",
     "NoVisibleOptions",
@@ -172,7 +144,5 @@ export function getValidDateFilterConfig(
         ? defaultDateFilterConfig
         : conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true);
 
-    const dateFilterConfig = settings.enableWeekFilters ? validConfig : filterOutWeeks(validConfig);
-
-    return [dateFilterConfig, configValidation];
+    return [validConfig, configValidation];
 }

@@ -24,4 +24,4 @@ export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [
     },
 ];
 
-export const AUTOMATIONS_MAX_HEIGHT = 360;
+export const AUTOMATIONS_MAX_HEIGHT = 328;

@@ -2023,7 +2023,9 @@ exports[`createPivotTableConfig > should create valid config with auto-resize if
 
 exports[`createPivotTableConfig > should create valid config with growToFit if feature flag on and environment !== dashboards 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2036,6 +2038,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
 exports[`createPivotTableConfig > should create valid config with growToFit if feature flag on and environment === analyticalDesigner 1`] = `
 {
   "columnSizing": {
+    "defaultWidth": "autoresizeAll",
     "growToFit": false,
   },
   "enableExecutionCancelling": false,
@@ -2050,6 +2053,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
 exports[`createPivotTableConfig > should create valid config with growToFit if feature flag on and environment === dashboards 1`] = `
 {
   "columnSizing": {
+    "defaultWidth": "autoresizeAll",
     "growToFit": true,
   },
   "enableExecutionCancelling": false,
@@ -2059,7 +2063,19 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
 
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag off and configs are provided 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "columnWidths": [
+      {
+        "attributeColumnWidthItem": {
+          "attributeIdentifier": "294512a6b2ed4be8bd3948dd14db1950",
+          "width": {
+            "value": 740,
+          },
+        },
+      },
+    ],
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2071,7 +2087,9 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag on and configs are empty 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2083,7 +2101,9 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag on and configs are not defined 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2106,6 +2126,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
         },
       },
     ],
+    "defaultWidth": "autoresizeAll",
   },
   "enableExecutionCancelling": false,
   "menu": {
@@ -2118,7 +2139,9 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 
 exports[`createPivotTableConfig > should create valid config with menus for non-dashboard env 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2130,7 +2153,9 @@ exports[`createPivotTableConfig > should create valid config with menus for non-
 
 exports[`createPivotTableConfig > should create valid config with menus for undefined env 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2142,7 +2167,9 @@ exports[`createPivotTableConfig > should create valid config with menus for unde
 
 exports[`createPivotTableConfig > should create valid config with separators 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2157,7 +2184,9 @@ exports[`createPivotTableConfig > should create valid config with separators 1`]
 
 exports[`createPivotTableConfig > should create valid config with total rows if feature flag off 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2169,7 +2198,9 @@ exports[`createPivotTableConfig > should create valid config with total rows if 
 
 exports[`createPivotTableConfig > should create valid config with total rows if feature flag on 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+  },
   "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
@@ -2182,7 +2213,10 @@ exports[`createPivotTableConfig > should create valid config with total rows if 
 
 exports[`createPivotTableConfig > should create valid config without menus for dashboard env 1`] = `
 {
-  "columnSizing": {},
+  "columnSizing": {
+    "defaultWidth": "autoresizeAll",
+    "growToFit": true,
+  },
   "enableExecutionCancelling": false,
   "separators": undefined,
 }

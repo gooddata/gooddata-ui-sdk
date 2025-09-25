@@ -400,18 +400,6 @@ export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boole
 );
 
 /**
- * Returns whether Kpi drills in embedded mode are disabled.
- *
- * @public
- */
-export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.hideKpiDrillInEmbedded ?? false;
-    },
-);
-
-/**
  * Returns whether insight export scheduling is enabled.
  *
  * @public

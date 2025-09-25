@@ -35,6 +35,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         loadNextPage,
         setSelectedItemIds,
         onSearch,
+        accessibilityConfig,
     } = props;
 
     return (
@@ -49,28 +50,34 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 items={items}
                 isSmall={isSmall}
                 onSearch={onSearch}
+                accessibilityConfig={accessibilityConfig}
             />
 
-            <div role="grid">
+            <div
+                role="grid"
+                aria-rowcount={totalItemsCount}
+                aria-colcount={bulkActions ? columns.length + 1 : columns.length}
+            >
                 {renderHeader()}
-                {items.length === 0 && !isLoading && renderEmptyState()}
+                <UiAsyncTableBody
+                    items={items}
+                    maxHeight={maxHeight}
+                    itemHeight={itemHeight}
+                    skeletonItemsCount={skeletonItemsCount}
+                    hasNextPage={hasNextPage}
+                    isLoading={isLoading}
+                    onItemClick={props.onItemClick}
+                    loadNextPage={loadNextPage}
+                    columns={columns}
+                    bulkActions={bulkActions}
+                    scrollToIndex={scrollToIndex}
+                    shouldLoadNextPage={shouldLoadNextPage}
+                    renderItem={renderItem}
+                    isLargeRow={isLargeRow}
+                />
             </div>
-            <UiAsyncTableBody
-                items={items}
-                maxHeight={maxHeight}
-                itemHeight={itemHeight}
-                skeletonItemsCount={skeletonItemsCount}
-                hasNextPage={hasNextPage}
-                isLoading={isLoading}
-                onItemClick={props.onItemClick}
-                loadNextPage={loadNextPage}
-                columns={columns}
-                bulkActions={bulkActions}
-                scrollToIndex={scrollToIndex}
-                shouldLoadNextPage={shouldLoadNextPage}
-                renderItem={renderItem}
-                isLargeRow={isLargeRow}
-            />
+
+            {items.length === 0 && !isLoading && renderEmptyState()}
         </div>
     );
 }
@@ -89,6 +96,7 @@ const useAsyncTable = <T extends { id: string }>({
     setSelectedItemIds,
     isSmall,
     onItemClick,
+    accessibilityConfig,
 }: UiAsyncTableProps<T>) => {
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
@@ -148,10 +156,20 @@ const useAsyncTable = <T extends { id: string }>({
                     hasCheckbox={!!bulkActions}
                     isLarge={isLargeRow}
                     onClick={onItemClick}
+                    accessibilityConfig={accessibilityConfig}
                 />
             );
         },
-        [columns, renderItemProp, onItemSelect, isItemSelected, onItemClick, bulkActions, isLargeRow],
+        [
+            columns,
+            renderItemProp,
+            onItemSelect,
+            isItemSelected,
+            onItemClick,
+            bulkActions,
+            isLargeRow,
+            accessibilityConfig,
+        ],
     );
 
     const renderHeader = useCallback(() => {
@@ -167,6 +185,7 @@ const useAsyncTable = <T extends { id: string }>({
                 width={width}
                 small={isSmall}
                 largeRow={isLargeRow}
+                accessibilityConfig={accessibilityConfig}
             />
         );
     }, [
@@ -179,6 +198,7 @@ const useAsyncTable = <T extends { id: string }>({
         sortDirection,
         isLargeRow,
         isSmall,
+        accessibilityConfig,
     ]);
 
     const renderEmptyState = useCallback(() => {

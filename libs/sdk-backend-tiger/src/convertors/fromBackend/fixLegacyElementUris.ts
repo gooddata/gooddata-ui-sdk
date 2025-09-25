@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { flow, isEmpty } from "lodash-es";
+
+import { isEmpty } from "lodash-es";
 
 import {
     IInsightDefinition,
@@ -192,11 +193,12 @@ function fixVisualizationPropertiesColumnWidths(properties: VisualizationPropert
 export function fixInsightLegacyElementUris(insight: IInsightDefinition): IInsightDefinition {
     const fixedSortItems = fixSortItems(insight.insight.sorts);
 
-    const fixedProperties = flow(
-        fixVisualizationPropertiesColorMapping,
-        fixVisualizationPropertiesColumnWidths,
-        (properties) => addVisualizationPropertiesSortItems(properties, fixedSortItems),
-    )(insight.insight.properties);
+    const fixedProperties = addVisualizationPropertiesSortItems(
+        fixVisualizationPropertiesColumnWidths(
+            fixVisualizationPropertiesColorMapping(insight.insight.properties),
+        ),
+        fixedSortItems,
+    );
 
     return {
         ...insight,

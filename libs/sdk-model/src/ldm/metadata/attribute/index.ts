@@ -1,6 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { ObjRef } from "../../../objRef/index.js";
 import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm/index.js";
+import { IDataSetMetadataObject } from "../dataSet/index.js";
 import { IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
@@ -15,6 +17,11 @@ export interface IAttributeMetadataObject extends IMetadataObject {
      * Whether the attribute is locked for editing
      */
     isLocked?: boolean;
+
+    /**
+     * Dataset the attribute belongs to (if supplied by backend include)
+     */
+    dataSet?: IDataSetMetadataObject;
 
     /**
      * A reference to the attribute displayForm that represents implicit drill down step

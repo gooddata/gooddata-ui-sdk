@@ -4,13 +4,13 @@ import { useIntl } from "react-intl";
 
 import { ExportDialog } from "@gooddata/sdk-ui-kit";
 
-import { useExportDialogContext } from "../dashboardContexts/index.js";
+import { useExportXlsxDialogContext } from "../dashboardContexts/index.js";
 
 /**
  * @internal
  */
-export function ExportDialogProvider() {
-    const { closeDialog, dialogConfig, isOpen } = useExportDialogContext();
+export function ExportXlsxDialogProvider() {
+    const { closeDialog, dialogConfig, isOpen } = useExportXlsxDialogContext();
     const intl = useIntl();
 
     return isOpen ? (

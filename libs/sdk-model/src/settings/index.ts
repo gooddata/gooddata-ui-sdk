@@ -58,6 +58,11 @@ export interface ISettings {
     weekStart?: WeekStart;
 
     /**
+     * Locale code to use for metadata.
+     */
+    metadataLocale?: string;
+
+    /**
      * Locale code to use for date formatting.
      */
     formatLocale?: string;
@@ -133,50 +138,14 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
 
     /**
-     * Disables Kpi widget drills in embedded mode.
-     */
-    hideKpiDrillInEmbedded?: boolean;
-
-    /**
      * Allows configuration of axis name position and visibility for Pluggable Visualizations.
      */
     enableAxisNameConfiguration?: boolean;
 
     /**
-     * Indicates whether PivotTable columns should be auto-resized to fit viewport before
-     * the table is shown to the user.
-     */
-    enableTableColumnsAutoResizing?: boolean;
-
-    /**
-     * Indicates whether PivotTable should grow to fill all available, allocated space.
-     */
-    enableTableColumnsGrowToFit?: boolean;
-
-    /**
-     * Indicates whether PivotTable manual resizing should be persisted or not.
-     */
-    enableTableColumnsManualResizing?: boolean;
-
-    /**
-     * Indicates whether the Bullet Chart is available in AD.
-     */
-    enableBulletChart?: boolean;
-
-    /**
-     * Indicates whether the GeoPushpin Chart is available in AD.
-     */
-    enablePushpinGeoChart?: boolean;
-
-    /**
      * Indicates whether the Waterfall Chart is available in AD.
      */
     enableWaterfallChart?: boolean;
-
-    /**
-     * Indicates whether week filtering is available in AD.
-     */
-    enableWeekFilters?: boolean;
 
     /**
      * Indicates whether color picker config panel should allow users to select custom RGB colors.
@@ -187,11 +156,6 @@ export interface ISettings {
      * Indicates whether the catalog groups in analytical designer are expanded by default.
      */
     ADCatalogGroupsExpanded?: boolean;
-
-    /**
-     * Indicates whether data point visibility configuration is available in AD
-     */
-    enableHidingOfDataPoints?: boolean;
 
     /**
      * Indicates whether multiple dates can be put into buckets

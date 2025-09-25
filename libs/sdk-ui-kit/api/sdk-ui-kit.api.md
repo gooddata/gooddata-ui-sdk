@@ -438,7 +438,7 @@ export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, favic
 export function Dropdown(props: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
-export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, onClick, children, dropdownId, buttonRef, }: IDropdownButtonProps): JSX.Element;
+export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef, }: IDropdownButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
@@ -480,6 +480,9 @@ export const ExportDialog: NamedExoticComponent<IExportDialogProps>;
 
 // @internal (undocumented)
 export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
+
+// @internal (undocumented)
+export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
 
 // @internal (undocumented)
 export const FilterLabel: FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
@@ -1675,6 +1678,8 @@ export interface IDropdownButtonProps {
     // (undocumented)
     id?: string;
     // (undocumented)
+    isFullWidth?: boolean;
+    // (undocumented)
     isOpen?: boolean;
     // (undocumented)
     isSmall?: boolean;
@@ -1975,6 +1980,39 @@ export type IExportDialogData = Pick<IExportDialogBaseProps, "includeFilterConte
 export interface IExportDialogProps extends IExportDialogBaseProps {
     // (undocumented)
     containerClassName?: string;
+}
+
+// @internal
+export type IExportTabularPdfDialogData = {
+    pageSize?: PageSize;
+    pageOrientation?: PageOrientation;
+    showInfoPage?: boolean;
+};
+
+// @internal
+export interface IExportTabularPdfDialogProps {
+    // (undocumented)
+    cancelButtonText?: string;
+    // (undocumented)
+    displayCloseButton?: boolean;
+    // (undocumented)
+    isPositive?: boolean;
+    // (undocumented)
+    isShowInfoPageVisible?: boolean;
+    // (undocumented)
+    isSubmitDisabled?: boolean;
+    // (undocumented)
+    onCancel?: () => void;
+    // (undocumented)
+    onSubmit?: (data: IExportTabularPdfDialogData) => void;
+    // (undocumented)
+    pageOrientation?: PageOrientation;
+    // (undocumented)
+    pageSize?: PageSize;
+    // (undocumented)
+    showInfoPage?: boolean;
+    // (undocumented)
+    submitButtonText?: string;
 }
 
 // @internal (undocumented)
@@ -5522,6 +5560,12 @@ export function OverlayControllerProvider({ children, overlayController }: IOver
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
+export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
+
+// @internal (undocumented)
+export type PageSize = "A3" | "A4" | "LETTER";
+
+// @internal (undocumented)
 export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
 
 // @internal (undocumented)
@@ -5863,6 +5907,16 @@ export function UiAsyncTable<T extends {
 }>(props: UiAsyncTableProps<T>): JSX.Element;
 
 // @internal (undocumented)
+export interface UiAsyncTableAccessibilityConfig<T> {
+    // (undocumented)
+    checkboxAllAriaLabel?: string;
+    // (undocumented)
+    getCheckboxItemAriaLabel?: (item: T) => string;
+    // (undocumented)
+    searchAriaLabel?: string;
+}
+
+// @internal (undocumented)
 export interface UiAsyncTableBulkAction {
     // (undocumented)
     label: string;
@@ -5950,6 +6004,8 @@ export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) =
 export interface UiAsyncTableProps<T extends {
     id: string;
 }> {
+    // (undocumented)
+    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
     // (undocumented)
     bulkActions?: Array<UiAsyncTableBulkAction>;
     // (undocumented)
@@ -6071,6 +6127,8 @@ export interface UiButtonProps {
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
     label: string;
     // (undocumented)
     maxWidth?: number;
@@ -6108,10 +6166,12 @@ export interface UiCardProps {
 }
 
 // @internal (undocumented)
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, }: UiCheckboxProps): JSX.Element;
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, }: UiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiCheckboxProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     checked: boolean;
     // (undocumented)
@@ -6122,10 +6182,12 @@ export interface UiCheckboxProps {
     onChange?: (e: ChangeEvent) => void;
     // (undocumented)
     preventDefault?: boolean;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, }: UiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, }: UiChipProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -6141,6 +6203,8 @@ export interface UiChipProps {
     isActive?: boolean;
     // (undocumented)
     isDeletable?: boolean;
+    // (undocumented)
+    isExpandable?: boolean;
     // (undocumented)
     isLocked?: boolean;
     // (undocumented)
@@ -6308,7 +6372,9 @@ export function UiLink({ variant, flipUnderline, fullWidth, ...anchorProps }: IU
 export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
 
 // @internal (undocumented)
-export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
+    "aria-controls"?: string;
+};
 
 // @internal (undocumented)
 export interface UiListboxInteractiveItemProps<T> {

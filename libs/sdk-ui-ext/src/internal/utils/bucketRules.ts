@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { flatMap, isEmpty, reduce } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -15,7 +16,7 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
 } from "./bucketHelper.js";
-import { ALL_TIME, ATTRIBUTE, DATE, FILTERS, GRANULARITY, METRIC } from "../constants/bucket.js";
+import { ALL_TIME, ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import {
     INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
     INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
@@ -156,14 +157,6 @@ export function hasUsedDate(buckets: IBucketOfFun[], filters: IFilters): boolean
     return hasDateInCategories(buckets) || hasGlobalDateFilter(filters);
 }
 
-function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
-    if (hasDateInCategories(buckets)) {
-        return getAllAttributeItems(buckets).every((item) => item?.granularity !== GRANULARITY.week);
-    }
-
-    return getBucketItems(buckets, FILTERS).every((item) => item?.granularity !== GRANULARITY.week);
-}
-
 function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
     return !getMeasureItems(buckets).some((item: IBucketItem) => {
         const filters = item?.filters;
@@ -230,21 +223,12 @@ export function isShowInPercentAllowed(
     );
 }
 
-export function isComparisonOverTimeAllowed(
-    buckets: IBucketOfFun[],
-    filters: IFilters,
-    weekFiltersEnabled: boolean,
-): boolean {
-    const rules = weekFiltersEnabled ? [hasNoStacksWithDate] : [hasNoStacksWithDate, hasNoWeekGranularity];
-
-    return allRulesMet(rules, buckets, filters) && hasGlobalDateFilter(filters);
+export function isComparisonOverTimeAllowed(buckets: IBucketOfFun[], filters: IFilters): boolean {
+    return allRulesMet([hasNoStacksWithDate], buckets, filters) && hasGlobalDateFilter(filters);
 }
 
-export function overTimeComparisonRecommendationEnabled(
-    referencePoint: IReferencePoint,
-    weekFiltersEnabled: boolean,
-): boolean {
-    const baseRules = [
+export function overTimeComparisonRecommendationEnabled(referencePoint: IReferencePoint): boolean {
+    const rules = [
         noDerivedMeasurePresent,
         hasOneMeasure,
         hasFirstDate,
@@ -252,7 +236,6 @@ export function overTimeComparisonRecommendationEnabled(
         hasOneCategory,
         hasNoMeasureDateFilter,
     ];
-    const rules = weekFiltersEnabled ? baseRules : [...baseRules, hasNoWeekGranularity];
 
     return (
         allRulesMet(rules, referencePoint?.buckets ?? []) &&

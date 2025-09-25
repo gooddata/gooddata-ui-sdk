@@ -20,7 +20,6 @@ describe("insightViewCodeGenerator tests", () => {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,
-                        enableHidingOfDataPoints: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -51,7 +50,6 @@ describe("insightViewCodeGenerator tests", () => {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,
-                        enableHidingOfDataPoints: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -72,7 +70,6 @@ describe("insightViewCodeGenerator tests", () => {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,
-                        enableHidingOfDataPoints: true,
                         locale: "de-DE",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -93,7 +90,6 @@ describe("insightViewCodeGenerator tests", () => {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,
-                        enableHidingOfDataPoints: true,
                         locale: "de-DE",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",

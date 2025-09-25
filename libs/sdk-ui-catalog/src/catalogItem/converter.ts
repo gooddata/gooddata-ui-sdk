@@ -108,6 +108,7 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
         isLocked: fact.isLocked ?? false,
+        dataSet: fact.dataSet,
     };
 }
 
@@ -123,6 +124,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
         isLocked: attribute.isLocked ?? false,
+        dataSet: attribute.dataSet,
     };
 }
 

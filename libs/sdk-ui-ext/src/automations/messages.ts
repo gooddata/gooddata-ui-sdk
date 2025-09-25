@@ -382,6 +382,25 @@ export const messages = defineMessages({
     emptyStateAlertDescription: {
         id: "automations.emptyState.alert.description",
     },
+    // Accessibility messages
+    accessibilitySelectAllAlerts: {
+        id: "automations.accessibility.selectAll.alerts",
+    },
+    accessibilitySelectAllSchedules: {
+        id: "automations.accessibility.selectAll.schedules",
+    },
+    accessibilitySelectAlert: {
+        id: "automations.accessibility.select.alert",
+    },
+    accessibilitySelectSchedule: {
+        id: "automations.accessibility.select.schedule",
+    },
+    accessibilitySearchAlerts: {
+        id: "automations.accessibility.search.alerts",
+    },
+    accessibilitySearchSchedules: {
+        id: "automations.accessibility.search.schedules",
+    },
 });
 
 export const getActionMessages = (type: AutomationsType) => {

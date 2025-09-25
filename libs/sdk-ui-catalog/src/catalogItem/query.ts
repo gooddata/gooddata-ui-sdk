@@ -88,7 +88,8 @@ export function getAttributesQuery({
             .getAttributesQuery()
             .withPage(0)
             .withSize(pageSize)
-            //.withInclude(["createdBy"])
+            // TODO: include createdBy once available
+            .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
             .withFilter({ search, id, tags })
@@ -111,7 +112,8 @@ export function getFactsQuery({
             .getFactsQuery()
             .withPage(0)
             .withSize(pageSize)
-            //.withInclude(["createdBy"])
+            // TODO: include createdBy once available
+            .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
             .withFilter({ search, id, tags })

@@ -902,6 +902,7 @@ export interface IAttributeLocatorItemBody {
 
 // @public
 export interface IAttributeMetadataObject extends IMetadataObject {
+    dataSet?: IDataSetMetadataObject;
     displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
     drillToAttributeLink?: ObjRef;
@@ -2027,6 +2028,7 @@ export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIME
 
 // @public
 export interface IFactMetadataObject extends IMetadataObject {
+    dataSet?: IDataSetMetadataObject;
     isLocked?: boolean;
     // (undocumented)
     type: "fact";
@@ -3527,7 +3529,6 @@ export interface ISettings {
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableAxisNameViewByTwoAttributes?: boolean;
-    enableBulletChart?: boolean;
     enableCentralizedAutomationManagement?: boolean;
     enableChartAccessibilityFeatures?: boolean;
     enableChartsSorting?: boolean;
@@ -3569,7 +3570,6 @@ export interface ISettings {
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
     enableHeadlineExport?: boolean;
-    enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
@@ -3618,7 +3618,6 @@ export interface ISettings {
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
     enablePreAggregationDatasets?: boolean;
-    enablePushpinGeoChart?: boolean;
     enableRawExports?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
@@ -3641,24 +3640,20 @@ export interface ISettings {
     enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
-    enableTableColumnsAutoResizing?: boolean;
-    enableTableColumnsGrowToFit?: boolean;
-    enableTableColumnsManualResizing?: boolean;
     enableToDateFilters?: boolean;
     enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
-    enableWeekFilters?: boolean;
     enableWidgetExportPdf?: boolean;
     enableWidgetExportPngImage?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     formatLocale?: string;
-    hideKpiDrillInEmbedded?: boolean;
     // (undocumented)
     hidePixelPerfectExperience?: boolean;
     llmEndpoint?: ILlmEndpoint;
+    metadataLocale?: string;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;

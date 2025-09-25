@@ -12,6 +12,7 @@ export type {
     AutomationColumnDefinitions,
     AutomationsFilterName,
     AutomationsFilterPreselectName,
+    AutomationsFilterPreselectValue,
     AutomationsPreselectedFilters,
     AutomationsAvailableFilters,
     AutomationsInvalidateItemsRef,

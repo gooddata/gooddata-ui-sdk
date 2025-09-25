@@ -2,8 +2,6 @@
 
 import { useMemo } from "react";
 
-import { flow } from "lodash-es";
-
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
 import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResize.js";
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
@@ -41,7 +39,7 @@ export function useAgGridReactProps() {
     const enhanceWithVirtualColumnAutoResize = useVirtualColumnAutoResize();
 
     return useMemo<AgGridProps>(() => {
-        return flow(
+        return [
             enhanceWithAgGridApi,
             enhanceWithServerSideRowModel,
             enhanceWithColumnDefs,
@@ -55,7 +53,7 @@ export function useAgGridReactProps() {
             enhanceWithHeaderComponents,
             enhanceWithAfterRender,
             enhanceWithVirtualColumnAutoResize,
-        )(AG_GRID_DEFAULT_PROPS);
+        ].reduce((acc, fn) => fn(acc), AG_GRID_DEFAULT_PROPS);
     }, [
         enhanceWithAgGridApi,
         enhanceWithServerSideRowModel,

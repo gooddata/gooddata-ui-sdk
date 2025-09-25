@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useRef } from "react";
+import { KeyboardEventHandler, useCallback, useRef } from "react";
 
 import cx from "classnames";
 
-import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Dropdown, isArrowKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
@@ -64,6 +64,12 @@ export function AttributeFilterDropdown() {
 
     const isMultiselect = selectionMode !== "single";
     const showSelectionCount = isMultiselect && selectionElements.length !== 0;
+    const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e) => {
+        //stop arrow keys from leaking to filter bar
+        if (isArrowKey(e)) {
+            e.stopPropagation();
+        }
+    }, []);
 
     return (
         <Dropdown
@@ -121,6 +127,7 @@ export function AttributeFilterDropdown() {
                     id={ariaAttributes.id}
                     className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile })}
                     style={{ height: fullscreenOnMobile && isMobile ? "100%" : "auto" }}
+                    onKeyDown={handleKeyDown}
                 >
                     <DropdownBodyComponent
                         onApplyButtonClick={() => {

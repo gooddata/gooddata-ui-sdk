@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { filter, union } from "lodash-es";
+import { union } from "lodash-es";
 
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
@@ -514,8 +514,8 @@ export const selectSectionModification: (
                     return item?.modification;
                 });
 
-                const inserted = filter(modifications, (a) => a === "insertedByPlugin");
-                const modified = filter(modifications, (a) => a === "modifiedByPlugin");
+                const inserted = modifications.filter((a) => a === "insertedByPlugin");
+                const modified = modifications.filter((a) => a === "modifiedByPlugin");
 
                 return [
                     ...(inserted.length === refs.length ? ["insertedByPlugin"] : []),

@@ -1,4 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
+
+import { IDataSetMetadataObject } from "../dataSet/index.js";
 import { IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
@@ -13,6 +15,11 @@ export interface IFactMetadataObject extends IMetadataObject {
      * Whether the fact is locked for editing
      */
     isLocked?: boolean;
+
+    /**
+     * DataSet the fact belongs to (if supplied by backend include)
+     */
+    dataSet?: IDataSetMetadataObject;
 }
 
 /**

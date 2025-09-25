@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import { format } from "date-fns";
-import { flow, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
@@ -160,7 +160,7 @@ export function DateFilterCore({
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateFilter" }));
 
     const filteredFilterOptions = useMemo(() => {
-        return flow(filterVisibleDateFilterOptions, sanitizePresetIntervals)(filterOptions);
+        return sanitizePresetIntervals(filterVisibleDateFilterOptions(filterOptions));
     }, [filterOptions]);
 
     const closeConfiguration = () => {

@@ -157,6 +157,7 @@ export type {
     ChangeIgnoreExecutionTimestamp,
     ChangeIgnoreExecutionTimestampPayload,
     ExportDashboardToPresentationPayload,
+    PdfConfiguration,
 } from "./dashboard.js";
 export {
     InitialLoadCorrelationId,

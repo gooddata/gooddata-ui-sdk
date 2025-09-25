@@ -86,12 +86,12 @@
                 &:focus-visible,
                 &:hover {
                     background-color: var(--gd-palette-primary-base-d06);
-
                     box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-complementary-9-t85)
                         inset;
                 }
 
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     background-color: var(--gd-palette-primary-base-d12);
                     box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
                         inset;
@@ -124,7 +124,8 @@
                         inset;
                 }
 
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
 
                     color: var(--gd-palette-complementary-8);
@@ -153,7 +154,8 @@
             &:not(&:disabled) {
                 &:hover,
                 &:focus-visible,
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
 
                     color: var(--gd-palette-complementary-8);
@@ -184,7 +186,8 @@
             &:not(&:disabled) {
                 &:hover,
                 &:focus-visible,
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     text-decoration: underline;
                 }
             }
@@ -224,7 +227,8 @@
                         inset;
                 }
 
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     border-color: var(--gd-palette-complementary-9-t80);
                     background-color: var(--gd-palette-error-base-d20);
                     box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
@@ -252,7 +256,8 @@
             &:not(&:disabled) {
                 &:hover,
                 &:focus-visible,
-                &:active {
+                &:active,
+                &#{$root}--isSelected {
                     --gd-icon-fill-color: var(--gd-palette-complementary-0);
                     opacity: 1;
 

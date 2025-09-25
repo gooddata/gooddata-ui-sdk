@@ -33,14 +33,11 @@ export const DefaultUiSettings: ISettings = {
     enableNewADFilterBar: true,
     enableMeasureValueFilters: true,
     hidePixelPerfectExperience: true,
-    enableBulletChart: true,
     enableCsvUploader: true,
     platformEdition: "enterprise",
     portalLogoPage: false,
     analyticalDesigner: true,
-    enableWeekFilters: true,
     enableAnalyticalDashboards: true,
-    enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
     enableKPIDashboardDependentFilters: false,
@@ -49,11 +46,6 @@ export const DefaultUiSettings: ISettings = {
     enableEmbedButtonInKD: true,
     enableEmbedButtonInAD: true,
     enableHidingOfWidgetTitle: true,
-
-    // pivot table specific
-    enableTableColumnsManualResizing: true,
-    enableTableColumnsAutoResizing: true,
-    enableTableColumnsGrowToFit: true,
 
     // embedding AD in KD
     enableExploreInsightsFromKD: true,
@@ -97,7 +89,6 @@ export const DefaultUiSettings: ISettings = {
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
 
-    enablePushpinGeoChart: true,
     tableSortingCheckDisabled: true,
     enablePivotTableTransposition: true,
     enableColumnHeadersPosition: true,

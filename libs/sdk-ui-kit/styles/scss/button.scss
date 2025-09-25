@@ -55,6 +55,10 @@
             button-variables.$button-normal-active-gradient-bottom
         );
     }
+
+    &.is-full-width {
+        width: 100%;
+    }
 }
 
 .gd-button-positive,

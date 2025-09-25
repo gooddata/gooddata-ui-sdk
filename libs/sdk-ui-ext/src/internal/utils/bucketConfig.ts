@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, includes, isEmpty, isEqual, set } from "lodash-es";
 
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
@@ -27,7 +28,6 @@ function getTypeOfDerivedToKeep(
 
 export function configureOverTimeComparison(
     extendedReferencePoint: IExtendedReferencePoint,
-    weekFiltersEnabled: boolean,
 ): IExtendedReferencePoint {
     let newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
 
@@ -43,7 +43,7 @@ export function configureOverTimeComparison(
         supportedOverTimeComparisonTypes,
         appliedComparisonType,
     );
-    const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters, weekFiltersEnabled);
+    const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters);
     const originalBuckets = cloneDeep(buckets);
 
     buckets.forEach((bucket) => {

@@ -144,11 +144,8 @@ describe("PluggablePivotTable", () => {
             expect(renderEl).toBeUndefined();
         });
 
-        it("should have onColumnResized callback when FF enableTableColumnsManualResizing is set to true", () => {
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: { enableTableColumnsManualResizing: true },
-            });
+        it("should have onColumnResized callback", () => {
+            const pivotTable = createComponent();
 
             const options = getDefaultOptions();
             pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
@@ -158,22 +155,6 @@ describe("PluggablePivotTable", () => {
             expect(renderEl.type).toBe(CorePivotTable);
 
             expect(renderEl.props.onColumnResized).toBeInstanceOf(Function);
-        });
-
-        it("should not have onColumnResized callback when FF enableTableColumnsManualResizing is set to false", () => {
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: { enableTableColumnsManualResizing: false },
-            });
-
-            const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
-
-            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
-            expect(renderEl).toBeDefined();
-            expect(renderEl.type).toBe(CorePivotTable);
-
-            expect(renderEl.props.onColumnResized).toBeUndefined();
         });
 
         it("should render PivotTable passing down all the necessary properties", () => {
@@ -857,60 +838,48 @@ describe("createPivotTableConfig", () => {
         ["config with menus for non-dashboard env", {}, "none", {}, undefined],
         ["config with menus for undefined env", {}, "none", {}, undefined],
         ["config with separators", { separators: { decimal: ".", thousand: "-" } }, "none", {}, undefined],
-        [
-            "config with auto-resize if feature flag on",
-            {},
-            "none",
-            { enableTableColumnsAutoResizing: true },
-            undefined,
-        ],
+        ["config with auto-resize if feature flag on", {}, "none", {}, undefined],
         [
             "config with growToFit if feature flag on and environment !== dashboards",
             {},
             "none",
-            { enableTableColumnsGrowToFit: true },
+            {},
             undefined,
         ],
         [
             "config with growToFit if feature flag on and environment === dashboards",
             {},
             "dashboards",
-            { enableTableColumnsGrowToFit: true },
+            {},
             undefined,
         ],
         [
             "config with growToFit if feature flag on and environment === analyticalDesigner",
             {},
             "analyticalDesigner",
-            { enableTableColumnsGrowToFit: true },
+            {},
             undefined,
         ],
         [
             "config with manualResizing if feature flag on and configs are not defined",
             {},
             "none",
-            { enableTableColumnsManualResizing: true },
+            {},
             undefined,
         ],
-        [
-            "config with manualResizing if feature flag on and configs are empty",
-            {},
-            "none",
-            { enableTableColumnsManualResizing: true },
-            [],
-        ],
+        ["config with manualResizing if feature flag on and configs are empty", {}, "none", {}, []],
         [
             "config with manualResizing if feature flag on and configs are provided",
             {},
             "none",
-            { enableTableColumnsManualResizing: true },
+            {},
             columnWidths,
         ],
         [
             "config with manualResizing if feature flag off and configs are provided",
             {},
             "none",
-            { enableTableColumnsManualResizing: false },
+            {},
             columnWidths,
         ],
         ["config with total rows if feature flag on", {}, "none", { enableTableTotalRows: true }, undefined],

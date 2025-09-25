@@ -12,6 +12,7 @@ import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
+import { ASYNC_TABLE_FILTER_LABEL_ID } from "./constants.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
     const {
@@ -20,6 +21,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
         hasContent,
         checkbox,
         isCheckboxDisabled,
+        checkboxAriaLabel,
         handleCheckboxChange,
         renderBulkActions,
         renderFilters,
@@ -32,6 +34,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
                 checked={isChecked}
                 indeterminate={isCheckboxIndeterminate}
                 disabled={isCheckboxDisabled}
+                ariaLabel={checkboxAriaLabel}
             />
             {renderBulkActions()}
             {renderFilters()}
@@ -50,6 +53,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     items,
     isSmall,
     onSearch,
+    accessibilityConfig,
 }: UiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
@@ -89,18 +93,21 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     const renderFilters = useCallback(() => {
         return filters?.length ? (
             <>
-                <div className={e("toolbar-label")}>{intl.formatMessage(messages["filterLabel"])}</div>
-                {filters.map((filter) => (
-                    <UiAsyncTableFilter
-                        isSmall={isSmall ? !!selectedItemIds?.length : null}
-                        isFiltersTooLarge={isFiltersTooLarge}
-                        key={filter.label}
-                        {...filter}
-                    />
-                ))}
+                <div className={e("toolbar-label")} id={ASYNC_TABLE_FILTER_LABEL_ID}>
+                    {intl.formatMessage(messages["filterLabel"])}
+                </div>
+                <div className={e("toolbar-filters")} aria-labelledby={ASYNC_TABLE_FILTER_LABEL_ID}>
+                    {filters.map((filter) => (
+                        <UiAsyncTableFilter
+                            isFiltersTooLarge={isFiltersTooLarge}
+                            key={filter.label}
+                            {...filter}
+                        />
+                    ))}
+                </div>
             </>
         ) : null;
-    }, [filters, intl, isSmall, selectedItemIds?.length, isFiltersTooLarge]);
+    }, [filters, intl, isFiltersTooLarge]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
@@ -113,14 +120,14 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                     clearOnEsc
                     placeholder={placeholder}
                     accessibilityConfig={{
-                        ariaLabel: placeholder,
+                        ariaLabel: accessibilityConfig?.searchAriaLabel ?? placeholder,
                     }}
                     value={searchValue}
                     onChange={setSearchValue}
                 />
             </div>
         ) : null;
-    }, [onSearch, intl, searchValue, setSearchValue]);
+    }, [onSearch, intl, searchValue, setSearchValue, accessibilityConfig?.searchAriaLabel]);
 
     const hasContent = useMemo(() => {
         return filters?.length || bulkActions;
@@ -134,12 +141,15 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         return !!bulkActions && selectedItemIds?.length !== items.length;
     }, [bulkActions, selectedItemIds, items]);
 
+    const checkboxAriaLabel = accessibilityConfig?.checkboxAllAriaLabel;
+
     return {
         isChecked,
         isCheckboxIndeterminate,
         hasContent,
         checkbox: !!bulkActions,
         isCheckboxDisabled,
+        checkboxAriaLabel,
         handleCheckboxChange,
         renderBulkActions,
         renderFilters,

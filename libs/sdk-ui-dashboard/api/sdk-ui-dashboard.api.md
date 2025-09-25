@@ -3812,7 +3812,7 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
 }
 
 // @beta
-export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], fileName?: string, correlationId?: string): ExportDashboardToExcel;
+export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], fileName?: string, format?: "XLSX" | "PDF", pdfConfiguration?: PdfConfiguration, correlationId?: string): ExportDashboardToExcel;
 
 // @beta (undocumented)
 export interface ExportDashboardToExcelPayload {
@@ -3821,7 +3821,11 @@ export interface ExportDashboardToExcelPayload {
     // (undocumented)
     fileName?: string;
     // (undocumented)
+    format?: "XLSX" | "PDF";
+    // (undocumented)
     mergeHeaders: boolean;
+    // (undocumented)
+    pdfConfiguration?: PdfConfiguration;
     // (undocumented)
     widgetIds?: string[];
 }
@@ -7312,6 +7316,13 @@ export type OptionalVisualizationSwitcherToolbarComponentProvider = OptionalProv
 // @public (undocumented)
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
 
+// @beta (undocumented)
+export type PdfConfiguration = {
+    pageSize?: "A3" | "A4" | "LETTER";
+    pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+    showInfoPage?: boolean;
+};
+
 // @public (undocumented)
 export interface PermissionsState {
     // (undocumented)
@@ -8965,9 +8976,6 @@ export const selectHasCatalogMeasures: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectHasSomeExecutionResult: DashboardSelector<boolean>;
-
-// @public
-export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIgnoredDrillDownHierarchiesByWidgetRef: (ref: ObjRef) => DashboardSelector<IDrillDownReference[]>;

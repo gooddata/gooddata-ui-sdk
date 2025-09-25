@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { flow } from "lodash-es";
 import { LRUCache } from "lru-cache";
 
 import {
@@ -19,7 +18,6 @@ import {
 
 import {
     DashboardLayoutItemModifications,
-    IDashboardLayoutItemBuilder,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 
@@ -40,11 +38,11 @@ export const getMemoizedWidgetSanitizer =
             const cacheKey = `${stringify(item.facade().raw(), { space: 0 })}__${insightAvailable}`;
 
             if (!cache.has(cacheKey)) {
-                const resultBuilder: IDashboardLayoutItemBuilder<TWidget> = flow(
-                    polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
-                    validateItemsSize(getInsightByRef),
-                )(item);
-                cache.set(cacheKey, resultBuilder.build());
+                const resultBuilder = validateItemsSize(getInsightByRef)(
+                    polluteWidgetRefsWithBothIdAndUri(getInsightByRef)(item as any, undefined as any),
+                    undefined as any,
+                );
+                cache.set(cacheKey, resultBuilder.build() as any);
             }
 
             return item.setItem(cache.get(cacheKey)!);

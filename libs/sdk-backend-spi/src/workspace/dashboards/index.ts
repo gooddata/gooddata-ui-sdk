@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     CatalogItem,
     FilterContextItem,
@@ -225,7 +226,7 @@ export interface IRawExportCustomOverrides {
 }
 
 /**
- * Options for exporting dashboard to tabular format
+ * Options for exporting dashboard to tabular format.
  *
  * @alpha
  */
@@ -236,12 +237,17 @@ export interface IDashboardExportTabularOptions {
     title?: string;
 
     /**
+     * Export format. Defaults to "XLSX" if not specified.
+     */
+    format?: "XLSX" | "PDF";
+
+    /**
      * If true, the headers will be merged into a single row
      */
     mergeHeaders?: boolean;
 
     /**
-     * If true, the export info will be included in the EXCEL file
+     * If true, the export info will be included in the file
      */
     exportInfo?: boolean;
 
@@ -254,6 +260,15 @@ export interface IDashboardExportTabularOptions {
      * If true, the dashboard filters will be applied to the exported dashboard
      */
     dashboardFiltersOverride?: FilterContextItem[];
+
+    /**
+     * PDF-specific configuration options. Only applicable when format is "PDF".
+     */
+    pdfConfiguration?: {
+        pageSize?: "A3" | "A4" | "LETTER";
+        pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+        showInfoPage?: boolean;
+    };
 }
 
 /**

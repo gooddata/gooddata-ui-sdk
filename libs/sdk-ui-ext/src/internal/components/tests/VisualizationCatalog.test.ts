@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -90,9 +91,6 @@ describe("getEmbeddingCode functionality", () => {
                 context: {
                     settings: {
                         enableAxisNameConfiguration: true,
-                        enableHidingOfDataPoints: true,
-                        enableTableColumnsManualResizing: true,
-                        enableTableColumnsAutoResizing: true,
                         enableTableTotalRows: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },

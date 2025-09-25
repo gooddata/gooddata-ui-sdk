@@ -441,11 +441,22 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
 /**
  * @beta
  */
+export type PdfConfiguration = {
+    pageSize?: "A3" | "A4" | "LETTER";
+    pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+    showInfoPage?: boolean;
+};
+
+/**
+ * @beta
+ */
 export interface ExportDashboardToExcelPayload {
     mergeHeaders: boolean;
     exportInfo: boolean;
     widgetIds?: string[];
     fileName?: string;
+    format?: "XLSX" | "PDF";
+    pdfConfiguration?: PdfConfiguration;
 }
 
 /**
@@ -467,6 +478,8 @@ export function exportDashboardToExcel(
     exportInfo: boolean,
     widgetIds?: string[],
     fileName?: string,
+    format?: "XLSX" | "PDF",
+    pdfConfiguration?: PdfConfiguration,
     correlationId?: string,
 ): ExportDashboardToExcel {
     return {
@@ -477,6 +490,8 @@ export function exportDashboardToExcel(
             exportInfo,
             widgetIds,
             fileName,
+            format,
+            pdfConfiguration,
         },
     };
 }

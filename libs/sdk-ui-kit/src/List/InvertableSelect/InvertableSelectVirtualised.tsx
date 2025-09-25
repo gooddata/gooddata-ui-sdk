@@ -451,6 +451,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 ref={containerRef as RefObject<HTMLDivElement>}
                                                 role={"grid"}
                                                 aria-rowcount={items.length}
+                                                aria-label={formatMessage({
+                                                    id: "attributesDropdown.filterValues",
+                                                })}
                                                 aria-multiselectable={!isSingleSelect}
                                                 id={focusStoreValue.containerId}
                                             >

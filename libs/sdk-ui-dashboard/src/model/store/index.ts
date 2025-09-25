@@ -58,7 +58,6 @@ export {
     selectEnableKPIDashboardDrillToInsight,
     selectEnableKPIDashboardDrillToURL,
     selectEnableKPIDashboardImplicitDrillDown,
-    selectHideKpiDrillInEmbedded,
     selectEnableRenamingProjectToWorkspace,
     selectEnableRenamingMeasureToMetric,
     selectShouldHidePixelPerfectExperience,

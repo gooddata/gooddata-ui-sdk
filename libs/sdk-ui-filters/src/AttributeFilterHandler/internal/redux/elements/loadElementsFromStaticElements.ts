@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import { flow } from "lodash-es";
 
 import {
     ElementsQueryOptionsElementsSpecification,
@@ -63,11 +62,11 @@ export async function loadElementsFromStaticElements(
     hiddenElementsInfo: IHiddenElementsInfo,
     staticElements: IAttributeElement[],
 ): Promise<IElementsQueryResult> {
-    let resolvedElements = flow(
-        resolveHiddenElements(hiddenElementsInfo.hiddenElements),
-        resolveSelectedElements(options.elements),
-        resolveStringFilter(options.search),
-    )(staticElements);
+    let resolvedElements = resolveStringFilter(options.search)(
+        resolveSelectedElements(options.elements)(
+            resolveHiddenElements(hiddenElementsInfo.hiddenElements)(staticElements),
+        ),
+    );
 
     if (options.order === "desc") {
         resolvedElements = [...resolvedElements].reverse();

@@ -234,6 +234,12 @@ export function CatalogDetailContent({
                         selectedTabId={selectedTab?.id ?? ""}
                     />
                     <div className="gd-analytics-catalog-detail__tab-content">
+                        {item.dataSet ? (
+                            <CatalogDetailContentRow
+                                title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
+                                content={item.dataSet.title}
+                            />
+                        ) : null}
                         <CatalogDetailContentRow
                             title={<FormattedMessage id="analyticsCatalog.column.title.createdBy" />}
                             content={item.createdBy ?? undefined}

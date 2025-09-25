@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { keyBy } from "lodash-es";
 
 import {
@@ -8,6 +9,7 @@ import {
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
+    JsonApiFactOut,
     JsonApiFactOutDocument,
     JsonApiFactOutList,
     JsonApiFactOutWithLinks,
@@ -114,13 +116,15 @@ export function convertAttributeLabels(
  */
 function convertAttributeWithLinks(
     attribute: JsonApiAttributeOutWithLinks,
-    labels: Record<string, JsonApiLabelOutWithLinks>,
+    labelMap: Record<string, JsonApiLabelOutWithLinks>,
+    dataSetMap: Record<string, JsonApiDatasetOutWithLinks>,
 ): IAttributeMetadataObject {
     return newAttributeMetadataObject(idRef(attribute.id, "attribute"), (m) =>
         m
             .modify(commonMetadataObjectModifications(attribute))
-            .displayForms(convertAttributeLabels(attribute, labels))
-            .isLocked(isInheritedObject(attribute)),
+            .displayForms(convertAttributeLabels(attribute, labelMap))
+            .isLocked(isInheritedObject(attribute))
+            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap)),
     );
 }
 
@@ -129,7 +133,8 @@ function convertAttributeWithLinks(
  */
 function convertAttributeDocument(
     attributeDoc: JsonApiAttributeOutDocument,
-    labels: Record<string, JsonApiLabelOutWithLinks>,
+    labelMap: Record<string, JsonApiLabelOutWithLinks>,
+    dataSetMap: Record<string, JsonApiDatasetOutWithLinks>,
 ): IAttributeMetadataObject {
     const attribute = attributeDoc.data;
 
@@ -139,8 +144,9 @@ function convertAttributeDocument(
             .title(attribute.attributes?.title || "")
             .description(attribute.attributes?.description || "")
             .uri(attributeDoc.links!.self)
-            .displayForms(convertAttributeLabels(attribute, labels))
-            .isLocked(isInheritedObject(attribute)),
+            .displayForms(convertAttributeLabels(attribute, labelMap))
+            .isLocked(isInheritedObject(attribute))
+            .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap)),
     );
 }
 
@@ -179,9 +185,10 @@ function convertLabelWithLinks(
 export function convertAttributeWithSideloadedLabels(
     attribute: JsonApiAttributeOutDocument,
 ): IAttributeMetadataObject {
-    const labels = createLabelMap(attribute.included);
+    const labelMap = createLabelMap(attribute.included);
+    const dataSetMap = createDataSetMap(attribute.included);
 
-    return convertAttributeDocument(attribute, labels);
+    return convertAttributeDocument(attribute, labelMap, dataSetMap);
 }
 
 /**
@@ -192,7 +199,8 @@ export function convertAttributeWithSideloadedLabels(
 export function convertAttributesWithSideloadedLabels(
     attributes: JsonApiAttributeOutList,
 ): IAttributeMetadataObject[] {
-    const labels = createLabelMap(attributes.included);
+    const labelMap = createLabelMap(attributes.included);
+    const dataSetMap = createDataSetMap(attributes.included);
 
     /*
      * Filter out date data set attributes. Purely because there is special processing for them
@@ -200,7 +208,7 @@ export function convertAttributesWithSideloadedLabels(
      *
      */
 
-    return attributes.data.map((attribute) => convertAttributeWithLinks(attribute, labels));
+    return attributes.data.map((attribute) => convertAttributeWithLinks(attribute, labelMap, dataSetMap));
 }
 
 /**
@@ -209,11 +217,16 @@ export function convertAttributesWithSideloadedLabels(
  * @param facts - sideloaded facts
  */
 export function convertFactsWithLinks(facts: JsonApiFactOutList): IFactMetadataObject[] {
-    return facts.data.map((fact) => {
-        return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
-            m.modify(commonMetadataObjectModifications(fact)).isLocked(isInheritedObject(fact)),
-        );
-    });
+    const datasetMap = createDataSetMap(facts.included);
+
+    return facts.data.map((fact) =>
+        newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
+            m
+                .modify(commonMetadataObjectModifications(fact))
+                .isLocked(isInheritedObject(fact))
+                .dataSet(convertDatasetRelationship(fact.relationships, datasetMap)),
+        ),
+    );
 }
 
 /**
@@ -223,6 +236,7 @@ export function convertFactsWithLinks(facts: JsonApiFactOutList): IFactMetadataO
  */
 export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObject {
     const fact = factDoc.data;
+    const datasetMap = createDataSetMap(factDoc.included);
 
     return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
         m
@@ -231,7 +245,8 @@ export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObjec
             .description(fact.attributes?.description || "")
             .tags(fact.attributes?.tags || [])
             .uri(factDoc.links!.self)
-            .isLocked(isInheritedObject(fact)),
+            .isLocked(isInheritedObject(fact))
+            .dataSet(convertDatasetRelationship(fact.relationships, datasetMap)),
     );
 }
 
@@ -253,6 +268,31 @@ export function convertDatasetWithLinks(dataset: JsonApiDatasetOutWithLinks): ID
     return newDataSetMetadataObject(idRef(dataset.id, "dataSet"), (m) =>
         m.modify(commonMetadataObjectModifications(dataset)),
     );
+}
+
+type DatasetRelationships =
+    | JsonApiAttributeOut["relationships"]
+    | JsonApiAttributeOutWithLinks["relationships"]
+    | JsonApiFactOut["relationships"]
+    | JsonApiFactOutWithLinks["relationships"]
+    | undefined;
+
+/**
+ * Converts side loaded dataset relationship into {@link IDataSetMetadataObject}
+ */
+function convertDatasetRelationship(
+    relationships: DatasetRelationships,
+    dataSetMap: Record<string, JsonApiDatasetOutWithLinks>,
+): IDataSetMetadataObject | undefined {
+    const datasetId = relationships?.dataset?.data?.id;
+    if (!datasetId) {
+        return undefined;
+    }
+    const dataset = dataSetMap[datasetId];
+    if (!dataset) {
+        return undefined;
+    }
+    return convertDatasetWithLinks(dataset);
 }
 
 /**

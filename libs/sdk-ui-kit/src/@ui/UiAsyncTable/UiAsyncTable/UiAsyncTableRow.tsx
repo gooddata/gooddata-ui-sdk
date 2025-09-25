@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getColumnWidth, stopPropagationCallback } from "./utils.js";
+import { getColumnHeaderId, getColumnWidth, stopPropagationCallback } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
@@ -22,20 +22,31 @@ export function UiAsyncTableRow<T extends { id: string }>({
     isSelected,
     hasCheckbox,
     isLarge,
+    accessibilityConfig,
 }: UiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge });
 
     return (
-        <div onClick={() => onClick?.(item)} className={e("row", { large: isLarge })}>
+        <div onClick={() => onClick?.(item)} className={e("row", { large: isLarge })} role="row">
             {hasCheckbox ? (
-                <UiAsyncTableCheckbox checked={isSelected} onChange={() => onSelect(item)} />
+                <UiAsyncTableCheckbox
+                    checked={isSelected}
+                    onChange={() => onSelect(item)}
+                    ariaLabel={accessibilityConfig?.getCheckboxItemAriaLabel?.(item)}
+                />
             ) : null}
             {columns.map((column, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
                 const width = getColumnWidth(!!renderMenu, isLarge, widthProp);
                 const key = index;
                 return (
-                    <div style={{ width }} key={key} className={e("cell", { bold, align: column.align })}>
+                    <div
+                        style={{ width }}
+                        key={key}
+                        className={e("cell", { bold, align: column.align })}
+                        role="gridcell"
+                        aria-labelledby={getColumnHeaderId(String(column.key ?? index))}
+                    >
                         {renderCellContent(column, item)}
                     </div>
                 );

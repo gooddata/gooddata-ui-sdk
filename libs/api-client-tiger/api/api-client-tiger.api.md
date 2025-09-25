@@ -11397,6 +11397,7 @@ export interface ExportDashboardTabularExportRequest {
 // @public (undocumented)
 export const ExportDashboardTabularExportRequestFormatEnum: {
     readonly XLSX: "XLSX";
+    readonly PDF: "PDF";
 };
 
 // @public (undocumented)

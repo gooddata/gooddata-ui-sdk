@@ -483,6 +483,7 @@ export interface ExportDashboardTabularExportRequest {
 
 export const ExportDashboardTabularExportRequestFormatEnum = {
     XLSX: "XLSX",
+    PDF: "PDF",
 } as const;
 
 export type ExportDashboardTabularExportRequestFormatEnum =
