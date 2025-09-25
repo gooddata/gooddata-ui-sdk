@@ -21,7 +21,8 @@ import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
     DashboardCustomizationsProvider,
-    ExportDialogContextProvider,
+    ExportTabularPdfDialogContextProvider,
+    ExportXlsxDialogContextProvider,
 } from "../../dashboardContexts/index.js";
 import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/index.js";
 import {
@@ -103,94 +104,106 @@ export function DashboardRenderer(props: IDashboardProps) {
                         customizationFns={props.customizationFns}
                         widgetsOverlayFn={props.widgetsOverlayFn}
                     >
-                        <ExportDialogContextProvider>
-                            <DashboardCustomizationsProvider
-                                insightMenuItemsProvider={props.insightMenuItemsProvider}
-                                richTextMenuItemsProvider={props.richTextMenuItemsProvider}
-                                existingExportTransformFn={props.customizationFns?.existingExportTransformFn}
-                                slideConfig={props.config?.slideConfig}
-                            >
-                                <DashboardComponentsProvider
-                                    ErrorComponent={props.ErrorComponent ?? DefaultError}
-                                    LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                                    LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
-                                    InsightComponentProvider={insightProvider}
-                                    InsightBodyComponentProvider={insightBodyProvider}
-                                    InsightMenuButtonComponentProvider={insightMenuButtonProvider}
-                                    InsightMenuTitleComponentProvider={insightMenuTitleProvider}
-                                    InsightMenuComponentProvider={insightMenuProvider}
-                                    VisualizationSwitcherToolbarComponentProvider={
-                                        visualizationSwitcherToolbarComponentProvider
+                        <ExportXlsxDialogContextProvider>
+                            <ExportTabularPdfDialogContextProvider>
+                                <DashboardCustomizationsProvider
+                                    insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                    richTextMenuItemsProvider={props.richTextMenuItemsProvider}
+                                    existingExportTransformFn={
+                                        props.customizationFns?.existingExportTransformFn
                                     }
-                                    RichTextComponentProvider={richTextProvider}
-                                    RichTextMenuComponentProvider={richTextMenuProvider}
-                                    RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
-                                    VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
-                                    WidgetComponentProvider={widgetProvider}
-                                    ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
-                                    MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                                    TopBarComponent={props.TopBarComponent ?? RenderModeAwareTopBar}
-                                    ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
-                                    TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
-                                    ScheduledEmailDialogComponent={
-                                        props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
-                                    }
-                                    ScheduledEmailManagementDialogComponent={
-                                        props.ScheduledEmailManagementDialogComponent ??
-                                        DefaultScheduledEmailManagementDialog
-                                    }
-                                    ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialog}
-                                    AlertingManagementDialogComponent={
-                                        props.AlertingManagementDialogComponent ??
-                                        DefaultAlertingManagementDialogNew
-                                    }
-                                    AlertingDialogComponent={
-                                        props.AlertingDialogComponent ?? DefaultAlertingDialogNew
-                                    }
-                                    SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialog}
-                                    DashboardAttributeFilterComponentProvider={attributeFilterProvider}
-                                    DashboardDateFilterComponentProvider={dateFilterProvider}
-                                    FilterBarComponent={props.FilterBarComponent ?? RenderModeAwareFilterBar}
-                                    SidebarComponent={
-                                        props.SidebarComponent ?? RenderModeAwareDashboardSidebar
-                                    }
-                                    InsightWidgetComponentSet={insightWidgetComponentSet}
-                                    RichTextWidgetComponentSet={richTextWidgetComponentSet}
-                                    VisualizationSwitcherWidgetComponentSet={
-                                        visualizationSwitcherWidgetComponentSet
-                                    }
-                                    DashboardLayoutWidgetComponentSet={dashboardLayoutWidgetComponentSet}
-                                    AttributeFilterComponentSet={attributeFilterComponentSet}
-                                    DateFilterComponentSet={dateFilterComponentSet}
-                                    EmptyLayoutDropZoneBodyComponent={
-                                        props.EmptyLayoutDropZoneBodyComponent ??
-                                        DefaultEmptyLayoutDropZoneBody
-                                    }
-                                    SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
-                                    DashboardContentComponentProvider={dashboardContentProvider}
-                                    SettingButtonComponent={
-                                        props.SettingButtonComponent ?? DefaultSettingButton
-                                    }
-                                    DashboardSettingsDialogComponent={
-                                        props.DashboardSettingsDialogComponent ??
-                                        DefaultDashboardSettingsDialog
-                                    }
-                                    ShowAsTableButtonComponentProvider={showAsTableButtonComponentProvider}
+                                    slideConfig={props.config?.slideConfig}
                                 >
-                                    <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                                        <DndProvider backend={HTML5Backend}>
-                                            <LayoutResizeStateProvider>
-                                                <DashboardItemPathAndSizeProvider>
-                                                    <HoveredWidgetProvider>
-                                                        <DashboardLoading {...props} />
-                                                    </HoveredWidgetProvider>
-                                                </DashboardItemPathAndSizeProvider>
-                                            </LayoutResizeStateProvider>
-                                        </DndProvider>
-                                    </DashboardConfigProvider>
-                                </DashboardComponentsProvider>
-                            </DashboardCustomizationsProvider>
-                        </ExportDialogContextProvider>
+                                    <DashboardComponentsProvider
+                                        ErrorComponent={props.ErrorComponent ?? DefaultError}
+                                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
+                                        InsightComponentProvider={insightProvider}
+                                        InsightBodyComponentProvider={insightBodyProvider}
+                                        InsightMenuButtonComponentProvider={insightMenuButtonProvider}
+                                        InsightMenuTitleComponentProvider={insightMenuTitleProvider}
+                                        InsightMenuComponentProvider={insightMenuProvider}
+                                        VisualizationSwitcherToolbarComponentProvider={
+                                            visualizationSwitcherToolbarComponentProvider
+                                        }
+                                        RichTextComponentProvider={richTextProvider}
+                                        RichTextMenuComponentProvider={richTextMenuProvider}
+                                        RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
+                                        VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
+                                        WidgetComponentProvider={widgetProvider}
+                                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
+                                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
+                                        TopBarComponent={props.TopBarComponent ?? RenderModeAwareTopBar}
+                                        ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
+                                        TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
+                                        ScheduledEmailDialogComponent={
+                                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
+                                        }
+                                        ScheduledEmailManagementDialogComponent={
+                                            props.ScheduledEmailManagementDialogComponent ??
+                                            DefaultScheduledEmailManagementDialog
+                                        }
+                                        ShareDialogComponent={
+                                            props.ShareDialogComponent ?? DefaultShareDialog
+                                        }
+                                        AlertingManagementDialogComponent={
+                                            props.AlertingManagementDialogComponent ??
+                                            DefaultAlertingManagementDialogNew
+                                        }
+                                        AlertingDialogComponent={
+                                            props.AlertingDialogComponent ?? DefaultAlertingDialogNew
+                                        }
+                                        SaveAsDialogComponent={
+                                            props.SaveAsDialogComponent ?? DefaultSaveAsDialog
+                                        }
+                                        DashboardAttributeFilterComponentProvider={attributeFilterProvider}
+                                        DashboardDateFilterComponentProvider={dateFilterProvider}
+                                        FilterBarComponent={
+                                            props.FilterBarComponent ?? RenderModeAwareFilterBar
+                                        }
+                                        SidebarComponent={
+                                            props.SidebarComponent ?? RenderModeAwareDashboardSidebar
+                                        }
+                                        InsightWidgetComponentSet={insightWidgetComponentSet}
+                                        RichTextWidgetComponentSet={richTextWidgetComponentSet}
+                                        VisualizationSwitcherWidgetComponentSet={
+                                            visualizationSwitcherWidgetComponentSet
+                                        }
+                                        DashboardLayoutWidgetComponentSet={dashboardLayoutWidgetComponentSet}
+                                        AttributeFilterComponentSet={attributeFilterComponentSet}
+                                        DateFilterComponentSet={dateFilterComponentSet}
+                                        EmptyLayoutDropZoneBodyComponent={
+                                            props.EmptyLayoutDropZoneBodyComponent ??
+                                            DefaultEmptyLayoutDropZoneBody
+                                        }
+                                        SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
+                                        DashboardContentComponentProvider={dashboardContentProvider}
+                                        SettingButtonComponent={
+                                            props.SettingButtonComponent ?? DefaultSettingButton
+                                        }
+                                        DashboardSettingsDialogComponent={
+                                            props.DashboardSettingsDialogComponent ??
+                                            DefaultDashboardSettingsDialog
+                                        }
+                                        ShowAsTableButtonComponentProvider={
+                                            showAsTableButtonComponentProvider
+                                        }
+                                    >
+                                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                                            <DndProvider backend={HTML5Backend}>
+                                                <LayoutResizeStateProvider>
+                                                    <DashboardItemPathAndSizeProvider>
+                                                        <HoveredWidgetProvider>
+                                                            <DashboardLoading {...props} />
+                                                        </HoveredWidgetProvider>
+                                                    </DashboardItemPathAndSizeProvider>
+                                                </LayoutResizeStateProvider>
+                                            </DndProvider>
+                                        </DashboardConfigProvider>
+                                    </DashboardComponentsProvider>
+                                </DashboardCustomizationsProvider>
+                            </ExportTabularPdfDialogContextProvider>
+                        </ExportXlsxDialogContextProvider>
                     </DashboardStoreProvider>
                 </OverlayControllerProvider>
             </WorkspaceProvider>

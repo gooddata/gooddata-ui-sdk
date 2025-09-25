@@ -18,7 +18,7 @@ function UiAsyncTableDropdownItem({
         >
             {isMultiSelect ? (
                 <div className={e("dropdown-item-checkbox")}>
-                    <UiCheckbox preventDefault={true} checked={isSelected} />
+                    <UiCheckbox preventDefault={true} checked={isSelected} tabIndex={-1} />
                 </div>
             ) : null}
             <div className={e("dropdown-item-label-primary")}>{label}</div>

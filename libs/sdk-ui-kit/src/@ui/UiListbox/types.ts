@@ -79,7 +79,9 @@ export interface IUiListboxContext<InteractiveItemData, StaticItemData = ReactNo
 /**
  * @internal
  */
-export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
+    "aria-controls"?: string;
+};
 
 /**
  * @internal

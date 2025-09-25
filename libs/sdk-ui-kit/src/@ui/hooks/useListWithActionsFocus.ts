@@ -14,7 +14,8 @@ export function useFocusWithinContainer(idToFocus?: string | null) {
 
     useEffect(() => {
         const container = containerRef.current;
-        const elementToFocus = idToFocus ? container?.querySelector(`#${idToFocus}`) : null;
+        const escapedIdToFocus = idToFocus ? CSS.escape(idToFocus) : null;
+        const elementToFocus = idToFocus ? container?.querySelector(`#${escapedIdToFocus}`) : null;
 
         if (!elementToFocus) {
             return;

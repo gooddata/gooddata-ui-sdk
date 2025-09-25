@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { IntlShape } from "react-intl";
 
@@ -135,7 +136,6 @@ export function setBaseChartUiConfig(
 export function setBaseChartUiConfigRecommendations(
     referencePoint: IExtendedReferencePoint,
     visualizationType: string,
-    weekFiltersEnabled: boolean,
 ): IExtendedReferencePoint {
     if (visualizationType === VisualizationTypes.COLUMN) {
         const newReferencePoint = cloneDeep(referencePoint);
@@ -144,10 +144,7 @@ export function setBaseChartUiConfigRecommendations(
 
         const percentEnabled = percentRecommendationEnabled(buckets, filters);
         const comparisonAndTrending = comparisonAndTrendingRecommendationEnabled(buckets);
-        const overTimeComparison = overTimeComparisonRecommendationEnabled(
-            newReferencePoint,
-            weekFiltersEnabled,
-        );
+        const overTimeComparison = overTimeComparisonRecommendationEnabled(newReferencePoint);
         const previousPeriod = previousPeriodRecommendationEnabled(buckets);
 
         set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "percent"], percentEnabled);

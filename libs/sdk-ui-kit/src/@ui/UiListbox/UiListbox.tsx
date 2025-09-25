@@ -203,6 +203,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             aria-selected={item.id === selectedItemId}
                             aria-disabled={item.isDisabled}
                             data-testid={itemDataTestId}
+                            aria-controls={ariaAttributes["aria-controls"]}
                         >
                             <InteractiveItemComponent
                                 onSelect={(e) => {

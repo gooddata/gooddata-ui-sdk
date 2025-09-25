@@ -25,3 +25,7 @@ export const SKELETON_ITEM_GAP = 0;
 export const SCROLLBAR_WIDTH = 10;
 
 export const FILTER_OPTION_ALL_VALUE = "__ALL__";
+
+export const ASYNC_TABLE_ID_PREFIX = "ui-async-table-";
+
+export const ASYNC_TABLE_FILTER_LABEL_ID = `${ASYNC_TABLE_ID_PREFIX}filter-label`;

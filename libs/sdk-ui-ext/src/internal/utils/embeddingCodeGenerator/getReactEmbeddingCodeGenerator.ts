@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { compact, flow, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
+import { compact, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -76,11 +76,9 @@ function indent(str: string, tabs: number): string {
         .join("\n");
 }
 
-const renderImports: (imports: IImportInfo[]) => string = flow(
-    (imports) => groupBy(imports, (i: IImportInfo) => i.package),
-    Object.entries,
-    (pairs) =>
-        pairs.map(([pkg, imports]: [string, IImportInfo[]]) => {
+const renderImports = (imports: IImportInfo[]) =>
+    Object.entries(groupBy(imports, (i: IImportInfo) => i.package))
+        .map(([pkg, imports]: [string, IImportInfo[]]) => {
             const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
 
             return compact([
@@ -96,9 +94,8 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
                 "from",
                 `"${pkg}";`,
             ]).join(" ");
-        }),
-    (arr) => arr.join("\n"),
-);
+        })
+        .join("\n");
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };
 

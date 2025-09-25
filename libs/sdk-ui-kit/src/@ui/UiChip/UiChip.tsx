@@ -26,6 +26,7 @@ export interface UiChipProps {
     isDeletable?: boolean;
     isActive?: boolean;
     isLocked?: boolean;
+    isExpandable?: boolean;
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
@@ -46,6 +47,7 @@ export function UiChip({
     isDeletable = false,
     isActive = false,
     isLocked = false,
+    isExpandable = true,
     iconBefore,
     onClick,
     onDelete,
@@ -100,7 +102,7 @@ export function UiChip({
                     <span className={e("icon-lock")}>
                         <UiIcon type="lock" color="complementary-6" size={14} ariaHidden={true} />
                     </span>
-                ) : (
+                ) : isExpandable ? (
                     <span className={e("icon-chevron", { isActive })}>
                         <UiIcon
                             type={isActive ? "chevronUp" : "chevronDown"}
@@ -109,7 +111,7 @@ export function UiChip({
                             ariaHidden={true}
                         />
                     </span>
-                )}
+                ) : null}
             </button>
             {isDeletable ? (
                 <button

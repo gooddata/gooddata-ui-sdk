@@ -20,10 +20,6 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
         },
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withDefaultBackendSettings({
-        enableTableColumnsAutoResizing: true,
-        enableTableColumnsGrowToFit: true,
-    })
     .addScenario("with column attributes only and auto-resizing", {
         ...PivotTableWithSingleColumn,
         config: {

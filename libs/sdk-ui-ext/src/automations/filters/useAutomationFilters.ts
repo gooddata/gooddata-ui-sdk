@@ -14,6 +14,7 @@ import { messages } from "../messages.js";
 import {
     AutomationsAvailableFilters,
     AutomationsFilterName,
+    AutomationsFilterPreselectValue,
     AutomationsPreselectedFilters,
     IAutomationFilter,
     IAutomationFilterQuery,
@@ -25,10 +26,10 @@ import { useUser } from "../UserContext.js";
 const useAutomationFilter = (
     filterOptions: UiAsyncTableFilterOption[],
     filterLabel: string,
-    preselectedValues: Array<string> | undefined,
+    preselectedValues: Array<AutomationsFilterPreselectValue> | undefined,
 ): IAutomationFilter => {
     const preselectedFilterOptions = useMemo(() => {
-        return preselectedValues?.map((value) => ({ value, label: "" }));
+        return preselectedValues?.map(({ value, label }) => ({ value, label: label ?? "" }));
     }, [preselectedValues]);
 
     useEffect(() => {
@@ -85,7 +86,7 @@ const useAutomationFilter = (
 
 //specific filters hooks
 
-const useDashboardFilter = (preselectedValues: Array<string> | undefined) => {
+const useDashboardFilter = (preselectedValues: Array<AutomationsFilterPreselectValue> | undefined) => {
     const intl = useIntl();
 
     const { dashboards } = useFilterOptions();
@@ -106,7 +107,7 @@ const useDashboardFilter = (preselectedValues: Array<string> | undefined) => {
     return { dashboardFilter, dashboardFilterQuery };
 };
 
-const useRecipientsFilter = (preselectedValues: Array<string> | undefined) => {
+const useRecipientsFilter = (preselectedValues: Array<AutomationsFilterPreselectValue> | undefined) => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
@@ -126,7 +127,7 @@ const useRecipientsFilter = (preselectedValues: Array<string> | undefined) => {
     return { recipientsFilter, recipientsFilterQuery };
 };
 
-const useCreatedByFilter = (preselectedValues: Array<string> | undefined) => {
+const useCreatedByFilter = (preselectedValues: Array<AutomationsFilterPreselectValue> | undefined) => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
@@ -146,7 +147,7 @@ const useCreatedByFilter = (preselectedValues: Array<string> | undefined) => {
     return { createdByFilter, createdByFilterQuery };
 };
 
-const useWorkspacesFilter = (preselectedValues: Array<string> | undefined) => {
+const useWorkspacesFilter = (preselectedValues: Array<AutomationsFilterPreselectValue> | undefined) => {
     const intl = useIntl();
 
     const { workspaces } = useFilterOptions();
@@ -167,7 +168,7 @@ const useWorkspacesFilter = (preselectedValues: Array<string> | undefined) => {
     return { workspacesFilter, workspacesFilterQuery };
 };
 
-const useStatusFilter = (preselectedValues: Array<string> | undefined) => {
+const useStatusFilter = (preselectedValues: Array<AutomationsFilterPreselectValue> | undefined) => {
     const intl = useIntl();
 
     const options = useMemo(() => {
@@ -197,7 +198,7 @@ export const useAutomationFilters = (
     const { statusFilter, statusFilterQuery } = useStatusFilter(preselectedFilters.status);
     const { workspacesFilter, workspacesFilterQuery } = useWorkspacesFilter(preselectedFilters.workspace);
     const externalRecipientsFilterQuery = {
-        value: preselectedFilters.externalRecipients?.join(","),
+        value: preselectedFilters.externalRecipients?.map(({ value }) => value).join(","),
     } as IAutomationFilterQuery;
 
     const filters = useMemo(() => {

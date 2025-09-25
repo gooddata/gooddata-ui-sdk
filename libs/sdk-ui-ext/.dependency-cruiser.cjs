@@ -11,7 +11,9 @@ const options = {
 
         ...depCruiser.DefaultSdkRules,
         ...depCruiser.PublicLibraryRules,
-        depCruiser.isolatedSubmodule("internal", "src/internal"),
+        depCruiser.moduleWithDependencies("internal", "src/internal", [
+            "src/kdaDialog/internal.ts"
+        ]),
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [
             "src/dataLoaders",
             "src/internal",

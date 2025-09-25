@@ -25,6 +25,7 @@ import { messages } from "../../../locales.js";
 import {
     selectCanCreateAutomation,
     selectDashboardId,
+    selectDashboardTitle,
     selectEnableAutomationManagement,
     selectExternalRecipient,
     selectIsAlertingDialogOpen,
@@ -65,6 +66,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
@@ -170,9 +172,11 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 isSmall={true}
                                 editAutomation={handleAlertEdit}
                                 preselectedFilters={{
-                                    dashboard: dashboardId ? [dashboardId] : undefined,
+                                    dashboard: dashboardId
+                                        ? [{ value: dashboardId, label: dashboardTitle }]
+                                        : undefined,
                                     externalRecipients: externalRecipientOverride
-                                        ? [externalRecipientOverride]
+                                        ? [{ value: externalRecipientOverride }]
                                         : undefined,
                                 }}
                                 availableFilters={availableFilters}

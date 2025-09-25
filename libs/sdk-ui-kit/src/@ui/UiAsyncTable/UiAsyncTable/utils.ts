@@ -2,7 +2,12 @@
 
 import { MouseEvent } from "react";
 
-import { CHECKBOX_COLUMN_WIDTH, MENU_COLUMN_WIDTH, MENU_COLUMN_WIDTH_LARGE } from "./constants.js";
+import {
+    ASYNC_TABLE_ID_PREFIX,
+    CHECKBOX_COLUMN_WIDTH,
+    MENU_COLUMN_WIDTH,
+    MENU_COLUMN_WIDTH_LARGE,
+} from "./constants.js";
 import { UiAsyncTableColumn, UiAsyncTableFilterOption } from "../types.js";
 
 export const getColumnWidth = (renderMenu: boolean, isLarge: boolean, widthProp?: number) => {
@@ -20,6 +25,10 @@ export const getColumnWidths = <T extends { id: string }>(
 
 export const getFilterOptionsMap = (options: Array<UiAsyncTableFilterOption>) => {
     return new Map(options.map((item) => [item.value, item]));
+};
+
+export const getColumnHeaderId = (key: string) => {
+    return `${ASYNC_TABLE_ID_PREFIX}column-header-${key}`;
 };
 
 export const stopPropagationCallback = <T extends HTMLElement>(

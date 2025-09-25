@@ -3,12 +3,7 @@
 import { IntlShape } from "react-intl";
 
 import { IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
-import {
-    ITableColumnDefinition,
-    ITableDataHeaderScope,
-    UnexpectedSdkError,
-    emptyHeaderTitleFromIntl,
-} from "@gooddata/sdk-ui";
+import { ITableColumnDefinition, ITableDataHeaderScope, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import {
     MEASURE_GROUP_HEADER_COL_DEF_ID,
@@ -16,7 +11,7 @@ import {
     PIVOTING_GROUP_SEPARATOR,
 } from "../../constants/internal.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
-import { extractIntlTotalHeaderValue } from "../columns/shared.js";
+import { extractIntlTotalHeaderValue, getAttributeHeaderName } from "../columns/shared.js";
 
 /**
  * Creates header names path for provided column def.
@@ -107,16 +102,7 @@ function columnScopeHeaderNames(
     columnScope.forEach((scope) => {
         if (scope.type === "attributeScope") {
             groups.push(scope.descriptor.attributeHeader.formOf.name);
-            // Differentiate between explicit null and empty string "" as BE supports both
-            // and the result would not be consistent once using "" or "(empty value)".
-            // We want to display "(empty value)" for both.
-            const nulledName =
-                scope.header.attributeHeaderItem.name === "" ? null : scope.header.attributeHeaderItem.name;
-            values.push(
-                scope.header.attributeHeaderItem.formattedName ??
-                    nulledName ??
-                    emptyHeaderTitleFromIntl(intl),
-            );
+            values.push(getAttributeHeaderName(scope.header, intl));
         } else if (scope.type === "attributeTotalScope") {
             groups.push(scope.descriptor.attributeHeader.formOf.name);
             const localizedHeaderName = extractIntlTotalHeaderValue(scope.header, intl);

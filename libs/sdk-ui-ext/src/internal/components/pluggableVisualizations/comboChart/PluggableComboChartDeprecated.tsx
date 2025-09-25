@@ -92,10 +92,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
 
         newReferencePoint = setComboChartUiConfigDeprecated(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(
-            newReferencePoint,
-            !!this.featureFlags["enableWeekFilters"],
-        );
+        newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = applyUiConfig(newReferencePoint);
         newReferencePoint = removeSort(newReferencePoint);
 

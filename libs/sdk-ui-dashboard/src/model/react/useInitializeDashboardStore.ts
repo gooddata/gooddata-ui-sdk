@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "@reduxjs/toolkit";
-import { flow } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDashboard, IDashboardWidget, ObjRef, isDashboard } from "@gooddata/sdk-model";
@@ -76,7 +75,7 @@ function enrichConfig(
     const withMapbox = (cfg?: DashboardConfig) => enrichMapboxToken(cfg, mapboxToken);
     const withAgGrid = (cfg?: DashboardConfig) => enrichAgGridToken(cfg, agGridToken);
 
-    return flow(withMapbox, withAgGrid)(config);
+    return withAgGrid(withMapbox(config));
 }
 
 /**

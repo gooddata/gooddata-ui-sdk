@@ -31,7 +31,7 @@ export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
     const { types, origin, tags } = useFilterState();
-    const { status, totalCount, error, items, setItems } = state;
+    const { status, totalCount, totalCountByType, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
         return {
@@ -64,6 +64,7 @@ export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize
         error,
         status,
         totalCount,
+        totalCountByType,
         hasNext,
         next,
         updateItem,
@@ -75,8 +76,8 @@ function useReset(
     cache: ReturnType<typeof useFeedCache>,
     endpoints: ReturnType<typeof useEndpoints>,
 ) {
-    const { initialized, endpointCache, endpointItems, endpointTotalCounts } = cache;
-    const { setStatus, setError, setCurrentEndpoint, setTotal, setItems } = state;
+    const { initialized, endpointCache, endpointItems } = cache;
+    const { setStatus, setError, setCurrentEndpoint, setTotalCounts, setItems } = state;
 
     useLayoutEffect(() => {
         if (!initialized.current) {
@@ -86,24 +87,22 @@ function useReset(
         initialized.current = false;
         endpointCache.current = [];
         endpointItems.current = [];
-        endpointTotalCounts.current = [];
 
         setStatus("loading");
         setError(null);
         setCurrentEndpoint(0);
-        setTotal(0);
+        setTotalCounts([]);
         setItems([]);
     }, [
         endpointCache,
         endpointItems,
-        endpointTotalCounts,
         endpoints,
         initialized,
         setCurrentEndpoint,
         setError,
         setItems,
         setStatus,
-        setTotal,
+        setTotalCounts,
     ]);
 }
 
@@ -146,23 +145,25 @@ function useFeedCache() {
     >([]);
     const initialized = useRef(false);
     const endpointItems = useRef<ICatalogItem[][]>([]);
-    const endpointTotalCounts = useRef<number[]>([]);
 
     return {
         initialized,
         endpointCache,
         endpointItems,
-        endpointTotalCounts,
     };
 }
 
 function useFeedState() {
+    // State
     const [status, setStatus] = useState<AsyncStatus>("idle");
     const [error, setError] = useState<Error | null>(null);
     const [currentEndpoint, setCurrentEndpoint] = useState(0);
-
-    const [totalCount, setTotal] = useState(0);
+    const [totalCounts, setTotalCounts] = useState<number[]>([]);
     const [items, setItems] = useState<ICatalogItem[]>([]);
+
+    // Derived state
+    const totalCount = getTotalCount(totalCounts);
+    const totalCountByType = getTotalCountByType(totalCounts);
 
     return {
         status,
@@ -171,8 +172,10 @@ function useFeedState() {
         setError,
         currentEndpoint,
         setCurrentEndpoint,
+        totalCounts,
+        totalCountByType,
         totalCount,
-        setTotal,
+        setTotalCounts,
         items,
         setItems,
     };
@@ -183,8 +186,8 @@ function useFirstLoad(
     cache: ReturnType<typeof useFeedCache>,
     endpoints: ReturnType<typeof useEndpoints>,
 ) {
-    const { setStatus, setError, setCurrentEndpoint, setTotal, setItems } = state;
-    const { initialized, endpointCache, endpointItems, endpointTotalCounts } = cache;
+    const { setStatus, setError, setCurrentEndpoint, setTotalCounts, setItems } = state;
+    const { initialized, endpointCache, endpointItems } = cache;
     // load first pages (cached)
     useEffect(() => {
         // prevent re-init
@@ -208,7 +211,6 @@ function useFirstLoad(
                 // Set initial data for endpoints
                 endpointCache.current = firstPages;
                 endpointItems.current = firstPages.map((p) => p.items.map(convertEntityToCatalogItem));
-                endpointTotalCounts.current = firstPages.map((p) => p.totalCount);
 
                 let currentEndpoint = firstPages.findIndex((page) => {
                     return page.items.length < page.totalCount;
@@ -217,12 +219,12 @@ function useFirstLoad(
 
                 setCurrentEndpoint(currentEndpoint);
                 setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
-                setTotal(endpointTotalCounts.current.reduce((acc, c) => acc + c, 0));
+                setTotalCounts(firstPages.map((page) => page.totalCount));
                 setStatus("success");
             } catch (error) {
                 setError(error as Error);
                 setItems([]);
-                setTotal(0);
+                setTotalCounts([]);
                 setStatus("error");
             }
         })();
@@ -233,14 +235,13 @@ function useFirstLoad(
     }, [
         endpointCache,
         endpointItems,
-        endpointTotalCounts,
         endpoints,
         initialized,
         setCurrentEndpoint,
         setError,
         setItems,
         setStatus,
-        setTotal,
+        setTotalCounts,
     ]);
 }
 
@@ -250,8 +251,8 @@ function useNextCallback(
     endpoints: ReturnType<typeof useEndpoints>,
 ) {
     const mounted = useMounted();
-    const { status, setStatus, currentEndpoint, setCurrentEndpoint, setItems, setError } = state;
-    const { endpointCache, endpointItems, endpointTotalCounts } = cache;
+    const { status, totalCounts, setStatus, currentEndpoint, setCurrentEndpoint, setItems, setError } = state;
+    const { endpointCache, endpointItems } = cache;
 
     // Check if there are more endpointItems to load
     const hasNext = useMemo(
@@ -270,14 +271,14 @@ function useNextCallback(
 
         while (idx < endpoints.length) {
             const items = (endpointItems.current[idx] = endpointItems.current[idx] ?? []);
-            const totalCounts = endpointTotalCounts.current[idx] ?? 0;
+            const totalCount = totalCounts[idx] ?? 0;
 
             const current = endpointCache.current[idx];
             if (!current) {
                 break;
             }
 
-            if (items.length < totalCounts) {
+            if (items.length < totalCount) {
                 try {
                     // load next page of this endpoint
                     const nextPage = await current.next();
@@ -314,13 +315,13 @@ function useNextCallback(
         mounted,
         currentEndpoint,
         status,
+        totalCounts,
         hasNext,
         setStatus,
         setError,
         setCurrentEndpoint,
         setItems,
         endpointItems,
-        endpointTotalCounts,
         endpointCache,
         endpoints.length,
     ]);
@@ -328,5 +329,19 @@ function useNextCallback(
     return {
         next,
         hasNext,
+    };
+}
+
+function getTotalCount(totalCounts: number[]) {
+    return totalCounts.reduce((acc, count) => acc + count, 0);
+}
+
+function getTotalCountByType(totalCounts: number[]) {
+    return {
+        [ObjectTypes.DASHBOARD]: totalCounts[0] ?? 0,
+        [ObjectTypes.VISUALIZATION]: totalCounts[1] ?? 0,
+        [ObjectTypes.METRIC]: totalCounts[2] ?? 0,
+        [ObjectTypes.ATTRIBUTE]: totalCounts[3] ?? 0,
+        [ObjectTypes.FACT]: totalCounts[4] ?? 0,
     };
 }

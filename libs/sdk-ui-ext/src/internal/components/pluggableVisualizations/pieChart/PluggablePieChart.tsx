@@ -138,10 +138,7 @@ export class PluggablePieChart extends PluggableBaseChart {
 
         newReferencePoint = setPieChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(
-            newReferencePoint,
-            !!this.featureFlags["enableWeekFilters"],
-        );
+        newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

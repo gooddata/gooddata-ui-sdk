@@ -2,8 +2,6 @@
 
 import { ComponentType, ReactNode, createContext } from "react";
 
-import { flowRight } from "lodash-es";
-
 import { wrapDisplayName } from "../../react/wrapDisplayName.js";
 
 const TranslationsCustomizationContext = createContext<Record<string, string> | undefined>(undefined);
@@ -94,9 +92,7 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
 export function withTranslationsCustomization<T>(
     Component: ComponentType<T>,
 ): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
-    return flowRight(
-        wrapDisplayName("withTranslationsCustomization"),
-        withTranslationsCustomizationValue,
-        withTranslationsCustomizationIsLoading,
-    )(Component);
+    return wrapDisplayName("withTranslationsCustomization")(
+        withTranslationsCustomizationValue(withTranslationsCustomizationIsLoading(Component as any) as any),
+    );
 }

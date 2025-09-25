@@ -8,7 +8,14 @@ import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
 const escapeFileName = (str: string) => str?.replace(/[/?<>\\:*|"]/g, "");
 
 function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTitle: string | undefined) {
-    const { format, includeFilterContext, showFilters, mergeHeaders, title: customTitle } = exportConfig;
+    const {
+        format,
+        includeFilterContext,
+        showFilters,
+        mergeHeaders,
+        title: customTitle,
+        pdfConfiguration,
+    } = exportConfig;
 
     const title: string = escapeFileName(customTitle || exportTitle || "Untitled");
 
@@ -20,6 +27,10 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
 
     if (includeFilterContext || showFilters) {
         exportRequestConfig.showFilters = true;
+    }
+
+    if (pdfConfiguration) {
+        exportRequestConfig.pdfConfiguration = pdfConfiguration;
     }
 
     return exportRequestConfig;

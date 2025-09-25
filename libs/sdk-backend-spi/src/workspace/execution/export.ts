@@ -60,12 +60,18 @@ export interface IExportConfig {
  * @public
  */
 export interface IExportPdfConfig {
-    /** Page size and orientation (e.g. 'a4 landscape'). */
+    /** Page size and orientation (e.g. 'a4 landscape'). @deprecated Use pageSize and pageOrientation instead. */
     pdfPageSize?: string;
-    /** PDF top left header content. */
+    /** PDF top left header content. @deprecated This property is no longer supported. */
     pdfTopLeftContent?: string;
-    /** PDF top right header content. */
+    /** PDF top right header content. @deprecated This property is no longer supported. */
     pdfTopRightContent?: string;
+    /** Page size */
+    pageSize?: "A3" | "A4" | "LETTER";
+    /** Page orientation */
+    pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+    /** Show info page with export information. */
+    showInfoPage?: boolean;
 }
 
 /**

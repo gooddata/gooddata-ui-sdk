@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
@@ -70,7 +71,6 @@ describe("overTimeComparisonRecommendationEnabled", () => {
         expect(
             bucketRules.overTimeComparisonRecommendationEnabled(
                 referencePointMocks.overTimeComparisonRecommendationRefPoint,
-                false,
             ),
         ).toBeTruthy();
     });
@@ -87,21 +87,14 @@ describe("overTimeComparisonRecommendationEnabled", () => {
 
         set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
 
-        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint, false)).toBeFalsy();
+        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeFalsy();
     });
 
     it("should return true if insight is sliced by weeks and week filters are enabled", () => {
         const editedReferencePoint = cloneDeep(referencePointMocks.overTimeComparisonRecommendationRefPoint);
         set(editedReferencePoint, ["buckets", 1, "items", 0], referencePointMocks.sliceByWeekBucketItem);
 
-        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint, true)).toBeTruthy();
-    });
-
-    it("should return false if insight is sliced by weeks and week filters are not enabled", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.overTimeComparisonRecommendationRefPoint);
-        set(editedReferencePoint, ["buckets", 1, "items", 0], referencePointMocks.sliceByWeekBucketItem);
-
-        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint, false)).toBeFalsy();
+        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeTruthy();
     });
 });
 

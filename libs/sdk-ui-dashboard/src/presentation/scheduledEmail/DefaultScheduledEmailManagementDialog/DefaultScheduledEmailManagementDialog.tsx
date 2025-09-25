@@ -27,6 +27,7 @@ import {
     selectCanCreateAutomation,
     selectCurrentUser,
     selectDashboardId,
+    selectDashboardTitle,
     selectEnableAutomationManagement,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
@@ -70,6 +71,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
@@ -151,9 +153,11 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 isSmall={true}
                                 editAutomation={handleScheduleEdit}
                                 preselectedFilters={{
-                                    dashboard: dashboardId ? [dashboardId] : undefined,
+                                    dashboard: dashboardId
+                                        ? [{ value: dashboardId, label: dashboardTitle }]
+                                        : undefined,
                                     externalRecipients: externalRecipientOverride
-                                        ? [externalRecipientOverride]
+                                        ? [{ value: externalRecipientOverride }]
                                         : undefined,
                                 }}
                                 availableFilters={availableFilters}

@@ -92,7 +92,6 @@ function DefaultDashboardInsightWidgetCore({
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
         widget,
-        useNewTabularExport: true,
     });
 
     const onScheduleExport = useCallback(() => {

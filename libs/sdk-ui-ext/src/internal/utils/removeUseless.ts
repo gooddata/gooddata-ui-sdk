@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { compact, filter, flow, isEmpty } from "lodash-es";
+import { compact, isEmpty } from "lodash-es";
 
 function isUseless(obj: unknown): boolean {
     return obj === null || obj === undefined || (typeof obj === "object" && isEmpty(obj));
@@ -19,12 +19,11 @@ export function removeUseless(obj: any): any | undefined {
     if (Array.isArray(obj)) {
         res = compact(obj.map(removeUseless));
     } else if (obj !== null && typeof obj === "object") {
-        res = flow(
-            Object.entries,
-            (pairs) => pairs.map(([key, value]) => [key, removeUseless(value)]),
-            (pairs) => filter(pairs, ([_, value]) => !isUseless(value)),
-            Object.fromEntries,
-        )(obj);
+        res = Object.fromEntries(
+            Object.entries(obj)
+                .map(([key, value]) => [key, removeUseless(value)])
+                .filter(([_, value]) => !isUseless(value)),
+        );
     }
 
     return isUseless(res) ? undefined : res;

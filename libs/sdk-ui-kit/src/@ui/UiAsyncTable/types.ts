@@ -9,6 +9,15 @@ import { IconType } from "../@types/icon.js";
 /**
  * @internal
  */
+export interface UiAsyncTableAccessibilityConfig<T> {
+    getCheckboxItemAriaLabel?: (item: T) => string;
+    checkboxAllAriaLabel?: string;
+    searchAriaLabel?: string;
+}
+
+/**
+ * @internal
+ */
 export interface UiAsyncTableProps<T extends { id: string }> {
     items: T[];
     totalItemsCount?: number;
@@ -54,6 +63,9 @@ export interface UiAsyncTableProps<T extends { id: string }> {
 
     //locale
     locale?: string;
+
+    //accessibility
+    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
 /**
@@ -141,10 +153,10 @@ export interface UiAsyncTableHeaderProps<T> {
     width?: number;
     small?: boolean;
     largeRow?: boolean;
+    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
 export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
-    isSmall?: boolean;
     isFiltersTooLarge?: boolean;
 }
 
@@ -156,6 +168,7 @@ export interface UiAsyncTableRowProps<T extends { id: string }> {
     hasCheckbox?: boolean;
     isLarge?: boolean;
     isSelected?: boolean;
+    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
 export type UiAsyncTableCheckboxProps = {
@@ -163,6 +176,8 @@ export type UiAsyncTableCheckboxProps = {
     checked?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
+    ariaLabel?: string;
+    header?: boolean;
 };
 
 export interface UiAsyncTableToolbarProps<T extends { id: string }> {
@@ -175,6 +190,7 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     items: Array<T>;
     isSmall?: boolean;
     onSearch?: (search: string) => void;
+    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
 export type UiAsyncTableDropdownItemProps = {

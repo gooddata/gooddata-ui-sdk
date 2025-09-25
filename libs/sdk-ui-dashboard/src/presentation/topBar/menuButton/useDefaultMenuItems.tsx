@@ -6,7 +6,6 @@ import { useIntl } from "react-intl";
 
 import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
 import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
 import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
@@ -34,8 +33,9 @@ import {
     useDashboardScheduledEmails,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { useExportDialogContext } from "../../dashboardContexts/ExportDialogContext.js";
+import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { IMenuButtonItem } from "../types.js";
+import { useExportToTabular } from "./useExportToTabular.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>
@@ -130,8 +130,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         exportDashboardToPdf();
     }, [exportDashboardToPdf, isNewDashboard]);
 
-    const { exportDashboardToExcel, exportDashboardToExcelStatus } = useExportDashboardToExcel();
-    const { openDialog, closeDialog } = useExportDialogContext();
+    const { exportToTabular, exportToTabularStatus } = useExportToTabular();
+    const { openDialog, closeDialog } = useExportXlsxDialogContext();
     const defaultOnExportToExcel = useCallback(() => {
         if (isNewDashboard) {
             return;
@@ -139,11 +139,12 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openDialog({
             onSubmit: (data) => {
                 closeDialog();
-                exportDashboardToExcel(
+                exportToTabular(
                     data.mergeHeaders ?? true,
                     data.includeFilterContext ?? true,
                     undefined,
                     dashboardTitle,
+                    "XLSX",
                 );
             },
             headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
@@ -161,7 +162,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         settings?.["cellMergedByDefault"],
         settings?.["activeFiltersByDefault"],
         closeDialog,
-        exportDashboardToExcel,
+        exportToTabular,
         dashboardTitle,
     ]);
 
@@ -210,7 +211,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const isInProgress =
         exportDashboardToPdfStatus === "running" ||
-        exportDashboardToExcelStatus === "running" ||
+        exportToTabularStatus === "running" ||
         exportDashboardToPdfPresentationStatus === "running" ||
         exportDashboardToPptPresentationStatus === "running";
 

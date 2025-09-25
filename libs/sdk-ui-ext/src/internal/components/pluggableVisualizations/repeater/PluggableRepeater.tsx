@@ -269,17 +269,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     };
 
     private buildColumnSizing(columnWidths?: RepeaterColumnWidthItem[]): IRepeaterColumnSizing {
-        const autoSize = this.featureFlags?.enableTableColumnsAutoResizing;
-        const growToFit =
-            this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags?.enableTableColumnsGrowToFit;
+        const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
 
-        let columnSizing: Partial<IRepeaterColumnSizing> = {};
-
-        if (autoSize) {
-            columnSizing = {
-                defaultWidth: "autoresizeAll",
-            };
-        }
+        let columnSizing: Partial<IRepeaterColumnSizing> = {
+            defaultWidth: "autoresizeAll",
+        };
 
         if (growToFit) {
             columnSizing = {

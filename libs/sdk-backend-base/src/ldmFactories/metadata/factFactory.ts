@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { identity } from "lodash-es";
 
-import { IFactMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IDataSetMetadataObject, IFactMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
 import { BuilderModifications, builderFactory } from "../builder.js";
@@ -17,6 +18,11 @@ export class FactMetadataObjectBuilder<
 > extends MetadataObjectBuilder<T> {
     public isLocked(value: boolean): this {
         this.item.isLocked = value;
+        return this;
+    }
+
+    public dataSet(value: IDataSetMetadataObject | undefined): this {
+        this.item.dataSet = value;
         return this;
     }
 }

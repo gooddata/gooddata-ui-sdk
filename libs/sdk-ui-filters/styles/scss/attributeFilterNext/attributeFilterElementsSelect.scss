@@ -27,6 +27,7 @@
     flex: 1 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-left: 3px; // additional padding to see focus ring
 }
 
 .gd-async-list {
@@ -34,16 +35,25 @@
     &:focus-within {
         outline: none;
 
-        .gd-attribute-filter-list-item--isFocused .gd-list-item-only {
-            opacity: 1;
-            outline: none;
+        .gd-attribute-filter-list-item--isFocused {
+            .gd-list-item-only:not(.gd-list-item-only--isFocusedSelectItem) {
+                opacity: 1;
+                outline: none;
+            }
+
+            .gd-item-title-tooltip-wrapper.gd-list-item-only.gd-list-item-only--isFocusedSelectItem,
+            .gd-list-item-only.gd-list-item-only .gd-icon-circle-question--isFocusedSelectItem {
+                @include mixins.focus-ring;
+                outline-offset: 0;
+            }
         }
 
         .gd-attribute-filter-single-selection-list-item--isFocusedSelectItem,
         .gd-attribute-filter-list-item--isFocusedSelectItem,
-        .gd-list-item-only--isFocusedSelectItem,
+        .gd-item-title-tooltip-wrapper.gd-list-item-only--isFocusedSelectItem,
         .gd-list-item-only .gd-icon-circle-question--isFocusedSelectItem {
             @include mixins.focus-ring;
+            outline-offset: 0;
         }
     }
 }
@@ -61,14 +71,25 @@
     }
 }
 
-.gd-attribute-filter-elements-select-item__next {
+.gd-async-list .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
+    padding-left: 7px; // compensate additional padding on label
 
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin: 0 0 0 5px;
         flex-grow: 0;
         flex-shrink: 0;
         color: var(--gd-palette-complementary-7, #6d7680);
+    }
+
+    // Collapse contextual-only action by default to avoid affecting layout
+    .gd-list-item-only {
+        opacity: 0;
+        margin-left: 0;
+        width: 1px;
+        overflow: hidden;
+        white-space: nowrap;
+        pointer-events: none;
     }
 
     &.gd-list-item {
@@ -83,11 +104,30 @@
             .input-label-text {
                 color: var(--gd-palette-complementary-9-from-theme, inherit);
             }
+
+            // Expand the contextual-only action on hover
+            .gd-list-item-only {
+                opacity: 1;
+                width: auto;
+                margin-left: 7px;
+                pointer-events: auto;
+            }
         }
 
         &.is-selected {
             font-weight: bold;
             color: variables.$gd-color-text;
+        }
+
+        // Expand when the item is focused via keyboard
+        &.is-focused,
+        &:focus-within {
+            .gd-list-item-only {
+                opacity: 1;
+                width: auto;
+                margin-left: 7px;
+                pointer-events: auto;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
@@ -12,10 +13,10 @@ import { changeIgnoreExecutionTimestampHandler } from "./dashboard/changeIgnoreE
 import { changeSharingHandler } from "./dashboard/changeSharingHandler.js";
 import { setDashboardDateFilterConfigModeHandler } from "./dashboard/dateFilterConfigHandler.js";
 import { deleteDashboardHandler } from "./dashboard/deleteDashboardHandler.js";
-import { exportDashboardToExcelHandler } from "./dashboard/exportDashboardToExcelHandler.js";
 import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHandler.js";
 import { exportDashboardToPdfPresentationHandler } from "./dashboard/exportDashboardToPdfPresentationHandler.js";
 import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashboardToPptPresentationHandler.js";
+import { exportToTabularHandler } from "./dashboard/exportToTabularHandler.js";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
 import { renameDashboardHandler } from "./dashboard/renameDashboardHandler.js";
 import { resetDashboardHandler } from "./dashboard/resetDashboardHandler.js";
@@ -131,7 +132,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.CHANGE_RENDER_MODE": changeRenderModeHandler,
     "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
-    "GDC.DASH/CMD.EXPORT.EXCEL": exportDashboardToExcelHandler,
+    "GDC.DASH/CMD.EXPORT.EXCEL": exportToTabularHandler,
     "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION": exportDashboardToPdfPresentationHandler,
     "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION": exportDashboardToPptPresentationHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,

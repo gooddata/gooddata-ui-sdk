@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { flow } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -62,10 +61,11 @@ describe("resolveComposedPlaceholderValue", () => {
         const testMeasure1 = newMeasure("test-measure1");
         const testMeasure2 = newMeasure("test-measure2");
 
-        const updatedState = flow(
-            (s) => setPlaceholder(placeholder1, testMeasure1, s),
-            (s) => setPlaceholder(placeholder2, testMeasure2, s),
-        )(emptyState);
+        const updatedState = setPlaceholder(
+            placeholder2,
+            testMeasure2,
+            setPlaceholder(placeholder1, testMeasure1, emptyState),
+        );
 
         expect(resolveComposedPlaceholderValue(composedPlaceholder, updatedState)).toEqual([
             testMeasure1,

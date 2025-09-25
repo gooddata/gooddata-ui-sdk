@@ -64,7 +64,6 @@ export class PluggableSankeyChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const enableWeekFilters = !!this.featureFlags["enableWeekFilters"];
         let extendedReferencePoint: IExtendedReferencePoint = {
             ...cloneDeep(referencePoint),
             uiConfig: cloneDeep(DEFAULT_SANKEY_UI_CONFIG),
@@ -74,7 +73,7 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         extendedReferencePoint = removeAllDerivedMeasures(extendedReferencePoint);
         extendedReferencePoint = configBuckets(extendedReferencePoint);
         extendedReferencePoint = configurePercent(extendedReferencePoint, false);
-        extendedReferencePoint = configureOverTimeComparison(extendedReferencePoint, enableWeekFilters);
+        extendedReferencePoint = configureOverTimeComparison(extendedReferencePoint);
         extendedReferencePoint = configSankeyUiConfig(extendedReferencePoint, this.intl, this.type);
 
         return Promise.resolve(sanitizeFilters(extendedReferencePoint));

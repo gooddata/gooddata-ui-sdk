@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { filter, flow } from "lodash-es";
-
 import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
@@ -81,13 +79,17 @@ export function chartConfigFromInsight(
         ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
     };
 
-    return flow(
-        Object.entries,
-        (pairs) => filter(pairs, ([key]) => supportedChartConfigProperties.has(key as any)),
-        Object.fromEntries,
-        (c) => getChartSupportedControls(c, insight, ctx?.settings),
-        removeUseless,
-    )(withValuesFromContext);
+    return removeUseless(
+        getChartSupportedControls(
+            Object.fromEntries(
+                Object.entries(withValuesFromContext).filter(([key]) =>
+                    supportedChartConfigProperties.has(key as any),
+                ),
+            ),
+            insight,
+            ctx?.settings,
+        ),
+    );
 }
 
 export function chartForecastConfigFromInsight(
@@ -106,7 +108,7 @@ export function chartForecastConfigFromInsight(
     const confidenceLevel = controls.forecast?.confidence ?? 0.95;
     const seasonal = controls.forecast?.seasonal;
 
-    return flow(removeUseless)({
+    return removeUseless({
         confidenceLevel,
         forecastPeriod,
         seasonal,

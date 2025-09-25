@@ -130,7 +130,6 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
         widget: activeVisualization,
-        useNewTabularExport: true,
     });
 
     const {

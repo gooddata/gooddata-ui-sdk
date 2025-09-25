@@ -1,7 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { identity } from "lodash-es";
 
-import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IDataSetMetadataObject,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
 import { BuilderModifications, builderFactory } from "../builder.js";
@@ -17,6 +23,11 @@ export class AttributeMetadataObjectBuilder<
 > extends MetadataObjectBuilder<T> {
     public isLocked(value: boolean): this {
         this.item.isLocked = value;
+        return this;
+    }
+
+    public dataSet(value: IDataSetMetadataObject | undefined): this {
+        this.item.dataSet = value;
         return this;
     }
 

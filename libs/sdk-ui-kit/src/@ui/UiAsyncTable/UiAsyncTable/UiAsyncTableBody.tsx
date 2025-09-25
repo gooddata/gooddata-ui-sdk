@@ -40,6 +40,7 @@ export function UiAsyncTableBody<T extends { id: string }>(props: UiAsyncTableBo
             scrollbarHoverEffect={true}
             scrollToIndex={scrollToIndex}
             shouldLoadNextPage={shouldLoadNextPage}
+            tabIndex={items.length ? 0 : -1}
         >
             {(item) => renderItem(item)}
         </UiPagedVirtualList>

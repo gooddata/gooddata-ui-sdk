@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { flow } from "lodash-es";
-
 import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import {
     IInsightDefinition,
@@ -78,10 +76,11 @@ export function normalizeInsight(insight: IInsightDefinition): IInsightDefinitio
     const properties = insightProperties(insight);
     const processedProperties = properties && normalizeProperties(properties, o2nMap);
 
-    return flow(
-        (i) => insightSetBuckets(i, processedBuckets),
-        (i) => insightSetFilters(i, normalized.filters),
-        (i) => insightSetSorts(i, normalized.sortBy),
-        (i) => insightSetProperties(i, processedProperties),
-    )(insight);
+    return insightSetProperties(
+        insightSetSorts(
+            insightSetFilters(insightSetBuckets(insight, processedBuckets), normalized.filters),
+            normalized.sortBy,
+        ),
+        processedProperties,
+    );
 }

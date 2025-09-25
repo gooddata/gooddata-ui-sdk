@@ -8,7 +8,7 @@ import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog/index.js";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog/index.js";
-import { ExportDialogProvider } from "../../dialogs/index.js";
+import { ExportTabularPdfDialogProvider, ExportXlsxDialogProvider } from "../../dialogs/index.js";
 import { FilterBar, useFilterBarProps } from "../../filterBar/index.js";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog/index.js";
 import { SaveAsDialog, useSaveAsDialogProps } from "../../saveAs/index.js";
@@ -59,7 +59,8 @@ export function DashboardHeader(): ReactElement {
     return (
         <>
             <ToastMessages />
-            <ExportDialogProvider />
+            <ExportXlsxDialogProvider />
+            <ExportTabularPdfDialogProvider />
             <ScheduledEmailDialogProvider />
             <AlertingDialogProvider />
             <ShareDialogDashboardHeader />

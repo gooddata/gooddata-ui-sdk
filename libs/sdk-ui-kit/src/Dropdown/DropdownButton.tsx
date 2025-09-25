@@ -23,6 +23,7 @@ export interface IDropdownButtonProps {
     isOpen?: boolean;
     isSmall?: boolean;
     iconLeft?: string;
+    isFullWidth?: boolean;
 
     onClick?: (e: MouseEvent) => void;
 
@@ -46,7 +47,7 @@ export function DropdownButton({
     isOpen,
     isSmall = true,
     iconLeft,
-
+    isFullWidth = false,
     onClick,
     children,
     dropdownId,
@@ -62,6 +63,7 @@ export function DropdownButton({
             "gd-button-small": isSmall,
             "is-dropdown-open": isOpen,
             "is-active": isOpen,
+            "is-full-width": isFullWidth,
         },
         className,
     );

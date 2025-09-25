@@ -2150,5 +2150,105 @@
     "automations.emptyState.alert.description": {
         "value": "Create an alert on the visualization in any dashboard.",
         "comment": "Empty state description explaining how to create the first alert"
+    },
+    "automations.accessibility.selectAll.alerts": {
+        "value": "Select all alerts",
+        "comment": "Accessibility label for the checkbox that selects all alerts in the alerts table"
+    },
+    "automations.accessibility.selectAll.schedules": {
+        "value": "Select all scheduled exports",
+        "comment": "Accessibility label for the checkbox that selects all scheduled exports in the schedules table"
+    },
+    "automations.accessibility.select.alert": {
+        "value": "Select alert: {title}",
+        "comment": "Accessibility label for individual alert selection checkbox. Example: 'Select alert: Revenue Alert'"
+    },
+    "automations.accessibility.select.schedule": {
+        "value": "Select scheduled export: {title}",
+        "comment": "Accessibility label for individual scheduled export selection checkbox. Example: 'Select scheduled export: Weekly Revenue Report'"
+    },
+    "automations.accessibility.search.alerts": {
+        "value": "Search alerts",
+        "comment": "Accessibility label for the search input field when searching through alerts"
+    },
+    "automations.accessibility.search.schedules": {
+        "value": "Search scheduled exports",
+        "comment": "Accessibility label for the search input field when searching through scheduled exports"
+    },
+    "kdaDialog.dialog.title": {
+        "value": "Key driver analysis for {metric}",
+        "comment": "Dialog title for key driver analysis"
+    },
+    "kdaDialog.dialog.closeLabel": {
+        "value": "Close",
+        "comment": "Dialog close button label"
+    },
+    "kdaDialog.dialog.bars.metric.title": {
+        "value": "Metric",
+        "comment": "Metric title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.filters.title": {
+        "value": "Filters",
+        "comment": "Filters title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.date.title": {
+        "value": "Date range: {title}",
+        "comment": "Date range title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.title": {
+        "value": "Key drivers",
+        "comment": "Key drivers title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.tooltip": {
+        "value": "List of key drivers sorted by impact",
+        "comment": "Key drivers tooltip in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.button.trendUp": {
+        "value": "Increasing ({count})",
+        "comment": "Key drivers button trend up in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.button.trendDown": {
+        "value": "Decreasing ({count})",
+        "comment": "Key drivers button trend down in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.title": {
+        "value": "Analysis summary",
+        "comment": "Key drivers overview summary title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.tests": {
+        "value": "{combinations} tests",
+        "comment": "Key drivers overview summary combinations in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.attributes": {
+        "value": "{attributes} attributes",
+        "comment": "Key drivers overview summary attributes in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": {
+        "value": "Tested {combinations} data combinations and found {drivers} drivers.",
+        "comment": "Key drivers overview summary drivers description in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.edit_button": {
+        "value": "Edit attributes",
+        "comment": "Key drivers overview summary drivers edit button in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": {
+        "value": "Click on column to see key drivers for given country",
+        "comment": "Key drivers overview detail tip in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.title": {
+        "value": "Change in {title} by {category}",
+        "comment": "Key drivers overview detail title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": {
+        "value": "Attribute",
+        "comment": "Key drivers overview detail table attribute column header in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.driver": {
+        "value": "Most significant driver",
+        "comment": "Key drivers overview detail table driver column header in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.drivers": {
+        "value": "Num. of drivers",
+        "comment": "Key drivers overview detail table drivers column header in key driver analysis dialog"
     }
 }

@@ -48,14 +48,8 @@ export function useObjectTypeActions(): IObjectTypeActions {
     return useContext(ObjectTypeActionsContext);
 }
 
-export function useObjectTypeCounterSync(items: { type: ObjectType }[]) {
+export function useObjectTypeCounterSync(counter: Record<ObjectType, number>) {
     const { setCounter } = useObjectTypeActions();
 
-    useEffect(() => {
-        const counter = { ...initialState.counter };
-        for (const item of items) {
-            counter[item.type] = counter[item.type] + 1;
-        }
-        setCounter(counter);
-    }, [items, setCounter]);
+    useEffect(() => setCounter(counter), [counter, setCounter]);
 }

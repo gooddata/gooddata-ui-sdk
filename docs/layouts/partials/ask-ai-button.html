@@ -1,0 +1,11 @@
+<div class="ask-ai-button-container">
+    <button
+        class="gd-docs-header-nav__cta gd-docs-header-nav__github open-kapa-widget ask-ai-button"
+        id="ask-ai-button"
+    >
+        Ask AI
+        <div class="ask-ai-icon">
+            {{ with resources.Get "icons/ai.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
+        </div>
+    </button>
+</div>

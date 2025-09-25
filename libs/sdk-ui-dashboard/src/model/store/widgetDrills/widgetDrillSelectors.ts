@@ -64,7 +64,6 @@ import {
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardDrillToInsight,
     selectEnableKPIDashboardDrillToURL,
-    selectHideKpiDrillInEmbedded,
     selectIsDisabledCrossFiltering,
     selectIsDrillDownEnabled,
     selectIsEmbedded,
@@ -499,7 +498,6 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectEnableKPIDashboardDrillToInsight,
         selectEnableKPIDashboardDrillToDashboard,
         selectEnableKDCrossFiltering,
-        selectHideKpiDrillInEmbedded,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
@@ -511,7 +509,6 @@ export const selectConfiguredDrillsByWidgetRef: (
             enableKPIDashboardDrillToInsight,
             enableKPIDashboardDrillToDashboard,
             enableKDCrossFiltering,
-            hideKpiDrillInEmbedded,
             isEmbedded,
             disableCrossFiltering,
             disableCrossFilteringByConfig,
@@ -536,7 +533,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return enableKPIDashboardDrillToInsight;
                     }
                     case "drillToLegacyDashboard": {
-                        return !(isEmbedded && hideKpiDrillInEmbedded);
+                        return !isEmbedded;
                     }
                     case "crossFiltering": {
                         return (

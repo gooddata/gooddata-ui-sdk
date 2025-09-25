@@ -610,14 +610,21 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const dashboardFiltersOverrideObj = options?.dashboardFiltersOverride
                 ? { dashboardFiltersOverride: cloneWithSanitizedIds(options?.dashboardFiltersOverride) }
                 : {};
-
+            const format = options?.format || "XLSX";
             const tabularExport = await client.export.createDashboardExportRequest({
                 exportDashboardTabularExportRequest: {
                     fileName: title || "export",
-                    format: "XLSX",
+                    format,
                     settings: {
                         mergeHeaders: options?.mergeHeaders,
                         exportInfo: options?.exportInfo,
+                        ...(format === "PDF" && options?.pdfConfiguration
+                            ? {
+                                  pageSize: options.pdfConfiguration.pageSize,
+                                  pageOrientation: options.pdfConfiguration.pageOrientation,
+                                  showInfoPage: options.pdfConfiguration.showInfoPage,
+                              }
+                            : {}),
                     },
                     widgetIds: options?.widgetIds,
                     ...dashboardFiltersOverrideObj,
@@ -626,14 +633,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
             });
 
-            return await this.handleExportTabularResultPolling(
-                client,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                {
-                    workspaceId: this.workspace,
-                    exportId: tabularExport?.data?.exportResult,
-                },
-            );
+            const contentType =
+                format === "PDF"
+                    ? "application/pdf"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return await this.handleExportTabularResultPolling(client, contentType, {
+                workspaceId: this.workspace,
+                exportId: tabularExport?.data?.exportResult,
+            });
         });
     };
 
@@ -727,7 +735,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private async handleExportTabularResultPolling(
         client: ITigerClient,
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" | "application/pdf",
         payload: ActionsExportGetTabularExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {

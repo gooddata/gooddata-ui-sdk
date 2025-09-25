@@ -17,10 +17,10 @@
   <div class="gd-docs-header-nav__center">
     <div id="adds-container" class="gd-docs-header-nav__search"></div>
   </div>
+  {{ partial "ask-ai-button.html" . }}
   <div class="gd-docs-header-nav__right">
     {{ if .Site.Params.versions }}
       {{ partial "navbar-version-selector.html" . }}
-
       {{ $version := partial "version.html" (dict "context" .) }}
       <a href="https://github.com/gooddata/gooddata-ui-sdk/tree/{{ if and $version $version.tag }}{{ $version.tag }}{{ else }}master{{ end }}/examples/sdk-interactive-examples" class="gd-docs-header-nav__cta gd-docs-header-nav__github" target="_blank">
         Examples

@@ -1,0 +1,59 @@
+// (C) 2023 GoodData Corporation
+// Custom tooltip styles
+
+// Override Bootstrap tooltip background color
+.tooltip {
+    font-family: inherit;
+
+    .tooltip-inner {
+        padding: 12px 15px;
+        text-align: left;
+        max-width: 300px;
+        font-family: inherit;
+        color: $color-white;
+        text-align: center;
+        background-color: $color-deep-purple;
+    }
+
+    // Override tooltip arrow colors for all directions
+    &.bs-tooltip-top .tooltip-arrow::before,
+    &.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+        border-top-color: $color-deep-purple;
+    }
+
+    &.bs-tooltip-right .tooltip-arrow::before,
+    &.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+        border-right-color: $color-deep-purple;
+    }
+
+    &.bs-tooltip-bottom .tooltip-arrow::before,
+    &.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+        border-bottom-color: $color-deep-purple;
+    }
+
+    &.bs-tooltip-left .tooltip-arrow::before,
+    &.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+        border-left-color: $color-deep-purple;
+    }
+}
+
+// Additional fallback for older Bootstrap versions
+.bs-tooltip-top .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+    border-top-color: $color-deep-purple;
+}
+
+.bs-tooltip-right .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+    border-right-color: $color-deep-purple;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+    border-bottom-color: $color-deep-purple;
+}
+
+.bs-tooltip-left .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+    border-left-color: $color-deep-purple;
+}

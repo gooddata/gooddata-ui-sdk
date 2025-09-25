@@ -34,7 +34,6 @@ import "./insightStories.css";
 
 const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,
-    enableHidingOfDataPoints: true,
     enableSeparateTotalLabels: true,
     enableChartsSorting: true,
     enableLineChartTrendThreshold: true,

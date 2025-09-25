@@ -1,0 +1,18 @@
+.gd-pdf-export-dialog {
+    min-width: 300px;
+
+    .gd-dialog-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .gd-pdf-export-dialog-item {
+            h4 {
+                font-size: 14px;
+                font-weight: 400;
+                color: var(--gd-palette-complementary-7);
+                margin: 0 0 2px 0;
+            }
+        }
+    }
+}

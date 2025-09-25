@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { flowRight } from "lodash-es";
+import type { ComponentType } from "react";
+
 import { WrappedComponentProps } from "react-intl";
 
 import { withEntireDataView } from "@gooddata/sdk-ui";
@@ -11,12 +12,9 @@ import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper.js";
 import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC.js";
 import { withMapboxToken } from "./MapboxTokenProvider.js";
 
-const WrappedCoreGeoChart = flowRight(
-    withTheme,
-    withMapboxToken,
-    geoValidatorHOC,
-    withEntireDataView,
-)(GeoChartOptionsWrapper);
+const WrappedCoreGeoChart = withTheme(
+    withMapboxToken(geoValidatorHOC(withEntireDataView(GeoChartOptionsWrapper) as any)),
+) as ComponentType<any>;
 
 /**
  * @internal

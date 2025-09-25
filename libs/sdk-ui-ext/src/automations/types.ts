@@ -95,6 +95,15 @@ export type AutomationsFilterName = "dashboard" | "workspace" | "createdBy" | "r
 export type AutomationsFilterPreselectName = AutomationsFilterName | "externalRecipients";
 
 /**
+ * Automation filter preselect value
+ * @internal
+ */
+export type AutomationsFilterPreselectValue = {
+    value: string;
+    label?: string;
+};
+
+/**
  * Automation scope
  * @internal
  */
@@ -104,7 +113,9 @@ export type AutomationsScope = "workspace" | "organization";
  * Preselected filters configuration
  * @internal
  */
-export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterPreselectName, Array<string>>>;
+export type AutomationsPreselectedFilters = Partial<
+    Record<AutomationsFilterPreselectName, Array<AutomationsFilterPreselectValue>>
+>;
 
 /**
  * Available filters configuration

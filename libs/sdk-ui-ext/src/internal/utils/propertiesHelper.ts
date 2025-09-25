@@ -261,23 +261,13 @@ export function getHighchartsAxisNameConfiguration(
 
 export function getDataPointsConfiguration(
     controlProperties: IVisualizationProperties,
-    enableHidingOfDataPoints: boolean = false,
 ): IVisualizationProperties {
-    if (enableHidingOfDataPoints) {
-        const dataPointsVisible = controlProperties["dataPoints"]?.visible;
-
-        return {
-            ...controlProperties,
-            dataPoints: {
-                visible: dataPointsVisible === undefined ? "auto" : dataPointsVisible,
-            },
-        };
-    }
+    const dataPointsVisible = controlProperties["dataPoints"]?.visible;
 
     return {
         ...controlProperties,
         dataPoints: {
-            visible: undefined,
+            visible: dataPointsVisible === undefined ? "auto" : dataPointsVisible,
         },
     };
 }
@@ -337,7 +327,7 @@ export function getChartSupportedControls(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
         (c) => getLegendConfiguration(c, insight),
         (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
-        (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
+        (c) => getDataPointsConfiguration(c),
     )(controlProperties);
 }
 
@@ -350,7 +340,7 @@ export function getChartSupportedControlsDashboardsEnv(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
         (c) => getLegendConfigurationDashboardsEnv(c, options),
         (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
-        (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
+        (c) => getDataPointsConfiguration(c),
     )(controlProperties);
 }
 

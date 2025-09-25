@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     IUserWorkspaceSettings,
     IWorkspaceSettings,
@@ -30,6 +31,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async setMetadataLocale(locale: string): Promise<void> {
         return this.decorated.setMetadataLocale(locale);
+    }
+
+    async setFormatLocale(locale: string): Promise<void> {
+        return this.decorated.setFormatLocale(locale);
     }
 
     async setSeparators(separators: ISeparators): Promise<void> {

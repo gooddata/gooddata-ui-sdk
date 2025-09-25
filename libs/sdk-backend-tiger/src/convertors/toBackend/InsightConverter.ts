@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { flow, omit } from "lodash-es";
+
+import { omit } from "lodash-es";
 
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
@@ -28,10 +29,9 @@ function removeVisualizationPropertiesSortItems(insight: IInsight): IInsightDefi
 export const convertInsight = (
     insight: IInsightDefinition,
 ): VisualizationObjectModelV2.IVisualizationObject => {
-    const sanitizedInsight: IInsightDefinition = flow(
-        removeIdentifiers,
-        removeVisualizationPropertiesSortItems,
-    )(insight as IInsight);
+    const sanitizedInsight: IInsightDefinition = removeVisualizationPropertiesSortItems(
+        removeIdentifiers(insight as IInsight) as IInsight,
+    );
 
     return {
         buckets: cloneWithSanitizedIds(sanitizedInsight.insight.buckets),

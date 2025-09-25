@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { compact, flow } from "lodash-es";
+import { compact } from "lodash-es";
 import stringifyObject from "stringify-object";
 
 import { ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
@@ -99,7 +99,7 @@ const addRatio =
         computeRatio ? `${value}.ratio()` : value;
 
 const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Converter<T>>) => {
-    const builder = flow(builderSegmentHandlers)(defaultBuilder);
+    const builder = builderSegmentHandlers.reduce((acc, fn) => fn(acc as unknown as T), defaultBuilder);
     return builder === defaultBuilder ? "undefined" : builder;
 };
 

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 
@@ -26,18 +27,26 @@ function exportDashboardToTabular(
     exportInfo?: boolean,
     widgetIds?: string[],
     dashboardFiltersOverride?: FilterContextItem[],
+    format?: "XLSX" | "PDF",
+    pdfConfiguration?: {
+        pageSize?: "A3" | "A4" | "LETTER";
+        pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+        showInfoPage?: boolean;
+    },
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
     return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, {
         title,
+        format,
         mergeHeaders,
         exportInfo,
         dashboardFiltersOverride,
         widgetIds,
+        pdfConfiguration,
     });
 }
 
-export function* exportDashboardToExcelHandler(
+export function* exportToTabularHandler(
     ctx: DashboardContext,
     cmd: ExportDashboardToExcel,
 ): SagaIterator<DashboardExportToExcelResolved> {
@@ -45,10 +54,14 @@ export function* exportDashboardToExcelHandler(
 
     const dashboardRef = yield select(selectDashboardRef);
     if (!dashboardRef) {
-        throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            "Dashboard to export to tabular format must have an ObjRef.",
+        );
     }
 
-    const { mergeHeaders, exportInfo, widgetIds, fileName } = cmd.payload;
+    const { mergeHeaders, exportInfo, widgetIds, fileName, format, pdfConfiguration } = cmd.payload;
     const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> =
         yield select(selectIsFiltersChanged);
     const filterViews: SagaReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
@@ -64,6 +77,8 @@ export function* exportDashboardToExcelHandler(
         exportInfo,
         widgetIds,
         isFilterContextChanged || hasDefaultFilterViewApplied ? filterContext : undefined,
+        format,
+        pdfConfiguration,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

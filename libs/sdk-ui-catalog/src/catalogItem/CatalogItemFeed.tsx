@@ -37,6 +37,7 @@ export function CatalogItemFeed({ backend, workspace, children, createdBy, pageS
         next,
         hasNext,
         totalCount,
+        totalCountByType,
         updateItem,
     } = useCatalogItemFeed({
         backend,
@@ -49,8 +50,8 @@ export function CatalogItemFeed({ backend, workspace, children, createdBy, pageS
     const items = useUnifiedItems(searchStatus, searchItems, feedItems);
     const status = getUnifiedStatus(searchStatus, feedStatus);
 
-    // Sync unified items into the object type counter
-    useObjectTypeCounterSync(items);
+    // Sync total count into the object type counter
+    useObjectTypeCounterSync(totalCountByType);
 
     if (status === "error") {
         return (

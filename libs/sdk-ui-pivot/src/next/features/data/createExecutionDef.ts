@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import { flow } from "lodash-es";
 
 import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 
@@ -46,7 +45,7 @@ export function createExecutionDef({
     measureGroupDimension,
     execConfig,
 }: IPivotTableExecutionDefinitionParams): IPivotTableExecutionDefinition {
-    return flow(
+    return [
         applyWorkspaceToExecutionDef({ workspace }),
         applyAttributesToExecutionDef({ rows, columns }),
         applyMeasuresToExecutionDef({ measures }),
@@ -55,5 +54,5 @@ export function createExecutionDef({
         applySortByToExecutionDef({ sortBy }),
         applyTranspositionToExecutionDef({ measureGroupDimension }),
         applyExecConfigToExecutionDef({ execConfig }),
-    )(DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION);
+    ].reduce((acc, fn) => fn(acc), DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION);
 }

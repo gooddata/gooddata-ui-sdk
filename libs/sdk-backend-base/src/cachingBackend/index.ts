@@ -623,6 +623,10 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return super.setMetadataLocale(locale);
     }
 
+    public override async setFormatLocale(locale: string): Promise<void> {
+        return super.setFormatLocale(locale);
+    }
+
     public override async setSeparators(separators: ISeparators): Promise<void> {
         return super.setSeparators(separators);
     }

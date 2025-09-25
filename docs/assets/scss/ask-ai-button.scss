@@ -1,0 +1,36 @@
+// (C) 2025 GoodData Corporation
+@import "variables/variables";
+
+.ask-ai-button-container {
+    display: flex;
+    margin-left: 20px;
+    justify-content: flex-start;
+    button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.2;
+            &:hover,
+            &:focus,
+            &:active {
+                color: inherit;
+                border-color: inherit;
+            }
+
+            &:focus {
+                box-shadow: inherit;
+            }
+        }
+    }
+    .ask-ai-icon {
+        display: flex;
+        width: fit-content;
+        svg {
+            width: 15px;
+            height: 15px;
+            margin: 0;
+        }
+    }
+}

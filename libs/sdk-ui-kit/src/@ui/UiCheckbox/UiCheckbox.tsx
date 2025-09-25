@@ -2,6 +2,8 @@
 
 import { ChangeEvent } from "react";
 
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { bem } from "../@utils/bem.js";
 
 /**
@@ -13,6 +15,8 @@ export interface UiCheckboxProps {
     preventDefault?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
+    accessibilityConfig?: IAccessibilityConfigBase;
+    tabIndex?: number;
 }
 
 const { b, e } = bem("gd-ui-kit-checkbox");
@@ -26,16 +30,20 @@ export function UiCheckbox({
     preventDefault = false,
     indeterminate = false,
     disabled = false,
+    accessibilityConfig,
+    tabIndex,
 }: UiCheckboxProps) {
     return (
-        <label className={b()}>
+        <label className={b()} {...accessibilityConfigToAttributes(accessibilityConfig)}>
             <input
                 type="checkbox"
                 className={e("input")}
                 checked={checked}
                 onChange={onChange}
                 disabled={disabled}
+                aria-checked={checked}
                 onClick={(e) => preventDefault && e.stopPropagation()}
+                tabIndex={tabIndex}
             />
             <span className={e("box", { checked, indeterminate, disabled })} />
         </label>

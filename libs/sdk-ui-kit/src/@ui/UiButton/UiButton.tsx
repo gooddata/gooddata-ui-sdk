@@ -45,6 +45,7 @@ export interface UiButtonProps {
     label: string;
     isDisabled?: boolean;
     isLoading?: boolean;
+    isSelected?: boolean;
     tooltip?: ReactNode;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
@@ -73,6 +74,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             tabIndex = 0,
             label,
             isDisabled,
+            isSelected,
             isLoading,
             iconBefore,
             iconAfter,
@@ -95,7 +97,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             <button
                 id={id}
                 ref={ref}
-                className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter })}
+                className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter, isSelected })}
                 disabled={isDisabled}
                 tabIndex={tabIndex}
                 onClick={onClick}

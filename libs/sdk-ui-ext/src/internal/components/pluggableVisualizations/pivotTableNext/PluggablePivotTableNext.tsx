@@ -245,7 +245,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
 
         setPivotTableNextUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE, this.settings);
         configurePercent(newReferencePoint, false);
-        configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
+        configureOverTimeComparison(newReferencePoint);
         Object.assign(
             newReferencePoint,
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),

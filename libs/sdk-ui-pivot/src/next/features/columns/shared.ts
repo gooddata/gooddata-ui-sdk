@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
+
 import { IRowNode, ValueGetterParams } from "ag-grid-enterprise";
 import { IntlShape } from "react-intl";
 
-import { IResultTotalHeader, TotalType } from "@gooddata/sdk-model";
+import { IResultAttributeHeader, IResultTotalHeader, TotalType } from "@gooddata/sdk-model";
 import {
     ITableAttributeColumnDefinition,
     ITableDataValue,
+    emptyHeaderTitleFromIntl,
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
     isTableGrandTotalSubtotalMeasureValue,
@@ -218,4 +220,34 @@ export function parentsMatch(
     }
 
     return true;
+}
+
+/**
+ * Gets the name of the attribute header.
+ *
+ * We nullify empty string as otherwise it would be displayed as "" instead of "(empty value)".
+ *
+ * Generally, both "" and null are supported by BE, but we want to display "(empty value)" for both.
+ *
+ * @param attributeHeader - The attribute header.
+ * @param intl - The intl instance.
+ * @returns The name of the attribute header.
+ */
+export function getAttributeHeaderName(attributeHeader: IResultAttributeHeader, intl: IntlShape) {
+    return (
+        convertEmptyStringToNull(attributeHeader.attributeHeaderItem.formattedName) ??
+        convertEmptyStringToNull(attributeHeader.attributeHeaderItem.name) ??
+        convertEmptyStringToNull(attributeHeader.attributeHeaderItem.uri) ??
+        emptyHeaderTitleFromIntl(intl)
+    );
+}
+
+/**
+ * Converts empty string to null.
+ *
+ * @param value - The value to convert.
+ * @returns The converted value.
+ */
+export function convertEmptyStringToNull(value: string | null | undefined) {
+    return value === "" ? null : value;
 }

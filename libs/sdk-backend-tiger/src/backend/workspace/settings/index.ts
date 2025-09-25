@@ -116,6 +116,10 @@ export class TigerWorkspaceSettings
         return this.setSetting("METADATA_LOCALE", { value: locale });
     }
 
+    public override async setFormatLocale(locale: string): Promise<void> {
+        return this.setSetting("FORMAT_LOCALE", { value: locale });
+    }
+
     public override async setSeparators(separators: ISeparators): Promise<void> {
         return this.setSetting("SEPARATORS", separators);
     }
