@@ -1,6 +1,38 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 22 Sep 2025 08:18:19 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Sep 2025 08:07:44 GMT and should not be manually modified.
+
+## 11.1.0
+
+Thu, 25 Sep 2025 08:07:44 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Added tabular PDF export option in drill down
+- sdk-ui-dashboard: Settings for PDF tabular export
+- sdk-ui-catalog: Filter by tag when a tag is clicked in the table. This enables quick drill into tagged items directly from the table without opening filter panel.
+- sdk-backend-spi: Add full-text `search` to `IFilterBaseOptions`
+- sdk-ui-catalog: Add full-text search to the catalog, temporarily replacing semantic search.
+- sdk-ui-catalog: Show the total count of items by object type in the tooltip
+- sdk-model: Introduce `dataSet` property to attribute `IAttributeMetadataObject` and fact `IFactMetadataObject` metadata objects.
+- sdk-backend: Expose dataset metadata on attribute/fact builders and tiger converters.
+- sdk-ui-catalog: Show dataset title in the catalog detail view for attributes and facts.
+- [sdk-ui-catalog] Detail drawer is open fullscreen
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-ext] Added KDA dialog component designs
+- [sdk-ui-catalog] tags filter is not sorted alphabetically
+- Added method for setting format locale to settings services
+- UiAyncTable: general grid a11y, changes to table structure
+- Improve accessibility of attribute filter
+- Remove unused feature flag: enableBulletChart
+- Remove unused feature flag: enableHidingOfDataPoints
+- Remove unused feature flag: enablePushpinGeoChart
+- Remove unused feature flag: enableTableColumnsAutoResizing
+- Remove unused feature flag: enableTableColumnsGrowToFit
+- Remove unused feature flag: enableTableColumnsManualResizing
+- Remove unused feature flag: enableWeekFilters
+- Remove unused feature flag: hideKpiDrillInEmbedded
 
 ## 11.0.0
 

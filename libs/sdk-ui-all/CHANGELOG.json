@@ -2,6 +2,90 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.1.0",
+            "tag": "@gooddata/sdk-ui-all_v11.1.0",
+            "date": "Thu, 25 Sep 2025 08:07:44 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Added tabular PDF export option in drill down"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Settings for PDF tabular export"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Filter by tag when a tag is clicked in the table. This enables quick drill into tagged items directly from the table without opening filter panel."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add full-text `search` to `IFilterBaseOptions`"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add full-text search to the catalog, temporarily replacing semantic search."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Show the total count of items by object type in the tooltip"
+                    },
+                    {
+                        "comment": "sdk-model: Introduce `dataSet` property to attribute `IAttributeMetadataObject` and fact `IFactMetadataObject` metadata objects."
+                    },
+                    {
+                        "comment": "sdk-backend: Expose dataset metadata on attribute/fact builders and tiger converters."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Show dataset title in the catalog detail view for attributes and facts."
+                    },
+                    {
+                        "comment": "[sdk-ui-catalog] Detail drawer is open fullscreen "
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-ext] Added KDA dialog component designs"
+                    },
+                    {
+                        "comment": "[sdk-ui-catalog] tags filter is not sorted alphabetically"
+                    },
+                    {
+                        "comment": "Added method for setting format locale to settings services"
+                    },
+                    {
+                        "comment": "UiAyncTable: general grid a11y, changes to table structure"
+                    },
+                    {
+                        "comment": "Improve accessibility of attribute filter"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableBulletChart"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableHidingOfDataPoints"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enablePushpinGeoChart"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableTableColumnsAutoResizing"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableTableColumnsGrowToFit"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableTableColumnsManualResizing"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableWeekFilters"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: hideKpiDrillInEmbedded"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.0.0",
             "tag": "@gooddata/sdk-ui-all_v11.0.0",
             "date": "Mon, 22 Sep 2025 08:18:19 GMT",
