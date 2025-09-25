@@ -1,1314 +1,1278 @@
 // DO NOT ADD COMMENTS IN THIS FILE.  They will be lost when the Rush tool resaves it.
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
-  "packages": [
-    {
-      "name": "@aaronhayes/react-use-hubspot-form",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@babel/cli",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/core",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/plugin-proposal-export-default-from",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@babel/plugin-transform-async-to-generator",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@babel/plugin-transform-class-properties",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@babel/plugin-transform-object-rest-spread",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@babel/plugin-transform-typescript",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/preset-env",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/preset-react",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/preset-typescript",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@babel/runtime",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@braintree/sanitize-url",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@codemirror/autocomplete",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@codemirror/commands",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@codemirror/lang-yaml",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@codemirror/language",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@codemirror/lint",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@codemirror/state",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@codemirror/view",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@componentdriven/csf",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@cypress/grep",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@evil-internetmann/react-dnd",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@floating-ui/dom",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@floating-ui/react",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@floating-ui/react-dom",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@formatjs/cli-lib",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@formatjs/icu-messageformat-parser",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@gooddata/api-client-tiger",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/catalog-export",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/emailjs-mime-codec-new",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/eslint-config",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/fixtures",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/i18n-toolkit",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/mock-handling",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/number-formatter",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/plugin-toolkit",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@gooddata/reference-workspace",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-backend-base",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-backend-mockingbird",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-backend-spi",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-backend-tiger",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-embedding",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-model",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-catalog",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-dashboard",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-ext",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-filters",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-gen-ai",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-kit",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-loaders",
-      "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-pivot",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-semantic-search",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-theme-provider",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-vis-commons",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-web-components",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/stylelint-config",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/util",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@lezer/highlight",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@microsoft/api-documenter",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@microsoft/api-extractor",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@openapitools/openapi-generator-cli",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@react-aria/interactions",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@reduxjs/toolkit",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/builder-vite",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/builder-webpack5",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/cli",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/manager-webpack5",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/preset-scss",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/react",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/react-vite",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@storybook/react-webpack5",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@tanstack/react-virtual",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@testing-library/dom",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@testing-library/react",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@testing-library/user-event",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/babel__core",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/blessed",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/columnify",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/cross-spawn",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/debounce-promise",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/fast-levenshtein",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/fs-extra",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/history",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@types/hoist-non-react-statics",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/inquirer",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/isomorphic-fetch",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@types/js-yaml",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/json5",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/kefir",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/lodash-es",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@types/mapbox-gl",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/mdast",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/node",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@types/node-fetch",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/pdf-parse",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/prettier",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/qs",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/raf",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@types/react",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@types/react-datepicker",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@types/react-dom",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@types/react-google-recaptcha",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@types/react-helmet",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@types/react-lines-ellipsis",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-measure",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@types/react-native-listener",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-portal",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-redux",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-router-dom",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@types/react-syntax-highlighter",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@types/react-textarea-autosize",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-transition-group",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-window",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/rimraf",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/semver",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/spark-md5",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/stringify-object",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/tar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/tinycolor2",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/tough-cookie",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/unist",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/uuid",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/validate-npm-package-name",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/watchpack",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/webpack-env",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@typescript-eslint/eslint-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@typescript-eslint/parser",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@vitejs/plugin-react",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@vitejs/plugin-react-swc",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@welldone-software/why-did-you-render",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "ag-grid-community",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "ag-grid-enterprise",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "ag-grid-react",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "async",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "axios",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "axios-cache-interceptor",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "babel-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "babel-plugin-lodash",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "babel-plugin-require-context-hook",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "blessed",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "blob-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "case-sensitive-paths-webpack-plugin",
-      "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "circular-dependency-plugin",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "classnames",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "clean-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "codemirror",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "columnify",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "commander",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "compression-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "concurrently",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "copy-to-clipboard",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "copy-webpack-plugin",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "core-js",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "cron-parser",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cross-spawn",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "css-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "cypress",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-multi-reporters",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-real-events",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-terminal-report",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "date-fns",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "date-fns-tz",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "debounce-promise",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "default-import",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "dependency-cruiser",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "dotenv",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "dotenv-webpack",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "downshift",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "esbuild-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-config-prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-import-resolver-typescript",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "eslint-plugin-eslint-comments",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-header",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-import",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-import-esm",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-jest",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-no-only-tests",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-react",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-react-hooks",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-regexp",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-sonarjs",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-tsdoc",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eventsource-parser",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "exponential-backoff",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fast-equals",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fast-glob",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "fast-levenshtein",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fetch-cookie",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fetch-mock",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "find-up",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "fix-esm-import-path",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fixed-data-table-2",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "fork-ts-checker-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "fs-extra",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "full-icu",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "glob",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "happy-dom",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "highcharts",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "highcharts-react-official",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "history",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "hoist-non-react-statics",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "html-validate",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "html-webpack-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "http-status-codes",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "immer",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "inquirer",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "isomorphic-fetch",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "js-object-pretty-print",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "js-yaml",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "jsdom",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "json-loader",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "json-stable-stringify",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "json5",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "jsonschema",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "kefir",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "lodash-es",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "lru-cache",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "lz-string",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mapbox-gl",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mdast",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "memoize-one",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mini-css-extract-plugin",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mkdirp",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "mocha",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mocha-junit-reporter",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "moment",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "moment-timezone",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "node-fetch",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "node-xlsx",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "npm-run-all",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "open",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "ora",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "p-map",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "pdf-parse",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "polished",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "postcss",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "postcss-value-parser",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "prettier-loader",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "process",
-      "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "qs",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "raf",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "react",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "react-content-loader",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-datepicker",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "react-day-picker",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-dnd",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-dnd-html5-backend",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-dom",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "react-fast-compare",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-ga",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "react-google-recaptcha",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "react-grid-system",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-helmet",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "react-intl",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "react-lines-ellipsis",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-loading-skeleton",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-markdown",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-measure",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "react-native-listener",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-portal",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-redux",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-responsive",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-router-dom",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "react-select",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "react-select-async-paginate",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-syntax-highlighter",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "react-textarea-autosize",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-transition-group",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "react-window",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "redux",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "redux-batched-actions",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "redux-saga",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "remark",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "remark-emoji",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "require-from-string",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "reselect",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "sass",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "sass-loader",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "semver",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "source-map-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "spark-md5",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "speed-measure-webpack-plugin",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "storybook",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "stringify-object",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "strip-ansi",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "style-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "styled-jsx",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "stylelint",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "stylelint-checkstyle-formatter",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "stylelint-config-prettier",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "svgo",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "tar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "tinycolor2",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "ts-invariant",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "ts-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "ts-morph",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "tsd",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "tslib",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "typescript",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "unified",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "util",
-      "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "uuid",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "validate-npm-package-name",
-      "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "vite",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "vite-node",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "vite-plugin-html",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "vite-plugin-mkcert",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "vite-plugin-static-copy",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "vitest",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "vitest-dom",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "wait-on",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "watchpack",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "webpack",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "webpack-bundle-analyzer",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "webpack-cli",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "webpack-dev-server",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "xml2js",
-      "allowedCategories": [ "production" ]
-    }
-  ]
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
+    "packages": [
+        {
+            "name": "@aaronhayes/react-use-hubspot-form",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@babel/cli",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/core",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/plugin-proposal-export-default-from",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@babel/plugin-transform-async-to-generator",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@babel/plugin-transform-class-properties",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@babel/plugin-transform-object-rest-spread",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@babel/plugin-transform-typescript",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/preset-env",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/preset-react",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/preset-typescript",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@babel/runtime",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@braintree/sanitize-url",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@codemirror/autocomplete",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@codemirror/commands",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@codemirror/lang-yaml",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@codemirror/language",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@codemirror/lint",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@codemirror/state",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@codemirror/view",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@componentdriven/csf",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@cypress/grep",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@floating-ui/dom",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@floating-ui/react",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@floating-ui/react-dom",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@formatjs/cli-lib",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@formatjs/icu-messageformat-parser",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@gooddata/api-client-tiger",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@gooddata/catalog-export",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/eslint-config",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/fixtures",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@gooddata/i18n-toolkit",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/mock-handling",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@gooddata/number-formatter",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/plugin-toolkit",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@gooddata/reference-workspace",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/sdk-backend-base",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-backend-mockingbird",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/sdk-backend-spi",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-backend-tiger",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-embedding",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/sdk-model",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-dashboard",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-ext",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-filters",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-gen-ai",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-geo",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-charts",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-kit",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-loaders",
+            "allowedCategories": ["examples", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-pivot",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-semantic-search",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-theme-provider",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-vis-commons",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/sdk-ui-web-components",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/stylelint-config",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/util",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@lezer/highlight",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@microsoft/api-documenter",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@microsoft/api-extractor",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@openapitools/openapi-generator-cli",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@react-aria/interactions",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@reduxjs/toolkit",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/builder-vite",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/builder-webpack5",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/cli",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/manager-webpack5",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/preset-scss",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/react",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/react-vite",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@storybook/react-webpack5",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@tanstack/react-virtual",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@testing-library/dom",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@testing-library/react",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@testing-library/user-event",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/babel__core",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/blessed",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/columnify",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/cross-spawn",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/debounce-promise",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/fast-levenshtein",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/fs-extra",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/history",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@types/hoist-non-react-statics",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/inquirer",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/isomorphic-fetch",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@types/js-yaml",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/json5",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/kefir",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/mapbox-gl",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/mdast",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/node",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@types/node-fetch",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/pdf-parse",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/prettier",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/qs",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/raf",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "@types/react",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@types/react-datepicker",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@types/react-dom",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@types/react-google-recaptcha",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@types/react-helmet",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@types/react-lines-ellipsis",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-measure",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@types/react-native-listener",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-portal",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-redux",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-router-dom",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "@types/react-syntax-highlighter",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@types/react-textarea-autosize",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-transition-group",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/react-window",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/rimraf",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/semver",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/spark-md5",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/stringify-object",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/tar",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/tinycolor2",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/tough-cookie",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/unist",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/uuid",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@types/validate-npm-package-name",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/watchpack",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "@types/webpack-env",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@typescript-eslint/eslint-plugin",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@typescript-eslint/parser",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "@vitejs/plugin-react",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@vitejs/plugin-react-swc",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "@welldone-software/why-did-you-render",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "ag-grid-community",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "ag-grid-enterprise",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "ag-grid-react",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "async",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "axios",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "axios-cache-interceptor",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "babel-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "babel-plugin-lodash",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "babel-plugin-require-context-hook",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "blessed",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "blob-polyfill",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "case-sensitive-paths-webpack-plugin",
+            "allowedCategories": ["examples", "tools"]
+        },
+        {
+            "name": "circular-dependency-plugin",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "classnames",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "clean-webpack-plugin",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "codemirror",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "columnify",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "commander",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "compression-webpack-plugin",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "concurrently",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "copy-to-clipboard",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "copy-webpack-plugin",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "core-js",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "cron-parser",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "cross-spawn",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "css-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "cypress",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "cypress-multi-reporters",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "cypress-real-events",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "cypress-terminal-report",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "date-fns",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "date-fns-tz",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "debounce-promise",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "default-import",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "dependency-cruiser",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "dotenv",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "dotenv-webpack",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "downshift",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "@gooddata/emailjs-mime-codec-new",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "esbuild-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-config-prettier",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-import-resolver-typescript",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "eslint-plugin-header",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-import",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-import-esm",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-jest",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-no-only-tests",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-prettier",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-react",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-react-hooks",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-regexp",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-sonarjs",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eslint-plugin-tsdoc",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "eventsource-parser",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "exponential-backoff",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "fast-glob",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "fast-levenshtein",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "fetch-cookie",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "fetch-mock",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "find-up",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "fix-esm-import-path",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "fixed-data-table-2",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "fork-ts-checker-webpack-plugin",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "fs-extra",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "full-icu",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "glob",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "happy-dom",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "highcharts",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "highcharts-react-official",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "history",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "hoist-non-react-statics",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "html-validate",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "html-webpack-plugin",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "http-status-codes",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "chalk",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "chokidar",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "immer",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "inquirer",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "isomorphic-fetch",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "js-object-pretty-print",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "js-yaml",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "jsdom",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "json-loader",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "json-stable-stringify",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "json5",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "jsonschema",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "kefir",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "lru-cache",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "lz-string",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "mapbox-gl",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "mdast",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "memoize-one",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "mini-css-extract-plugin",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "mkdirp",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "mocha",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "mocha-junit-reporter",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "moment",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "node-fetch",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "node-xlsx",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "npm-run-all",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "open",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "ora",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "p-map",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "pdf-parse",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "polished",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "postcss",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "postcss-value-parser",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "prettier",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "prettier-loader",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "process",
+            "allowedCategories": ["examples", "tools"]
+        },
+        {
+            "name": "qs",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "raf",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "react",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "react-content-loader",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-datepicker",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "react-day-picker",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-dnd",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-dnd-html5-backend",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-dom",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "react-fast-compare",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-ga",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "react-google-recaptcha",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "react-grid-system",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-helmet",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "react-intl",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "react-lines-ellipsis",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-loading-skeleton",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-markdown",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-measure",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "react-native-listener",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-portal",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-redux",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-responsive",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-router-dom",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "react-select",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "react-select-async-paginate",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-syntax-highlighter",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "react-textarea-autosize",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-transition-group",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "react-window",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "redux-batched-actions",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "redux-saga",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "recharts",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "remark",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "remark-emoji",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "require-from-string",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "reselect",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "sass",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "sass-loader",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "semver",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "source-map-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "spark-md5",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "speed-measure-webpack-plugin",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "storybook",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "stringify-object",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "strip-ansi",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "style-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "styled-jsx",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "stylelint",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "stylelint-config-prettier",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "stylelint-checkstyle-formatter",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "svgo",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "tar",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "tinycolor2",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "ts-invariant",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "ts-loader",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "ts-morph",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "tsd",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "tslib",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "typescript",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "unified",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "util",
+            "allowedCategories": ["examples", "tools"]
+        },
+        {
+            "name": "uuid",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "validate-npm-package-name",
+            "allowedCategories": ["examples", "tools"]
+        },
+        {
+            "name": "vite",
+            "allowedCategories": ["examples", "production"]
+        },
+        {
+            "name": "vite-plugin-html",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "vite-plugin-mkcert",
+            "allowedCategories": ["examples"]
+        },
+        {
+            "name": "vite-plugin-static-copy",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "vitest",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "vitest-dom",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "wait-on",
+            "allowedCategories": ["production"]
+        },
+        {
+            "name": "watchpack",
+            "allowedCategories": ["tools"]
+        },
+        {
+            "name": "webpack",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "webpack-bundle-analyzer",
+            "allowedCategories": ["production", "tools"]
+        },
+        {
+            "name": "webpack-cli",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "webpack-dev-server",
+            "allowedCategories": ["examples", "production", "tools"]
+        },
+        {
+            "name": "xml2js",
+            "allowedCategories": ["production"]
+        }
+    ]
 }
