@@ -18,7 +18,9 @@ export function KdaHeader({ title, bars, titleId }: IKdaHeaderProps) {
                     {title}
                 </div>
             </div>
-            <div className={cx("gd-kda-dialog-header-bars")}>{bars}</div>
+            <div className={cx("gd-kda-dialog-header-bars")} role="status" aria-live="polite">
+                {bars}
+            </div>
         </div>
     );
 }

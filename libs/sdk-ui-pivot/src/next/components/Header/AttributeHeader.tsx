@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { useState } from "react";
+import { MouseEvent, useCallback, useState } from "react";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import { useHeaderSorting } from "./hooks/useHeaderSorting.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderDrilling } from "../../hooks/useHeaderDrilling.js";
 import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
@@ -18,15 +19,33 @@ export function AttributeHeader(params: AgGridHeaderParams) {
     const colDef = params.column.getColDef() as AgGridColumnDef;
 
     const { currentSort, handleHeaderClick } = useHeaderSorting(params);
+    const { handleHeaderDrill, isDrillable } = useHeaderDrilling(params);
     const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
         useHeaderMenu(allowAggregations, allowTextWrapping, [], [], params.api);
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
 
+    // Combined click handler for both sorting and drilling
+    const handleCombinedHeaderClick = useCallback(
+        (e: MouseEvent) => {
+            // First handle sorting if available
+            if (colDef.sortable) {
+                handleHeaderClick(e);
+            }
+
+            // Then handle drilling if available
+            if (isDrillable) {
+                handleHeaderDrill(e);
+            }
+        },
+        [colDef.sortable, handleHeaderClick, isDrillable, handleHeaderDrill],
+    );
+
     return (
         <div
             className={e("header-cell", {
                 "is-menu-open": isMenuOpen,
+                drillable: isDrillable,
             })}
         >
             <div className="gd-header-content">
@@ -37,9 +56,9 @@ export function AttributeHeader(params: AgGridHeaderParams) {
                     ></span>
                 )}
             </div>
-            {!!colDef.sortable && (
-                <div className="gd-header-cell-clickable-area" onClick={handleHeaderClick}></div>
-            )}
+            {!!colDef.sortable || !!isDrillable ? (
+                <div className="gd-header-cell-clickable-area" onClick={handleCombinedHeaderClick}></div>
+            ) : null}
             {hasMenuItems ? (
                 <HeaderMenu
                     aggregationsItems={aggregationsItems}

@@ -178,7 +178,10 @@ describe("headlineUiConfigHelper", () => {
                 ...config,
                 ...properties.controls,
                 colorPalette: DEFAULT_COMPARISON_PALETTE,
+                disableDrillUnderline: true,
                 enableCompactSize: true,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
             });
         });
     });

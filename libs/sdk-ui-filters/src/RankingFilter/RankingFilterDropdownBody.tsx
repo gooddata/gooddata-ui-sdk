@@ -38,7 +38,6 @@ interface RankingFilterDropdownBodyComponentProps {
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 export function RankingFilterDropdownBody({
@@ -50,7 +49,6 @@ export function RankingFilterDropdownBody({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-    enableRenamingMeasureToMetric,
 }: RankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
@@ -113,7 +111,6 @@ export function RankingFilterDropdownBody({
                     onSelect={setMeasureIdentifier}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
-                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.preview" />

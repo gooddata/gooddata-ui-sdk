@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { ComponentType } from "react";
 
@@ -9,7 +9,6 @@ export interface IDeleteDialogProps {
     isVisible: boolean;
     isSchedulingEnabled: boolean;
     isAlertingEnabled: boolean;
-    isDrillToDashboardEnabled: boolean;
     onDelete: () => void;
     onCancel: () => void;
     dashboardTitle: string;

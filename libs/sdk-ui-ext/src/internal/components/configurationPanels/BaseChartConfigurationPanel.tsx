@@ -58,7 +58,7 @@ export default class BaseChartConfigurationPanel<
                         !!properties?.controls?.["stackMeasuresToPercent"] ||
                         (isNotStacked && !properties?.controls?.["stackMeasures"])
                     }
-                    enableSeparateTotalLabels={!!featureFlags.enableSeparateTotalLabels}
+                    enableSeparateTotalLabels
                     enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                 />
                 <CheckboxControl
@@ -140,7 +140,6 @@ export default class BaseChartConfigurationPanel<
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
         const isAxisNameViewByTwoAttributesEnabled: boolean =
             featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
@@ -149,8 +148,6 @@ export default class BaseChartConfigurationPanel<
             const nameSubsectionDisabled: boolean =
                 (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const { name, title, subtitle, visible } = axis;
-
-            const showFormat = axis.primary && isAxisLabelsFormatEnabled;
 
             return (
                 <ConfigSection
@@ -181,7 +178,7 @@ export default class BaseChartConfigurationPanel<
                         axis={axis.name}
                         properties={properties}
                         pushData={pushData}
-                        showFormat={showFormat}
+                        showFormat={axis.primary}
                     />
                     {axis.primary ? this.renderMinMax(axis.name) : null}
                 </ConfigSection>

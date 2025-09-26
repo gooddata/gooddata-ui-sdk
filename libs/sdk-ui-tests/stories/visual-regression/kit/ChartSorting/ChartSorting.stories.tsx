@@ -98,7 +98,6 @@ export function DropdownSingleAttribute() {
                     availableSorts={singleAttributeSortConfig.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>
@@ -120,7 +119,6 @@ export function DropdownSingleChronologicalDate() {
                     availableSorts={singleChronologicalDateSortConfig.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>
@@ -163,7 +161,6 @@ export function DropdownSingleAttributeSingleMetric() {
                     availableSorts={singleAttributeWithSingleMetricSortConfig.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>
@@ -185,7 +182,6 @@ export function DropdownSingleAttributeMultipleMetrics() {
                     availableSorts={singleAttributeWithMultipleMetrics.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>
@@ -207,7 +203,6 @@ export function DropdownMultipleAttributesMultipleMetrics() {
                     availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>
@@ -215,28 +210,6 @@ export function DropdownMultipleAttributesMultipleMetrics() {
 }
 DropdownMultipleAttributesMultipleMetrics.parameters = {
     kind: "dropdown multiple attributes multiple metrics",
-    screenshots: dropdownMultipleAttributesMultipleMetricsScenario,
-};
-
-export function DropdownMultipleAttributesMultipleMeasures() {
-    return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <InternalIntlWrapper>
-                <ChartSortingDialog
-                    buttonNode="screenshot-target"
-                    bucketItems={bucketItemNames}
-                    currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
-                    availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
-                    onApply={action("apply")}
-                    onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={false}
-                />
-            </InternalIntlWrapper>
-        </div>
-    );
-}
-DropdownMultipleAttributesMultipleMeasures.parameters = {
-    kind: "dropdown multiple attributes multiple measures",
     screenshots: dropdownMultipleAttributesMultipleMetricsScenario,
 };
 
@@ -251,7 +224,6 @@ export const Themed = () =>
                     availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
-                    enableRenamingMeasureToMetric={true}
                 />
             </InternalIntlWrapper>
         </div>,

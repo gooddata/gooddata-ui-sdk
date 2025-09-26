@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { defineMessages } from "react-intl";
@@ -34,7 +35,6 @@ import {
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
     selectInsightByRef,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
-    selectSettings,
     selectSupportsAttributeHierarchies,
     selectWidgetByRef,
     useDashboardDispatch,
@@ -146,9 +146,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const invalidCustomUrlDrillLocalIds = useDashboardSelector(
         selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef(widgetRef),
     );
-    const settings = useDashboardSelector(selectSettings);
 
-    const { enableKDZooming } = settings;
     const availableDrillTargets = configItems?.availableDrillTargets;
 
     const attributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
@@ -279,7 +277,6 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     return {
         widget,
         insight,
-        enableKDZooming,
         drillConfigItems: mergedItems,
         originSelectorItems,
         isOriginSelectorVisible: !!configItems?.availableDrillTargets,

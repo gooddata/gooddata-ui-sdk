@@ -40,7 +40,7 @@ export const useResolveDashboardInsightProperties = (
             controls: {
                 ...fromWidget?.["controls"],
                 // we need to take the relevant feature flag into account as well
-                zoomInsight: !!(settings.enableKDZooming && fromWidget?.["controls"]?.zoomInsight),
+                zoomInsight: !!fromWidget?.["controls"]?.zoomInsight,
             },
         };
 

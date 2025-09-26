@@ -41,7 +41,6 @@ export interface IRankingFilterDropdownProps {
     anchorEl?: HTMLElement | string;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 function RankingFilterDropdownComponent({
@@ -54,7 +53,6 @@ function RankingFilterDropdownComponent({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-    enableRenamingMeasureToMetric,
 }: IRankingFilterDropdownProps) {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -82,7 +80,6 @@ function RankingFilterDropdownComponent({
                 onDropDownItemMouseOver={onDropDownItemMouseOver}
                 onDropDownItemMouseOut={onDropDownItemMouseOut}
                 customGranularitySelection={customGranularitySelection}
-                enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
             />
         </Overlay>
     );

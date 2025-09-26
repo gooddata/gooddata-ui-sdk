@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
@@ -12,7 +13,6 @@ import {
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
-    selectEnableKPIDashboardSaveAsNew,
     selectEnableSlideshowExports,
     selectIsExport,
     selectIsReadOnly,
@@ -225,20 +225,12 @@ export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardSt
  * @internal
  */
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = createSelector(
-    selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,
     selectCanEnterEditModeAndIsLoaded,
     selectCanCreateAnalyticalDashboard,
     selectIsExport,
     selectIsReadOnly,
-    (
-        isSaveAsNewEnabled,
-        isSaveAsButtonHidden,
-        isDashboardEditable,
-        canCreateDashboard,
-        isExport,
-        isReadOnly,
-    ) => {
+    (isSaveAsButtonHidden, isDashboardEditable, canCreateDashboard, isExport, isReadOnly) => {
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
          *
@@ -252,12 +244,7 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
          * 6.  If the dashboard is in read-only mode.
          */
         return (
-            isSaveAsNewEnabled &&
-            !isSaveAsButtonHidden &&
-            !isDashboardEditable &&
-            !isExport &&
-            canCreateDashboard &&
-            !isReadOnly
+            !isSaveAsButtonHidden && !isDashboardEditable && !isExport && canCreateDashboard && !isReadOnly
         );
     },
 );

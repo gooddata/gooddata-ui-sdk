@@ -40,7 +40,6 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -73,7 +72,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                             axis={"xaxis"}
                             properties={properties}
                             pushData={pushData}
-                            showFormat={isAxisLabelsFormatEnabled}
+                            showFormat
                         />
                         {this.renderMinMax("xaxis")}
                     </ConfigSection>
@@ -104,7 +103,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                             axis={"yaxis"}
                             properties={properties}
                             pushData={pushData}
-                            showFormat={isAxisLabelsFormatEnabled}
+                            showFormat
                         />
                         {this.renderMinMax("yaxis")}
                     </ConfigSection>

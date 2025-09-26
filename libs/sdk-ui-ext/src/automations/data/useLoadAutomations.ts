@@ -19,8 +19,10 @@ export const useLoadAutomations = ({
     includeAutomationResult,
     scope,
     setState,
+    onLoad,
 }: IUseLoadAutomationsProps) => {
     const { promiseGetAutomationsQuery } = useAutomationService(scope);
+    const isInitial = state.page === 0 && state.invalidationId === 0;
 
     const { status: dataLoadingStatus, error } = useCancelablePromise(
         {
@@ -48,6 +50,7 @@ export const useLoadAutomations = ({
                     hasNextPage: result.totalCount > newAutomations.length,
                     totalItemsCount: result.totalCount,
                 }));
+                onLoad?.(newAutomations, isInitial);
             },
             onError: (error) => {
                 console.error("error", error);
@@ -70,6 +73,7 @@ export const useLoadAutomations = ({
                         hasNextPage: false,
                     }));
                 }
+                onLoad?.(state.automations, isInitial);
             },
         },
         [state.page, state.invalidationId],

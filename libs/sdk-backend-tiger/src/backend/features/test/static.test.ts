@@ -35,7 +35,6 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                 [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
             }),
@@ -47,7 +46,6 @@ describe("static features", () => {
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
-            enableLongitudeAndLatitudeLabels: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,
         });
@@ -63,7 +61,6 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                    [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                     [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
                 },
@@ -77,7 +74,6 @@ describe("static features", () => {
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
-            enableLongitudeAndLatitudeLabels: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,
         });

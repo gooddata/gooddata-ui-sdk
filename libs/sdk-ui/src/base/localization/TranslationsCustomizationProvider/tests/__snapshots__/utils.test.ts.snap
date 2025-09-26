@@ -1,22 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`pickCorrectMetricWording > should return translations with measure when enableRenamingMeasureToMetric is set to false 1`] = `
-{
-  "mock.translation": "Measure",
-  "mock.translation._measure": "Measure",
-  "mock.translation._metric": "Metric",
-}
-`;
-
-exports[`pickCorrectMetricWording > should return translations with metric when enableRenamingMeasureToMetric is set to true 1`] = `
-{
-  "mock.translation": "Metric",
-  "mock.translation._measure": "Measure",
-  "mock.translation._metric": "Metric",
-}
-`;
-
-exports[`pickCorrectMetricWording > should return translations with metric when enableRenamingMeasureToMetric is set to undefined 1`] = `
+exports[`pickCorrectMetricWording > should return translations with metric 1`] = `
 {
   "mock.translation": "Metric",
   "mock.translation._measure": "Measure",

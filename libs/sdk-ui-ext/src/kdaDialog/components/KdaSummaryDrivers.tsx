@@ -9,7 +9,6 @@ import {
     UiAsyncTable,
     UiAsyncTableColumn,
     UiAsyncTableScrollbarWidth,
-    UiButton,
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
@@ -39,25 +38,6 @@ export function KdaSummaryDrivers() {
 
     return (
         <div className={cx("gd-kda-key-drivers-summary")}>
-            <div className={cx("gd-kda-key-drivers-summary-info")}>
-                <div className={cx("gd-kda-key-drivers-summary-info-text")}>
-                    {intl.formatMessage(
-                        { id: "kdaDialog.dialog.keyDrives.overview.summary.drivers.description" },
-                        {
-                            combinations: state.combinations,
-                            drivers: state.items.length,
-                        },
-                    )}
-                </div>
-                <UiButton
-                    size="medium"
-                    variant="secondary"
-                    iconBefore="pencil"
-                    label={intl.formatMessage({
-                        id: "kdaDialog.dialog.keyDrives.overview.summary.drivers.edit_button",
-                    })}
-                />
-            </div>
             <div className={cx("gd-kda-key-drivers-summary-list")} ref={ref as RefObject<HTMLDivElement>}>
                 <UiAsyncTable
                     items={state.items.map((item) => item.data)}

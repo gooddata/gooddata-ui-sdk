@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
+
 import {
     DataViewFacade,
     ExplicitDrill,
     IMappingHeader,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
+    isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
 import {
@@ -12,7 +14,7 @@ import {
     extractAllRowMeasureMappingHeaders,
     extractRowMappingHeadersAtPosition,
 } from "./headerMapping.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";
 
 /**
@@ -80,6 +82,72 @@ export function isCellDrillable(
     const isTransposed = dataViewFacade?.data().asTable().isTransposed ?? false;
     const mappingHeaders = getCellDrillHeaders(colDef, data, isTransposed);
     if (mappingHeaders.length === 0 || !dataViewFacade) {
+        return false;
+    }
+
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+
+    return mappingHeaders.some((header: IMappingHeader) =>
+        isSomeHeaderPredicateMatched(drillablePredicates, header, dataViewFacade),
+    );
+}
+
+/**
+ * Extracts headers for drill intersection for a header cell
+ *
+ * @param colDef - The column definition from ag-grid
+ * @param isTransposed - Whether the table is transposed
+ * @param columnHeadersPosition - Position of column headers
+ * @returns Array of mapping headers
+ */
+function getHeaderCellDrillHeaders(
+    colDef: AgGridColumnDef | AgGridColumnGroupDef,
+    isTransposed: boolean,
+    columnHeadersPosition: string,
+): IMappingHeader[] {
+    // Header drilling only works in transposed mode with headers on left
+    if (!isTransposed || columnHeadersPosition !== "left") {
+        return [];
+    }
+
+    const columnDefinition = colDef.context?.columnDefinition;
+
+    if (!columnDefinition) {
+        return [];
+    }
+
+    if (!isValueColumnDefinition(columnDefinition)) {
+        return [];
+    }
+
+    // For all valid header types, use the standard column mapping extraction
+    return extractAllColumnMappingHeaders(columnDefinition);
+}
+
+/**
+ * Checks if a header cell is drillable based on drillable items and column definition
+ *
+ * @param colDef - The column definition from ag-grid
+ * @param drillableItems - Array of drillable items to check against
+ * @param dataViewFacade - Current data view facade for context
+ * @param columnHeadersPosition - Position of column headers ("left" or "top")
+ * @returns True if the header cell is drillable, false otherwise
+ */
+export function isHeaderCellDrillable(
+    colDef: AgGridColumnDef,
+    drillableItems: ExplicitDrill[],
+    dataViewFacade?: DataViewFacade,
+    columnHeadersPosition?: string,
+): boolean {
+    if (!dataViewFacade || !columnHeadersPosition) {
+        return false;
+    }
+
+    const isTransposed = dataViewFacade.data().asTable().isTransposed;
+
+    const mappingHeaders = getHeaderCellDrillHeaders(colDef, isTransposed, columnHeadersPosition);
+
+    if (mappingHeaders.length === 0) {
         return false;
     }
 

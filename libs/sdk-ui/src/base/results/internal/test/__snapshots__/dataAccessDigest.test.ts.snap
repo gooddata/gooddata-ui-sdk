@@ -1206,15 +1206,6 @@ exports[`createDataAccessDigest > should find slices and series for: Headline - 
 }
 `;
 
-exports[`createDataAccessDigest > should find slices and series for: Headline - two measures with german separators 1`] = `
-{
-  "seriesCount": 2,
-  "seriesIdx": 0,
-  "slicesCount": 0,
-  "slicesIdx": undefined,
-}
-`;
-
 exports[`createDataAccessDigest > should find slices and series for: Heatmap - font 1`] = `
 {
   "seriesCount": 2,

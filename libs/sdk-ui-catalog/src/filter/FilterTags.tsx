@@ -35,7 +35,13 @@ export function FilterTags({ backend, workspace }: Props) {
         [backend, workspace],
     );
 
-    const options = useMemo(() => result?.tags.sort() ?? [], [result?.tags]);
+    const options = useMemo(
+        () =>
+            result?.tags.sort((a, b) => {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
+            }) ?? [],
+        [result?.tags],
+    );
 
     if (status === "loading" || status === "pending") {
         return <UiSkeleton itemsCount={1} itemWidth={92} itemHeight={27} itemBorderRadius={4} />;

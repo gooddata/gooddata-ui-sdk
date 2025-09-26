@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 export {
     DashboardStoreProvider,
     useDashboardDispatch,
@@ -45,6 +46,7 @@ export { useWidgetScheduledExportFilters } from "./filtering/useWidgetScheduledE
 export type { IUseWidgetScheduledExportFiltersProps } from "./filtering/useWidgetScheduledExportFilters.js";
 export { useAutomationAvailableDashboardFilters } from "./filtering/useAutomationAvailableDashboardFilters.js";
 export { useAutomationsInvalidateRef } from "./useAutomationsInvalidateRef.js";
+export { useAutomationsInitialFocus } from "./useAutomationsInitialFocus.js";
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,

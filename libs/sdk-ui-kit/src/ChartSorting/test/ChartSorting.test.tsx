@@ -42,10 +42,7 @@ const bucketItems: IBucketItemDescriptors = {
 
 const DefaultLocale = "en-US";
 
-const messages = pickCorrectWording(messagesMap[DefaultLocale], {
-    workspace: "mockWorkspace",
-    enableRenamingMeasureToMetric: true,
-});
+const messages = pickCorrectWording(messagesMap[DefaultLocale]);
 
 const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {

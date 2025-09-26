@@ -12,6 +12,7 @@ const config: IChartConfig = {
         position: "top",
         responsive: "autoPositionWithPopup"
     },
+    enableSeparateTotalLabels: true,
     dataPoints: {visible: "auto"}
 };
 const style = {height: 400};
@@ -67,6 +68,7 @@ const config: IChartConfig = {
         position: "top",
         responsive: "autoPositionWithPopup"
     },
+    enableSeparateTotalLabels: true,
     dataPoints: {visible: "auto"}
 };
 const style = {height: 400};

@@ -4,8 +4,6 @@ import { ReactNode, useMemo } from "react";
 
 import { IntlProvider } from "react-intl";
 
-import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
 import { resolveLocaleDefaultMessages } from "./intlUtils.js";
 import { DefaultLocale } from "./Locale.js";
 import { messagesMap } from "./messagesMap.js";
@@ -23,16 +21,9 @@ export interface IIntlWrapperProps {
  * @internal
  */
 export function IntlWrapper({ locale = DefaultLocale, children }: IIntlWrapperProps) {
-    /**
-     * Because of issues described in the ticket FET-855, we decided to use this workaround.
-     * After the issues that are described in the ticket are solved or at least reduced,
-     * this workaround can be removed.
-     */
-    const settings = window.gdSettings as IWorkspaceSettings;
-
     const messages = useMemo(
-        () => pickCorrectWording(resolveLocaleDefaultMessages(locale, messagesMap), settings),
-        [locale, settings],
+        () => pickCorrectWording(resolveLocaleDefaultMessages(locale, messagesMap)),
+        [locale],
     );
 
     return (

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { DependencyList, useLayoutEffect, useState } from "react";
 
 import { useTagsElements } from "./useTagsElements.js";
@@ -104,6 +105,7 @@ function recalculateSingleLineTags(
     // add offset width from elements
     currentWidth += hiddenContainer?.offsetWidth ?? 0;
     currentWidth += addButton?.offsetWidth ?? 0;
+    currentWidth += 4; // padding of container
 
     const availableWidth = tagsContainerWidth - currentWidth;
 

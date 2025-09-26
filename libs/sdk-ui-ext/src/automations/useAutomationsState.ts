@@ -23,10 +23,11 @@ export const useAutomationsState = ({
     pageSize,
     availableFilters,
     preselectedFilters,
+    invalidateItemsRef,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
-    invalidateItemsRef,
+    onLoad,
 }: IAutomationsCoreProps) => {
     const [state, setState] = useState<IAutomationsState>(AutomationsDefaultState);
     const workspace = useWorkspace();
@@ -106,6 +107,7 @@ export const useAutomationsState = ({
         createdByFilterQuery,
         includeAutomationResult,
         scope,
+        onLoad,
         setState,
     });
 

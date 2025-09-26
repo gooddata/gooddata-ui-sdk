@@ -34,7 +34,6 @@ const colors: IColorConfiguration = {
 
 const defaultProps: IColorsSectionProps = {
     controlsDisabled: false,
-    showCustomPicker: false,
     properties: {},
     propertiesMeta: {
         colors_section: {

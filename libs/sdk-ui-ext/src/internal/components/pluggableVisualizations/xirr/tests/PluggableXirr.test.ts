@@ -98,23 +98,6 @@ describe("PluggableXirr", () => {
             expect(renderEl.type).toBe(CoreXirr);
             expect(renderEl.props.config.enableCompactSize).toBe(true);
         });
-
-        it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
-            const xirr = createComponent({
-                featureFlags: {
-                    disableKpiDashboardHeadlineUnderline: true,
-                },
-                renderFun: mockRenderFun,
-            });
-
-            const options: IVisProps = getTestOptions();
-
-            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
-
-            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreXirr);
-            expect(renderEl.props.config.disableDrillUnderline).toBe(true);
-        });
     });
 
     describe("getExtendedReferencePoint", () => {

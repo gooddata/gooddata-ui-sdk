@@ -25,7 +25,6 @@ import {
     IMetricsAndFacts,
     isDashboardDependentDateFilter,
     selectBackendCapabilities,
-    selectEnableAttributeFilterValuesValidation,
     selectEnableKDAttributeFilterDatesValidation,
     useDashboardSelector,
     useDashboardUserInteraction,
@@ -167,11 +166,8 @@ function LimitValuesConfiguration({
 export type LocalizedLimitValuesConfigurationProps = ILimitValuesConfigurationProps & WrappedComponentProps;
 
 export function LocalizedLimitValuesConfiguration(props: LocalizedLimitValuesConfigurationProps) {
-    const isAttributeFilterValuesValidationEnabled = useDashboardSelector(
-        selectEnableAttributeFilterValuesValidation,
-    );
     const capabilities = useDashboardSelector(selectBackendCapabilities);
-    if (!isAttributeFilterValuesValidationEnabled || !capabilities.supportsAttributeFilterElementsLimiting) {
+    if (!capabilities.supportsAttributeFilterElementsLimiting) {
         return null;
     }
     return (

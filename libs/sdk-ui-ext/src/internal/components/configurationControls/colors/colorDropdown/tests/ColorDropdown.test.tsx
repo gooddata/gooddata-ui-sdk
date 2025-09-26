@@ -22,7 +22,6 @@ const defaultProps: IColorDropdownOwnProps = {
         value: "04",
     },
     colorPalette,
-    showCustomPicker: false,
     onColorSelected: () => {},
 };
 
@@ -143,17 +142,8 @@ describe("ColorDropdown", () => {
         });
     });
 
-    it("should not render CustomColorButton when showCustomPicker props is false after item button click", async () => {
-        createComponent();
-
-        await userEvent.click(screen.getByText("test"));
-        await waitFor(() => {
-            expect(screen.queryByText("Custom color")).not.toBeInTheDocument();
-        });
-    });
-
     it("should render CustomColorButton when showCustomPicker props is true after item button click", async () => {
-        createComponent({ showCustomPicker: true });
+        createComponent();
 
         await userEvent.click(screen.getByText("test"));
         await waitFor(() => {
@@ -162,9 +152,7 @@ describe("ColorDropdown", () => {
     });
 
     it("should render ColorPicker when CustomColorButton button click", async () => {
-        createComponent({
-            showCustomPicker: true,
-        });
+        createComponent();
 
         await userEvent.click(screen.getByText("test"));
         expect(await screen.findByText("Custom color")).toBeInTheDocument();
@@ -185,9 +173,7 @@ describe("ColorDropdown", () => {
                 g: 153,
                 b: 121,
             };
-            createComponent({
-                showCustomPicker: true,
-            });
+            createComponent();
 
             await userEvent.click(screen.getByText("test"));
             expect(await screen.findByText("Custom color")).toBeInTheDocument();
@@ -199,7 +185,7 @@ describe("ColorDropdown", () => {
     );
 
     it("should inject isSelected=true into child when ColorPicker control shown", async () => {
-        createComponent({ showCustomPicker: true });
+        createComponent();
 
         await userEvent.click(screen.getByText("test"));
         await userEvent.click(screen.getByText("Custom color"));
@@ -207,7 +193,7 @@ describe("ColorDropdown", () => {
     });
 
     it("should inject position=IconPosition.Right into child when ColorPicker control shown", async () => {
-        createComponent({ showCustomPicker: true });
+        createComponent();
 
         await userEvent.click(screen.getByText("test"));
         await userEvent.click(screen.getByText("Custom color"));
@@ -215,7 +201,7 @@ describe("ColorDropdown", () => {
     });
 
     it("should render ColorPalette when ColorPicker cancel button click", async () => {
-        createComponent({ showCustomPicker: true });
+        createComponent();
 
         await userEvent.click(screen.getByText("test"));
         await userEvent.click(screen.getByText("Custom color"));
@@ -232,7 +218,6 @@ describe("ColorDropdown", () => {
         async () => {
             const onColorSelected = vi.fn();
             createComponent({
-                showCustomPicker: true,
                 onColorSelected,
             });
 

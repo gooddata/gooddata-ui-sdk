@@ -61,8 +61,9 @@ export const useInsightExport = (config: {
     widgetRef: ObjRef;
     insight?: IInsight;
     widget?: IInsightWidget;
+    enableNewTabularExport?: boolean;
 }) => {
-    const { title, widgetRef, insight, widget } = config;
+    const { title, widgetRef, insight, widget, enableNewTabularExport = true } = config;
     const [isExporting, setIsExporting] = useState(false);
     const intl = useIntl();
     const locale = useDashboardSelector(selectLocale);
@@ -188,7 +189,7 @@ export const useInsightExport = (config: {
     }, [setIsExporting, title, openPdfDialog, closePdfDialog, widget, exportToTabular, locale]);
 
     const onExportXLSX = useCallback(() => {
-        if (dashboardTabularExportEnabled) {
+        if (dashboardTabularExportEnabled && enableNewTabularExport) {
             openXlsxDialog({
                 onSubmit: ({
                     includeFilterContext,
@@ -260,7 +261,7 @@ export const useInsightExport = (config: {
         !isExporting &&
         isInsightExportable &&
         isExportableToXlsx &&
-        (dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
+        (enableNewTabularExport && dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
     const exportPdfTabularEnabled = !isExporting && isInsightExportable && isExportableToPdfTabular;
 

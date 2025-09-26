@@ -18,15 +18,15 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
     return {
         ...(config || {}),
         enableCompactSize: true,
-        ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
+        disableDrillUnderline: true,
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {
                   enableJoinedAttributeAxisName: settings.enableAxisNameViewByTwoAttributes,
               }
             : {}),
         ...(settings.enableChartsSorting ? { enableChartSorting: true } : {}),
-        ...(settings.enableReversedStacking ? { enableReversedStacking: true } : {}),
-        ...(settings.enableSeparateTotalLabels ? { enableSeparateTotalLabels: true } : {}),
+        enableReversedStacking: true,
+        enableSeparateTotalLabels: true,
         ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
         ...(settings.enableCrossFilteringAliasTitles ? { enableAliasAttributeLabel: true } : {}),
         ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),

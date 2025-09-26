@@ -1041,8 +1041,6 @@ export interface IRankingFilterDropdownProps {
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
     // (undocumented)
-    enableRenamingMeasureToMetric?: boolean;
-    // (undocumented)
     filter: IRankingFilter;
     // (undocumented)
     locale?: string;
@@ -1066,8 +1064,6 @@ export interface IRankingFilterProps {
     buttonTitle: string;
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
-    // (undocumented)
-    enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
     filter: IRankingFilter;
     // (undocumented)
@@ -1330,7 +1326,7 @@ export type OnSelectionCommittedCallbackPayload<T> = {
 export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
 // @beta (undocumented)
-export function RankingFilter({ measureItems, attributeItems, filter, onApply, onCancel, buttonTitle, onDropDownItemMouseOver, onDropDownItemMouseOut, customGranularitySelection, locale, enableRenamingMeasureToMetric, }: IRankingFilterProps): JSX.Element;
+export function RankingFilter({ measureItems, attributeItems, filter, onApply, onCancel, buttonTitle, onDropDownItemMouseOver, onDropDownItemMouseOut, customGranularitySelection, locale, }: IRankingFilterProps): JSX.Element;
 
 // @beta (undocumented)
 export function RankingFilterDropdown(props: IRankingFilterDropdownProps): JSX.Element;

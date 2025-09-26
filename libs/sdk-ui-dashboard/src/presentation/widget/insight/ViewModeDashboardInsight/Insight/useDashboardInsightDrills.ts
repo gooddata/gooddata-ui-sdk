@@ -5,13 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { isEqual } from "lodash-es";
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import {
-    DataViewFacade,
-    IAvailableDrillTargets,
-    IDrillEvent,
-    IPushData,
-    isSomeHeaderPredicateMatched,
-} from "@gooddata/sdk-ui";
+import { DataViewFacade, IDrillEvent, IPushData, isSomeHeaderPredicateMatched } from "@gooddata/sdk-ui";
 
 import {
     addDrillTargets,
@@ -20,7 +14,6 @@ import {
     selectConfiguredAndImplicitDrillsByWidgetRef,
     selectDrillTargetsByWidgetRef,
     selectDrillableItemsByWidgetRef,
-    selectEnableKPIDashboardDrillFromAttribute,
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
@@ -46,7 +39,6 @@ export const useDashboardInsightDrills = ({
 }: UseDashboardInsightDrillsProps) => {
     const dispatch = useDashboardDispatch();
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
-    const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
     const disableDrillDownOnWidget = insight.insight.properties["controls"]?.["disableDrillDown"];
     const catalogIsLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
@@ -54,10 +46,7 @@ export const useDashboardInsightDrills = ({
 
     const onPushData = useCallback(
         (data: IPushData): void => {
-            const targets = sanitizeAvailableDrillTargets(
-                data?.availableDrillTargets,
-                isDrillFromAttributeEnabled,
-            );
+            const targets = data?.availableDrillTargets;
 
             if (targets && !isEqual(drillTargets?.availableDrillTargets, targets)) {
                 dispatch(addDrillTargets(widget.ref, targets));
@@ -67,7 +56,7 @@ export const useDashboardInsightDrills = ({
                 setIsLoadingDrillTargets(false);
             }
         },
-        [drillTargets, widget.ref, isDrillFromAttributeEnabled, dispatch],
+        [drillTargets, widget.ref, dispatch],
     );
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -117,19 +106,4 @@ export const useDashboardInsightDrills = ({
         onPushData,
         onDrill,
     };
-};
-
-const sanitizeAvailableDrillTargets = (
-    availableDrillTargets: IAvailableDrillTargets | undefined,
-    isDrillFromAttributeEnabled: boolean,
-) => {
-    // if no drill targets went in (likely the pushData was fired in a non-drill-related case)
-    // pass the undefined through, this avoids useless setting of the drill targets down the line
-    if (!availableDrillTargets) {
-        return availableDrillTargets;
-    }
-    // base on ff we remove attributes targets if is not supported
-    return isDrillFromAttributeEnabled
-        ? availableDrillTargets
-        : { ...availableDrillTargets, attributes: undefined };
 };

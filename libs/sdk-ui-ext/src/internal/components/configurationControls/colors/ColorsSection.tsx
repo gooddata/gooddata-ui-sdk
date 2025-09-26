@@ -20,7 +20,6 @@ import DropdownControl from "../DropdownControl.js";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
-    showCustomPicker: boolean;
     properties: IVisualizationProperties;
     propertiesMeta: any;
     references: IReferences;
@@ -38,7 +37,6 @@ export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
 function ColorsSection({
     controlsDisabled,
-    showCustomPicker,
     properties,
     propertiesMeta,
     pushData,
@@ -143,7 +141,6 @@ function ColorsSection({
                     colorPalette={colorPalette}
                     inputItems={inputItems}
                     onSelect={onSelect}
-                    showCustomPicker={showCustomPicker}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
                     chartFill={chartFill}

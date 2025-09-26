@@ -19,7 +19,6 @@ export interface IColoredItemProps {
     className?: string;
     item?: IColoredItem;
     onSelect?: (source: IColoredItem, color: IColor) => void;
-    showCustomPicker?: boolean;
     isSelected?: boolean;
     disabled?: boolean;
     chartFill?: ChartFillConfig;
@@ -27,15 +26,7 @@ export interface IColoredItemProps {
 }
 
 const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
-    const {
-        item,
-        colorPalette,
-        showCustomPicker = false,
-        intl,
-        onSelect,
-        chartFill,
-        patternFillIndex,
-    } = props;
+    const { item, colorPalette, intl, onSelect, chartFill, patternFillIndex } = props;
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -70,7 +61,6 @@ const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & Wrapped
             selectedColorItem={coloredItem.colorItem}
             colorPalette={colorPalette}
             onColorSelected={onColorSelected}
-            showCustomPicker={showCustomPicker}
             chartFill={chartFill}
             patternFillIndex={patternFillIndex}
         >

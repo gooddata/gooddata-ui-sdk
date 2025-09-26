@@ -12,10 +12,7 @@ import { ISeriesItem } from "../types.js";
 describe("FluidLegend", () => {
     // Define locale and messages
     const DefaultLocale = "en-US";
-    const messages = pickCorrectWording(messagesMap[DefaultLocale], {
-        workspace: "mockWorkspace",
-        enableRenamingMeasureToMetric: true,
-    });
+    const messages = pickCorrectWording(messagesMap[DefaultLocale]);
 
     function renderComponent(customProps: any = {}) {
         const props = {

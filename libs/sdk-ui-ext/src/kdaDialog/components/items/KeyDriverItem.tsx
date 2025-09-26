@@ -26,14 +26,14 @@ export function KeyDriverItem({
             })}
             onClick={onSelect}
         >
-            {trend === "up" ? <UiIcon type="trendUp" size={16} color="complementary-5" /> : null}
-            {trend === "down" ? <UiIcon type="trendDown" size={16} color="complementary-5" /> : null}
             <div className={cx("gd-kda-item-text")}>
                 {item.data.title}: <strong>{item.data.category}</strong>
             </div>
             <div className={cx("gd-kda-item-value")}>
                 {item.data.formatValue(item.data.to.value - item.data.from.value)}
             </div>
+            {trend === "up" ? <UiIcon type="trendUp" size={16} color="complementary-5" /> : null}
+            {trend === "down" ? <UiIcon type="trendDown" size={16} color="complementary-5" /> : null}
             <div
                 className={cx("gd-kda-item-progress")}
                 style={{ "--kda-item-width": width } as CSSProperties}

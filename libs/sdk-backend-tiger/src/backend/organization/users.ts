@@ -21,6 +21,15 @@ import {
 } from "./fromBackend/userConvertor.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
+/**
+ * Quote a string value for use in RSQL filters using double quotes.
+ * Escapes backslashes and embedded double quotes to prevent malformed queries.
+ */
+function rsqlQuote(value: string): string {
+    const escaped = value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    return `"${escaped}"`;
+}
+
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
@@ -147,7 +156,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUsersByEmail = async (email: string): Promise<IUser[]> => {
         return this.authCall(async (client) => {
             return client.entities
-                .getAllEntitiesUsers({ filter: `email==${email}` })
+                .getAllEntitiesUsers({ filter: `email==${rsqlQuote(email)}` })
                 .then((response) => response.data.data)
                 .then((users) => users.map(convertIncludedUser));
         });
@@ -188,7 +197,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
             return client.entities
                 .getAllEntitiesUsers({
                     include: ["userGroups"],
-                    filter: `userGroups.id==${userGroupId}`,
+                    filter: `userGroups.id==${rsqlQuote(userGroupId)}`,
                     size: 1000,
                 })
                 .then((response) => response.data)

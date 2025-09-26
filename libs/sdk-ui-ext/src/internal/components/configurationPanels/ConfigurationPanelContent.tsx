@@ -119,7 +119,6 @@ export default abstract class ConfigurationPanelContent<
                 controlsDisabled={controlsDisabled}
                 pushData={pushData}
                 hasMeasures={hasMeasures}
-                showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={panelConfig.supportsChartFill}

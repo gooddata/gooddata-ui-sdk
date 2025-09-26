@@ -13,7 +13,6 @@ interface IMeasureDropdownItemProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 export function MeasureDropdownItem({
@@ -22,7 +21,6 @@ export function MeasureDropdownItem({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
-    enableRenamingMeasureToMetric,
 }: IMeasureDropdownItemProps) {
     const { title, ref, sequenceNumber } = item;
 
@@ -33,7 +31,7 @@ export function MeasureDropdownItem({
             "is-selected": isSelected,
         },
         "gd-button-link",
-        enableRenamingMeasureToMetric ? "gd-icon-metric" : "gd-icon-measure",
+        "gd-icon-metric",
         `s-rf-measure-${stringUtils.simplifyText(title)}`,
     );
 

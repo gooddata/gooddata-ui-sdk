@@ -55,7 +55,6 @@ function ColorItem({
                 colorPalette={colorPalette}
                 onColorSelected={handleColorSelected}
                 selectedColorItem={color}
-                showCustomPicker={true}
                 disabled={disabled}
             >
                 <ColoredItemContent text={label} color={rgbColor} chartFill={chartFill} />

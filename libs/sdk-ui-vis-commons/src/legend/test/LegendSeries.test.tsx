@@ -26,10 +26,7 @@ vi.mock("../visibilityDetection.js", () => ({
 describe("LegendSeries", () => {
     // Define locale and messages
     const DefaultLocale = "en-US";
-    const messages = pickCorrectWording(messagesMap[DefaultLocale], {
-        workspace: "mockWorkspace",
-        enableRenamingMeasureToMetric: true,
-    });
+    const messages = pickCorrectWording(messagesMap[DefaultLocale]);
 
     const series: ISeriesItem[] = [
         {

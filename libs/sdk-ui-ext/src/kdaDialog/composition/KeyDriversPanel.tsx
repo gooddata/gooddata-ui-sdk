@@ -66,7 +66,7 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
         <div className={cx("gd-kda-key-drivers-panel")}>
             <div className={cx("gd-kda-key-drivers-panel-summary")}>
                 {loading ? (
-                    <UiSkeleton itemHeight={56} />
+                    <UiSkeleton itemHeight={40} />
                 ) : (
                     <SummaryItem
                         detailsId={detailsId}
@@ -108,7 +108,6 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                 ) : (
                     <UiButtonSegmentedControl>
                         <UiButton
-                            iconBefore="trendUp"
                             label={intl.formatMessage(
                                 { id: "kdaDialog.dialog.keyDrives.button.trendUp" },
                                 { count: trendUp.length },
@@ -118,9 +117,11 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                             onClick={() => {
                                 setState({ selectedTrend: "up" });
                             }}
+                            accessibilityConfig={{
+                                ariaControls: listId,
+                            }}
                         />
                         <UiButton
-                            iconBefore="trendDown"
                             label={intl.formatMessage(
                                 { id: "kdaDialog.dialog.keyDrives.button.trendDown" },
                                 { count: trendDown.length },
@@ -129,6 +130,9 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                             isSelected={state.selectedTrend === "down"}
                             onClick={() => {
                                 setState({ selectedTrend: "down" });
+                            }}
+                            accessibilityConfig={{
+                                ariaControls: listId,
                             }}
                         />
                     </UiButtonSegmentedControl>

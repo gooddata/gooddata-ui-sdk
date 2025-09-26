@@ -1,11 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { availableDrillTargetsValidation } from "./validation/availableDrillTargetsValidation.js";
 import { AddDrillTargets } from "../../commands/drillTargets.js";
 import { DrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets.js";
-import { selectEnableKPIDashboardDrillFromAttribute } from "../../store/config/configSelectors.js";
 import { drillTargetsActions } from "../../store/drillTargets/index.js";
 import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors.js";
@@ -24,17 +23,8 @@ export function* addDrillTargetsHandler(
     } = cmd;
 
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
-    const enableKPIDashboardDrillFromAttribute: boolean = yield select(
-        selectEnableKPIDashboardDrillFromAttribute,
-    );
 
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
-    const drillTarget = availableDrillTargetsValidation(
-        availableDrillTargets,
-        enableKPIDashboardDrillFromAttribute,
-        ctx,
-        cmd,
-    );
 
     const { ref, uri, identifier } = insightWidget;
 
@@ -43,7 +33,7 @@ export function* addDrillTargetsHandler(
             identifier,
             uri,
             ref,
-            availableDrillTargets: drillTarget,
+            availableDrillTargets,
         }),
     );
 

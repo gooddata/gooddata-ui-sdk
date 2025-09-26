@@ -133,11 +133,6 @@ export interface ISettings {
     enableChartAccessibilityFeatures?: boolean;
 
     /**
-     * Headline component will not be underlined when it is set up with drilling.
-     */
-    disableKpiDashboardHeadlineUnderline?: boolean;
-
-    /**
      * Allows configuration of axis name position and visibility for Pluggable Visualizations.
      */
     enableAxisNameConfiguration?: boolean;
@@ -148,11 +143,6 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
 
     /**
-     * Indicates whether color picker config panel should allow users to select custom RGB colors.
-     */
-    enableCustomColorPicker?: boolean;
-
-    /**
      * Indicates whether the catalog groups in analytical designer are expanded by default.
      */
     ADCatalogGroupsExpanded?: boolean;
@@ -161,12 +151,6 @@ export interface ISettings {
      * Indicates whether multiple dates can be put into buckets
      */
     enableMultipleDates?: boolean;
-
-    /**
-     * Indicates whether alternative display form can be selected for attribute and multiple instances
-     * of the same attributes can be put into buckets
-     */
-    enableAlternativeDisplayFormSelection?: boolean;
 
     /**
      * Indicates whether unavailable data items are visible
@@ -180,70 +164,9 @@ export interface ISettings {
     showHiddenCatalogItems?: boolean;
 
     /**
-     * Indicates whether dashboard scheduled mails are enabled.
-     */
-    enableKPIDashboardSchedule?: boolean;
-
-    /**
-     * Indicates whether the user can select recipients of scheduled e-mails.
-     * If not, scheduled mail can only be sent to a logged in user.
-     */
-    enableKPIDashboardScheduleRecipients?: boolean;
-
-    /**
      * Indicates whether the new UI for scheduled widget exports is enabled.
      */
     enableInsightExportScheduling?: boolean;
-
-    /**
-     * Indicates whether the user can zoom on the insights in KPI dashboards that have this feature enabled.
-     */
-    enableKDZooming?: boolean;
-
-    /**
-     * Indicates whether the user can save and existing dashboard in KPI dashboards as new.
-     */
-    enableKPIDashboardSaveAsNew?: boolean;
-
-    /**
-     * Indicates whether the Embed dashboard button is available in KPI dashboards.
-     */
-    enableEmbedButtonInKD?: boolean;
-
-    /**
-     * Indicates whether the Embed button/dialog is available in AD.
-     */
-    enableEmbedButtonInAD?: boolean;
-
-    /**
-     * Indicates whether the approximate variant of count is available in AD.
-     */
-    enableApproxCount?: boolean;
-
-    /**
-     * Indicates whether the drill to dashboard is enabled.
-     */
-    enableKPIDashboardDrillToDashboard?: boolean;
-
-    /**
-     * Indicates whether the drill to insight is enabled.
-     */
-    enableKPIDashboardDrillToInsight?: boolean;
-
-    /**
-     * Indicates whether the drill to url is enabled.
-     */
-    enableKPIDashboardDrillToURL?: boolean;
-
-    /**
-     * Indicates whether the drilled insight can be exported.
-     */
-    enableDrilledInsightExport?: boolean;
-
-    /**
-     * Indicates whether backend supports data sampling.
-     */
-    enableDataSampling?: boolean;
 
     /**
      * Indicates whether the company logo should be visible in the embedded dashboard.
@@ -251,19 +174,9 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
 
     /**
-     * Enable implicit drillToAttributeURL
-     */
-    enableClickableAttributeURL?: boolean;
-
-    /**
      * Enable implicit drill down
      */
     enableKPIDashboardImplicitDrillDown?: boolean;
-
-    /**
-     * Enable drill from attributes
-     */
-    enableKPIDashboardDrillFromAttribute?: boolean;
 
     /**
      * Enable usage of Dashboard permissions
@@ -271,39 +184,14 @@ export interface ISettings {
     enableAnalyticalDashboardPermissions?: boolean;
 
     /**
-     * Enable renaming measure to metric
-     */
-    enableRenamingMeasureToMetric?: boolean;
-
-    /**
-     * Enable axis label formatting
-     */
-    enableAxisLabelFormat?: boolean;
-
-    /**
      * Enable charts sorting customization
      */
     enableChartsSorting?: boolean;
 
     /**
-     * Enable hiding of widget title
-     */
-    enableHidingOfWidgetTitle?: boolean;
-
-    /**
      * Enable axis name for the column, bar and bullet charts with view by two attributes.
      */
     enableAxisNameViewByTwoAttributes?: boolean;
-
-    /**
-     * Enable reverse the order of stacked items in bar chart.
-     */
-    enableReversedStacking?: boolean;
-
-    /**
-     * Enable visibility control for total labels
-     */
-    enableSeparateTotalLabels?: boolean;
 
     /**
      * Enable usage of insights, widgets, kpis descriptions.
@@ -319,16 +207,6 @@ export interface ISettings {
      * Enable use of composite grain
      */
     enableCompositeGrain?: boolean;
-
-    /**
-     * Enable table transposition (metrics in rows)
-     */
-    enablePivotTableTransposition?: boolean;
-
-    /**
-     * Enable moving column attribute headers to the left.
-     */
-    enableColumnHeadersPosition?: boolean;
 
     /**
      * Enable new max bucket size items limit for Pivot Table
@@ -366,12 +244,6 @@ export interface ISettings {
     enableKDVisualizationSwitcher?: boolean;
 
     /**
-     * Enable attribute filter values validation by metric, attribute, fact.
-     * The configuration of filter values validation is merged with parent filters UI.
-     */
-    enableAttributeFilterValuesValidation?: boolean;
-
-    /**
      * Enable creating users in user management.
      */
     enableCreateUser?: boolean;
@@ -380,11 +252,6 @@ export interface ISettings {
      * Enable attribute filter values validation by date filters.
      */
     enableKDAttributeFilterDatesValidation?: boolean;
-
-    /**
-     * Enable upload of multiple CSVs to data source and multiple CSV data sources.
-     */
-    enableMultipleCSVs?: boolean;
 
     /**
      * Enable possibility to set non-existing value into attribute filter in AD and KD via postMessage.
@@ -724,11 +591,6 @@ export interface ISettings {
      * Enable new pivot table
      */
     enableNewPivotTable?: boolean;
-
-    /**
-     * Enable centralized automation management in home-ui
-     */
-    enableCentralizedAutomationManagement?: boolean;
 
     /**
      * Enable automation management in dashboards

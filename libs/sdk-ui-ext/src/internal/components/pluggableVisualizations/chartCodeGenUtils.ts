@@ -75,7 +75,7 @@ export function chartConfigFromInsight(
         ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),
         ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
-        ...(ctx?.settings?.enableSeparateTotalLabels ? { enableSeparateTotalLabels: true } : {}),
+        enableSeparateTotalLabels: true,
         ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
     };
 

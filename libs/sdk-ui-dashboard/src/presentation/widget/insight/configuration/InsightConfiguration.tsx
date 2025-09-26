@@ -44,15 +44,13 @@ export function InsightConfiguration({
         visible: true,
     };
 
-    const isHidingOfWidgetTitleEnabled = (settings.enableHidingOfWidgetTitle ?? false) && enableTitleConfig;
-
     return (
         <ScrollablePanel className={classes}>
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
                 <InsightTitleConfig
                     widget={widget}
-                    isHidingOfWidgetTitleEnabled={isHidingOfWidgetTitleEnabled}
+                    isHidingOfWidgetTitleEnabled={enableTitleConfig}
                     hideTitle={widget.configuration?.hideTitle ?? false}
                     setVisualPropsConfigurationTitle={(widget, hideTitle) => {
                         dispatch(

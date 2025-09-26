@@ -28,10 +28,6 @@ import {
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
-    .withDefaultBackendSettings({
-        enablePivotTableTransposition: true,
-        enableColumnHeadersPosition: true,
-    })
     .addScenario("single measure pivot with both attributes and metrics in rows", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         config: {

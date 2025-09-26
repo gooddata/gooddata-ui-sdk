@@ -67,13 +67,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableLongitudeAndLatitudeLabels,
-            "enableLongitudeAndLatitudeLabels",
-            "BOOLEAN",
-            FeatureFlagsValues.enableLongitudeAndLatitudeLabels,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDescriptions,
             "enableDescriptions",
             "BOOLEAN",
@@ -214,13 +207,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAttributeFilterValuesValidation,
-            "enableAttributeFilterValuesValidation",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAttributeFilterValuesValidation,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMySqlDataSource,
             "enableMySqlDataSource",
             "BOOLEAN",
@@ -253,13 +239,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableKDAttributeFilterDatesValidation",
             "BOOLEAN",
             FeatureFlagsValues.enableKDAttributeFilterDatesValidation,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableMultipleCSVs,
-            "enableMultipleCSVs",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMultipleCSVs,
         ),
         ...loadFeature(
             features,
@@ -820,13 +799,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableNewPivotTable",
             "BOOLEAN",
             FeatureFlagsValues.enableNewPivotTable,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableCentralizedAutomationManagement,
-            "enableCentralizedAutomationManagement",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCentralizedAutomationManagement,
         ),
         ...loadFeature(
             features,

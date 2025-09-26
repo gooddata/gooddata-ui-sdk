@@ -37,7 +37,6 @@ interface MeasureDropdownProps {
     index: number;
 
     disabledExplanationTooltip?: string;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 const getItems = (
@@ -100,13 +99,11 @@ const getButtonValue = (
     return buttonValue;
 };
 
-const getMeasureIconClassNameBySelected = (id: string, enableRenamingMeasureToMetric: boolean): string => {
+const getMeasureIconClassNameBySelected = (id: string): string => {
     if (id === "aggregation") {
         return "gd-icon-aggregation";
-    } else if (enableRenamingMeasureToMetric) {
-        return "gd-icon-metric";
     } else {
-        return "gd-icon-measure";
+        return "gd-icon-metric";
     }
 };
 
@@ -117,7 +114,6 @@ export function MeasureDropdown({
     intl,
     onSelect,
     index,
-    enableRenamingMeasureToMetric,
     disabledExplanationTooltip,
 }: MeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
@@ -162,10 +158,7 @@ export function MeasureDropdown({
                             className="s-inner-aggregation-disabled-button s-measure-dropdown-button"
                             value={measureName}
                             disabled={true}
-                            iconLeft={getMeasureIconClassNameBySelected(
-                                buttonValue.id,
-                                enableRenamingMeasureToMetric,
-                            )}
+                            iconLeft={getMeasureIconClassNameBySelected(buttonValue.id)}
                         />
                         {disabledExplanationTooltip ? (
                             <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
@@ -186,10 +179,7 @@ export function MeasureDropdown({
                                     isOpen={isOpen}
                                     disabled={disableDropdown}
                                     onClick={toggleDropdown}
-                                    iconLeft={getMeasureIconClassNameBySelected(
-                                        buttonValue.id,
-                                        enableRenamingMeasureToMetric,
-                                    )}
+                                    iconLeft={getMeasureIconClassNameBySelected(buttonValue.id)}
                                 />
                             </div>
                         )}
@@ -207,10 +197,7 @@ export function MeasureDropdown({
                                         "gd-list-item-shortened",
                                         "gd-sorting-measure",
                                         "gd-button-link",
-                                        getMeasureIconClassNameBySelected(
-                                            item.id,
-                                            enableRenamingMeasureToMetric,
-                                        ),
+                                        getMeasureIconClassNameBySelected(item.id),
                                         {
                                             "is-selected": isSelected,
                                         },

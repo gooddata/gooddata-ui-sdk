@@ -615,16 +615,10 @@ describe("PluggablePivotTable", () => {
         });
 
         it("should return a new reference point with ui config with measures bucket subtitles", () => {
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enablePivotTableTransposition: true,
-                },
-            });
-            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const pivotTable = createComponent();
 
             return pivotTable
-                .getExtendedReferencePoint(sourceReferencePoint)
+                .getExtendedReferencePoint(referencePointMocks.simpleStackedReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });

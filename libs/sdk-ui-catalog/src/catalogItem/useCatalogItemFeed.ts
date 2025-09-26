@@ -31,7 +31,7 @@ export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
     const { types, origin, tags } = useFilterState();
-    const { status, totalCount, totalCountByType, error, items, setItems } = state;
+    const { status, totalCount, totalCounts, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
         return {
@@ -52,6 +52,12 @@ export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize
 
     // load first pages (cached)
     useFirstLoad(state, cache, endpoints);
+
+    // total count by type calculation
+    const totalCountByType = useMemo(
+        () => getTotalCountByType(endpoints, totalCounts),
+        [endpoints, totalCounts],
+    );
 
     // cache update
     const updateItem = useUpdateItemCallback(cache.endpointItems, setItems);
@@ -113,20 +119,29 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
         }
         const promises = [];
         if (types.includes(ObjectTypes.DASHBOARD) || types.length === 0) {
-            promises.push(() => getDashboardsQuery(queryOptions).query());
+            promises.push({
+                query: () => getDashboardsQuery(queryOptions).query(),
+                type: ObjectTypes.DASHBOARD,
+            });
         }
         if (types.includes(ObjectTypes.VISUALIZATION) || types.length === 0) {
-            promises.push(() => getInsightsQuery(queryOptions).query());
+            promises.push({
+                query: () => getInsightsQuery(queryOptions).query(),
+                type: ObjectTypes.VISUALIZATION,
+            });
         }
         if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
-            promises.push(() => getMetricsQuery(queryOptions).query());
+            promises.push({ query: () => getMetricsQuery(queryOptions).query(), type: ObjectTypes.METRIC });
         }
         if (!queryOptions.createdBy?.length) {
             if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
-                promises.push(() => getAttributesQuery(queryOptions).query());
+                promises.push({
+                    query: () => getAttributesQuery(queryOptions).query(),
+                    type: ObjectTypes.ATTRIBUTE,
+                });
             }
             if (types.includes(ObjectTypes.FACT) || types.length === 0) {
-                promises.push(() => getFactsQuery(queryOptions).query());
+                promises.push({ query: () => getFactsQuery(queryOptions).query(), type: ObjectTypes.FACT });
             }
         }
         return promises;
@@ -163,7 +178,6 @@ function useFeedState() {
 
     // Derived state
     const totalCount = getTotalCount(totalCounts);
-    const totalCountByType = getTotalCountByType(totalCounts);
 
     return {
         status,
@@ -173,7 +187,6 @@ function useFeedState() {
         currentEndpoint,
         setCurrentEndpoint,
         totalCounts,
-        totalCountByType,
         totalCount,
         setTotalCounts,
         items,
@@ -202,7 +215,7 @@ function useFirstLoad(
         let mounted = true;
         (async () => {
             try {
-                const firstPages = await Promise.all(endpoints.map((ep) => ep()));
+                const firstPages = await Promise.all(endpoints.map((ep) => ep.query()));
 
                 if (!mounted) {
                     return;
@@ -336,12 +349,18 @@ function getTotalCount(totalCounts: number[]) {
     return totalCounts.reduce((acc, count) => acc + count, 0);
 }
 
-function getTotalCountByType(totalCounts: number[]) {
-    return {
-        [ObjectTypes.DASHBOARD]: totalCounts[0] ?? 0,
-        [ObjectTypes.VISUALIZATION]: totalCounts[1] ?? 0,
-        [ObjectTypes.METRIC]: totalCounts[2] ?? 0,
-        [ObjectTypes.ATTRIBUTE]: totalCounts[3] ?? 0,
-        [ObjectTypes.FACT]: totalCounts[4] ?? 0,
+function getTotalCountByType(endpoints: ReturnType<typeof useEndpoints>, totalCounts: number[]) {
+    const base = {
+        [ObjectTypes.DASHBOARD]: 0,
+        [ObjectTypes.VISUALIZATION]: 0,
+        [ObjectTypes.METRIC]: 0,
+        [ObjectTypes.ATTRIBUTE]: 0,
+        [ObjectTypes.FACT]: 0,
     };
+
+    endpoints.forEach((endpoint, idx) => {
+        base[endpoint.type] = totalCounts[idx] ?? 0;
+    });
+
+    return base;
 }

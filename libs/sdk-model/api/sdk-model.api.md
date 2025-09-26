@@ -3503,7 +3503,6 @@ export interface ISettings {
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
-    disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAccessibleChartTooltip?: boolean;
@@ -3515,25 +3514,18 @@ export interface ISettings {
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
-    enableAlternativeDisplayFormSelection?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
     enableAnalyticalDashboards?: boolean;
-    enableApproxCount?: boolean;
-    enableAttributeFilterValuesValidation?: boolean;
     enableAttributeFilterVirtualised?: boolean;
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
-    enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableAxisNameViewByTwoAttributes?: boolean;
-    enableCentralizedAutomationManagement?: boolean;
     enableChartAccessibilityFeatures?: boolean;
     enableChartsSorting?: boolean;
-    enableClickableAttributeURL?: boolean;
-    enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
@@ -3542,25 +3534,20 @@ export interface ISettings {
     enableCrossFilteringAliasTitles?: boolean;
     // (undocumented)
     enableCsvUploader?: boolean;
-    enableCustomColorPicker?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
     enableDashboardTabularExport?: boolean;
-    enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
     enableDateFilterIdentifiersRollout?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
-    enableDrilledInsightExport?: boolean;
     enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
-    enableEmbedButtonInAD?: boolean;
-    enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
     enableExportToDocumentStorage?: boolean;
@@ -3570,7 +3557,6 @@ export interface ISettings {
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
     enableHeadlineExport?: boolean;
-    enableHidingOfWidgetTitle?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
@@ -3582,21 +3568,12 @@ export interface ISettings {
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
-    enableKDZooming?: boolean;
-    enableKPIDashboardDrillFromAttribute?: boolean;
-    enableKPIDashboardDrillToDashboard?: boolean;
-    enableKPIDashboardDrillToInsight?: boolean;
-    enableKPIDashboardDrillToURL?: boolean;
     enableKPIDashboardImplicitDrillDown?: boolean;
-    enableKPIDashboardSaveAsNew?: boolean;
-    enableKPIDashboardSchedule?: boolean;
-    enableKPIDashboardScheduleRecipients?: boolean;
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     // (undocumented)
     enableMotherDuckDataSource?: boolean;
-    enableMultipleCSVs?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
@@ -3614,15 +3591,12 @@ export interface ISettings {
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
-    enablePivotTableTransposition?: boolean;
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
     enablePreAggregationDatasets?: boolean;
     enableRawExports?: boolean;
-    enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
     enableRenamingProjectToWorkspace?: boolean;
-    enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;
     enableScatterPlotClustering?: boolean;
@@ -3631,7 +3605,6 @@ export interface ISettings {
     enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
-    enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;

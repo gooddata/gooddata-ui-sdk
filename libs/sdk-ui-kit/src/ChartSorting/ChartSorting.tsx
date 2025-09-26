@@ -24,7 +24,6 @@ export interface ChartSortingOwnProps {
     onCancel: () => void;
     buttonNode?: HTMLElement | string;
     locale?: string;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 /**
@@ -43,7 +42,6 @@ export function ChartSorting({
     buttonNode,
     onCancel,
     onApply,
-    enableRenamingMeasureToMetric,
 }: ChartSortingProps) {
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
@@ -70,7 +68,6 @@ export function ChartSorting({
                     bucketItems={bucketItems}
                     intl={intl}
                     onSelect={onSelect}
-                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             </div>
             <div className="gd-chart-sorting-dropdown-footer">

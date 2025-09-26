@@ -33,8 +33,11 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
         return this.decorated.getAttributeDisplayForms(refs);
     }
 
-    public getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
-        return this.decorated.getAttribute(ref);
+    public getAttribute(
+        ref: ObjRef,
+        opts: { include?: ["dataset"] } = {},
+    ): Promise<IAttributeMetadataObject> {
+        return this.decorated.getAttribute(ref, opts);
     }
 
     public updateAttributeMeta(

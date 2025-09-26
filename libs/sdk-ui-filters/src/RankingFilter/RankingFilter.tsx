@@ -22,7 +22,6 @@ export interface IRankingFilterProps {
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 /**
@@ -39,7 +38,6 @@ export function RankingFilter({
     onDropDownItemMouseOut,
     customGranularitySelection,
     locale,
-    enableRenamingMeasureToMetric,
 }: IRankingFilterProps) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -77,7 +75,6 @@ export function RankingFilter({
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
                     customGranularitySelection={customGranularitySelection}
                     locale={locale}
-                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             ) : null}
         </>

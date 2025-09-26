@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import {
     ColDef,
     ColGroupDef,
@@ -73,3 +74,14 @@ export type AgGridHeaderParams = IHeaderParams<AgGridRowData, string | null>;
  * @internal
  */
 export type AgGridHeaderGroupParams = IHeaderGroupParams<AgGridRowData, string | null>;
+
+/**
+ * @internal
+ * Checks if the column definition is a column group definition
+ *
+ * @param colDef - The column definition
+ * @returns true if the column definition is a column group definition, false otherwise
+ */
+export const isAgGridColumnGroupDef = (colDef: unknown): colDef is AgGridColumnGroupDef => {
+    return colDef !== undefined && colDef !== null && (colDef as AgGridColumnGroupDef).children !== undefined;
+};

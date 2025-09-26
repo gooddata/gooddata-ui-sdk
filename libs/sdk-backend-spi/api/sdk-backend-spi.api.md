@@ -1534,7 +1534,9 @@ export interface IWorkspaceAccessControlService {
 // @public
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+    getAttribute(ref: ObjRef, opts?: {
+        include?: ["dataset"];
+    }): Promise<IAttributeMetadataObject>;
     getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject>;
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
@@ -1736,7 +1738,9 @@ export interface IWorkspaceExportDefinitionsService {
 
 // @public
 export interface IWorkspaceFactsService {
-    getFact(ref: ObjRef): Promise<IFactMetadataObject>;
+    getFact(ref: ObjRef, opts?: {
+        include?: ["dataset"];
+    }): Promise<IFactMetadataObject>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getFactsQuery(): IFactsQuery;
     updateFactMeta(updatedFact: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IFactMetadataObject>;

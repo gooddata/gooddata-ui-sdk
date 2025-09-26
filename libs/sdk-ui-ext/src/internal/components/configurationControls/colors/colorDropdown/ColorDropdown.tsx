@@ -34,7 +34,6 @@ export interface ISelectableChild {
 export interface IColorDropdownOwnProps {
     selectedColorItem?: IColor;
     colorPalette: IColorPalette;
-    showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
     children?: ReactNode;
@@ -53,7 +52,6 @@ const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
 const ColorDropdown = memo(function ColorDropdown({
     selectedColorItem,
     colorPalette,
-    showCustomPicker,
     onColorSelected: onColorSelectedProp,
     disabled,
     children,
@@ -169,13 +167,12 @@ const ColorDropdown = memo(function ColorDropdown({
                     chartFill={chartFill}
                     patternFillIndex={patternFillIndex}
                 />
-                {showCustomPicker ? <CustomColorButton onClick={onCustomColorButtonClick} /> : null}
+                <CustomColorButton onClick={onCustomColorButtonClick} />
             </div>
         );
     }, [
         getSelectedGuidFromColorItem,
         colorPalette,
-        showCustomPicker,
         onColorSelected,
         onCustomColorButtonClick,
         chartFill,

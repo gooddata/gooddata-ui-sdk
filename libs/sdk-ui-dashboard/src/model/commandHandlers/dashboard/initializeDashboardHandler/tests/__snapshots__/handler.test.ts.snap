@@ -369,9 +369,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": {
-    "enableKPIDashboardDrillFromAttribute": true,
-  },
+  "settings": {},
   "widgetsOverlay": {},
 }
 `;

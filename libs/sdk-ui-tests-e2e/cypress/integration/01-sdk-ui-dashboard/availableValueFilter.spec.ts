@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { ISettings } from "@gooddata/sdk-model";
 
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
@@ -18,7 +19,6 @@ const salesRepFilter = new AttributeFilter("Sales Rep");
 const accountFilter = new AttributeFilter("Account");
 
 const featureFlags: ISettings = {
-    enableAttributeFilterValuesValidation: true,
     enableKDAttributeFilterDatesValidation: true,
 };
 describe("Available value filter", () => {

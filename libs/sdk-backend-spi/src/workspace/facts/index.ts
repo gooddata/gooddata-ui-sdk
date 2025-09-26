@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     IFactMetadataObject,
     IMetadataObject,
@@ -34,9 +35,10 @@ export interface IWorkspaceFactsService {
     /**
      * Get information about the given fact
      * @param ref - ref of the fact
+     * @param opts - options to include additional data
      * @returns promise of metadata object
      */
-    getFact(ref: ObjRef): Promise<IFactMetadataObject>;
+    getFact(ref: ObjRef, opts?: { include?: ["dataset"] }): Promise<IFactMetadataObject>;
 
     /**
      * Updates metadata of the fact.

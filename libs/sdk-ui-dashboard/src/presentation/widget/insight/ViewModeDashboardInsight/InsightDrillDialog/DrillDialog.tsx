@@ -23,7 +23,6 @@ import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
 import {
     selectCanExportTabular,
     selectEnableExportToPdfTabular,
-    selectSettings,
     useDashboardSelector,
 } from "../../../../../model/index.js";
 
@@ -101,10 +100,8 @@ export function DrillDialog({
 }: DrillDialogProps) {
     const [announcementText, setAnnouncementText] = useState<string>("");
 
-    const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
     const enablePdfTabularExport = useDashboardSelector(selectEnableExportToPdfTabular);
-    const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 
@@ -173,7 +170,7 @@ export function DrillDialog({
             >
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
-            {shouldShowDrilledInsightExport || isShowAsTableVisible ? (
+            {canExport || isShowAsTableVisible ? (
                 <div className="gd-drill-modal-dialog-footer gd-drill-modal-dialog-footer-with-border s-drill-modal-dialog-footer">
                     {isShowAsTableVisible ? (
                         <UiButton
@@ -183,7 +180,7 @@ export function DrillDialog({
                             label={formatMessage(showAsTableButtonMessage)}
                         />
                     ) : null}
-                    {shouldShowDrilledInsightExport ? (
+                    {canExport ? (
                         <DrillDialogExportDropdown
                             exportAvailable={exportAvailable}
                             exportXLSXEnabled={exportXLSXEnabled}

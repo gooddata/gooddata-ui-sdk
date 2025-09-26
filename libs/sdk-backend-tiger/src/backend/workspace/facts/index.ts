@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -42,13 +43,14 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
         });
     }
 
-    public async getFact(ref: ObjRef): Promise<IFactMetadataObject> {
+    public async getFact(ref: ObjRef, opts: { include?: ["dataset"] } = {}): Promise<IFactMetadataObject> {
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
             client.entities.getEntityFacts(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
+                    include: [...(opts.include ?? [])],
                 },
                 {
                     headers: jsonApiHeaders,

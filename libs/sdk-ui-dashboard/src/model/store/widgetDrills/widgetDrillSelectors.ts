@@ -59,11 +59,7 @@ import {
 } from "../catalog/catalogSelectors.js";
 import {
     selectDisableDefaultDrills,
-    selectEnableClickableAttributeURL,
     selectEnableKDCrossFiltering,
-    selectEnableKPIDashboardDrillToDashboard,
-    selectEnableKPIDashboardDrillToInsight,
-    selectEnableKPIDashboardDrillToURL,
     selectIsDisabledCrossFiltering,
     selectIsDrillDownEnabled,
     selectIsEmbedded,
@@ -471,15 +467,9 @@ export const selectImplicitDrillsToUrlByWidgetRef: (
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDisplayFormLink,
-        selectEnableClickableAttributeURL,
-        (availableDrillTargets, attributesWithLink, isClickableAttributeURLEnabled) => {
-            if (isClickableAttributeURLEnabled) {
-                const availableDrillAttributes =
-                    availableDrillTargets?.availableDrillTargets?.attributes ?? [];
-                return getDrillToUrlDefinitionsWithPredicates(availableDrillAttributes, attributesWithLink);
-            }
-
-            return [];
+        (availableDrillTargets, attributesWithLink) => {
+            const availableDrillAttributes = availableDrillTargets?.availableDrillTargets?.attributes ?? [];
+            return getDrillToUrlDefinitionsWithPredicates(availableDrillAttributes, attributesWithLink);
         },
     ),
 );
@@ -493,10 +483,6 @@ export const selectConfiguredDrillsByWidgetRef: (
     createSelector(
         selectWidgetDrills(ref),
         selectDisableDefaultDrills,
-        selectEnableClickableAttributeURL,
-        selectEnableKPIDashboardDrillToURL,
-        selectEnableKPIDashboardDrillToInsight,
-        selectEnableKPIDashboardDrillToDashboard,
         selectEnableKDCrossFiltering,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
@@ -504,10 +490,6 @@ export const selectConfiguredDrillsByWidgetRef: (
         (
             drills = [],
             disableDefaultDrills,
-            enableClickableAttributeURL,
-            enableKPIDashboardDrillToURL,
-            enableKPIDashboardDrillToInsight,
-            enableKPIDashboardDrillToDashboard,
             enableKDCrossFiltering,
             isEmbedded,
             disableCrossFiltering,
@@ -521,16 +503,16 @@ export const selectConfiguredDrillsByWidgetRef: (
                 const drillType = drill.type;
                 switch (drillType) {
                     case "drillToAttributeUrl": {
-                        return enableClickableAttributeURL;
+                        return true;
                     }
                     case "drillToCustomUrl": {
-                        return enableKPIDashboardDrillToURL;
+                        return true;
                     }
                     case "drillToDashboard": {
-                        return enableKPIDashboardDrillToDashboard;
+                        return true;
                     }
                     case "drillToInsight": {
-                        return enableKPIDashboardDrillToInsight;
+                        return true;
                     }
                     case "drillToLegacyDashboard": {
                         return !isEmbedded;
