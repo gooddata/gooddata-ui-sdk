@@ -24,7 +24,6 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
     const {
         widget,
         insight,
-        enableKDZooming,
         drillConfigItems,
         originSelectorItems,
         isOriginSelectorVisible,
@@ -37,7 +36,7 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
 
     return (
         <>
-            {!!enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
+            <ZoomInsightConfiguration widget={widget} />
             <div className="configuration-category s-drill-config-panel">
                 <Typography tagName="h3">
                     <span>

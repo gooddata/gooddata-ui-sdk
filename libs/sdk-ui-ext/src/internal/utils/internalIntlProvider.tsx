@@ -22,21 +22,15 @@ const INTL_CACHE_KEY = "messages";
 const intlCache = new LRUCache<string, IntlConfig>({ max: INTL_CACHE_SIZE });
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
-    /**
-     * Because of issues described in the ticket FET-855, we decided to use this workaround.
-     * After the issues that are described in the ticket are solved or at least reduced,
-     * this workaround can be removed.
-     */
     const cachedIntlConfig = intlCache.get(INTL_CACHE_KEY);
     if (cachedIntlConfig?.locale === locale) {
         return createIntl(cachedIntlConfig);
     }
-    const settings = window.gdSettings as IWorkspaceSettings;
     const strings = resolveLocaleDefaultMessages(locale, translations);
 
     intlCache.set(INTL_CACHE_KEY, {
         locale,
-        messages: pickCorrectWording(strings, settings),
+        messages: pickCorrectWording(strings),
     });
     return createIntl(intlCache.get(INTL_CACHE_KEY));
 }
@@ -62,12 +56,9 @@ export function InternalIntlWrapper({
     const strings = resolveLocaleDefaultMessages(locale, translations);
 
     // Memoize the modified translations using the original sdk-ui logic without the global memoization cache
-    const modifiedStrings = useMemo(() => {
-        const isEnabledRenamingMeasureToMetric = settings?.enableRenamingMeasureToMetric ?? true;
-        return pickCorrectMetricWordingInner(strings, isEnabledRenamingMeasureToMetric);
-    }, [strings, settings?.enableRenamingMeasureToMetric]);
+    const modifiedStrings = useMemo(() => pickCorrectMetricWordingInner(strings), [strings]);
 
-    const messages = useMemo(() => pickCorrectWording(strings, settings), [strings, settings]);
+    const messages = useMemo(() => pickCorrectWording(strings), [strings]);
 
     if (settings) {
         return (

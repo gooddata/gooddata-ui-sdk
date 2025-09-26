@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
@@ -14,7 +15,6 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     SimpleDashboardIdentifier,
-    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
@@ -70,56 +70,5 @@ describe("addDrillTargetsHandler", () => {
         );
 
         expect(Tester.emittedEventsDigest()).toMatchSnapshot();
-    });
-});
-
-describe("addDrillTargetsHandler with enableKPIDashboardDrillFromAttribute set to false", () => {
-    let Tester: DashboardTester;
-
-    beforeEach(async () => {
-        await preloadedTesterFactory(
-            (tester: DashboardTester) => {
-                Tester = tester;
-            },
-            SimpleDashboardIdentifier,
-            {
-                backendConfig: {
-                    globalSettings: {
-                        enableKPIDashboardDrillFromAttribute: false,
-                    },
-                },
-            },
-        );
-    });
-
-    it("should fail when trying to add drill targets with attributes and enableKPIDashboardDrillFromAttribute is false", async () => {
-        const event: DashboardCommandFailed<AddDrillTargets> = await Tester.dispatchAndWaitFor(
-            addDrillTargets(
-                SimpleSortedTableWidgetRef,
-                SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-                TestCorrelation,
-            ),
-            "GDC.DASH/EVT.COMMAND.FAILED",
-        );
-
-        expect(event.payload.reason).toEqual("USER_ERROR");
-        expect(event.correlationId).toEqual(TestCorrelation);
-    });
-
-    it("should add drill target to the state for given widget when targets not contain attributes", async () => {
-        const availableDrillWithoutAttributes = {
-            ...SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-            attributes: undefined,
-        };
-
-        const event: DrillTargetsAdded = await Tester.dispatchAndWaitFor(
-            addDrillTargets(SimpleSortedTableWidgetRef, availableDrillWithoutAttributes),
-            "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
-        );
-
-        expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
-
-        const drillTargets = selectDrillTargetsByWidgetRef(SimpleSortedTableWidgetRef)(Tester.state());
-        expect(drillTargets?.availableDrillTargets).toEqual(availableDrillWithoutAttributes);
     });
 });

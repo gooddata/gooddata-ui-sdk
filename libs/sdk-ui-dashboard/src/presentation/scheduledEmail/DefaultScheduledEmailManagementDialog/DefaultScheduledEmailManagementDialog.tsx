@@ -15,6 +15,7 @@ import {
     Dialog,
     Hyperlink,
     Typography,
+    UiAutofocus,
     UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
@@ -35,6 +36,7 @@ import {
     selectExternalRecipient,
     selectIsWhiteLabeled,
     selectTimezone,
+    useAutomationsInitialFocus,
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -79,6 +81,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
+    const { addButtonRef, onAutomationsLoad } = useAutomationsInitialFocus();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -143,28 +146,31 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                     {enableAutomationManagement ? (
                         <>
                             <ContentDivider />
-                            <Automations
-                                workspace={workspace}
-                                timezone={timezone}
-                                type="schedule"
-                                backend={backend}
-                                scope="workspace"
-                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                                isSmall={true}
-                                editAutomation={handleScheduleEdit}
-                                preselectedFilters={{
-                                    dashboard: dashboardId
-                                        ? [{ value: dashboardId, label: dashboardTitle }]
-                                        : undefined,
-                                    externalRecipients: externalRecipientOverride
-                                        ? [{ value: externalRecipientOverride }]
-                                        : undefined,
-                                }}
-                                availableFilters={availableFilters}
-                                locale={intl.locale}
-                                invalidateItemsRef={invalidateItemsRef}
-                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
-                            />
+                            <UiAutofocus>
+                                <Automations
+                                    workspace={workspace}
+                                    timezone={timezone}
+                                    type="schedule"
+                                    backend={backend}
+                                    scope="workspace"
+                                    maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                                    isSmall={true}
+                                    editAutomation={handleScheduleEdit}
+                                    preselectedFilters={{
+                                        dashboard: dashboardId
+                                            ? [{ value: dashboardId, label: dashboardTitle }]
+                                            : undefined,
+                                        externalRecipients: externalRecipientOverride
+                                            ? [{ value: externalRecipientOverride }]
+                                            : undefined,
+                                    }}
+                                    onLoad={onAutomationsLoad}
+                                    availableFilters={availableFilters}
+                                    locale={intl.locale}
+                                    invalidateItemsRef={invalidateItemsRef}
+                                    selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                                />
+                            </UiAutofocus>
                         </>
                     ) : (
                         <>
@@ -227,6 +233,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                     <Button
                                         onClick={onAdd}
                                         disabled={isAddButtonDisabled}
+                                        ref={addButtonRef}
                                         value={intl.formatMessage({
                                             id: messages.scheduleManagementCreate.id!,
                                         })}

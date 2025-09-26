@@ -5,19 +5,15 @@ import { AutomationColumnDefinition } from "@gooddata/sdk-ui-ext";
 export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [
     {
         name: "title",
-        width: 240,
+        width: 285,
     },
     {
         name: "dashboard",
-        width: 144,
-    },
-    {
-        name: "recipients",
-        width: 131,
+        width: 187,
     },
     {
         name: "lastRun",
-        width: 144,
+        width: 187,
     },
     {
         name: "menu",

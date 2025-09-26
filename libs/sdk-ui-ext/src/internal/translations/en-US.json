@@ -2215,21 +2215,9 @@
         "value": "Analysis summary",
         "comment": "Key drivers overview summary title in key driver analysis dialog"
     },
-    "kdaDialog.dialog.keyDrives.overview.summary.tests": {
-        "value": "{combinations} tests",
-        "comment": "Key drivers overview summary combinations in key driver analysis dialog"
-    },
-    "kdaDialog.dialog.keyDrives.overview.summary.attributes": {
-        "value": "{attributes} attributes",
-        "comment": "Key drivers overview summary attributes in key driver analysis dialog"
-    },
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": {
-        "value": "Tested {combinations} data combinations and found {drivers} drivers.",
+        "value": "Tested {combinations} variants with <button>{attributes} attributes</button>",
         "comment": "Key drivers overview summary drivers description in key driver analysis dialog"
-    },
-    "kdaDialog.dialog.keyDrives.overview.summary.drivers.edit_button": {
-        "value": "Edit attributes",
-        "comment": "Key drivers overview summary drivers edit button in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.detail.tip": {
         "value": "Click on column to see key drivers for given country",

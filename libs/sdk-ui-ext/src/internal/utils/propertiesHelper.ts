@@ -369,20 +369,12 @@ function getMaxWidthForCollapsedLegend(legendPosition: string): number {
 }
 
 export function getPivotTableProperties(settings: ISettings, properties: IVisualizationProperties) {
-    const { enablePivotTableTransposition, enableColumnHeadersPosition, enableNewPivotTable } = settings;
+    const { enableNewPivotTable } = settings;
     const textWrapping = enableNewPivotTable ? getTextWrappingFromProperties(properties) : undefined;
 
     return {
-        ...(enablePivotTableTransposition === true
-            ? {
-                  measureGroupDimension: getMeasureGroupDimensionFromProperties(properties),
-              }
-            : {}),
-        ...(enableColumnHeadersPosition === true
-            ? {
-                  columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
-              }
-            : {}),
+        measureGroupDimension: getMeasureGroupDimensionFromProperties(properties),
+        columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
         ...(textWrapping ? { textWrapping } : {}),
     };
 }

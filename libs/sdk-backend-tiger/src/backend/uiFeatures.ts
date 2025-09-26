@@ -17,7 +17,6 @@ export enum TigerFeaturesNames {
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
-    EnableLongitudeAndLatitudeLabels = "enableLongitudeAndLatitudeLabels",
     EnableDescriptions = "enableDescriptions",
     EnableAnalyticalDashboardPermissions = "enableAnalyticalDashboardPermissions",
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
@@ -41,13 +40,11 @@ export enum TigerFeaturesNames {
     EnableMultipleDateFilters = "enableMultipleDateFilters",
     EnableADMultipleDateFilters = "enableADMultipleDateFilters",
     EnableKDRichText = "enableKDRichText",
-    EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableRepeaterChart = "enableRepeaterChart",
     EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
-    EnableMultipleCSVs = "enableMultipleCSVs",
     EnableKDVisualizationSwitcher = "enableKDVisualizationSwitcher",
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
@@ -126,7 +123,6 @@ export enum TigerFeaturesNames {
     EnableToDateFilters = "enableToDateFilters",
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
-    EnableCentralizedAutomationManagement = "enableCentralizedAutomationManagement",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -141,7 +137,6 @@ export type ITigerFeatureFlags = {
     enableKPIDashboardDeleteFilterButton: (typeof FeatureFlagsValues)["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
-    enableLongitudeAndLatitudeLabels: (typeof FeatureFlagsValues)["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
     enableAnalyticalDashboardPermissions: (typeof FeatureFlagsValues)["enableAnalyticalDashboardPermissions"][number];
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
@@ -163,13 +158,11 @@ export type ITigerFeatureFlags = {
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
     enableADMultipleDateFilters: (typeof FeatureFlagsValues)["enableADMultipleDateFilters"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
-    enableAttributeFilterValuesValidation: (typeof FeatureFlagsValues)["enableAttributeFilterValuesValidation"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableCreateUser: (typeof FeatureFlagsValues)["enableCreateUser"][number];
     enableMariaDbDataSource: (typeof FeatureFlagsValues)["enableMariaDbDataSource"][number];
     enableRepeaterChart: (typeof FeatureFlagsValues)["enableRepeaterChart"][number];
     enableKDAttributeFilterDatesValidation: (typeof FeatureFlagsValues)["enableKDAttributeFilterDatesValidation"][number];
-    enableMultipleCSVs: (typeof FeatureFlagsValues)["enableMultipleCSVs"][number];
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableAlerting: (typeof FeatureFlagsValues)["enableAlerting"][number];
@@ -250,7 +243,6 @@ export type ITigerFeatureFlags = {
     enableToDateFilters: (typeof FeatureFlagsValues)["enableToDateFilters"][number];
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
-    enableCentralizedAutomationManagement: (typeof FeatureFlagsValues)["enableCentralizedAutomationManagement"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -265,7 +257,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKPIDashboardDeleteFilterButton: false,
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
-    enableLongitudeAndLatitudeLabels: true,
     enableDescriptions: true,
     enableAnalyticalDashboardPermissions: true,
     enableKPIDashboardExportPDF: true,
@@ -287,13 +278,11 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDateFilters: true,
     enableADMultipleDateFilters: true,
     enableKDRichText: true,
-    enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
     enableCreateUser: true,
     enableMariaDbDataSource: false,
     enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
-    enableMultipleCSVs: false,
     enableMotherDuckDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
@@ -374,7 +363,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
-    enableCentralizedAutomationManagement: false,
     enableAutomationManagement: false,
     enableNewPdfTabularExport: false,
     enableFilterAccessibility: false,
@@ -393,7 +381,6 @@ export const FeatureFlagsValues = {
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
-    enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,
     enableAnalyticalDashboardPermissions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
@@ -415,14 +402,12 @@ export const FeatureFlagsValues = {
     enableMultipleDateFilters: [true, false] as const,
     enableADMultipleDateFilters: [true, false] as const,
     enableKDRichText: [true, false] as const,
-    enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
     enableKDAttributeFilterDatesValidation: [true, false] as const,
-    enableMultipleCSVs: [true, false] as const,
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
@@ -503,7 +488,6 @@ export const FeatureFlagsValues = {
     enableToDateFilters: [true, false] as const,
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
-    enableCentralizedAutomationManagement: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,

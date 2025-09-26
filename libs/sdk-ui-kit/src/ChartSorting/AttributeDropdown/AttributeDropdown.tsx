@@ -27,7 +27,6 @@ interface AttributeDropdownProps {
     intl: IntlShape;
     index: number;
     onSelect: (item: ISortItem) => void;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 const icons = {
@@ -170,7 +169,6 @@ export function AttributeDropdown({
     intl,
     index,
     onSelect,
-    enableRenamingMeasureToMetric,
 }: AttributeDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
@@ -259,7 +257,6 @@ export function AttributeDropdown({
                     bucketItems={bucketItems}
                     onSelect={measureSelectHandler}
                     disabledExplanationTooltip={availableSorts.explanation}
-                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                     index={index}
                 />
             ) : null}

@@ -8,26 +8,15 @@ import { IChartConfig } from "../../../../interfaces/index.js";
 import { updateConfigWithSettings } from "../chartOptionsForSettings.js";
 
 describe("updateConfigWithSettings", () => {
-    describe("disableKpiDashboardHeadlineUnderline", () => {
-        it("should return correct config from feature flags", async () => {
-            const config: IChartConfig = {};
-            const settings: ISettings = {
-                disableKpiDashboardHeadlineUnderline: true,
-            };
-            const expectedConfig = {
-                disableDrillUnderline: true,
-                enableCompactSize: true,
-            };
-            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
-        });
-    });
-
     describe("enableCompactSize", () => {
         it("should return correct config with enableCompactSize always true", async () => {
             const config: IChartConfig = {};
             const settings: ISettings = {};
             const expectedConfig = {
+                disableDrillUnderline: true,
                 enableCompactSize: true,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
         });
@@ -40,8 +29,11 @@ describe("updateConfigWithSettings", () => {
                 enableAxisNameViewByTwoAttributes: false,
             };
             const expectedConfig = {
+                disableDrillUnderline: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: false,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
         });
@@ -54,8 +46,11 @@ describe("updateConfigWithSettings", () => {
                 enableAxisNameViewByTwoAttributes: false,
             };
             const expectedConfig = {
+                disableDrillUnderline: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
         });
@@ -77,7 +72,10 @@ describe("updateConfigWithSettings", () => {
                 enableKDCrossFiltering: true,
             };
             const expectedConfig = {
+                disableDrillUnderline: true,
                 enableCompactSize: true,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
                 useGenericInteractionTooltip: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);

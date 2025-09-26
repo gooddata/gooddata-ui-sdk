@@ -161,6 +161,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
         widget,
+        enableNewTabularExport: false,
     });
 
     const dialogId = useIdPrefixed(`drillDialog-${breadcrumbs.length}`);

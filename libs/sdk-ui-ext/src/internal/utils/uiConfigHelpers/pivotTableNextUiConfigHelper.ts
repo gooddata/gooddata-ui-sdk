@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { IntlShape } from "react-intl";
 
@@ -98,14 +99,12 @@ export function setPivotTableNextUiConfig(
 
     set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
 
-    if (settings?.enablePivotTableTransposition) {
-        const messageId =
-            referencePoint.properties?.controls?.["measureGroupDimension"] === "rows"
-                ? messages["inRows"].id
-                : messages["inColumns"].id;
-        const subtitle = getTranslation(messageId, intl);
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
-    }
+    const messageId =
+        referencePoint.properties?.controls?.["measureGroupDimension"] === "rows"
+            ? messages["inRows"].id
+            : messages["inColumns"].id;
+    const subtitle = getTranslation(messageId, intl);
+    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
 
     if (settings?.enablePivotTableIncreaseBucketSize) {
         const canMeasuresAddItems = canIncreasedTableMeasuresAddMoreItems(buckets);

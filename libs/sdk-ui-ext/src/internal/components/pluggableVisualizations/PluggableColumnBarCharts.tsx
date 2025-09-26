@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 
 import {
@@ -92,10 +93,9 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
                 this.getSupportedPropertiesList(),
             );
 
-            newExt = getReferencePointWithSupportedProperties(newExt, this.supportedPropertiesList);
-            if (this.featureFlags.enableSeparateTotalLabels) {
-                newExt = getReferencePointWithTotalLabelsInitialized(newExt);
-            }
+            newExt = getReferencePointWithTotalLabelsInitialized(
+                getReferencePointWithSupportedProperties(newExt, this.supportedPropertiesList),
+            );
 
             return setColumnBarChartUiConfig(newExt, this.intl);
         });

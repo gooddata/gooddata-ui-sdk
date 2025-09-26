@@ -13,10 +13,7 @@ describe("useKeyboardNavigationTarget", () => {
         const DefaultLocale = "en-US";
         const onFocus = vi.fn();
 
-        const messages = pickCorrectWording(messagesMap[DefaultLocale], {
-            workspace: "mockWorkspace",
-            enableRenamingMeasureToMetric: true,
-        });
+        const messages = pickCorrectWording(messagesMap[DefaultLocale]);
 
         function Component() {
             const { targetRef } = useKeyboardNavigationTarget({

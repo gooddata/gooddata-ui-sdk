@@ -131,7 +131,6 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
         const isAxisNameViewByTwoAttributesEnabled: boolean =
             featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
@@ -142,8 +141,6 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                 (isPrimaryAxis || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;
             const { name, title, subtitle, visible } = axis;
-
-            const showFormat = isPrimaryAxis && isAxisLabelsFormatEnabled;
 
             return (
                 <ConfigSection
@@ -174,7 +171,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                         axis={axis.name}
                         properties={properties}
                         pushData={pushData}
-                        showFormat={showFormat}
+                        showFormat={isPrimaryAxis}
                     />
                     {isPrimaryAxis ? this.renderMinMax(axis.name) : null}
                 </ConfigSection>

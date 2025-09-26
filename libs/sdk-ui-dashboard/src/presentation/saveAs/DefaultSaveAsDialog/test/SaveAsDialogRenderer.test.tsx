@@ -12,7 +12,6 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         isDashboardLoaded: true,
         isDashboardSaving: false,
         isKpiWidgetEnabled: true,
-        isScheduleEmailsEnabled: true,
         locale: "en-US",
         onCancel: () => {},
         onSubmit: () => {},
@@ -79,11 +78,10 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         });
     });
 
-    it("Should not render note if neither isKpiWidgetEnabled nor isScheduleEmailsEnabled are true", () => {
+    it("Should not render note if isKpiWidgetEnabled is false", () => {
         renderComponent({
             ...defaultProps,
             isKpiWidgetEnabled: false,
-            isScheduleEmailsEnabled: false,
         });
 
         expect(

@@ -15,7 +15,6 @@ interface ChartSortingProps {
     bucketItems: IBucketItemDescriptors;
     intl: IntlShape;
     onSelect: (item: ISortItem[]) => void;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 const getAttributeName = (bucketItemNames: IBucketItemDescriptors, available: IAvailableSortsGroup) =>
@@ -27,7 +26,6 @@ export function ChartSortingDropdown({
     bucketItems,
     intl,
     onSelect,
-    enableRenamingMeasureToMetric,
 }: ChartSortingProps) {
     const onSortChanged = useCallback(
         (newSort: ISortItem, index: number) => {
@@ -67,7 +65,6 @@ export function ChartSortingDropdown({
                             onSelect={(newSort: ISortItem) => {
                                 onSortChanged(newSort, index);
                             }}
-                            enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                         />
                     </div>
                 );

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -26,10 +27,6 @@ import {
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("transposition")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
-    .withDefaultBackendSettings({
-        enablePivotTableTransposition: true,
-        enableColumnHeadersPosition: true,
-    })
     .addScenario("single measure pivot with both attributes and metrics in rows", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         config: {

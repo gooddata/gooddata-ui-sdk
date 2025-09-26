@@ -22,10 +22,6 @@ const defaultScenarios = {
         clickSelector: ".gd-icon-navigatedown",
         postInteractionWait: 200,
     },
-};
-
-const customPicker = {
-    ...defaultScenarios,
     "select-custom-color": {
         clickSelectors: [".s-colored-items-list-item", ".s-custom-section-button"],
         postInteractionWait: 200,
@@ -40,11 +36,7 @@ export function Colordropdown() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
-                <ColorDropdown
-                    colorPalette={DefaultColorPalette}
-                    onColorSelected={action("onColorSelect")}
-                    showCustomPicker={false}
-                >
+                <ColorDropdown colorPalette={DefaultColorPalette} onColorSelected={action("onColorSelect")}>
                     <ColoredItemContent
                         text="<<< this color hardcoded for tests"
                         color={{ r: 20, g: 178, b: 226 }}
@@ -64,7 +56,6 @@ export function ColordropdownPreSelectedWithLargePalette() {
                     selectedColorItem={{ type: "guid", value: "11_12" }}
                     colorPalette={getLargePalette()}
                     onColorSelected={action("onColorSelect")}
-                    showCustomPicker={false}
                 >
                     <ColoredItemContent
                         text="<<< this color hardcoded for tests"
@@ -80,38 +71,11 @@ ColordropdownPreSelectedWithLargePalette.parameters = {
     screenshots: defaultScenarios,
 };
 
-export function ColordropdownWithCustomPicker() {
-    return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <InternalIntlWrapper>
-                <ColorDropdown
-                    colorPalette={DefaultColorPalette}
-                    onColorSelected={action("onColorSelect")}
-                    showCustomPicker={true}
-                >
-                    <ColoredItemContent
-                        text="<<< this color hardcoded for tests"
-                        color={{ r: 20, g: 178, b: 226 }}
-                    />
-                </ColorDropdown>
-            </InternalIntlWrapper>
-        </div>
-    );
-}
-ColordropdownWithCustomPicker.parameters = {
-    kind: "ColorDropdown with custom picker",
-    screenshots: customPicker,
-};
-
-export function ColordropdownWithCustomPickerLocalized() {
+export function ColordropdownLocalized() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper locale={german}>
-                <ColorDropdown
-                    colorPalette={DefaultColorPalette}
-                    onColorSelected={action("onColorSelect")}
-                    showCustomPicker={true}
-                >
+                <ColorDropdown colorPalette={DefaultColorPalette} onColorSelected={action("onColorSelect")}>
                     <ColoredItemContent
                         text="<<< this color hardcoded for tests"
                         color={{ r: 20, g: 178, b: 226 }}
@@ -121,7 +85,7 @@ export function ColordropdownWithCustomPickerLocalized() {
         </div>
     );
 }
-ColordropdownWithCustomPickerLocalized.parameters = {
+ColordropdownLocalized.parameters = {
     kind: "ColorDropdown with custom picker - localized",
-    screenshots: customPicker,
+    screenshots: defaultScenarios,
 };

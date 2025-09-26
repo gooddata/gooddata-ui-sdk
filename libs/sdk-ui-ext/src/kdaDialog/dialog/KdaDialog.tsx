@@ -12,6 +12,7 @@ import { KdaContent } from "../components/KdaContent.js";
 import { KdaFooter } from "../components/KdaFooter.js";
 import { KdaHeader } from "../components/KdaHeader.js";
 import { FiltersBar } from "../composition/FiltersBar.js";
+import { KeyDriversFooter } from "../composition/KeyDriversFooter.js";
 import { KeyDriversOverview } from "../composition/KeyDriversOverview.js";
 import { KeyDriversPanel } from "../composition/KeyDriversPanel.js";
 import { MetricsBar } from "../composition/MetricsBar.js";
@@ -24,7 +25,7 @@ import { useKdaState } from "../providers/KdaState.js";
  */
 export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
     const { state } = useKdaState();
-    const accessibilityConfig = useKdaDialogAccessibility(state.metric.title);
+    const accessibilityConfig = useKdaDialogAccessibility(state.metric?.title ?? "");
     const detailsId = useId();
 
     return (
@@ -69,7 +70,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                         }
                     />
                 }
-                footer={<KdaFooter onClose={onClose} />}
+                footer={<KdaFooter content={<KeyDriversFooter />} onClose={onClose} />}
             />
         </Dialog>
     );

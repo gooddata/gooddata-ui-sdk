@@ -132,6 +132,16 @@
             z-index: 1;
         }
 
+        &--drillable {
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--gd-table-valueColor);
+        }
+
+        &--drillable:hover {
+            text-decoration: underline;
+        }
+
         &--transposed-left-border {
             border-left: var(--dash-border);
         }

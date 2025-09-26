@@ -5,9 +5,7 @@ import { ReactNode, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { UiIconButton, UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
-
-import { useKdaState } from "../../providers/KdaState.js";
+import { UiIcon, UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
 
 export function SummaryItem({
     onSelect,
@@ -19,7 +17,6 @@ export function SummaryItem({
     const intl = useIntl();
     const [isFocused, setFocused] = useState(false);
     const label = intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.overview.summary.title" });
-    const { state } = useKdaState();
 
     return (
         <div
@@ -42,37 +39,8 @@ export function SummaryItem({
         >
             <div>
                 <div className={cx("gd-kda-item-summary-title")}>{label}</div>
-                <div className={cx("gd-kda-item-summary-info")}>
-                    <div className={cx("gd-kda-item-summary-info-text")}>
-                        {intl.formatMessage(
-                            { id: "kdaDialog.dialog.keyDrives.overview.summary.tests" },
-                            {
-                                combinations: state.combinations,
-                            },
-                        )}
-                    </div>
-                    <div className={cx("gd-kda-item-summary-info-divider")} />
-                    <div className={cx("gd-kda-item-summary-info-text")}>
-                        {intl.formatMessage(
-                            { id: "kdaDialog.dialog.keyDrives.overview.summary.attributes" },
-                            {
-                                attributes: state.attributes,
-                            },
-                        )}
-                    </div>
-                </div>
             </div>
-            <UiIconButton
-                icon="pencil"
-                variant="tertiary"
-                label={intl.formatMessage({
-                    id: "kdaDialog.dialog.keyDrives.overview.summary.drivers.edit_button",
-                })}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                }}
-            />
+            <UiIcon type="navigateRight" size={16} />
         </div>
     );
 }

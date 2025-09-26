@@ -40,6 +40,7 @@ export function Automations({
     dashboardUrlBuilder = buildDashboardUrl,
     widgetUrlBuilder = buildWidgetUrl,
     editAutomation = defaultEditAutomation,
+    onLoad,
 }: IAutomationsProps) {
     return (
         <BackendProvider backend={backend}>
@@ -62,6 +63,7 @@ export function Automations({
                                         dashboardUrlBuilder={dashboardUrlBuilder}
                                         widgetUrlBuilder={widgetUrlBuilder}
                                         editAutomation={editAutomation}
+                                        onLoad={onLoad}
                                         invalidateItemsRef={invalidateItemsRef}
                                         locale={locale}
                                     />

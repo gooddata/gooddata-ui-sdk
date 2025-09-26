@@ -32,6 +32,7 @@ import {
     selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
     selectTimezone,
+    useAutomationsInitialFocus,
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -71,6 +72,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
+    const { addButtonRef, onAutomationsLoad } = useAutomationsInitialFocus();
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -179,6 +181,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                         ? [{ value: externalRecipientOverride }]
                                         : undefined,
                                 }}
+                                onLoad={onAutomationsLoad}
                                 availableFilters={availableFilters}
                                 locale={intl.locale}
                                 invalidateItemsRef={invalidateItemsRef}
@@ -216,6 +219,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                         canCreateAutomation ? (
                             <Button
                                 onClick={handleAddAlert}
+                                ref={addButtonRef}
                                 className="gd-button-action s-add-alert-button"
                                 value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
                             />

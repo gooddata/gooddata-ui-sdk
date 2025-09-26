@@ -106,7 +106,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -128,6 +128,9 @@ export type AutomationsFilterPreselectValue = {
 
 // @internal
 export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
+
+// @internal
+export type AutomationsOnLoad = (items: Array<IAutomationMetadataObject>, isInitial: boolean) => void;
 
 // @internal
 export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterPreselectName, Array<AutomationsFilterPreselectValue>>>;
@@ -384,6 +387,8 @@ export interface IAutomationsProps {
     locale?: string;
     // (undocumented)
     maxHeight?: number;
+    // (undocumented)
+    onLoad?: AutomationsOnLoad;
     // (undocumented)
     organization?: string;
     // (undocumented)

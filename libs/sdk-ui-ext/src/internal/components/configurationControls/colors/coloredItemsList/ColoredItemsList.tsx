@@ -20,7 +20,6 @@ export interface IColoredItemsListOwnProps {
     colorPalette: IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
-    showCustomPicker?: boolean;
     disabled?: boolean;
     isLoading?: boolean;
     chartFill?: ChartFillConfig;
@@ -41,7 +40,6 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         colorPalette,
         inputItems,
         onSelect: onSelectProp,
-        showCustomPicker,
         disabled = false,
         isLoading = false,
         chartFill,
@@ -111,7 +109,6 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                         <ColoredItem
                             colorPalette={colorPalette}
                             onSelect={onSelect}
-                            showCustomPicker={showCustomPicker}
                             disabled={disabled}
                             item={item}
                             chartFill={appliedChartFill}

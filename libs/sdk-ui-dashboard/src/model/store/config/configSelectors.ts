@@ -258,30 +258,6 @@ export const selectDateFormat: DashboardSelector<string | undefined> = createSel
 );
 
 /**
- * Returns whether the current user can schedule emails.
- *
- * @public
- */
-export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardSchedule ?? false;
-    },
-);
-
-/**
- * Returns whether the current user can share scheduled email to other recipients.
- *
- * @public
- */
-export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardScheduleRecipients ?? false;
-    },
-);
-
-/**
  * Returns current platform edition.
  *
  * @public
@@ -290,18 +266,6 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition> = createS
     selectConfig,
     (state) => {
         return state.settings?.platformEdition ?? "enterprise";
-    },
-);
-
-/**
- * Returns whether company logo should be visible in embedded dashboard.
- *
- * @public
- */
-export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
     },
 );
 
@@ -316,66 +280,6 @@ export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | numbe
     });
 
 /**
- * Returns whether the drill to dashboard is enabled.
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
-    },
-);
-
-/**
- * Returns whether the save as new dashboard functionality is enabled.
- *
- * @public
- */
-export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardSaveAsNew ?? false;
-    },
-);
-
-/**
- * Returns whether implicit drill to attributes url enabled
- *
- * @public
- */
-export const selectEnableClickableAttributeURL: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableClickableAttributeURL ?? true;
-    },
-);
-
-/**
- * Returns whether drill to url is enabled
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToURL ?? false;
-    },
-);
-
-/**
- * Returns whether drill to insight is enabled
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToInsight ?? false;
-    },
-);
-
-/**
  * Returns whether implicit drill to attributes url enabled
  *
  * @public
@@ -384,18 +288,6 @@ export const selectEnableKPIDashboardImplicitDrillDown: DashboardSelector<boolea
     selectConfig,
     (state) => {
         return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
-    },
-);
-
-/**
- * Returns whether drill fromAttribute is enabled
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillFromAttribute: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillFromAttribute ?? false;
     },
 );
 
@@ -481,18 +373,6 @@ export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> 
 );
 
 /**
- * Returns whether we should call measures metrics (true) or measures (false).
- *
- * @internal
- */
-export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableRenamingMeasureToMetric ?? true;
-    },
-);
-
-/**
  * Returns whether we should hide the pixel perfect experience references.
  *
  * @internal
@@ -503,18 +383,6 @@ export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | 
         const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
         return !isHidden && isEnabled;
     });
-
-/**
- * Returns whether we should disable the underline in KPIs when they are drillable.
- *
- * @internal
- */
-export const selectDisableKpiDashboardHeadlineUnderline: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
-    },
-);
 
 /**
  * Returns whether unfinished features are allowed.
@@ -583,16 +451,6 @@ export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = cre
     (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
         return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
     },
-);
-
-/**
- * Returns whether choice of alternate display forms is enabled.
- *
- * @internal
- */
-export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => !!(state.settings?.enableAlternativeDisplayFormSelection || false),
 );
 
 /**
@@ -688,18 +546,6 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSe
     selectConfig,
     (state) => {
         return state.settings?.enableKDCrossFiltering ?? false;
-    },
-);
-
-/**
- * Returns whether KD attribute filter values validation/filtering is enabled.
- *
- * @internal
- */
-export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAttributeFilterValuesValidation ?? true;
     },
 );
 
@@ -1109,18 +955,6 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean> = create
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableNewScheduledExport) ?? false;
-    },
-);
-
-/**
- * Selector for the centralized automation management feature flag
- *
- * @internal
- */
-export const selectEnableCentralizedAutomationManagement: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableCentralizedAutomationManagement) ?? false;
     },
 );
 

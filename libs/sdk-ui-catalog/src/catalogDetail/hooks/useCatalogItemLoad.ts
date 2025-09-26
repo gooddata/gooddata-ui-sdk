@@ -95,10 +95,15 @@ async function loadObjectDefinition(
         case "attribute":
             return workspace
                 .attributes()
-                .getAttribute({
-                    type: "attribute",
-                    identifier: id,
-                })
+                .getAttribute(
+                    {
+                        type: "attribute",
+                        identifier: id,
+                    },
+                    {
+                        include: ["dataset"],
+                    },
+                )
                 .then(convertAttributeToCatalogItem);
         case "analyticalDashboard":
             return workspace
@@ -138,10 +143,15 @@ async function loadObjectDefinition(
         case "fact":
             return workspace
                 .facts()
-                .getFact({
-                    type: "fact",
-                    identifier: id,
-                })
+                .getFact(
+                    {
+                        type: "fact",
+                        identifier: id,
+                    },
+                    {
+                        include: ["dataset"],
+                    },
+                )
                 .then(convertFactToCatalogItem);
         default:
             throw new Error(`Unsupported object type: ${type}`);

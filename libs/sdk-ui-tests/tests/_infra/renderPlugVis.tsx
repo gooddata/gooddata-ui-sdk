@@ -73,10 +73,6 @@ export async function mountInsight(
             pushData={() => {}}
             onLoadingChanged={() => {}}
             drillableItems={drillableItems}
-            featureFlags={{
-                // explicitly turn on table transposition to keep scenarios with metrics in rows working
-                enablePivotTableTransposition: true,
-            }}
         />,
     );
 

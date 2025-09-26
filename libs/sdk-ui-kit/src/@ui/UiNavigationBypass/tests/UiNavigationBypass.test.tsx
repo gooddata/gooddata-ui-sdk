@@ -20,10 +20,7 @@ describe("UiNavigationBypass", () => {
         const DefaultLocale = "en-US";
         const onItemClick = vi.fn();
 
-        const messages = pickCorrectWording(messagesMap[DefaultLocale], {
-            workspace: "mockWorkspace",
-            enableRenamingMeasureToMetric: true,
-        });
+        const messages = pickCorrectWording(messagesMap[DefaultLocale]);
 
         const res = render(
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>

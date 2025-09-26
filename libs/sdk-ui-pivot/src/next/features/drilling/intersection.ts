@@ -1,8 +1,18 @@
 // (C) 2025 GoodData Corporation
-import { IDrillEventIntersectionElement, IMappingHeader, getDrillIntersection } from "@gooddata/sdk-ui";
 
-import { extractAllColumnMappingHeaders, extractRowMappingHeadersUpToPosition } from "./headerMapping.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+import {
+    IDrillEventIntersectionElement,
+    IMappingHeader,
+    getDrillIntersection,
+    isValueColumnDefinition,
+} from "@gooddata/sdk-ui";
+
+import {
+    extractAllColumnMappingHeaders,
+    extractMappingHeadersUpToPosition,
+    extractRowMappingHeadersUpToPosition,
+} from "./headerMapping.js";
+import { AgGridColumnDef, AgGridColumnGroupDef, isAgGridColumnGroupDef } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";
 
 /**
@@ -49,6 +59,32 @@ function createCellMappingHeadersForIntersection(
 }
 
 /**
+ * Creates mapping headers for drill intersection for a header cell
+ *
+ * @param colDef - The column definition from ag-grid
+ * @returns Array of mapping headers
+ */
+function createHeaderMappingHeadersForIntersection(
+    colDef: AgGridColumnDef | AgGridColumnGroupDef,
+): IMappingHeader[] {
+    const columnDefinition = colDef.context?.columnDefinition;
+
+    if (!columnDefinition || !isValueColumnDefinition(columnDefinition)) {
+        return [];
+    }
+
+    const columnScope = columnDefinition.columnScope;
+
+    // With header groups, we use depth to determine which attributes to use for intersection
+    // With regular columns, we use all column attributes
+    const position = isAgGridColumnGroupDef(colDef)
+        ? colDef.headerGroupComponentParams?.pivotGroupDepth
+        : columnScope.length - 1;
+
+    return extractMappingHeadersUpToPosition(columnDefinition.columnScope, position);
+}
+
+/**
  * Creates drill intersection elements for a cell
  *
  * @param colDef - The column definition from ag-grid
@@ -60,6 +96,18 @@ export function createDrillIntersection(
     data: AgGridRowData,
 ): IDrillEventIntersectionElement[] {
     const mappingHeaders = createCellMappingHeadersForIntersection(colDef, data);
+
+    return getDrillIntersection(mappingHeaders);
+}
+
+/**
+ * Creates drill intersection elements for a header cell
+ *
+ * @param colDef - The column definition from ag-grid
+ * @returns Array of drill intersection elements
+ */
+export function createHeaderDrillIntersection(colDef: AgGridColumnDef): IDrillEventIntersectionElement[] {
+    const mappingHeaders = createHeaderMappingHeadersForIntersection(colDef);
 
     return getDrillIntersection(mappingHeaders);
 }

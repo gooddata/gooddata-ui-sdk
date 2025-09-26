@@ -218,8 +218,6 @@ export interface ChartSortingOwnProps {
     // (undocumented)
     currentSort: ISortItem[];
     // (undocumented)
-    enableRenamingMeasureToMetric?: boolean;
-    // (undocumented)
     locale?: string;
     // (undocumented)
     onApply: (sortItems: ISortItem[]) => void;

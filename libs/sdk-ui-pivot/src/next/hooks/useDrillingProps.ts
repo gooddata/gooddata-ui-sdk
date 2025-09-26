@@ -14,6 +14,7 @@ import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
 import { AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
@@ -78,11 +79,7 @@ export function useDrillingProps(): (agGridReactProps: AgGridProps) => AgGridPro
             };
 
             if (onDrill(drillEvent)) {
-                // Dispatch custom drill event for embedded scenarios
-                const customEvent = new CustomEvent("drill", {
-                    detail: drillEvent,
-                    bubbles: true,
-                });
+                const customEvent = createCustomDrillEvent(drillEvent);
                 event.event?.target?.dispatchEvent(customEvent);
                 return true;
             }

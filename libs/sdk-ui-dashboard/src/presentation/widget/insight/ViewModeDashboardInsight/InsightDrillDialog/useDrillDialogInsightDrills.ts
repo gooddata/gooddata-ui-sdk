@@ -15,7 +15,6 @@ import {
 
 import {
     selectDrillableItemsByAvailableDrillTargets,
-    selectEnableKPIDashboardDrillFromAttribute,
     selectImplicitDrillsByAvailableDrillTargets,
     useDashboardSelector,
 } from "../../../../../model/index.js";
@@ -41,14 +40,12 @@ export const useDrillDialogInsightDrills = ({
 }: UseDashboardInsightDrillsProps) => {
     // Drilling
     const [drillTargets, setDrillTargets] = useState<IAvailableDrillTargets>();
-    const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
     const disableDrillDownOnInsight = insight.insight.properties["controls"]?.["disableDrillDown"];
 
     const onPushData = useCallback(
         (data: IPushData): void => {
             const targets = sanitizeAvailableDrillTargets(
                 data?.availableDrillTargets,
-                isDrillFromAttributeEnabled,
                 !disableDrillDownOnInsight,
             );
 
@@ -56,7 +53,7 @@ export const useDrillDialogInsightDrills = ({
                 setDrillTargets(targets);
             }
         },
-        [disableDrillDownOnInsight, drillTargets, isDrillFromAttributeEnabled],
+        [disableDrillDownOnInsight, drillTargets],
     );
 
     const implicitDrillDefinitions = useDashboardSelector(
@@ -99,7 +96,6 @@ export const useDrillDialogInsightDrills = ({
 
 const sanitizeAvailableDrillTargets = (
     availableDrillTargets: IAvailableDrillTargets | undefined,
-    isDrillFromAttributeEnabled: boolean,
     isDrillDownOnInsightEnabled: boolean,
 ) => {
     // if no drill targets went in (likely the pushData was fired in a non-drill-related case)
@@ -109,7 +105,7 @@ const sanitizeAvailableDrillTargets = (
     }
 
     // Both drill from attribute FF and drilldown enablement on insight level must be enabled
-    return isDrillFromAttributeEnabled && isDrillDownOnInsightEnabled
+    return isDrillDownOnInsightEnabled
         ? availableDrillTargets
         : { ...availableDrillTargets, attributes: undefined };
 };

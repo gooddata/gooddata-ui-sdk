@@ -2,8 +2,6 @@
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { selectEnableRenamingMeasureToMetric, useDashboardSelector } from "../../../../model/index.js";
-
 export interface IDrillOriginItemProps {
     title: string;
     type: string;
@@ -11,12 +9,12 @@ export interface IDrillOriginItemProps {
     isDateAttribute: boolean;
 }
 
-const getIconType = (type: string, isDateAttribute: boolean, shouldRenameMeasureToMetric: boolean) => {
+const getIconType = (type: string, isDateAttribute: boolean) => {
     if (isDateAttribute) {
         return "date";
     }
 
-    if (shouldRenameMeasureToMetric && type === "measure") {
+    if (type === "measure") {
         return "metric";
     }
 
@@ -24,9 +22,7 @@ const getIconType = (type: string, isDateAttribute: boolean, shouldRenameMeasure
 };
 
 export function DrillOriginItem({ onDelete, title, type, isDateAttribute }: IDrillOriginItemProps) {
-    const shouldRenameMeasureToMetric = useDashboardSelector(selectEnableRenamingMeasureToMetric);
-
-    const iconType = getIconType(type, isDateAttribute, shouldRenameMeasureToMetric);
+    const iconType = getIconType(type, isDateAttribute);
     const iconClassName = `dm-button-icon dm-button-icon-${iconType}`;
 
     return (

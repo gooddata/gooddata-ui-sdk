@@ -39,6 +39,7 @@ export interface IAutomationsProps {
     type?: AutomationsType;
     isSmall?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
     editAutomation?: (
@@ -51,6 +52,12 @@ export interface IAutomationsProps {
 export interface IEditAutomation {
     (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string): void;
 }
+
+/**
+ * Callback function to be called when automations are loaded
+ * @internal
+ */
+export type AutomationsOnLoad = (items: Array<IAutomationMetadataObject>, isInitial: boolean) => void;
 
 /**
  * @internal
@@ -165,6 +172,7 @@ export interface IAutomationsCoreProps {
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
+    onLoad?: AutomationsOnLoad;
 }
 
 export interface FilterOptionsContextValue {
@@ -233,6 +241,7 @@ export interface IUseLoadAutomationsProps {
     includeAutomationResult: boolean;
     scope: AutomationsScope;
     setState: Dispatch<SetStateAction<IAutomationsState>>;
+    onLoad?: AutomationsOnLoad;
 }
 
 export interface IUseAutomationBulkActionsProps {

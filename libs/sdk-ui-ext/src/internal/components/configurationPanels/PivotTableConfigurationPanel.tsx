@@ -84,29 +84,25 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
     }
 
     private renderCanvasSection() {
-        const { properties, featureFlags, insight, pushData, isLoading, propertiesMeta, panelConfig } =
-            this.props;
+        const { properties, insight, pushData, isLoading, propertiesMeta, panelConfig } = this.props;
         const metricPositionControlsDisabled = this.isPositionControlDisabled();
         const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
         const canvasSection = (
             <ConfigDummySection id="metric_col_header_position_section">
-                {featureFlags.enablePivotTableTransposition ? (
-                    <MetricsPositionControl
-                        isDisabled={metricPositionControlsDisabled}
-                        showDisabledMessage={metricPositionControlsDisabled ? !isLoading : false}
-                        properties={properties}
-                        pushData={pushData}
-                    />
-                ) : null}
-                {featureFlags.enablePivotTableTransposition && featureFlags.enableColumnHeadersPosition ? (
-                    <ColumnHeadersPositionControl
-                        isDisabled={columnHeadersControlsDisabled}
-                        showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
-                        properties={properties}
-                        pushData={pushData}
-                        insight={insight}
-                    />
-                ) : null}
+                <MetricsPositionControl
+                    isDisabled={metricPositionControlsDisabled}
+                    showDisabledMessage={metricPositionControlsDisabled ? !isLoading : false}
+                    properties={properties}
+                    pushData={pushData}
+                />
+
+                <ColumnHeadersPositionControl
+                    isDisabled={columnHeadersControlsDisabled}
+                    showDisabledMessage={columnHeadersControlsDisabled ? !isLoading : false}
+                    properties={properties}
+                    pushData={pushData}
+                    insight={insight}
+                />
             </ConfigDummySection>
         );
 

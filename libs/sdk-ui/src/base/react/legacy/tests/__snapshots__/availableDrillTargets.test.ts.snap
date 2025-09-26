@@ -14874,26 +14874,6 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - single measure 1`] = `
-{
-  "attributes": [],
-  "measures": [
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
-          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-          "name": "Won",
-          "ref": undefined,
-        },
-      },
-    },
-  ],
-}
-`;
-
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - themed 1`] = `
 {
   "attributes": [],
@@ -14926,69 +14906,6 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - two measures 1`] = `
-{
-  "attributes": [],
-  "measures": [
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
-          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-          "name": "Won",
-          "ref": undefined,
-        },
-      },
-    },
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
-          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-          "name": "Amount",
-          "ref": undefined,
-        },
-      },
-    },
-  ],
-}
-`;
-
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - two measures one PoP 1`] = `
-{
-  "attributes": [],
-  "measures": [
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
-          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-          "name": "Won",
-          "ref": undefined,
-        },
-      },
-    },
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
-          "name": "Won Last Year",
-          "ref": undefined,
-        },
-      },
-    },
-  ],
-}
-`;
-
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - two measures with comparison 1`] = `
 {
   "attributes": [],
@@ -15013,38 +14930,6 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
           "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
           "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           "name": "Won",
-          "ref": undefined,
-        },
-      },
-    },
-  ],
-}
-`;
-
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: Headline - two measures with german separators 1`] = `
-{
-  "attributes": [],
-  "measures": [
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
-          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-          "name": "Won",
-          "ref": undefined,
-        },
-      },
-    },
-    {
-      "attributes": [],
-      "measure": {
-        "measureHeaderItem": {
-          "format": "$#,##0.00",
-          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
-          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-          "name": "Amount",
           "ref": undefined,
         },
       },

@@ -88,7 +88,6 @@ import {
     setPivotTableUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
     addIntersectionFiltersToInsight,
@@ -267,19 +266,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             originalMeasureGroupDimension,
         );
 
-        const measureGroupDimensionProp =
-            tableTranspositionEnabled(this.settings) && originalMeasureGroupDimension
-                ? {
-                      measureGroupDimension: originalMeasureGroupDimension,
-                  }
-                : {};
+        const measureGroupDimensionProp = originalMeasureGroupDimension
+            ? {
+                  measureGroupDimension: originalMeasureGroupDimension,
+              }
+            : {};
 
-        const columnHeaderPositionProp =
-            tableColumnHeadersPositionEnabled(this.settings) && originalColumnHeadersPosition
-                ? {
-                      columnHeadersPosition: originalColumnHeadersPosition,
-                  }
-                : {};
+        const columnHeaderPositionProp = originalColumnHeadersPosition
+            ? {
+                  columnHeadersPosition: originalColumnHeadersPosition,
+              }
+            : {};
 
         const controlsObj = columnWidths
             ? {
@@ -344,32 +341,16 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
-    private getSanitizedConfig(insight: IInsightDefinition, customVisualizationConfig: any) {
-        if (
-            !tableTranspositionEnabled(this.settings) &&
-            (customVisualizationConfig?.measureGroupDimension === "rows" ||
-                getMeasureGroupDimensionFromProperties(insightProperties(insight)) === "rows")
-        ) {
-            // override custom position to default when FF disabled in meantime
-            return {
-                ...(customVisualizationConfig || {}),
-                measureGroupDimension: "columns",
-            };
-        }
-        return customVisualizationConfig;
-    }
-
     public getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         const { dateFormat, executionConfig, customVisualizationConfig } = options;
-        const sanitizedConfig = this.getSanitizedConfig(insight, customVisualizationConfig);
 
         return executionFactory
             .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight, sanitizedConfig))
+            .withDimensions(...this.getDimensions(insight, customVisualizationConfig))
             .withSorting(...(getPivotTableSortItems(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
@@ -528,35 +509,25 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            if (tableTranspositionEnabled(this.settings)) {
-                const panelConfig = {
-                    supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
-                };
+            const panelConfig = {
+                supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+            };
 
-                this.renderFun(
-                    <PivotTableConfigurationPanel
-                        locale={this.locale}
-                        properties={sanitizedProperties}
-                        propertiesMeta={this.propertiesMeta}
-                        insight={insight}
-                        pushData={this.handlePushData}
-                        isError={this.getIsError()}
-                        isLoading={this.isLoading}
-                        featureFlags={this.settings}
-                        panelConfig={panelConfig}
-                        configurationPanelRenderers={options.custom?.configurationPanelRenderers}
-                    />,
-                    configPanelElement,
-                );
-            } else {
-                this.renderFun(
-                    <UnsupportedConfigurationPanel
-                        pushData={this.pushData}
-                        properties={sanitizedProperties}
-                    />,
-                    configPanelElement,
-                );
-            }
+            this.renderFun(
+                <PivotTableConfigurationPanel
+                    locale={this.locale}
+                    properties={sanitizedProperties}
+                    propertiesMeta={this.propertiesMeta}
+                    insight={insight}
+                    pushData={this.handlePushData}
+                    isError={this.getIsError()}
+                    isLoading={this.isLoading}
+                    featureFlags={this.settings}
+                    panelConfig={panelConfig}
+                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
+                />,
+                configPanelElement,
+            );
         }
     }
 
@@ -645,14 +616,6 @@ function multipleDatesEnabled(settings: ISettings): boolean {
 
 function tableSortingCheckDisabled(settings: ISettings): boolean {
     return settings["tableSortingCheckDisabled"] === true;
-}
-
-function tableTranspositionEnabled(settings: ISettings): boolean {
-    return settings.enablePivotTableTransposition === true;
-}
-
-function tableColumnHeadersPositionEnabled(settings: ISettings): boolean {
-    return settings.enableColumnHeadersPosition === true;
 }
 
 /**

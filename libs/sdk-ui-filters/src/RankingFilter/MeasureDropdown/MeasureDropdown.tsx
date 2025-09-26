@@ -16,7 +16,6 @@ interface IMeasureDropdownProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 export function MeasureDropdown({
@@ -25,7 +24,6 @@ export function MeasureDropdown({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
-    enableRenamingMeasureToMetric,
 }: IMeasureDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -61,7 +59,7 @@ export function MeasureDropdown({
                 className={buttonClassNames}
                 value={title}
                 onClick={onButtonClick}
-                iconLeft={enableRenamingMeasureToMetric ? "gd-icon-metric" : "gd-icon-measure"}
+                iconLeft={"gd-icon-metric"}
             />
             {isOpen ? (
                 <MeasureDropdownBody
@@ -71,7 +69,6 @@ export function MeasureDropdown({
                     onClose={() => setIsOpen(false)}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
-                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             ) : null}
         </>

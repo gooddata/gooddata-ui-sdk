@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { IAttribute, ITotal, bucketSetTotals } from "@gooddata/sdk-model";
 
+import { orderTotals } from "./ordering.js";
 import { addTotalsToDimension } from "../data/executionDefinition/dimensions.js";
 import { IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
 
@@ -19,12 +21,16 @@ export const applyTotalsToExecutionDef =
         const [measuresBucket, rowsBucket, columnsBucket] = executionDefinition.buckets;
         const [rowsDimension, columnsDimension] = executionDefinition.dimensions;
 
-        const rowTotals = totals.filter((total) =>
-            rows.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+        const rowTotals = orderTotals(
+            totals.filter((total) =>
+                rows.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+            ),
         );
 
-        const columnTotals = totals.filter((total) =>
-            columns.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+        const columnTotals = orderTotals(
+            totals.filter((total) =>
+                columns.find((attr) => attr.attribute.localIdentifier === total.attributeIdentifier),
+            ),
         );
 
         return {

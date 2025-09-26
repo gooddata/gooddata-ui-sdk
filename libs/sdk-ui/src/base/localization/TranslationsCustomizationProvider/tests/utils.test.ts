@@ -2,8 +2,6 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
 import { ITranslations } from "../../messagesMap.js";
 import { pickCorrectMetricWording, removeAllWordingTranslationsWithSpecialSuffix } from "../utils.js";
 
@@ -13,25 +11,11 @@ const mockMetricTranslation: ITranslations = {
 };
 
 describe("pickCorrectMetricWording", () => {
-    const settings: IWorkspaceSettings = {
-        workspace: "workspace",
-    };
+    it("should return translations with metric", () => {
+        const result = pickCorrectMetricWording(mockMetricTranslation);
 
-    it.each([
-        ["measure", false],
-        ["metric", true],
-        ["metric", undefined], // default should be true
-    ])(
-        "should return translations with %s when enableRenamingMeasureToMetric is set to %s",
-        (_value: string, enableRenamingMeasureToMetric: boolean | undefined) => {
-            const result = pickCorrectMetricWording(mockMetricTranslation, {
-                ...settings,
-                enableRenamingMeasureToMetric,
-            });
-
-            expect(result).toMatchSnapshot();
-        },
-    );
+        expect(result).toMatchSnapshot();
+    });
 });
 
 describe("removeAllWordingTranslationsWithSpecialSuffix", () => {

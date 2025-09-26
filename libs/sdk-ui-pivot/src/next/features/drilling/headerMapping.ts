@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { isMeasureDescriptor } from "@gooddata/sdk-model";
 import {
     IMappingHeader,
@@ -7,7 +8,7 @@ import {
     ITableRowDefinition,
 } from "@gooddata/sdk-ui";
 
-function extractMappingHeadersUpToPosition(
+export function extractMappingHeadersUpToPosition(
     scopes: ITableDataHeaderScope[],
     position: number,
 ): IMappingHeader[] {

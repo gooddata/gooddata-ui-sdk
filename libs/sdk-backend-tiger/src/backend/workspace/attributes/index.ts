@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -65,8 +66,11 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         return this.authCall(async (client) => loadAttributeDisplayForm(client, this.workspace, ref));
     };
 
-    public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        return this.authCall(async (client) => loadAttribute(client, this.workspace, ref));
+    public getAttribute = async (
+        ref: ObjRef,
+        opts: { include?: ["dataset"] } = {},
+    ): Promise<IAttributeMetadataObject> => {
+        return this.authCall(async (client) => loadAttribute(client, this.workspace, ref, opts.include));
     };
 
     public updateAttributeMeta = async (
@@ -266,6 +270,7 @@ function loadAttribute(
     client: ITigerClient,
     workspaceId: string,
     ref: ObjRef,
+    include?: ["dataset"],
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
@@ -274,7 +279,7 @@ function loadAttribute(
             {
                 workspaceId,
                 objectId: ref.identifier,
-                include: ["labels", "defaultView"],
+                include: ["labels", "defaultView", ...(include ?? [])],
             },
             {
                 headers: jsonApiHeaders,

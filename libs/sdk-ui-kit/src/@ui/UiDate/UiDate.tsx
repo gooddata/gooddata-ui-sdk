@@ -85,7 +85,7 @@ function getRelativeTime(diffMs: number, locale: string) {
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    if (Math.abs(seconds) < 60) return rtf.format(-seconds, "second");
+    if (Math.abs(seconds) < 60) return rtf.format(0, "second"); // show "now" for seconds
     if (Math.abs(minutes) < 60) return rtf.format(-minutes, "minute");
     if (Math.abs(hours) < 24) return rtf.format(-hours, "hour");
     return rtf.format(-days, "day");

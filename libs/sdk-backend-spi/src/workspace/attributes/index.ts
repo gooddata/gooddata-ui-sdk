@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -78,9 +79,10 @@ export interface IWorkspaceAttributesService {
      * Gets metadata of the attribute.
      *
      * @param ref - ref of the attribute to retrieve
+     * @param opts - options to include additional data
      * @returns promise of attribute metadata object
      */
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+    getAttribute(ref: ObjRef, opts?: { include?: ["dataset"] }): Promise<IAttributeMetadataObject>;
 
     /**
      * Updates metadata of the attribute.

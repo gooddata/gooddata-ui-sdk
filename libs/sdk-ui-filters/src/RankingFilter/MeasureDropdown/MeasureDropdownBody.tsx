@@ -13,7 +13,6 @@ interface IMeasureDropdownBodyProps {
     onClose: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
-    enableRenamingMeasureToMetric?: boolean;
 }
 
 export function MeasureDropdownBody({
@@ -23,7 +22,6 @@ export function MeasureDropdownBody({
     onClose,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
-    enableRenamingMeasureToMetric,
 }: IMeasureDropdownBodyProps) {
     return (
         <Overlay
@@ -43,7 +41,6 @@ export function MeasureDropdownBody({
                             onSelect={onSelect}
                             onDropDownItemMouseOver={onDropDownItemMouseOver}
                             onDropDownItemMouseOut={onDropDownItemMouseOut}
-                            enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                         />
                     );
                 })}
