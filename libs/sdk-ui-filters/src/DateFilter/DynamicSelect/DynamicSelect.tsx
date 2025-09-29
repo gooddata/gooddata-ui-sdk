@@ -8,13 +8,13 @@ import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { findRelativeDateFilterOptionByValue } from "./utils.js";
-import { ISelectItemOption } from "../Select/types.js";
-import { getSelectableItems, itemToString } from "../Select/utils.js";
 import {
-    VirtualizedSelectMenu,
+    ScrollableSelectMenu,
     defaultVisibleItemsRange,
     getMedianIndex,
-} from "../Select/VirtualizedSelectMenu.js";
+} from "../Select/ScrollableSelectMenu.js";
+import { ISelectItemOption } from "../Select/types.js";
+import { getSelectableItems, itemToString } from "../Select/utils.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -194,7 +194,7 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
                                     })}
                                 />
                             </div>
-                            {isOpen && items.length > 0 ? <VirtualizedSelectMenu {...menuProps} /> : null}
+                            {isOpen && items.length > 0 ? <ScrollableSelectMenu {...menuProps} /> : null}
                         </div>
                     );
                 }}

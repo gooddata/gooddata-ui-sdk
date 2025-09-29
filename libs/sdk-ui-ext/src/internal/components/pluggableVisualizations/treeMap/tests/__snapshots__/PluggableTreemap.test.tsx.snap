@@ -137,7 +137,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -145,6 +147,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -152,6 +157,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -273,7 +279,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -281,6 +289,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -288,6 +299,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -453,7 +465,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -461,6 +475,9 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -468,6 +485,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -585,7 +603,9 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -593,6 +613,9 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -600,6 +623,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -734,7 +758,9 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -742,6 +768,9 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -749,6 +778,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -843,7 +873,9 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
       "segment": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -851,6 +883,9 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
         "icon": "local:treemap/bucket-title-segment.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Segment by",
       },
       "view": {
@@ -858,6 +893,7 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,

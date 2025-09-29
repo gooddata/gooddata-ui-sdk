@@ -9,12 +9,12 @@ import {
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
-import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
-import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { createCustomDrillEvent } from "../features/drilling/events.js";
-import { createHeaderDrillIntersection } from "../features/drilling/intersection.js";
-import { isHeaderCellDrillable } from "../features/drilling/isDrillable.js";
-import { AgGridColumnDef, AgGridHeaderParams } from "../types/agGrid.js";
+import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
+import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { createCustomDrillEvent } from "../../features/drilling/events.js";
+import { createHeaderDrillIntersection } from "../../features/drilling/intersection.js";
+import { isHeaderCellDrillable } from "../../features/drilling/isDrillable.js";
+import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Custom hook that provides header drilling functionality.
@@ -24,7 +24,7 @@ import { AgGridColumnDef, AgGridHeaderParams } from "../types/agGrid.js";
  * @returns Object with header drilling functions
  * @internal
  */
-export function useHeaderDrilling(params: AgGridHeaderParams) {
+export function useHeaderDrilling(params: AgGridHeaderParams | null) {
     const { drillableItems, onDrill, config } = usePivotTableProps();
     const { currentDataView } = useCurrentDataView();
 
@@ -32,13 +32,13 @@ export function useHeaderDrilling(params: AgGridHeaderParams) {
      * Check if the header cell is drillable (memoized)
      */
     const isDrillable = useMemo(() => {
-        if (!drillableItems.length || !currentDataView) {
+        if (!drillableItems.length || !currentDataView || !params) {
             return false;
         }
 
         const colDef = params.column.getColDef() as AgGridColumnDef;
         return isHeaderCellDrillable(colDef, drillableItems, currentDataView, config.columnHeadersPosition);
-    }, [drillableItems, currentDataView, params.column, config.columnHeadersPosition]);
+    }, [drillableItems, currentDataView, params, config.columnHeadersPosition]);
 
     /**
      * Handle header click for drilling
@@ -46,7 +46,7 @@ export function useHeaderDrilling(params: AgGridHeaderParams) {
      */
     const handleHeaderDrill = useCallback(
         (event: MouseEvent) => {
-            if (!onDrill || !isDrillable || !currentDataView) {
+            if (!onDrill || !isDrillable || !currentDataView || !params) {
                 return false;
             }
 
@@ -80,11 +80,16 @@ export function useHeaderDrilling(params: AgGridHeaderParams) {
 
             return false;
         },
-        [onDrill, isDrillable, params.column, currentDataView],
+        [onDrill, isDrillable, params, currentDataView],
     );
 
-    return {
-        handleHeaderDrill,
-        isDrillable,
-    };
+    return params
+        ? {
+              handleHeaderDrill,
+              isDrillable,
+          }
+        : {
+              handleHeaderDrill: () => {},
+              isDrillable: false,
+          };
 }

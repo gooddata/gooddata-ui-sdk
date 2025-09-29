@@ -118,6 +118,7 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
             </ShortenedText>
 
             {!!item.subItems && <i className="gd-icon-navigateright" />}
+            {item.iconRight ? item.iconRight : null}
         </div>
     );
 }

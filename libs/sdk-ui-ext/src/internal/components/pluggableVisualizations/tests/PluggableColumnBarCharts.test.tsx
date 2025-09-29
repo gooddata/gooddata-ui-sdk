@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -439,12 +438,7 @@ describe("PluggableColumnBarCharts", () => {
                     inputReferencePoint: IReferencePoint,
                     expectedReferencePoint: Partial<IExtendedReferencePoint>,
                 ) => {
-                    const columnChart = createComponent({
-                        ...defaultProps,
-                        featureFlags: {
-                            enableMultipleDates: true,
-                        },
-                    });
+                    const columnChart = createComponent();
 
                     const referencePoint = await columnChart.getExtendedReferencePoint(inputReferencePoint);
                     expect(referencePoint).toMatchObject(expectedReferencePoint);
@@ -452,29 +446,7 @@ describe("PluggableColumnBarCharts", () => {
             );
         });
 
-        it("should keep only one date attribute in view by bucket when comming from stacked chart", async () => {
-            const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(0, 1),
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
-
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should keep two date attributes in view by bucket when comming from pivot table with only one dimension", async () => {
+        it("should keep two date attributes in view by bucket when coming from pivot table with only one dimension", async () => {
             const columnChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint;
             const expectedBuckets: IBucketOfFun[] = [
@@ -485,31 +457,6 @@ describe("PluggableColumnBarCharts", () => {
                 {
                     localIdentifier: "view",
                     items: [...mockRefPoint.buckets[1].items, ...mockRefPoint.buckets[2].items],
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
-
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should keep only first date attribute in view by bucket when comming from pivot table with different dimensions", async () => {
-            const columnChart = createComponent(defaultProps);
-            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
-            mockRefPoint.buckets[2].items[0].dateDatasetRef = {
-                uri: "closed",
-            };
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: [...mockRefPoint.buckets[1].items],
                 },
                 {
                     localIdentifier: "stack",

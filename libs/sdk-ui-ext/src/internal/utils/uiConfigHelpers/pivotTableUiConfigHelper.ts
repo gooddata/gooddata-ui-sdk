@@ -140,7 +140,7 @@ export function setPivotTableUiConfig(
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
 }
 
-export function getPivotTableDefaultUiConfig(multipleDatesEnabled: boolean): IUiConfig {
+export function getPivotTableDefaultUiConfig(): IUiConfig {
     return {
         buckets: {
             measures: {
@@ -151,9 +151,9 @@ export function getPivotTableDefaultUiConfig(multipleDatesEnabled: boolean): IUi
                 allowsSwapping: true,
                 allowsReordering: true,
                 itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
-                allowsDuplicateDates: multipleDatesEnabled,
+                allowsDuplicateDates: true,
                 itemsLimitByType: {
-                    date: multipleDatesEnabled ? MAX_TABLE_CATEGORIES_COUNT : 1,
+                    date: MAX_TABLE_CATEGORIES_COUNT,
                 },
             },
             columns: {
@@ -161,9 +161,9 @@ export function getPivotTableDefaultUiConfig(multipleDatesEnabled: boolean): IUi
                 allowsSwapping: true,
                 allowsReordering: true,
                 itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
-                allowsDuplicateDates: multipleDatesEnabled,
+                allowsDuplicateDates: true,
                 itemsLimitByType: {
-                    date: multipleDatesEnabled ? MAX_TABLE_CATEGORIES_COUNT : 1,
+                    date: MAX_TABLE_CATEGORIES_COUNT,
                 },
             },
             ...defaultFilters,

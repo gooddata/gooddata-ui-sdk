@@ -2,7 +2,20 @@
 
 import { useMemo } from "react";
 
-import { insightVisualizationType } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    ICatalogAttribute,
+    IInsightDefinition,
+    IMeasure,
+    areObjRefsEqual,
+    attributeAlias,
+    attributeDisplayFormRef,
+    insightAttributes,
+    insightMeasures,
+    insightVisualizationType,
+    measureAlias,
+    measureTitle,
+} from "@gooddata/sdk-model";
 
 import {
     CommonExportDataAttributes,
@@ -16,11 +29,48 @@ import {
 } from "./types.js";
 import {
     ExtendedDashboardWidget,
+    selectCatalogAttributes,
     selectInsightByWidgetRef,
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
 import { RenderMode } from "../../types.js";
+
+const getAttributeDisplayName = (attribute: IAttribute, catalogAttributes: ICatalogAttribute[]) => {
+    const alias = attributeAlias(attribute);
+    if (alias) {
+        return alias;
+    }
+
+    const displayFormRef = attributeDisplayFormRef(attribute);
+    const catalogAttribute = catalogAttributes.find((catalogAttribute) =>
+        catalogAttribute.displayForms.some((displayForm) => areObjRefsEqual(displayForm.ref, displayFormRef)),
+    );
+
+    if (catalogAttribute) {
+        return catalogAttribute.attribute.title;
+    }
+
+    return null;
+};
+
+const getMeasureDisplayName = (measure: IMeasure) => {
+    return measureAlias(measure) || measureTitle(measure) || null;
+};
+
+const getVisualizationDimensionsAttributes = (
+    insight: IInsightDefinition,
+    catalogAttributes: ICatalogAttribute[],
+) => {
+    const dimensions = [
+        ...insightAttributes(insight).map((attr) => getAttributeDisplayName(attr, catalogAttributes)),
+        ...insightMeasures(insight).map(getMeasureDisplayName),
+    ].filter(Boolean);
+
+    return Object.fromEntries(
+        dimensions.map((dimension, index) => [`data-export-visualization-dimension-${index}`, dimension]),
+    );
+};
 
 /**
  * @alpha
@@ -116,6 +166,7 @@ export const useSectionDescriptionExportData = (
 export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExportData | undefined => {
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref));
     const isExportMode = useDashboardSelector(selectIsInExportMode);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
 
     if (!isExportMode) {
         return undefined;
@@ -127,6 +178,7 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
             "data-export-type": "widget-content",
             "data-export-widget-type": widget.type,
             ...(insight ? { "data-export-visualization-type": insightVisualizationType(insight) } : {}),
+            ...(insight ? getVisualizationDimensionsAttributes(insight, catalogAttributes) : {}),
         },
         title: { "data-export-type": "widget-title" },
         description: {

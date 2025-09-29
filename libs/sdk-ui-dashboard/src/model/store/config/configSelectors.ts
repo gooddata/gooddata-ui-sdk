@@ -270,6 +270,18 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition> = createS
 );
 
 /**
+ * Returns whether company logo should be visible in embedded dashboard.
+ *
+ * @public
+ */
+export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
+    },
+);
+
+/**
  * Returns whether the export to pdf is enabled.
  *
  * @public
@@ -288,18 +300,6 @@ export const selectEnableKPIDashboardImplicitDrillDown: DashboardSelector<boolea
     selectConfig,
     (state) => {
         return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
-    },
-);
-
-/**
- * Returns whether insight export scheduling is enabled.
- *
- * @public
- */
-export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableInsightExportScheduling ?? false;
     },
 );
 
@@ -510,9 +510,7 @@ export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelect
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return (
-            state.settings?.showHiddenCatalogItems ?? state.settings?.enableUnavailableItemsVisible ?? false
-        );
+        return state.settings?.showHiddenCatalogItems ?? false;
     },
 );
 

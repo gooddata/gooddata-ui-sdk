@@ -24,7 +24,7 @@ import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIn
 
 export default class BulletChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
-        const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
+        const { propertiesMeta, properties, pushData, type, insight } = this.props;
 
         const controls = properties?.controls || {};
 
@@ -36,12 +36,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
-        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisNameViewByTwoAttributesEnabled: boolean =
-            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
-        const yAxisNameSubsectionDisabled = isAxisNameViewByTwoAttributesEnabled
-            ? controlsDisabled || itemsOnYAxis === 0
-            : controlsDisabled || itemsOnYAxis !== 1;
+        const yAxisNameSubsectionDisabled = controlsDisabled || itemsOnYAxis === 0;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -58,15 +53,13 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={xAxisNameSectionDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"xaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={xAxisNameSectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -88,15 +81,13 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={yAxisNameSubsectionDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"yaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={yAxisNameSubsectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
                         <LabelSubsection
                             disabled={controlsDisabled || itemsOnYAxis === 0}
                             configPanelDisabled={controlsDisabled}

@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-9-25
+Date generated: 2025-9-26
 
-Revision ID: aeae00ff943483f3b3837a88f24c6721d457494b
+Revision ID: 30bd5bc40320a016248c1b4336a82eed40e074d9
 
 ================================================================================
 ================================================================================
@@ -656,7 +656,6 @@ Revision ID: aeae00ff943483f3b3837a88f24c6721d457494b
 - media-typer (0.3.0) [MIT]
 - memfs (4.42.0) [Unlicense]
 - memoize-one (6.0.0) [MIT]
-- memoize-one (5.2.1) [MIT]
 - merge-descriptors (1.0.3) [MIT]
 - merge-stream (2.0.0) [MIT]
 - merge2 (1.4.1) [MIT]
@@ -797,7 +796,6 @@ Revision ID: aeae00ff943483f3b3837a88f24c6721d457494b
 - react-select-async-paginate (0.7.11) [MIT]
 - react-textarea-autosize (8.5.6) [MIT]
 - react-transition-group (4.4.5) [BSD-3-Clause]
-- react-window (1.8.11) [MIT]
 - readable-stream (2.3.8) [MIT]
 - readable-stream (3.6.2) [MIT]
 - readdirp (3.6.0) [MIT]
@@ -31456,47 +31454,6 @@ Authors: alexreardon@gmail.com
 Package Download URL: https://registry.npmjs.org/memoize-one/-/memoize-one-6.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: memoize-one (5.2.1)
-
-Package Locator: npm+memoize-one$5.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2019 Alexander Reardon
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Package Info *
-
-Authors: alexreardon@gmail.com
-
-Package Download URL: https://registry.npmjs.org/memoize-one/-/memoize-one-5.2.1.tgz
-
---------------------------------------------------------------------------------
 Package Title: merge-descriptors (1.0.3)
 
 Package Locator: npm+merge-descriptors$1.0.3
@@ -37976,48 +37933,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Authors: monastic.panic@gmail.com
 
 Package Download URL: https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz
-
---------------------------------------------------------------------------------
-Package Title: react-window (1.8.11)
-
-Package Locator: npm+react-window$1.8.11
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) 2018 Brian Vaughn
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: briandavidvaughn@gmail.com
-
-Package Download URL: https://registry.npmjs.org/react-window/-/react-window-1.8.11.tgz
 
 --------------------------------------------------------------------------------
 Package Title: readable-stream (2.3.8)
@@ -80796,31 +80711,6 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2018 Brian Vaughn
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright (c) 2018 Jed Watson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82495,4 +82385,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-9-25
+Report Generated by FOSSA on 2025-9-26

@@ -122,6 +122,15 @@ export type DescriptionExportData = {
 };
 
 /**
+ * Data attributes for visualization dimensions.
+ *
+ * @alpha
+ */
+export type WidgetExportDimensionsAttributes = {
+    [K in `data-export-visualization-dimension-${number}`]?: string;
+};
+
+/**
  * Data attributes for export mode to be added to the widget.
  *
  * @alpha
@@ -130,7 +139,7 @@ export type WidgetExportDataAttributes = CommonExportDataAttributes & {
     "data-export-widget-type"?: string;
     "data-export-visualization-type"?: string;
     "data-export-visualization-status"?: "loading" | "loaded" | "error";
-};
+} & WidgetExportDimensionsAttributes;
 
 /**
  * Data attributes with export specification for section description component.

@@ -20,6 +20,7 @@ import { e } from "../../../features/styling/bem.js";
 import {
     IAggregationsMenuItem,
     IAggregationsSubMenuItem,
+    ISortingMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
@@ -75,7 +76,12 @@ type DisabledItemData = { type: "disabledItem"; disabledTooltip?: string };
 
 export type AggregationsMenuItemData = {
     static: ReactNode;
-    interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | DisabledItemData | null;
+    interactive:
+        | IAggregationsSubMenuItem
+        | ITextWrappingMenuItem
+        | ISortingMenuItem
+        | DisabledItemData
+        | null;
 };
 
 export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
@@ -219,18 +225,59 @@ function buildUiTextWrappingMenuItems(
 }
 
 /**
- * Builds complete UI menu items by combining aggregation and text wrapping items.
+ * Builds UI menu items for sorting functionality.
+ *
+ * @param sortingItems - The sorting menu items to build from
+ * @returns Array of UI menu items for sorting
+ */
+function buildUiSortingMenuItems(
+    sortingItems: ISortingMenuItem[],
+    intl: IntlShape,
+): Array<IUiMenuItem<AggregationsMenuItemData>> {
+    const uiItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
+
+    if (sortingItems.length > 0) {
+        uiItems.push({
+            type: "static",
+            id: "sort-header",
+            data: (
+                <div className={e("header-cell-menu-section-header")}>
+                    <span>{intl.formatMessage(messages["sortSection"])}</span>
+                </div>
+            ),
+        });
+
+        sortingItems.forEach((sortItem) => {
+            uiItems.push({
+                type: "interactive",
+                id: `sort-${sortItem.id}`,
+                stringTitle: sortItem.title,
+                isSelected: sortItem.isActive,
+                data: sortItem,
+                iconRight: sortItem.isActive ? <i className="gd-icon-checkmark" /> : null,
+            });
+        });
+    }
+
+    return uiItems;
+}
+
+/**
+ * Builds complete UI menu items by combining sorting, aggregation and text wrapping items.
  *
  * @param aggregationsItems - The aggregation menu items
  * @param textWrappingItems - The text wrapping menu items
+ * @param sortingItems - The sorting menu items
  * @returns Complete array of UI menu items
  */
 export function buildUiMenuItems(
     aggregationsItems: IAggregationsMenuItem[],
     textWrappingItems: ITextWrappingMenuItem[],
+    sortingItems: ISortingMenuItem[],
     intl: IntlShape,
 ): Array<IUiMenuItem<AggregationsMenuItemData>> {
     return [
+        ...buildUiSortingMenuItems(sortingItems, intl),
         ...buildUiAggregationMenuItems(aggregationsItems, intl),
         ...buildUiTextWrappingMenuItems(textWrappingItems, intl),
     ];

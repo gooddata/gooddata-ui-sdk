@@ -13,7 +13,6 @@ import { AutomationsDefaultState } from "./constants.js";
 import { useLoadAutomations } from "./data/useLoadAutomations.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
 import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
-import { getDefaultColumnDefinitions } from "./utils.js";
 
 export const useAutomationsState = ({
     type,
@@ -35,10 +34,6 @@ export const useAutomationsState = ({
     const actionsRefFirstRun = useRef(true);
     const filtersRefFirstRun = useRef(true);
     const previousSkeletonItemsCountRef = useRef<number>(0);
-
-    const columnDefinitions = useMemo(() => {
-        return selectedColumnDefinitions ?? getDefaultColumnDefinitions(scope);
-    }, [selectedColumnDefinitions, scope]);
 
     const setPendingAction = useCallback((pendingAction: IAutomationsPendingAction | undefined) => {
         setState((state) => ({
@@ -74,7 +69,7 @@ export const useAutomationsState = ({
     const { columns, includeAutomationResult } = useAutomationColumns({
         type,
         timezone,
-        columnDefinitions,
+        selectedColumnDefinitions,
         automationsType: type,
         deleteAutomation,
         unsubscribeFromAutomation,

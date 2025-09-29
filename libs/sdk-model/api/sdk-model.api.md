@@ -3492,7 +3492,6 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
-    ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     aiChatSearchLimit?: number;
     aiRateLimit?: number;
@@ -3522,8 +3521,6 @@ export interface ISettings {
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
-    enableAxisNameConfiguration?: boolean;
-    enableAxisNameViewByTwoAttributes?: boolean;
     enableChartAccessibilityFeatures?: boolean;
     enableChartsSorting?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
@@ -3561,7 +3558,6 @@ export interface ISettings {
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
-    enableInsightExportScheduling?: boolean;
     enableInvalidValuesInAttributeFilter?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -3576,7 +3572,6 @@ export interface ISettings {
     enableMotherDuckDataSource?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
-    enableMultipleDates?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
     // (undocumented)
@@ -3614,7 +3609,6 @@ export interface ISettings {
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableToDateFilters?: boolean;
-    enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;

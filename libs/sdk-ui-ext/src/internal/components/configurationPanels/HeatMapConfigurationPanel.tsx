@@ -31,7 +31,6 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
         const controlsDisabled = this.isControlDisabled();
         const xAxisDisabled = this.isAxisDisabled(controlsDisabled, "xaxis", this.props.insight);
         const yAxisDisabled = this.isAxisDisabled(controlsDisabled, "yaxis", this.props.insight);
-        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -49,15 +48,13 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={xAxisDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"xaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={xAxisDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
 
                         <LabelSubsection
                             disabled={xAxisDisabled}
@@ -79,15 +76,13 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={yAxisDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"yaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={yAxisDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
 
                         <LabelSubsection
                             disabled={yAxisDisabled}

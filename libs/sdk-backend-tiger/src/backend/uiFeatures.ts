@@ -11,7 +11,6 @@ export enum TigerFeaturesNames {
     EnableSortingByTotalGroup = "enableSortingByTotalGroup",
     //string, possible values: disabled, enabledCheckedByDefault, enabledUncheckedByDefault
     ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
-    EnableMultipleDates = "enableMultipleDates",
     EnableKPIDashboardDeleteFilterButton = "enableKPIDashboardDeleteFilterButton",
     // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
@@ -31,7 +30,6 @@ export enum TigerFeaturesNames {
     EnableCompositeGrain = "enableCompositeGrain",
     EnableTableTotalRows = "enableTableTotalRows",
     EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
-    EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
     EnableUserManagement = "enableUserManagement",
     EnableKDSavedFilters = "enableKDSavedFilters",
@@ -133,7 +131,6 @@ export enum TigerFeaturesNames {
 export type ITigerFeatureFlags = {
     enableSortingByTotalGroup: (typeof FeatureFlagsValues)["enableSortingByTotalGroup"][number];
     ADMeasureValueFilterNullAsZeroOption: (typeof FeatureFlagsValues)["ADMeasureValueFilterNullAsZeroOption"][number];
-    enableMultipleDates: (typeof FeatureFlagsValues)["enableMultipleDates"][number];
     enableKPIDashboardDeleteFilterButton: (typeof FeatureFlagsValues)["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
@@ -149,7 +146,6 @@ export type ITigerFeatureFlags = {
     enableCompositeGrain: (typeof FeatureFlagsValues)["enableCompositeGrain"][number];
     enableTableTotalRows: (typeof FeatureFlagsValues)["enableTableTotalRows"][number];
     enablePdmRemovalDeprecationPhase: (typeof FeatureFlagsValues)["enablePdmRemovalDeprecationPhase"][number];
-    enableUnavailableItemsVisible: (typeof FeatureFlagsValues)["enableUnavailableItemsVisible"][number];
     enablePivotTableIncreaseBucketSize: (typeof FeatureFlagsValues)["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: (typeof FeatureFlagsValues)["enableUserManagement"][number];
     enableKDSavedFilters: (typeof FeatureFlagsValues)["enableKDSavedFilters"][number];
@@ -253,7 +249,6 @@ export type ITigerFeatureFlags = {
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSortingByTotalGroup: false,
     ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
-    enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
@@ -269,7 +264,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCompositeGrain: false,
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
-    enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
     enableKDSavedFilters: true,
@@ -377,7 +371,6 @@ export const FeatureFlagsValues = {
         "EnabledCheckedByDefault",
         "EnabledUncheckedByDefault",
     ] as const,
-    enableMultipleDates: [true, false] as const,
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
@@ -393,7 +386,6 @@ export const FeatureFlagsValues = {
     enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
     enablePdmRemovalDeprecationPhase: [true, false] as const,
-    enableUnavailableItemsVisible: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,

@@ -172,21 +172,48 @@ export const useInsightExport = (config: {
     const { exportToTabular } = useExportToTabular(() => setIsExporting(false));
     const onExportPdfTabular = useCallback(() => {
         const defaultPageSize = getDefaultPageSize(locale);
-        openPdfDialog({
-            onSubmit: ({ pageSize, pageOrientation, showInfoPage }) => {
-                setIsExporting(true);
-                closePdfDialog();
-                exportToTabular(false, showInfoPage ?? false, [widget!.identifier], title, "PDF", {
-                    pageSize,
-                    pageOrientation,
-                    showInfoPage,
-                });
-            },
-            pageSize: defaultPageSize,
-            pageOrientation: "PORTRAIT",
-            showInfoPage: true,
-        });
-    }, [setIsExporting, title, openPdfDialog, closePdfDialog, widget, exportToTabular, locale]);
+        if (enableNewTabularExport) {
+            openPdfDialog({
+                onSubmit: ({ pageSize, pageOrientation, showInfoPage }) => {
+                    setIsExporting(true);
+                    closePdfDialog();
+                    exportToTabular(false, false, [widget!.identifier], title, "PDF", {
+                        pageSize,
+                        pageOrientation,
+                        showInfoPage,
+                    });
+                },
+                pageSize: defaultPageSize,
+                pageOrientation: "PORTRAIT",
+                showInfoPage: true,
+            });
+        } else {
+            openPdfDialog({
+                onSubmit: ({ pageSize, pageOrientation }) => {
+                    setIsExporting(true);
+                    // if this bombs there is an issue with the logic enabling the buttons
+                    invariant(exportFunction);
+                    exportHandler(exportFunction, {
+                        format: "pdf",
+                        title,
+                        pdfConfiguration: { pageSize, pageOrientation },
+                    }).finally(() => setIsExporting(false));
+                },
+                pageSize: defaultPageSize,
+                pageOrientation: "PORTRAIT",
+                isShowInfoPageVisible: false,
+            });
+        }
+    }, [
+        setIsExporting,
+        title,
+        openPdfDialog,
+        closePdfDialog,
+        widget,
+        exportToTabular,
+        locale,
+        exportFunction,
+    ]);
 
     const onExportXLSX = useCallback(() => {
         if (dashboardTabularExportEnabled && enableNewTabularExport) {

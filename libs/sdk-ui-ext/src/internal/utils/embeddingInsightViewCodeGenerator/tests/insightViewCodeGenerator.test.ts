@@ -19,7 +19,6 @@ describe("insightViewCodeGenerator tests", () => {
             insightViewCodeGenerator(insight, {
                 context: {
                     settings: {
-                        enableAxisNameConfiguration: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -49,7 +48,6 @@ describe("insightViewCodeGenerator tests", () => {
             insightViewCodeGenerator(insight, {
                 context: {
                     settings: {
-                        enableAxisNameConfiguration: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -69,7 +67,6 @@ describe("insightViewCodeGenerator tests", () => {
             insightViewCodeGenerator(insight, {
                 context: {
                     settings: {
-                        enableAxisNameConfiguration: true,
                         locale: "de-DE",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
@@ -89,7 +86,6 @@ describe("insightViewCodeGenerator tests", () => {
             insightViewEmbeddedCodeGenerator(insight, {
                 context: {
                     settings: {
-                        enableAxisNameConfiguration: true,
                         locale: "de-DE",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",

@@ -13,16 +13,12 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
-import { messages } from "../../../../locales.js";
-import { useCurrentDataView } from "../../../context/CurrentDataViewContext.js";
-import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
-import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
-import { useUpdateTextWrapping } from "../../../hooks/textWrapping/useUpdateTextWrapping.js";
-import { useUpdateTotals } from "../../../hooks/totals/useUpdateTotals.js";
-import { AgGridApi } from "../../../types/agGrid.js";
-import { IAggregationsSubMenuItem, ITextWrappingMenuItem } from "../../../types/menu.js";
-import { constructAggregationsMenuItems } from "../utils/constructAggregationsMenuItems.js";
-import { constructTextWrappingMenuItems } from "../utils/constructTextWrappingMenuItems.js";
+import { messages } from "../../../locales.js";
+import { constructAggregationsMenuItems } from "../../components/Header/utils/constructAggregationsMenuItems.js";
+import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
+import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { IAggregationsSubMenuItem } from "../../types/menu.js";
+import { useUpdateTotals } from "../totals/useUpdateTotals.js";
 
 /**
  * Hook for header cell components that handles menu items and callbacks.
@@ -32,17 +28,14 @@ import { constructTextWrappingMenuItems } from "../utils/constructTextWrappingMe
  * @param gridApi - Optional ag-grid API for checking current text wrapping state
  * @returns Menu items and callbacks
  */
-export const useHeaderMenuProps = (
+export const useHeaderMenuAggregations = (
     measureIdentifiers: string[],
     pivotAttributeDescriptors: IAttributeDescriptor[],
-    gridApi?: AgGridApi,
 ) => {
     const intl = useIntl();
     const { currentDataView } = useCurrentDataView();
     const { config, execution, rows, columns } = usePivotTableProps();
-    const { onUpdateTextWrapping } = useUpdateTextWrapping();
     const { onUpdateTotals } = useUpdateTotals();
-    const getCurrentTextWrapping = useGetDefaultTextWrapping();
 
     const { rowTotals, columnTotals } = getTotalsFromExecutionDefinition(execution.definition);
 
@@ -83,32 +76,9 @@ export const useHeaderMenuProps = (
         onUpdateTotals(currentTotals, item.totalDefinitions, item.isActive, item.isColumn);
     };
 
-    const currentTextWrapping = getCurrentTextWrapping(gridApi, config.textWrapping);
-    const textWrappingItems = constructTextWrappingMenuItems({ textWrapping: currentTextWrapping }, intl);
-
-    const handleTextWrappingItemClick = (item: ITextWrappingMenuItem) => {
-        const effectiveItem = textWrappingItems.find((i) => i.id === item.id);
-
-        if (!effectiveItem) {
-            return;
-        }
-
-        const isHeaderItem = effectiveItem.id === "header";
-        const newTextWrapping = {
-            ...currentTextWrapping,
-            ...(isHeaderItem
-                ? { wrapHeaderText: !effectiveItem.isActive }
-                : { wrapText: !effectiveItem.isActive }),
-        };
-
-        onUpdateTextWrapping(newTextWrapping, gridApi);
-    };
-
     return {
         aggregationsItems,
         handleAggregationsItemClick,
-        textWrappingItems,
-        handleTextWrappingItemClick,
     };
 };
 

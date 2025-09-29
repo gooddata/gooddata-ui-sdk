@@ -133,40 +133,15 @@ export interface ISettings {
     enableChartAccessibilityFeatures?: boolean;
 
     /**
-     * Allows configuration of axis name position and visibility for Pluggable Visualizations.
-     */
-    enableAxisNameConfiguration?: boolean;
-
-    /**
      * Indicates whether the Waterfall Chart is available in AD.
      */
     enableWaterfallChart?: boolean;
-
-    /**
-     * Indicates whether the catalog groups in analytical designer are expanded by default.
-     */
-    ADCatalogGroupsExpanded?: boolean;
-
-    /**
-     * Indicates whether multiple dates can be put into buckets
-     */
-    enableMultipleDates?: boolean;
-
-    /**
-     * Indicates whether unavailable data items are visible
-     */
-    enableUnavailableItemsVisible?: boolean;
 
     /**
      * Indicates whether unavailable data items are visible in the settings API
      * only available on Tiger/Panther
      */
     showHiddenCatalogItems?: boolean;
-
-    /**
-     * Indicates whether the new UI for scheduled widget exports is enabled.
-     */
-    enableInsightExportScheduling?: boolean;
 
     /**
      * Indicates whether the company logo should be visible in the embedded dashboard.
@@ -187,11 +162,6 @@ export interface ISettings {
      * Enable charts sorting customization
      */
     enableChartsSorting?: boolean;
-
-    /**
-     * Enable axis name for the column, bar and bullet charts with view by two attributes.
-     */
-    enableAxisNameViewByTwoAttributes?: boolean;
 
     /**
      * Enable usage of insights, widgets, kpis descriptions.

@@ -115,10 +115,21 @@
                 overflow-x: hidden;
                 text-overflow: ellipsis;
                 text-align: left;
+                min-width: 16px;
             }
 
             .gd-sort-indicator {
-                margin-left: 4px;
+                display: inline-flex;
+                align-items: center;
+                min-width: 16px;
+                justify-content: flex-start;
+            }
+
+            .gd-sort-order {
+                font-size: 8px;
+                font-weight: 700;
+                line-height: 1;
+                color: var(--gd-palette-complementary-8);
             }
         }
 

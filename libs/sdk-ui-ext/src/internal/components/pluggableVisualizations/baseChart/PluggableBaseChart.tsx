@@ -443,27 +443,14 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         );
         const supportedControls =
             this.environment === DASHBOARDS_ENVIRONMENT
-                ? getChartSupportedControlsDashboardsEnv(
-                      this.visualizationProperties?.controls,
-                      options,
-                      this.featureFlags,
-                  )
-                : getChartSupportedControls(
-                      this.visualizationProperties?.controls,
-                      insight,
-                      this.featureFlags,
-                  );
+                ? getChartSupportedControlsDashboardsEnv(this.visualizationProperties?.controls, options)
+                : getChartSupportedControls(this.visualizationProperties?.controls, insight);
 
         return {
             ...defaultControls,
             ...supportedControls,
             ...customControls,
         };
-    }
-
-    protected isMultipleDatesEnabled(): boolean {
-        //this is development FF and will be removed in the end of dev cycle
-        return !!this.featureFlags["enableMultipleDates"];
     }
 
     protected reuseCurrentSort(

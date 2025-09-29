@@ -467,10 +467,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/react-window",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@types/rimraf",
       "allowedCategories": [ "tools" ]
     },

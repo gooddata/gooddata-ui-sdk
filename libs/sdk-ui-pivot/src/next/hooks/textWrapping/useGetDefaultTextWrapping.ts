@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { AgGridApi } from "../../types/agGrid.js";
@@ -10,7 +11,7 @@ import { ITextWrapping } from "../../types/textWrapping.js";
  * @internal
  */
 export function useGetDefaultTextWrapping() {
-    return useCallback((gridApi: AgGridApi | undefined, configDefaults?: ITextWrapping): ITextWrapping => {
+    return useCallback((gridApi: AgGridApi | null, configDefaults?: ITextWrapping): ITextWrapping => {
         if (!gridApi) {
             return configDefaults ?? { wrapHeaderText: false, wrapText: false };
         }

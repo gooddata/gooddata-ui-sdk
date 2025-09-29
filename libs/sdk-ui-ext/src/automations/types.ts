@@ -161,7 +161,7 @@ export interface IAutomationsCoreProps {
     type: AutomationsType;
     scope: AutomationsScope;
     timezone?: string;
-    selectedColumnDefinitions?: AutomationColumnDefinitions;
+    selectedColumnDefinitions: AutomationColumnDefinitions;
     availableFilters: AutomationsAvailableFilters;
     preselectedFilters: AutomationsPreselectedFilters;
     maxHeight: number;
@@ -257,7 +257,7 @@ export interface IUseAutomationBulkActionsProps {
 export interface IUseAutomationColumnsProps {
     type: AutomationsType;
     timezone?: string;
-    columnDefinitions: AutomationColumnDefinitions;
+    selectedColumnDefinitions: AutomationColumnDefinitions;
     automationsType: AutomationsType;
     deleteAutomation: AutomationAction;
     unsubscribeFromAutomation: AutomationAction;

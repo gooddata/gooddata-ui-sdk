@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { newAttributeSort } from "@gooddata/sdk-model";
@@ -253,7 +254,7 @@ describe("propertiesHelper", () => {
                     max: 200,
                 },
             };
-            expect(getHighchartsAxisNameConfiguration(controlsProp, true)).toEqual(controlsProp);
+            expect(getHighchartsAxisNameConfiguration(controlsProp)).toEqual(controlsProp);
         });
 
         it.each([
@@ -273,29 +274,11 @@ describe("propertiesHelper", () => {
                 },
             };
 
-            const newControlsProp = getHighchartsAxisNameConfiguration(controlsProp, true);
+            const newControlsProp = getHighchartsAxisNameConfiguration(controlsProp);
             expect(newControlsProp).toEqual({
                 xaxis: {
                     name: {
                         position: hcValue,
-                    },
-                },
-            });
-        });
-
-        it("should return default position", () => {
-            const controlsProp: IVisualizationProperties = {
-                xaxis: {
-                    name: {
-                        position: "left",
-                    },
-                },
-            };
-            const newControlsProp = getHighchartsAxisNameConfiguration(controlsProp, false);
-            expect(newControlsProp).toEqual({
-                xaxis: {
-                    name: {
-                        position: "middle",
                     },
                 },
             });

@@ -12,14 +12,17 @@ import { e } from "../../../features/styling/bem.js";
 import {
     IAggregationsMenuItem,
     IAggregationsSubMenuItem,
+    ISortingMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
 export interface IHeaderMenuProps {
     aggregationsItems: IAggregationsMenuItem[];
     textWrappingItems: ITextWrappingMenuItem[];
+    sortingItems: ISortingMenuItem[];
     onAggregationsItemClick: (item: IAggregationsSubMenuItem) => void;
     onTextWrappingItemClick: (item: ITextWrappingMenuItem) => void;
+    onSortingItemClick: (item: ISortingMenuItem) => void;
     isMenuOpened: boolean;
     onMenuOpenedChange: (opened: boolean) => void;
 }
@@ -45,15 +48,17 @@ export function HeaderMenu(props: IHeaderMenuProps) {
     const {
         aggregationsItems,
         textWrappingItems,
+        sortingItems,
         onAggregationsItemClick,
         onTextWrappingItemClick,
+        onSortingItemClick,
         isMenuOpened,
         onMenuOpenedChange,
     } = props;
 
     const uiMenuItems = useMemo(
-        () => buildUiMenuItems(aggregationsItems, textWrappingItems, intl),
-        [aggregationsItems, textWrappingItems, intl],
+        () => buildUiMenuItems(aggregationsItems, textWrappingItems, sortingItems, intl),
+        [aggregationsItems, textWrappingItems, sortingItems, intl],
     );
 
     const handleSelect = useCallback(
@@ -66,11 +71,13 @@ export function HeaderMenu(props: IHeaderMenuProps) {
                 onAggregationsItemClick(item.data);
             } else if (item.data && item.data.type === "textWrapping") {
                 onTextWrappingItemClick(item.data);
+            } else if (item.data && item.data.type === "sorting") {
+                onSortingItemClick(item.data);
             }
 
             onMenuOpenedChange(false);
         },
-        [onAggregationsItemClick, onTextWrappingItemClick, onMenuOpenedChange],
+        [onAggregationsItemClick, onTextWrappingItemClick, onSortingItemClick, onMenuOpenedChange],
     );
 
     const handleToggle = useCallback(

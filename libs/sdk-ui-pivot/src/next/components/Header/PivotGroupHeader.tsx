@@ -3,11 +3,11 @@
 import { MouseEvent, useCallback, useState } from "react";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderGroupDrilling } from "../../hooks/header/useHeaderGroupDrilling.js";
+import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
-import { useHeaderGroupDrilling } from "../../hooks/useHeaderGroupDrilling.js";
 import { AgGridColumnGroupDef, AgGridHeaderGroupParams } from "../../types/agGrid.js";
 
 interface IHeaderGroupCellProps extends AgGridHeaderGroupParams {
@@ -33,15 +33,29 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         isValueColDef &&
         !isTransposed;
     const allowTextWrapping = isValueColDef;
+    const allowSorting = false;
+    const allowDrilling = false;
 
-    const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
-        useHeaderMenu(
+    const {
+        aggregationsItems,
+        textWrappingItems,
+        sortingItems,
+        handleAggregationsItemClick,
+        handleTextWrappingItemClick,
+        handleSortingItemClick,
+    } = useHeaderMenu(
+        {
             allowAggregations,
             allowTextWrapping,
-            params.measureIdentifiers,
+            allowSorting,
+            allowDrilling,
+        },
+        {
+            measureIdentifiers: params.measureIdentifiers,
             pivotAttributeDescriptors,
-            params.api,
-        );
+        },
+        null,
+    );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
 
@@ -74,8 +88,10 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
                 <HeaderMenu
                     aggregationsItems={aggregationsItems}
                     textWrappingItems={textWrappingItems}
+                    sortingItems={sortingItems}
                     onAggregationsItemClick={handleAggregationsItemClick}
                     onTextWrappingItemClick={handleTextWrappingItemClick}
+                    onSortingItemClick={handleSortingItemClick}
                     isMenuOpened={isMenuOpen}
                     onMenuOpenedChange={setIsMenuOpen}
                 />

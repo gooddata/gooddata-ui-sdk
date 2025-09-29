@@ -39,13 +39,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableMultipleDates,
-            "enableMultipleDates",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMultipleDates,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton,
             "enableKPIDashboardDeleteFilterButton",
             "BOOLEAN",
@@ -141,13 +134,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enablePdmRemovalDeprecationPhase",
             "BOOLEAN",
             FeatureFlagsValues.enablePdmRemovalDeprecationPhase,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableUnavailableItemsVisible,
-            "enableUnavailableItemsVisible",
-            "BOOLEAN",
-            FeatureFlagsValues.enableUnavailableItemsVisible,
         ),
         ...loadFeature(
             features,

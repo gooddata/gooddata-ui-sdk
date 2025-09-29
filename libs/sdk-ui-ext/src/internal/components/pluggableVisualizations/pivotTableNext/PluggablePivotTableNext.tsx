@@ -239,6 +239,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 measures,
                 rowAttributes,
                 columnAttributes,
+                originalMeasureGroupDimension,
             ),
             controls,
         };
@@ -283,11 +284,14 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     ) {
         const { dateFormat, executionConfig, customVisualizationConfig } = options;
         const sanitizedConfig = this.getSanitizedConfig(insight, customVisualizationConfig);
+        const measureGroupDimension =
+            getMeasureGroupDimensionFromProperties(insightProperties(insight)) || "columns";
+        const sortItems = getSanitizedSortItems(insightSorts(insight), measureGroupDimension) ?? [];
 
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight, sanitizedConfig))
-            .withSorting(...(insightSorts(insight) ?? []))
+            .withSorting(...sortItems)
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }

@@ -19,11 +19,8 @@ import {
 } from "../../../constants/supportedProperties.js";
 import {
     AREA_UICONFIG_WITH_MULTIPLE_DATES,
-    DEFAULT_AREA_UICONFIG,
     MAX_CATEGORIES_COUNT,
     MAX_METRICS_COUNT,
-    MAX_STACKS_COUNT,
-    MAX_VIEW_COUNT,
 } from "../../../constants/uiConfig.js";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
@@ -40,18 +37,12 @@ import {
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAllAttributeItemsWithPreference,
-    getAllCategoriesAttributeItems,
     getBucketItems,
-    getDateItems,
     getFilteredMeasuresForStackedCharts,
-    getMainDateItem,
     getStackItems,
-    isDateBucketItem,
-    isNotDateBucketItem,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
-    removeDivergentDateItems,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import {
@@ -78,8 +69,6 @@ import {
  * | Measures | measures | measures only       |
  * | ViewBy   | view     | attributes or dates |
  * | StackBy  | stack    | attributes only     |
- *
- * The ViewBy can accept one date at most, unless "enableMultipleDates" FF is on.
  *
  * ### Bucket axioms
  *
@@ -116,9 +105,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(
-            this.isMultipleDatesEnabled() ? AREA_UICONFIG_WITH_MULTIPLE_DATES : DEFAULT_AREA_UICONFIG,
-        );
+        return cloneDeep(AREA_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
@@ -196,9 +183,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     protected override configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const { measures, views, stacks } = this.isMultipleDatesEnabled()
-            ? this.getBucketItemsWithMultipleDates(extendedReferencePoint)
-            : this.getBucketItems(extendedReferencePoint);
+        const { measures, views, stacks } = this.getBucketItemsWithMultipleDates(extendedReferencePoint);
 
         set(extendedReferencePoint, BUCKETS, [
             {
@@ -288,54 +273,6 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 supportedPropertiesList.push(property);
             }
         });
-    }
-
-    private getAllAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
-        return getAllAttributeItemsWithPreference(buckets, [
-            BucketNames.TREND,
-            BucketNames.VIEW,
-            BucketNames.SEGMENT,
-            BucketNames.STACK,
-        ]);
-    }
-
-    private getAllAttributesWithoutDate(buckets: IBucketOfFun[]): IBucketItem[] {
-        return this.getAllAttributes(buckets).filter(isNotDateBucketItem);
-    }
-
-    private filterStackItems(bucketItems: IBucketItem[]): IBucketItem[] {
-        return bucketItems.filter(isNotDateBucketItem).slice(0, MAX_STACKS_COUNT);
-    }
-
-    private getBucketItems(referencePoint: IExtendedReferencePoint) {
-        const buckets = referencePoint?.buckets ?? [];
-        const measures = this.getBucketMeasures(buckets);
-        const dateItems = getDateItems(buckets);
-        const mainDateItem = getMainDateItem(dateItems);
-
-        let stacks: IBucketItem[] = this.filterStackItems(getStackItems(buckets));
-        const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
-        const numOfAttributes = isAllowMoreThanOneViewByAttribute ? MAX_VIEW_COUNT : 1;
-        let views: IBucketItem[] = removeDivergentDateItems(
-            getAllCategoriesAttributeItems(buckets),
-            mainDateItem,
-        ).slice(0, numOfAttributes);
-        const hasDateItemInViewByBucket = views.some(isDateBucketItem);
-
-        if (dateItems.length && !hasDateItemInViewByBucket) {
-            const allAttributes = this.getAllAttributesWithoutDate(buckets);
-            const extraViewItems = allAttributes.slice(0, numOfAttributes - 1);
-            views = numOfAttributes > 1 ? [mainDateItem, ...extraViewItems] : [mainDateItem];
-            if (!isAllowMoreThanOneViewByAttribute && measures.length <= 1) {
-                stacks = allAttributes.slice(0, MAX_STACKS_COUNT);
-            }
-        }
-
-        return {
-            measures,
-            views,
-            stacks,
-        };
     }
 
     private getViewByMaxItemCount(referencePoint: IExtendedReferencePoint): number {

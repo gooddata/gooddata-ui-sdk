@@ -1,11 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { Component, createRef } from "react";
+import { CSSProperties, Component, createRef } from "react";
 
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
 import { range } from "lodash-es";
-import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 
 import { SelectHeading } from "./SelectHeading.js";
 import { SelectOption } from "./SelectOption.js";
@@ -38,7 +37,7 @@ const optionGetter = <V extends {}>({
     getItemProps,
     optionClassName,
 }: IOptionGetterProps<V>) => {
-    function WrappedSelectOption({ index, style }: ListChildComponentProps) {
+    function WrappedSelectOption({ index, style }: { index: number; style?: CSSProperties }) {
         const selectableOptions = getSelectableItems(items);
         const item = items[index];
         if (item.type === "option") {
@@ -94,14 +93,14 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
+export class ScrollableSelectMenu<V> extends Component<ISelectMenuProps<V>> {
     // static cannot have <V>
     public static defaultProps: Partial<ISelectMenuProps<any>> = {
         selectedItem: null,
         visibleItemsRange: defaultVisibleItemsRange,
     };
 
-    private listRef = createRef<List>();
+    private listRef = createRef<HTMLDivElement>();
 
     public override render() {
         const {
@@ -129,30 +128,32 @@ export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
             Math.min(middleItemIndex + visibleItemsRange + 1, items.length),
         );
 
+        const itemHeightFn = getItemHeight(items);
         const listHeight = visibleIndexes.reduce(
-            (totalHeight, itemIndex) => totalHeight + getItemHeight(items)(itemIndex),
+            (totalHeight, itemIndex) => totalHeight + itemHeightFn(itemIndex),
             0,
         );
 
         return (
             <div {...getMenuProps({ className: cx("gd-select-menu-wrapper", className) })}>
                 <div className="gd-select-menu s-select-menu">
-                    <List
+                    <div
                         className="List"
                         ref={this.listRef}
-                        itemCount={items.length}
-                        itemSize={getItemHeight(items)}
-                        height={listHeight}
-                        width="100%"
-                        overscanCount={10} // initial value of 2 causes Downshifts scrollToView to break
-                        estimatedItemSize={itemHeightByTypeMap.option}
-                        // IE shows an unnecessary scrollbar when the list has only one item
-                        // this means we have to explicitly disallow that
-                        // we also cannot use className prop because react-window sets overflow using style
-                        style={items.length === 1 ? { overflow: "hidden" } : undefined}
+                        style={{
+                            height: listHeight,
+                            width: "100%",
+                            overflowY: items.length === 1 ? "hidden" : "auto",
+                        }}
                     >
-                        {Option}
-                    </List>
+                        {items.map((_, index) => (
+                            <Option
+                                key={`item-${index}`}
+                                index={index}
+                                style={{ height: itemHeightFn(index) }}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         );
@@ -164,9 +165,20 @@ export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
             const selectableOptions = getSelectableItems(items);
             const optionIndex = index === null ? getMedianIndex(getSelectableItems(items)) : index;
             const highlightedOption = selectableOptions[optionIndex];
-            // highlightedIndex ignores non selectable items, but scrollToItem doesn't.
             const actualItemIndex = items.indexOf(highlightedOption);
-            this.listRef.current.scrollToItem(actualItemIndex, "center");
+            if (actualItemIndex >= 0) {
+                const container = this.listRef.current;
+                const heightFn = getItemHeight(items);
+                const itemOffset = items
+                    .slice(0, actualItemIndex)
+                    .reduce((sum, _it, i) => sum + heightFn(i), 0);
+                const itemHeight = heightFn(actualItemIndex);
+                const targetTop = Math.max(
+                    0,
+                    itemOffset - Math.max(0, container.clientHeight / 2 - itemHeight / 2),
+                );
+                container.scrollTo({ top: targetTop });
+            }
         }
     };
 
@@ -174,7 +186,7 @@ export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
         if (!this.listRef.current) {
             return;
         }
-        this.listRef.current.scrollTo(0);
+        this.listRef.current.scrollTo({ top: 0 });
     };
 
     public override componentDidUpdate = (lastProps: ISelectMenuProps<V>): void => {

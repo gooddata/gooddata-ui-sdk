@@ -44,7 +44,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
-        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
         const showClusteringSection: boolean = featureFlags.enableScatterPlotClustering as boolean;
         const isScatterPlotClusteringDisabled = this.isClusteringDisabled();
         const showingPartialClusters = propertiesMeta?.showingPartialClusters;
@@ -65,15 +64,13 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={xAxisNameSectionDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"xaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={xAxisNameSectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
 
                         <LabelSubsection
                             disabled={controlsDisabled}
@@ -96,15 +93,13 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible ? (
-                            <NameSubsection
-                                disabled={yAxisNameSectionDisabled}
-                                configPanelDisabled={controlsDisabled}
-                                axis={"yaxis"}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                        ) : null}
+                        <NameSubsection
+                            disabled={yAxisNameSectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
 
                         <LabelSubsection
                             disabled={controlsDisabled}

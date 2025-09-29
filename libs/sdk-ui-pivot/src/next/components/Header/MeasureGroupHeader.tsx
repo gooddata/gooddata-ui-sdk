@@ -5,7 +5,6 @@ import { useState } from "react";
 import { isEmpty } from "lodash-es";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import {
     getColumnMeasureIdentifier,
     getPivotAttributeDescriptorsForMeasureGroup,
@@ -13,6 +12,7 @@ import {
     isValueRowDef,
 } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
@@ -37,15 +37,21 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
 
     const allowAggregations = isValueRowDef(rowDefinition);
     const allowTextWrapping = isHeader; // we disable text wrapping for value cells
+    const allowSorting = false;
+    const allowDrilling = false;
 
-    const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
-        useHeaderMenu(
-            allowAggregations,
-            allowTextWrapping,
-            measureIdentifier ? [measureIdentifier] : [],
-            pivotAttributeDescriptors,
-            params.api,
-        );
+    const {
+        aggregationsItems,
+        textWrappingItems,
+        sortingItems,
+        handleAggregationsItemClick,
+        handleTextWrappingItemClick,
+        handleSortingItemClick,
+    } = useHeaderMenu(
+        { allowAggregations, allowTextWrapping, allowSorting, allowDrilling },
+        { measureIdentifiers: measureIdentifier ? [measureIdentifier] : [], pivotAttributeDescriptors },
+        null,
+    );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
 
@@ -64,8 +70,10 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
                 <HeaderMenu
                     aggregationsItems={aggregationsItems}
                     textWrappingItems={textWrappingItems}
+                    sortingItems={sortingItems}
                     onAggregationsItemClick={handleAggregationsItemClick}
                     onTextWrappingItemClick={handleTextWrappingItemClick}
+                    onSortingItemClick={handleSortingItemClick}
                     isMenuOpened={isMenuOpen}
                     onMenuOpenedChange={setIsMenuOpen}
                 />
