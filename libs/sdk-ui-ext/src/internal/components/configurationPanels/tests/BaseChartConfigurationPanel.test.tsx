@@ -24,13 +24,6 @@ describe("BaseChartConfigurationPanel", () => {
             },
         };
 
-        const regionAttribute: IAttribute = {
-            attribute: {
-                localIdentifier: "viewId2",
-                displayForm: { uri: "/gdc/md/projectId/obj/1025" },
-            },
-        };
-
         const closeBOPMeasure: IMeasure = {
             measure: {
                 localIdentifier: "measureId",
@@ -58,9 +51,6 @@ describe("BaseChartConfigurationPanel", () => {
             isLoading: false,
             locale: DefaultLocale,
             type: VisualizationTypes.COLUMN,
-            featureFlags: {
-                enableAxisNameConfiguration: true,
-            },
         };
 
         it("should render configuration panel with enabled name sections in single axis chart", async () => {
@@ -173,45 +163,9 @@ describe("BaseChartConfigurationPanel", () => {
             expect(screen.getByLabelText("yaxis name")).toBeDisabled(); // because of 2 measures on Y axis
         });
 
-        it("should render configuration panel with disabled X axis name section and disabled Y axis name section in group-category chart", async () => {
-            const insight: IInsightDefinition = {
-                insight: {
-                    title: "My Insight",
-                    sorts: [],
-                    filters: [],
-                    visualizationUrl: "vc",
-                    properties: {},
-                    buckets: [
-                        {
-                            localIdentifier: "measures",
-                            items: [closeBOPMeasure, closeEOPMeasure],
-                        },
-                        {
-                            localIdentifier: "view",
-                            items: [productAttribute, regionAttribute],
-                        },
-                    ],
-                },
-            };
-
-            createComponent({
-                ...defaultProps,
-                insight,
-            });
-
-            await userEvent.click(screen.getByText("X-Axis"));
-            expect(screen.getByLabelText("xaxis name")).toBeDisabled(); // because of 2 attributes on X axis
-
-            await userEvent.click(screen.getByText("Y-Axis"));
-            expect(screen.getByLabelText("yaxis name")).toBeDisabled(); // because of 2 measures on Y axis
-        });
-
         it("should not render name sections in configuration panel", async () => {
             createComponent({
                 ...defaultProps,
-                featureFlags: {
-                    enableAxisNameConfiguration: false,
-                },
                 insight: insightWithSingleAttribute,
             });
 

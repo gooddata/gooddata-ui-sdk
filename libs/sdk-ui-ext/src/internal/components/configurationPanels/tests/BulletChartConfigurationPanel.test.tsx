@@ -153,9 +153,6 @@ describe("BulletChartConfigurationPanel", () => {
 
     describe("axis name configuration", () => {
         const defaultProps: IConfigurationPanelContentProps = {
-            featureFlags: {
-                enableAxisNameConfiguration: true,
-            },
             isError: false,
             isLoading: false,
             locale: DefaultLocale,
@@ -219,19 +216,6 @@ describe("BulletChartConfigurationPanel", () => {
             await userEvent.click(screen.getByText("Y-Axis"));
             expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
-
-        it("should not render name sections in configuration panel", async () => {
-            createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enableAxisNameConfiguration: false,
-                },
-                insight: emptyInsight,
-            });
-
-            await userEvent.click(screen.getByText("X-Axis"));
-            expect(screen.queryByLabelText("xaxis name")).not.toBeInTheDocument();
-        });
     });
 
     describe("Y axis labels configuration", () => {
@@ -290,9 +274,6 @@ describe("BulletChartConfigurationPanel", () => {
             isLoading: false,
             locale: DefaultLocale,
             type: VisualizationTypes.BULLET,
-            featureFlags: {
-                enableAxisNameConfiguration: true,
-            },
         };
 
         it("should render name configuration panel enabled if there is an attribute", async () => {
@@ -316,7 +297,7 @@ describe("BulletChartConfigurationPanel", () => {
             expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render name configuration panel disabled if there are two attributes", async () => {
+        it("should render name configuration panel enabled if there are two attributes", async () => {
             const insight = testInsight([
                 {
                     localIdentifier: "measures",
@@ -330,31 +311,6 @@ describe("BulletChartConfigurationPanel", () => {
 
             createComponent({
                 ...defaultProps,
-                insight,
-            });
-
-            await userEvent.click(screen.getByText("Y-Axis"));
-            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
-        });
-
-        it("should render name configuration panel enabled if there are two attributes and feature flag 'enableAxisNameViewByTwoAttributes' is true", async () => {
-            const insight = testInsight([
-                {
-                    localIdentifier: "measures",
-                    items: [testMeasure],
-                },
-                {
-                    localIdentifier: "view",
-                    items: [attributeItemA1, attributeItemA2],
-                },
-            ]);
-
-            createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    ...defaultProps.featureFlags,
-                    enableAxisNameViewByTwoAttributes: true,
-                },
                 insight,
             });
 

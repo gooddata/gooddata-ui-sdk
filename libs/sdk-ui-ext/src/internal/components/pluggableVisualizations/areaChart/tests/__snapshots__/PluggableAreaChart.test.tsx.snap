@@ -290,21 +290,20 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "items": [
         {
           "aggregation": null,
-          "attribute": "attr.datedataset",
-          "dateDatasetRef": {
-            "identifier": "ds1",
-          },
-          "localIdentifier": "a1",
-          "showInPercent": null,
-          "type": "date",
-        },
-        {
-          "aggregation": null,
           "attribute": "attr.owner.department",
           "dfRef": {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
           "type": "attribute",
         },
       ],
@@ -351,12 +350,14 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
         "title": "Metrics",
-        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -364,6 +365,9 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
         "warningMessage": "To stack by, an visualization can have only one attribute in view by",
       },
@@ -372,6 +376,7 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -380,7 +385,7 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
       },
@@ -526,7 +531,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -534,6 +541,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
         "warningMessage": "To stack by an attribute, an visualization can have only one metric",
       },
@@ -542,6 +552,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -550,7 +561,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
         "warningMessage": "To view by another attribute, an visualization can have only one metric",
@@ -699,7 +710,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -707,6 +720,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -714,6 +730,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -722,7 +739,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
         "warningMessage": "To add additional attribute, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
@@ -877,7 +894,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -885,6 +904,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
         "warningMessage": "To stack by, an visualization can have only one attribute in view by",
       },
@@ -893,6 +915,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -901,7 +924,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
       },
@@ -1001,7 +1024,9 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -1009,6 +1034,9 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -1016,6 +1044,7 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -1024,7 +1053,7 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
       },
@@ -1124,7 +1153,9 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -1132,6 +1163,9 @@ exports[`PluggableAreaChart > should return reference point when no categories a
         "icon": "local:area/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -1139,6 +1173,7 @@ exports[`PluggableAreaChart > should return reference point when no categories a
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -1147,7 +1182,7 @@ exports[`PluggableAreaChart > should return reference point when no categories a
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
         "title": "View by",
       },

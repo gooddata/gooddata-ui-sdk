@@ -8716,6 +8716,9 @@ export const selectEnableAutomationManagement: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableAutomations: DashboardSelector<boolean>;
 
+// @public
+export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
+
 // @alpha (undocumented)
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
@@ -8772,9 +8775,6 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
 
 // @internal
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;
-
-// @public
-export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean>;
@@ -10722,6 +10722,11 @@ export type WidgetExportDataAttributes = CommonExportDataAttributes & {
     "data-export-widget-type"?: string;
     "data-export-visualization-type"?: string;
     "data-export-visualization-status"?: "loading" | "loaded" | "error";
+} & WidgetExportDimensionsAttributes;
+
+// @alpha
+export type WidgetExportDimensionsAttributes = {
+    [K in `data-export-visualization-dimension-${number}`]?: string;
 };
 
 // @beta

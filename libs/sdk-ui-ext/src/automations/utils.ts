@@ -15,17 +15,7 @@ import { ErrorCodes, buildAutomationUrl, convertError, navigate } from "@gooddat
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
-import { AutomationColumnDefinitions, AutomationsScope, AutomationsType } from "./types.js";
-
-export const getDefaultColumnDefinitions = (scope: AutomationsScope): AutomationColumnDefinitions => {
-    return [
-        { name: "title" },
-        { name: scope === "workspace" ? "dashboard" : "workspace" },
-        { name: "recipients" },
-        { name: "lastRun" },
-        { name: "menu" },
-    ];
-};
+import { AutomationsType } from "./types.js";
 
 export const getWorkspaceId = (automation: IAutomationMetadataObject, fallbackWorkspaceId: string) => {
     return automation.workspace?.id ?? fallbackWorkspaceId;

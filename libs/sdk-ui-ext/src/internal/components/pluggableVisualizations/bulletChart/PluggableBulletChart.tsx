@@ -16,10 +16,7 @@ import { BucketNames, IDrillEvent, VisualizationTypes, getIntersectionPartAfter 
 import { transformBuckets } from "./bucketHelper.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import {
-    BULLET_CHART_CONFIG_MULTIPLE_DATES,
-    DEFAULT_BULLET_CHART_CONFIG,
-} from "../../../constants/uiConfig.js";
+import { BULLET_CHART_CONFIG_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
     IBucketItem,
@@ -91,9 +88,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(
-            this.isMultipleDatesEnabled() ? BULLET_CHART_CONFIG_MULTIPLE_DATES : DEFAULT_BULLET_CHART_CONFIG,
-        );
+        return cloneDeep(BULLET_CHART_CONFIG_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(

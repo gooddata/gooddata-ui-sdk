@@ -5,6 +5,7 @@ import cx from "classnames";
 
 import {
     selectCanManageWorkspace,
+    selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
     selectPlatformEdition,
     useDashboardSelector,
@@ -27,8 +28,9 @@ const getHref = (canManageWorkspace: boolean) => {
 };
 
 const isPoweredByGDLogoPresent = createSelector(
-    [selectIsEmbedded, selectPlatformEdition],
-    (isEmbedded, platformEdition) => isEmbedded && platformEdition === "free",
+    [selectIsEmbedded, selectPlatformEdition, selectEnableCompanyLogoInEmbeddedUI],
+    (isEmbedded, platformEdition, enableCompanyLogoInEmbeddedUI) =>
+        isEmbedded && platformEdition === "free" && enableCompanyLogoInEmbeddedUI,
 );
 
 export function PoweredByGDLogo({ isSmall }: PoweredByGDLogoProps) {

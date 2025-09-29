@@ -229,7 +229,6 @@ const AXIS_TYPES: string[] = ["xaxis", "yaxis", "secondary_xaxis", "secondary_ya
 
 export function getHighchartsAxisNameConfiguration(
     controlProperties: IVisualizationProperties,
-    enableAxisNameConfiguration: boolean = false,
 ): IVisualizationProperties {
     const axisProperties: IVisualizationProperties = AXIS_TYPES.reduce(
         (result: IVisualizationProperties, axis: string) => {
@@ -239,10 +238,7 @@ export function getHighchartsAxisNameConfiguration(
                 return result;
             }
 
-            axisNameConfig.position =
-                AXIS_NAME_POSITION_MAPPING[
-                    enableAxisNameConfiguration ? axisNameConfig.position : AXIS_NAME_POSITION_MAPPING.auto
-                ];
+            axisNameConfig.position = AXIS_NAME_POSITION_MAPPING[axisNameConfig.position];
             result[axis] = {
                 ...controlProperties[axis],
                 name: axisNameConfig,
@@ -321,12 +317,11 @@ export function getLegendConfigurationDashboardsEnv(
 export function getChartSupportedControls(
     controlProperties: IVisualizationProperties | undefined,
     insight: IInsightDefinition,
-    settings: ISettings | undefined,
 ): IVisualizationProperties | undefined {
     return flow(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
         (c) => getLegendConfiguration(c, insight),
-        (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
+        (c) => getHighchartsAxisNameConfiguration(c),
         (c) => getDataPointsConfiguration(c),
     )(controlProperties);
 }
@@ -334,12 +329,11 @@ export function getChartSupportedControls(
 export function getChartSupportedControlsDashboardsEnv(
     controlProperties: IVisualizationProperties | undefined,
     options: IVisProps,
-    settings: ISettings | undefined,
 ): IVisualizationProperties | undefined {
     return flow(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
         (c) => getLegendConfigurationDashboardsEnv(c, options),
-        (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
+        (c) => getHighchartsAxisNameConfiguration(c),
         (c) => getDataPointsConfiguration(c),
     )(controlProperties);
 }

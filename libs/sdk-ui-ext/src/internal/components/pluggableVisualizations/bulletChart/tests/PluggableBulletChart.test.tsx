@@ -212,12 +212,7 @@ describe("PluggableBulletChart", () => {
                     inputReferencePoint: IReferencePoint,
                     expectedReferencePoint: Partial<IExtendedReferencePoint>,
                 ) => {
-                    const chart = createComponent({
-                        ...defaultProps,
-                        featureFlags: {
-                            enableMultipleDates: true,
-                        },
-                    });
+                    const chart = createComponent();
 
                     const referencePoint = await chart.getExtendedReferencePoint(inputReferencePoint);
                     expect(referencePoint).toMatchObject(expectedReferencePoint);

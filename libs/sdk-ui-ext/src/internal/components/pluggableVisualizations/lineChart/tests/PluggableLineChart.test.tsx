@@ -237,32 +237,6 @@ describe("PluggableLineChart", () => {
         },
     );
 
-    it("should allow only one date attribute", async () => {
-        const lineChart = createComponent();
-        const referencePoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
-
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: [referencePoint.buckets[0].items[0]],
-            },
-            {
-                localIdentifier: "trend",
-                items: [referencePoint.buckets[1].items[0]],
-            },
-            {
-                localIdentifier: "segment",
-                items: [],
-            },
-        ];
-
-        const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.dateAttributeOnViewAndStackReferencePoint,
-        );
-
-        expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-    });
-
     describe("Over Time Comparison", () => {
         it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
             const component = createComponent();
@@ -567,12 +541,7 @@ describe("PluggableLineChart", () => {
                     inputReferencePoint: IReferencePoint,
                     expectedReferencePoint: Partial<IExtendedReferencePoint>,
                 ) => {
-                    const lineChart = createComponent({
-                        ...defaultProps,
-                        featureFlags: {
-                            enableMultipleDates: true,
-                        },
-                    });
+                    const lineChart = createComponent();
 
                     const referencePoint = await lineChart.getExtendedReferencePoint(inputReferencePoint);
                     expect(referencePoint).toMatchObject(expectedReferencePoint);

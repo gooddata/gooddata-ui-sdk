@@ -180,6 +180,7 @@ describe("headlineUiConfigHelper", () => {
                 colorPalette: DEFAULT_COMPARISON_PALETTE,
                 disableDrillUnderline: true,
                 enableCompactSize: true,
+                enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
             });

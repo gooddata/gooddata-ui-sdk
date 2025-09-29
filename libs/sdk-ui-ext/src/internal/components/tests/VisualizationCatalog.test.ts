@@ -90,7 +90,6 @@ describe("getEmbeddingCode functionality", () => {
             descriptor.getEmbeddingCode?.(insight, {
                 context: {
                     settings: {
-                        enableAxisNameConfiguration: true,
                         enableTableTotalRows: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },

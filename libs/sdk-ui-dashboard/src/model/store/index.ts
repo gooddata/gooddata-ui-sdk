@@ -42,7 +42,7 @@ export {
     selectMapboxToken,
     selectAgGridToken,
     selectDateFormat,
-    selectEnableInsightExportScheduling,
+    selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
     selectIsExport,
     selectPlatformEdition,

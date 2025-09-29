@@ -21,7 +21,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         disableDrillUnderline: true,
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {
-                  enableJoinedAttributeAxisName: settings.enableAxisNameViewByTwoAttributes,
+                  enableJoinedAttributeAxisName: true,
               }
             : {}),
         ...(settings.enableChartsSorting ? { enableChartSorting: true } : {}),

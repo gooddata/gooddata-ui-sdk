@@ -25,8 +25,8 @@ import {
     getRelativeDateFilterItems,
 } from "../DynamicSelect/utils.js";
 import { DateFilterOption, IUiRelativeDateFilterForm } from "../interfaces/index.js";
+import { defaultVisibleItemsRange } from "../Select/ScrollableSelectMenu.js";
 import { itemToString } from "../Select/utils.js";
-import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 
 enum RelativeRangePickerErrorType {
     INVALID_VALUE = "INVALID_VALUE",

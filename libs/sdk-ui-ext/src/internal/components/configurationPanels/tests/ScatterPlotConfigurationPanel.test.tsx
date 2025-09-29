@@ -52,9 +52,6 @@ describe("ScatterPlotConfigurationPanel", () => {
             isLoading: false,
             locale: DefaultLocale,
             type: VisualizationTypes.SCATTER,
-            featureFlags: {
-                enableAxisNameConfiguration: true,
-            },
         };
 
         it("should render configuration panel with enabled name sections", async () => {
@@ -174,9 +171,6 @@ describe("ScatterPlotConfigurationPanel", () => {
         it("should not render name sections in configuration panel", async () => {
             createComponent({
                 ...defaultProps,
-                featureFlags: {
-                    enableAxisNameConfiguration: false,
-                },
                 insight: insightWithSingleAttribute,
             });
 

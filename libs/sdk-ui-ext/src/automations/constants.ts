@@ -3,6 +3,7 @@
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
 import {
+    AutomationColumnDefinitions,
     AutomationsAvailableFilters,
     AutomationsScope,
     CellValueType,
@@ -119,6 +120,23 @@ export const AutomationActionsDefaultState: IAutomationActionsState = {
 export const defaultAvailableFilters: Record<AutomationsScope, AutomationsAvailableFilters> = {
     workspace: ["dashboard", "recipients", "status"],
     organization: ["workspace", "recipients", "status"],
+};
+
+export const defaultColumnDefinitions: Record<AutomationsScope, AutomationColumnDefinitions> = {
+    workspace: [
+        { name: "title" },
+        { name: "dashboard" },
+        { name: "recipients" },
+        { name: "lastRun" },
+        { name: "menu" },
+    ],
+    organization: [
+        { name: "title" },
+        { name: "workspace" },
+        { name: "recipients" },
+        { name: "lastRun" },
+        { name: "menu" },
+    ],
 };
 
 export const getAutomationActionsEmptyState = () => ({ ...AutomationActionsDefaultState });

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 
 /**
@@ -97,4 +98,17 @@ export interface ITextWrappingMenuItem {
     id: string;
     title: string;
     isActive: boolean;
+}
+
+/**
+ * Sorting menu item. Represents a single sorting option entry.
+ *
+ * @internal
+ */
+export interface ISortingMenuItem {
+    type: "sorting";
+    id: string;
+    title: string;
+    isActive: boolean;
+    direction: "asc" | "desc" | null;
 }

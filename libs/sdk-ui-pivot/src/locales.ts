@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 import { TotalType } from "@gooddata/sdk-model";
@@ -24,6 +25,10 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     textWrappingSection: { id: "visualizations.menu.textWrapping" },
     textWrappingHeader: { id: "visualizations.menu.textWrapping.header" },
     textWrappingCell: { id: "visualizations.menu.textWrapping.cell" },
+    // Sorting menu
+    sortSection: { id: "visualizations.menu.sort" },
+    sortAscending: { id: "visualizations.menu.sort.ascending" },
+    sortDescending: { id: "visualizations.menu.sort.descending" },
     // Accessibility
     openHeaderMenuAria: { id: "visualizations.menu.header.openAriaLabel" },
 });

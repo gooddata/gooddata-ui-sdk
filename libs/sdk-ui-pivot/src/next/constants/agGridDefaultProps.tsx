@@ -25,6 +25,7 @@ const COLUMN_PROPS: AgGridProps = {
 
 const SIZING_PROPS: AgGridProps = {
     defaultColDef: {
+        minWidth: 64,
         resizable: true,
     },
     autoSizePadding: 8,
@@ -39,6 +40,7 @@ const AGGREGATION_PROPS: AgGridProps = {
 };
 
 const SORTING_PROPS: AgGridProps = {
+    alwaysMultiSort: true,
     defaultColDef: {
         sortable: true,
         sortingOrder: ["desc", "asc", null],

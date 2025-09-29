@@ -22,7 +22,6 @@ import {
     getAttributeItemsWithoutStacks,
     getMeasureItems,
     getStackItems,
-    isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
@@ -106,31 +105,8 @@ export class PluggableTreemap extends PluggableBaseChart {
         return { measures, view, stacks };
     }
 
-    private getBucketItems(newReferencePoint: IExtendedReferencePoint) {
-        const buckets = newReferencePoint?.buckets ?? [];
-        let measures = this.getBucketMeasures(buckets);
-        let stacks = getStackItems(buckets);
-        const nonStackAttributes = getAttributeItemsWithoutStacks(buckets);
-        const view = nonStackAttributes.slice(0, 1);
-
-        if (nonStackAttributes.length > 0) {
-            measures = getMeasureItems(limitNumberOfMeasuresInBuckets(buckets, 1));
-        }
-
-        if (nonStackAttributes.length > 1 && isEmpty(stacks)) {
-            // first attribute is taken, find next available non-date attribute
-            const attributesWithoutFirst = tail(nonStackAttributes);
-            const nonDate = attributesWithoutFirst.filter((attribute) => !isDateBucketItem(attribute));
-            stacks = nonDate.slice(0, 1);
-        }
-
-        return { measures, view, stacks };
-    }
-
     protected override configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
-        const { measures, view, stacks } = this.isMultipleDatesEnabled()
-            ? this.getBucketItemsWithMultipleDates(newReferencePoint)
-            : this.getBucketItems(newReferencePoint);
+        const { measures, view, stacks } = this.getBucketItemsWithMultipleDates(newReferencePoint);
 
         set(newReferencePoint, BUCKETS, [
             {
@@ -150,13 +126,10 @@ export class PluggableTreemap extends PluggableBaseChart {
 
     private getTreemapUIConfig(referencePoint: IReferencePoint) {
         const buckets = referencePoint?.buckets;
-        const allowsMultipleDates = this.isMultipleDatesEnabled();
-        const nonStackAttributes = allowsMultipleDates
-            ? getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE])
-            : getAttributeItemsWithoutStacks(buckets);
+        const nonStackAttributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]);
         const measures = getMeasureItems(buckets);
 
-        return getTreemapUiConfig(allowsMultipleDates, nonStackAttributes.length > 0, measures.length > 1);
+        return getTreemapUiConfig(nonStackAttributes.length > 0, measures.length > 1);
     }
 
     public override getExtendedReferencePoint(

@@ -3,8 +3,7 @@
 import { useState } from "react";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
-import { useHeaderSorting } from "./hooks/useHeaderSorting.js";
+import { SortIndicator } from "./SortIndicator.js";
 import {
     getColumnMeasureIdentifier,
     getColumnScope,
@@ -12,6 +11,7 @@ import {
     isValueColumnDef,
 } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
@@ -30,18 +30,30 @@ export function MeasureHeader(params: AgGridHeaderParams) {
 
     const allowAggregations = isValueColDef && !isTransposed;
     const allowTextWrapping = isValueColDef;
+    const allowSorting = !!colDef.sortable;
+    const allowDrilling = false;
 
-    const { currentSort, handleHeaderClick } = useHeaderSorting(params);
-    const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
-        useHeaderMenu(
+    const {
+        aggregationsItems,
+        textWrappingItems,
+        sortingItems,
+        sortDirection,
+        sortIndex,
+        hasMenuItems,
+        handleAggregationsItemClick,
+        handleTextWrappingItemClick,
+        handleSortingItemClick,
+        handleHeaderClick,
+    } = useHeaderMenu(
+        {
             allowAggregations,
             allowTextWrapping,
-            measureIdentifier ? [measureIdentifier] : [],
-            pivotAttributeDescriptors,
-            params.api,
-        );
-
-    const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
+            allowSorting,
+            allowDrilling,
+        },
+        { measureIdentifiers: measureIdentifier ? [measureIdentifier] : [], pivotAttributeDescriptors },
+        params,
+    );
 
     return (
         <div
@@ -51,11 +63,9 @@ export function MeasureHeader(params: AgGridHeaderParams) {
         >
             <div className="gd-header-content">
                 <span className="gd-header-text">{params.displayName}</span>
-                {!!colDef.sortable && (
-                    <span
-                        className={`ag-icon ag-icon-${currentSort === "asc" ? "asc" : currentSort === "desc" ? "desc" : "none"}`}
-                    ></span>
-                )}
+                {!!colDef.sortable && sortDirection ? (
+                    <SortIndicator sortDirection={sortDirection} sortIndex={sortIndex} />
+                ) : null}
             </div>
             {!!colDef.sortable && (
                 <div className="gd-header-cell-clickable-area" onClick={handleHeaderClick}></div>
@@ -64,8 +74,10 @@ export function MeasureHeader(params: AgGridHeaderParams) {
                 <HeaderMenu
                     aggregationsItems={aggregationsItems}
                     textWrappingItems={textWrappingItems}
+                    sortingItems={sortingItems}
                     onAggregationsItemClick={handleAggregationsItemClick}
                     onTextWrappingItemClick={handleTextWrappingItemClick}
+                    onSortingItemClick={handleSortingItemClick}
                     isMenuOpened={isMenuOpen}
                     onMenuOpenedChange={setIsMenuOpen}
                 />

@@ -54,7 +54,6 @@ export const DefaultUiSettings: ISettings = {
 
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
-    ADCatalogGroupsExpanded: true,
     enableAdAdditionalDateAttributes: true,
     enableNewAnalyticalDashboardsNavigation: true,
 
@@ -64,8 +63,6 @@ export const DefaultUiSettings: ISettings = {
     enableRenamingProjectToWorkspace: true,
 
     enableChartsSorting: true,
-    enableAxisNameViewByTwoAttributes: true,
-    enableAxisNameConfiguration: true,
     enableKPIDashboardExport: true,
     enableAdDescriptionEdit: true,
     drillIntoUrlDocumentationLink:

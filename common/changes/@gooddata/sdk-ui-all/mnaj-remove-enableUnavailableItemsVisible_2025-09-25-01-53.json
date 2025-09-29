@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Remove unused feature flag: enableCompanyLogoInEmbeddedUI",
+            "comment": "Remove unused feature flag: enableUnavailableItemsVisible",
             "type": "none"
         }
     ],

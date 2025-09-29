@@ -815,11 +815,7 @@ export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
     },
 };
 
-export function getTreemapUiConfig(
-    allowsMultipleDates: boolean,
-    hasNonStackAttributes: boolean,
-    hasMultipleMeasures: boolean,
-): IUiConfig {
+export function getTreemapUiConfig(hasNonStackAttributes: boolean, hasMultipleMeasures: boolean): IUiConfig {
     const measuresConfig = hasNonStackAttributes
         ? {
               itemsLimit: DEFAULT_TREEMAP_MEASURES_COUNT,
@@ -836,15 +832,12 @@ export function getTreemapUiConfig(
               }
             : {};
 
-    const multipleDatesConfig = allowsMultipleDates
-        ? {
-              itemsLimitByType: {
-                  date: 1,
-              },
-              allowsDuplicateDates: true,
-          }
-        : {};
-    const segmentBase = allowsMultipleDates ? stackBaseWithDate : stackBase;
+    const multipleDatesConfig = {
+        itemsLimitByType: {
+            date: 1,
+        },
+        allowsDuplicateDates: true,
+    };
 
     return {
         buckets: {
@@ -858,7 +851,7 @@ export function getTreemapUiConfig(
                 ...multipleDatesConfig,
             },
             segment: {
-                ...segmentBase,
+                ...stackBaseWithDate,
                 ...multipleDatesConfig,
             },
             ...defaultFilters,

@@ -10,7 +10,12 @@ import {
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { AutomationsCore } from "./AutomationsCore.js";
-import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE, defaultAvailableFilters } from "./constants.js";
+import {
+    DEFAULT_MAX_HEIGHT,
+    DEFAULT_PAGE_SIZE,
+    defaultAvailableFilters,
+    defaultColumnDefinitions,
+} from "./constants.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
@@ -29,7 +34,7 @@ export function Automations({
     organization,
     locale = "en-US",
     timezone = "UTC",
-    selectedColumnDefinitions,
+    selectedColumnDefinitions = defaultColumnDefinitions[scope],
     preselectedFilters = {},
     availableFilters = defaultAvailableFilters[scope],
     maxHeight = DEFAULT_MAX_HEIGHT,

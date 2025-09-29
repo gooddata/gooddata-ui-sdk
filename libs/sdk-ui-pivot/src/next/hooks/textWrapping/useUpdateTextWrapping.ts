@@ -34,7 +34,7 @@ export function useUpdateTextWrapping() {
     const getAgGridColumns = useGetAgGridColumns();
 
     const onUpdateTextWrapping = useCallback(
-        (newTextWrapping: ITextWrapping, gridApi?: AgGridApi) => {
+        (newTextWrapping: ITextWrapping, gridApi: AgGridApi | null) => {
             if (gridApi) {
                 const wrapText = !!newTextWrapping.wrapText;
                 const wrapHeaderText = !!newTextWrapping.wrapHeaderText;

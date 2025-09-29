@@ -82,16 +82,6 @@
         color: var(--gd-palette-complementary-7, #6d7680);
     }
 
-    // Collapse contextual-only action by default to avoid affecting layout
-    .gd-list-item-only {
-        opacity: 0;
-        margin-left: 0;
-        width: 1px;
-        overflow: hidden;
-        white-space: nowrap;
-        pointer-events: none;
-    }
-
     &.gd-list-item {
         &:hover {
             background-color: variables.$is-focused-background;
@@ -104,7 +94,29 @@
             .input-label-text {
                 color: var(--gd-palette-complementary-9-from-theme, inherit);
             }
+        }
 
+        &.is-selected {
+            font-weight: bold;
+            color: variables.$gd-color-text;
+        }
+    }
+}
+
+.gd-async-list .gd-attribute-filter-elements-select-item__next,
+.gd-async-list .gd-single-selection-attribute-filter-elements-select-item {
+    // Collapse contextual-only action by default to avoid affecting layout
+    .gd-list-item-only {
+        opacity: 0;
+        margin-left: 0;
+        width: 1px;
+        overflow: hidden;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    &.gd-list-item {
+        &:hover {
             // Expand the contextual-only action on hover
             .gd-list-item-only {
                 opacity: 1;
@@ -112,11 +124,6 @@
                 margin-left: 7px;
                 pointer-events: auto;
             }
-        }
-
-        &.is-selected {
-            font-weight: bold;
-            color: variables.$gd-color-text;
         }
 
         // Expand when the item is focused via keyboard

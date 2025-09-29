@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -366,42 +367,12 @@ describe("PluggableAreaChart", () => {
                     inputReferencePoint: IReferencePoint,
                     expectedReferencePoint: Partial<IExtendedReferencePoint>,
                 ) => {
-                    const areaChart = createComponent({
-                        ...defaultProps,
-                        featureFlags: {
-                            enableMultipleDates: true,
-                        },
-                    });
+                    const areaChart = createComponent();
 
                     const referencePoint = await areaChart.getExtendedReferencePoint(inputReferencePoint);
                     expect(referencePoint).toMatchObject(expectedReferencePoint);
                 },
             );
-        });
-
-        it("should allow only one date attribute when comming from stacked chart", async () => {
-            const areaChart = createComponent();
-            const referencePoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: [referencePoint.buckets[0].items[0]],
-                },
-                {
-                    localIdentifier: "view",
-                    items: [referencePoint.buckets[1].items[0]],
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-
-            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
-                referencePointMocks.dateAttributeOnViewAndStackReferencePoint,
-            );
-
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
         });
 
         it("should keep two date attributes in view by bucket when comming from pivot table with only one dimension", async () => {
@@ -436,32 +407,7 @@ describe("PluggableAreaChart", () => {
                 },
                 {
                     localIdentifier: "view",
-                    items: [mockRefPoint.buckets[1].items[0], mockRefPoint.buckets[1].items[3]],
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should keep only first date attribute in view by bucket when comming from pivot table with different dimensions", async () => {
-            const areaChart = createComponent(defaultProps);
-            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
-            mockRefPoint.buckets[2].items[0].dateDatasetRef = {
-                uri: "closed",
-            };
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: [...mockRefPoint.buckets[1].items],
+                    items: [mockRefPoint.buckets[1].items[0], mockRefPoint.buckets[1].items[1]],
                 },
                 {
                     localIdentifier: "stack",
@@ -619,72 +565,6 @@ describe("PluggableAreaChart", () => {
                 {
                     localIdentifier: "view",
                     items: mockRefPoint.buckets[1].items,
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-
-            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should move date from stack by bucket to view by bucket", async () => {
-            const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnStackBucketReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[2].items,
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-
-            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should remove date from stack by bucket", async () => {
-            const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items,
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-
-            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
-        it("should not move attribute from view by to stack by", async () => {
-            const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.twoMeasuresAndDateAsSecondViewByItemReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(1, 2),
                 },
                 {
                     localIdentifier: "stack",

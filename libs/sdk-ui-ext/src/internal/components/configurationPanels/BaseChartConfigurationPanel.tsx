@@ -134,19 +134,15 @@ export default class BaseChartConfigurationPanel<
     }
 
     protected getBaseChartAxisSection(axes: IAxisProperties[]): ReactNode {
-        const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
+        const { type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
-        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisNameViewByTwoAttributesEnabled: boolean =
-            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);
-            const nameSubsectionDisabled: boolean =
-                (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
+            const nameSubsectionDisabled: boolean = axis.primary && itemsOnAxes[axis.name] > 1;
             const { name, title, subtitle, visible } = axis;
 
             return (
@@ -163,15 +159,13 @@ export default class BaseChartConfigurationPanel<
                     properties={properties}
                     pushData={pushData}
                 >
-                    {isNameSubsectionVisible ? (
-                        <NameSubsection
-                            disabled={disabled || nameSubsectionDisabled}
-                            configPanelDisabled={controlsDisabled}
-                            axis={axis.name}
-                            properties={properties}
-                            pushData={pushData}
-                        />
-                    ) : null}
+                    <NameSubsection
+                        disabled={disabled || nameSubsectionDisabled}
+                        configPanelDisabled={controlsDisabled}
+                        axis={axis.name}
+                        properties={properties}
+                        pushData={pushData}
+                    />
                     <LabelSubsection
                         disabled={disabled}
                         configPanelDisabled={controlsDisabled}

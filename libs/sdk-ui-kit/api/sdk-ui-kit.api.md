@@ -5017,6 +5017,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     isSelected?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
+    iconRight?: ReactNode;
 };
 
 // @internal (undocumented)

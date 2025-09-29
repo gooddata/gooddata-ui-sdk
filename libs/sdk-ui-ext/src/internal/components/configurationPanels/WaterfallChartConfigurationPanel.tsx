@@ -125,20 +125,16 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
     }
 
     protected override getBaseChartAxisSection(axes: IAxisProperties[]) {
-        const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
+        const { type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
-        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
-        const isAxisNameViewByTwoAttributesEnabled: boolean =
-            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
         return axes.map((axis: IAxisProperties) => {
             const isPrimaryAxis =
                 controls?.["orientation"]?.position === "vertical" ? axis.name === "xaxis" : axis.primary;
-            const isPrimaryAxisWithMoreThanOneItem: boolean =
-                (isPrimaryAxis || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
+            const isPrimaryAxisWithMoreThanOneItem: boolean = isPrimaryAxis && itemsOnAxes[axis.name] > 1;
             const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;
             const { name, title, subtitle, visible } = axis;
 
@@ -156,15 +152,13 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                     properties={properties}
                     pushData={pushData}
                 >
-                    {isNameSubsectionVisible ? (
-                        <NameSubsection
-                            disabled={nameSubsectionDisabled}
-                            configPanelDisabled={controlsDisabled}
-                            axis={axis.name}
-                            properties={properties}
-                            pushData={pushData}
-                        />
-                    ) : null}
+                    <NameSubsection
+                        disabled={nameSubsectionDisabled}
+                        configPanelDisabled={controlsDisabled}
+                        axis={axis.name}
+                        properties={properties}
+                        pushData={pushData}
+                    />
                     <LabelSubsection
                         disabled={false}
                         configPanelDisabled={controlsDisabled}

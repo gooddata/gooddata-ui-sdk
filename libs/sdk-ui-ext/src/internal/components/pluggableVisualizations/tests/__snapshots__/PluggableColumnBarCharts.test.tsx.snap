@@ -77,7 +77,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -85,6 +87,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
         "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -92,6 +97,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -100,8 +106,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
+        "preferSynchronizedDates": true,
         "title": "View by",
       },
     },
@@ -288,7 +295,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -296,6 +305,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
         "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -303,6 +315,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -311,8 +324,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
+        "preferSynchronizedDates": true,
         "title": "View by",
       },
     },
@@ -429,7 +443,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -437,6 +453,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
         "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -444,6 +463,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -452,8 +472,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
+        "preferSynchronizedDates": true,
         "title": "View by",
       },
     },
@@ -648,7 +669,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": false,
@@ -656,6 +679,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
         "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
         "warningMessage": "To stack by an attribute, an visualization can have only one metric",
       },
@@ -664,6 +690,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -672,8 +699,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
+        "preferSynchronizedDates": true,
         "title": "View by",
       },
     },
@@ -860,7 +888,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
       "stack": {
         "accepts": [
           "attribute",
+          "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -868,6 +898,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
         "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
+        "itemsLimitByType": {
+          "date": 1,
+        },
         "title": "Stack by",
       },
       "view": {
@@ -875,6 +908,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
           "attribute",
           "date",
         ],
+        "allowsDuplicateDates": true,
         "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
@@ -883,8 +917,9 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
         "isShowInPercentEnabled": false,
         "itemsLimit": 2,
         "itemsLimitByType": {
-          "date": 1,
+          "date": 2,
         },
+        "preferSynchronizedDates": true,
         "title": "View by",
       },
     },

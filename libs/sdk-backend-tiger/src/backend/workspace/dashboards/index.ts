@@ -616,13 +616,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     fileName: title || "export",
                     format,
                     settings: {
-                        mergeHeaders: options?.mergeHeaders,
-                        exportInfo: options?.exportInfo,
+                        ...(format === "XLSX" && {
+                            mergeHeaders: options?.mergeHeaders,
+                            exportInfo: options?.exportInfo,
+                        }),
                         ...(format === "PDF" && options?.pdfConfiguration
                             ? {
                                   pageSize: options.pdfConfiguration.pageSize,
                                   pageOrientation: options.pdfConfiguration.pageOrientation,
-                                  showInfoPage: options.pdfConfiguration.showInfoPage,
+                                  exportInfo: options.pdfConfiguration.showInfoPage,
                               }
                             : {}),
                     },

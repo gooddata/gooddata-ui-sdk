@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType, Dispatch, KeyboardEvent, RefObject, SetStateAction } from "react";
+import { ComponentType, Dispatch, KeyboardEvent, ReactNode, RefObject, SetStateAction } from "react";
 
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
 import { SizeMedium, SizeSmall } from "../@types/size.js";
@@ -30,6 +30,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     isSelected?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
+    iconRight?: ReactNode;
 };
 
 /**

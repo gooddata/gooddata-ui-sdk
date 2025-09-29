@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { ISortItem, sortDirection } from "@gooddata/sdk-model";
 
 import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
@@ -26,5 +27,6 @@ export const applySortByToColDef =
         return {
             ...colDef,
             initialSort: sortDirection(sort),
+            initialSortIndex: sortBy.indexOf(sort),
         };
     };

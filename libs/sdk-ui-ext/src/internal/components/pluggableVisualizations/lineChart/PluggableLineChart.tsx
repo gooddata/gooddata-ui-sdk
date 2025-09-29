@@ -8,11 +8,7 @@ import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import {
-    DEFAULT_LINE_UICONFIG,
-    LINE_UICONFIG_WITH_MULTIPLE_DATES,
-    MAX_METRICS_COUNT,
-} from "../../../constants/uiConfig.js";
+import { LINE_UICONFIG_WITH_MULTIPLE_DATES, MAX_METRICS_COUNT } from "../../../constants/uiConfig.js";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
     IBucketItem,
@@ -31,12 +27,10 @@ import {
     getAllAttributeItemsWithPreference,
     getAttributeItemsWithoutStacks,
     getBucketItems,
-    getDateItems,
     getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport,
     getFistDateItemWithMultipleDates,
     getMeasureItems,
     getStackItems,
-    isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
@@ -101,10 +95,7 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = this.isMultipleDatesEnabled()
-            ? LINE_UICONFIG_WITH_MULTIPLE_DATES
-            : DEFAULT_LINE_UICONFIG;
-        return cloneDeep(config);
+        return cloneDeep(LINE_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
@@ -181,59 +172,7 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     protected override configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
-        if (this.isMultipleDatesEnabled()) {
-            this.configureBucketsWithMultipleDates(newReferencePoint);
-            return;
-        }
-
-        const buckets = newReferencePoint?.buckets ?? [];
-        const measures = getMeasureItems(buckets);
-        const masterMeasures = filterOutDerivedMeasures(measures);
-        let attributes: IBucketItem[] = [];
-        let stacks: IBucketItem[] = getStackItems(buckets);
-        const dateItems = getDateItems(buckets);
-        const allAttributes = getAllAttributeItemsWithPreference(buckets, [
-            BucketNames.LOCATION,
-            BucketNames.TREND,
-            BucketNames.VIEW,
-            BucketNames.SEGMENT,
-            BucketNames.STACK,
-        ]);
-
-        if (dateItems.length) {
-            attributes = dateItems.slice(0, 1);
-            stacks =
-                masterMeasures.length <= 1 && allAttributes.length > 1
-                    ? allAttributes
-                          .filter((attribute: IBucketItem) => !isDateBucketItem(attribute))
-                          .slice(0, 1)
-                    : stacks;
-        } else {
-            if (
-                masterMeasures.length <= 1 &&
-                allAttributes.length > 1 &&
-                !isDateBucketItem(allAttributes?.[1])
-            ) {
-                stacks = allAttributes.slice(1, 2);
-            }
-
-            attributes = getAttributeItemsWithoutStacks(buckets).slice(0, 1);
-        }
-
-        set(newReferencePoint, BUCKETS, [
-            {
-                localIdentifier: BucketNames.MEASURES,
-                items: this.getBucketMeasures(newReferencePoint.buckets),
-            },
-            {
-                localIdentifier: BucketNames.TREND,
-                items: attributes,
-            },
-            {
-                localIdentifier: BucketNames.SEGMENT,
-                items: stacks,
-            },
-        ]);
+        this.configureBucketsWithMultipleDates(newReferencePoint);
     }
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {

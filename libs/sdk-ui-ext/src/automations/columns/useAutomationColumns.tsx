@@ -26,7 +26,7 @@ import {
 export const useAutomationColumns = ({
     type,
     timezone,
-    columnDefinitions,
+    selectedColumnDefinitions,
     automationsType,
     deleteAutomation,
     unsubscribeFromAutomation,
@@ -204,17 +204,17 @@ export const useAutomationColumns = ({
     );
 
     const columns = useMemo(() => {
-        return columnDefinitions.map((columnDef) => {
+        return selectedColumnDefinitions.map((columnDef) => {
             const selectedColumn = allColumns[columnDef.name];
             return { ...selectedColumn, width: columnDef.width ?? selectedColumn.width };
         });
-    }, [allColumns, columnDefinitions]);
+    }, [allColumns, selectedColumnDefinitions]);
 
     const includeAutomationResult = useMemo(() => {
-        return columnDefinitions.some(
+        return selectedColumnDefinitions.some(
             (columnDef) => columnDef.name === "lastRun" || columnDef.name === "lastRunStatus",
         );
-    }, [columnDefinitions]);
+    }, [selectedColumnDefinitions]);
 
     return { columns, includeAutomationResult };
 };

@@ -137,8 +137,6 @@ const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
  * | Rows     | attributes | attributes or dates |
  * | Columns  | columns    | attributes or dates |
  *
- * The Rows and Columns can each accept one date at most, unless "enableMultipleDates" FF is on.
- *
  * ### Bucket axioms
  *
  * - |Measures| ≤ 20
@@ -192,7 +190,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: getPivotTableDefaultUiConfig(multipleDatesEnabled(this.settings)),
+            uiConfig: getPivotTableDefaultUiConfig(),
         };
 
         const buckets = newReferencePoint.buckets;
@@ -608,10 +606,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             this.pushData(data);
         }
     }
-}
-
-function multipleDatesEnabled(settings: ISettings): boolean {
-    return settings.enableMultipleDates === true;
 }
 
 function tableSortingCheckDisabled(settings: ISettings): boolean {

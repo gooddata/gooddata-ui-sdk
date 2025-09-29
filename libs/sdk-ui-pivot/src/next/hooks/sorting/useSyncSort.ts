@@ -25,18 +25,25 @@ export function useSyncSort() {
                 sortBy,
                 columnDefinitionByColId,
                 columnHeadersPosition,
-            );
+            ).filter(Boolean);
 
             const currentState = agGridApi.getColumnState();
             const updatedState = currentState.map((col) => {
+                const sortModelItem = updatedSortModel.find((sort) => sort.colId === col.colId);
+                const sortIndex = sortModelItem ? updatedSortModel.indexOf(sortModelItem) : undefined;
+
                 return {
                     ...col,
-                    sort: updatedSortModel.find((sort) => sort.colId === col.colId)?.sort ?? null,
+                    sort: sortModelItem?.sort ?? null,
+                    // Apply sortIndex to preserve multi-sort order
+                    ...(sortIndex !== undefined && { sortIndex }),
                 };
             });
 
             agGridApi.applyColumnState({
                 state: updatedState,
+                // Clear sorts for columns not in the sort model
+                defaultState: { sort: null },
             });
         }
     }, [agGridApi, sortBy, columnDefinitionByColId, columnHeadersPosition, pushData]);

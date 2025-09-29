@@ -33,7 +33,6 @@ import { getTheme, wrapWithTheme } from "../themeWrapper.js";
 import "./insightStories.css";
 
 const DefaultSettings: ISettings = {
-    enableAxisNameConfiguration: true,
     enableSeparateTotalLabels: true,
     enableChartsSorting: true,
     enableLineChartTrendThreshold: true,

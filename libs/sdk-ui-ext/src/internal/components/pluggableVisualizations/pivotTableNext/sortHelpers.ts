@@ -37,6 +37,7 @@ export const adaptReferencePointSortItemsToPivotTable = (
     measures: IBucketItem[],
     rowAttributes: IBucketItem[],
     columnAttributes: IBucketItem[],
+    measureGroupDimension: MeasureGroupDimension,
 ): ISortItem[] => {
     const measureLocalIdentifiers = measures.map((measure) => measure.localIdentifier);
     const rowAttributeLocalIdentifiers = rowAttributes.map((rowAttribute) => rowAttribute.localIdentifier);
@@ -45,7 +46,7 @@ export const adaptReferencePointSortItemsToPivotTable = (
     );
 
     return filterInvalidSortItems(
-        originalSortItems,
+        getSanitizedSortItems(originalSortItems, measureGroupDimension),
         measureLocalIdentifiers,
         rowAttributeLocalIdentifiers,
         columnAttributeLocalIdentifiers,

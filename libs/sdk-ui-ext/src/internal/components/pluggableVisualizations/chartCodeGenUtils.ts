@@ -76,7 +76,7 @@ export function chartConfigFromInsight(
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),
         ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
         enableSeparateTotalLabels: true,
-        ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
+        enableJoinedAttributeAxisName: true,
     };
 
     return removeUseless(
@@ -87,7 +87,6 @@ export function chartConfigFromInsight(
                 ),
             ),
             insight,
-            ctx?.settings,
         ),
     );
 }

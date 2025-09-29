@@ -599,16 +599,10 @@ describe("PluggablePivotTable", () => {
         });
 
         it("should return a new reference point with ui config supporting mulple date dimensions when turned on", () => {
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enableMultipleDates: true,
-                },
-            });
-            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const pivotTable = createComponent();
 
             return pivotTable
-                .getExtendedReferencePoint(sourceReferencePoint)
+                .getExtendedReferencePoint(referencePointMocks.simpleStackedReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });

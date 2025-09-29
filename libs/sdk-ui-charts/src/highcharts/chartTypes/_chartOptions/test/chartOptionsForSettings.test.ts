@@ -15,39 +15,6 @@ describe("updateConfigWithSettings", () => {
             const expectedConfig = {
                 disableDrillUnderline: true,
                 enableCompactSize: true,
-                enableReversedStacking: true,
-                enableSeparateTotalLabels: true,
-            };
-            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
-        });
-    });
-
-    describe("enableAxisNameViewByTwoAttributes", () => {
-        it("should return correct config from feature flags if enableJoinedAttributeAxisName is not provided", async () => {
-            const config: IChartConfig = {};
-            const settings: ISettings = {
-                enableAxisNameViewByTwoAttributes: false,
-            };
-            const expectedConfig = {
-                disableDrillUnderline: true,
-                enableCompactSize: true,
-                enableJoinedAttributeAxisName: false,
-                enableReversedStacking: true,
-                enableSeparateTotalLabels: true,
-            };
-            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
-        });
-
-        it("should return correct config from feature flags if enableJoinedAttributeAxisName is provided", async () => {
-            const config: IChartConfig = {
-                enableJoinedAttributeAxisName: true,
-            };
-            const settings: ISettings = {
-                enableAxisNameViewByTwoAttributes: false,
-            };
-            const expectedConfig = {
-                disableDrillUnderline: true,
-                enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
@@ -74,6 +41,7 @@ describe("updateConfigWithSettings", () => {
             const expectedConfig = {
                 disableDrillUnderline: true,
                 enableCompactSize: true,
+                enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
                 useGenericInteractionTooltip: true,

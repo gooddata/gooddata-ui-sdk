@@ -13,6 +13,7 @@ const config: IChartConfig = {
         responsive: "autoPositionWithPopup"
     },
     enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
     dataPoints: {visible: "auto"}
 };
 const style = {height: 400};
@@ -69,6 +70,7 @@ const config: IChartConfig = {
         responsive: "autoPositionWithPopup"
     },
     enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
     dataPoints: {visible: "auto"}
 };
 const style = {height: 400};

@@ -256,18 +256,20 @@ export class TigerExecutionResult implements IExecutionResult {
         const format = isTabularExportFormat(uppercaseFormat)
             ? TabularExportRequestFormatEnum[uppercaseFormat]
             : TabularExportRequestFormatEnum.CSV;
-
         const settings: Settings = {
             ...(format === TabularExportRequestFormatEnum.XLSX
-                ? { mergeHeaders: Boolean(options.mergeHeaders), showFilters: Boolean(options.showFilters) }
+                ? {
+                      mergeHeaders: Boolean(options.mergeHeaders),
+                      exportInfo: Boolean(options.showFilters),
+                  }
                 : {}),
             ...(format === TabularExportRequestFormatEnum.PDF
                 ? {
-                      showFilters: Boolean(options.showFilters),
                       pageSize: options.pdfConfiguration?.pageSize,
                       pageOrientation: options.pdfConfiguration?.pageOrientation,
-                      showInfoPage: options.pdfConfiguration?.showInfoPage,
+                      exportInfo: options.pdfConfiguration?.showInfoPage,
                       // Deprecated properties for backward compatibility
+                      showFilters: options.showFilters,
                       pdfPageSize: options.pdfConfiguration?.pdfPageSize,
                       pdfTopLeftContent: options.pdfConfiguration?.pdfTopLeftContent,
                       pdfTopRightContent: options.pdfConfiguration?.pdfTopRightContent,

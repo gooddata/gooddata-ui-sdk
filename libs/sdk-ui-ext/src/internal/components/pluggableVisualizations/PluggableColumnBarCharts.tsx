@@ -23,7 +23,6 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 import { AXIS } from "../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import {
-    COLUMN_BAR_CHART_UICONFIG,
     COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES,
     MAX_CATEGORIES_COUNT,
     MAX_METRICS_COUNT,
@@ -41,15 +40,11 @@ import {
 } from "../../interfaces/Visualization.js";
 import {
     getAllCategoriesAttributeItems,
-    getDateItems,
     getFilteredMeasuresForStackedCharts,
-    getMainDateItem,
     getStackItems,
     hasSameDateDimension,
     isDateBucketItem,
-    isNotDateBucketItem,
     limitNumberOfMeasuresInBuckets,
-    removeDivergentDateItems,
 } from "../../utils/bucketHelper.js";
 import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import {
@@ -61,6 +56,7 @@ import {
     setSecondaryMeasures,
 } from "../../utils/propertiesHelper.js";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper.js";
+
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);
@@ -71,10 +67,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = this.isMultipleDatesEnabled()
-            ? COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES
-            : COLUMN_BAR_CHART_UICONFIG;
-        return cloneDeep(config);
+        return cloneDeep(COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
@@ -159,56 +152,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     protected override configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        if (this.isMultipleDatesEnabled()) {
-            this.configureBucketsWithMultipleDates(extendedReferencePoint);
-            return;
-        }
-
-        const buckets = extendedReferencePoint?.buckets ?? [];
-        const measures = this.getBucketMeasures(buckets);
-        const dateItems = getDateItems(buckets);
-        const mainDateItem = getMainDateItem(dateItems);
-        const categoriesCount =
-            extendedReferencePoint.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
-        const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
-        const allAttributesWithoutStacksWithDatesHandled = removeDivergentDateItems(
-            allAttributesWithoutStacks,
-            mainDateItem,
-        );
-        let views = allAttributesWithoutStacksWithDatesHandled.slice(0, categoriesCount);
-        const hasDateItemInViewByBucket = views.some(isDateBucketItem);
-        let stackItemIndex = categoriesCount;
-        let stacks = getStackItems(buckets);
-
-        if (dateItems.length && !hasDateItemInViewByBucket) {
-            const extraViewItems = allAttributesWithoutStacksWithDatesHandled.slice(0, categoriesCount - 1);
-            views = [mainDateItem, ...extraViewItems];
-            stackItemIndex = categoriesCount - 1;
-        }
-
-        const hasSomeRemainingAttributes = allAttributesWithoutStacksWithDatesHandled.length > stackItemIndex;
-
-        if (!stacks.length && measures.length <= 1 && hasSomeRemainingAttributes) {
-            stacks = allAttributesWithoutStacksWithDatesHandled
-                .slice(stackItemIndex, allAttributesWithoutStacksWithDatesHandled.length)
-                .filter(isNotDateBucketItem)
-                .slice(0, MAX_STACKS_COUNT);
-        }
-
-        set(extendedReferencePoint, BUCKETS, [
-            {
-                localIdentifier: BucketNames.MEASURES,
-                items: measures,
-            },
-            {
-                localIdentifier: BucketNames.VIEW,
-                items: views,
-            },
-            {
-                localIdentifier: BucketNames.STACK,
-                items: stacks,
-            },
-        ]);
+        this.configureBucketsWithMultipleDates(extendedReferencePoint);
     }
 
     private configureBucketsWithMultipleDates(extendedReferencePoint: IExtendedReferencePoint): void {
