@@ -10,6 +10,7 @@ export interface IDropdownButtonAccessibilityConfig {
     isExpanded?: boolean;
     popupType?: AriaAttributes["aria-haspopup"];
     popupId?: string;
+    ariaHaspopup?: AriaAttributes["aria-haspopup"];
 }
 
 /**

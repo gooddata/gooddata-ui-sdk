@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { compact, isEqual } from "lodash-es";
+import { IntlShape } from "react-intl";
 
 import {
     FilterContextItem,
@@ -393,3 +394,31 @@ export function removeIgnoredWidgetFilters(
               }),
     );
 }
+
+export const getFilterTitle = (
+    filter: FilterContextItem,
+    allAttributes: ICatalogAttribute[],
+    allDateDatasets: ICatalogDateDataset[],
+    intl: IntlShape,
+): string => {
+    if (isDashboardAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) => areObjRefsEqual(df.ref, filter.attributeFilter.displayForm)),
+        );
+        return attribute?.attribute.title || "";
+    }
+
+    if (isDashboardDateFilter(filter)) {
+        // Handle common date filter (no specific dataSet)
+        if (!filter.dateFilter.dataSet) {
+            return intl.formatMessage({ id: "dateFilterDropdown.title" });
+        }
+
+        const dateDataset = allDateDatasets.find((ds) =>
+            areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
+        );
+        return dateDataset?.dataSet.title || "";
+    }
+
+    return "";
+};

@@ -151,5 +151,3 @@ export function provideCreateRoot(_fn: any) {
     // eslint-disable-next-line no-console
     console.log("Info: no longer necessary to call provideCreateRoot");
 }
-
-export * from "./kdaDialog/index.js";

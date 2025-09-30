@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { IDashboardDefinition } from "@gooddata/sdk-model";
@@ -119,16 +120,13 @@ describe("getDashboardWithSharing", () => {
         },
     };
     it.each([
-        [true, true, { shareStatus: "private", isLocked: false, isUnderStrictControl: true }],
-        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
+        [true, { shareStatus: "private", isLocked: false, isUnderStrictControl: true }],
+        [false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
     ])(
-        "should set proper sharing on dashboard for new dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
-        (sharingEnabled, sharingSupported, expectedResult) => {
+        "should set proper sharing on dashboard for new dashboard when supportsAccessControl %s",
+        (sharingSupported, expectedResult) => {
             const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
                 dashboard,
-                sharingEnabled,
                 sharingSupported,
                 true,
             );

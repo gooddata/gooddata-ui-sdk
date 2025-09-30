@@ -12,7 +12,6 @@ export interface ISaveButtonProps {
     isEnabled: boolean;
     isSaving: boolean;
     buttonTitle: MessageDescriptor;
-    buttonValue: MessageDescriptor;
     onSaveClick: () => void;
 }
 

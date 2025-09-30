@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeFilter, IDateFilter, IMeasure } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IMeasure } from "@gooddata/sdk-model";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 export interface KdaMetric {
@@ -10,12 +10,11 @@ export interface KdaMetric {
 
 export interface KdaDateFilter {
     title: string;
-    dateFilter?: IDateFilter;
+    selectedPeriod: "same_period_previous_year" | "previous_period";
 }
 
 export interface KdaAttributeFilter {
-    title: string;
-    attributeFilter?: IAttributeFilter;
+    attributeFilter: IDashboardAttributeFilter;
 }
 
 export interface KdaItem {
@@ -33,14 +32,14 @@ export interface KdaItem {
 }
 
 export interface KdaState {
-    rootItem: KdaItem;
+    rootItem: KdaItem | null;
     rootStatus: "loading" | "success" | "error" | "pending";
     selectedTrend: "up" | "down";
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
     selectedStatus: "loading" | "success" | "error" | "pending";
     metric: KdaMetric | null;
-    dateFilter: KdaDateFilter | null;
-    attributeFilter: KdaAttributeFilter | null;
+    dateFilters: KdaDateFilter[];
+    attributeFilters: KdaAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: "loading" | "success" | "error" | "pending";
     combinations: number;

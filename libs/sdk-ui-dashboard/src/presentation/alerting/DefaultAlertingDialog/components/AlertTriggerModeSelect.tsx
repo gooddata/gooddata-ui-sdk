@@ -1,12 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { MutableRefObject } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { IAlertTriggerMode } from "@gooddata/sdk-model";
 import {
-    Button,
     Dropdown,
+    DropdownButton,
     IUiListboxItem,
     OverlayPositionType,
     SingleSelectListItem,
@@ -55,27 +57,17 @@ export function AlertTriggerModeSelect({
                 autofocusOnOpen={true}
                 renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                     return (
-                        <Button
+                        <DropdownButton
                             id={id}
+                            value={selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                             onClick={toggleDropdown}
-                            iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
-                            size="small"
-                            variant="secondary"
                             className={cx(
                                 "gd-edit-alert-trigger-mode-select__button s-alert-trigger-mode-select",
-                                {
-                                    "is-active": isOpen,
-                                },
                             )}
-                            accessibilityConfig={{
-                                role: "button",
-                                popupId: dropdownId,
-                                isExpanded: isOpen,
-                            }}
-                            ref={buttonRef}
-                        >
-                            {selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
-                        </Button>
+                            buttonRef={buttonRef as MutableRefObject<HTMLElement>}
+                            dropdownId={dropdownId}
+                            isOpen={isOpen}
+                        />
                     );
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => {

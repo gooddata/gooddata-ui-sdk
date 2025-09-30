@@ -30,5 +30,6 @@ export function accessibilityConfigToAttributes(
         role: accessibilityConfig.role,
         "aria-expanded": accessibilityConfig.ariaExpanded,
         "aria-controls": accessibilityConfig.ariaControls,
+        "aria-haspopup": accessibilityConfig.ariaHaspopup,
     };
 }

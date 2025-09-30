@@ -32,20 +32,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.ADMeasureValueFilterNullAsZeroOption,
-            "ADMeasureValueFilterNullAsZeroOption",
-            "STRING",
-            FeatureFlagsValues.ADMeasureValueFilterNullAsZeroOption,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton,
-            "enableKPIDashboardDeleteFilterButton",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKPIDashboardDeleteFilterButton,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.DashboardEditModeDevRollout,
             "dashboardEditModeDevRollout",
             "BOOLEAN",
@@ -64,13 +50,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDescriptions",
             "BOOLEAN",
             FeatureFlagsValues.enableDescriptions,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAnalyticalDashboardPermissions,
-            "enableAnalyticalDashboardPermissions",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAnalyticalDashboardPermissions,
         ),
         ...loadFeature(
             features,
@@ -351,13 +330,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSnowflakeKeyPairAuthentication",
             "BOOLEAN",
             FeatureFlagsValues.enableSnowflakeKeyPairAuthentication,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableInvalidValuesInAttributeFilter,
-            "enableInvalidValuesInAttributeFilter",
-            "BOOLEAN",
-            FeatureFlagsValues.enableInvalidValuesInAttributeFilter,
         ),
         ...loadFeature(
             features,

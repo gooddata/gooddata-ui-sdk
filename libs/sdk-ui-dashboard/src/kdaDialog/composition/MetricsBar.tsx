@@ -13,7 +13,7 @@ export function MetricsBar() {
     return (
         <KdaBar
             title={intl.formatMessage({ id: "kdaDialog.dialog.bars.metric.title" })}
-            content={<MetricBar metric={state.metric} />}
+            content={<>{state.metric ? <MetricBar metric={state.metric} /> : null}</>}
         />
     );
 }

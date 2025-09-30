@@ -13,7 +13,6 @@ import {
     saveDashboard,
     selectCanSaveDashboard,
     selectDashboardTitle,
-    selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
     selectIsDashboardSaving,
     selectIsInEditMode,
@@ -57,7 +56,6 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);
-    const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
     const isEmptyDashboard = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const canSaveDashboard = useDashboardSelector(selectCanSaveDashboard);
@@ -66,10 +64,6 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const isVisible = isEditing;
     const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard;
-
-    const buttonValue = arePermissionsEnabled
-        ? messages.controlButtonsSaveValue
-        : messages.controlButtonsSaveAndPublishValue;
 
     let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {
@@ -88,7 +82,6 @@ export function useSaveButtonProps(): ISaveButtonProps {
         isVisible,
         isEnabled,
         isSaving,
-        buttonValue,
         buttonTitle,
         onSaveClick,
     };
@@ -102,7 +95,6 @@ export function DefaultSaveButton({
     isEnabled,
     isSaving,
     buttonTitle,
-    buttonValue,
     onSaveClick,
 }: ISaveButtonProps) {
     const intl = useIntl();
@@ -127,7 +119,7 @@ export function DefaultSaveButton({
         <BubbleHoverTrigger>
             <Button
                 className="gd-button-action save-publish-button s-save_button"
-                value={intl.formatMessage(buttonValue)}
+                value={intl.formatMessage(messages.controlButtonsSaveValue)}
                 onClick={onSaveClick}
                 disabled={!isEnabled}
             />

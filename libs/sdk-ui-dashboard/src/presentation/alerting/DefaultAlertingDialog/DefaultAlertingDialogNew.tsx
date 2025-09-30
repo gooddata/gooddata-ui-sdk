@@ -18,7 +18,6 @@ import {
     ConfirmDialogBase,
     ContentDivider,
     Hyperlink,
-    Input,
     Message,
     Overlay,
     OverlayController,
@@ -36,6 +35,7 @@ import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOpera
 import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
 import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
+import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
@@ -155,6 +155,7 @@ export function AlertingDialogRenderer({
         validationErrorMessage,
         isSubmitDisabled,
         isParentValid,
+        thresholdErrorMessage,
     } = useEditAlert({
         insight,
         widget,
@@ -396,15 +397,13 @@ export function AlertingDialogRenderer({
                                         label={<FormattedMessage id="insightAlert.config.threshold" />}
                                         htmlFor="alert.value"
                                     >
-                                        <Input
+                                        <AlertThresholdInput
                                             id="alert.value"
-                                            className="gd-edit-alert__value-input s-alert-value-input"
-                                            isSmall
                                             value={value}
                                             onChange={onChange}
                                             onBlur={onBlur}
-                                            type="number"
                                             suffix={getValueSuffix(editedAutomation?.alert)}
+                                            errorMessage={thresholdErrorMessage}
                                         />
                                     </FormField>
                                     {isChangeOrDifferenceOperator(editedAutomation?.alert) && (

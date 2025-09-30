@@ -43,6 +43,7 @@ export function UiTooltip({
     id,
     anchor,
     content,
+    behaviour = "tooltip",
     arrowPlacement = "top",
     triggerBy = [],
     hoverOpenDelay = SHOW_DELAY,
@@ -57,6 +58,7 @@ export function UiTooltip({
     isOpen: isOpenProp,
     onOpen,
     onClose,
+    anchorWrapperStyles,
 }: UiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
     const isOpen =
@@ -89,6 +91,9 @@ export function UiTooltip({
     const customShiftMiddleware: Middleware = {
         name: "customShift",
         fn(args) {
+            if (behaviour === "popover") {
+                return {};
+            }
             const { x, y, rects, middlewareData } = args;
             const currentFloatingDimensions = getDimensionsFromRect(rects?.floating);
             const enable = !middlewareData?.flip?.index;
@@ -103,7 +108,7 @@ export function UiTooltip({
     const { refs, floatingStyles, context, middlewareData } = useFloating({
         open: isOpen,
         onOpenChange: handleOpen,
-        placement: getOppositeBasicPlacement(arrowPlacement),
+        placement: getOppositeBasicPlacement(arrowPlacement, behaviour),
         whileElementsMounted: autoUpdate,
         middleware: [
             offset(offsetProp ?? ARROW_HEIGHT),
@@ -111,7 +116,7 @@ export function UiTooltip({
             ...(optimalPlacement
                 ? [
                       flip({
-                          fallbackPlacements: getFlipFallbackOrder(arrowPlacement),
+                          fallbackPlacements: getFlipFallbackOrder(arrowPlacement, behaviour),
                           fallbackStrategy: "initialPlacement",
                       }),
                   ]
@@ -149,7 +154,12 @@ export function UiTooltip({
 
     return (
         <>
-            <div className={e("anchor")} ref={refs.setReference} {...getReferenceProps()}>
+            <div
+                className={e("anchor")}
+                ref={refs.setReference}
+                style={anchorWrapperStyles}
+                {...getReferenceProps()}
+            >
                 {anchor}
             </div>
 

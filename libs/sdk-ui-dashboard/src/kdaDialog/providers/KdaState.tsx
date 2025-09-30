@@ -16,8 +16,8 @@ const defaultState: KdaState = {
     selectedStatus: "pending",
     //root data
     metric: null,
-    attributeFilter: null,
-    dateFilter: null,
+    dateFilters: [],
+    attributeFilters: [],
     //summary data
     combinations: 0,
     attributes: 0,

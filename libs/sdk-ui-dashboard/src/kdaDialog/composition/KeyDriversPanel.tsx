@@ -20,8 +20,8 @@ import { KdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export interface KeyDriversPanelProps {
+    detailsId: string;
     loading?: boolean;
-    detailsId?: string;
 }
 
 export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {

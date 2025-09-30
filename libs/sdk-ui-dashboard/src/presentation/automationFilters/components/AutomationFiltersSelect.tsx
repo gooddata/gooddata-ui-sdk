@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, RefObject, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,6 +34,11 @@ import {
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
+import {
+    AUTOMATION_FILTERS_DIALOG_ID,
+    AUTOMATION_FILTERS_DIALOG_TITLE_ID,
+    AUTOMATION_FILTERS_GROUP_LABEL_ID,
+} from "../../constants/automations.js";
 import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
 
@@ -88,10 +93,12 @@ export function AutomationFiltersSelect({
         dateDatasets,
         attributeConfigs,
         dateConfigs,
+        filterAnnouncement,
         handleAddFilter,
         handleDeleteFilter,
         handleChangeFilter,
         handleStoreFiltersChange,
+        setAddFilterButtonRefs,
     } = useAutomationFilters({
         availableFilters,
         selectedFilters,
@@ -111,11 +118,17 @@ export function AutomationFiltersSelect({
     };
 
     const automationFilterSelectTooltipId = useIdPrefixed("automation-filter-select-tooltip");
-    const tooltipText = intl.formatMessage({ id: "dialogs.automation.filters.add" });
+    const isAddButtonDisabled = availableFilters?.length === selectedFilters?.length;
+    const tooltipTextValues = {
+        add: intl.formatMessage({ id: "dialogs.automation.filters.add" }),
+        addDisabled: intl.formatMessage({ id: "dialogs.automation.filters.addDisabled" }),
+    };
+    const tooltipText = isAddButtonDisabled ? tooltipTextValues.addDisabled : tooltipTextValues.add;
+    const searchAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.searchAriaLabel" });
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
-            <div className="gd-label">
+            <div className="gd-label" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
                 {isExpandable ? (
                     <BubbleHoverTrigger showDelay={500} hideDelay={0}>
                         <UiButton
@@ -128,12 +141,12 @@ export function AutomationFiltersSelect({
                             iconAfter={isExpanded ? "navigateUp" : "navigateDown"}
                             accessibilityConfig={{
                                 ariaExpanded: isExpanded,
-                                ariaLabel: isExpanded
+                                ariaDescription: isExpanded
                                     ? intl.formatMessage({
-                                          id: "dialogs.automation.filters.showLess.ariaLabel",
+                                          id: "dialogs.automation.filters.showLess.ariaDescription",
                                       })
                                     : intl.formatMessage({
-                                          id: "dialogs.automation.filters.showAll.ariaLabel",
+                                          id: "dialogs.automation.filters.showAll.ariaDescription",
                                       }),
                                 iconAriaHidden: true,
                             }}
@@ -154,7 +167,11 @@ export function AutomationFiltersSelect({
                 )}
             </div>
             <div className="gd-automation-filters">
-                <div className="gd-automation-filters__list">
+                <div
+                    className="gd-automation-filters__list"
+                    role="group"
+                    aria-labelledby={AUTOMATION_FILTERS_GROUP_LABEL_ID}
+                >
                     {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => {
                         const isCommonDateFilter =
                             isDashboardCommonDateFilter(filter) ||
@@ -180,6 +197,7 @@ export function AutomationFiltersSelect({
                     })}
                     {isExpanded || !isExpandable ? (
                         <AttributesDropdown
+                            id={AUTOMATION_FILTERS_DIALOG_ID}
                             onClose={() => {}}
                             onSelect={(value) => {
                                 handleAddFilter(value, attributes, dateDatasets);
@@ -194,7 +212,11 @@ export function AutomationFiltersSelect({
                                 getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
                             }
                             renderVirtualisedList={true}
-                            DropdownButtonComponent={({ buttonRef, onClick }) => (
+                            accessibilityConfig={{
+                                ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
+                                searchAriaLabel: searchAriaLabel,
+                            }}
+                            DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
                                 <UiTooltip
                                     arrowPlacement="left"
                                     triggerBy={["hover", "focus"]}
@@ -205,9 +227,15 @@ export function AutomationFiltersSelect({
                                             label={tooltipText}
                                             onClick={onClick}
                                             variant="tertiary"
-                                            ref={buttonRef as RefObject<HTMLButtonElement>}
+                                            isDisabled={isAddButtonDisabled}
+                                            ref={(element) => {
+                                                setAddFilterButtonRefs(element, buttonRef);
+                                            }}
                                             accessibilityConfig={{
                                                 ariaLabel: tooltipText,
+                                                ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
+                                                ariaExpanded: isOpen,
+                                                ariaHaspopup: "dialog",
                                             }}
                                         />
                                     }
@@ -215,7 +243,7 @@ export function AutomationFiltersSelect({
                             )}
                             DropdownTitleComponent={() => (
                                 <div className="gd-automation-filters__dropdown-header">
-                                    <Typography tagName="h3">
+                                    <Typography tagName="h3" id={AUTOMATION_FILTERS_DIALOG_TITLE_ID}>
                                         <FormattedMessage id="dialogs.automation.filters.title" />
                                     </Typography>
                                 </div>
@@ -284,6 +312,11 @@ export function AutomationFiltersSelect({
                         />
                     </div>
                 ) : null}
+            </div>
+
+            {/* Screen reader announcement when filters are added, removed, or changed */}
+            <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
+                {filterAnnouncement}
             </div>
         </div>
     );

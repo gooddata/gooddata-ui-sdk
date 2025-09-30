@@ -149,34 +149,26 @@ describe("live features", () => {
 
     it("full definition - BOOLEAN", async () => {
         mockReturn([
-            createFeature("ADMeasureValueFilterNullAsZeroOption", "BOOLEAN", true),
             createFeature("dashboardEditModeDevRollout", "BOOLEAN", true),
-            createFeature("enableKPIDashboardDeleteFilterButton", "BOOLEAN", true),
             createFeature("enableSortingByTotalGroup", "BOOLEAN", true),
         ]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADMeasureValueFilterNullAsZeroOption: true,
             dashboardEditModeDevRollout: true,
-            enableKPIDashboardDeleteFilterButton: true,
             enableSortingByTotalGroup: true,
         });
     });
 
     it("full definition - STRING", async () => {
         mockReturn([
-            createFeature("ADMeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
             createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
-            createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableSortingByTotalGroup", "STRING", "TRUE"),
         ]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
-            enableKPIDashboardDeleteFilterButton: true,
             enableSortingByTotalGroup: true,
         });
     });

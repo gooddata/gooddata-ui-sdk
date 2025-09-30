@@ -639,24 +639,28 @@
         "value": "Show all",
         "comment": "Button label to expand and show the complete list of filters"
     },
-    "dialogs.automation.filters.showAll.ariaLabel": {
-        "value": "Expand to show all applied filters",
-        "comment": "Accessibility label for the button that shows all filters"
+    "dialogs.automation.filters.showAll.ariaDescription": {
+        "value": "Use to show all filters.",
+        "comment": "Accessibility description for the button that shows all filters"
     },
     "dialogs.automation.filters.showLess": {
         "value": "Show less",
         "comment": "Button label to collapse and show fewer filters in the list"
     },
-    "dialogs.automation.filters.showLess.ariaLabel": {
-        "value": "Collapse to show less applied filters",
-        "comment": "Accessibility label for the button that collapses the filter list"
+    "dialogs.automation.filters.showLess.ariaDescription": {
+        "value": "Use to show less filters.",
+        "comment": "Accessibility description for the button that collapses the filter list"
     },
     "dialogs.automation.filters.add": {
-        "value": "Add filters",
+        "value": "Add filter",
         "comment": "Button label to add a new filter in the automation dialog"
     },
+    "dialogs.automation.filters.addDisabled": {
+        "value": "Add filter disabled — all filters have been added.",
+        "comment": "Button label to add a new filter in the automation dialog when the button is disabled"
+    },
     "dialogs.automation.filters.title": {
-        "value": "Add filters",
+        "value": "Add filter",
         "comment": "Title of the dialog for adding filters to automation"
     },
     "dialogs.automation.filters.noFilters": {
@@ -666,6 +670,22 @@
     "dialogs.automation.filters.useFiltersMessage": {
         "value": "Always use these filters for future exports",
         "comment": "Message explaining that selected filters will be applied to all future exports"
+    },
+    "dialogs.automation.filters.searchAriaLabel": {
+        "value": "Search filters",
+        "comment": "Accessibility label for the search input in the automation dialog"
+    },
+    "dialogs.automation.filters.deleteAriaLabel": {
+        "value": "Remove filter",
+        "comment": "Accessibility label for the button that removes a filter from automation"
+    },
+    "dialogs.automation.filters.deleteTooltip": {
+        "value": "Remove filter",
+        "comment": "Tooltip text for the button that removes a filter from automation"
+    },
+    "dialogs.automation.filters.lockedTooltip": {
+        "value": "This filter is locked and cannot be removed.",
+        "comment": "Tooltip text for locked filter in automation create dialog"
     },
     "dialogs.automation.filters.useFiltersMessage.tooltip": {
         "value": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard.",
@@ -2615,6 +2635,10 @@
         "value": "Error: Alert can't be sent — the source widget was deleted. Delete the alert or contact your administrator.",
         "comment": "Error message for alert configuration"
     },
+    "insightAlert.config.missingThreshold": {
+        "value": "Error: Required field — enter a threshold value to continue.",
+        "comment": "Error message when threshold value is not provided in alert configuration"
+    },
     "insightAlert.config.selectMetric": {
         "value": "Select a metric",
         "comment": "Label of metric select dropdown"
@@ -2687,8 +2711,100 @@
         "value": "Visualization switched back to original view",
         "comment": "Screen reader announcement when a table is switched back to chart format for better accessibility"
     },
+    "automationFilters.announcement.filterAdded": {
+        "value": "Filter {title} added.",
+        "comment": "Screen reader announcement when a filter is added to automation configuration. Example: 'Filter Department added.'"
+    },
+    "automationFilters.announcement.filterRemoved": {
+        "value": "Filter {title} removed.",
+        "comment": "Screen reader announcement when a filter is removed from automation configuration. Example: 'Filter Department removed.'"
+    },
+    "automationFilters.announcement.filterChanged": {
+        "value": "Filter {title} changed.",
+        "comment": "Screen reader announcement when a filter's settings are modified in automation configuration. Example: 'Filter Department changed.'"
+    },
     "dashboard.crossFilter.success": {
         "value": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart.",
         "comment": "Success message shown when cross filters are applied from a chart visualization."
+    },
+    "kdaDialog.dialog.title": {
+        "value": "Key driver analysis for {metric}",
+        "comment": "Dialog title for key driver analysis"
+    },
+    "kdaDialog.dialog.closeLabel": {
+        "value": "Close",
+        "comment": "Dialog close button label"
+    },
+    "kdaDialog.dialog.bars.metric.title": {
+        "value": "Metric",
+        "comment": "Metric title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.filters.title": {
+        "value": "Filters",
+        "comment": "Filters title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.date.title": {
+        "value": "Date range: {title}",
+        "comment": "Date range title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.title": {
+        "value": "Key drivers",
+        "comment": "Key drivers title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.tooltip": {
+        "value": "List of key drivers sorted by impact",
+        "comment": "Key drivers tooltip in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.button.trendUp": {
+        "value": "Increasing ({count})",
+        "comment": "Key drivers button trend up in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.button.trendDown": {
+        "value": "Decreasing ({count})",
+        "comment": "Key drivers button trend down in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.title": {
+        "value": "Analysis summary",
+        "comment": "Key drivers overview summary title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": {
+        "value": "Tested {combinations} variants with <button>{attributes} attributes</button>",
+        "comment": "Key drivers overview summary drivers description in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": {
+        "value": "Click on column to see key drivers for given country",
+        "comment": "Key drivers overview detail tip in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.title": {
+        "value": "Change in {title} by {category}",
+        "comment": "Key drivers overview detail title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": {
+        "value": "Attribute",
+        "comment": "Key drivers overview detail table attribute column header in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.driver": {
+        "value": "Most significant driver",
+        "comment": "Key drivers overview detail table driver column header in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.detail.table.drivers": {
+        "value": "Num. of drivers",
+        "comment": "Key drivers overview detail table drivers column header in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.attribute.deleteLabel": {
+        "value": "Remove attribute filter",
+        "comment": "Key drivers dialog attribute delete label in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.date.period.title": {
+        "value": "Period comparison",
+        "comment": "Key drivers dialog date title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": {
+        "value": "Same period previous year",
+        "comment": "Key drivers dialog date same period previous year in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.bars.date.period.previousPeriod": {
+        "value": "Previous period",
+        "comment": "Key drivers dialog date previous period in key driver analysis dialog"
     }
 }

@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Remove unused feature flag: enableKPIDashboardDrillToURL",
+            "comment": "Remove unused feature flag: enableKPIDashboardDeleteFilterButton",
             "type": "none"
         }
     ],

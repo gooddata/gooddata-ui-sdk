@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Remove unused feature flag: enableAlternativeDisplayFormSelection",
+            "comment": "create alert/schedule dialog accessibility, changes to sdk components",
             "type": "none"
         }
     ],

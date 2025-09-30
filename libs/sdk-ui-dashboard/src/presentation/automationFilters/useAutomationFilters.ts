@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
+
+import { useIntl } from "react-intl";
 
 import {
     FilterContextItem,
@@ -15,6 +17,7 @@ import {
     getCatalogAttributesByFilters,
     getCatalogDateDatasetsByFilters,
     getFilterByCatalogItemRef,
+    getFilterTitle,
     getNonHiddenFilters,
     getNonSelectedFilters,
 } from "./utils.js";
@@ -43,6 +46,7 @@ export const useAutomationFilters = ({
     onFiltersChange: (filters: FilterContextItem[]) => void;
     onStoreFiltersChange: (shouldStore: boolean, filters: FilterContextItem[]) => void;
 }) => {
+    const intl = useIntl();
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
@@ -50,6 +54,11 @@ export const useAutomationFilters = ({
     const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
+
+    const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
+
+    const addFilterButtonRef = useRef<HTMLButtonElement>(null);
+
     const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
     const visibleFilters = useMemo(() => {
@@ -71,11 +80,25 @@ export const useAutomationFilters = ({
         [nonSelectedFilters, allDateDatasets, dateConfigs],
     );
 
+    const focusAddFilterButton = useCallback(() => {
+        //focus add button, use requestAnimationFrame to wait for rerender
+        requestAnimationFrame(() => {
+            addFilterButtonRef.current?.focus();
+        });
+    }, []);
+
     const handleChangeFilter = useCallback(
         (filter: FilterContextItem | undefined) => {
             if (!filter) {
                 return;
             }
+
+            const filterTitle = getFilterTitle(filter, allAttributes, allDateDatasets, intl);
+            const message = intl.formatMessage(
+                { id: "automationFilters.announcement.filterChanged" },
+                { title: filterTitle },
+            );
+            setFilterAnnouncement(message);
 
             const updatedFilters = selectedFilters.map((prevFilter) => {
                 if (areFiltersMatchedByIdentifier(prevFilter, filter)) {
@@ -85,17 +108,26 @@ export const useAutomationFilters = ({
             });
             onFiltersChange(updatedFilters);
         },
-        [onFiltersChange, selectedFilters],
+        [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl],
     );
 
     const handleDeleteFilter = useCallback(
         (filter: FilterContextItem) => {
+            const filterTitle = getFilterTitle(filter, allAttributes, allDateDatasets, intl);
+            const message = intl.formatMessage(
+                { id: "automationFilters.announcement.filterRemoved" },
+                { title: filterTitle },
+            );
+            setFilterAnnouncement(message);
+
             const updatedFilters = selectedFilters.filter(
                 (prevFilter) => !areFiltersMatchedByIdentifier(prevFilter, filter),
             );
             onFiltersChange(updatedFilters);
+
+            focusAddFilterButton();
         },
-        [onFiltersChange, selectedFilters],
+        [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl, focusAddFilterButton],
     );
 
     const handleAddFilter = useCallback(
@@ -127,11 +159,28 @@ export const useAutomationFilters = ({
             const filter = attributeFilter || dateFilter;
 
             if (filter) {
+                const filterTitle = getFilterTitle(filter, allAttributes, allDateDatasets, intl);
+                const message = intl.formatMessage(
+                    { id: "automationFilters.announcement.filterAdded" },
+                    { title: filterTitle },
+                );
+                setFilterAnnouncement(message);
+
                 const updatedFilters = [...selectedFilters, filter];
                 onFiltersChange(updatedFilters);
+
+                focusAddFilterButton();
             }
         },
-        [nonSelectedFilters, onFiltersChange, selectedFilters],
+        [
+            nonSelectedFilters,
+            onFiltersChange,
+            selectedFilters,
+            allAttributes,
+            allDateDatasets,
+            intl,
+            focusAddFilterButton,
+        ],
     );
 
     const handleStoreFiltersChange = useCallback(
@@ -139,6 +188,17 @@ export const useAutomationFilters = ({
             onStoreFiltersChange(value, selectedFilters);
         },
         [onStoreFiltersChange, selectedFilters],
+    );
+
+    // Function to set ref for AttributesDropdown and also add filter button ref for custom focus management
+    const setAddFilterButtonRefs = useCallback(
+        (element: HTMLButtonElement | null, dropdownButtonRef?: MutableRefObject<HTMLElement>) => {
+            addFilterButtonRef.current = element;
+            if (dropdownButtonRef && element) {
+                dropdownButtonRef.current = element;
+            }
+        },
+        [],
     );
 
     return {
@@ -149,9 +209,11 @@ export const useAutomationFilters = ({
         dateDatasets,
         attributeConfigs,
         dateConfigs,
+        filterAnnouncement,
         handleChangeFilter,
         handleDeleteFilter,
         handleAddFilter,
         handleStoreFiltersChange,
+        setAddFilterButtonRefs,
     };
 };

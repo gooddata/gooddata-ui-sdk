@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useCallback } from "react";
+import { MutableRefObject, ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -34,7 +34,9 @@ export function AutomationAttributeFilter({
     overlayPositionType?: OverlayPositionType;
 }) {
     const intl = useIntl();
-    const deleteAriaLabel = intl.formatMessage({ id: "delete" });
+    const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
+    const deleteTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.deleteTooltip" });
+    const lockedTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
 
     return (
         <AutomationAttributeFilterProvider
@@ -43,6 +45,8 @@ export function AutomationAttributeFilter({
             onDelete={onDelete}
             isLocked={isLocked}
             deleteAriaLabel={deleteAriaLabel}
+            deleteTooltipContent={deleteTooltipContent}
+            lockedTooltipContent={lockedTooltipContent}
         >
             <AttributeFilterWrapper
                 displayAsLabel={displayAsLabel}
@@ -94,46 +98,67 @@ function AutomationAttributeFilterLoadingComponent() {
 }
 
 function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilterDropdownButtonProps) {
-    const { isLocked, onDelete, filter, deleteAriaLabel } = useAutomationAttributeFilterContext();
+    const { isLocked, onDelete, filter, deleteAriaLabel, deleteTooltipContent, lockedTooltipContent } =
+        useAutomationAttributeFilterContext();
     const label = `${props.title!}: ${props.subtitle!}`;
     const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
     const attributeFilterTooltipId = useIdPrefixed("attribute-filter-tooltip");
+    const attributeFilterDeleteTooltipId = useIdPrefixed("attribute-filter-delete-tooltip");
 
     const tooltipContent = (
         <>
             {label}
             {tag ? ` ${tag}` : null}
+            {isLocked ? <div>{lockedTooltipContent}</div> : null}
         </>
     );
 
     return (
-        <UiTooltip
-            id={attributeFilterTooltipId}
-            arrowPlacement="top-start"
-            width={300}
-            content={tooltipContent}
-            triggerBy={["hover", "focus"]}
-            anchor={
-                <UiChip
-                    label={label}
-                    tag={tag}
-                    isLocked={isLocked}
-                    isActive={props.isOpen}
-                    isDeletable={!isLocked}
-                    onClick={props.onClick}
-                    onDelete={() => onDelete?.(filter!)}
-                    onDeleteKeyDown={(event) => {
-                        // Do not propagate event to parent as attribute filter would always open
-                        event.stopPropagation();
+        <UiChip
+            label={label}
+            tag={tag}
+            isLocked={isLocked}
+            isActive={props.isOpen}
+            isDeletable={!isLocked}
+            onClick={props.onClick}
+            onDelete={() => onDelete?.(filter!)}
+            onDeleteKeyDown={(event) => {
+                // Do not propagate event to parent as attribute filter would always open
+                event.stopPropagation();
+            }}
+            accessibilityConfig={{
+                isExpanded: props.isOpen,
+                deleteAriaLabel,
+                ariaDescribedBy: attributeFilterTooltipId,
+            }}
+            buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
+            renderChipContent={(content: ReactNode) => (
+                <UiTooltip
+                    id={attributeFilterTooltipId}
+                    arrowPlacement="top-start"
+                    content={tooltipContent}
+                    triggerBy={["hover", "focus"]}
+                    anchor={content}
+                    anchorWrapperStyles={{
+                        display: "flex",
+                        width: "100%",
+                        height: "100%",
+                        minWidth: 0,
                     }}
-                    accessibilityConfig={{
-                        isExpanded: props.isOpen,
-                        deleteAriaLabel,
-                        ariaDescribedBy: attributeFilterTooltipId,
-                    }}
-                    buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
                 />
-            }
+            )}
+            renderDeleteButton={(button: ReactNode) => (
+                <UiTooltip
+                    id={attributeFilterDeleteTooltipId}
+                    arrowPlacement="top-start"
+                    content={deleteTooltipContent}
+                    triggerBy={["hover", "focus"]}
+                    anchor={button}
+                    anchorWrapperStyles={{
+                        height: "100%",
+                    }}
+                />
+            )}
         />
     );
 }

@@ -13,7 +13,7 @@ import {
     areObjRefsEqual,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
-import { IExtendedExportConfig, type ILocale, VisualizationTypes } from "@gooddata/sdk-ui";
+import { IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 import { useExportHandler } from "./useExportHandler.js";
@@ -39,7 +39,6 @@ import {
     selectIsExportableToPdfTabular,
     selectIsExportableToPngImage,
     selectIsExportableToXLSX,
-    selectLocale,
     selectSettings,
     selectShowWidgetAsTable,
     selectSlideShowExportVisible,
@@ -52,8 +51,11 @@ import {
 } from "../../dashboardContexts/index.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
 
-function getDefaultPageSize(locale?: ILocale) {
-    return locale === "en-US" || locale === "fr-CA" ? "LETTER" : "A4";
+function getDefaultPageSize(formatLocale?: string) {
+    const normalizedLocale = formatLocale?.replace("_", "-");
+    const region = normalizedLocale?.split("-")[1]?.toUpperCase();
+
+    return region === "US" || region === "CA" ? "LETTER" : "A4";
 }
 
 export const useInsightExport = (config: {
@@ -66,7 +68,7 @@ export const useInsightExport = (config: {
     const { title, widgetRef, insight, widget, enableNewTabularExport = true } = config;
     const [isExporting, setIsExporting] = useState(false);
     const intl = useIntl();
-    const locale = useDashboardSelector(selectLocale);
+    const { formatLocale } = useDashboardSelector(selectSettings);
 
     const dispatch = useDashboardDispatch();
     const exportFunction = useCallback(
@@ -171,7 +173,7 @@ export const useInsightExport = (config: {
 
     const { exportToTabular } = useExportToTabular(() => setIsExporting(false));
     const onExportPdfTabular = useCallback(() => {
-        const defaultPageSize = getDefaultPageSize(locale);
+        const defaultPageSize = getDefaultPageSize(formatLocale);
         if (enableNewTabularExport) {
             openPdfDialog({
                 onSubmit: ({ pageSize, pageOrientation, showInfoPage }) => {
@@ -211,7 +213,7 @@ export const useInsightExport = (config: {
         closePdfDialog,
         widget,
         exportToTabular,
-        locale,
+        formatLocale,
         exportFunction,
     ]);
 
@@ -236,9 +238,9 @@ export const useInsightExport = (config: {
                     );
                 },
                 headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
-                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
+                mergeHeaders: true,
                 mergeHeadersTitle: null,
-                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
+                includeFilterContext: true,
                 filterContextVisible: true,
                 filterContextTitle: null,
                 filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
@@ -264,8 +266,8 @@ export const useInsightExport = (config: {
                         title,
                     }).finally(() => setIsExporting(false));
                 },
-                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
-                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
+                includeFilterContext: true,
+                mergeHeaders: true,
                 filterContextVisible: Boolean(settings?.["enableActiveFilterContext"] ?? true),
             });
         }
@@ -273,8 +275,6 @@ export const useInsightExport = (config: {
         dashboardTabularExportEnabled,
         openXlsxDialog,
         intl,
-        settings?.["cellMergedByDefault"],
-        settings?.["activeFiltersByDefault"],
         settings?.["enableActiveFilterContext"],
         closeXlsxDialog,
         exportToTabular,

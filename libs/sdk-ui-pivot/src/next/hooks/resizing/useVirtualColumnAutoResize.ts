@@ -5,6 +5,8 @@ import { useCallback, useRef } from "react";
 import { GridApi, VirtualColumnsChangedEvent } from "ag-grid-enterprise";
 import { debounce } from "lodash-es";
 
+import { usePrevious } from "@gooddata/sdk-ui";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { AgGridColumn, AgGridOnVirtualColumnsChanged, AgGridProps } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";
@@ -20,12 +22,19 @@ import { AgGridRowData } from "../../types/internal.js";
  */
 export function useVirtualColumnAutoResize(): (agGridReactProps: AgGridProps) => AgGridProps {
     const { config } = usePivotTableProps();
-    const { columnSizing } = config;
+    const { columnSizing, columnHeadersPosition } = config;
     const { defaultWidth } = columnSizing;
 
     const shouldAutoResizeDisplayedColumns = defaultWidth === "autoresizeAll" || defaultWidth === "viewport";
 
     const processedColumnsRef = useRef<Set<string>>(new Set());
+
+    const previousColumnHeadersPosition = usePrevious(columnHeadersPosition);
+
+    // Avoid skipping columns autosize on column headers position change
+    if (columnHeadersPosition !== previousColumnHeadersPosition) {
+        processedColumnsRef.current = new Set();
+    }
 
     const debouncedAutoSize = useRef(
         debounce((api: GridApi<AgGridRowData>, columns: AgGridColumn[]) => {

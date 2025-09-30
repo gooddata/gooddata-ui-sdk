@@ -102,5 +102,3 @@ export { EmbedInsightDialog } from "./components/dialogs/embedInsightDialog/Embe
 export type { IEmbedInsightDialogProps } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
 
 export type { IInsightTitleProps, IInsightViewProps } from "./interfaces/InsightView.js";
-
-export * from "../kdaDialog/internal.js";

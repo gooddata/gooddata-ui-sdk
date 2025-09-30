@@ -77,7 +77,14 @@ export interface IDropdownButtonRenderProps {
      */
     accessibilityConfig: Pick<
         IButtonAccessibilityConfig,
-        "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy"
+        | "role"
+        | "isExpanded"
+        | "popupId"
+        | "ariaLabel"
+        | "ariaDescribedBy"
+        | "ariaControls"
+        | "ariaExpanded"
+        | "ariaHaspopup"
     >;
 }
 

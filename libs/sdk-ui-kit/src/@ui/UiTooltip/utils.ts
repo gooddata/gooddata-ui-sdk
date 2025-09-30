@@ -19,14 +19,26 @@ const parsePlacement = (placement: TooltipArrowPlacement) => {
     return { basicPlacement, axisPlacement };
 };
 
-export const getOppositeBasicPlacement = (arrowPlacement: TooltipArrowPlacement) => {
-    const basicPlacement = parsePlacement(arrowPlacement).basicPlacement;
-    return oppositeSides[basicPlacement] as Placement;
+export const getOppositeBasicPlacement = (
+    arrowPlacement: TooltipArrowPlacement,
+    behaviour: "tooltip" | "popover",
+) => {
+    const parsedPlacement = parsePlacement(arrowPlacement);
+    const { basicPlacement, axisPlacement } = parsedPlacement;
+    const opposite = oppositeSides[basicPlacement] as Placement;
+
+    if (behaviour === "popover") {
+        return `${opposite}-${axisPlacement}` as Placement;
+    }
+    return opposite;
 };
 
-export const getFlipFallbackOrder = (arrowPlacement: TooltipArrowPlacement) => {
+export const getFlipFallbackOrder = (
+    arrowPlacement: TooltipArrowPlacement,
+    behaviour: "tooltip" | "popover",
+) => {
     const basicPlacement = parsePlacement(arrowPlacement).basicPlacement;
-    const oppositePlacement = getOppositeBasicPlacement(arrowPlacement);
+    const oppositePlacement = getOppositeBasicPlacement(arrowPlacement, behaviour);
     const remaining = Object.values(oppositeSides).filter(
         (side) => side !== basicPlacement && side !== oppositePlacement,
     );

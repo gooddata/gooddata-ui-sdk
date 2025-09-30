@@ -19,7 +19,6 @@ import {
     ObjectAvailabilityConfig,
     ResolvedDashboardConfig,
 } from "../../types/commonTypes.js";
-import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -258,6 +257,18 @@ export const selectDateFormat: DashboardSelector<string | undefined> = createSel
 );
 
 /**
+ * Returns whether the current user can schedule emails.
+ *
+ * @public
+ */
+export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardSchedule ?? false;
+    },
+);
+
+/**
  * Returns current platform edition.
  *
  * @public
@@ -292,14 +303,50 @@ export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | numbe
     });
 
 /**
- * Returns whether implicit drill to attributes url enabled
+ * Returns whether the drill to dashboard is enabled.
  *
  * @public
  */
-export const selectEnableKPIDashboardImplicitDrillDown: DashboardSelector<boolean> = createSelector(
+export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableKPIDashboardImplicitDrillDown ?? false;
+        return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
+    },
+);
+
+/**
+ * Returns whether the save as new dashboard functionality is enabled.
+ *
+ * @public
+ */
+export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardSaveAsNew ?? false;
+    },
+);
+
+/**
+ * Returns whether drill to url is enabled
+ *
+ * @public
+ */
+export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillToURL ?? false;
+    },
+);
+
+/**
+ * Returns whether drill to insight is enabled
+ *
+ * @public
+ */
+export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKPIDashboardDrillToInsight ?? false;
     },
 );
 
@@ -349,18 +396,6 @@ export const selectEnableAutomations: DashboardSelector<boolean> = createSelecto
 );
 
 /**
- * Returns whether analytical dashboard permissions are enabled
- *
- * @internal
- */
-export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAnalyticalDashboardPermissions ?? true;
-    },
-);
-
-/**
  * Returns whether we should call workspaces workspaces (true) or projects (false).
  *
  * @internal
@@ -368,7 +403,7 @@ export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boole
 export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return !!(state.settings?.enableRenamingProjectToWorkspace ?? true);
+        return state.settings?.enableRenamingProjectToWorkspace ?? true;
     },
 );
 
@@ -417,16 +452,6 @@ export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean> = cre
 );
 
 /**
- * Returns whether delete button in dashboard attribute filters is visible.
- *
- * @internal
- */
-export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => !!(state.settings?.["enableKPIDashboardDeleteFilterButton"] || false),
-);
-
-/**
  * Returns whether dependent filters are enabled.
  *
  * @internal
@@ -451,6 +476,16 @@ export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = cre
     (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
         return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
     },
+);
+
+/**
+ * Returns whether choice of alternate display forms is enabled.
+ *
+ * @internal
+ */
+export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => state.settings?.enableAlternativeDisplayFormSelection || false,
 );
 
 /**
@@ -483,22 +518,6 @@ export const selectIsDisableUserFilterReset: DashboardSelector<boolean> = create
     selectConfig,
     (state) => {
         return state.disableUserFilterReset ?? false;
-    },
-);
-
-/**
- * Returns whether drill down is enabled.
- *
- * On Bear, drill down is driven by isKPIDashboardImplicitDrillDown.
- * On Tiger, it is driven by attribute hierarchies, thus isAttribueHierarchiesEnabled.
- *
- * @internal
- */
-export const selectIsDrillDownEnabled: DashboardSelector<boolean> = createSelector(
-    selectEnableKPIDashboardImplicitDrillDown,
-    selectSupportsAttributeHierarchies,
-    (isKPIDashboardImplicitDrillDownEnabled, isAttributeHierarchiesEnabled) => {
-        return isKPIDashboardImplicitDrillDownEnabled || isAttributeHierarchiesEnabled;
     },
 );
 

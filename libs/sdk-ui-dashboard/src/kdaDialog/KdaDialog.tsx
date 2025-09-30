@@ -3,17 +3,17 @@
 import { KdaDialog as KdaDialogComponent } from "./dialog/KdaDialog.js";
 import { KdaStateProvider } from "./providers/KdaState.js";
 import { IKdaDialogProps } from "./types.js";
-import { InternalIntlWrapper } from "../internal/index.js";
+import { IntlWrapper } from "../presentation/localization/index.js";
 
 /**
  * @internal
  */
 export function KdaDialog(props: IKdaDialogProps) {
     return (
-        <InternalIntlWrapper locale={props.locale ?? "en"}>
+        <IntlWrapper locale={props.locale ?? "en"}>
             <KdaStateProvider>
                 <KdaDialogComponent {...props} />
             </KdaStateProvider>
-        </InternalIntlWrapper>
+        </IntlWrapper>
     );
 }

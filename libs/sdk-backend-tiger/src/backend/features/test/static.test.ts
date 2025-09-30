@@ -29,9 +29,7 @@ describe("static features", () => {
     it("full definition", async () => {
         const results = await getStaticFeatures(
             createFeatures({
-                [TigerFeaturesNames.ADMeasureValueFilterNullAsZeroOption]: "EnabledUncheckedByDefault",
                 [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
-                [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -39,9 +37,7 @@ describe("static features", () => {
             }),
         );
         expect(results).toEqual({
-            ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
-            enableKPIDashboardDeleteFilterButton: true,
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
@@ -53,9 +49,7 @@ describe("static features", () => {
         const results = await getStaticFeatures(
             createFeatures(
                 {
-                    [TigerFeaturesNames.ADMeasureValueFilterNullAsZeroOption]: "EnabledUncheckedByDefault",
                     [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
-                    [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -65,9 +59,7 @@ describe("static features", () => {
             ),
         );
         expect(results).toEqual({
-            ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
-            enableKPIDashboardDeleteFilterButton: true,
             enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,

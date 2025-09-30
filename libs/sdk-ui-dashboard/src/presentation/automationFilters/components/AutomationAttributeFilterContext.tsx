@@ -15,6 +15,8 @@ export interface IAutomationAttributeFilterContext {
     filter: IDashboardAttributeFilter;
     isLocked?: boolean;
     deleteAriaLabel?: string;
+    deleteTooltipContent?: string;
+    lockedTooltipContent?: string;
 }
 
 /**
@@ -41,10 +43,20 @@ export function AutomationAttributeFilterProvider({
     isLocked,
     filter,
     deleteAriaLabel,
+    deleteTooltipContent,
+    lockedTooltipContent,
 }: IAutomationAttributeFilterProviderProps) {
     return (
         <AutomationAttributeFilterContext.Provider
-            value={{ onChange, onDelete, isLocked, filter, deleteAriaLabel }}
+            value={{
+                onChange,
+                onDelete,
+                isLocked,
+                filter,
+                deleteAriaLabel,
+                deleteTooltipContent,
+                lockedTooltipContent,
+            }}
         >
             {children}
         </AutomationAttributeFilterContext.Provider>

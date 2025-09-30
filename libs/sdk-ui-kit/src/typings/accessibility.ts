@@ -15,6 +15,7 @@ export interface IAccessibilityConfigBase {
     ariaControls?: AriaAttributes["aria-controls"];
     ariaActiveDescendant?: AriaAttributes["aria-activedescendant"];
     ariaCurrent?: AriaAttributes["aria-current"];
+    ariaHaspopup?: AriaAttributes["aria-haspopup"];
 }
 
 /**

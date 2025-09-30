@@ -41,6 +41,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     isDisabledFocusable = false,
     isCompact = false,
 
+    reference,
     ariaAttributes,
 }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
     const isItemFocusable = useCallback(
@@ -185,6 +186,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
             <ul
                 className={e("items")}
+                ref={reference}
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
                 aria-activedescendant={makeItemId(ariaAttributes.id, focusedItem)}

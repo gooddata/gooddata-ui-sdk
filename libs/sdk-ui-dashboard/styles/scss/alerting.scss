@@ -482,3 +482,11 @@
     background: kit-variables.$gd-border-color;
     margin: 4px 0;
 }
+
+.gd-threshold-field-error {
+    font-size: 12px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    color: kit-variables.$gd-palette-error-base;
+}

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
 
 import cx from "classnames";
 
@@ -36,12 +36,11 @@ export const ExportDialogBase = memo<IExportDialogBaseProps>(function ExportDial
     mergeHeadersTitle = "CELLS",
 
     includeFilterContext = true,
-    mergeHeaders = true,
 }) {
     const effectiveIncludeFilterContext = filterContextVisible ? includeFilterContext : false;
 
     const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(effectiveIncludeFilterContext);
-    const [shouldMergeHeaders, setShouldMergeHeaders] = usePropState(mergeHeaders);
+    const [shouldMergeHeaders, setShouldMergeHeaders] = useState(true);
 
     const dialogId = useIdPrefixed("exportDialog");
     const mergeHeadersId = useIdPrefixed("mergeHeaders");

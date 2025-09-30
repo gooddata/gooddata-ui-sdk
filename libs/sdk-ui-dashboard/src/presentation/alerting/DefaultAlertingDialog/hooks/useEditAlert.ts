@@ -64,6 +64,7 @@ import {
     getAlertRelativeOperator,
     getMeasureFormatsFromExecution,
 } from "../utils/getters.js";
+import { isAlertValueDefined } from "../utils/guards.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
@@ -455,7 +456,12 @@ export function useEditAlert(props: IUseEditAlertProps) {
         onFiltersChange(filtersForNewAutomation);
     }, [filtersForNewAutomation, onFiltersChange]);
 
-    const { value, onChange, onBlur } = useThresholdValue(
+    const {
+        value,
+        onChange,
+        onBlur,
+        errorMessage: thresholdErrorMessage,
+    } = useThresholdValue(
         onValueChange,
         getMetricValue,
         isNewAlert,
@@ -465,6 +471,8 @@ export function useEditAlert(props: IUseEditAlertProps) {
         selectedAttribute,
         selectedValue,
     );
+
+    const hasValidThreshold = isAlertValueDefined(editedAutomation.alert);
 
     const validationErrorMessage = isOriginalAutomationValid
         ? undefined
@@ -498,6 +506,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
         hasValidCreatorRecipient &&
         hasNoUnknownRecipients &&
         hasFilledEmails &&
+        hasValidThreshold &&
         isTitleValid;
 
     const isSubmitDisabled = !isValid || (alertToEdit && isEqual(originalAutomation, editedAutomation));
@@ -541,5 +550,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
         validationErrorMessage,
         isSubmitDisabled,
         isParentValid,
+        thresholdErrorMessage,
     };
 }
