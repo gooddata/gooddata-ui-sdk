@@ -58,38 +58,37 @@ read the [official documentation](https://rushjs.io/pages/intro/welcome/).
 
 Long story short, here are facts and commands you need to know:
 
--   lock file (shrinkwrap file) is stored in pnpm-lock.yaml.
+- lock file (shrinkwrap file) is stored in pnpm-lock.yaml.
 
--   Rush maintains internal registry of packages in common/temp; all package dependencies are symlinked; projects
-    within the monorepo are also symlinked.
+- Rush maintains internal registry of packages in common/temp; all package dependencies are symlinked; projects
+  within the monorepo are also symlinked.
 
--   the [common](common) directory contains Rush and project configuration including:
+- the [common](common) directory contains Rush and project configuration including:
+    - [lockfile](common/config/rush/pnpm-lock.yaml)
+    - [git hooks scripts](common/git-hooks) which will be automatically installed by Rush
+    - [custom scripts](common/scripts) that can be integrated into
 
-    -   [lockfile](common/config/rush/pnpm-lock.yaml)
-    -   [git hooks scripts](common/git-hooks) which will be automatically installed by Rush
-    -   [custom scripts](common/scripts) that can be integrated into
+- `rush install` - installs dependencies according to the lock file.
 
--   `rush install` - installs dependencies according to the lock file.
-
--   `rush update` - conservatively install dependencies describes in package.json files, update lockfile.
+- `rush update` - conservatively install dependencies describes in package.json files, update lockfile.
 
     This will only install / update dependencies that you have modified.
 
--   `rush update --full` - install and update all dependencies according to the semver, update lockfile.
+- `rush update --full` - install and update all dependencies according to the semver, update lockfile.
 
     This is a more aggressive mode in which Rush will install and use latest applicable versions of packages, possibly
     resulting in a massive change to the lockfile. There is no need to run this as part of typical feature
     development.
 
--   `rush build` - builds all the projects' ESM and CommonJS builds, in the right order, possibly skipping those that have no changes since
-    the last build.
+- `rush build` - builds all the projects' ESM and CommonJS builds, in the right order, possibly skipping those that have no changes since
+  the last build.
 
--   `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository.
+- `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository.
 
     This is typically not needed as Rush will re-link during update. Use in case you encounter strange dependency
     errors during build.
 
--   `rush add` - adds a new dependency to a project.
+- `rush add` - adds a new dependency to a project.
 
 **IMPORTANT**: When `rush` runs builds in the projects it will truncate the project's build outputs when emitting to
 console. It will, however, store full build output into each project's directory. It will create files `<projectId>.build.log`
@@ -210,19 +209,17 @@ Commit message structure:
 
 Must be one of the following:
 
--   `feat` - A new feature
--   `fix` - A bug fix of existing feature
--   `build` - Changes that affect the build system or auxiliary tools and libraries such as eslint or prettier
--   `ci` - Changes to our CI configuration files and scripts
--   `docs` - Documentation changes, JSDoc, comments, changelog
--   `perf` - A code change that improves performance
--   `style` - Changes that do not affect the meaning of the code (white-space, formatting)
--   `refactor` - A code change that neither fixes a bug nor adds a feature. Refactor and cleanup of the
-    source code that retains original functionality.
--   `test` - Adding new tests or correcting existing tests
--   `chore` - Change of code that do not fit anything described above. Changing of `.gitignore`, configuration of linter, etc.
--   `config` - Code change adjusting environment or tooling configuration.
--   `trivial` - Simple, low-risk code change, not bringing a new functionality. This type of change does not have to have JIRA footer.
+- `feat` - A new feature
+- `fix` - A bug fix of existing feature
+- `build` - Changes that affect the build system or auxiliary tools and libraries such as eslint or prettier
+- `ci` - Changes to our CI configuration files and scripts
+- `docs` - Documentation changes, JSDoc, comments, changelog
+- `perf` - A code change that improves performance
+- `style` - Changes that do not affect the meaning of the code (white-space, formatting)
+- `refactor` - A code change that neither fixes a bug nor adds a feature. Refactor and cleanup of the
+  source code that retains original functionality.
+- `test` - Adding new tests or correcting existing tests
+- `chore` - Change of code that do not fit anything described above. Changing of `.gitignore`, configuration of linter, etc.
 
 #### Scope
 
@@ -245,7 +242,7 @@ Lines must be wrapped at 72 characters.
 
 The commit must include a footer.
 
-The first (optional) line contains a JIRA ID reference in the format `JIRA: PROJECT-TICKET_ID`. For changes that do not require a JIRA ticket (e.g., typo fixes), use `JIRA: TRIVIAL` in the footer or omit this line entirely.
+The first (optional) line contains a JIRA ID reference in the format `JIRA: PROJECT-TICKET_ID`. For changes that do not require a JIRA ticket (e.g., typo fixes), omit this line entirely.
 
 The second line specifies the potential risk introduced by the commit in the format `risk: [nonprod|low|high]`, e.g., `risk: low`.
 
@@ -300,14 +297,14 @@ transparent and traceable.
 
 If your Pull Request meets **any** of the following points, please ask some [Code Owner](../.github/CODEOWNERS) for review before merging:
 
--   introduces a breaking change
--   adds a new package
--   adds a new feature
--   adds a new dependency to any package published to NPM or upgrades it to a new major
--   changes the architecture in a non-trivial way
--   changes the implementation/behavior of any public functionality in a non-trivial way
--   changes CI scripts
--   changes package.json scripts
+- introduces a breaking change
+- adds a new package
+- adds a new feature
+- adds a new dependency to any package published to NPM or upgrades it to a new major
+- changes the architecture in a non-trivial way
+- changes the implementation/behavior of any public functionality in a non-trivial way
+- changes CI scripts
+- changes package.json scripts
 
 If your PR does not meet any of the aforementioned criteria, it can be merged by anyone with the necessary rights.
 
@@ -337,8 +334,8 @@ If you are still in doubt, ask.
 
 Before proceeding, first ask yourself:
 
--   Why does the contribution not fit into an existing package? (see [Developer's Guide](./sdk-dev.md))
--   Which of the existing packages is closest fit for the contribution? Why does the contribution not fit in there? (see [Developer's Guide](./sdk-dev.md))
+- Why does the contribution not fit into an existing package? (see [Developer's Guide](./sdk-dev.md))
+- Which of the existing packages is closest fit for the contribution? Why does the contribution not fit in there? (see [Developer's Guide](./sdk-dev.md))
 
 Once you have answers to these questions and still feel a new package is needed, get in touch for approval before
 proceeding.
@@ -399,10 +396,10 @@ Every pull-request can be merged by adding `merge` label. This triggers test scr
 
 You can run all checks which are executed in CI pipelines locally:
 
--   `rush rebuild`
--   `rush validate-ci`
--   `rush test-ci`
--   `cd libs/sdk-ui-tests; npm run backstop-test`
+- `rush rebuild`
+- `rush validate-ci`
+- `rush test-ci`
+- `cd libs/sdk-ui-tests; npm run backstop-test`
 
 > Note: the pipelines WILL NOT run automatically for contributors outside of the GoodData organization. Please ping maintainers
 > to trigger the pipeline execution.

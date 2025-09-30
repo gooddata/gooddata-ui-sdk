@@ -759,6 +759,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaExpanded?: AriaAttributes["aria-expanded"];
     // (undocumented)
+    ariaHaspopup?: AriaAttributes["aria-haspopup"];
+    // (undocumented)
     ariaLabel?: AriaAttributes["aria-label"];
     // (undocumented)
     ariaLabelledBy?: AriaAttributes["aria-labelledby"];
@@ -1648,6 +1650,8 @@ export interface IDropdownBodyRenderProps {
 // @internal (undocumented)
 export interface IDropdownButtonAccessibilityConfig {
     // (undocumented)
+    ariaHaspopup?: AriaAttributes["aria-haspopup"];
+    // (undocumented)
     isExpanded?: boolean;
     // (undocumented)
     popupId?: string;
@@ -1691,7 +1695,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy" | "ariaControls" | "ariaExpanded" | "ariaHaspopup">;
     ariaAttributes: {
         role: AriaRole;
     } & Pick<AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
@@ -6186,7 +6190,7 @@ export interface UiCheckboxProps {
 }
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, }: UiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -6203,6 +6207,8 @@ export interface UiChipProps {
     // (undocumented)
     isDeletable?: boolean;
     // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
     isExpandable?: boolean;
     // (undocumented)
     isLocked?: boolean;
@@ -6214,6 +6220,10 @@ export interface UiChipProps {
     onDelete?: () => void;
     // (undocumented)
     onDeleteKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    renderChipContent?: (content: ReactNode) => ReactNode;
+    // (undocumented)
+    renderDeleteButton?: (button: ReactNode) => ReactNode;
     // (undocumented)
     tag?: string;
 }
@@ -6368,7 +6378,7 @@ export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTre
 export function UiLink({ variant, flipUnderline, fullWidth, ...anchorProps }: IUiLinkProps): JSX.Element;
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
 
 // @internal (undocumented)
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
@@ -6418,6 +6428,8 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode>
     }) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
+    // (undocumented)
+    reference?: RefObject<HTMLUListElement | null>;
     // (undocumented)
     selectedItemId?: string;
     // (undocumented)
@@ -6719,13 +6731,15 @@ export interface UiTagsProps {
 }
 
 // @internal (undocumented)
-export function UiTooltip({ id, anchor, content, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, }: UiTooltipProps): JSX.Element;
+export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles, }: UiTooltipProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiTooltipProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     anchor: ReactNode;
+    anchorWrapperStyles?: CSSProperties;
     arrowPlacement?: TooltipArrowPlacement;
+    behaviour?: "tooltip" | "popover";
     content: ReactNode | ((args: {
         onClose: () => void;
         type: "screen-reader" | "live";

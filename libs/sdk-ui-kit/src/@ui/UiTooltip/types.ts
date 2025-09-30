@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
@@ -59,12 +59,15 @@ export interface UiTooltipProps {
 
     /** ARIA attributes configuration for accessibility */
     accessibilityConfig?: IAccessibilityConfigBase;
-
     /**
      * Tooltip styling variant
      * @defaultValue "default"
      */
     variant?: "default" | "error" | "none";
+    /**
+     * Tooltip behaviour of position
+     */
+    behaviour?: "tooltip" | "popover";
 
     /** If the tooltip is disabled, only the anchor element will be shown */
     disabled?: boolean;
@@ -81,6 +84,11 @@ export interface UiTooltipProps {
      * Controls the open state of the tooltip, overrides the triggerBy prop if set
      */
     isOpen?: boolean;
+
+    /**
+     * Custom styles for the anchor wrapper element
+     */
+    anchorWrapperStyles?: CSSProperties;
 }
 
 export type Dimensions = { width: number; height: number };

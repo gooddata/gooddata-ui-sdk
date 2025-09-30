@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { flatMap, isEmpty, negate } from "lodash-es";
 
@@ -35,7 +36,6 @@ import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectIsDrillDownEnabled } from "../config/configSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -184,14 +184,9 @@ export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTempl
  * @alpha
  */
 export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]> = createSelector(
-    [
-        selectDateHierarchyTemplates,
-        selectCatalogDateDatasets,
-        selectIsDrillDownEnabled,
-        selectSupportsAttributeHierarchies,
-    ],
-    (dateHierarchyTemplates, catalogDateDatasets, isDrillDownEnabled, isSupportAttributeHierarchies) => {
-        if (isDrillDownEnabled && isSupportAttributeHierarchies) {
+    [selectDateHierarchyTemplates, selectCatalogDateDatasets, selectSupportsAttributeHierarchies],
+    (dateHierarchyTemplates, catalogDateDatasets, isSupportAttributeHierarchies) => {
+        if (isSupportAttributeHierarchies) {
             return buildAdhocDateHierarchies(dateHierarchyTemplates, catalogDateDatasets);
         }
         return [];

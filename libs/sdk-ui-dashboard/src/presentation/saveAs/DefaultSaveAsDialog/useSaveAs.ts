@@ -10,6 +10,7 @@ import {
     saveDashboardAs,
     selectBackendCapabilities,
     selectDashboardTitle,
+    selectEnableKPIDashboardSchedule,
     selectIsDashboardSaving,
     selectIsInEditMode,
     selectLocale,
@@ -23,6 +24,7 @@ interface UseSaveAsResult {
     isDashboardSaving: boolean;
     isDashboardLoaded: boolean;
     isKpiWidgetEnabled: boolean;
+    isScheduleEmailsEnabled: boolean;
     isInEditMode: boolean;
 
     /**
@@ -64,6 +66,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     const { onSubmit, onSubmitSuccess, onSubmitError } = props;
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const isDashboardSaving = useDashboardSelector(selectIsDashboardSaving);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -93,6 +96,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     return {
         locale,
         dashboardTitle,
+        isScheduleEmailsEnabled,
         isKpiWidgetEnabled: capabilities.supportsKpiWidget ?? false,
         isDashboardLoaded: true,
         isDashboardSaving,

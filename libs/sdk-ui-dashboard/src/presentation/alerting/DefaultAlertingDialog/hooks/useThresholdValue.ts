@@ -2,6 +2,8 @@
 
 import { ChangeEvent, FocusEvent, useCallback, useEffect, useState } from "react";
 
+import { useIntl } from "react-intl";
+
 import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -27,10 +29,12 @@ export function useThresholdValue(
     selectedAttribute?: AlertAttribute,
     selectedValue?: string | null,
 ) {
+    const intl = useIntl();
     const [relativeOperator] = selectedRelativeOperator;
 
     const [value, setValue] = useState(getAlertThreshold(alert));
     const [touched, setTouched] = useState(false);
+    const [hasValidationError, setHasValidationError] = useState(false);
 
     useEffect(() => {
         // If input is already touched, do not trigger current value calculation
@@ -66,6 +70,9 @@ export function useThresholdValue(
     const onChange = useCallback(
         (e: string | number, event?: ChangeEvent<HTMLInputElement>) => {
             const val = e === "" ? undefined : parseFloat(String(e));
+            if (val) {
+                setHasValidationError(false);
+            }
             changeValue(val!);
             setValue(val);
             // Set touched state when user changes the value
@@ -81,13 +88,23 @@ export function useThresholdValue(
             const val = convertThresholdValue(event.target.value, getMeasureFormat(selectedMeasure?.measure));
             changeValue(val!);
             setValue(val);
+            setTouched(true);
+
+            const isEmpty = val === undefined || val === null;
+            setHasValidationError(isEmpty);
         },
         [changeValue, selectedMeasure?.measure],
     );
+
+    const showValidationError = touched && hasValidationError;
+    const errorMessage = showValidationError
+        ? intl.formatMessage({ id: "insightAlert.config.missingThreshold" })
+        : undefined;
 
     return {
         value,
         onChange,
         onBlur,
+        errorMessage,
     };
 }

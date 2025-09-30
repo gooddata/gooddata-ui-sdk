@@ -27,10 +27,7 @@ import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.j
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-    selectSettings,
-} from "../../store/config/configSelectors.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
@@ -141,7 +138,6 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         selectDateFilterConfigsOverrides,
     );
 
-    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
@@ -161,17 +157,16 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
 
-    const shareProp: Partial<IAccessControlAware> =
-        settings.enableAnalyticalDashboardPermissions && capabilities.supportsAccessControl
-            ? {
-                  isLocked: false,
-                  shareStatus: "private",
-                  isUnderStrictControl: true,
-              }
-            : {
-                  isLocked: false,
-                  shareStatus: "public",
-              };
+    const shareProp: Partial<IAccessControlAware> = capabilities.supportsAccessControl
+        ? {
+              isLocked: false,
+              shareStatus: "private",
+              isUnderStrictControl: true,
+          }
+        : {
+              isLocked: false,
+              shareStatus: "public",
+          };
 
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets

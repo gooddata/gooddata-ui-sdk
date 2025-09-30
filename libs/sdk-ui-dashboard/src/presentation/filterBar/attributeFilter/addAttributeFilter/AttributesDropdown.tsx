@@ -71,6 +71,7 @@ const WIDTH = 253;
  * @internal
  */
 export function AttributesDropdown({
+    id,
     className,
     bodyClassName,
     onClose,
@@ -84,6 +85,7 @@ export function AttributesDropdown({
     overlayPositionType,
     renderVirtualisedList,
     getCustomItemTitle,
+    accessibilityConfig,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -226,6 +228,8 @@ export function AttributesDropdown({
                                 closeDropdown();
                             }
                         }}
+                        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                        id={id}
                     >
                         <DropdownList
                             width={WIDTH}
@@ -242,6 +246,7 @@ export function AttributesDropdown({
                             searchPlaceholder={intl.formatMessage({
                                 id: "attributesDropdown.placeholder",
                             })}
+                            searchLabel={accessibilityConfig?.searchAriaLabel}
                             onKeyDownSelect={(item) => {
                                 if (isCatalogAttribute(item)) {
                                     onSelect(item.defaultDisplayForm.ref);

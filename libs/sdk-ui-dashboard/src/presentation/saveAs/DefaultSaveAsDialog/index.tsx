@@ -58,6 +58,7 @@ export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | n
         locale,
         dashboardTitle,
         isKpiWidgetEnabled,
+        isScheduleEmailsEnabled,
         isDashboardSaving,
         isDashboardLoaded,
         handleSaveAs,
@@ -75,6 +76,7 @@ export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | n
             isKpiWidgetEnabled={isKpiWidgetEnabled}
             isDashboardLoaded={isDashboardLoaded}
             isDashboardSaving={isDashboardSaving}
+            isScheduleEmailsEnabled={isScheduleEmailsEnabled}
             isInEditMode={isInEditMode}
             onSubmit={handleSaveAs}
             onCancel={onCancel}

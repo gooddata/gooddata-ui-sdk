@@ -87,7 +87,12 @@ export function useHeaderMenu(
         }
     };
 
-    const hasMenuItems = [...aggregationsItems, ...textWrappingItems, ...sortingItems].length > 0;
+    const hasMenuItems =
+        [
+            ...sanitizedAggregationProps.aggregationsItems,
+            ...sanitizedTextWrappingProps.textWrappingItems,
+            ...sanitizedSortingProps.sortingItems,
+        ].length > 0;
 
     return {
         ...sanitizedAggregationProps,

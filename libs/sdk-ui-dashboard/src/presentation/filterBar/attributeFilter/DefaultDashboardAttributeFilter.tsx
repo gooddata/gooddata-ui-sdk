@@ -43,7 +43,6 @@ import {
 } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import {
-    removeAttributeFilter,
     selectAttributeFilterConfigsModeMap,
     selectBackendCapabilities,
     selectEnableAttributeFilterVirtualisedList,
@@ -55,7 +54,6 @@ import {
     selectIsInEditMode,
     selectLocale,
     selectPreloadedAttributesWithReferences,
-    useDashboardDispatch,
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../model/index.js";
@@ -74,8 +72,10 @@ export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilter
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const showFilter = isInEditMode || filtersPreloaded;
 
+    const LoadingComponent = props.AttributeFilterLoadingComponent || AttributeFilterLoading;
+
     if (!showFilter) {
-        return <AttributeFilterLoading />;
+        return <LoadingComponent />;
     }
 
     return <DefaultDashboardAttributeFilterInner {...props} />;
@@ -126,13 +126,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
     }, [attributeFilter]);
-
-    const dispatch = useDashboardDispatch();
-
-    const handleRemoveAttributeFilter = useCallback(
-        () => dispatch(removeAttributeFilter(filter.attributeFilter.localIdentifier!)),
-        [filter, dispatch],
-    );
 
     const intl = useIntl();
 
@@ -312,9 +305,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                                     "attributeFilterConfigurationOpened",
                                 );
                             }}
-                            onDeleteButtonClick={() => {
-                                handleRemoveAttributeFilter();
-                            }}
                             attributes={attributes}
                         />
                     )}
@@ -331,7 +321,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         filter.attributeFilter.selectionMode,
         applyText,
         attributes,
-        handleRemoveAttributeFilter,
     ]);
 
     const CustomElementsSelect = useMemo(() => {

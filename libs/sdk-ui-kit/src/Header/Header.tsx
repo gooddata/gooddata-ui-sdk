@@ -95,6 +95,10 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
 
     const measureChildren = useCallback(() => {
         const currentDOMNode = nodeRef.current;
+        if (!currentDOMNode) {
+            return;
+        }
+
         const childrenWidth = getWidthOfChildren(currentDOMNode, ".gd-header-measure");
 
         setState((prevState) => ({

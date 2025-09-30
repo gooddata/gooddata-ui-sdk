@@ -60,8 +60,10 @@ import {
 import {
     selectDisableDefaultDrills,
     selectEnableKDCrossFiltering,
+    selectEnableKPIDashboardDrillToDashboard,
+    selectEnableKPIDashboardDrillToInsight,
+    selectEnableKPIDashboardDrillToURL,
     selectIsDisabledCrossFiltering,
-    selectIsDrillDownEnabled,
     selectIsEmbedded,
 } from "../config/configSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
@@ -321,7 +323,7 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithHierarchyDescendants,
         selectAllCatalogAttributesMap,
-        selectIsDrillDownEnabled,
+        selectSupportsAttributeHierarchies,
         selectInsightByWidgetRef(ref),
         selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
         selectAllCatalogAttributeHierarchies,
@@ -483,6 +485,9 @@ export const selectConfiguredDrillsByWidgetRef: (
     createSelector(
         selectWidgetDrills(ref),
         selectDisableDefaultDrills,
+        selectEnableKPIDashboardDrillToURL,
+        selectEnableKPIDashboardDrillToInsight,
+        selectEnableKPIDashboardDrillToDashboard,
         selectEnableKDCrossFiltering,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
@@ -490,6 +495,9 @@ export const selectConfiguredDrillsByWidgetRef: (
         (
             drills = [],
             disableDefaultDrills,
+            enableKPIDashboardDrillToURL,
+            enableKPIDashboardDrillToInsight,
+            enableKPIDashboardDrillToDashboard,
             enableKDCrossFiltering,
             isEmbedded,
             disableCrossFiltering,
@@ -506,13 +514,13 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return true;
                     }
                     case "drillToCustomUrl": {
-                        return true;
+                        return enableKPIDashboardDrillToURL;
                     }
                     case "drillToDashboard": {
-                        return true;
+                        return enableKPIDashboardDrillToDashboard;
                     }
                     case "drillToInsight": {
-                        return true;
+                        return enableKPIDashboardDrillToInsight;
                     }
                     case "drillToLegacyDashboard": {
                         return !isEmbedded;
@@ -697,7 +705,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectAttributesWithDisplayFormLink,
             selectAttributesWithHierarchyDescendants,
             selectAllCatalogAttributesMap,
-            selectIsDrillDownEnabled,
+            selectSupportsAttributeHierarchies,
             selectAllCatalogAttributeHierarchies,
             selectBackendCapabilities,
             (

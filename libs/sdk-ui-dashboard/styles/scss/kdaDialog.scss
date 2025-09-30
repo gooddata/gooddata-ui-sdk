@@ -188,7 +188,7 @@
         &-list {
             flex: 1 1 auto;
             margin-top: 10px;
-            overflow: auto;
+            overflow: hidden;
             margin-right: -20px;
 
             .gd-ui-kit-listbox {
@@ -196,6 +196,24 @@
                 padding: 0;
                 max-height: 100%;
                 height: 100%;
+
+                &::-webkit-scrollbar {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: var(--gd-palette-complementary-7);
+                    border: 2px solid transparent;
+                    border-radius: 5px;
+                    background-clip: padding-box;
+                }
+
+                &:hover::-webkit-scrollbar-thumb:hover {
+                    border: 0;
+                    background-color: var(--gd-palette-complementary-5);
+                }
 
                 li {
                     margin-top: 10px;
@@ -505,4 +523,12 @@
             }
         }
     }
+}
+
+//date select in popover
+.gd-kda-dialog-bar__date-select {
+    margin-top: -10px;
+    margin-bottom: -10px;
+    margin-left: -10px;
+    width: calc(100% + 20px);
 }

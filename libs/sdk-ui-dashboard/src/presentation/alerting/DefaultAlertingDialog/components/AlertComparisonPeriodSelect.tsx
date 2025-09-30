@@ -1,12 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useMemo } from "react";
+import { MutableRefObject, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownButton,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
+} from "@gooddata/sdk-ui-kit";
 
 import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
 import { translateGranularity } from "../utils/granularity.js";
@@ -89,7 +95,7 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
     // select the comparison period
     // If feature flag is not enabled, return the label with the selected comparison period
     if (measure?.comparators.length === 1 || !canManageComparison) {
-        return <DropdownButtonLabel selectedOperator={selectedOperator} />;
+        return <div className="gd-edit-alert__measure-info">{getButtonValue(selectedOperator, intl)}</div>;
     }
 
     return (
@@ -99,12 +105,10 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
             autofocusOnOpen={true}
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
-                    <Button
+                    <DropdownButton
                         id={id}
+                        value={getButtonValue(selectedOperator, intl)}
                         onClick={toggleDropdown}
-                        iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
-                        size="small"
-                        variant="primary"
                         className={cx(
                             "gd-alert-comparison-select__button s-alert-comparison-select",
                             "button-dropdown",
@@ -114,15 +118,10 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
                                 "is-active": isOpen,
                             },
                         )}
-                        accessibilityConfig={{
-                            role: "button",
-                            popupId: dropdownId,
-                            isExpanded: isOpen,
-                        }}
-                        ref={buttonRef}
-                    >
-                        <DropdownButtonLabel selectedOperator={selectedOperator} />
-                    </Button>
+                        buttonRef={buttonRef as MutableRefObject<HTMLElement>}
+                        dropdownId={dropdownId}
+                        isOpen={isOpen}
+                    />
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {
@@ -165,47 +164,28 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
     );
 }
 
-interface DropdownButtonLabelProps {
-    selectedOperator?: AlertMetricComparator;
-}
-
-function DropdownButtonLabel(props: DropdownButtonLabelProps) {
-    const intl = useIntl();
-    const { selectedOperator } = props;
-
+function getButtonValue(selectedOperator: AlertMetricComparator | undefined, intl: IntlShape): string {
     if (selectedOperator?.comparator === AlertMetricComparatorType.SamePeriodPreviousYear) {
-        return (
-            <div className="gd-edit-alert__measure-info">
-                {selectedOperator.granularity && selectedOperator.granularity !== DateGranularity["year"] ? (
-                    <FormattedMessage
-                        id="insightAlert.config.compare_with_sp_granularity"
-                        values={{
-                            period: translateGranularity(intl, selectedOperator.granularity),
-                        }}
-                    />
-                ) : (
-                    <FormattedMessage id="insightAlert.config.compare_with_sp" />
-                )}
-            </div>
-        );
+        if (selectedOperator.granularity && selectedOperator.granularity !== DateGranularity["year"]) {
+            return intl.formatMessage(
+                { id: "insightAlert.config.compare_with_sp_granularity" },
+                { period: translateGranularity(intl, selectedOperator.granularity) },
+            );
+        } else {
+            return intl.formatMessage({ id: "insightAlert.config.compare_with_sp" });
+        }
     }
 
     if (selectedOperator?.comparator === AlertMetricComparatorType.PreviousPeriod) {
-        return (
-            <div className="gd-edit-alert__measure-info">
-                {selectedOperator.granularity ? (
-                    <FormattedMessage
-                        id="insightAlert.config.compare_with_pp_granularity"
-                        values={{
-                            period: translateGranularity(intl, selectedOperator.granularity),
-                        }}
-                    />
-                ) : (
-                    <FormattedMessage id="insightAlert.config.compare_with_pp" />
-                )}
-            </div>
-        );
+        if (selectedOperator.granularity) {
+            return intl.formatMessage(
+                { id: "insightAlert.config.compare_with_pp_granularity" },
+                { period: translateGranularity(intl, selectedOperator.granularity) },
+            );
+        } else {
+            return intl.formatMessage({ id: "insightAlert.config.compare_with_pp" });
+        }
     }
 
-    return <div className="gd-edit-alert__measure-info"> - </div>;
+    return " - ";
 }

@@ -105,7 +105,7 @@ export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
-export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/UiChip.js";
+export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
 export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";
 export type { UiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";

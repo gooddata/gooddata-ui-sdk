@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useRef } from "react";
+import { MutableRefObject, useRef } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -10,7 +10,13 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
-import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownButton,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
+} from "@gooddata/sdk-ui-kit";
 
 import { AlertMetric } from "../../types.js";
 import { OPERATORS, OperatorItemType } from "../constants.js";
@@ -84,7 +90,7 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                             ref.current = item;
                         }}
                     >
-                        <Button
+                        <DropdownButton
                             id={id}
                             className={cx(
                                 "gd-alert-comparison-operator-select__button s-alert-operator-select",
@@ -92,22 +98,15 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                                     "is-active": isOpen,
                                 },
                             )}
-                            size="small"
-                            variant="secondary"
-                            iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
-                            iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
-                            onClick={toggleDropdown}
-                            accessibilityConfig={{
-                                role: "button",
-                                popupId: dropdownId,
-                                isExpanded: isOpen,
-                            }}
-                            ref={buttonRef}
-                        >
-                            {intl.formatMessage({
+                            value={intl.formatMessage({
                                 id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
                             })}
-                        </Button>
+                            iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
+                            onClick={toggleDropdown}
+                            buttonRef={buttonRef as MutableRefObject<HTMLElement>}
+                            dropdownId={dropdownId}
+                            isOpen={isOpen}
+                        />
                     </div>
                 );
             }}

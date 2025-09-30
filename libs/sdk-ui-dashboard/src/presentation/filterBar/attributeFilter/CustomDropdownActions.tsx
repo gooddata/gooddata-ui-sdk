@@ -9,14 +9,13 @@ import {
     ObjRef,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
+import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters";
 import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -49,7 +48,6 @@ export interface ICustomAttributeFilterDropdownActionsProps {
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
     onConfigurationButtonClick: () => void;
-    onDeleteButtonClick: () => void;
     isApplyDisabled?: boolean;
     isSelectionChanged?: boolean;
     cancelText: string;
@@ -68,7 +66,6 @@ export function CustomAttributeFilterDropdownActions({
     onApplyButtonClick,
     onCancelButtonClick,
     onConfigurationButtonClick,
-    onDeleteButtonClick,
     cancelText,
     applyText,
     filterDisplayFormRef,
@@ -76,7 +73,6 @@ export function CustomAttributeFilterDropdownActions({
     filterSelectionMode,
 }: ICustomAttributeFilterDropdownActionsProps) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
@@ -90,12 +86,6 @@ export function CustomAttributeFilterDropdownActions({
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
             <div className="gd-attribute-filter-dropdown-actions-left-content__next">
-                {isEditMode && isDeleteButtonEnabled ? (
-                    <>
-                        <AttributeFilterDeleteButton onDelete={onDeleteButtonClick} />
-                        <div className="gd-button-separator" />
-                    </>
-                ) : null}
                 {isConfigButtonVisible ? (
                     <AttributeFilterConfigurationButton onConfiguration={onConfigurationButtonClick} />
                 ) : null}

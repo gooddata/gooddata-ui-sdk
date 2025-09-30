@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Remove unused feature flag: enableKPIDashboardSaveAsNew",
+            "comment": "[sdk-ui-kit]: Update chip to support only disabled state, Update popover and tooltip behaviour",
             "type": "none"
         }
     ],

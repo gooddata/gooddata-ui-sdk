@@ -3492,7 +3492,6 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
-    ADMeasureValueFilterNullAsZeroOption?: string;
     aiChatSearchLimit?: number;
     aiRateLimit?: number;
     alertDefault?: IAlertDefault;
@@ -3513,8 +3512,8 @@ export interface ISettings {
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
+    enableAlternativeDisplayFormSelection?: boolean;
     enableAmplitudeTracker?: boolean;
-    enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
     enableAnalyticalDashboards?: boolean;
     enableAttributeFilterVirtualised?: boolean;
@@ -3558,13 +3557,16 @@ export interface ISettings {
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
-    enableInvalidValuesInAttributeFilter?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
-    enableKPIDashboardImplicitDrillDown?: boolean;
+    enableKPIDashboardDrillToDashboard?: boolean;
+    enableKPIDashboardDrillToInsight?: boolean;
+    enableKPIDashboardDrillToURL?: boolean;
+    enableKPIDashboardSaveAsNew?: boolean;
+    enableKPIDashboardSchedule?: boolean;
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;

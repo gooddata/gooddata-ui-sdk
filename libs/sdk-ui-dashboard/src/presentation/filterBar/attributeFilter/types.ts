@@ -89,6 +89,11 @@ export interface IDashboardAttributeFilterProps {
     AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
 
     /**
+     * Optional custom attribute filter loading component to change or extend the default rendered one.
+     */
+    AttributeFilterLoadingComponent?: ComponentType;
+
+    /**
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
@@ -102,7 +107,16 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 /**
  * @internal
  */
+export interface IDashboardAttributeFilterAccessibilityConfig {
+    ariaLabelledBy?: string;
+    searchAriaLabel?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IDashboardAttributeFilterPlaceholderProps {
+    id?: string;
     className?: string;
     bodyClassName?: string;
     onSelect: (displayForm: ObjRef) => void;
@@ -116,6 +130,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     overlayPositionType?: OverlayPositionType;
     renderVirtualisedList?: boolean;
     getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;
+    accessibilityConfig?: IDashboardAttributeFilterAccessibilityConfig;
 }
 
 /**

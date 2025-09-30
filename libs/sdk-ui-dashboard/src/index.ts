@@ -27,3 +27,4 @@ export * from "./converters/index.js";
 export * from "./plugins/index.js";
 export * from "./widgets/index.js";
 export * from "./tools/index.js";
+export * from "./kdaDialog/index.js";

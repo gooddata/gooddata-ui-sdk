@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Remove unused feature flag: enableKPIDashboardSchedule",
+            "comment": "Remove unused feature flag: enableNewADFilterBar",
             "type": "none"
         }
     ],

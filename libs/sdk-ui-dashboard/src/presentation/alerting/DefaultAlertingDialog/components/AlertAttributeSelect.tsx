@@ -12,9 +12,9 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import {
-    Button,
     DefaultUiMenuInteractiveItem,
     Dropdown,
+    DropdownButton,
     IUiMenuInteractiveItem,
     IUiMenuInteractiveItemProps,
     IUiMenuItem,
@@ -144,7 +144,7 @@ export function AlertAttributeSelect({
                 // "All" option
                 createInteractiveItem(
                     `all-${item.id}`,
-                    `${intl.formatMessage({ id: "insightAlert.config.selectAttribute" })} (${values.length})`,
+                    `${accessibilityAriaLabel} (${values.length})`,
                     attribute,
                     undefined,
                     Boolean(hasDisplayForm && !selectedAttributeValue),
@@ -196,7 +196,7 @@ export function AlertAttributeSelect({
             // "Select Attribute" option
             createInteractiveItem(
                 "clear",
-                intl.formatMessage({ id: "insightAlert.config.selectAttribute" }),
+                accessibilityAriaLabel,
                 undefined,
                 undefined,
                 Boolean(!selectedAttribute && !selectedAttributeValue),
@@ -239,48 +239,36 @@ export function AlertAttributeSelect({
                 <Dropdown
                     autofocusOnOpen={true}
                     closeOnParentScroll={closeOnParentScroll}
-                    renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => (
-                        <Button
-                            id={id}
-                            className={cx("gd-alert-attribute-select__button", {
-                                "is-active": isOpen,
-                            })}
-                            size="small"
-                            disabled={isResultLoading}
-                            variant="secondary"
-                            iconLeft="gd-icon-attribute"
-                            iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
-                            onClick={() => {
-                                if (!isResultLoading) {
-                                    toggleDropdown();
-                                }
-                            }}
-                            accessibilityConfig={{
-                                role: "button",
-                                popupId: dropdownId,
-                                isExpanded: isOpen,
-                                ariaLabel: accessibilityAriaLabel,
-                            }}
-                            ref={buttonRef as MutableRefObject<HTMLButtonElement>}
-                        >
-                            {selectedAttribute ? (
-                                <span>
-                                    {selectedAttribute?.title}
-                                    <span>
-                                        {"\u00A0"}/{"\u00A0"}
-                                    </span>
-                                    {selectedAttributeValue
-                                        ? (selectedAttributeValue.title ?? selectedAttributeValue.name) ||
-                                          `(${intl.formatMessage({ id: "empty_value" })})`
-                                        : intl.formatMessage({
-                                              id: "insightAlert.config.selectAttribute",
-                                          })}
-                                </span>
-                            ) : (
-                                <>{intl.formatMessage({ id: "insightAlert.config.selectAttribute" })}</>
-                            )}
-                        </Button>
-                    )}
+                    renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
+                        const buttonValue = selectedAttribute
+                            ? `${selectedAttribute?.title} / ${
+                                  selectedAttributeValue
+                                      ? (selectedAttributeValue.title ?? selectedAttributeValue.name) ||
+                                        `(${intl.formatMessage({ id: "empty_value" })})`
+                                      : accessibilityAriaLabel
+                              }`
+                            : accessibilityAriaLabel;
+
+                        return (
+                            <DropdownButton
+                                id={id}
+                                className={cx("gd-alert-attribute-select__button", {
+                                    "is-active": isOpen,
+                                })}
+                                value={buttonValue}
+                                iconLeft="gd-icon-attribute"
+                                onClick={() => {
+                                    if (!isResultLoading) {
+                                        toggleDropdown();
+                                    }
+                                }}
+                                disabled={isResultLoading}
+                                buttonRef={buttonRef as MutableRefObject<HTMLElement>}
+                                dropdownId={dropdownId}
+                                isOpen={isOpen}
+                            />
+                        );
+                    }}
                     renderBody={({ closeDropdown, ariaAttributes }) => (
                         <UiMenu<IAttributeMenuData>
                             items={uiMenuItems}

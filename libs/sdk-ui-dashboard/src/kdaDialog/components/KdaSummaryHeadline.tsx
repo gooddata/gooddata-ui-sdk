@@ -10,6 +10,10 @@ export function KdaSummaryHeadline() {
     const { state } = useKdaState();
     const item = state.rootItem;
 
+    if (!item) {
+        return null;
+    }
+
     const diff = item.to.value - item.from.value;
     const change = diff / item.from.value;
 

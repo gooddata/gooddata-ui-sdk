@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import { IDescriptorsInfo } from "./collectDescriptorsInfo.js";
@@ -53,7 +54,7 @@ export function collectRowDefinitions(
     // Collect grand total row definitions
     const rowGrandTotalsToUse: ITableGrandTotalRowDefinition[] = [];
 
-    rowGrandTotals.forEach((rowGrandTotal, rowGrandTotalIndex) => {
+    rowGrandTotals.forEach((rowGrandTotal) => {
         const totalToExtend = rowGrandTotalsToUse.find((total) => total.totalType === rowGrandTotal.type);
         if (!isTransposed && totalToExtend) {
             totalToExtend.measureDescriptors.push(
@@ -62,7 +63,7 @@ export function collectRowDefinitions(
         } else {
             rowGrandTotalsToUse.push({
                 type: "grandTotal",
-                rowIndex: rowDefinitions.length,
+                rowIndex: rowHeaders.length + rowGrandTotalsToUse.length,
                 measureDescriptors: [
                     descriptorByLocalId[rowGrandTotal.measureIdentifier] as IMeasureDescriptor,
                 ],
@@ -70,7 +71,7 @@ export function collectRowDefinitions(
                     rowGrandTotal.attributeIdentifier
                 ] as IAttributeDescriptor,
                 totalType: rowGrandTotal.type,
-                rowGrandTotalIndex,
+                rowGrandTotalIndex: rowGrandTotalsToUse.length,
             });
         }
     });

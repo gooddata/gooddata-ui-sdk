@@ -2,15 +2,20 @@
 
 import { action } from "storybook/actions";
 
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { ObjRef } from "@gooddata/sdk-model";
 import {
-    InternalIntlWrapper,
+    IntlWrapper,
     KdaDialog,
     KdaItem,
     KdaState,
     KdaStateProvider,
-} from "@gooddata/sdk-ui-ext/internal";
-import "@gooddata/sdk-ui-ext/styles/internal/css/kdaDialog.css";
+    KdaStoreProvider,
+} from "@gooddata/sdk-ui-dashboard/internal";
+import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+
+import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
 
 function formatValue(val: number) {
     if (val < 0) {
@@ -18,6 +23,8 @@ function formatValue(val: number) {
     }
     return `$${val}`;
 }
+
+const backend = StorybookBackend();
 
 export default {
     title: "18 Kda/Dialog",
@@ -267,8 +274,26 @@ export const dialogContentLoadingState: Partial<KdaState> = {
     metric: {
         title: "Revenue",
     },
-    dateFilter: { title: "July vs June" },
-    attributeFilter: { title: "Region: Europe" },
+    dateFilters: [{ title: "July vs June", selectedPeriod: "same_period_previous_year" }],
+    attributeFilters: [
+        {
+            attributeFilter: {
+                attributeFilter: {
+                    displayForm: ReferenceMd.Activity.Subject.attribute.displayForm,
+                    negativeSelection: false,
+                    attributeElements: {
+                        values: [],
+                    },
+                    localIdentifier: "localIdentifier-attributeFilter-region",
+                    title: "Region",
+                    selectionMode: "multi",
+                    //filterElementsBy?: IDashboardAttributeFilterParent[];
+                    //filterElementsByDate?: IDashboardAttributeFilterByDate[];
+                    //validateElementsBy?: ObjRef[];
+                },
+            },
+        },
+    ],
     rootItem: {
         id: "1",
         title: "Country",
@@ -307,11 +332,22 @@ export const dialogFullyLoadedScrollState: Partial<KdaState> = {
 export function DialogComponent(props: { state: Partial<KdaState> }) {
     return (
         <div>
-            <InternalIntlWrapper>
-                <KdaStateProvider value={props.state}>
-                    <KdaDialog showCloseButton={true} onClose={action("onClose")} />
-                </KdaStateProvider>
-            </InternalIntlWrapper>
+            <IntlWrapper>
+                <KdaStoreProvider
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    dashboard={
+                        {
+                            identifier: ReferenceMd.Dashboards.SimpleDashboard,
+                            type: "analyticalDashboard",
+                        } as ObjRef
+                    }
+                >
+                    <KdaStateProvider value={props.state}>
+                        <KdaDialog showCloseButton={true} onClose={action("onClose")} />
+                    </KdaStateProvider>
+                </KdaStoreProvider>
+            </IntlWrapper>
         </div>
     );
 }

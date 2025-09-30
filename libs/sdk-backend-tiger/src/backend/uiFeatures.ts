@@ -9,15 +9,11 @@ import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata
 
 export enum TigerFeaturesNames {
     EnableSortingByTotalGroup = "enableSortingByTotalGroup",
-    //string, possible values: disabled, enabledCheckedByDefault, enabledUncheckedByDefault
-    ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
-    EnableKPIDashboardDeleteFilterButton = "enableKPIDashboardDeleteFilterButton",
     // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableDescriptions = "enableDescriptions",
-    EnableAnalyticalDashboardPermissions = "enableAnalyticalDashboardPermissions",
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     EnableSqlDatasets = "enableSqlDatasets",
     EnableFunnelChart = "enableFunnelChart",
@@ -60,7 +56,6 @@ export enum TigerFeaturesNames {
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
-    EnableInvalidValuesInAttributeFilter = "enableInvalidValuesInAttributeFilter",
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
@@ -130,12 +125,9 @@ export enum TigerFeaturesNames {
 
 export type ITigerFeatureFlags = {
     enableSortingByTotalGroup: (typeof FeatureFlagsValues)["enableSortingByTotalGroup"][number];
-    ADMeasureValueFilterNullAsZeroOption: (typeof FeatureFlagsValues)["ADMeasureValueFilterNullAsZeroOption"][number];
-    enableKPIDashboardDeleteFilterButton: (typeof FeatureFlagsValues)["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
-    enableAnalyticalDashboardPermissions: (typeof FeatureFlagsValues)["enableAnalyticalDashboardPermissions"][number];
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableFunnelChart: (typeof FeatureFlagsValues)["enableFunnelChart"][number];
@@ -175,7 +167,6 @@ export type ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
-    enableInvalidValuesInAttributeFilter: (typeof FeatureFlagsValues)["enableInvalidValuesInAttributeFilter"][number];
     enableDuplicatedLabelValuesInAttributeFilter: (typeof FeatureFlagsValues)["enableDuplicatedLabelValuesInAttributeFilter"][number];
     enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: (typeof FeatureFlagsValues)["enableScatterPlotSegmentation"][number];
@@ -248,12 +239,9 @@ export type ITigerFeatureFlags = {
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSortingByTotalGroup: false,
-    ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
-    enableKPIDashboardDeleteFilterButton: false,
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableDescriptions: true,
-    enableAnalyticalDashboardPermissions: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
     enableFunnelChart: true,
@@ -293,7 +281,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableSnowflakeKeyPairAuthentication: true,
-    enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: true,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
@@ -366,16 +353,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
 
 export const FeatureFlagsValues = {
     enableSortingByTotalGroup: [true, false] as const,
-    ADMeasureValueFilterNullAsZeroOption: [
-        "Disabled",
-        "EnabledCheckedByDefault",
-        "EnabledUncheckedByDefault",
-    ] as const,
-    enableKPIDashboardDeleteFilterButton: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableDescriptions: [true, false] as const,
-    enableAnalyticalDashboardPermissions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableFunnelChart: [true, false] as const,
@@ -415,7 +395,6 @@ export const FeatureFlagsValues = {
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
-    enableInvalidValuesInAttributeFilter: [true, false] as const,
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,

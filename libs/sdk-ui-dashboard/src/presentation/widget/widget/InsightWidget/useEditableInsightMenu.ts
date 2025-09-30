@@ -12,6 +12,7 @@ import {
     selectDrillTargetsByWidgetRef,
     selectEnableAlerting,
     selectEnableScheduling,
+    selectSettings,
     useDashboardDispatch,
     useDashboardEventDispatch,
     useDashboardSelector,
@@ -34,12 +35,23 @@ export const useEditableInsightMenu = (
     const dispatch = useDashboardDispatch();
     const eventDispatch = useDashboardEventDispatch();
 
+    const settings = useDashboardSelector(selectSettings);
+    const {
+        enableKPIDashboardDrillToURL,
+        enableKPIDashboardDrillToDashboard,
+        enableKPIDashboardDrillToInsight,
+    } = settings;
+
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
+    const someDrillingEnabled =
+        enableKPIDashboardDrillToURL ||
+        enableKPIDashboardDrillToDashboard ||
+        enableKPIDashboardDrillToInsight;
     const availableDrillTargets = configItems?.availableDrillTargets;
     const someAvailableDrillTargetsExist =
         !!availableDrillTargets?.attributes?.length || !!availableDrillTargets?.measures?.length;
 
-    const includeInteractions = someAvailableDrillTargetsExist && Boolean(insight);
+    const includeInteractions = someDrillingEnabled && someAvailableDrillTargetsExist && Boolean(insight);
     const includeConfigurations = Boolean(insight);
 
     const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);

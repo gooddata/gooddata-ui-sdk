@@ -585,14 +585,6 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     workspace?: string;
 }
 
-// @internal (undocumented)
-export interface IKdaDialogProps {
-    className?: string;
-    locale?: string;
-    onClose?: () => void;
-    showCloseButton?: boolean;
-}
-
 // @alpha
 export interface ILayoutDescriptor {
     // (undocumented)
@@ -857,9 +849,6 @@ export interface IWithTelemetryProps {
     // (undocumented)
     onEvent: TrackEventCallback;
 }
-
-// @internal (undocumented)
-export function KdaDialog(props: IKdaDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

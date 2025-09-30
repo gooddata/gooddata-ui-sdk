@@ -1,10 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { MutableRefObject } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownButton,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
+} from "@gooddata/sdk-ui-kit";
 
 export interface IAlertDestinationSelectProps {
     id: string;
@@ -34,18 +42,10 @@ export function AlertDestinationSelect({
             autofocusOnOpen={true}
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
-                    <Button
+                    <DropdownButton
                         id={id}
-                        accessibilityConfig={{
-                            role: "button",
-                            popupId: dropdownId,
-                            isExpanded: isOpen,
-                            ariaLabel: accessibilityAriaLabel,
-                        }}
+                        value={selectedOption?.title ?? " - "}
                         onClick={toggleDropdown}
-                        iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
-                        size="small"
-                        variant="primary"
                         className={cx(
                             "gd-alert-destination-select__button s-alert-destination-select",
                             "button-dropdown",
@@ -55,10 +55,13 @@ export function AlertDestinationSelect({
                                 "is-active": isOpen,
                             },
                         )}
-                        ref={buttonRef}
-                    >
-                        {selectedOption?.title ?? " - "}
-                    </Button>
+                        buttonRef={buttonRef as MutableRefObject<HTMLElement>}
+                        accessibilityConfig={{
+                            ariaLabel: accessibilityAriaLabel,
+                        }}
+                        dropdownId={dropdownId}
+                        isOpen={isOpen}
+                    />
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {

@@ -7,6 +7,7 @@ import {
     MouseEvent,
     MutableRefObject,
     ReactNode,
+    RefObject,
     SetStateAction,
 } from "react";
 
@@ -121,4 +122,6 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode>
     isCompact?: boolean;
 
     ariaAttributes: UiListboxAriaAttributes;
+
+    reference?: RefObject<HTMLUListElement | null>;
 }

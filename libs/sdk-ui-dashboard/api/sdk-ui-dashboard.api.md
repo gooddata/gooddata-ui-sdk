@@ -472,7 +472,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ id, className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -3401,7 +3401,7 @@ export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | n
 export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
+export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): JSX.Element;
@@ -4139,12 +4139,6 @@ export function getFilterIdentifier(filter: FilterContextItem): string;
 // @public
 export function getWidgetTitle(widget?: ExtendedDashboardWidget, fallbackTitle?: string): string;
 
-// @internal
-export const hasEditDashboardPermission: DashboardSelector<boolean>;
-
-// @internal
-export const hasEditLockedDashboardPermission: DashboardSelector<boolean>;
-
 // @alpha
 export type HeaderExportData = {
     info?: CommonExportDataAttributes;
@@ -4428,6 +4422,14 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
 }
 
 // @internal (undocumented)
+export interface IDashboardAttributeFilterAccessibilityConfig {
+    // (undocumented)
+    ariaLabelledBy?: string;
+    // (undocumented)
+    searchAriaLabel?: string;
+}
+
+// @internal (undocumented)
 export interface IDashboardAttributeFilterDisplayForms {
     // (undocumented)
     availableDisplayForms: IAttributeDisplayFormMetadataObject[];
@@ -4454,6 +4456,8 @@ export interface IDashboardAttributeFilterParentItem {
 // @internal (undocumented)
 export interface IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
+    accessibilityConfig?: IDashboardAttributeFilterAccessibilityConfig;
+    // (undocumented)
     attributes: ICatalogAttribute[];
     // (undocumented)
     bodyClassName?: string;
@@ -4467,6 +4471,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     DropdownTitleComponent?: ComponentType;
     // (undocumented)
     getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -4485,6 +4491,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 export interface IDashboardAttributeFilterProps {
     // @alpha
     AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
+    AttributeFilterLoadingComponent?: ComponentType;
     autoOpen?: boolean;
     displayAsLabel?: ObjRef;
     filter: IDashboardAttributeFilter;
@@ -5412,6 +5419,14 @@ export interface IIRichTextMenuItemSeparator {
     type: "separator";
 }
 
+// @internal (undocumented)
+export interface IKdaDialogProps {
+    className?: string;
+    locale?: string;
+    onClose?: () => void;
+    showCloseButton?: boolean;
+}
+
 // @internal
 export interface IKeyboardNavigationConfigItem {
     ariaLabel?: string;
@@ -5878,8 +5893,6 @@ export interface ISaveAsNewButtonProps {
 export interface ISaveButtonProps {
     // (undocumented)
     buttonTitle: MessageDescriptor;
-    // (undocumented)
-    buttonValue: MessageDescriptor;
     // (undocumented)
     isEnabled: boolean;
     // (undocumented)
@@ -6768,6 +6781,9 @@ export interface IXlsxExportConfig {
     showFilters?: boolean;
     title?: string;
 }
+
+// @internal (undocumented)
+export function KdaDialog(props: IKdaDialogProps): JSX.Element;
 
 // @internal
 export type KeyboardNavigationConfig = {
@@ -8699,9 +8715,6 @@ export const selectEnableAlerting: DashboardSelector<boolean>;
 export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableAttributeFilterVirtualisedList: DashboardSelector<boolean>;
 
 // @internal
@@ -8789,10 +8802,22 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 export const selectEnableKDRichText: DashboardSelector<boolean>;
 
 // @public
+export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean>;
+
+// @public
+export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean>;
+
+// @public
+export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean>;
+
+// @public
 export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object>;
 
 // @public
-export const selectEnableKPIDashboardImplicitDrillDown: DashboardSelector<boolean>;
+export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean>;
+
+// @public
+export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
@@ -9014,6 +9039,9 @@ export const selectIsAlertingManagementDialogContext: DashboardSelector<IAlertDi
 export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean>;
 
 // @internal
+export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean>;
+
+// @internal
 export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean>;
 
 // @internal
@@ -9059,9 +9087,6 @@ export const selectIsDashboardShareLinkVisible: DashboardSelector<boolean>;
 export const selectIsDeleteDialogOpen: DashboardSelector<boolean>;
 
 // @internal
-export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean>;
-
-// @internal
 export const selectIsDisabledCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
@@ -9069,9 +9094,6 @@ export const selectIsDisableUserFilterReset: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDraggingWidget: DashboardSelector<boolean>;
-
-// @internal
-export const selectIsDrillDownEnabled: DashboardSelector<boolean>;
 
 // @public
 export const selectIsEmbedded: DashboardSelector<boolean>;

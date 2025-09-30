@@ -16,6 +16,7 @@ export interface ISaveAsDialogRendererOwnProps {
     isDashboardSaving: boolean;
     isDashboardLoaded: boolean;
     isKpiWidgetEnabled: boolean;
+    isScheduleEmailsEnabled: boolean;
     isInEditMode: boolean;
     locale?: string;
 
@@ -34,6 +35,7 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
     onSubmit,
     isInEditMode,
     isKpiWidgetEnabled,
+    isScheduleEmailsEnabled,
 }: ISaveAsDialogRendererOwnProps) {
     const intl = useIntl();
 
@@ -83,12 +85,13 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
 
     const getNoteText = useCallback(() => {
         const messageId = compact([
-            isKpiWidgetEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
-            !isKpiWidgetEnabled && messages.saveAsNewEmailsMessage.id,
+            isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
+            isKpiWidgetEnabled && !isScheduleEmailsEnabled && messages.saveAsNewAlertsMessage.id,
+            !isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewEmailsMessage.id,
         ]).at(0);
 
         return messageId ? intl.formatMessage({ id: messageId }) : "";
-    }, [intl, isKpiWidgetEnabled]);
+    }, [intl, isKpiWidgetEnabled, isScheduleEmailsEnabled]);
 
     const noteText = getNoteText();
 

@@ -2,17 +2,14 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
+import { selectSupportsCrossFiltering } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectSupportsCrossFiltering,
-    selectSupportsHierarchicalWorkspacesCapability,
-} from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableAnalyticalDashboardPermissions,
     selectEnableAutomationManagement,
     selectEnableDashboardShareDialogLink,
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
+    selectEnableKPIDashboardSaveAsNew,
     selectEnableSlideshowExports,
     selectIsExport,
     selectIsReadOnly,
@@ -41,66 +38,21 @@ import {
 import {
     selectCanCreateAnalyticalDashboard,
     selectCanExportPdf,
-    selectCanManageAnalyticalDashboard,
-    selectCanManageWorkspace,
 } from "../permissions/permissionsSelectors.js";
 import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 
 /**
- * Decide whether the user has the right to edit dashboard.
- * If dashboard permissions are enabled then use them, otherwise fallback to workspace permissions
- *
- * @internal
- */
-export const hasEditDashboardPermission: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
-    selectCanEditDashboardPermission,
-    selectCanManageAnalyticalDashboard,
-    (dashboardPermissionsEnabled, canEditDashboardPermission, canManageAnalyticalDashboard) => {
-        if (dashboardPermissionsEnabled) {
-            return canEditDashboardPermission;
-        }
-        return canManageAnalyticalDashboard;
-    },
-);
-
-/**
- * Decide whether the user has the right to edit locked dashboard.
- * If dashboard permissions are enabled then use them, otherwise fallback to workspace permissions
- *
- * @internal
- */
-export const hasEditLockedDashboardPermission: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
-    selectCanEditLockedDashboardPermission,
-    selectCanManageWorkspace,
-    selectSupportsHierarchicalWorkspacesCapability,
-    (
-        dashboardPermissionsEnabled,
-        canEditLockedDashboardPermission,
-        canManageWorkspace,
-        hierarchicalWorkspacesSupported,
-    ) => {
-        if (dashboardPermissionsEnabled) {
-            return canEditLockedDashboardPermission;
-        }
-        // editing locked dashboard is always disabled when hierarchical workspaces are supported (Tiger)
-        return canManageWorkspace && !hierarchicalWorkspacesSupported;
-    },
-);
-
-/**
  * @internal
  */
 export const selectCanEnterEditMode: DashboardSelector<boolean> = createSelector(
-    hasEditDashboardPermission,
-    hasEditLockedDashboardPermission,
+    selectCanEditDashboardPermission,
+    selectCanEditLockedDashboardPermission,
     selectDashboardLockStatus,
     selectIsReadOnly,
-    (hasEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
-        !isReadOnly && hasEditDashboardPermission && (!isLocked || hasEditLockedDashboardPermission),
+    (canEditDashboardPermission, hasEditLockedDashboardPermission, isLocked, isReadOnly) =>
+        !isReadOnly && canEditDashboardPermission && (!isLocked || hasEditLockedDashboardPermission),
 );
 
 /**
@@ -116,11 +68,9 @@ export const selectCanEnterEditModeAndIsLoaded: DashboardSelector<boolean> = cre
  * @internal
  */
 export const selectIsPrivateDashboard: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardPrivate,
     selectIsNewDashboard,
-    (arePermissionsEnabled, isPrivate, isCreatingNewDashboard) =>
-        arePermissionsEnabled && (isCreatingNewDashboard || isPrivate),
+    (isPrivate, isCreatingNewDashboard) => isCreatingNewDashboard || isPrivate,
 );
 
 /**
@@ -153,14 +103,11 @@ export const selectCrossFilteringEnabledAndSupported: DashboardSelector<boolean>
 );
 
 export const selectHasSharePermissions: DashboardSelector<boolean> = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
     selectDashboardLockStatus,
-    (dashboardPermissionsEnabled, canShareDashboardPermission, canShareLockedDashboardPermission, isLocked) =>
-        dashboardPermissionsEnabled &&
-        canShareDashboardPermission &&
-        (!isLocked || canShareLockedDashboardPermission),
+    (canShareDashboardPermission, canShareLockedDashboardPermission, isLocked) =>
+        canShareDashboardPermission && (!isLocked || canShareLockedDashboardPermission),
 );
 
 /**
@@ -225,12 +172,20 @@ export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardSt
  * @internal
  */
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = createSelector(
+    selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,
     selectCanEnterEditModeAndIsLoaded,
     selectCanCreateAnalyticalDashboard,
     selectIsExport,
     selectIsReadOnly,
-    (isSaveAsButtonHidden, isDashboardEditable, canCreateDashboard, isExport, isReadOnly) => {
+    (
+        isSaveAsNewEnabled,
+        isSaveAsButtonHidden,
+        isDashboardEditable,
+        canCreateDashboard,
+        isExport,
+        isReadOnly,
+    ) => {
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
          *
@@ -244,7 +199,12 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
          * 6.  If the dashboard is in read-only mode.
          */
         return (
-            !isSaveAsButtonHidden && !isDashboardEditable && !isExport && canCreateDashboard && !isReadOnly
+            isSaveAsNewEnabled &&
+            !isSaveAsButtonHidden &&
+            !isDashboardEditable &&
+            !isExport &&
+            canCreateDashboard &&
+            !isReadOnly
         );
     },
 );

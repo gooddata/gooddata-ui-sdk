@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { AnyAction } from "@reduxjs/toolkit";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -23,7 +24,6 @@ import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import {
@@ -89,22 +89,20 @@ function updateDashboard(ctx: DashboardContext, saveCtx: DashboardSaveContext): 
 
 export function getDashboardWithSharing(
     dashboard: IDashboardDefinition,
-    sharingEnabled: boolean = false,
     sharingSupported: boolean = true,
     isNewDashboard: boolean,
 ): IDashboardDefinition {
     let shareProp: Partial<IAccessControlAware> = {};
     if (isNewDashboard) {
         const { isUnderStrictControl: _unusedIsUnderStrictControl, ...dashboardRest } = dashboard;
-        shareProp =
-            sharingEnabled && sharingSupported
-                ? {
-                      shareStatus: "private",
-                      isUnderStrictControl: true,
-                  }
-                : {
-                      shareStatus: "public",
-                  };
+        shareProp = sharingSupported
+            ? {
+                  shareStatus: "private",
+                  isUnderStrictControl: true,
+              }
+            : {
+                  shareStatus: "public",
+              };
         return {
             ...dashboardRest,
             ...shareProp,
@@ -142,7 +140,6 @@ function* createDashboardSaveContext(
     const dateFilterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
         selectDateFilterConfigsOverrides,
     );
-    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
@@ -187,7 +184,6 @@ function* createDashboardSaveContext(
         dashboardFromState,
         dashboardToSave: getDashboardWithSharing(
             dashboardToSave,
-            settings.enableAnalyticalDashboardPermissions,
             capabilities.supportsAccessControl,
             isNewDashboard,
         ),

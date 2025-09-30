@@ -93,6 +93,7 @@ export function UiPopover({
                 ...(tabIndex === undefined ? {} : { tabIndex }),
                 ref: mergeRefs(ref, (anchor as any).props?.ref),
             })}
+            offset={0}
             content={({ onClose, type }) => {
                 //NOTE: Do not make screen reader tooltip visible, live content is enough
                 // because we expect that poper content is accessible only when open on click
@@ -154,6 +155,7 @@ export function UiPopover({
                 );
             }}
             variant="none"
+            behaviour="popover"
             triggerBy={triggerBy}
             showArrow={false}
             optimalPlacement={true}
