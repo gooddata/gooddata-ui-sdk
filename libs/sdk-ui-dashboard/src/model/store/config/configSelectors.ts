@@ -257,18 +257,6 @@ export const selectDateFormat: DashboardSelector<string | undefined> = createSel
 );
 
 /**
- * Returns whether the current user can schedule emails.
- *
- * @public
- */
-export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardSchedule ?? false;
-    },
-);
-
-/**
  * Returns current platform edition.
  *
  * @public
@@ -281,18 +269,6 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition> = createS
 );
 
 /**
- * Returns whether company logo should be visible in embedded dashboard.
- *
- * @public
- */
-export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableCompanyLogoInEmbeddedUI ?? false;
-    },
-);
-
-/**
  * Returns whether the export to pdf is enabled.
  *
  * @public
@@ -301,54 +277,6 @@ export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | numbe
     createSelector(selectConfig, (state) => {
         return state.settings?.["enableKPIDashboardExportPDF"] ?? true;
     });
-
-/**
- * Returns whether the drill to dashboard is enabled.
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToDashboard ?? false;
-    },
-);
-
-/**
- * Returns whether the save as new dashboard functionality is enabled.
- *
- * @public
- */
-export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardSaveAsNew ?? false;
-    },
-);
-
-/**
- * Returns whether drill to url is enabled
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToURL ?? false;
-    },
-);
-
-/**
- * Returns whether drill to insight is enabled
- *
- * @public
- */
-export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKPIDashboardDrillToInsight ?? false;
-    },
-);
 
 /**
  * @alpha
@@ -406,18 +334,6 @@ export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> 
         return state.settings?.enableRenamingProjectToWorkspace ?? true;
     },
 );
-
-/**
- * Returns whether we should hide the pixel perfect experience references.
- *
- * @internal
- */
-export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object> =
-    createSelector(selectConfig, (state) => {
-        const isHidden = state.settings?.hidePixelPerfectExperience ?? true;
-        const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
-        return !isHidden && isEnabled;
-    });
 
 /**
  * Returns whether unfinished features are allowed.
@@ -479,16 +395,6 @@ export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = cre
 );
 
 /**
- * Returns whether choice of alternate display forms is enabled.
- *
- * @internal
- */
-export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => state.settings?.enableAlternativeDisplayFormSelection || false,
-);
-
-/**
  * Returns whether share button is hidden.
  *
  * @internal
@@ -518,18 +424,6 @@ export const selectIsDisableUserFilterReset: DashboardSelector<boolean> = create
     selectConfig,
     (state) => {
         return state.disableUserFilterReset ?? false;
-    },
-);
-
-/**
- * Returns whether the unrelated data datasets are shown.
- *
- * @internal
- */
-export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.showHiddenCatalogItems ?? false;
     },
 );
 

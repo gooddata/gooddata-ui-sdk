@@ -3,11 +3,10 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
+import { MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
-    Button,
     Dropdown,
     DropdownButton,
     DropdownList,
@@ -92,7 +91,6 @@ export interface IDateDatasetDropdownProps {
     className?: string;
     width: number;
     isLoading?: boolean;
-    enableUnrelatedItemsVisibility?: boolean;
     unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
@@ -112,13 +110,11 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
         dateFromVisualization,
         relatedDateDatasets,
         widgetRef,
-        enableUnrelatedItemsVisibility,
         unrelatedDateDatasets,
     } = props;
 
     const intl = useIntl();
     const { onItemScroll, closeOnParentScroll } = useAutoScroll(autoOpen);
-    const [showUnavailableItems, setShowUnavailableItems] = useState(false);
 
     const unrelatedDateDataSetId = unrelatedDateDataset ? unrelatedDateDataset.dataSet.id : null;
     let activeDateDataSetId: string;
@@ -142,10 +138,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
         relatedDateDatasets,
         recommendedDateDataSet,
         unrelatedDateDataset,
-        unrelatedDateDatasets,
-        enableUnrelatedItemsVisibility && showUnavailableItems,
     );
-    const unrelatedDateDatasetCount = (unrelatedDateDatasets?.length ?? 0) - (unrelatedDateDataset ? 1 : 0);
 
     const buttonRef = useRef<HTMLDivElement | null>(null);
     const [{ height, width }, setDropdownDimensions] = useState<IDateDatasetsDropdownState>({
@@ -165,10 +158,6 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
         );
         setDropdownDimensions({ width: calculatedWidth, height: calculatedHeight });
     }, [dropdownBodyHeight, unrelatedDateDatasets, buttonRef]);
-
-    const onShowHideUnrelatedItemsClick = () => {
-        setShowUnavailableItems(!showUnavailableItems);
-    };
 
     const renderDropdownBody = ({ closeDropdown }: { closeDropdown: () => void }) => {
         if (isLoading) {
@@ -209,27 +198,6 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
                         );
                     }}
                 />
-
-                {enableUnrelatedItemsVisibility && unrelatedDateDatasetCount > 0 ? (
-                    <div className="gd-list-footer">
-                        <FormattedMessage
-                            id={"gs.date.date-dataset.unrelated_hidden"}
-                            values={{
-                                count: unrelatedDateDatasetCount,
-                                isShow: showUnavailableItems,
-                            }}
-                        />
-                        <Button
-                            onClick={onShowHideUnrelatedItemsClick}
-                            className="gd-button-link-dimmed unrelated-date-button"
-                            value={intl.formatMessage({
-                                id: showUnavailableItems
-                                    ? defineMessage({ id: "gs.date.date-dataset.unrelated.hide" }).id
-                                    : defineMessage({ id: "gs.date.date-dataset.unrelated.show" }).id,
-                            })}
-                        />
-                    </div>
-                ) : null}
             </div>
         );
     };

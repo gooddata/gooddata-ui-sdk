@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardAttributeFilter, IMeasure } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 export interface KdaMetric {
@@ -43,5 +43,5 @@ export interface KdaState {
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: "loading" | "success" | "error" | "pending";
     combinations: number;
-    attributes: number;
+    attributes: ObjRef[];
 }

@@ -9,7 +9,6 @@ export interface IDeleteDialogProps {
     isVisible: boolean;
     isSchedulingEnabled: boolean;
     isAlertingEnabled: boolean;
-    isDrillToDashboardEnabled: boolean;
     onDelete: () => void;
     onCancel: () => void;
     dashboardTitle: string;

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -29,14 +30,6 @@ export const selectEntitlements: DashboardSelector<ResolvedEntitlements> = creat
         return state.entitlements;
     },
 );
-
-/**
- * @alpha
- */
-export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined> =
-    createSelector(selectEntitlements, (entitlements) => {
-        return entitlements.find((entitlement) => entitlement.name === "PdfExports");
-    });
 
 /**
  * @alpha

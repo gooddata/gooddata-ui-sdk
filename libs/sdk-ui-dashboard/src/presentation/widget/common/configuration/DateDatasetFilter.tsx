@@ -13,7 +13,6 @@ import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
-    selectEnableUnavailableItemsVisibility,
     selectFilterContextDateFilterByDataSet,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -44,7 +43,6 @@ export function DateDatasetFilter(props: IDateDatasetFilterProps) {
         isLoadingAdditionalData,
     } = props;
 
-    const enableUnrelatedItemsVisibility = useDashboardSelector(selectEnableUnavailableItemsVisibility);
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -80,10 +78,7 @@ export function DateDatasetFilter(props: IDateDatasetFilterProps) {
     const shouldRenderDateDataSetsDropdown =
         !dateFilterCheckboxDisabled &&
         !(!isDateFilterEnabled || isFilterLoading) &&
-        (relatedDateDatasets?.length ||
-            isDropdownLoading ||
-            selectedDateDatasetHiddenByObjectAvailability ||
-            (dateDatasets.length && enableUnrelatedItemsVisibility));
+        (relatedDateDatasets?.length || isDropdownLoading || selectedDateDatasetHiddenByObjectAvailability);
 
     const unrelatedDateDataset =
         relatedDateDatasets &&
@@ -106,7 +101,6 @@ export function DateDatasetFilter(props: IDateDatasetFilterProps) {
                 selectedDateDataset={selectedDateDataset}
                 selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                 onDateDatasetFilterEnabled={handleDateFilterEnabled}
-                enableUnrelatedItemsVisibility={enableUnrelatedItemsVisibility}
             />
             {!!shouldRenderDateDataSetsDropdown && (
                 <DateDatasetPicker
@@ -119,7 +113,6 @@ export function DateDatasetFilter(props: IDateDatasetFilterProps) {
                     onDateDatasetChange={handleDateDatasetChanged}
                     autoOpen={shouldOpenDateDatasetPicker}
                     isLoading={isDropdownLoading}
-                    enableUnrelatedItemsVisibility={enableUnrelatedItemsVisibility}
                     unrelatedDateDatasets={unrelatedDateDatasets}
                 />
             )}

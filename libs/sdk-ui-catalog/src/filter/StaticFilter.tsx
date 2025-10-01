@@ -1,32 +1,49 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode } from "react";
 
-import { DropdownInvertableSelect } from "@gooddata/sdk-ui-kit";
+import { DropdownInvertableSelect, SeparatorLine } from "@gooddata/sdk-ui-kit";
 
-export interface IStaticFilterProps {
+export interface IStaticFilterProps<T> {
     dataTestId: string;
-    options: string[];
-    onChange: (selection: string[]) => void;
+    options: T[];
+    onChange: (selection: T[]) => void;
+    getItemKey: (item: T) => string;
+    getItemTitle: (item: T) => string;
     header: ReactNode;
     noDataMessage: ReactNode;
-    initialValue?: string[];
+    statusBar?: ReactNode;
+    actions?: ReactNode;
+    initialValue?: T[];
 }
 
-export function StaticFilter(props: IStaticFilterProps) {
-    const { options, onChange, dataTestId, header, noDataMessage, initialValue = [] } = props;
+export function StaticFilter<T>(props: IStaticFilterProps<T>) {
+    const {
+        options,
+        onChange,
+        getItemKey,
+        getItemTitle,
+        dataTestId,
+        header,
+        noDataMessage,
+        statusBar,
+        actions,
+        initialValue = [],
+    } = props;
 
     // Always use inverted mode for simplicity. Empty external value means "All".
     const initialIsInverted = true;
     const initialSelection =
         initialValue.length === 0 ? [] : options.filter((item) => !initialValue.includes(item));
 
-    const handleChange = (selection: string[], isInverted: boolean) => {
-        const optionsSet = new Set(options);
-        const selectionSet = new Set(selection);
+    const handleChange = (selection: T[], isInverted: boolean) => {
+        const optionsSet = new Set(options.map(getItemKey));
+        const selectionSet = new Set(selection.map(getItemKey));
+
         const nextSelection = isInverted
-            ? options.filter((item) => !selectionSet.has(item))
-            : selection.filter((item) => optionsSet.has(item));
+            ? options.filter((item) => !selectionSet.has(getItemKey(item)))
+            : selection.filter((item) => optionsSet.has(getItemKey(item)));
+
         if (options.length === nextSelection.length) {
             onChange([]);
         } else {
@@ -44,8 +61,8 @@ export function StaticFilter(props: IStaticFilterProps) {
                 initialIsInverted={initialIsInverted}
                 options={options}
                 alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
-                getItemTitle={(item) => item}
-                getItemKey={(item) => item}
+                getItemTitle={getItemTitle}
+                getItemKey={getItemKey}
                 onChange={handleChange}
                 header={<div className="gd-list-title gd-analytics-catalog__filter__header">{header}</div>}
                 renderSearchBar={
@@ -54,7 +71,18 @@ export function StaticFilter(props: IStaticFilterProps) {
                         : () => <div className="gd-analytics-catalog__filter__search-bar" />
                 }
                 renderNoData={() => <div className="gd-list-noResults">{noDataMessage}</div>}
+                renderActions={actions ? () => <Actions>{actions}</Actions> : undefined}
+                renderStatusBar={statusBar ? () => <>{statusBar}</> : undefined}
             />
+        </div>
+    );
+}
+
+function Actions({ children }: PropsWithChildren) {
+    return (
+        <div className="gd-invertable-select-actions">
+            <SeparatorLine />
+            <div className="gd-invertable-select-actions-buttons">{children}</div>
         </div>
     );
 }

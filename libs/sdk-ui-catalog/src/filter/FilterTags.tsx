@@ -35,13 +35,7 @@ export function FilterTags({ backend, workspace }: Props) {
         [backend, workspace],
     );
 
-    const options = useMemo(
-        () =>
-            result?.tags.sort((a, b) => {
-                return a.toLowerCase().localeCompare(b.toLowerCase());
-            }) ?? [],
-        [result?.tags],
-    );
+    const options = useMemo(() => sortTags(result?.tags), [result?.tags]);
 
     if (status === "loading" || status === "pending") {
         return <UiSkeleton itemsCount={1} itemWidth={92} itemHeight={27} itemBorderRadius={4} />;
@@ -58,6 +52,8 @@ export function FilterTags({ backend, workspace }: Props) {
                 initialValue={tags}
                 options={options}
                 onChange={setTags}
+                getItemKey={(item) => item}
+                getItemTitle={(item) => item}
                 dataTestId={dataTestId}
                 header={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}
                 noDataMessage={<FormattedMessage id="analyticsCatalog.filter.tags.noOptions" />}
@@ -67,3 +63,10 @@ export function FilterTags({ backend, workspace }: Props) {
 }
 
 export const FilterTagsMemo = memo(FilterTags);
+
+function sortTags(tags: string[] = []): string[] {
+    // Sort alphabetically
+    return [...tags].sort((a, b) => {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
+}

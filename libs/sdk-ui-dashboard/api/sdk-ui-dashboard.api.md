@@ -3490,6 +3490,9 @@ export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase
 // @beta (undocumented)
 export type DescriptionTooltipOpenedType = "inherit" | "custom";
 
+// @internal (undocumented)
+export type DisabledReason = "oldWidget";
+
 // @beta
 export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
@@ -6600,6 +6603,8 @@ export interface IUseInsightMenuConfig {
     // (undocumented)
     canCreateAutomation: boolean;
     // (undocumented)
+    disabledReason?: DisabledReason;
+    // (undocumented)
     exportCSVDisabled: boolean;
     // (undocumented)
     exportCSVRawDisabled: boolean;
@@ -6659,8 +6664,6 @@ export interface IUseInsightMenuConfig {
     scheduleExportDisabledReason?: SchedulingDisabledReason;
     // (undocumented)
     scheduleExportManagementDisabled: boolean;
-    // (undocumented)
-    xlsxDisabledReason?: XLSXDisabledReason;
 }
 
 // @public
@@ -8729,9 +8732,6 @@ export const selectEnableAutomationManagement: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableAutomations: DashboardSelector<boolean>;
 
-// @public
-export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
-
 // @alpha (undocumented)
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
@@ -8802,22 +8802,7 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 export const selectEnableKDRichText: DashboardSelector<boolean>;
 
 // @public
-export const selectEnableKPIDashboardDrillToDashboard: DashboardSelector<boolean>;
-
-// @public
-export const selectEnableKPIDashboardDrillToInsight: DashboardSelector<boolean>;
-
-// @public
-export const selectEnableKPIDashboardDrillToURL: DashboardSelector<boolean>;
-
-// @public
 export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object>;
-
-// @public
-export const selectEnableKPIDashboardSaveAsNew: DashboardSelector<boolean>;
-
-// @public
-export const selectEnableKPIDashboardSchedule: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
@@ -8847,13 +8832,7 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean>;
 export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;
-
-// @alpha (undocumented)
-export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
 export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;
@@ -9037,9 +9016,6 @@ export const selectIsAlertingManagementDialogContext: DashboardSelector<IAlertDi
 
 // @alpha (undocumented)
 export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean>;
-
-// @internal
-export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean>;
@@ -9343,9 +9319,6 @@ export const selectSettings: DashboardSelector<ISettings>;
 
 // @internal
 export const selectSettingsVisible: DashboardSelector<boolean>;
-
-// @internal
-export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
 
 // @beta (undocumented)
 export const selectShowWidgetAsTable: (state: DashboardState) => ObjRef[];
@@ -10824,8 +10797,5 @@ export type WorkingDashboardAttributeFilter = {
 
 // @alpha
 export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashboardDateFilter;
-
-// @internal (undocumented)
-export type XLSXDisabledReason = "oldWidget";
 
 ```

@@ -8,7 +8,6 @@ import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata
  */
 
 export enum TigerFeaturesNames {
-    EnableSortingByTotalGroup = "enableSortingByTotalGroup",
     // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
@@ -25,7 +24,6 @@ export enum TigerFeaturesNames {
     EnableWaterfallChart = "enableWaterfallChart",
     EnableCompositeGrain = "enableCompositeGrain",
     EnableTableTotalRows = "enableTableTotalRows",
-    EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
     EnableUserManagement = "enableUserManagement",
     EnableKDSavedFilters = "enableKDSavedFilters",
@@ -124,7 +122,6 @@ export enum TigerFeaturesNames {
 }
 
 export type ITigerFeatureFlags = {
-    enableSortingByTotalGroup: (typeof FeatureFlagsValues)["enableSortingByTotalGroup"][number];
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
@@ -137,7 +134,6 @@ export type ITigerFeatureFlags = {
     enableWaterfallChart: (typeof FeatureFlagsValues)["enableWaterfallChart"][number];
     enableCompositeGrain: (typeof FeatureFlagsValues)["enableCompositeGrain"][number];
     enableTableTotalRows: (typeof FeatureFlagsValues)["enableTableTotalRows"][number];
-    enablePdmRemovalDeprecationPhase: (typeof FeatureFlagsValues)["enablePdmRemovalDeprecationPhase"][number];
     enablePivotTableIncreaseBucketSize: (typeof FeatureFlagsValues)["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: (typeof FeatureFlagsValues)["enableUserManagement"][number];
     enableKDSavedFilters: (typeof FeatureFlagsValues)["enableKDSavedFilters"][number];
@@ -238,7 +234,6 @@ export type ITigerFeatureFlags = {
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
-    enableSortingByTotalGroup: false,
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableDescriptions: true,
@@ -251,7 +246,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWaterfallChart: true,
     enableCompositeGrain: false,
     enableTableTotalRows: true,
-    enablePdmRemovalDeprecationPhase: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
     enableKDSavedFilters: true,
@@ -352,7 +346,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
 };
 
 export const FeatureFlagsValues = {
-    enableSortingByTotalGroup: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableDescriptions: [true, false] as const,
@@ -365,7 +358,6 @@ export const FeatureFlagsValues = {
     enableWaterfallChart: [true, false] as const,
     enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
-    enablePdmRemovalDeprecationPhase: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,

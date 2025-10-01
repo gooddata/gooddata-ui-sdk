@@ -29,7 +29,6 @@ describe("static features", () => {
     it("full definition", async () => {
         const results = await getStaticFeatures(
             createFeatures({
-                [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -38,7 +37,6 @@ describe("static features", () => {
         );
         expect(results).toEqual({
             dashboardEditModeDevRollout: true,
-            enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,
@@ -49,7 +47,6 @@ describe("static features", () => {
         const results = await getStaticFeatures(
             createFeatures(
                 {
-                    [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
@@ -60,7 +57,6 @@ describe("static features", () => {
         );
         expect(results).toEqual({
             dashboardEditModeDevRollout: true,
-            enableSortingByTotalGroup: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,

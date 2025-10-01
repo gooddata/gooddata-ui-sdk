@@ -133,48 +133,6 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
 
     /**
-     * Indicates whether alternative display form can be selected for attribute and multiple instances
-     * of the same attributes can be put into buckets
-     */
-    enableAlternativeDisplayFormSelection?: boolean;
-
-    /**
-     * Indicates whether unavailable data items are visible in the settings API
-     * only available on Tiger/Panther
-     */
-    showHiddenCatalogItems?: boolean;
-
-    /**
-     * Indicates whether dashboard scheduled mails are enabled.
-     */
-    enableKPIDashboardSchedule?: boolean;
-
-    /**
-     * Indicates whether the user can save and existing dashboard in KPI dashboards as new.
-     */
-    enableKPIDashboardSaveAsNew?: boolean;
-
-    /**
-     * Indicates whether the drill to dashboard is enabled.
-     */
-    enableKPIDashboardDrillToDashboard?: boolean;
-
-    /**
-     * Indicates whether the drill to insight is enabled.
-     */
-    enableKPIDashboardDrillToInsight?: boolean;
-
-    /**
-     * Indicates whether the drill to url is enabled.
-     */
-    enableKPIDashboardDrillToURL?: boolean;
-
-    /**
-     * Indicates whether the company logo should be visible in the embedded dashboard.
-     */
-    enableCompanyLogoInEmbeddedUI?: boolean;
-
-    /**
      * Enable charts sorting customization
      */
     enableChartsSorting?: boolean;
@@ -301,9 +259,7 @@ export interface ISettings {
 
     enableDataSection?: boolean;
     enableRenamingProjectToWorkspace?: boolean;
-    enableCsvUploader?: boolean;
     enableAnalyticalDashboards?: boolean;
-    enablePixelPerfectExperience?: boolean;
     hidePixelPerfectExperience?: boolean;
     enableNewNavigationForResponsiveUi?: boolean;
     enableMySqlDataSource?: boolean;

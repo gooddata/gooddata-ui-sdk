@@ -95,7 +95,7 @@ describe("UiMenu", () => {
 
         fireEvent.click(screen.getByText("Item 1"));
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
     });
 
     it("should not call onSelect when disabled item is clicked", () => {
@@ -147,7 +147,7 @@ describe("UiMenu", () => {
         // Select with Enter
         fireEvent.keyDown(menu, { code: "Enter" });
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], expect.anything());
     });
 
     it("should select with Space key", () => {
@@ -162,7 +162,7 @@ describe("UiMenu", () => {
         // Select with Space
         fireEvent.keyDown(menu, { code: "Space" }); // Space key is represented as "Space" in event.code
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1], expect.anything());
     });
 
     it("should close with Escape key", () => {
@@ -185,7 +185,7 @@ describe("UiMenu", () => {
         // Click on an item
         fireEvent.click(screen.getByText("Item 1"));
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -197,7 +197,7 @@ describe("UiMenu", () => {
         // Click on an item
         fireEvent.click(screen.getByText("Item 1"));
 
-        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0], expect.anything());
         expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -526,7 +526,10 @@ describe("UiMenu", () => {
         // Select an item
         fireEvent.keyDown(menu, { code: "ArrowDown" });
         fireEvent.keyDown(menu, { code: "Enter" });
-        expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "group1item2" }));
+        expect(onSelect).toHaveBeenCalledWith(
+            expect.objectContaining({ id: "group1item2" }),
+            expect.anything(),
+        );
     });
 
     it("should open submenu with a group inside when top-level interactive item is clicked", () => {

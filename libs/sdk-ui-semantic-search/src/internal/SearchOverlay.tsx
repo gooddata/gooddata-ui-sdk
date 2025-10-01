@@ -251,15 +251,19 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         [setImmediate],
     );
 
+    const isLoading = searchStatus === "loading";
+    const isExpanded = !isLoading && (searchResults.length > 0 || searchHistory.length > 0);
+
     const inputAccessibilityConfig = useMemo(
         (): IAccessibilityConfigBase => ({
             role: "combobox",
-            ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
+            ariaLabel: intl.formatMessage({ id: "semantic-search.placeholder" }),
             ariaControls: treeViewId,
-            ariaExpanded: true, // Always expanded
-            ariaActiveDescendant: activeNodeId,
+            ariaExpanded: isExpanded,
+            ariaActiveDescendant: isExpanded ? activeNodeId : undefined,
+            ariaAutocomplete: "list",
         }),
-        [intl, activeNodeId, treeViewId],
+        [intl, activeNodeId, treeViewId, isExpanded],
     );
 
     const onValueChange = useCallback((value: string | number) => setValue(String(value)), [setValue]);

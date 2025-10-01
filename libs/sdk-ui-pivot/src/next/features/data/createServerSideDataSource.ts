@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { IServerSideDatasource, IServerSideGetRowsParams, LoadSuccessParams } from "ag-grid-enterprise";
 import { isEqual } from "lodash-es";
 
@@ -101,7 +102,9 @@ export const createServerSideDataSource = ({
         const updatedSortBy = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
         if (!isEqual(lastSortBy, updatedSortBy)) {
-            currentExecutionResult = await currentExecutionResult
+            // Always rebuild from the initial execution result to avoid accumulating
+            // multiple layers of execution result decorators over time.
+            currentExecutionResult = await initialExecutionResult
                 .transform()
                 .withSorting(...updatedSortBy)
                 .execute();

@@ -307,10 +307,23 @@ export interface IAnalyticalWorkspace {
 }
 
 // @internal
+export interface IAnalyticsCatalogCreatedBy {
+    // (undocumented)
+    reasoning: string;
+    // (undocumented)
+    users: IUser[];
+}
+
+// @internal
 export interface IAnalyticsCatalogService {
-    getTags(): Promise<{
-        tags: string[];
-    }>;
+    getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
+    getTags(): Promise<IAnalyticsCatalogTags>;
+}
+
+// @internal
+export interface IAnalyticsCatalogTags {
+    // (undocumented)
+    tags: string[];
 }
 
 // @alpha (undocumented)

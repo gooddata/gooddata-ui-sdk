@@ -100,11 +100,6 @@ export enum GdcKdCommandType {
     SaveAsDashboard = "saveAsDashboard",
 
     /**
-     * The command to open schedule email dialog
-     */
-    OpenScheduleEmailDialog = "openScheduleEmailDialog",
-
-    /**
      * The command to set attribute filter parents
      */
     SetFilterParents = "setFilterParents",
@@ -1049,48 +1044,6 @@ export type KdDrillToUrlResolvedData = IGdcKdMessageEnvelope<
     GdcKdEventType.DrillToUrlResolved,
     IKdDrillToUrlResolvedDataBody
 >;
-
-/**
- * Open the schedule email dialog, user will be able to schedule periodic exports of the current dashboard
- *
- * Contract:
- *
- * -  if KD is currently viewing dashboard, this command will try to open the dialog to schedule an email,
- *    on success ScheduleEmailDialogOpened will be posted
- * -  if KD is currently editing dashboard or is not currently showing any dashboard or schedule email dialog is opened,
- *    commandFailed will be posted
- *
- * @public
- */
-export type KdOpenScheduleEmailDialogCommand = IGdcKdMessageEvent<
-    GdcKdCommandType.OpenScheduleEmailDialog,
-    null
->;
-
-/**
- * @public
- */
-export type KdOpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
-    GdcKdCommandType.OpenScheduleEmailDialog,
-    null
->;
-
-/**
- * Type-guard checking whether object is an instance of {@link KdOpenScheduleEmailDialogCommandData}.
- *
- * @param obj - object to test
- *
- * @public
- */
-export function isKdOpenScheduleEmailDialogCommandData(
-    obj: unknown,
-): obj is KdOpenScheduleEmailDialogCommandData {
-    return (
-        obj !== null &&
-        typeof obj === "object" &&
-        getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog
-    );
-}
 
 /**
  * Type that represents attribute filter on a dashboard referenced by display form.

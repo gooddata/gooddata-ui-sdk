@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, useMemo, useState } from "react";
+import { AriaAttributes, KeyboardEvent, MouseEvent, ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
 import copy from "copy-to-clipboard";
@@ -24,17 +24,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import {
-    Button,
-    IAlignPoint,
-    Icon,
-    ItemsWrapper,
-    Overlay,
-    SingleSelectListItem,
-    UiFocusManager,
-    makeMenuKeyboardNavigation,
-    useId,
-} from "@gooddata/sdk-ui-kit";
+import { Button, IAlignPoint, Icon, Overlay, UiFocusManager, UiMenu, useId } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { MarkdownComponent } from "./Markdown.js";
@@ -63,6 +53,7 @@ interface IMenuButtonItem {
     id: string;
     title: string;
     icon: ReactNode;
+    ariaAttributes: AriaAttributes;
 }
 
 export type VisualizationContentsProps = {
@@ -98,12 +89,7 @@ function VisualizationContentsComponentCore({
     const [isHovered, setHovered] = useState(false);
 
     const intl = useIntl();
-    const tooltipText = intl.formatMessage(
-        { id: "gd.gen-ai.visualisation.menu" },
-        {
-            name: visualization?.title || "",
-        },
-    );
+    const tooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
 
     // generate unique IDs for accessibility and dropdown positioning
     const id = useId();
@@ -119,21 +105,29 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} />,
+                          icon: <SaveIcon width={16} height={16} ariaHidden />,
+                          ariaAttributes: {
+                              "aria-haspopup": "dialog",
+                          },
                       },
                       {
                           id: "button-open",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} />,
+                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden />,
+                          ariaAttributes: {
+                              "aria-description": intl.formatMessage({
+                                  id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
+                              }),
+                          },
                       },
                       {
                           id: "button-copy",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
                           }),
-                          icon: <CopyIcon width={16} height={16} />,
+                          icon: <CopyIcon width={16} height={16} ariaHidden />,
                       },
                   ] as IMenuButtonItem[])
                 : ([
@@ -142,20 +136,28 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} />,
+                          icon: <SaveIcon width={16} height={16} ariaHidden />,
+                          ariaAttributes: {
+                              "aria-haspopup": "dialog",
+                          },
                       },
                       {
                           id: "button-open",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} />,
+                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden />,
+                          ariaAttributes: {
+                              "aria-description": intl.formatMessage({
+                                  id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
+                              }),
+                          },
                       },
                   ] as IMenuButtonItem[]),
         [intl, visualization?.savedVisualizationId],
     );
 
-    const handleOpen = (e: MouseEvent, vis: IGenAIVisualization) => {
+    const handleOpen = (e: MouseEvent | KeyboardEvent, vis: IGenAIVisualization) => {
         if (!vis?.savedVisualizationId) {
             return;
         }
@@ -170,7 +172,7 @@ function VisualizationContentsComponentCore({
         e.stopPropagation();
     };
 
-    const handleButtonClick = (e: MouseEvent<HTMLElement>, item: IMenuButtonItem) => {
+    const handleButtonClick = (e: MouseEvent | KeyboardEvent, item: IMenuButtonItem) => {
         switch (item.id) {
             case "button-save":
                 setSaveDialogOpen("save");
@@ -266,14 +268,6 @@ function VisualizationContentsComponentCore({
         setVisLoading(isLoading);
     };
 
-    const handleKeyDown = useMemo(
-        () =>
-            makeMenuKeyboardNavigation({
-                onClose: () => setMenuButtonOpen(false),
-            }),
-        [],
-    );
-
     const renderMenuItems = () => {
         return (
             <Overlay
@@ -286,30 +280,30 @@ function VisualizationContentsComponentCore({
                 onClose={() => setMenuButtonOpen(false)}
             >
                 <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
-                    <div style={{ display: "contents" }} tabIndex={-1} onKeyDown={handleKeyDown}>
-                        <ItemsWrapper smallItemsSpacing className="gd-menu">
-                            <div role={"menu"} id={menuId} aria-labelledby={MORE_MENU_BUTTON_ID}>
-                                {menuItems.map((menuItem) => {
-                                    return (
-                                        <SingleSelectListItem
-                                            className="gd-menu-item"
-                                            elementType="button"
-                                            key={menuItem.id}
-                                            title={menuItem.title}
-                                            icon={menuItem.icon}
-                                            onClick={(e) => {
-                                                handleButtonClick(e, menuItem);
-                                            }}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </ItemsWrapper>
-                    </div>
+                    <UiMenu
+                        items={menuItems.map((item) => ({
+                            type: "interactive",
+                            stringTitle: item.title,
+                            data: item,
+                            iconLeft: item.icon,
+                            id: item.id,
+                            isDisabled: false,
+                            ariaAttributes: item.ariaAttributes,
+                        }))}
+                        ariaAttributes={{
+                            id: menuId,
+                        }}
+                        onSelect={(item, e) => {
+                            handleButtonClick(e, item.data as IMenuButtonItem);
+                        }}
+                        onClose={() => setMenuButtonOpen(false)}
+                    />
                 </UiFocusManager>
             </Overlay>
         );
     };
+
+    const descId = useId();
 
     return (
         <div className={className}>
@@ -344,10 +338,12 @@ function VisualizationContentsComponentCore({
                                               },
                                           )}
                                           accessibilityConfig={{
-                                              ariaLabel: tooltipText,
                                               role: "button",
+                                              ariaLabel: tooltipText,
+                                              ariaDescribedBy: descId,
                                               isExpanded: isMenuButtonOpen,
                                               popupId: menuId,
+                                              popupType: "menu",
                                           }}
                                       />
                                       {isMenuButtonOpen ? renderMenuItems() : null}
@@ -355,7 +351,7 @@ function VisualizationContentsComponentCore({
                               );
                           })()
                         : null}
-                    <div className="gd-gen-ai-chat__visualization__title">
+                    <div className="gd-gen-ai-chat__visualization__title" id={descId}>
                         <MarkdownComponent allowMarkdown={useMarkdown}>
                             {visualization.title}
                         </MarkdownComponent>

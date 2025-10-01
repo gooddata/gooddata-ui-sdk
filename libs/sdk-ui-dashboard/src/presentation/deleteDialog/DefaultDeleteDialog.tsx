@@ -15,7 +15,6 @@ import {
     selectDashboardUserAutomationAlerts,
     selectDashboardUserAutomationSchedules,
     selectEnableAlerting,
-    selectEnableKPIDashboardDrillToDashboard,
     selectEnableScheduling,
     selectIsDeleteDialogOpen,
     uiActions,
@@ -60,7 +59,6 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
     const isVisible = useDashboardSelector(selectIsDeleteDialogOpen);
     const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
-    const isDrillToDashboardEnabled = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
 
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlerts); // Should be in dashboard context
     const schedules = useDashboardSelector(selectDashboardUserAutomationSchedules); // Should be in dashboard context
@@ -69,7 +67,6 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
         isVisible,
         isSchedulingEnabled,
         isAlertingEnabled,
-        isDrillToDashboardEnabled,
 
         showAlertsMessage: alerts.length > 0,
         showSchedulesMessage: schedules.length > 0,
@@ -89,7 +86,6 @@ export function DefaultDeleteDialog(props: IDeleteDialogProps): ReactElement | n
         isVisible,
         isSchedulingEnabled,
         isAlertingEnabled,
-        isDrillToDashboardEnabled,
         onDelete,
         onCancel,
         dashboardTitle,
@@ -106,7 +102,7 @@ export function DefaultDeleteDialog(props: IDeleteDialogProps): ReactElement | n
     const messages = compact([
         isAlertingEnabled && showAlertsMessage && deleteMessages.alerts,
         isSchedulingEnabled && showSchedulesMessage && deleteMessages.schedules,
-        isDrillToDashboardEnabled && deleteMessages.drills,
+        deleteMessages.drills,
     ]);
 
     return (

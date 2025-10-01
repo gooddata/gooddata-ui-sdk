@@ -26,11 +26,11 @@ import { useMounted } from "../hooks/useMounted.js";
 import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 import { useFullTextSearchState } from "../search/index.js";
 
-export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize }: ICatalogItemFeedOptions) {
+export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalogItemFeedOptions) {
     const state = useFeedState();
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
-    const { types, origin, tags } = useFilterState();
+    const { types, origin, createdBy, tags } = useFilterState();
     const { status, totalCount, totalCounts, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {

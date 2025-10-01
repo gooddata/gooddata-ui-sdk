@@ -1,13 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
-import {
-    HEADER_ITEM_ID_DASHBOARDS,
-    HEADER_ITEM_ID_KPIS,
-    generateHeaderMenuItemsGroups,
-} from "../generateHeaderMenuItemsGroups.js";
+import { HEADER_ITEM_ID_KPIS, generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
 import { IHeaderMenuItem } from "../typings.js";
 
 describe("activateHeaderMenuItems", () => {
@@ -22,7 +19,7 @@ describe("activateHeaderMenuItems", () => {
 
     beforeAll(() => {
         items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, false, true, true, "enterprise", false),
+            getAccountMenuFeatureFlagsMock(true, false, true, "enterprise", false),
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
@@ -40,14 +37,8 @@ describe("activateHeaderMenuItems", () => {
     });
 
     it("activate only one item", () => {
-        const changed = activateHeaderMenuItems(items, [HEADER_ITEM_ID_DASHBOARDS]);
+        const changed = activateHeaderMenuItems(items, [HEADER_ITEM_ID_KPIS]);
 
-        expect(findAllActiveIds(changed)).toEqual([HEADER_ITEM_ID_DASHBOARDS]);
-    });
-
-    it("activate more items", () => {
-        const changed = activateHeaderMenuItems(items, [HEADER_ITEM_ID_DASHBOARDS, HEADER_ITEM_ID_KPIS]);
-
-        expect(findAllActiveIds(changed)).toEqual([HEADER_ITEM_ID_DASHBOARDS, HEADER_ITEM_ID_KPIS]);
+        expect(findAllActiveIds(changed)).toEqual([HEADER_ITEM_ID_KPIS]);
     });
 });

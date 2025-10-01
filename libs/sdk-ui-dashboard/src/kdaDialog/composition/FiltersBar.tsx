@@ -50,6 +50,8 @@ export function FiltersBar() {
         [setState, state.dateFilters],
     );
 
+    //TODO: AttributesDropdown will be used to add new filter
+
     return (
         <KdaBar
             title={intl.formatMessage({ id: "kdaDialog.dialog.bars.filters.title" })}

@@ -25,10 +25,7 @@ export const DefaultSeparators = {
  * settings are thus hardcoded here.
  */
 export const DefaultUiSettings: ISettings = {
-    enableActiveFilterContext: false,
-    enableMetricDateFilter: true,
     hidePixelPerfectExperience: true,
-    enableCsvUploader: true,
     platformEdition: "enterprise",
     portalLogoPage: false,
     analyticalDesigner: true,
@@ -37,7 +34,6 @@ export const DefaultUiSettings: ISettings = {
     enableAdRankingFilter: true,
     enableKPIDashboardDependentFilters: false,
     enableSectionHeaders: true,
-    enableKPIDashboardSaveAsNew: true,
 
     // embedding AD in KD
     enableExploreInsightsFromKD: true,
@@ -45,15 +41,11 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardNewInsight: true,
 
     // drilling
-    enableKPIDashboardDrillToDashboard: true,
-    enableKPIDashboardDrillToInsight: true,
-    enableKPIDashboardDrillToURL: true,
     enableFilterValuesResolution: false,
 
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
     enableAdAdditionalDateAttributes: true,
-    enableAlternativeDisplayFormSelection: true,
     enableNewAnalyticalDashboardsNavigation: true,
 
     // enable the plugin-ready Dashboard component in gdc-dashboards

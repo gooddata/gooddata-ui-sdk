@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useCallback } from "react";
+import { KeyboardEvent, MouseEvent, ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -59,13 +59,16 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         setFocusedId(item.id);
     }, [controlType, item.id, setFocusedId]);
 
-    const handleSelect = useCallback(() => {
-        if (item.isDisabled) {
-            return;
-        }
+    const handleSelect = useCallback(
+        (e: MouseEvent | KeyboardEvent) => {
+            if (item.isDisabled) {
+                return;
+            }
 
-        onSelect(item);
-    }, [item, onSelect]);
+            onSelect(item, e);
+        },
+        [item, onSelect],
+    );
 
     const classNames = cx(
         e("item-wrapper", {
@@ -81,7 +84,8 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         <li
             ref={scrollToItem}
             role="menuitem"
-            aria-haspopup={item.subItems ? "menu" : undefined}
+            {...item.ariaAttributes}
+            aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
             aria-disabled={item.isDisabled}
             onMouseMove={handleMouseFocus}
             tabIndex={-1}
@@ -113,6 +117,7 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
             })}
             onClick={onSelect}
         >
+            {item.iconLeft ? item.iconLeft : null}
             <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
                 {item.stringTitle}
             </ShortenedText>

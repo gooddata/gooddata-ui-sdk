@@ -1,7 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import type { IAnalyticsCatalogService } from "@gooddata/sdk-backend-spi";
+import type {
+    IAnalyticsCatalogCreatedBy,
+    IAnalyticsCatalogService,
+    IAnalyticsCatalogTags,
+} from "@gooddata/sdk-backend-spi";
 
+import { convertAnalyticsCatalogCreatedBy } from "../../../convertors/fromBackend/AnalyticsCatalogConverter.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
@@ -17,11 +22,19 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
     /**
      * Returns available tags assigned to any object in the Analytics catalog.
      */
-    async getTags(): Promise<{ tags: string[] }> {
+    async getTags(): Promise<IAnalyticsCatalogTags> {
         const response = await this.authCall((client) =>
             // Will be moved to client tiger APIs
             client.axios.get(`/api/v1/actions/workspaces/${this.workspaceId}/ai/analyticsCatalog/tags`),
         );
         return response.data;
+    }
+
+    async getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy> {
+        const response = await this.authCall((client) =>
+            // Will be moved to client tiger APIs
+            client.axios.get(`/api/v1/actions/workspaces/${this.workspaceId}/ai/analyticsCatalog/createdBy`),
+        );
+        return convertAnalyticsCatalogCreatedBy(response.data);
     }
 }

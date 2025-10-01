@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { defineMessages } from "react-intl";
 
-import { XLSXDisabledReason } from "./types.js";
+import { DisabledReason } from "./types.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
 
@@ -11,19 +12,19 @@ const tooltipMessages = defineMessages({
     dataError: { id: "options.menu.unsupported.error" },
     loading: { id: "options.menu.unsupported.loading" },
     exporting: { id: "options.menu.export.in.progress" },
-    xlsxOldWidget: { id: "options.menu.unsupported.xlsxOldWidget" },
+    oldWidget: { id: "options.menu.unsupported.oldWidgetExport" },
 });
 
 export const getExportTooltipId = ({
     isRawExportsEnabled,
     isExporting,
     execution,
-    xlsxDisabledReason,
+    disabledReason,
 }: {
     execution?: IExecutionResultEnvelope;
     isExporting: boolean;
     isRawExportsEnabled?: boolean;
-    xlsxDisabledReason?: XLSXDisabledReason;
+    disabledReason?: DisabledReason;
 }): string => {
     if (isExporting) {
         return tooltipMessages.exporting.id;
@@ -38,8 +39,8 @@ export const getExportTooltipId = ({
             return tooltipMessages.dataError.id;
         }
     }
-    if (xlsxDisabledReason === "oldWidget") {
-        return tooltipMessages.xlsxOldWidget.id;
+    if (disabledReason === "oldWidget") {
+        return tooltipMessages.oldWidget.id;
     }
     return tooltipMessages.loading.id;
 };

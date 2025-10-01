@@ -86,7 +86,7 @@ function DefaultDashboardInsightWidgetCore({
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
-        xlsxDisabledReason,
+        disabledReason,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -152,7 +152,7 @@ function DefaultDashboardInsightWidgetCore({
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
-        xlsxDisabledReason,
+        disabledReason,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

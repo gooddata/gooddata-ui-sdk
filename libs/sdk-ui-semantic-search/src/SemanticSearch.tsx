@@ -143,15 +143,19 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
         limit,
     });
 
+    const isLoading = searchStatus === "loading";
+    const isExpanded = !isLoading && searchResults.length > 0;
+
     const inputAccessibilityConfig = useMemo(
         (): IAccessibilityConfigBase => ({
             role: "combobox",
-            ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
+            ariaLabel: placeholder ?? intl.formatMessage({ id: "semantic-search.label" }),
             ariaControls: treeViewId,
-            ariaExpanded: Boolean(activeNodeId),
-            ariaActiveDescendant: activeNodeId,
+            ariaExpanded: isExpanded,
+            ariaActiveDescendant: isExpanded ? activeNodeId : undefined,
+            ariaAutocomplete: "list",
         }),
-        [intl, activeNodeId, treeViewId],
+        [intl, activeNodeId, treeViewId, isExpanded, placeholder],
     );
 
     // The component requires explicit width

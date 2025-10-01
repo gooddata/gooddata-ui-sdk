@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, ReactNode, memo, useCallback } from "react";
+import { KeyboardEvent, MouseEvent, ReactElement, ReactNode, memo, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -55,13 +55,16 @@ export const DefaultUiMenuContentItemWrapper = memo(function DefaultUiMenuConten
         setFocusedId(item.id);
     }, [controlType, item.id, setFocusedId]);
 
-    const handleSelect = useCallback(() => {
-        if (item.isDisabled) {
-            return;
-        }
+    const handleSelect = useCallback(
+        (e: MouseEvent | KeyboardEvent) => {
+            if (item.isDisabled) {
+                return;
+            }
 
-        onSelect(item);
-    }, [item, onSelect]);
+            onSelect(item, e);
+        },
+        [item, onSelect],
+    );
 
     const classNames = cx(
         e("item-wrapper", {

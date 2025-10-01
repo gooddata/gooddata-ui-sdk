@@ -13,7 +13,6 @@ describe("updateConfigWithSettings", () => {
             const config: IChartConfig = {};
             const settings: ISettings = {};
             const expectedConfig = {
-                disableDrillUnderline: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
@@ -39,7 +38,6 @@ describe("updateConfigWithSettings", () => {
                 enableKDCrossFiltering: true,
             };
             const expectedConfig = {
-                disableDrillUnderline: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,

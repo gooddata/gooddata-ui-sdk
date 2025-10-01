@@ -21,7 +21,7 @@ function CalculationListItem({ title, icon, info, isSelected, onClick }: ISingle
 
     return (
         <div className={classNames} onClick={onClick}>
-            <span role="icon" className={`gd-list-icon ${icon}`} />
+            <span className={`gd-list-icon ${icon}`} />
             <span>{title}</span>
             <div role="item-info" className="gd-list-item-bubble s-list-item-info">
                 <BubbleHoverTrigger

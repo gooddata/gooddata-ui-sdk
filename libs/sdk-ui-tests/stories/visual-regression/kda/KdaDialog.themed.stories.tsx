@@ -6,6 +6,7 @@ import {
     dialogDetailsLoadingState,
     dialogFullLoadingState,
     dialogFullyLoadedScrollState,
+    dialogFullyLoadedSmallState,
     dialogFullyLoadedState,
 } from "./init.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -34,6 +35,13 @@ DialogDetailsLoading.parameters = {
 export const DialogFullyLoaded = () => wrapWithTheme(<DialogComponent state={dialogFullyLoadedState} />);
 DialogFullyLoaded.parameters = {
     kind: "themed",
+};
+
+export function DialogFullyLoadedSmall() {
+    return <DialogComponent state={dialogFullyLoadedSmallState} />;
+}
+DialogFullyLoadedSmall.parameters = {
+    kind: "full-featured",
 };
 
 export const DialogFullyLoadedScrolls = () =>

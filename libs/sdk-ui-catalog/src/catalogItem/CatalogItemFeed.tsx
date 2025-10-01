@@ -28,7 +28,7 @@ type Props = ICatalogItemFeedOptions & {
 const searchStatus = "idle";
 const searchItems: ISemanticSearchResultItem[] = [];
 
-export function CatalogItemFeed({ backend, workspace, children, createdBy, pageSize }: Props) {
+export function CatalogItemFeed({ backend, workspace, children, pageSize }: Props) {
     const intl = useIntl();
     const id = useIdFilter(searchStatus, searchItems);
     const {
@@ -43,7 +43,6 @@ export function CatalogItemFeed({ backend, workspace, children, createdBy, pageS
         backend,
         workspace,
         id,
-        createdBy,
         pageSize,
     });
 
