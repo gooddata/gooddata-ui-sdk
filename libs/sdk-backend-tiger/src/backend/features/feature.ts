@@ -25,13 +25,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableSortingByTotalGroup,
-            "enableSortingByTotalGroup",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSortingByTotalGroup,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.DashboardEditModeDevRollout,
             "dashboardEditModeDevRollout",
             "BOOLEAN",
@@ -106,13 +99,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableTableTotalRows",
             "BOOLEAN",
             FeatureFlagsValues.enableTableTotalRows,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnablePdmRemovalDeprecationPhase,
-            "enablePdmRemovalDeprecationPhase",
-            "BOOLEAN",
-            FeatureFlagsValues.enablePdmRemovalDeprecationPhase,
         ),
         ...loadFeature(
             features,

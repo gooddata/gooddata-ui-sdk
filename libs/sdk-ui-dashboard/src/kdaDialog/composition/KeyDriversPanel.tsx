@@ -1,13 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import {
     UiButton,
     UiButtonSegmentedControl,
+    UiIcon,
     UiIconButton,
     UiListbox,
     UiSkeleton,
@@ -61,6 +62,14 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
             }),
         );
     }, [currentItems]);
+
+    // When there are no items for selected trend, switch to the other trend
+    useEffect(() => {
+        if (trendUp.length === 0 && trendDown.length > 0 && state.selectedTrend === "up") {
+            setState({ selectedTrend: "down" });
+        }
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div className={cx("gd-kda-key-drivers-panel")}>
@@ -149,20 +158,33 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                         <UiSkeleton itemHeight={40} />
                     </div>
                 ) : (
-                    <UiListbox
-                        items={currentItems}
-                        ariaAttributes={{
-                            id: listId,
-                            "aria-controls": detailsId,
-                        }}
-                        InteractiveItemComponent={(props) => {
-                            return <KeyDriverItem {...props} maximum={maximum} />;
-                        }}
-                        selectedItemId={getSelectedItem(state)}
-                        onSelect={(item) => {
-                            setState({ selectedItem: item });
-                        }}
-                    />
+                    <>
+                        {currentItems.length > 0 ? (
+                            <UiListbox
+                                items={currentItems}
+                                ariaAttributes={{
+                                    id: listId,
+                                    "aria-controls": detailsId,
+                                }}
+                                InteractiveItemComponent={(props) => {
+                                    return <KeyDriverItem {...props} maximum={maximum} />;
+                                }}
+                                selectedItemId={getSelectedItem(state)}
+                                onSelect={(item) => {
+                                    setState({ selectedItem: item });
+                                }}
+                            />
+                        ) : (
+                            <div className={cx("gd-kda-key-drivers-panel-list-empty")}>
+                                <UiIcon type="drawerEmpty" size={26} color="currentColor" />
+                                {state.selectedTrend === "up" ? (
+                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_up" />
+                                ) : (
+                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_down" />
+                                )}
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

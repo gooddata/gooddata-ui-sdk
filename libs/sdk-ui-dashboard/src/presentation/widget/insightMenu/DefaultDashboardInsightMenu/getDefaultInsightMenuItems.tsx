@@ -38,13 +38,13 @@ const getExportMenuItems = (
         onExportPngImage,
         onExportPdfTabular,
         isExporting,
-        xlsxDisabledReason,
+        disabledReason,
     } = config;
     const tooltipId = getExportTooltipId({
         isRawExportsEnabled: isExportRawVisible,
         isExporting,
         execution,
-        xlsxDisabledReason,
+        disabledReason,
     });
     const tooltip = intl.formatMessage({ id: tooltipId });
     const presentationTooltip = intl.formatMessage({

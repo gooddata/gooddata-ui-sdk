@@ -1,12 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { UiButton } from "../@ui/UiButton/UiButton.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
+import {
+    Dropdown,
+    type IDropdownBodyRenderProps,
+    type IDropdownButtonRenderProps,
+} from "../Dropdown/Dropdown.js";
 import {
     type IInvertableSelectRenderNoDataProps,
     type IInvertableSelectRenderSearchBarProps,
@@ -30,6 +34,16 @@ export interface IDropdownInvertableSelectProps<T> {
      * List of options to show in the select.
      */
     options: T[];
+
+    /**
+     * Class name to apply to the dropdown.
+     */
+    className?: string;
+
+    /**
+     * Class name to apply to the dropdown body.
+     */
+    bodyClassName?: string;
 
     /**
      * Function to get the title of an item.
@@ -90,6 +104,16 @@ export interface IDropdownInvertableSelectProps<T> {
      * Render function for the no data state.
      */
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
+
+    /**
+     * Render function for the button.
+     */
+    renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
+
+    /*
+     * Render function for the actions.
+     */
+    renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
 }
 
 const messages = defineMessages({
@@ -109,6 +133,8 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         title,
         options,
         onChange,
+        className,
+        bodyClassName,
         width = 240,
         alignPoints,
         getItemTitle,
@@ -120,6 +146,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         renderStatusBar,
         renderSearchBar,
         renderNoData,
+        renderActions,
     } = props;
 
     const [searchString, setSearchString] = useState<string>(initialSearchString ?? "");
@@ -161,15 +188,10 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         return !searchString || getItemTitle(option).toLowerCase().includes(searchString.toLowerCase());
     });
 
-    return (
-        <Dropdown
-            alignPoints={alignPoints}
-            onOpenStateChanged={(isOpen) => {
-                if (!isOpen) {
-                    resetTemporarySelection();
-                }
-            }}
-            renderButton={({ toggleDropdown }) => (
+    const renderButton = useMemo((): IDropdownInvertableSelectProps<T>["renderButton"] => {
+        return (
+            props.renderButton ??
+            (({ toggleDropdown }) => (
                 <UiButton
                     label={buttonText}
                     onClick={toggleDropdown}
@@ -177,8 +199,22 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                     variant="secondary"
                     iconAfter="navigateDown"
                 />
-            )}
-            renderBody={({ closeDropdown }) => {
+            ))
+        );
+    }, [buttonText, props.renderButton]);
+
+    return (
+        <Dropdown
+            className={className}
+            alignPoints={alignPoints}
+            onOpenStateChanged={(isOpen) => {
+                if (!isOpen) {
+                    resetTemporarySelection();
+                }
+            }}
+            renderButton={renderButton}
+            renderBody={(bodyProps) => {
+                const { closeDropdown } = bodyProps;
                 const isEmptySelection = !isInverted && selection.length === 0;
                 const isSelectionEqual =
                     isEqual(selection, committedSelection) && isInverted === committedIsInverted;
@@ -187,6 +223,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                         {header}
                         <InvertableSelect
                             width={width}
+                            className={bodyClassName}
                             items={filteredOptions}
                             getItemTitle={getItemTitle}
                             getItemKey={getItemKey}
@@ -200,16 +237,18 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                             renderNoData={renderNoData}
                             totalItemsCount={filteredOptions.length}
                         />
-                        <DropdownInvertableSelectActions
-                            onApply={() => {
-                                onApply();
-                                closeDropdown();
-                            }}
-                            onCancel={() => {
-                                closeDropdown();
-                            }}
-                            isApplyDisabled={isEmptySelection || isSelectionEqual}
-                        />
+                        {renderActions?.(bodyProps) ?? (
+                            <DropdownInvertableSelectActions
+                                onApply={() => {
+                                    onApply();
+                                    closeDropdown();
+                                }}
+                                onCancel={() => {
+                                    closeDropdown();
+                                }}
+                                isApplyDisabled={isEmptySelection || isSelectionEqual}
+                            />
+                        )}
                     </>
                 );
             }}

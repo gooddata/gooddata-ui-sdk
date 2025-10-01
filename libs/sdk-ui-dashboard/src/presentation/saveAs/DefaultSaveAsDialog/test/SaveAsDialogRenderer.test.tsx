@@ -12,7 +12,6 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         isDashboardLoaded: true,
         isDashboardSaving: false,
         isKpiWidgetEnabled: true,
-        isScheduleEmailsEnabled: true,
         locale: "en-US",
         onCancel: () => {},
         onSubmit: () => {},
@@ -28,7 +27,6 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
 
         expect(screen.getByText("Save dashboard as new")).toBeInTheDocument();
         expect(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`)).toBeInTheDocument();
-        expect(screen.getByText("Alerts and email schedules will not be duplicated")).toBeInTheDocument();
     });
 
     it("Should display the default title in the title textbox", () => {
@@ -79,11 +77,10 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         });
     });
 
-    it("Should not render note if neither isKpiWidgetEnabled nor isScheduleEmailsEnabled are true", () => {
+    it("Should not render note if isKpiWidgetEnabled is not true", () => {
         renderComponent({
             ...defaultProps,
             isKpiWidgetEnabled: false,
-            isScheduleEmailsEnabled: false,
         });
 
         expect(

@@ -1,6 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType, Dispatch, KeyboardEvent, ReactNode, RefObject, SetStateAction } from "react";
+import {
+    AriaAttributes,
+    ComponentType,
+    Dispatch,
+    KeyboardEvent,
+    MouseEvent,
+    ReactNode,
+    RefObject,
+    SetStateAction,
+} from "react";
 
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
 import { SizeMedium, SizeSmall } from "../@types/size.js";
@@ -31,6 +40,8 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;
+    iconLeft?: ReactNode;
+    ariaAttributes?: AriaAttributes;
 };
 
 /**
@@ -105,7 +116,7 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
 
     isFocused: boolean;
 
-    onSelect: () => void;
+    onSelect: (e: MouseEvent | KeyboardEvent) => void;
 
     size?: SizeSmall | SizeMedium;
 }
@@ -130,7 +141,7 @@ export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
 export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
     isFocused: boolean;
-    onSelect: () => void;
+    onSelect: (e: MouseEvent | KeyboardEvent) => void;
 }
 
 /**
@@ -168,7 +179,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     shownCustomContentItemId?: string;
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
-    onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
+    onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => void;
     onClose?: () => void;
     setFocusedId: Dispatch<SetStateAction<string | undefined>>;
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
@@ -203,7 +214,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
 
     containerBottomPadding?: "none" | "small" | "medium";
 
-    onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
+    onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent | KeyboardEvent) => void;
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: KeyboardEvent, context: IUiMenuContext<T>) => void;

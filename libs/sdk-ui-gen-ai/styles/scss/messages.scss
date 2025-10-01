@@ -351,6 +351,13 @@
             opacity: 0;
         }
     }
+
+    &__menu_overlay {
+        padding: 8px 0;
+        box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
+        background: kit-variables.$gd-color-white;
+        border-radius: 3px;
+    }
 }
 
 .gd-gen-ai-chat__messages__empty {

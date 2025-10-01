@@ -9,7 +9,6 @@ import {
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
-    selectEnableKPIDashboardSaveAsNew,
     selectEnableSlideshowExports,
     selectIsExport,
     selectIsReadOnly,
@@ -23,7 +22,6 @@ import {
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
 } from "../dashboardPermissions/dashboardPermissionsSelectors.js";
-import { selectEntitlementExportPdf } from "../entitlements/entitlementsSelectors.js";
 import { selectIsLayoutEmpty } from "../layout/layoutSelectors.js";
 import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors.js";
 import { selectIsDashboardLoading } from "../loading/loadingSelectors.js";
@@ -172,20 +170,12 @@ export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardSt
  * @internal
  */
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = createSelector(
-    selectEnableKPIDashboardSaveAsNew,
     selectIsSaveAsNewButtonHidden,
     selectCanEnterEditModeAndIsLoaded,
     selectCanCreateAnalyticalDashboard,
     selectIsExport,
     selectIsReadOnly,
-    (
-        isSaveAsNewEnabled,
-        isSaveAsButtonHidden,
-        isDashboardEditable,
-        canCreateDashboard,
-        isExport,
-        isReadOnly,
-    ) => {
+    (isSaveAsButtonHidden, isDashboardEditable, canCreateDashboard, isExport, isReadOnly) => {
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
          *
@@ -199,12 +189,7 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
          * 6.  If the dashboard is in read-only mode.
          */
         return (
-            isSaveAsNewEnabled &&
-            !isSaveAsButtonHidden &&
-            !isDashboardEditable &&
-            !isExport &&
-            canCreateDashboard &&
-            !isReadOnly
+            !isSaveAsButtonHidden && !isDashboardEditable && !isExport && canCreateDashboard && !isReadOnly
         );
     },
 );
@@ -262,13 +247,11 @@ export const selectSlideShowExportVisible: DashboardSelector<boolean> = createSe
 export const selectPdfExportVisible: DashboardSelector<boolean> = createSelector(
     selectCommonExportAvailable,
     selectEnableKPIDashboardExportPDF,
-    selectEntitlementExportPdf,
     selectMenuButtonItemsVisibility,
-    (canExport, isKPIDashboardExportPDFEnabled, isExportPdfEntitlementPresent, menuButtonItemsVisibility) => {
+    (canExport, isKPIDashboardExportPDFEnabled, menuButtonItemsVisibility) => {
         return (
             canExport &&
             !!isKPIDashboardExportPDFEnabled &&
-            !!isExportPdfEntitlementPresent &&
             (menuButtonItemsVisibility.pdfExportButton ?? true)
         );
     },

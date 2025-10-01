@@ -13,6 +13,7 @@ import {
     IGenAIUserContext,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
+    type IUser,
 } from "@gooddata/sdk-model";
 
 /**
@@ -212,5 +213,27 @@ export interface IAnalyticsCatalogService {
     /**
      * Returns list of available tags in the workspace Analytics Catalog.
      */
-    getTags(): Promise<{ tags: string[] }>;
+    getTags(): Promise<IAnalyticsCatalogTags>;
+
+    /**
+     * Returns information about users who created objects in the workspace Analytics Catalog.
+     */
+    getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
+}
+
+/**
+ * Analytics Catalog tags response.
+ * @internal
+ */
+export interface IAnalyticsCatalogTags {
+    tags: string[];
+}
+
+/**
+ * Analytics Catalog creators response.
+ * @internal
+ */
+export interface IAnalyticsCatalogCreatedBy {
+    reasoning: string;
+    users: IUser[];
 }

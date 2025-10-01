@@ -268,6 +268,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
                     aria-controls={accessibilityConfig?.ariaControls}
                     aria-activedescendant={accessibilityConfig?.ariaActiveDescendant}
                     aria-readonly={readonly || undefined}
+                    aria-autocomplete={accessibilityConfig?.ariaAutocomplete}
                     autoComplete={isSearch ? "off" : autocomplete}
                     data-testid={dataTestId}
                 />

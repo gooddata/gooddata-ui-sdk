@@ -193,6 +193,7 @@ export const useInsightExport = (config: {
             openPdfDialog({
                 onSubmit: ({ pageSize, pageOrientation }) => {
                     setIsExporting(true);
+                    closePdfDialog();
                     // if this bombs there is an issue with the logic enabling the buttons
                     invariant(exportFunction);
                     exportHandler(exportFunction, {
@@ -268,14 +269,13 @@ export const useInsightExport = (config: {
                 },
                 includeFilterContext: true,
                 mergeHeaders: true,
-                filterContextVisible: Boolean(settings?.["enableActiveFilterContext"] ?? true),
+                filterContextVisible: false,
             });
         }
     }, [
         dashboardTabularExportEnabled,
         openXlsxDialog,
         intl,
-        settings?.["enableActiveFilterContext"],
         closeXlsxDialog,
         exportToTabular,
         widget,
@@ -290,7 +290,11 @@ export const useInsightExport = (config: {
         isExportableToXlsx &&
         (enableNewTabularExport && dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
-    const exportPdfTabularEnabled = !isExporting && isInsightExportable && isExportableToPdfTabular;
+    const exportPdfTabularEnabled =
+        !isExporting &&
+        isInsightExportable &&
+        isExportableToPdfTabular &&
+        (enableNewTabularExport && dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
 
@@ -315,9 +319,10 @@ export const useInsightExport = (config: {
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPngImageDisabled = !!widget && !widget.localIdentifier;
-    const exportPdfTabularDisabled = !isExportableToPdfTabular || isExporting;
+    const exportPdfTabularDisabled =
+        !isExportableToPdfTabular || isExporting || (!!widget && !widget.localIdentifier);
 
-    const xlsxDisabledReason =
+    const disabledReason =
         dashboardTabularExportEnabled && !widget?.localIdentifier ? ("oldWidget" as const) : undefined;
 
     return {
@@ -341,6 +346,6 @@ export const useInsightExport = (config: {
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
-        xlsxDisabledReason,
+        disabledReason,
     };
 };

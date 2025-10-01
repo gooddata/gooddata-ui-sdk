@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
+import { selectIsDashboardLoading, useDashboardSelector } from "../../model/index.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 interface IKdaDialogSectionsProps {
@@ -19,7 +20,8 @@ interface IKdaDialogSectionsProps {
  */
 export function KdaDialogSections({ footer, content, header }: IKdaDialogSectionsProps) {
     const { state } = useKdaState();
-    const isLoading = state.rootStatus === "pending" || state.rootStatus === "loading";
+    const isDashboardLoading = useDashboardSelector(selectIsDashboardLoading);
+    const isLoading = state.rootStatus === "pending" || state.rootStatus === "loading" || isDashboardLoading;
     const isError = state.rootStatus === "error";
 
     return (

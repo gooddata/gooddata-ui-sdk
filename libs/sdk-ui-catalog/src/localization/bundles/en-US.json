@@ -35,6 +35,10 @@
         "value": "Attribute: {count}",
         "comment": "ARIA label for the Attribute object type"
     },
+    "analyticsCatalog.filter.refresh": {
+        "value": "Refresh",
+        "comment": "Button label for retrying when the filter data is still syncing."
+    },
     "analyticsCatalog.filter.createdBy.title": {
         "value": "Created by",
         "comment": "Title of the header section containing the created by filter."

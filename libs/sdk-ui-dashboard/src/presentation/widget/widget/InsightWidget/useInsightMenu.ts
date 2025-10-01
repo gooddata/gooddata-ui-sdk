@@ -16,9 +16,9 @@ import {
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import {
     AlertingDisabledReason,
+    DisabledReason,
     IInsightMenuItem,
     SchedulingDisabledReason,
-    XLSXDisabledReason,
     getDefaultInsightMenuItems,
 } from "../../insightMenu/index.js";
 
@@ -55,7 +55,7 @@ type UseInsightMenuConfig = {
     exportPowerPointPresentationDisabled: boolean;
     exportPngImageDisabled: boolean;
     exportPdfTabularDisabled: boolean;
-    xlsxDisabledReason?: XLSXDisabledReason;
+    disabledReason?: DisabledReason;
 };
 
 export const useInsightMenu = (
@@ -112,7 +112,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
-        xlsxDisabledReason,
+        disabledReason,
     } = config;
 
     const intl = useIntl();
@@ -187,7 +187,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 exportPowerPointPresentationDisabled,
                 exportPngImageDisabled,
                 exportPdfTabularDisabled,
-                xlsxDisabledReason,
+                disabledReason,
             },
             execution,
         );
@@ -225,6 +225,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         exportPdfTabularDisabled,
         execution,
         exportPngImageDisabled,
-        xlsxDisabledReason,
+        disabledReason,
     ]);
 }

@@ -108,7 +108,16 @@ describe("SemanticSearch component", () => {
     });
 
     it("exposes correct ARIA attributes on input", () => {
-        render(<SemanticSearch backend={backend} workspace="test" onSelect={vi.fn()} />);
+        const placeholder = "Testing placeholder";
+
+        render(
+            <SemanticSearch
+                backend={backend}
+                workspace="test"
+                placeholder={placeholder}
+                onSelect={vi.fn()}
+            />,
+        );
 
         const input = screen.getByRole("combobox");
         expect(input).toBeVisible();
@@ -116,7 +125,12 @@ describe("SemanticSearch component", () => {
         expect(input).toHaveAttribute("id", expect.stringContaining("input"));
         expect(input).toHaveAttribute("aria-controls", expect.stringContaining("treeview"));
         expect(input).toHaveAttribute("aria-expanded", "false");
+        expect(input).toHaveAttribute("aria-autocomplete", "list");
         expect(input).not.toHaveAttribute("aria-activedescendant");
+
+        // Aria-label and placeholder should be the same
+        expect(input).toHaveAttribute("placeholder", placeholder);
+        expect(input).toHaveAttribute("aria-label", placeholder);
     });
 
     it("sets aria-activedescendant when navigating with keyboard", async () => {

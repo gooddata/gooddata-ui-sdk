@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
+
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
     IColorPaletteItem,
@@ -30,24 +30,12 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
 
     /**
      * Checks if Theming needs to be loaded.
-     * Theming needs to be enabled by license entitlement
-     * and activeTheme needs to be defined
+     * activeTheme needs to be defined
      *
      * @returns boolean
      */
     private async isStylizable(activeStyleId: string): Promise<boolean> {
-        const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            const entitlements =
-                profile.entitlements ??
-                (await this.authCall((client) => client.actions.resolveAllEntitlements())).data;
-            const customTheming = entitlements.find(
-                (entitlement) => entitlement.name === ApiEntitlementNameEnum.CUSTOM_THEMING,
-            );
-            return !!customTheming;
-        });
-
-        return isCustomThemingIncludedInEntitlements && activeStyleId !== "";
+        return activeStyleId !== "";
     }
 
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {

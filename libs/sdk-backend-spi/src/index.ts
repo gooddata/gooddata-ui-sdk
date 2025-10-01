@@ -103,6 +103,8 @@ export type { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace
 export type {
     IGenAIService,
     IAnalyticsCatalogService,
+    IAnalyticsCatalogTags,
+    IAnalyticsCatalogCreatedBy,
     ISemanticSearchQuery,
     ISemanticSearchResult,
     IChatThread,

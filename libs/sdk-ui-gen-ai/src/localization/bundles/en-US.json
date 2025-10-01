@@ -188,7 +188,7 @@
         "comment": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions"
     },
     "gd.gen-ai.visualisation.menu": {
-        "value": "{name}, more actions",
+        "value": "More actions",
         "comment": "Accessibility label for the visualization actions menu"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
@@ -202,6 +202,10 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
         "value": "Open in Analyze",
         "comment": "Menu option to open the visualization in the full Analyze interface"
+    },
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": {
+        "value": "This will ask you to save the visualisation before you can open it.",
+        "comment": "Description for the open in Analyze menu option"
     },
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": {
         "value": "Copy visualization link",

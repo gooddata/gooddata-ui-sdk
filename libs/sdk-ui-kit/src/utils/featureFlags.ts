@@ -1,4 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
 import { ISettings } from "@gooddata/sdk-model";
 
 const FREE = "free";
@@ -8,11 +9,8 @@ const GROWTH = "growth";
  * @internal
  */
 
-export function shouldHidePPExperience(featureFlags: ISettings): boolean {
-    const hidePPExperience = Boolean(featureFlags.hidePixelPerfectExperience);
-    const enablePPExperience = featureFlags.enablePixelPerfectExperience;
-
-    return hidePPExperience || !enablePPExperience;
+export function shouldHidePPExperience(_featureFlags: ISettings): boolean {
+    return true;
 }
 
 /**

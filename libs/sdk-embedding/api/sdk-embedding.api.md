@@ -313,7 +313,6 @@ export enum GdcKdCommandType {
     DrillableItems = "drillableItems",
     ExportToPdf = "exportToPdf",
     OpenDeleteDashboardDialog = "openDeleteDashboardDialog",
-    OpenScheduleEmailDialog = "openScheduleEmailDialog",
     RemoveFilterContext = "removeFilterContext",
     Save = "saveDashboard",
     SaveAsDashboard = "saveAsDashboard",
@@ -1074,9 +1073,6 @@ export function isKdIdentifierInsight(obj: unknown): obj is IKdIdentifierInsight
 export function isKdOpenDeleteDashboardDialogCommandData(obj: unknown): obj is KdOpenDeleteDashboardDialogCommandData;
 
 // @public
-export function isKdOpenScheduleEmailDialogCommandData(obj: unknown): obj is KdOpenScheduleEmailDialogCommandData;
-
-// @public
 export function isKdRemoveFilterContextCommandData(obj: unknown): obj is KdRemoveFilterContextCommandData;
 
 // @public
@@ -1387,12 +1383,6 @@ export type KdOpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<GdcKdCommand
 
 // @public (undocumented)
 export type KdOpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
-
-// @public
-export type KdOpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
-
-// @public (undocumented)
-export type KdOpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
 
 // @public (undocumented)
 export type KdPlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IKdPlatformBody>;

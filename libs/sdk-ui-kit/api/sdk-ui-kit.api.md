@@ -749,6 +749,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaActiveDescendant?: AriaAttributes["aria-activedescendant"];
     // (undocumented)
+    ariaAutocomplete?: AriaAttributes["aria-autocomplete"];
+    // (undocumented)
     ariaControls?: AriaAttributes["aria-controls"];
     // (undocumented)
     ariaCurrent?: AriaAttributes["aria-current"];
@@ -1718,6 +1720,8 @@ export interface IDropdownButtonRenderProps {
 // @internal (undocumented)
 export interface IDropdownInvertableSelectProps<T> {
     alignPoints?: IAlignPoint[];
+    bodyClassName?: string;
+    className?: string;
     getItemKey: (item: T) => string;
     getItemTitle: (item: T) => string;
     header?: ReactNode;
@@ -1726,6 +1730,9 @@ export interface IDropdownInvertableSelectProps<T> {
     initialValue?: T[];
     onChange: (selectedItems: T[], isInverted: boolean) => void;
     options: T[];
+    // (undocumented)
+    renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
+    renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
@@ -4877,7 +4884,10 @@ export interface IUiListboxContext<InteractiveItemData, StaticItemData = ReactNo
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
+    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>, mods: {
+        newTab?: boolean;
+        type?: "mouse" | "keyboard";
+    }) => void;
     // (undocumented)
     selectedItemId: string | undefined;
     // (undocumented)
@@ -4936,7 +4946,7 @@ export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     // (undocumented)
     item: IUiMenuContentItem<T>;
     // (undocumented)
-    onSelect: () => void;
+    onSelect: (e: MouseEvent_2 | KeyboardEvent_2) => void;
 }
 
 // @internal (undocumented)
@@ -4978,7 +4988,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
+    onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
     scrollToView: (element: HTMLElement | null) => void;
     // (undocumented)
@@ -5022,6 +5032,8 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;
+    iconLeft?: ReactNode;
+    ariaAttributes?: AriaAttributes;
 };
 
 // @internal (undocumented)
@@ -5031,7 +5043,7 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     // (undocumented)
     item: IUiMenuInteractiveItem<T>;
     // (undocumented)
-    onSelect: () => void;
+    onSelect: (e: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
     size?: SizeSmall | SizeMedium;
 }
@@ -5736,7 +5748,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
 export function shouldEnableNewNavigation(featureFlags: ISettings): boolean;
 
 // @internal (undocumented)
-export function shouldHidePPExperience(featureFlags: ISettings): boolean;
+export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
 
 // @internal
 export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
@@ -6478,7 +6490,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     // (undocumented)
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     // (undocumented)
-    onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
+    onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiMenuContext<T>) => void;
     // (undocumented)

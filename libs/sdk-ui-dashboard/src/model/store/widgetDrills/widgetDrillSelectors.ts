@@ -60,9 +60,6 @@ import {
 import {
     selectDisableDefaultDrills,
     selectEnableKDCrossFiltering,
-    selectEnableKPIDashboardDrillToDashboard,
-    selectEnableKPIDashboardDrillToInsight,
-    selectEnableKPIDashboardDrillToURL,
     selectIsDisabledCrossFiltering,
     selectIsEmbedded,
 } from "../config/configSelectors.js";
@@ -485,9 +482,6 @@ export const selectConfiguredDrillsByWidgetRef: (
     createSelector(
         selectWidgetDrills(ref),
         selectDisableDefaultDrills,
-        selectEnableKPIDashboardDrillToURL,
-        selectEnableKPIDashboardDrillToInsight,
-        selectEnableKPIDashboardDrillToDashboard,
         selectEnableKDCrossFiltering,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
@@ -495,9 +489,6 @@ export const selectConfiguredDrillsByWidgetRef: (
         (
             drills = [],
             disableDefaultDrills,
-            enableKPIDashboardDrillToURL,
-            enableKPIDashboardDrillToInsight,
-            enableKPIDashboardDrillToDashboard,
             enableKDCrossFiltering,
             isEmbedded,
             disableCrossFiltering,
@@ -509,31 +500,20 @@ export const selectConfiguredDrillsByWidgetRef: (
 
             const filteredDrills = [...drills].filter((drill) => {
                 const drillType = drill.type;
-                switch (drillType) {
-                    case "drillToAttributeUrl": {
-                        return true;
-                    }
-                    case "drillToCustomUrl": {
-                        return enableKPIDashboardDrillToURL;
-                    }
-                    case "drillToDashboard": {
-                        return enableKPIDashboardDrillToDashboard;
-                    }
-                    case "drillToInsight": {
-                        return enableKPIDashboardDrillToInsight;
-                    }
-                    case "drillToLegacyDashboard": {
-                        return !isEmbedded;
-                    }
-                    case "crossFiltering": {
-                        return (
-                            enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig
-                        );
-                    }
-                    default: {
-                        const unhandledType: never = drillType;
-                        throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
-                    }
+                if (
+                    drillType === "drillToAttributeUrl" ||
+                    drillType === "drillToCustomUrl" ||
+                    drillType === "drillToDashboard" ||
+                    drillType === "drillToInsight"
+                ) {
+                    return true;
+                } else if (drillType === "drillToLegacyDashboard") {
+                    return !isEmbedded;
+                } else if (drillType === "crossFiltering") {
+                    return enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig;
+                } else {
+                    const unhandledType: never = drillType;
+                    throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
                 }
             });
 

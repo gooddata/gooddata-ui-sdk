@@ -1099,7 +1099,7 @@
         "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",
         "comment": "Error message shown when attempting to schedule an export for a widget that needs to be resaved due to compatibility issues"
     },
-    "options.menu.unsupported.xlsxOldWidget": {
+    "options.menu.unsupported.oldWidgetExport": {
         "value": "Unable to export. Please resave the dashboard or contact your administrator.",
         "comment": "Error message shown when unable to export to XLSX due to widget compatibility issues, suggesting to resave the dashboard"
     },
@@ -1858,18 +1858,6 @@
     "gs.date.date-dataset.unrelated": {
         "value": "Unrelated",
         "comment": "Label for section containing unrelated date datasets"
-    },
-    "gs.date.date-dataset.unrelated_hidden": {
-        "value": "{count} unrelated {count, plural, one {date} other {dates}} {isShow, select, true {visible} other {hidden}}.",
-        "comment": "Status message showing count of unrelated dates that are visible or hidden"
-    },
-    "gs.date.date-dataset.unrelated.show": {
-        "value": "Show",
-        "comment": "Button to display unrelated date items"
-    },
-    "gs.date.date-dataset.unrelated.hide": {
-        "value": "Hide",
-        "comment": "Button to hide unrelated date items"
     },
     "gs.date.date-dataset.duplicityWarning": {
         "value": "Another filter is using the same date dataset. Disable this filter or set a different date.",
@@ -2771,6 +2759,10 @@
         "value": "Tested {combinations} variants with <button>{attributes} attributes</button>",
         "comment": "Key drivers overview summary drivers description in key driver analysis dialog"
     },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": {
+        "value": "Attributes",
+        "comment": "Key drivers overview summary drivers attributes in key driver analysis dialog"
+    },
     "kdaDialog.dialog.keyDrives.overview.detail.tip": {
         "value": "Click on column to see key drivers for given country",
         "comment": "Key drivers overview detail tip in key driver analysis dialog"
@@ -2806,5 +2798,13 @@
     "kdaDialog.dialog.bars.date.period.previousPeriod": {
         "value": "Previous period",
         "comment": "Key drivers dialog date previous period in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.empty_up": {
+        "value": "No increasing drivers",
+        "comment": "Key drivers dialog empty up in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.empty_down": {
+        "value": "No decreasing drivers",
+        "comment": "Key drivers dialog empty down in key driver analysis dialog"
     }
 }

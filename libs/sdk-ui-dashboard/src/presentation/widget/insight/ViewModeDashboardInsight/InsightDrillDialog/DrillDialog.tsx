@@ -19,7 +19,6 @@ import {
 
 import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
-import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
 import {
     selectCanExportTabular,
     selectEnableExportToPdfTabular,
@@ -199,7 +198,6 @@ export function DrillDialog({
                     ) : null}
                 </div>
             ) : null}
-            <PoweredByGDLogo isSmall />
 
             <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
                 {announcementText}

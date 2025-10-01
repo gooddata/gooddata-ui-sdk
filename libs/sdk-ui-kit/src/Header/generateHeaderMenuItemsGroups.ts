@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { IHeaderMenuItem } from "./typings.js";
@@ -315,8 +316,7 @@ function canShowLoadItem(
     isFreemiumCustomer: boolean,
     backendSupportsCsvUploader: boolean,
 ): boolean {
-    const canAccessLoadCsvPage =
-        workspacePermissions.canUploadNonProductionCSV === true && featureFlags.enableCsvUploader;
+    const canAccessLoadCsvPage = workspacePermissions.canUploadNonProductionCSV === true;
     const canShowLoadCsvItem = featureFlags.enableDataSection
         ? !isFreemiumCustomer && canAccessLoadCsvPage
         : canAccessLoadCsvPage;

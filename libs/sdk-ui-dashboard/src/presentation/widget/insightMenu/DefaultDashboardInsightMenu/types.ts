@@ -13,7 +13,7 @@ export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledO
 /**
  * @internal
  */
-export type XLSXDisabledReason = "oldWidget";
+export type DisabledReason = "oldWidget";
 
 /**
  * @internal
@@ -52,5 +52,5 @@ export interface IUseInsightMenuConfig {
     alertingDisabled: boolean;
     alertingDisabledReason?: AlertingDisabledReason;
     canCreateAutomation: boolean;
-    xlsxDisabledReason?: XLSXDisabledReason;
+    disabledReason?: DisabledReason;
 }

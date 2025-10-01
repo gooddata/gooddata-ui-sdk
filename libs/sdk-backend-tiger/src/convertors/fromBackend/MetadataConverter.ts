@@ -256,7 +256,7 @@ export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObjec
  * @param metrics - sideloaded facts
  */
 export function convertMetricsWithLinks(metrics: JsonApiMetricOutList): IMeasureMetadataObject[] {
-    return metrics.data.map((metric) => convertMetricFromBackend(metric));
+    return metrics.data.map((metric) => convertMetricFromBackend(metric, metrics.included));
 }
 
 /**

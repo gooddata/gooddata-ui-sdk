@@ -148,28 +148,20 @@ describe("live features", () => {
     });
 
     it("full definition - BOOLEAN", async () => {
-        mockReturn([
-            createFeature("dashboardEditModeDevRollout", "BOOLEAN", true),
-            createFeature("enableSortingByTotalGroup", "BOOLEAN", true),
-        ]);
+        mockReturn([createFeature("dashboardEditModeDevRollout", "BOOLEAN", true)]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
             dashboardEditModeDevRollout: true,
-            enableSortingByTotalGroup: true,
         });
     });
 
     it("full definition - STRING", async () => {
-        mockReturn([
-            createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
-            createFeature("enableSortingByTotalGroup", "STRING", "TRUE"),
-        ]);
+        mockReturn([createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED")]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
             dashboardEditModeDevRollout: true,
-            enableSortingByTotalGroup: true,
         });
     });
 });

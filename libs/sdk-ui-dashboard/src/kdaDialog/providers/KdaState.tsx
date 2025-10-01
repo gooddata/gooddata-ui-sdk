@@ -20,7 +20,7 @@ const defaultState: KdaState = {
     attributeFilters: [],
     //summary data
     combinations: 0,
-    attributes: 0,
+    attributes: [],
 };
 
 const KdaStateContext = createContext<{

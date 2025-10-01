@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ISettings, IWorkspacePermissions, PlatformEdition } from "@gooddata/sdk-model";
 
 export const getHelpMenuFeatureFlagsMock = (
@@ -12,19 +13,15 @@ export const getHelpMenuFeatureFlagsMock = (
 };
 
 export const getAccountMenuFeatureFlagsMock = (
-    enableCsvUploader: boolean,
     enableDataSection: boolean,
     hidePixelPerfectExperience: boolean,
-    enablePixelPerfectExperience: boolean,
     analyticalDesigner: boolean,
     platformEdition: PlatformEdition,
     enableRenamingProjectToWorkspace: boolean,
 ): ISettings => {
     return {
-        enableCsvUploader,
         enableDataSection,
         hidePixelPerfectExperience,
-        enablePixelPerfectExperience,
         analyticalDesigner,
         platformEdition,
         enableRenamingProjectToWorkspace,

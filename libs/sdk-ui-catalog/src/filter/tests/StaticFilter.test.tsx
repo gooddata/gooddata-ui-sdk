@@ -17,6 +17,8 @@ describe("StaticFilter", () => {
                 dataTestId={dataTestId}
                 options={[]}
                 onChange={vi.fn()}
+                getItemKey={vi.fn()}
+                getItemTitle={vi.fn()}
                 header={null}
                 noDataMessage={null}
             />,

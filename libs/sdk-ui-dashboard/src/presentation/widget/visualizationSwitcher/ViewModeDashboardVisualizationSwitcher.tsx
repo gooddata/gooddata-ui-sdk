@@ -125,6 +125,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
+        disabledReason,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -198,6 +199,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
         exportPdfTabularDisabled,
+        disabledReason,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { RefObject, useCallback, useEffect, useMemo, useState } from "react";
+import { KeyboardEvent, MouseEvent, RefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -124,7 +124,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     }, [parentItemId, onLevelChange, items]);
 
     const handleSelectItem = useCallback(
-        (item?: IUiMenuFocusableItem<T>) => {
+        (item: IUiMenuFocusableItem<T> | undefined, e: MouseEvent | KeyboardEvent) => {
             if (!item || item.isDisabled) {
                 return;
             }
@@ -138,7 +138,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
 
             // If there is no submenu, select the item
             if (!item.subItems) {
-                onSelect?.(item);
+                onSelect?.(item, e);
                 if (shouldCloseOnSelect) {
                     onClose?.();
                 }
@@ -288,11 +288,11 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
                         .find(isItemFocusable)?.id;
                 });
             },
-            onSelect: () => {
+            onSelect: (e) => {
                 const { onSelect, focusedItem } = menuContextRef.current;
-                onSelect(focusedItem);
+                onSelect(focusedItem, e);
             },
-            onEnterLevel: () => {
+            onEnterLevel: (e) => {
                 const { onSelect, focusedItem } = menuContextRef.current;
 
                 if (
@@ -303,7 +303,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
                     return;
                 }
 
-                onSelect(focusedItem);
+                onSelect(focusedItem, e);
             },
             onLeaveLevel: () => {
                 const { setFocusedId, items } = menuContextRef.current;

@@ -69,7 +69,10 @@ export interface UiListboxStaticItemProps<T> {
 export interface IUiListboxContext<InteractiveItemData, StaticItemData = ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     itemRefs: MutableRefObject<(HTMLLIElement | null)[]>;
-    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
+    onSelect: (
+        item: IUiListboxInteractiveItem<InteractiveItemData>,
+        mods: { newTab?: boolean; type?: "mouse" | "keyboard" },
+    ) => void;
     onClose?: () => void;
     selectedItemId: string | undefined;
     focusedIndex: number | undefined;

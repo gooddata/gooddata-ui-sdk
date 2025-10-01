@@ -268,6 +268,30 @@ const moreItems = [
     },
 ] as IUiListboxInteractiveItem<KdaItem>[];
 
+const oneItem = [
+    {
+        id: "8",
+        type: "interactive",
+        stringTitle: "Country",
+        data: {
+            id: "8",
+            title: "Country",
+            description: "There are some count drivers that rise the revenue in really interesting way.",
+            category: "Europe",
+            from: {
+                value: 200,
+                date: "June",
+            },
+            to: {
+                value: 190,
+                date: "July",
+            },
+            formatValue,
+            drivers: 1,
+        },
+    },
+] as IUiListboxInteractiveItem<KdaItem>[];
+
 export const dialogFullLoadingState: Partial<KdaState> = {};
 export const dialogContentLoadingState: Partial<KdaState> = {
     ...dialogFullLoadingState,
@@ -317,7 +341,10 @@ export const dialogDetailsLoadingState: Partial<KdaState> = {
     items: fewItems,
     itemsStatus: "success",
     combinations: 1256,
-    attributes: 2,
+    attributes: [
+        ReferenceMd.Activity.Default.attribute.displayForm,
+        ReferenceMd.Account.Default.attribute.displayForm,
+    ],
 };
 export const dialogFullyLoadedState: Partial<KdaState> = {
     ...dialogDetailsLoadingState,
@@ -327,6 +354,11 @@ export const dialogFullyLoadedScrollState: Partial<KdaState> = {
     ...dialogFullyLoadedState,
     selectedStatus: "success",
     items: moreItems,
+};
+export const dialogFullyLoadedSmallState: Partial<KdaState> = {
+    ...dialogFullyLoadedState,
+    selectedStatus: "success",
+    items: oneItem,
 };
 
 export function DialogComponent(props: { state: Partial<KdaState> }) {

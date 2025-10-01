@@ -1901,7 +1901,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "ExtraCache" | "ManagedOIDC" | "Tier" | "UserCount" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
 
 // @public
 export interface IExecutionConfig {
@@ -3512,7 +3512,6 @@ export interface ISettings {
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
-    enableAlternativeDisplayFormSelection?: boolean;
     enableAmplitudeTracker?: boolean;
     // (undocumented)
     enableAnalyticalDashboards?: boolean;
@@ -3522,14 +3521,11 @@ export interface ISettings {
     enableAutomationManagement?: boolean;
     enableChartAccessibilityFeatures?: boolean;
     enableChartsSorting?: boolean;
-    enableCompanyLogoInEmbeddedUI?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
-    // (undocumented)
-    enableCsvUploader?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
@@ -3562,11 +3558,6 @@ export interface ISettings {
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
-    enableKPIDashboardDrillToDashboard?: boolean;
-    enableKPIDashboardDrillToInsight?: boolean;
-    enableKPIDashboardDrillToURL?: boolean;
-    enableKPIDashboardSaveAsNew?: boolean;
-    enableKPIDashboardSchedule?: boolean;
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
@@ -3588,8 +3579,6 @@ export interface ISettings {
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
-    // (undocumented)
-    enablePixelPerfectExperience?: boolean;
     enablePreAggregationDatasets?: boolean;
     enableRawExports?: boolean;
     // (undocumented)
@@ -3630,7 +3619,6 @@ export interface ISettings {
     // @alpha
     productionFeatures?: IProductionFeaturesConfig;
     responsiveUiDateFormat?: string;
-    showHiddenCatalogItems?: boolean;
     timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;

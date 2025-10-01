@@ -2073,18 +2073,14 @@ export interface ApiEntitlement {
 export const ApiEntitlementNameEnum: {
     readonly CACHE_STRATEGY: "CacheStrategy";
     readonly CONTRACT: "Contract";
-    readonly CUSTOM_THEMING: "CustomTheming";
     readonly EXTRA_CACHE: "ExtraCache";
     readonly HIPAA: "Hipaa";
-    readonly PDF_EXPORTS: "PdfExports";
     readonly MANAGED_OIDC: "ManagedOIDC";
-    readonly UI_LOCALIZATION: "UiLocalization";
     readonly TIER: "Tier";
     readonly USER_COUNT: "UserCount";
     readonly MANAGED_IDP_USER_COUNT: "ManagedIdpUserCount";
     readonly UNLIMITED_USERS: "UnlimitedUsers";
     readonly UNLIMITED_WORKSPACES: "UnlimitedWorkspaces";
-    readonly WHITE_LABELING: "WhiteLabeling";
     readonly WORKSPACE_COUNT: "WorkspaceCount";
     readonly USER_TELEMETRY_DISABLED: "UserTelemetryDisabled";
     readonly AUTOMATION_COUNT: "AutomationCount";
@@ -10790,18 +10786,14 @@ export interface EntitlementsRequest {
 export const EntitlementsRequestEntitlementsNameEnum: {
     readonly CACHE_STRATEGY: "CacheStrategy";
     readonly CONTRACT: "Contract";
-    readonly CUSTOM_THEMING: "CustomTheming";
     readonly EXTRA_CACHE: "ExtraCache";
     readonly HIPAA: "Hipaa";
-    readonly PDF_EXPORTS: "PdfExports";
     readonly MANAGED_OIDC: "ManagedOIDC";
-    readonly UI_LOCALIZATION: "UiLocalization";
     readonly TIER: "Tier";
     readonly USER_COUNT: "UserCount";
     readonly MANAGED_IDP_USER_COUNT: "ManagedIdpUserCount";
     readonly UNLIMITED_USERS: "UnlimitedUsers";
     readonly UNLIMITED_WORKSPACES: "UnlimitedWorkspaces";
-    readonly WHITE_LABELING: "WhiteLabeling";
     readonly WORKSPACE_COUNT: "WorkspaceCount";
     readonly USER_TELEMETRY_DISABLED: "UserTelemetryDisabled";
     readonly AUTOMATION_COUNT: "AutomationCount";
