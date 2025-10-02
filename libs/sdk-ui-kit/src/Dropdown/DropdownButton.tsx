@@ -53,7 +53,8 @@ export function DropdownButton({
     dropdownId,
     buttonRef,
 }: IDropdownButtonProps) {
-    const { ariaLabel, ariaLabelledBy, ariaDescribedBy, popupType, role } = accessibilityConfig ?? {};
+    const { ariaLabel, ariaLabelledBy, ariaDescribedBy, popupType, role, ariaExpanded, ariaControls } =
+        accessibilityConfig ?? {};
 
     const buttonClasses = cx(
         "gd-button-primary",
@@ -75,13 +76,17 @@ export function DropdownButton({
                   popupId: dropdownId,
                   ariaLabel,
                   ariaLabelledBy,
+                  ariaExpanded,
                   ariaDescribedBy,
+                  ariaControls,
                   role: role ?? "combobox",
                   popupType,
               }
             : {
                   ariaLabel,
                   ariaLabelledBy,
+                  ariaExpanded,
+                  ariaControls,
                   role: role ?? "combobox",
               }
     ) satisfies IButtonAccessibilityConfig;

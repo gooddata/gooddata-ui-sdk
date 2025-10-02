@@ -28,7 +28,7 @@
         "comment": "A global open AI Assistant button label in the main menu"
     },
     "gs.header.logo.title.accessibility": {
-        "value": "Application logo",
+        "value": "{organizationName} logo",
         "comment": "Accessibility text for the application logo in the header. Used by screen readers to identify the logo element."
     },
     "gs.header.href.accessibility": {
@@ -3106,6 +3106,26 @@
     "dialogs.export.pdf.pageSize": {
         "value": "Page size",
         "comment": "Label for the page size dropdown in the export PDF dialog"
+    },
+    "dialogs.export.pdf.pageSize.option.a3": {
+        "value": "A3",
+        "comment": "Export PDF dialog: Page size dropdown option representing the A3 paper format."
+    },
+    "dialogs.export.pdf.pageSize.option.a4": {
+        "value": "A4",
+        "comment": "Export PDF dialog: Page size dropdown option representing the A4 paper format."
+    },
+    "dialogs.export.pdf.pageSize.option.letter": {
+        "value": "Letter",
+        "comment": "Export PDF dialog: Page size dropdown option representing the Letter paper format."
+    },
+    "dialogs.export.pdf.pageOrientation.option.portrait": {
+        "value": "Portrait",
+        "comment": "Export PDF dialog: Orientation dropdown option showing the portrait page orientation."
+    },
+    "dialogs.export.pdf.pageOrientation.option.landscape": {
+        "value": "Landscape",
+        "comment": "Export PDF dialog: Orientation dropdown option showing the landscape page orientation."
     },
     "dialogs.export.submit": {
         "value": "Export",

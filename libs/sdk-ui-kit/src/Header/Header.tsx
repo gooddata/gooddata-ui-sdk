@@ -58,6 +58,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
         intl,
         logoUrl,
         logoTitle,
+        organizationName,
         className,
         activeColor,
         headerColor,
@@ -345,13 +346,16 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
     );
 
     const renderAccessibilityLogo = useCallback(
-        (logoLinkClassName: string) => {
+        (logoLinkClassName: string, organizationName: string) => {
             const logoHrefAccesibilityText = intl.formatMessage({
                 id: "gs.header.href.accessibility",
             });
-            const imageAltAccessibilityText = intl.formatMessage({
-                id: "gs.header.logo.title.accessibility",
-            });
+            const imageAltAccessibilityText = intl.formatMessage(
+                {
+                    id: "gs.header.logo.title.accessibility",
+                },
+                { organizationName: organizationName || "GoodData" },
+            );
 
             return (
                 <a
@@ -659,7 +663,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
     return (
         <header aria-label={applicationHeaderAccessibilityLabel} className={getClassNames()} ref={nodeRef}>
             {isAccessibilityCompliant
-                ? renderAccessibilityLogo(logoLinkClassName)
+                ? renderAccessibilityLogo(logoLinkClassName, organizationName)
                 : renderLogo(logoLinkClassName)}
 
             {workspacePicker}

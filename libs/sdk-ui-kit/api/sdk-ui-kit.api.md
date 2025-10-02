@@ -902,6 +902,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     onUpsellButtonClick?: (e: MouseEvent_2) => void;
     // (undocumented)
+    organizationName?: string;
+    // (undocumented)
     search?: ReactNode;
     // (undocumented)
     showChatItem?: boolean;
