@@ -8,7 +8,6 @@ const GROWTH = "growth";
 /**
  * @internal
  */
-
 export function shouldHidePPExperience(_featureFlags: ISettings): boolean {
     return true;
 }
@@ -16,7 +15,6 @@ export function shouldHidePPExperience(_featureFlags: ISettings): boolean {
 /**
  * @internal
  */
-
 export function isFreemiumEdition(platformEdition: string | undefined): boolean {
     return platformEdition === FREE || platformEdition === GROWTH;
 }
@@ -24,7 +22,6 @@ export function isFreemiumEdition(platformEdition: string | undefined): boolean 
 /**
  * @internal
  */
-
 export function generateSupportUrl(projectId = "", sessionId = "", userEmail = "", url = ""): string {
     return [
         "https://support.gooddata.com/hc/en-us/requests/new",
@@ -39,20 +36,6 @@ export function generateSupportUrl(projectId = "", sessionId = "", userEmail = "
 /**
  * @internal
  */
-
 export function shouldEnableNewNavigation(featureFlags: ISettings): boolean {
-    const enableNewNavigationForResponsiveUi = Boolean(featureFlags.enableNewNavigationForResponsiveUi);
-    if (enableNewNavigationForResponsiveUi) {
-        const platformEdition = featureFlags.platformEdition;
-
-        // Free: always true
-        if (platformEdition === FREE) {
-            return true;
-        }
-
-        // Growth/Enterprise: with PP: false, without PP: On demand
-        return shouldHidePPExperience(featureFlags);
-    }
-
-    return false;
+    return Boolean(featureFlags.enableNewNavigationForResponsiveUi);
 }

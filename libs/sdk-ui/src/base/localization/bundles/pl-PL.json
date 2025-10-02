@@ -785,5 +785,14 @@
     "attributesDropdown.onlyLabel": "Wybierz tylko {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Filtruj wartości. Użyj klawisza strzałki w prawo, aby przejść do akcji „Wybierz tylko”, a następnie usłysz alternatywną wartość.",
     "attributesDropdown.actionsHint.noQuestion": "Filtruj wartości. Użyj klawisza strzałki w prawo, aby przejść do akcji „Wybierz tylko”",
-    "attributesDropdown.noChanges": "Brak zmian do zastosowania"
+    "attributesDropdown.noChanges": "Brak zmian do zastosowania",
+    "table.filter.error.tooLarge": "<strong>Błąd:</strong> Zbyt duży wybór w filtrach — odznacz niektóre wartości i spróbuj ponownie.",
+    "visualizations.menu.sort": "Sortuj",
+    "visualizations.menu.sort.ascending": "Rosnąco",
+    "visualizations.menu.sort.descending": "Malejąco",
+    "dialogs.export.pdf.headline": "Ustawienia eksportu (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Uwzględnij informacje o eksporcie strony",
+    "dialogs.export.pdf.pageOrientation": "Orientacja",
+    "dialogs.export.pdf.pageSize": "Rozmiar strony",
+    "dialogs.export.submit": "Eksportuj"
 }

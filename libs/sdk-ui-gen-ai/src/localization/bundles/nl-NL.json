@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spatie</code> of <code>Ctrl+I</code> voor suggesties",
     "gd.gen-ai.button.save_and_explore": "Opslaan en openen",
     "gd.gen-ai.save-dialog.description.explore": "Om deze visualisatie te openen, moet deze eerst worden opgeslagen. Je kunt het hieronder een naam geven.",
-    "gd.gen-ai.visualisation.menu": "{name}, meer acties",
+    "gd.gen-ai.visualisation.menu": "Meer acties",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Visualisatie opslaan",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Opslaan als nieuw…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Openen in Analyseren",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Doorgaan naar invoer AI-assistent",
     "gd.gen-ai.skip-navigation": "Navigatie overslaan",
-    "gd.gen-ai.messages.label": "Chatberichten"
+    "gd.gen-ai.messages.label": "Chatberichten",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen."
 }

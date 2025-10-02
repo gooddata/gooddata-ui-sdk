@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+스페이스바</code> 또는<code>Ctrl+I</code>를 눌러 제안 항목 확인",
     "gd.gen-ai.button.save_and_explore": "저장 및 열기",
     "gd.gen-ai.save-dialog.description.explore": "이 시각화를 열려면 먼저 저장해야 합니다. 아래에 이름을 지정할 수 있습니다.",
-    "gd.gen-ai.visualisation.menu": "{name}, 추가 작업",
+    "gd.gen-ai.visualisation.menu": "추가 작업",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "시각화 저장",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "새로 저장…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Analyze에서 열기",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "봇:",
     "gd.gen-ai.skip-messages-history": "AI 어시스턴트 입력으로 건너뛰기",
     "gd.gen-ai.skip-navigation": "탐색 건너뛰기",
-    "gd.gen-ai.messages.label": "채팅 메시지"
+    "gd.gen-ai.messages.label": "채팅 메시지",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "시각화를 열기 전에 저장하라는 메시지가 표시됩니다."
 }

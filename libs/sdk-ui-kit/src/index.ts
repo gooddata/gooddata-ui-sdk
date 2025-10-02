@@ -296,6 +296,7 @@ export {
     ROW_HEIGHT_NORMAL as UiAsyncTableRowHeightNormal,
     ROW_HEIGHT_LARGE as UiAsyncTableRowHeightLarge,
     SCROLLBAR_WIDTH as UiAsyncTableScrollbarWidth,
+    CHECKBOX_COLUMN_WIDTH as UiAsyncTableCheckboxColumnWidth,
 } from "./@ui/UiAsyncTable/UiAsyncTable/constants.js";
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";

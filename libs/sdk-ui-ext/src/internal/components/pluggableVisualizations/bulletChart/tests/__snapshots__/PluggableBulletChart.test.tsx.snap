@@ -644,7 +644,22 @@ exports[`PluggableBulletChart > should return reference point with three measure
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "sortItems": [
+      {
+        "measureSortItem": {
+          "direction": "desc",
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
@@ -870,7 +885,16 @@ exports[`PluggableBulletChart > should return reference point with three measure
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
   "uiConfig": {
     "buckets": {
       "filters": {

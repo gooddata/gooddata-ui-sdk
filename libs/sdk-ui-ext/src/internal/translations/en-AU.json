@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "No scheduled exports",
     "automations.emptyState.schedule.description": "Create a schedule export on the dashboard or visualisation",
     "automations.emptyState.alert.title": "No alerts",
-    "automations.emptyState.alert.description": "Create an alert on the visualisation in any dashboard"
+    "automations.emptyState.alert.description": "Create an alert on the visualisation in any dashboard",
+    "automations.column.nextRun": "Next execution",
+    "automations.accessibility.selectAll.alerts": "Select all alerts",
+    "automations.accessibility.selectAll.schedules": "Select all scheduled exports",
+    "automations.accessibility.select.alert": "Select alert: {title}",
+    "automations.accessibility.select.schedule": "Select scheduled export: {title}",
+    "automations.accessibility.search.alerts": "Search notifications",
+    "automations.accessibility.search.schedules": "Search scheduled exports"
 }

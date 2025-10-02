@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "仅选择 {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "过滤值。使用右箭头键移动到“仅选择”操作，然后听取备选值。",
     "attributesDropdown.actionsHint.noQuestion": "筛选值。使用向右箭头键移动到“仅选择”操作",
-    "attributesDropdown.noChanges": "无需应用任何更改"
+    "attributesDropdown.noChanges": "无需应用任何更改",
+    "table.filter.error.tooLarge": "<strong>错误：</strong> 过滤器选择范围太大 — 取消选择一些值并重试。",
+    "visualizations.menu.sort": "种类",
+    "visualizations.menu.sort.ascending": "升序",
+    "visualizations.menu.sort.descending": "降序",
+    "dialogs.export.pdf.headline": "导出设置（.pdf）",
+    "dialogs.export.pdf.includePageExportInfo": "包含页面导出信息",
+    "dialogs.export.pdf.pageOrientation": "方向",
+    "dialogs.export.pdf.pageSize": "页面大小",
+    "dialogs.export.submit": "出口"
 }

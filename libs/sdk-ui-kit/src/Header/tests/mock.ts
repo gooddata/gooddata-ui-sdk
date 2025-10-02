@@ -15,16 +15,12 @@ export const getHelpMenuFeatureFlagsMock = (
 export const getAccountMenuFeatureFlagsMock = (
     enableDataSection: boolean,
     hidePixelPerfectExperience: boolean,
-    analyticalDesigner: boolean,
     platformEdition: PlatformEdition,
-    enableRenamingProjectToWorkspace: boolean,
 ): ISettings => {
     return {
         enableDataSection,
         hidePixelPerfectExperience,
-        analyticalDesigner,
         platformEdition,
-        enableRenamingProjectToWorkspace,
     };
 };
 

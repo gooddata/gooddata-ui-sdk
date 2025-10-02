@@ -30,7 +30,6 @@ export enum TigerFeaturesNames {
     EnableClickHouseDataSource = "enableClickHouseDataSource",
     EnableKDCrossFiltering = "enableKDCrossFiltering",
     EnableMultipleDateFilters = "enableMultipleDateFilters",
-    EnableADMultipleDateFilters = "enableADMultipleDateFilters",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
@@ -140,7 +139,6 @@ export type ITigerFeatureFlags = {
     enableClickHouseDataSource: (typeof FeatureFlagsValues)["enableClickHouseDataSource"][number];
     enableKDCrossFiltering: (typeof FeatureFlagsValues)["enableKDCrossFiltering"][number];
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
-    enableADMultipleDateFilters: (typeof FeatureFlagsValues)["enableADMultipleDateFilters"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableCreateUser: (typeof FeatureFlagsValues)["enableCreateUser"][number];
@@ -252,7 +250,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableClickHouseDataSource: false,
     enableKDCrossFiltering: true,
     enableMultipleDateFilters: true,
-    enableADMultipleDateFilters: true,
     enableKDRichText: true,
     enableMySqlDataSource: false,
     enableCreateUser: true,
@@ -338,7 +335,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
-    enableAutomationManagement: false,
+    enableAutomationManagement: true,
     enableNewPdfTabularExport: false,
     enableFilterAccessibility: false,
     enableGenAIMemory: false,
@@ -364,7 +361,6 @@ export const FeatureFlagsValues = {
     enableClickHouseDataSource: [true, false] as const,
     enableKDCrossFiltering: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
-    enableADMultipleDateFilters: [true, false] as const,
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,

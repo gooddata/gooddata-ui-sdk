@@ -2,22 +2,12 @@
 
 import { invariant } from "ts-invariant";
 
+import type { AfmAnalyticsCatalogCreatedBy, AfmAnalyticsCatalogUser } from "@gooddata/api-client-tiger";
 import type { IAnalyticsCatalogCreatedBy } from "@gooddata/sdk-backend-spi";
 import { type IUser, idRef } from "@gooddata/sdk-model";
 
-export interface ITigerAnalyticsCatalogCreatedByResponse {
-    users?: ITigerAnalyticsCatalogCreatedByUser[];
-    reasoning?: string;
-}
-
-export interface ITigerAnalyticsCatalogCreatedByUser {
-    userId: string;
-    firstname?: string;
-    lastname?: string;
-}
-
 export function convertAnalyticsCatalogCreatedBy(
-    response: ITigerAnalyticsCatalogCreatedByResponse,
+    response: AfmAnalyticsCatalogCreatedBy,
 ): IAnalyticsCatalogCreatedBy {
     const { users = [], reasoning = "" } = response ?? {};
 
@@ -27,7 +17,7 @@ export function convertAnalyticsCatalogCreatedBy(
     };
 }
 
-function convertAnalyticsCatalogCreatedByUser(user: ITigerAnalyticsCatalogCreatedByUser): IUser {
+function convertAnalyticsCatalogCreatedByUser(user: AfmAnalyticsCatalogUser): IUser {
     invariant(user.userId, "Analytics Catalog creator user is missing userId.");
 
     const firstName = user.firstname;

@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Keine geplanten Exporte",
     "automations.emptyState.schedule.description": "Erstellen Sie einen Zeitplan-Export auf dem Dashboard oder der Visualisierung.",
     "automations.emptyState.alert.title": "Keine Benachrichtigungen",
-    "automations.emptyState.alert.description": "Erstellen Sie eine Warnung für die Visualisierung in einem beliebigen Dashboard."
+    "automations.emptyState.alert.description": "Erstellen Sie eine Warnung für die Visualisierung in einem beliebigen Dashboard.",
+    "automations.column.nextRun": "Nächster Durchlauf",
+    "automations.accessibility.selectAll.alerts": "Alle Benachrichtigungen auswählen",
+    "automations.accessibility.selectAll.schedules": "Alle geplanten Exporte auswählen",
+    "automations.accessibility.select.alert": "Warnung auswählen: {title}",
+    "automations.accessibility.select.schedule": "Geplanten Export auswählen: {title}",
+    "automations.accessibility.search.alerts": "Suchbenachrichtigungen",
+    "automations.accessibility.search.schedules": "Geplante Exporte suchen"
 }

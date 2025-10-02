@@ -15,27 +15,11 @@ import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 import { ASYNC_TABLE_FILTER_LABEL_ID } from "./constants.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
-    const {
-        isChecked,
-        isCheckboxIndeterminate,
-        hasContent,
-        checkbox,
-        isCheckboxDisabled,
-        checkboxAriaLabel,
-        handleCheckboxChange,
-        renderBulkActions,
-        renderFilters,
-        renderSearch,
-    } = useAsyncTableToolbar(props);
+    const { hasContent, renderBulkActions, renderFilters, renderSearch, renderCheckbox } =
+        useAsyncTableToolbar(props);
     return hasContent ? (
-        <div className={e("toolbar", { checkbox })}>
-            <UiAsyncTableCheckbox
-                onChange={handleCheckboxChange}
-                checked={isChecked}
-                indeterminate={isCheckboxIndeterminate}
-                disabled={isCheckboxDisabled}
-                ariaLabel={checkboxAriaLabel}
-            />
+        <div className={e("toolbar")}>
+            {renderCheckbox()}
             {renderBulkActions()}
             {renderFilters()}
             {renderSearch()}
@@ -100,6 +84,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                     {filters.map((filter) => (
                         <UiAsyncTableFilter
                             isFiltersTooLarge={isFiltersTooLarge}
+                            isSmall={isSmall}
                             key={filter.label}
                             {...filter}
                         />
@@ -107,7 +92,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 </div>
             </>
         ) : null;
-    }, [filters, intl, isFiltersTooLarge]);
+    }, [filters, intl, isFiltersTooLarge, isSmall]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
@@ -143,16 +128,30 @@ const useAsyncTableToolbar = <T extends { id: string }>({
 
     const checkboxAriaLabel = accessibilityConfig?.checkboxAllAriaLabel;
 
-    return {
+    const renderCheckbox = useCallback(() => {
+        return bulkActions ? (
+            <UiAsyncTableCheckbox
+                onChange={handleCheckboxChange}
+                checked={isChecked}
+                indeterminate={isCheckboxIndeterminate}
+                disabled={isCheckboxDisabled}
+                ariaLabel={checkboxAriaLabel}
+            />
+        ) : null;
+    }, [
+        handleCheckboxChange,
+        bulkActions,
         isChecked,
         isCheckboxIndeterminate,
-        hasContent,
-        checkbox: !!bulkActions,
         isCheckboxDisabled,
         checkboxAriaLabel,
-        handleCheckboxChange,
+    ]);
+
+    return {
+        hasContent,
         renderBulkActions,
         renderFilters,
         renderSearch,
+        renderCheckbox,
     };
 };

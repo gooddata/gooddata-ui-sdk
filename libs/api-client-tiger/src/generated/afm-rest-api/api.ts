@@ -252,6 +252,36 @@ export type AfmValidObjectsQueryTypesEnum =
 export interface AfmValidObjectsResponse {
     items: Array<RestApiIdentifier>;
 }
+export interface AnalyticsCatalogCreatedBy {
+    /**
+     * Users who created any object in the catalog
+     */
+    users: Array<AnalyticsCatalogUser>;
+    /**
+     * Reasoning for error states
+     */
+    reasoning: string;
+}
+export interface AnalyticsCatalogTags {
+    tags: Array<string>;
+}
+/**
+ * Users who created any object in the catalog
+ */
+export interface AnalyticsCatalogUser {
+    /**
+     * User ID of the user who created any objects
+     */
+    userId: string;
+    /**
+     * First name of the user who created any objects
+     */
+    firstname: string;
+    /**
+     * Last name of the user who created any objects
+     */
+    lastname: string;
+}
 export interface AnomalyDetectionRequest {
     /**
      * Anomaly detection sensitivity.
@@ -1197,6 +1227,9 @@ export interface FoundObjects {
      */
     reasoning: string;
 }
+export interface GetQualityIssuesResponse {
+    issues: Array<QualityIssue>;
+}
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  */
@@ -1496,6 +1529,16 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
+export interface QualityIssue {
+    objects: Array<QualityIssueObject>;
+    severity: string;
+    code: string;
+    detail: { [key: string]: object };
+}
+export interface QualityIssueObject {
+    type: string;
+    id: string;
+}
 /**
  * Filter the result by comparing specified metric to given range of values.
  */
@@ -1758,6 +1801,10 @@ export interface SearchRequest {
      * Score, above which we return found objects. Below this score objects are not relevant.
      */
     relevantScoreThreshold?: number;
+    /**
+     * If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.
+     */
+    includeHidden?: boolean;
 }
 
 export const SearchRequestObjectTypesEnum = {
@@ -1832,6 +1879,10 @@ export interface SearchResultObject {
      * Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.
      */
     scoreExactMatch?: number;
+    /**
+     * If true, this object is hidden from AI search results by default.
+     */
+    isHidden?: boolean;
 }
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
@@ -2884,6 +2935,44 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createdBy: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createdBy", "workspaceId", workspaceId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
@@ -3070,6 +3159,47 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+
+        /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssues: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getQualityIssues", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
@@ -3185,6 +3315,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -3325,6 +3456,43 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
                 localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
             }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tags: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("tags", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -3763,6 +3931,21 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+
+        /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createdBy(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogCreatedBy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createdBy(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
@@ -3849,6 +4032,21 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+
+        /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQualityIssues(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssues(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
@@ -3898,6 +4096,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -3965,6 +4164,20 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 xGDCCANCELTOKEN,
                 options,
             );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tags(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4274,6 +4487,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createdBy(
+            requestParameters: ActionsApiCreatedByRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnalyticsCatalogCreatedBy> {
+            return localVarFp
+                .createdBy(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides static structures needed for investigation of a problem with given AFM.
          * @summary AFM explain resource.
          * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -4335,6 +4563,22 @@ export const ActionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
+
+        /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssues(
+            requestParameters: ActionsApiGetQualityIssuesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<GetQualityIssuesResponse> {
+            return localVarFp
+                .getQualityIssues(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
         /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
@@ -4376,6 +4620,7 @@ export const ActionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
+
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -4429,6 +4674,22 @@ export const ActionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {ActionsApiTagsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tags(
+            requestParameters: ActionsApiTagsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnalyticsCatalogTags> {
+            return localVarFp
+                .tags(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+
         /**
          * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
@@ -4655,6 +4916,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
+     * Returns a list of Users who created any object for this workspace
+     * @summary Get Analytics Catalog CreatedBy
+     * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createdBy(
+        requestParameters: ActionsApiCreatedByRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnalyticsCatalogCreatedBy>;
+
+    /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
      * @summary AFM explain resource.
      * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -4692,6 +4966,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+
+    /**
+     * Returns metadata quality issues detected by the platform linter.
+     * @summary Get Quality Issues
+     * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getQualityIssues(
+        requestParameters: ActionsApiGetQualityIssuesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<GetQualityIssuesResponse>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
@@ -4757,6 +5044,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+
+    /**
+     * Returns a list of tags for this workspace
+     * @summary Get Analytics Catalog Tags
+     * @param {ActionsApiTagsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    tags(
+        requestParameters: ActionsApiTagsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnalyticsCatalogTags>;
 
     /**
      * Validates LLM endpoint with provided parameters.
@@ -5164,6 +5464,20 @@ export interface ActionsApiComputeValidObjectsRequest {
 }
 
 /**
+ * Request parameters for createdBy operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreatedByRequest
+ */
+export interface ActionsApiCreatedByRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCreatedBy
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for explainAFM operation in ActionsApi.
  * @export
  * @interface ActionsApiExplainAFMRequest
@@ -5270,6 +5584,20 @@ export interface ActionsApiForecastResultRequest {
      * @memberof ActionsApiForecastResult
      */
     readonly limit?: number;
+}
+
+/**
+ * Request parameters for getQualityIssues operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetQualityIssuesRequest
+ */
+export interface ActionsApiGetQualityIssuesRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetQualityIssues
+     */
+    readonly workspaceId: string;
 }
 
 /**
@@ -5417,6 +5745,20 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly xGDCCANCELTOKEN?: string;
+}
+
+/**
+ * Request parameters for tags operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTagsRequest
+ */
+export interface ActionsApiTagsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiTags
+     */
+    readonly workspaceId: string;
 }
 
 /**
@@ -5724,6 +6066,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Returns a list of Users who created any object for this workspace
+     * @summary Get Analytics Catalog CreatedBy
+     * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .createdBy(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
      * @summary AFM explain resource.
      * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
@@ -5779,6 +6135,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.limit,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns metadata quality issues detected by the platform linter.
+     * @summary Get Quality Issues
+     * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getQualityIssues(
+        requestParameters: ActionsApiGetQualityIssuesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getQualityIssues(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -5880,6 +6253,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.xGDCCANCELTOKEN,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of tags for this workspace
+     * @summary Get Analytics Catalog Tags
+     * @param {ActionsApiTagsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .tags(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -8013,6 +8400,45 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+
+        /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createdBy: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createdBy", "workspaceId", workspaceId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
@@ -8132,6 +8558,46 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssues: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getQualityIssues", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
          * @param {string} workspaceId Workspace identifier
@@ -8145,6 +8611,43 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tags: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("tags", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -8481,6 +8984,20 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createdBy(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogCreatedBy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createdBy(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
          * @param {string} workspaceId Workspace identifier
@@ -8533,6 +9050,20 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQualityIssues(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssues(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
          * @param {string} workspaceId Workspace identifier
@@ -8547,6 +9078,20 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 options,
             );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tags(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8760,6 +9305,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of Users who created any object for this workspace
+         * @summary Get Analytics Catalog CreatedBy
+         * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createdBy(
+            requestParameters: SmartFunctionsApiCreatedByRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnalyticsCatalogCreatedBy> {
+            return localVarFp
+                .createdBy(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Computes forecasted data points from the provided execution result and parameters.
          * @summary (BETA) Smart functions - Forecast
          * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
@@ -8802,6 +9362,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns metadata quality issues detected by the platform linter.
+         * @summary Get Quality Issues
+         * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssues(
+            requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<GetQualityIssuesResponse> {
+            return localVarFp
+                .getQualityIssues(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
          * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
@@ -8814,6 +9389,21 @@ export const SmartFunctionsApiFactory = function (
         ): AxiosPromise<ResolvedLlmEndpoints> {
             return localVarFp
                 .resolveLlmEndpoints(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of tags for this workspace
+         * @summary Get Analytics Catalog Tags
+         * @param {SmartFunctionsApiTagsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tags(
+            requestParameters: SmartFunctionsApiTagsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnalyticsCatalogTags> {
+            return localVarFp
+                .tags(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -8975,6 +9565,18 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiClusteringResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ClusteringResult>;
+    /**
+     * Returns a list of Users who created any object for this workspace
+     * @summary Get Analytics Catalog CreatedBy
+     * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    createdBy(
+        requestParameters: SmartFunctionsApiCreatedByRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnalyticsCatalogCreatedBy>;
 
     /**
      * (BETA) Computes forecasted data points from the provided execution result and parameters.
@@ -9003,6 +9605,32 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<ForecastResult>;
 
     /**
+     * Returns a list of Users who created any object for this workspace
+     * @summary Get Analytics Catalog CreatedBy
+     * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    createdBy(
+        requestParameters: SmartFunctionsApiCreatedByRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnalyticsCatalogCreatedBy>;
+
+    /**
+     * Returns metadata quality issues detected by the platform linter.
+     * @summary Get Quality Issues
+     * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    getQualityIssues(
+        requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<GetQualityIssuesResponse>;
+
+    /**
      * Returns a list of available LLM Endpoints
      * @summary Get Active LLM Endpoints for this workspace
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
@@ -9014,6 +9642,19 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ResolvedLlmEndpoints>;
+
+    /**
+     * Returns a list of tags for this workspace
+     * @summary Get Analytics Catalog Tags
+     * @param {SmartFunctionsApiTagsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    tags(
+        requestParameters: SmartFunctionsApiTagsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnalyticsCatalogTags>;
 
     /**
      * Validates LLM endpoint with provided parameters.
@@ -9281,6 +9922,20 @@ export interface SmartFunctionsApiClusteringResultRequest {
 }
 
 /**
+ * Request parameters for createdBy operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiCreatedByRequest
+ */
+export interface SmartFunctionsApiCreatedByRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiCreatedBy
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for forecast operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiForecastRequest
@@ -9351,6 +10006,20 @@ export interface SmartFunctionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for getQualityIssues operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiGetQualityIssuesRequest
+ */
+export interface SmartFunctionsApiGetQualityIssuesRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiGetQualityIssues
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for resolveLlmEndpoints operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiResolveLlmEndpointsRequest
@@ -9360,6 +10029,20 @@ export interface SmartFunctionsApiResolveLlmEndpointsRequest {
      * Workspace identifier
      * @type {string}
      * @memberof SmartFunctionsApiResolveLlmEndpoints
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for tags operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiTagsRequest
+ */
+export interface SmartFunctionsApiTagsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiTags
      */
     readonly workspaceId: string;
 }
@@ -9570,6 +10253,19 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
             )
             .then((request) => request(this.axios, this.basePath));
     }
+    /**
+     * Returns a list of Users who created any object for this workspace
+     * @summary Get Analytics Catalog CreatedBy
+     * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public createdBy(requestParameters: SmartFunctionsApiCreatedByRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .createdBy(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
 
     /**
      * (BETA) Computes forecasted data points from the provided execution result and parameters.
@@ -9615,6 +10311,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
+     * Returns metadata quality issues detected by the platform linter.
+     * @summary Get Quality Issues
+     * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public getQualityIssues(
+        requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .getQualityIssues(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns a list of available LLM Endpoints
      * @summary Get Active LLM Endpoints for this workspace
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
@@ -9628,6 +10341,20 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .resolveLlmEndpoints(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of tags for this workspace
+     * @summary Get Analytics Catalog Tags
+     * @param {SmartFunctionsApiTagsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .tags(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

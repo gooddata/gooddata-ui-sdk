@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { newAttributeSort } from "@gooddata/sdk-model";
@@ -45,7 +46,7 @@ import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
  *
  * The PluggableColumnChart does not use any sorts.
  *
- * If "enableChartsSorting" is enabled, the sorts can be changed by the user.
+ * The sorts can be changed by the user.
  */
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {

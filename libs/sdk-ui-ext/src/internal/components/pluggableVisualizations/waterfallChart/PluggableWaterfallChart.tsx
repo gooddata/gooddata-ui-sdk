@@ -39,7 +39,7 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
 } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import {
     getWaterfallTotalColumnName,
     setWaterfallChartUiConfig,
@@ -172,9 +172,6 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = this.setPropertiesTotalMeasures(newReferencePoint);
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
         newReferencePoint = setWaterfallChartUiConfig(newReferencePoint, this.intl, this.type);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));

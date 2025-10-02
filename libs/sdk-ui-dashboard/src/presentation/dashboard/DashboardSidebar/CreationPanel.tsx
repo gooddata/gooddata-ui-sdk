@@ -12,7 +12,6 @@ import { DraggableInsightList } from "./DraggableInsightList/index.js";
 import {
     selectEnableKDRichText,
     selectEnableVisualizationSwitcher,
-    selectIsAnalyticalDesignerEnabled,
     selectIsNewDashboard,
     selectSettings,
     selectSupportsRichTextWidgets,
@@ -46,7 +45,6 @@ export function CreationPanel(props: ICreationPanelProps) {
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
-    const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
@@ -96,19 +94,17 @@ export function CreationPanel(props: ICreationPanelProps) {
                     </Typography>
                     <div className="add-item-panel">{addItemPanelItems}</div>
                 </div>
-                {isAnalyticalDesignerEnabled ? (
-                    <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
-                        <Typography tagName="h3">
-                            <FormattedMessage id="visualizationsList.savedVisualizations" />
-                        </Typography>
-                        <DraggableInsightList
-                            WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
-                            recalculateSizeReference={className}
-                            searchAutofocus={!isNewDashboard}
-                            enableDescriptions={settings?.enableDescriptions}
-                        />
-                    </div>
-                ) : null}
+                <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
+                    <Typography tagName="h3">
+                        <FormattedMessage id="visualizationsList.savedVisualizations" />
+                    </Typography>
+                    <DraggableInsightList
+                        WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
+                        recalculateSizeReference={className}
+                        searchAutofocus={!isNewDashboard}
+                        enableDescriptions={settings?.enableDescriptions}
+                    />
+                </div>
             </div>
         </div>
     );

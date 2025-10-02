@@ -5940,6 +5940,9 @@ export interface UiAsyncTableBulkAction {
 }
 
 // @internal (undocumented)
+export const UiAsyncTableCheckboxColumnWidth = 34;
+
+// @internal (undocumented)
 export interface UiAsyncTableColumn<T> {
     // (undocumented)
     align?: "left" | "center" | "right";
@@ -6202,7 +6205,7 @@ export interface UiCheckboxProps {
 }
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -6226,6 +6229,8 @@ export interface UiChipProps {
     isLocked?: boolean;
     // (undocumented)
     label: string;
+    // (undocumented)
+    maxWidth?: number;
     // (undocumented)
     onClick?: () => void;
     // (undocumented)

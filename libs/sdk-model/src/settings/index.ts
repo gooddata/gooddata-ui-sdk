@@ -133,11 +133,6 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
 
     /**
-     * Enable charts sorting customization
-     */
-    enableChartsSorting?: boolean;
-
-    /**
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
@@ -171,11 +166,6 @@ export interface ISettings {
      * Enable multiple date filters.
      */
     enableMultipleDateFilters?: boolean;
-
-    /**
-     * Enable multiple date filters in AD.
-     */
-    enableADMultipleDateFilters?: boolean;
 
     /**
      * Enables rich text widgets on dashboards.
@@ -258,9 +248,7 @@ export interface ISettings {
     enableWidgetIdentifiersRollout?: boolean;
 
     enableDataSection?: boolean;
-    enableRenamingProjectToWorkspace?: boolean;
     enableAnalyticalDashboards?: boolean;
-    hidePixelPerfectExperience?: boolean;
     enableNewNavigationForResponsiveUi?: boolean;
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;

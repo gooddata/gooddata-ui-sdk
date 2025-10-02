@@ -127,6 +127,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             titleProvided: boolean,
             getTextContent: ((item: T) => string | ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
+            renderSuffixIcon: ((item: T) => ReactNode) | undefined,
         ) => {
             if (getMultiLineTextContent) {
                 return getMultiLineTextContent(item).map((line, index) => (
@@ -135,7 +136,10 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                         className={e("text-line", { first: index === 0 })}
                         key={index}
                     >
-                        {line}
+                        <span className={e("text-line-content")}>{line}</span>
+                        {renderSuffixIcon && index === 0
+                            ? renderSuffixIconWithWrapper(renderSuffixIcon, item)
+                            : null}
                     </span>
                 ));
             }
@@ -144,7 +148,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             }
             return String(item[key]);
         },
-        [],
+        [renderSuffixIconWithWrapper],
     );
 
     const renderTextContentWithWrapper = useCallback(
@@ -155,6 +159,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string) | undefined,
+            renderSuffixIcon: ((item: T) => ReactNode) | undefined,
         ) => {
             const textContent = renderTextContent(
                 item,
@@ -162,6 +167,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 !!getTextTitle,
                 getTextContent,
                 getMultiLineTextContent,
+                renderSuffixIcon,
             );
             const title = getTextTitle
                 ? getTextTitle(item)
@@ -215,9 +221,10 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                         getMultiLineTextContent,
                         getTextTitle,
                         getTextHref,
+                        renderSuffixIcon,
                     )}
                     {renderBadgeWithWrapper(renderBadge, item)}
-                    {renderSuffixIconWithWrapper(renderSuffixIcon, item)}
+                    {getMultiLineTextContent ? null : renderSuffixIconWithWrapper(renderSuffixIcon, item)}
                 </>
             );
         },

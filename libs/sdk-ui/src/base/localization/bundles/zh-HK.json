@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "只揀{itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "過濾值。 使用向右方向鍵移至“僅選擇”動作，然後聽到替代值。",
     "attributesDropdown.actionsHint.noQuestion": "過濾值。 使用向右方向鍵移至“僅選擇”動作",
-    "attributesDropdown.noChanges": "無改應"
+    "attributesDropdown.noChanges": "無改應",
+    "table.filter.error.tooLarge": "<strong>錯誤：</strong>跨過濾器的選擇太大 — 取消選擇某些值，然後再試一次。",
+    "visualizations.menu.sort": "分類",
+    "visualizations.menu.sort.ascending": "上行",
+    "visualizations.menu.sort.descending": "遞延",
+    "dialogs.export.pdf.headline": "匯出設定 （.pdf）",
+    "dialogs.export.pdf.includePageExportInfo": "包括頁面導出信息",
+    "dialogs.export.pdf.pageOrientation": "方向",
+    "dialogs.export.pdf.pageSize": "頁數",
+    "dialogs.export.submit": "匯出"
 }

@@ -8814,9 +8814,6 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
 export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 
 // @internal (undocumented)
@@ -9016,9 +9013,6 @@ export const selectIsAlertingManagementDialogContext: DashboardSelector<IAlertDi
 
 // @alpha (undocumented)
 export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean>;
-
-// @internal
-export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsApplyFiltersAllAtOnceEnabledAndSet: DashboardSelector<boolean>;

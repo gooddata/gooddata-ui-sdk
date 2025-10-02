@@ -49,7 +49,7 @@ import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
 } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper.js";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -133,9 +133,6 @@ export class PluggableAreaChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 

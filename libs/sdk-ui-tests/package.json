@@ -44,7 +44,7 @@
         "prettier-write-generated": "prettier --write --ignore-path=\"\" 'stories/visual-regression/**/*.generated.stories.tsx' > /dev/null 2>&1",
         "story-extractor": "vite-node backstop/story-extractor.ts",
         "story-generator": "vite-node backstop/story-generator.ts && npm run prettier-write-generated && npm run eslint-fix",
-        "storybook": "npm run build && storybook dev -p 9001 -c .storybook",
+        "storybook": "storybook dev -p 9001 -c .storybook",
         "storybook-serve": "bash stories/serve-storybook.sh",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",

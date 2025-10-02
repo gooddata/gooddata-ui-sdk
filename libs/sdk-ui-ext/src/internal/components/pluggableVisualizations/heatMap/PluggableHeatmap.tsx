@@ -38,7 +38,7 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper.js";
 import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -137,9 +137,6 @@ export class PluggableHeatmap extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }

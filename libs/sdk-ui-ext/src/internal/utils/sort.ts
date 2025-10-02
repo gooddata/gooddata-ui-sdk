@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty, isEqual, omitBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
@@ -8,7 +9,6 @@ import {
     ILocatorItem,
     IMeasure,
     IMeasureSortItem,
-    ISettings,
     ISortItem,
     SortDirection,
     areObjRefsEqual,
@@ -156,7 +156,6 @@ export function createSorts(
     type: string,
     insight: IInsightDefinition,
     supportedControls: IVisualizationProperties,
-    featureFlags: ISettings,
 ): ISortItem[] {
     if (insight.insight.sorts?.length > 0) {
         return insight.insight.sorts;
@@ -176,9 +175,7 @@ export function createSorts(
         case VisualizationTypes.PYRAMID:
         case VisualizationTypes.FUNNEL:
         case VisualizationTypes.WATERFALL:
-            if (featureFlags.enableChartsSorting) {
-                return getDefaultPieDonutPyramidFunnelSort(insight);
-            }
+            return getDefaultPieDonutPyramidFunnelSort(insight);
     }
     return [];
 }

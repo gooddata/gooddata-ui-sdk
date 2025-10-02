@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "無定期出口",
     "automations.emptyState.schedule.description": "在儀表板或視覺化上建立排程匯出。",
     "automations.emptyState.alert.title": "冇警報",
-    "automations.emptyState.alert.description": "在任何儀表板上創建有關可視化的警報。"
+    "automations.emptyState.alert.description": "在任何儀表板上創建有關可視化的警報。",
+    "automations.column.nextRun": "下一輪",
+    "automations.accessibility.selectAll.alerts": "選擇所有警報",
+    "automations.accessibility.selectAll.schedules": "選取所有預定的匯出",
+    "automations.accessibility.select.alert": "選擇警報： {title}",
+    "automations.accessibility.select.schedule": "選擇預定導出： {title}",
+    "automations.accessibility.search.alerts": "搜尋警報",
+    "automations.accessibility.search.schedules": "搜尋預定匯出"
 }

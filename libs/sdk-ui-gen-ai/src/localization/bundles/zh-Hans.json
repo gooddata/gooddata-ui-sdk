@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空格键</code> 或者<code>Ctrl+I</code> 寻求建议",
     "gd.gen-ai.button.save_and_explore": "保存并打开",
     "gd.gen-ai.save-dialog.description.explore": "要打开此可视化，需要先保存。您可以在下面为其命名。",
-    "gd.gen-ai.visualisation.menu": "{name}、更多操作",
+    "gd.gen-ai.visualisation.menu": "更多操作",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存可视化",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存为新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打开",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "机器人：",
     "gd.gen-ai.skip-messages-history": "跳至AI助手输入",
     "gd.gen-ai.skip-navigation": "跳过导航",
-    "gd.gen-ai.messages.label": "聊天消息"
+    "gd.gen-ai.messages.label": "聊天消息",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "这将要求您先保存可视化内容，然后才能打开它。"
 }

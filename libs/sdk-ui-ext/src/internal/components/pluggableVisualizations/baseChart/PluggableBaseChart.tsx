@@ -68,7 +68,7 @@ import {
     hasColorMapping,
     isEmptyObject,
 } from "../../../utils/propertiesHelper.js";
-import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort.js";
+import { createSorts, validateCurrentSort } from "../../../utils/sort.js";
 import { getTranslation } from "../../../utils/translations.js";
 import {
     setBaseChartUiConfig,
@@ -138,9 +138,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
         newReferencePoint = setBaseChartUiConfig(newReferencePoint, this.intl, this.type);
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
 
         this.referencePoint = newReferencePoint;
 
@@ -181,7 +178,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(...createSorts(this.type, insight, supportedControls, this.featureFlags))
+            .withSorting(...createSorts(this.type, insight, supportedControls))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }

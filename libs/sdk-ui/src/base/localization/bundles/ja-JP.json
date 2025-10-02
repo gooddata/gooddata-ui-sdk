@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "のみを選択 {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "フィルター値。右矢印キーを使って「選択のみ）」アクションに移動し、代替値を聞く。",
     "attributesDropdown.actionsHint.noQuestion": "フィルター値。右矢印キーを使用して、「選択のみ」アクションに移動します。",
-    "attributesDropdown.noChanges": "変更なし"
+    "attributesDropdown.noChanges": "変更なし",
+    "table.filter.error.tooLarge": "<strong>エラー：</strong> フィルター全体の選択範囲が大きすぎます - いくつかの値の選択を解除して再試行してください。",
+    "visualizations.menu.sort": "ソート",
+    "visualizations.menu.sort.ascending": "昇順",
+    "visualizations.menu.sort.descending": "降順",
+    "dialogs.export.pdf.headline": "エクスポート設定 (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "ページのエクスポート情報を含む",
+    "dialogs.export.pdf.pageOrientation": "向き",
+    "dialogs.export.pdf.pageSize": "ページサイズ",
+    "dialogs.export.submit": "エクスポート"
 }

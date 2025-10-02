@@ -90,6 +90,9 @@ export const EMPTY_CELL_VALUES: Record<CellValueType, string> = {
 
 export const AUTOMATION_FILTER_EXCLUDE_THRESHOLD = 10;
 
+export const AUTOMATIONS_SMALL_LAYOUT_SEARCH_THRESHOLD = 7;
+export const AUTOMATIONS_SMALL_LAYOUT_BULK_ACTIONS_THRESHOLD = 1;
+
 export const AutomationsDefaultState: IAutomationsState = {
     automations: [],
     totalItemsCount: 0,
@@ -165,6 +168,14 @@ export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
     alertPAUSED: {
         type: "alertPaused",
         ...titleIconProps,
+    },
+    automationDetails: {
+        type: "questionMark",
+        backgroundSize: 16,
+        color: "complementary-7",
+        backgroundColor: "complementary-7",
+        backgroundType: "border",
+        size: 10,
     },
     SUCCESS: {
         type: "checkCircle",

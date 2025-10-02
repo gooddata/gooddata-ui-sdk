@@ -13,6 +13,7 @@ describe("updateConfigWithSettings", () => {
             const config: IChartConfig = {};
             const settings: ISettings = {};
             const expectedConfig = {
+                enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
@@ -38,6 +39,7 @@ describe("updateConfigWithSettings", () => {
                 enableKDCrossFiltering: true,
             };
             const expectedConfig = {
+                enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,

@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Geen geplande export",
     "automations.emptyState.schedule.description": "Maak een planningsexport op het dashboard of de visualisatie.",
     "automations.emptyState.alert.title": "Geen waarschuwingen",
-    "automations.emptyState.alert.description": "Maak een waarschuwing aan op de visualisatie in een willekeurig dashboard."
+    "automations.emptyState.alert.description": "Maak een waarschuwing aan op de visualisatie in een willekeurig dashboard.",
+    "automations.column.nextRun": "Volgende run",
+    "automations.accessibility.selectAll.alerts": "Selecteer alle waarschuwingen",
+    "automations.accessibility.selectAll.schedules": "Alle geplande exporten selecteren",
+    "automations.accessibility.select.alert": "Selecteer waarschuwing: {title}",
+    "automations.accessibility.select.schedule": "Selecteer geplande export: {title}",
+    "automations.accessibility.search.alerts": "Waarschuwingen zoeken",
+    "automations.accessibility.search.schedules": "Geplande export zoeken"
 }

@@ -352,7 +352,16 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
   "uiConfig": {
     "buckets": {
       "filters": {

@@ -74,7 +74,7 @@ export function chartConfigFromInsight(
         ...controls,
         ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),
-        ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
+        enableChartSorting: true,
         enableSeparateTotalLabels: true,
         enableJoinedAttributeAxisName: true,
     };

@@ -34,7 +34,6 @@ import "./insightStories.css";
 
 const DefaultSettings: ISettings = {
     enableSeparateTotalLabels: true,
-    enableChartsSorting: true,
     enableLineChartTrendThreshold: true,
 };
 

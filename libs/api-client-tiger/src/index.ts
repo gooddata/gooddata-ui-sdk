@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *
@@ -220,6 +221,9 @@ export type {
     ChatHistoryRequestResponseStateEnum,
     CreatedVisualizationFiltersInner,
     ElementsRequestDependsOnInner,
+    AnalyticsCatalogCreatedBy as AfmAnalyticsCatalogCreatedBy,
+    AnalyticsCatalogUser as AfmAnalyticsCatalogUser,
+    AnalyticsCatalogTags as AfmAnalyticsCatalogTags,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

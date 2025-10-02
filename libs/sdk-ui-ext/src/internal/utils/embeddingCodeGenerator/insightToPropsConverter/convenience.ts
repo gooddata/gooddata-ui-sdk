@@ -149,9 +149,9 @@ export function filtersInsightConversion<TProps extends object, TPropKey extends
 export function sortsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, ISortItem[]> {
-    return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, (insight, ctx) => {
+    return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, (insight) => {
         const type = insightVisualizationType(insight);
-        return createSorts(type, insight, insightProperties(insight)?.["controls"] ?? {}, ctx.settings ?? {});
+        return createSorts(type, insight, insightProperties(insight)?.["controls"] ?? {});
     });
 }
 

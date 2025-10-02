@@ -24,16 +24,14 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
      */
     async getTags(): Promise<IAnalyticsCatalogTags> {
         const response = await this.authCall((client) =>
-            // Will be moved to client tiger APIs
-            client.axios.get(`/api/v1/actions/workspaces/${this.workspaceId}/ai/analyticsCatalog/tags`),
+            client.genAI.tags({ workspaceId: this.workspaceId }),
         );
         return response.data;
     }
 
     async getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy> {
         const response = await this.authCall((client) =>
-            // Will be moved to client tiger APIs
-            client.axios.get(`/api/v1/actions/workspaces/${this.workspaceId}/ai/analyticsCatalog/createdBy`),
+            client.genAI.createdBy({ workspaceId: this.workspaceId }),
         );
         return convertAnalyticsCatalogCreatedBy(response.data);
     }

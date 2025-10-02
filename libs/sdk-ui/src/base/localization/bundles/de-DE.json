@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "Nur {itemTitle} auswählen",
     "attributesDropdown.actionsHint.withQuestion": "Werte filtern. Verwenden Sie die rechte Pfeiltaste, um zur Aktion \"Nur auswählen\" zu wechseln und dann den alternativen Wert zu hören.",
     "attributesDropdown.actionsHint.noQuestion": "Werte filtern. Verwenden Sie die rechte Pfeiltaste, um zur Aktion \"Nur auswählen\" zu gelangen",
-    "attributesDropdown.noChanges": "Keine Änderungen zum Anwenden"
+    "attributesDropdown.noChanges": "Keine Änderungen zum Anwenden",
+    "table.filter.error.tooLarge": "<strong>Fehler:</strong> Auswahl über Filter zu groß — deaktivieren Sie einige Werte und versuchen Sie es erneut.",
+    "visualizations.menu.sort": "Sortieren",
+    "visualizations.menu.sort.ascending": "Aufsteigend",
+    "visualizations.menu.sort.descending": "Absteigend",
+    "dialogs.export.pdf.headline": "Export-Einstellungen (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Seiten-Exportinformationen einschließen",
+    "dialogs.export.pdf.pageOrientation": "Ausrichtung",
+    "dialogs.export.pdf.pageSize": "Seitengröße",
+    "dialogs.export.submit": "Exportieren"
 }

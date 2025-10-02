@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "Valitse vain {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Suodata arvot. Käytä oikeaa nuolinäppäintä siirtyäksesi \"Valitse vain\" -toimintoon ja sitten kuullaksesi vaihtoehtoisen arvon.",
     "attributesDropdown.actionsHint.noQuestion": "Suodata arvot. Käytä oikeaa nuolinäppäintä siirtyäksesi \"Valitse vain\" -toimintoon",
-    "attributesDropdown.noChanges": "Ei sovellettavia muutoksia"
+    "attributesDropdown.noChanges": "Ei sovellettavia muutoksia",
+    "table.filter.error.tooLarge": "<strong>Virhe:</strong> Valinta liian suurissa suodattimissa — poista joidenkin arvojen valinta ja yritä uudelleen.",
+    "visualizations.menu.sort": "Lajittele",
+    "visualizations.menu.sort.ascending": "Nouseva",
+    "visualizations.menu.sort.descending": "Laskeva",
+    "dialogs.export.pdf.headline": "Vientiasetukset (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Sisällytä sivun vientitiedot",
+    "dialogs.export.pdf.pageOrientation": "Suunta",
+    "dialogs.export.pdf.pageSize": "Sivun koko",
+    "dialogs.export.submit": "Vie"
 }

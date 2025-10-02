@@ -281,6 +281,7 @@ function VisualizationContentsComponentCore({
             >
                 <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
                     <UiMenu
+                        dataTestId="gen-ai-visualization-menu-list"
                         items={menuItems.map((item) => ({
                             type: "interactive",
                             stringTitle: item.title,

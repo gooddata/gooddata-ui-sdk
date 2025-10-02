@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Пробел</code> или<code> Ctrl+I</code> для предложений",
     "gd.gen-ai.button.save_and_explore": "Сохранить и открыть",
     "gd.gen-ai.save-dialog.description.explore": "Чтобы открыть эту визуализацию, сначала необходимо сохранить её. Вы можете дать ей имя ниже.",
-    "gd.gen-ai.visualisation.menu": "{name}, больше действий",
+    "gd.gen-ai.visualisation.menu": "Дополнительные действия",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Сохранить визуализацию",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Сохранить как новый…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Открыть в Analyze",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "Бот:",
     "gd.gen-ai.skip-messages-history": "Перейти к вводу AI-ассистента",
     "gd.gen-ai.skip-navigation": "Пропустить навигацию",
-    "gd.gen-ai.messages.label": "Чат-сообщения"
+    "gd.gen-ai.messages.label": "Чат-сообщения",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Это потребует от вас сохранить визуализацию перед тем, как вы сможете её открыть."
 }

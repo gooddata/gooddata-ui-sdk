@@ -7,6 +7,7 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
     IAutomationAlert,
+    IAutomationMetadataObject,
     IExportDefinitionMetadataObject,
     IOrganizationUser,
     IUser,
@@ -20,6 +21,16 @@ import { ARITHMETIC_OPERATORS, DATE_FORMAT, EMPTY_CELL_VALUES } from "./constant
 import { messages } from "./messages.js";
 import { CellValueType } from "./types.js";
 import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
+
+export const formatAutomationSubtitle = (automation: IAutomationMetadataObject, intl: IntlShape) => {
+    if (automation.schedule) {
+        return automation.schedule.cronDescription;
+    }
+    if (automation.alert) {
+        return formatAlertSubtitle(intl, automation.alert);
+    }
+    return "";
+};
 
 //cells
 export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) => {

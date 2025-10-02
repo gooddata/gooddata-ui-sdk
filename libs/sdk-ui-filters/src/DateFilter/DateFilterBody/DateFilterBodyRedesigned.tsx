@@ -120,7 +120,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                 } else if (previousForm === "relativeForm" && relativeButtonRef.current) {
                     relativeButtonRef.current.focus();
                 }
-            }, 0);
+            }, 100);
         };
 
         useEffect(() => {

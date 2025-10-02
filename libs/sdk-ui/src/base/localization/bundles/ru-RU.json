@@ -785,5 +785,14 @@
     "attributesDropdown.onlyLabel": "Выбрать только {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Фильтровать значения. Используйте клавишу со стрелкой вправо, чтобы перейти к действию «Выбрать только», затем, чтобы услышать альтернативное значение.",
     "attributesDropdown.actionsHint.noQuestion": "Фильтровать значения. Используйте клавишу со стрелкой вправо, чтобы перейти к действию «Выбрать только»",
-    "attributesDropdown.noChanges": "Нет изменений для применения"
+    "attributesDropdown.noChanges": "Нет изменений для применения",
+    "table.filter.error.tooLarge": "<strong>Ошибка:</strong> Выборка по фильтрам слишком велика — отмените выбор некоторых значений и попробуйте снова.",
+    "visualizations.menu.sort": "Сортировать",
+    "visualizations.menu.sort.ascending": "По возрастанию",
+    "visualizations.menu.sort.descending": "По убыванию",
+    "dialogs.export.pdf.headline": "Настройки экспорта (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Включить информацию об экспорте страницы",
+    "dialogs.export.pdf.pageOrientation": "Ориентация",
+    "dialogs.export.pdf.pageSize": "Размер страницы",
+    "dialogs.export.submit": "Экспортировать"
 }

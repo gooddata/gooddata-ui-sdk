@@ -26,6 +26,7 @@ export interface UiChipProps {
     isLocked?: boolean;
     isExpandable?: boolean;
     isDisabled?: boolean;
+    maxWidth?: number;
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
@@ -46,6 +47,7 @@ export interface ChipContentProps {
     isLocked: boolean;
     isExpandable: boolean;
     isDisabled: boolean;
+    maxWidth?: number;
     isDeletable: boolean;
     accessibilityConfig?: IUiChipAccessibilityConfig;
     dataTestId?: string;

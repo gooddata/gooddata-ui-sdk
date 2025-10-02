@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Nessuna esportazione programmata",
     "automations.emptyState.schedule.description": "Creare un'esportazione della pianificazione sul dashboard o sulla visualizzazione.",
     "automations.emptyState.alert.title": "Nessun avviso",
-    "automations.emptyState.alert.description": "Creare un avviso sulla visualizzazione in qualsiasi dashboard."
+    "automations.emptyState.alert.description": "Creare un avviso sulla visualizzazione in qualsiasi dashboard.",
+    "automations.column.nextRun": "Prossima corsa",
+    "automations.accessibility.selectAll.alerts": "Seleziona tutti gli avvisi",
+    "automations.accessibility.selectAll.schedules": "Selezionare tutte le esportazioni programmate",
+    "automations.accessibility.select.alert": "Selezionare l'avviso: {title}",
+    "automations.accessibility.select.schedule": "Selezionare l'esportazione programmata: {title}",
+    "automations.accessibility.search.alerts": "Avvisi di ricerca",
+    "automations.accessibility.search.schedules": "Ricerca delle esportazioni programmate"
 }

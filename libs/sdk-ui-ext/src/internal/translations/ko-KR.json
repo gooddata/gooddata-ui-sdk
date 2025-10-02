@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "예약된 내보내기 없음",
     "automations.emptyState.schedule.description": "대시보드 또는 시각화에서 일정 내보내기 생성",
     "automations.emptyState.alert.title": "알림 없음",
-    "automations.emptyState.alert.description": "대시보드의 시각화에 경고 생성"
+    "automations.emptyState.alert.description": "대시보드의 시각화에 경고 생성",
+    "automations.column.nextRun": "다음 실행",
+    "automations.accessibility.selectAll.alerts": "모든 알림 선택",
+    "automations.accessibility.selectAll.schedules": "모든 예약된 내보내기 선택",
+    "automations.accessibility.select.alert": "알림 선택: {title}",
+    "automations.accessibility.select.schedule": "예약된 내보내기 선택: {title}",
+    "automations.accessibility.search.alerts": "검색 알림",
+    "automations.accessibility.search.schedules": "예약된 내보내기 검색"
 }

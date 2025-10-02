@@ -20,6 +20,7 @@ export function UiChip({
     isLocked = false,
     isExpandable = true,
     isDisabled = false,
+    maxWidth,
     iconBefore,
     onClick,
     onDelete,
@@ -56,6 +57,7 @@ export function UiChip({
             isExpandable={isExpandable}
             isDisabled={isDisabled}
             isDeletable={isDeletable}
+            maxWidth={maxWidth}
             accessibilityConfig={accessibilityConfig}
             dataTestId={dataTestId}
             buttonRef={effectiveButtonRef}
@@ -73,7 +75,7 @@ export function UiChip({
     ) : null;
 
     return (
-        <div className={b()}>
+        <div className={b()} style={{ maxWidth }}>
             {renderChipContent ? renderChipContent(chipContent) : chipContent}
             {deleteButton && renderDeleteButton ? renderDeleteButton(deleteButton) : deleteButton}
         </div>

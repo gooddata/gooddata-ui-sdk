@@ -425,7 +425,16 @@ describe("PluggableBaseChart", () => {
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
             referencePointMocks.oneMetricAndManyCategoriesReferencePointWithInvalidSort,
         );
-        expect(extendedReferencePoint.properties).toEqual({});
+        expect(extendedReferencePoint.properties).toEqual({
+            sortItems: [
+                {
+                    attributeSortItem: {
+                        attributeIdentifier: "unknown",
+                        direction: "asc",
+                    },
+                },
+            ],
+        });
     });
 
     it("should not return derived measures when stack-by is there", async () => {

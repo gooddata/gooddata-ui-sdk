@@ -23,7 +23,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
                   enableJoinedAttributeAxisName: true,
               }
             : {}),
-        ...(settings.enableChartsSorting ? { enableChartSorting: true } : {}),
+        enableChartSorting: true,
         enableReversedStacking: true,
         enableSeparateTotalLabels: true,
         ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),

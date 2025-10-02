@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Zamanlanmış dışa aktarımlar yok",
     "automations.emptyState.schedule.description": "Gösterge panelinde veya görselleştirmede bir zamanlama ihracatı oluşturun.",
     "automations.emptyState.alert.title": "Uyarı yok",
-    "automations.emptyState.alert.description": "Herhangi bir panodaki görselleştirmede bir uyarı oluşturun."
+    "automations.emptyState.alert.description": "Herhangi bir panodaki görselleştirmede bir uyarı oluşturun.",
+    "automations.column.nextRun": "Sonraki çalıştırma",
+    "automations.accessibility.selectAll.alerts": "Tüm uyarıları seç",
+    "automations.accessibility.selectAll.schedules": "Tüm planlanmış dışa aktarımları seç",
+    "automations.accessibility.select.alert": "Uyarı seç: {title}",
+    "automations.accessibility.select.schedule": "Zamanlanmış dışa aktarmayı seç: {title}",
+    "automations.accessibility.search.alerts": "Uyarıları ara",
+    "automations.accessibility.search.schedules": "Zamanlanmış dışa aktarımları ara"
 }
