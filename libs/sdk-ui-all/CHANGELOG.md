@@ -1,6 +1,97 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 25 Sep 2025 08:07:44 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Oct 2025 09:04:26 GMT and should not be manually modified.
+
+## 11.2.0
+
+Thu, 02 Oct 2025 09:04:26 GMT
+
+### Updates
+
+- Remove unused feature flag: enableActiveFilterContext
+- sdk-ui-kit: Add `aria-autocomplete` to accessibility configuration.
+- sdk-ui-semantic-search: Improve semantic search accessibility attributes.
+- api-client-tiger: Update client to include `tags`, `createdBy` and `getQualityIssues` endpoints
+- sdk-backend-tiger: Add missing side-loaded data to metrics queries.
+- sdk-backend: Added `getCreatedBy` method to `IAnalyticsCatalogService` for retrieving creator information.
+- sdk-ui-kit: Add `renderActions` prop to `DropdownInvertableSelect` component.
+- sdk-ui-catalog: Add support for created by filtering.
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-kit]: sometimes tags additinal nubmer is hidden under cointainer box
+- [sdk-ui-kit]: Update chip to support only disabled state, Update popover and tooltip behaviour
+- [sdk-ui-dashboard]: Added attributes settings into footer + some minor changes
+- [sdk-ui-dashboard] KDA dioalog: Empty page on design, Switch on filled trend if any
+- [sdk-ui-gen-ai]: Chatbot accessibility repairs
+- [sdk-ui-kit] Repair of UiFocusTrap to be albe react on props change
+- Escape nonstandard characters in email
+- sdk-ui-kit: Update `UiDate` so that relative timestamps under one minute use the localized `now` text instead of showing the number of seconds ago.
+- Remove unused feature flag: enableInvalidValuesInAttributeFilter
+- Enable automation management by default.
+- Remove unused feature flag: ADCatalogGroupsExpanded
+- Remove unused feature flag: ADMeasureValueFilterNullAsZeroOption
+- Remove unused feature flag: activeFiltersByDefault
+- Remove unused feature flag: analyticalDesigner
+- Remove unused feature flag: cellMergedByDefault
+- Remove unused feature flag: disableKpiDashboardHeadlineUnderline
+- Remove unused feature flag: enableADMultipleDateFilters
+- Remove unused feature flag: enableAdAdditionalDateAttributes
+- Remove unused feature flag: enableAdCatalogRefresh
+- Remove unused feature flag: enableAdRankingFilter
+- Remove unused feature flag: enableAlternativeDisplayFormSelection
+- Remove unused feature flag: enableAnalyticalDashboardPermissions
+- Remove unused feature flag: enableAnalyticalDesignerExport
+- Remove unused feature flag: enableApproxCount
+- Remove unused feature flag: enableAttributeFilterValuesValidation
+- Remove unused feature flag: enableAxisLabelFormat
+- Remove unused feature flag: enableAxisNameConfiguration
+- Remove unused feature flag: enableAxisNameViewByTwoAttributes
+- Remove unused feature flag: enableChartsSorting
+- Remove unused feature flag: enableClickableAttributeURL
+- Remove unused feature flag: enableColumnHeadersPosition
+- Remove unused feature flag: enableCompanyLogoInEmbeddedUI
+- Remove unused feature flag: enableCsvUploader
+- Remove unused feature flag: enableCustomColorPicker
+- Remove unused feature flag: enableDataSampling
+- Remove unused feature flag: enableDrilledInsightExport
+- Remove unused feature flag: enableEmbedButtonInAD
+- Remove unused feature flag: enableEmbedButtonInKD
+- Remove unused feature flag: enableExploreInsightsFromKD
+- Remove unused feature flag: enableHidingOfWidgetTitle
+- Remove unused feature flag: enableInsightExportScheduling
+- Remove unused feature flag: enableKDZooming
+- Remove unused feature flag: enableKPIDashboardDeleteFilterButton
+- Remove unused feature flag: enableKPIDashboardDrillFromAttribute
+- Remove unused feature flag: enableKPIDashboardDrillToDashboard
+- Remove unused feature flag: enableKPIDashboardDrillToInsight
+- Remove unused feature flag: enableKPIDashboardDrillToURL
+- Remove unused feature flag: enableKPIDashboardImplicitDrillDown
+- Remove unused feature flag: enableKPIDashboardSaveAsNew
+- Remove unused feature flag: enableKPIDashboardScheduleRecipients
+- Remove unused feature flag: enableKPIDashboardSchedule
+- Remove dead bear-related code
+- Remove unused feature flag: enableLongitudeAndLatitudeLabels
+- Remove unused feature flag: enableMeasureValueFilters
+- Remove unused feature flag: enabledMetricDateFilter
+- Remove unused feature flag: enableMultipleCSVs
+- Remove unused feature flag: enableMultipleDates
+- Remove unused feature flag: enableNewADFilterBar
+- Remove unused feature flag: enablePdmRemovalDeprecationPhase
+- Remove unused feature flag: enablePivotTableTransposition
+- Remove unused feature flag: enablePixelPerfectExperience
+- Remove unused feature flag: enableRenamingMeasureToMetric
+- Remove unused feature flag: enableRenamingProjectToWorkspace
+- Remove unused feature flag: enableReversedStacking
+- Remove unused feature flag: enableSeparateTotalLabels
+- Remove unused feature flag: enableSortingByTotalGroup
+- Remove unused feature flag: enableUnavailableItemsVisible
+- Remove unused feature flag: hidePixelPerfectExperience
+- Remove unused feature flag: showHiddenCatalogItems
+- Remove unused entitlements (all are now enabled by default): CustomTheming, UiLocalization, WhiteLabeling, PdfExports
+- Update dashboard logo alt text to display organization name when custom logo is applied, for accessibility purposes.
+- sdk-ui-filters: remove react-window library and let dropdowns with fixed item count render without it
+- Fixed: UI Kit menu item must respect the width of its container
+- create alert/schedule dialog accessibility, changes to sdk components
 
 ## 11.1.0
 

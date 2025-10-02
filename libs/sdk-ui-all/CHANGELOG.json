@@ -2,6 +2,267 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.2.0",
+            "tag": "@gooddata/sdk-ui-all_v11.2.0",
+            "date": "Thu, 02 Oct 2025 09:04:26 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Remove unused feature flag: enableActiveFilterContext"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `aria-autocomplete` to accessibility configuration."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: Improve semantic search accessibility attributes."
+                    },
+                    {
+                        "comment": "api-client-tiger: Update client to include `tags`, `createdBy` and `getQualityIssues` endpoints"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add missing side-loaded data to metrics queries."
+                    },
+                    {
+                        "comment": "sdk-backend: Added `getCreatedBy` method to `IAnalyticsCatalogService` for retrieving creator information."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `renderActions` prop to `DropdownInvertableSelect` component."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for created by filtering."
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit]: sometimes tags additinal nubmer is hidden under cointainer box"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit]: Update chip to support only disabled state, Update popover and tooltip behaviour"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Added attributes settings into footer + some minor changes"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard] KDA dioalog: Empty page on design, Switch on filled trend if any"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: Chatbot accessibility repairs"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit] Repair of UiFocusTrap to be albe react on props change"
+                    },
+                    {
+                        "comment": "Escape nonstandard characters in email"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Update `UiDate` so that relative timestamps under one minute use the localized `now` text instead of showing the number of seconds ago."
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableInvalidValuesInAttributeFilter"
+                    },
+                    {
+                        "comment": "Enable automation management by default."
+                    },
+                    {
+                        "comment": "Remove unused feature flag: ADCatalogGroupsExpanded"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: ADMeasureValueFilterNullAsZeroOption"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: activeFiltersByDefault"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: analyticalDesigner"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: cellMergedByDefault"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: disableKpiDashboardHeadlineUnderline"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableADMultipleDateFilters"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAdAdditionalDateAttributes"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAdCatalogRefresh"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAdRankingFilter"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAlternativeDisplayFormSelection"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAnalyticalDashboardPermissions"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAnalyticalDesignerExport"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableApproxCount"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAttributeFilterValuesValidation"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAxisLabelFormat"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAxisNameConfiguration"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAxisNameViewByTwoAttributes"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableChartsSorting"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableClickableAttributeURL"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableColumnHeadersPosition"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableCompanyLogoInEmbeddedUI"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableCsvUploader"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableCustomColorPicker"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableDataSampling"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableDrilledInsightExport"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableEmbedButtonInAD"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableEmbedButtonInKD"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableExploreInsightsFromKD"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableHidingOfWidgetTitle"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableInsightExportScheduling"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKDZooming"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardDeleteFilterButton"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardDrillFromAttribute"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardDrillToDashboard"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardDrillToInsight"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardDrillToURL"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardImplicitDrillDown"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardSaveAsNew"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardScheduleRecipients"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableKPIDashboardSchedule"
+                    },
+                    {
+                        "comment": "Remove dead bear-related code"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableLongitudeAndLatitudeLabels"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableMeasureValueFilters"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enabledMetricDateFilter"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableMultipleCSVs"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableMultipleDates"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableNewADFilterBar"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enablePdmRemovalDeprecationPhase"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enablePivotTableTransposition"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enablePixelPerfectExperience"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableRenamingMeasureToMetric"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableRenamingProjectToWorkspace"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableReversedStacking"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableSeparateTotalLabels"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableSortingByTotalGroup"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableUnavailableItemsVisible"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: hidePixelPerfectExperience"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: showHiddenCatalogItems"
+                    },
+                    {
+                        "comment": "Remove unused entitlements (all are now enabled by default): CustomTheming, UiLocalization, WhiteLabeling, PdfExports"
+                    },
+                    {
+                        "comment": "Update dashboard logo alt text to display organization name when custom logo is applied, for accessibility purposes."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: remove react-window library and let dropdowns with fixed item count render without it"
+                    },
+                    {
+                        "comment": "Fixed: UI Kit menu item must respect the width of its container"
+                    },
+                    {
+                        "comment": "create alert/schedule dialog accessibility, changes to sdk components"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.1.0",
             "tag": "@gooddata/sdk-ui-all_v11.1.0",
             "date": "Thu, 25 Sep 2025 08:07:44 GMT",
