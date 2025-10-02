@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Нет запланированных экспортов",
     "automations.emptyState.schedule.description": "Создать расписание экспорта на дашборде или визуализации.",
     "automations.emptyState.alert.title": "Нет оповещений",
-    "automations.emptyState.alert.description": "Создать оповещение на визуализации в любом дашборде."
+    "automations.emptyState.alert.description": "Создать оповещение на визуализации в любом дашборде.",
+    "automations.column.nextRun": "Следующий запуск",
+    "automations.accessibility.selectAll.alerts": "Выбрать все оповещения",
+    "automations.accessibility.selectAll.schedules": "Выбрать все запланированные экспорты",
+    "automations.accessibility.select.alert": "Выберите оповещение: {title}",
+    "automations.accessibility.select.schedule": "Выберите запланированный экспорт: {title}",
+    "automations.accessibility.search.alerts": "Поиск оповещений",
+    "automations.accessibility.search.schedules": "Поиск запланированных экспортов"
 }

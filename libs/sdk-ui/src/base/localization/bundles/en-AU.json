@@ -785,5 +785,14 @@
     "attributesDropdown.onlyLabel": "Select only {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Filter values. Use the right arrow key to navigate to the ‘Select only’ action, then to hear the alternative value.",
     "attributesDropdown.actionsHint.noQuestion": "Filter values. Use the right arrow key to navigate to the ‘Select only’ action",
-    "attributesDropdown.noChanges": "No changes to apply"
+    "attributesDropdown.noChanges": "No changes to apply",
+    "table.filter.error.tooLarge": "<strong>Error:</strong> Selection across filters too large — please deselect some values and try again.",
+    "visualizations.menu.sort": "Sort",
+    "visualizations.menu.sort.ascending": "Ascending",
+    "visualizations.menu.sort.descending": "Descending",
+    "dialogs.export.pdf.headline": "Export settings (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Include page export information",
+    "dialogs.export.pdf.pageOrientation": "Orientation",
+    "dialogs.export.pdf.pageSize": "Page size",
+    "dialogs.export.submit": "Export"
 }

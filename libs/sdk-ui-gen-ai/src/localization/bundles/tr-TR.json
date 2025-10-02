@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Boşluk</code> veya <code>Ctrl+I</code> öneriler için",
     "gd.gen-ai.button.save_and_explore": "Kaydet ve Aç",
     "gd.gen-ai.save-dialog.description.explore": "Bu görselleştirmeyi açmak için önce kaydedilmesi gerekiyor. Aşağıda bir ad verebilirsiniz.",
-    "gd.gen-ai.visualisation.menu": "{name}, daha fazla eylem",
+    "gd.gen-ai.visualisation.menu": "Daha fazla işlem",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Görselleştirmeyi kaydet",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Yeni olarak kaydet…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Analyze'da Aç",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Yapay zeka asistanı girdisine atla",
     "gd.gen-ai.skip-navigation": "Gezintiyi atla",
-    "gd.gen-ai.messages.label": "Sohbet mesajları"
+    "gd.gen-ai.messages.label": "Sohbet mesajları",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Bunu açmadan önce görselleştirmeyi kaydetmenizi isteyecektir."
 }

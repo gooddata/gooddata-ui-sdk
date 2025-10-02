@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "Sélectionner uniquement {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Filtrer les valeurs. Utilisez la touche fléchée vers la droite pour passer à l'action \"Sélectionner uniquement\", puis pour écouter la valeur alternative.",
     "attributesDropdown.actionsHint.noQuestion": "Filtrer les valeurs. Utilisez la touche fléchée vers la droite pour passer à l'action \"Sélectionner uniquement\".",
-    "attributesDropdown.noChanges": "Aucun changement à appliquer"
+    "attributesDropdown.noChanges": "Aucun changement à appliquer",
+    "table.filter.error.tooLarge": "<strong>Erreur :</strong> La sélection des filtres est trop importante - désélectionnez certaines valeurs et réessayez.",
+    "visualizations.menu.sort": "Trier",
+    "visualizations.menu.sort.ascending": "Ordre croissant",
+    "visualizations.menu.sort.descending": "Ordre décroissant",
+    "dialogs.export.pdf.headline": "Exporter les paramètres (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Inclure les informations relatives à l'exportation des pages",
+    "dialogs.export.pdf.pageOrientation": "Orientation",
+    "dialogs.export.pdf.pageSize": "Taille de la page",
+    "dialogs.export.submit": "Exporter"
 }

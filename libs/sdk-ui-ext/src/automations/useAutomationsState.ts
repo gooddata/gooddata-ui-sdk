@@ -13,6 +13,7 @@ import { AutomationsDefaultState } from "./constants.js";
 import { useLoadAutomations } from "./data/useLoadAutomations.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
 import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
+import { useAutomationsSmallLayout } from "./useAutomationsSmallLayout.js";
 
 export const useAutomationsState = ({
     type,
@@ -23,6 +24,7 @@ export const useAutomationsState = ({
     availableFilters,
     preselectedFilters,
     invalidateItemsRef,
+    isSmall,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
@@ -57,7 +59,7 @@ export const useAutomationsState = ({
         bulkPauseAutomations,
         bulkResumeAutomations,
     } = useAutomationActions(type, scope);
-    const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
+    const availableBulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
         bulkDeleteAutomations,
@@ -66,11 +68,12 @@ export const useAutomationsState = ({
         bulkResumeAutomations,
         setPendingAction,
     });
-    const { columns, includeAutomationResult } = useAutomationColumns({
+    const { columnDefinitions, includeAutomationResult } = useAutomationColumns({
         type,
         timezone,
         selectedColumnDefinitions,
         automationsType: type,
+        isSmall,
         deleteAutomation,
         unsubscribeFromAutomation,
         pauseAutomation,
@@ -236,7 +239,7 @@ export const useAutomationsState = ({
         }));
     }, []);
 
-    const setSearch = useCallback((search: string) => {
+    const searchHandler = useCallback((search: string) => {
         setState((state) => ({
             ...state,
             search,
@@ -271,6 +274,15 @@ export const useAutomationsState = ({
         workspacesFilterQuery,
         statusFilterQuery,
     ]);
+
+    const { setSearch, bulkActions, columns } = useAutomationsSmallLayout({
+        searchHandler,
+        search: state.search,
+        availableBulkActions,
+        columnDefinitions,
+        isSmall,
+        automationsLength: state.automations.length,
+    });
 
     return {
         state,

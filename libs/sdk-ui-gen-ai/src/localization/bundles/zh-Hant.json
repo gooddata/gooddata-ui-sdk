@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空白鍵</code> 或者<code>Ctrl+I</code> 尋求建議",
     "gd.gen-ai.button.save_and_explore": "儲存並打開",
     "gd.gen-ai.save-dialog.description.explore": "要開啟此視覺化，需要先儲存。您可以在下面為其命名。",
-    "gd.gen-ai.visualisation.menu": "{name}、更多操作",
+    "gd.gen-ai.visualisation.menu": "更多操作",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存視覺化",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打開",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "機器人：",
     "gd.gen-ai.skip-messages-history": "跳至AI助理輸入",
     "gd.gen-ai.skip-navigation": "跳過導航",
-    "gd.gen-ai.messages.label": "聊天訊息"
+    "gd.gen-ai.messages.label": "聊天訊息",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "這將要求您先儲存視覺化內容，然後才能開啟它。"
 }

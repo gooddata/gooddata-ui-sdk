@@ -7,11 +7,7 @@ import { FormattedMessage, defineMessages } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
 
 import { Parameter } from "./Parameter.js";
-import {
-    DRILL_TO_URL_PLACEHOLDER,
-    selectEnableRenamingProjectToWorkspace,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/index.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail.js";
 import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail.js";
@@ -95,8 +91,6 @@ export function IdentifierParametersSection({
     intl,
     widgetRef,
 }: IIdentifierParametersSectionProps) {
-    const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
-
     return (
         <>
             <DropdownSectionHeader>
@@ -120,10 +114,7 @@ export function IdentifierParametersSection({
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !==
-                        (enableRenamingProjectToWorkspace
-                            ? DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID
-                            : DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID),
+                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID,
                 )
                 .map(({ placeholder, titleIntlKey }) => {
                     const title = intl.formatMessage({ id: titleIntlKey });

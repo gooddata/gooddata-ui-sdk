@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "无定期出口",
     "automations.emptyState.schedule.description": "在仪表板或可视化上创建计划导出。",
     "automations.emptyState.alert.title": "无警报",
-    "automations.emptyState.alert.description": "在任何仪表板上的可视化上创建警报。"
+    "automations.emptyState.alert.description": "在任何仪表板上的可视化上创建警报。",
+    "automations.column.nextRun": "下次运行",
+    "automations.accessibility.selectAll.alerts": "选择所有警报",
+    "automations.accessibility.selectAll.schedules": "选择所有计划的导出",
+    "automations.accessibility.select.alert": "选择警报： {title}",
+    "automations.accessibility.select.schedule": "选择计划导出： {title}",
+    "automations.accessibility.search.alerts": "搜索提醒",
+    "automations.accessibility.search.schedules": "搜索定期出口"
 }

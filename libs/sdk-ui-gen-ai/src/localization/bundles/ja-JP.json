@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code> または<code>Ctrl+I</code> 提案のために",
     "gd.gen-ai.button.save_and_explore": "保存して開く",
     "gd.gen-ai.save-dialog.description.explore": "この可視化を開くには、まず保存する必要があります。以下に名前を付けることができます。",
-    "gd.gen-ai.visualisation.menu": "{name}より多くのアクション",
+    "gd.gen-ai.visualisation.menu": "より多くの行動",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "視覚化の保存",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "新規保存…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "アナライズで開く",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "ボットだ：",
     "gd.gen-ai.skip-messages-history": "AIアシスタント入力へスキップ",
     "gd.gen-ai.skip-navigation": "ナビゲーションをスキップする",
-    "gd.gen-ai.messages.label": "チャットメッセージ"
+    "gd.gen-ai.messages.label": "チャットメッセージ",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "ビジュアライゼーションを開く前に保存するよう求められます。"
 }

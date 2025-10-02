@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "Alleen {itemTitle}selecteren ",
     "attributesDropdown.actionsHint.withQuestion": "Filterwaarden. Gebruik de pijltjestoets rechts om naar de actie 'Alleen selecteren' te gaan en vervolgens om de alternatieve waarde te horen.",
     "attributesDropdown.actionsHint.noQuestion": "Filterwaarden. Gebruik de pijltjestoets rechts om naar de actie 'Alleen selecteren' te gaan",
-    "attributesDropdown.noChanges": "Geen wijzigingen toe te passen"
+    "attributesDropdown.noChanges": "Geen wijzigingen toe te passen",
+    "table.filter.error.tooLarge": "<strong>Fout:</strong> Selectie over filters te groot - deselecteer enkele waarden en probeer het opnieuw.",
+    "visualizations.menu.sort": "Sorteer",
+    "visualizations.menu.sort.ascending": "Oplopend",
+    "visualizations.menu.sort.descending": "Aflopend",
+    "dialogs.export.pdf.headline": "Instellingen exporteren (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Pagina-exportinformatie opnemen",
+    "dialogs.export.pdf.pageOrientation": "Oriëntatie",
+    "dialogs.export.pdf.pageSize": "Paginaformaat",
+    "dialogs.export.submit": "Exporteren"
 }

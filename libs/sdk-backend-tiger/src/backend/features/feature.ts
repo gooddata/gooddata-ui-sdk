@@ -144,13 +144,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableADMultipleDateFilters,
-            "enableADMultipleDateFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableADMultipleDateFilters,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDRichText,
             "enableKDRichText",
             "BOOLEAN",

@@ -1,5 +1,8 @@
 // (C) 2025 GoodData Corporation
 
+/**
+ * @internal
+ */
 export const CHECKBOX_COLUMN_WIDTH = 34;
 
 /**
@@ -23,6 +26,8 @@ export const SKELETON_ITEM_GAP = 0;
  * @internal
  */
 export const SCROLLBAR_WIDTH = 10;
+
+export const FILTER_CHIP_MAX_WIDTH = 150;
 
 export const FILTER_OPTION_ALL_VALUE = "__ALL__";
 

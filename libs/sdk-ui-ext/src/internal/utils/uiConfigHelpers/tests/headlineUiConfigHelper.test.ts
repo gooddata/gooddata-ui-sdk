@@ -178,6 +178,7 @@ describe("headlineUiConfigHelper", () => {
                 ...config,
                 ...properties.controls,
                 colorPalette: DEFAULT_COMPARISON_PALETTE,
+                enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,

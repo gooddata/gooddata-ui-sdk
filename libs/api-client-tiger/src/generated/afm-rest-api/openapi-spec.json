@@ -1287,6 +1287,38 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/issues": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Quality Issues",
+                "description": "Returns metadata quality issues detected by the platform linter.",
+                "operationId": "getQualityIssues",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetQualityIssuesResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -1312,6 +1344,70 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ChatUsageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Analytics Catalog Tags",
+                "description": "Returns a list of tags for this workspace",
+                "operationId": "tags",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnalyticsCatalogTags"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Analytics Catalog CreatedBy",
+                "description": "Returns a list of Users who created any object for this workspace",
+                "operationId": "createdBy",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnalyticsCatalogCreatedBy"
                                 }
                             }
                         }
@@ -3189,6 +3285,11 @@
                         "description": "Score, above which we return found objects. Below this score objects are not relevant.",
                         "format": "double",
                         "default": 0.3
+                    },
+                    "includeHidden": {
+                        "type": "boolean",
+                        "description": "If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.",
+                        "default": false
                     }
                 }
             },
@@ -3326,6 +3427,10 @@
                         "type": "integer",
                         "description": "Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.",
                         "format": "int32"
+                    },
+                    "isHidden": {
+                        "type": "boolean",
+                        "description": "If true, this object is hidden from AI search results by default."
                     }
                 }
             },
@@ -3635,6 +3740,9 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/DateRelativeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RankingFilter"
                                 }
                             ]
                         }
@@ -4371,6 +4479,54 @@
                     }
                 }
             },
+            "GetQualityIssuesResponse": {
+                "required": ["issues"],
+                "type": "object",
+                "properties": {
+                    "issues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/QualityIssue"
+                        }
+                    }
+                }
+            },
+            "QualityIssue": {
+                "required": ["code", "detail", "objects", "severity"],
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/QualityIssueObject"
+                        }
+                    },
+                    "severity": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "QualityIssueObject": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
             "ChatUsageResponse": {
                 "required": ["interactionCount", "interactionLimit", "timeWindowHours"],
                 "type": "object",
@@ -4391,6 +4547,55 @@
                         "format": "int32"
                     }
                 }
+            },
+            "AnalyticsCatalogTags": {
+                "required": ["tags"],
+                "type": "object",
+                "properties": {
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Tags assigned to any object in the catalog"
+                        }
+                    }
+                }
+            },
+            "AnalyticsCatalogCreatedBy": {
+                "required": ["reasoning", "users"],
+                "type": "object",
+                "properties": {
+                    "users": {
+                        "type": "array",
+                        "description": "Users who created any object in the catalog",
+                        "items": {
+                            "$ref": "#/components/schemas/AnalyticsCatalogUser"
+                        }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Reasoning for error states"
+                    }
+                }
+            },
+            "AnalyticsCatalogUser": {
+                "required": ["firstname", "lastname", "userId"],
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "description": "User ID of the user who created any objects"
+                    },
+                    "firstname": {
+                        "type": "string",
+                        "description": "First name of the user who created any objects"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "description": "Last name of the user who created any objects"
+                    }
+                },
+                "description": "Users who created any object in the catalog"
             }
         }
     }

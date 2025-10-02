@@ -54,7 +54,7 @@ import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
  *
  * In any other case the sorts are not used.
  *
- * If "enableChartsSorting" is enabled, the sorts can be changed by the user.
+ * The sorts can be changed by the user.
  */
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {

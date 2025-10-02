@@ -1,59 +1,26 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
+import { IAutomationMetadataObject } from "node_modules/@gooddata/sdk-model/esm/automations/index.js";
 import { useIntl } from "react-intl";
 
-import { IAutomationLastRunStatus, IAutomationMetadataObject, IAutomationState } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, UiIcon, UiIconButton, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { UiIcon, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
-import { formatCellValue } from "../format.js";
+import { formatAutomationSubtitle, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
-import { AutomationsType } from "../types.js";
+import { IAutomationIconProps } from "../types.js";
+import { AutomationIconTooltip } from "./AutomationIconTooltip.js";
 
-const { b, e } = bem("gd-ui-ext-automation-icon-tooltip");
+const { e } = bem("gd-ui-ext-automation-icon-tooltip");
 
-export function AutomationIcon({
-    type,
-    automation,
-    state,
-}: {
-    type: AutomationsType | IAutomationLastRunStatus;
-    automation?: IAutomationMetadataObject;
-    state?: IAutomationState;
-}) {
-    if (!type) {
-        return null;
-    }
-
-    const props =
-        state === "PAUSED" ? AUTOMATION_ICON_CONFIGS[`${type}${state}`] : AUTOMATION_ICON_CONFIGS[type];
-
-    return type === "FAILED" ? (
-        <BubbleHoverTrigger hideDelay={300} eventsOnBubble={true}>
-            <UiIcon {...props} layout="block" />
-            <Bubble
-                className="bubble-light"
-                alignPoints={[{ align: "bc tc" }]}
-                arrowStyle={{ display: "none" }}
-            >
-                <AutomationIconTooltipContent automation={automation} />
-            </Bubble>
-        </BubbleHoverTrigger>
-    ) : (
-        <UiIcon {...props} />
-    );
-}
-
-function AutomationIconTooltipContent({ automation }: { automation: IAutomationMetadataObject }) {
+export function AutomationIcon({ type, automation, state }: IAutomationIconProps) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
-    const traceId = automation?.lastRun?.traceId;
-    const status = automation?.lastRun?.errorMessage;
 
-    const headerText = useMemo(() => {
+    const failedHeaderText = useMemo(() => {
         if (!automation) {
             return "";
         }
@@ -63,38 +30,75 @@ function AutomationIconTooltipContent({ automation }: { automation: IAutomationM
         return intl.formatMessage(messages.automationIconTooltipHeaderAlert);
     }, [automation, intl]);
 
-    const onCopyTraceId = useCallback(() => {
-        navigator.clipboard.writeText(traceId);
-        addSuccess(messages.messageAutomationIconTooltipTraceIdCopied);
-    }, [traceId, addSuccess]);
+    if (!type) {
+        return null;
+    }
 
+    const props =
+        state === "PAUSED" ? AUTOMATION_ICON_CONFIGS[`${type}${state}`] : AUTOMATION_ICON_CONFIGS[type];
+
+    if (type === "FAILED") {
+        const traceId = automation?.lastRun?.traceId;
+        const status = automation?.lastRun?.errorMessage;
+
+        const onCopyTraceId = () => {
+            navigator.clipboard.writeText(traceId);
+            addSuccess(messages.messageAutomationIconTooltipTraceIdCopied);
+        };
+
+        return (
+            <AutomationIconTooltip
+                header={failedHeaderText}
+                sections={[
+                    {
+                        header: intl.formatMessage(messages.automationIconTooltipStatus),
+                        content: formatCellValue(status),
+                    },
+                    {
+                        header: intl.formatMessage(messages.automationIconTooltipTraceId),
+                        content: formatCellValue(traceId),
+                        icon: "copy",
+                        onIconClick: onCopyTraceId,
+                    },
+                ]}
+            >
+                <UiIcon {...props} layout="block" />
+            </AutomationIconTooltip>
+        );
+    }
+
+    if (type === "automationDetails") {
+        return (
+            <AutomationIconTooltip
+                header={formatCellValue(automation.title)}
+                content={formatCellValue(formatAutomationSubtitle(automation, intl))}
+                sections={
+                    automation.recipients?.length
+                        ? [
+                              {
+                                  header: intl.formatMessage(messages.columnRecipients),
+                                  content: <TooltipRecipientsList automation={automation} />,
+                              },
+                          ]
+                        : []
+                }
+            >
+                <UiIcon {...props} layout="block" />
+            </AutomationIconTooltip>
+        );
+    }
+
+    return <UiIcon {...props} />;
+}
+
+function TooltipRecipientsList({ automation }: { automation: IAutomationMetadataObject }) {
     return (
-        <div className={b()}>
-            <div className={e("header")}>{headerText}</div>
-            <div>
-                <div className={e("sub-header")}>
-                    {intl.formatMessage(messages.automationIconTooltipStatus).toUpperCase()}
-                </div>
-                {status ? <div className={e("content")}>{formatCellValue(status)}</div> : null}
-            </div>
-            <div>
-                <div className={e("sub-header")}>
-                    {intl.formatMessage(messages.automationIconTooltipTraceId).toUpperCase()}
-                </div>
-                {traceId ? (
-                    <div className={e("content")}>
-                        <div className={e("trace-id")}>{formatCellValue(traceId)}</div>
-                        <div className={e("icon-button")}>
-                            <UiIconButton
-                                icon="copy"
-                                size="xsmall"
-                                variant="tertiary"
-                                onClick={onCopyTraceId}
-                            />
-                        </div>
-                    </div>
-                ) : null}
-            </div>
+        <div className={e("recipients-list")}>
+            {automation.recipients?.map((recipient) => (
+                <span className={e("recipient")} key={recipient.id}>
+                    {recipient.name}
+                </span>
+            ))}
         </div>
     );
 }

@@ -7,7 +7,6 @@ import { Message } from "@gooddata/sdk-ui-kit";
 
 import {
     selectDateFilterConfigValidationWarnings,
-    selectEnableRenamingProjectToWorkspace,
     selectIsInEditMode,
     selectIsNewDashboard,
     useDashboardSelector,
@@ -20,12 +19,6 @@ const workspaceValidationMessagesMapping: { [K in DateFilterValidationResult]?: 
     NoVisibleOptions: defineMessage({ id: "filters.config.warning.allOptionsHidden" }),
     SelectedOptionInvalid: defineMessage({ id: "filters.config.warning.selectedFilterNotValid" }),
     TOO_MANY_CONFIGS: defineMessage({ id: "filters.config.warning.multipleWorkspacesConfigs" }),
-};
-
-const projectValidationMessagesMapping: { [K in DateFilterValidationResult]?: MessageDescriptor } = {
-    ...workspaceValidationMessagesMapping,
-    NO_CONFIG: defineMessage({ id: "filters.config.warning.notAvailable" }),
-    TOO_MANY_CONFIGS: defineMessage({ id: "filters.config.warning.multipleProjectConfigs" }),
 };
 
 // Some warnings make sense only when creating a new dashboard, for existing dashboards they are irrelevant
@@ -48,17 +41,12 @@ const selectRelevantWarnings = createSelector(
 export function DateFilterConfigWarnings() {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const warnings = useDashboardSelector(selectRelevantWarnings);
-    const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
-
-    const effectiveMapping = enableRenamingProjectToWorkspace
-        ? workspaceValidationMessagesMapping
-        : projectValidationMessagesMapping;
 
     return isInEditMode && warnings.length > 0 ? (
         <Message type="warning" contrast={true} className="gd-date-filter-config-warning-message">
             <ul className="gd-date-filter-config-warning-message-items">
                 {warnings.map((warning) => {
-                    const message = effectiveMapping[warning];
+                    const message = workspaceValidationMessagesMapping[warning];
                     if (message) {
                         return (
                             <li key={warning}>

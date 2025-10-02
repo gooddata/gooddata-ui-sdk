@@ -49,7 +49,22 @@ exports[`PluggableDonutChart > should return reference point with multiple metri
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "sortItems": [
+      {
+        "measureSortItem": {
+          "direction": "desc",
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
@@ -265,7 +280,16 @@ exports[`PluggableDonutChart > should return reference point with only one metri
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "sortItems": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "a1",
+          "direction": "asc",
+        },
+      },
+    ],
+  },
   "uiConfig": {
     "buckets": {
       "filters": {

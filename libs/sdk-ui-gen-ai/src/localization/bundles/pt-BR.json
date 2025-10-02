@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Espaço</code> ou <code>Ctrl+I</code> para sugestões",
     "gd.gen-ai.button.save_and_explore": "Salvar e abrir",
     "gd.gen-ai.save-dialog.description.explore": "Para abrir essa visualização, ela precisa ser salva primeiro. Você pode dar um nome abaixo.",
-    "gd.gen-ai.visualisation.menu": "{name}, mais ações",
+    "gd.gen-ai.visualisation.menu": "Mais ações",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Salvar visualização",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Salvar como novo…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Abrir no Analyze",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Pular para a entrada do assistente de IA",
     "gd.gen-ai.skip-navigation": "Pular navegação",
-    "gd.gen-ai.messages.label": "Mensagens de bate-papo"
+    "gd.gen-ai.messages.label": "Mensagens de bate-papo",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Isso solicitará que você salve a visualização antes de abri-la."
 }

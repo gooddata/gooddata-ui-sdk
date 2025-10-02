@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "No hay exportaciones programadas",
     "automations.emptyState.schedule.description": "Cree una exportación de la programación en el cuadro de mandos o la visualización.",
     "automations.emptyState.alert.title": "Sin alertas",
-    "automations.emptyState.alert.description": "Crear una alerta sobre la visualización en cualquier cuadro de mando."
+    "automations.emptyState.alert.description": "Crear una alerta sobre la visualización en cualquier cuadro de mando.",
+    "automations.column.nextRun": "Próxima carrera",
+    "automations.accessibility.selectAll.alerts": "Seleccionar todas las alertas",
+    "automations.accessibility.selectAll.schedules": "Seleccionar todas las exportaciones programadas",
+    "automations.accessibility.select.alert": "Seleccionar alerta: {title}",
+    "automations.accessibility.select.schedule": "Seleccione la exportación programada: {title}",
+    "automations.accessibility.search.alerts": "Buscar alertas",
+    "automations.accessibility.search.schedules": "Buscar exportaciones programadas"
 }

@@ -41,7 +41,7 @@
     "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Espace</code> ou <code>Ctrl+I</code> pour les suggestions",
     "gd.gen-ai.button.save_and_explore": "Enregistrer et ouvrir",
     "gd.gen-ai.save-dialog.description.explore": "Pour ouvrir cette visualisation, il faut d'abord l'enregistrer. Vous pouvez lui donner un nom ci-dessous.",
-    "gd.gen-ai.visualisation.menu": "{name}, plus d'actions",
+    "gd.gen-ai.visualisation.menu": "Plus d'actions",
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Sauvegarder la visualisation",
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Enregistrer comme nouveau…",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Ouvrir dans Analyser",
@@ -60,5 +60,6 @@
     "gd.gen-ai.message.label.assistant": "Bot:",
     "gd.gen-ai.skip-messages-history": "Passer à l'entrée de l'assistant AI",
     "gd.gen-ai.skip-navigation": "Passer la navigation",
-    "gd.gen-ai.messages.label": "Messages de chat"
+    "gd.gen-ai.messages.label": "Messages de chat",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Il vous sera demandé d'enregistrer la visualisation avant de pouvoir l'ouvrir."
 }

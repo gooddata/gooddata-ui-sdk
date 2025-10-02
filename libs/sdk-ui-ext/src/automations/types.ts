@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from "react";
 
 import {
     AutomationFilterType,
@@ -10,7 +10,9 @@ import {
     IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
+    IAutomationLastRunStatus,
     IAutomationMetadataObject,
+    IAutomationState,
     IListedDashboard,
     IOrganizationUser,
     IUser,
@@ -19,7 +21,12 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import { IDashboardUrlBuilder, IWidgetUrlBuilder } from "@gooddata/sdk-ui";
-import { UiAsyncTableFilter } from "@gooddata/sdk-ui-kit";
+import {
+    IconType,
+    UiAsyncTableBulkAction,
+    UiAsyncTableColumn,
+    UiAsyncTableFilter,
+} from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -259,6 +266,7 @@ export interface IUseAutomationColumnsProps {
     timezone?: string;
     selectedColumnDefinitions: AutomationColumnDefinitions;
     automationsType: AutomationsType;
+    isSmall?: boolean;
     deleteAutomation: AutomationAction;
     unsubscribeFromAutomation: AutomationAction;
     pauseAutomation: AutomationAction;
@@ -340,3 +348,32 @@ export type AutomationsPendingActionType =
     | "bulkResume";
 
 export type CellValueType = "text" | "date" | "number";
+
+export interface IUseAutomationsSmallLayoutProps {
+    searchHandler: (search: string) => void;
+    search?: string;
+    availableBulkActions: UiAsyncTableBulkAction[];
+    columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
+    isSmall: boolean;
+    automationsLength?: number;
+}
+
+export interface ITooltipSection {
+    header: string;
+    content?: ReactNode;
+    icon?: IconType;
+    onIconClick?: () => void;
+}
+
+export interface IAutomationIconTooltipProps {
+    header: string;
+    content?: ReactNode;
+    sections: ITooltipSection[];
+    children: ReactNode;
+}
+
+export interface IAutomationIconProps {
+    type: AutomationsType | IAutomationLastRunStatus | "automationDetails";
+    automation?: IAutomationMetadataObject;
+    state?: IAutomationState;
+}

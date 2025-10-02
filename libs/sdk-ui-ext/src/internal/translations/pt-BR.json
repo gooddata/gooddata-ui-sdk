@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Sem exportações programadas",
     "automations.emptyState.schedule.description": "Crie uma exportação de agendamento no painel ou visualização.",
     "automations.emptyState.alert.title": "Sem alertas",
-    "automations.emptyState.alert.description": "Crie um alerta sobre a visualização em qualquer dashboard."
+    "automations.emptyState.alert.description": "Crie um alerta sobre a visualização em qualquer dashboard.",
+    "automations.column.nextRun": "Próxima execução",
+    "automations.accessibility.selectAll.alerts": "Selecionar todos os alertas",
+    "automations.accessibility.selectAll.schedules": "Selecionar todas as exportações agendadas",
+    "automations.accessibility.select.alert": "Selecione o alerta: {title}",
+    "automations.accessibility.select.schedule": "Selecione a exportação agendada: {title}",
+    "automations.accessibility.search.alerts": "Alertas de pesquisa",
+    "automations.accessibility.search.schedules": "Pesquisar exportações agendadas"
 }

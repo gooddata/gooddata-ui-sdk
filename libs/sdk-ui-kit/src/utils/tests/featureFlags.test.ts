@@ -2,25 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { isFreemiumEdition, shouldEnableNewNavigation, shouldHidePPExperience } from "../featureFlags.js";
+import { isFreemiumEdition, shouldEnableNewNavigation } from "../featureFlags.js";
 
 describe("featureFlags utils", () => {
-    describe("shouldHidePPExperience", () => {
-        it("should hide pixel perfect experience if hidePixelPerfectExperience is true", () => {
-            const shouldHidePixelperfect = shouldHidePPExperience({
-                hidePixelPerfectExperience: true,
-            });
-            expect(shouldHidePixelperfect).toBe(true);
-        });
-
-        it("should hide pixel perfect experience if hidePixelPerfectExperience is false", () => {
-            const shouldHidePixelperfect = shouldHidePPExperience({
-                hidePixelPerfectExperience: false,
-            });
-            expect(shouldHidePixelperfect).toBe(true);
-        });
-    });
-
     describe("isFreemiumEdition", () => {
         it("should return false if user is not free/growth", () => {
             const isFreemiumCustomer = isFreemiumEdition("enterprise");
@@ -71,18 +55,8 @@ describe("featureFlags utils", () => {
                 expect(enableNewNavigation).toBe(false);
             });
 
-            it("should return true if hidePixelPerfectExperience is true", () => {
+            it("should return true", () => {
                 const enableNewNavigation = shouldEnableNewNavigation({
-                    hidePixelPerfectExperience: true,
-                    enableNewNavigationForResponsiveUi: true,
-                    platformEdition: "growth",
-                });
-                expect(enableNewNavigation).toBe(true);
-            });
-
-            it("should return true if hidePixelPerfectExperience is false", () => {
-                const enableNewNavigation = shouldEnableNewNavigation({
-                    hidePixelPerfectExperience: false,
                     enableNewNavigationForResponsiveUi: true,
                     platformEdition: "growth",
                 });
@@ -99,18 +73,8 @@ describe("featureFlags utils", () => {
                 expect(enableNewNavigation).toBe(false);
             });
 
-            it("should return true if hidePixelPerfectExperience is true", () => {
+            it("should return true", () => {
                 const enableNewNavigation = shouldEnableNewNavigation({
-                    hidePixelPerfectExperience: true,
-                    enableNewNavigationForResponsiveUi: true,
-                    platformEdition: "enterprise",
-                });
-                expect(enableNewNavigation).toBe(true);
-            });
-
-            it("should return true if hidePixelPerfectExperience is false", () => {
-                const enableNewNavigation = shouldEnableNewNavigation({
-                    hidePixelPerfectExperience: false,
                     enableNewNavigationForResponsiveUi: true,
                     platformEdition: "enterprise",
                 });

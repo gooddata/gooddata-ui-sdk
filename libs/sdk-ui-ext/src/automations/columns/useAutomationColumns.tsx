@@ -11,7 +11,12 @@ import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 import { AutomationIcon } from "./AutomationIcon.js";
 import { AutomationMenu } from "./AutomationMenu.js";
 import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
-import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
+import {
+    formatAttachments,
+    formatAutomationSubtitle,
+    formatAutomationUser,
+    formatCellValue,
+} from "../format.js";
 import { messages } from "../messages.js";
 import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
@@ -28,6 +33,7 @@ export const useAutomationColumns = ({
     timezone,
     selectedColumnDefinitions,
     automationsType,
+    isSmall,
     deleteAutomation,
     unsubscribeFromAutomation,
     pauseAutomation,
@@ -37,7 +43,7 @@ export const useAutomationColumns = ({
     editAutomation,
     setPendingAction,
 }: IUseAutomationColumnsProps): {
-    columns: UiAsyncTableColumn<IAutomationMetadataObject>[];
+    columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
     includeAutomationResult: boolean;
 } => {
     const workspace = useWorkspace();
@@ -58,12 +64,11 @@ export const useAutomationColumns = ({
                 renderRoleIcon: (item) => <AutomationIcon type={type} state={item.state} />,
                 getMultiLineTextContent: (item) => [
                     formatCellValue(item.title),
-                    formatCellValue(
-                        type === "schedule"
-                            ? item.schedule?.cronDescription
-                            : formatAlertSubtitle(intl, item.alert),
-                    ),
+                    formatCellValue(formatAutomationSubtitle(item, intl)),
                 ],
+                renderSuffixIcon: isSmall
+                    ? (item) => <AutomationIcon type="automationDetails" automation={item} />
+                    : undefined,
                 sortable: true,
                 width: DEFAULT_COLUMN_WIDTHS.NAME,
             },
@@ -200,10 +205,11 @@ export const useAutomationColumns = ({
             canPauseAutomation,
             canResumeAutomation,
             automationsType,
+            isSmall,
         ],
     );
 
-    const columns = useMemo(() => {
+    const columnDefinitions = useMemo(() => {
         return selectedColumnDefinitions.map((columnDef) => {
             const selectedColumn = allColumns[columnDef.name];
             return { ...selectedColumn, width: columnDef.width ?? selectedColumn.width };
@@ -216,5 +222,5 @@ export const useAutomationColumns = ({
         );
     }, [selectedColumnDefinitions]);
 
-    return { columns, includeAutomationResult };
+    return { columnDefinitions, includeAutomationResult };
 };

@@ -138,6 +138,15 @@
             line-height: var(--gd-table-multi-line-line-height-large);
             color: var(--gd-palette-complementary-8);
             font-weight: 700;
+            display: flex;
+        }
+
+        &-content {
+            flex: 0 1 auto;
+            min-width: 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
     }
 
@@ -181,7 +190,7 @@
         padding: 0;
         min-height: var(--gd-table-row-height-small);
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: start;
         gap: var(--gd-spacing-10px);
         margin-bottom: var(--gd-spacing-20px);
@@ -189,17 +198,10 @@
         width: calc(100% - var(--gd-spacing-10px));
 
         #{$root}__cell {
-            visibility: hidden;
-            border-bottom: none;
-        }
-
-        &--checkbox {
-            #{$root}__cell {
-                visibility: visible;
-                border: 1px solid var(--gd-palette-complementary-3);
-                border-radius: 3px;
-                height: 27px;
-            }
+            visibility: visible;
+            border: 1px solid var(--gd-palette-complementary-3);
+            border-radius: 3px;
+            height: 27px;
         }
     }
 
@@ -216,7 +218,7 @@
         flex-wrap: wrap;
         align-items: center;
         align-content: center;
-        column-gap: var(--gd-spacing-10px);
+        column-gap: var(--gd-spacing-5px);
         row-gap: var(--gd-spacing-5px);
         flex-shrink: 2;
         overflow: hidden;

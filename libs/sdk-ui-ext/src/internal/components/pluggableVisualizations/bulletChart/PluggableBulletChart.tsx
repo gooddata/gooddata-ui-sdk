@@ -43,7 +43,7 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper.js";
 import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -121,9 +121,6 @@ export class PluggableBulletChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }

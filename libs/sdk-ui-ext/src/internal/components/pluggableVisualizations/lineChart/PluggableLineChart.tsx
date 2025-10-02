@@ -38,7 +38,7 @@ import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper.js";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -121,9 +121,6 @@ export class PluggableLineChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
 
         newReferencePoint = this.setThresholdProperties(newReferencePoint);
 

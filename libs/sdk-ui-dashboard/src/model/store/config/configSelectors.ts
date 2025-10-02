@@ -324,18 +324,6 @@ export const selectEnableAutomations: DashboardSelector<boolean> = createSelecto
 );
 
 /**
- * Returns whether we should call workspaces workspaces (true) or projects (false).
- *
- * @internal
- */
-export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableRenamingProjectToWorkspace ?? true;
-    },
-);
-
-/**
  * Returns whether unfinished features are allowed.
  *
  * @internal
@@ -355,16 +343,6 @@ export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = creat
     (state) => {
         return state.allowCreateInsightRequest ?? false;
     },
-);
-
-/**
- * Returns whether analytical designer is enabled.
- *
- * @internal
- */
-export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => !!(state.settings?.["analyticalDesigner"] || false),
 );
 
 /**
@@ -877,7 +855,7 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean> = create
 export const selectEnableAutomationManagement: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAutomationManagement) ?? false;
+        return Boolean(state.settings?.enableAutomationManagement) ?? true;
     },
 );
 

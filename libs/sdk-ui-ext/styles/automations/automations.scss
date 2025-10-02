@@ -23,11 +23,18 @@
     }
 
     &__content {
+        color: var(--gd-palette-complementary-8);
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 12px;
         line-height: 20px;
+
+        &-header {
+            color: var(--gd-palette-complementary-7);
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
         &:hover {
             #{$root}__icon-button {
@@ -36,7 +43,7 @@
         }
     }
 
-    &__trace-id {
+    &__content-inner-truncated {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -45,6 +52,19 @@
     &__icon-button {
         opacity: 0;
         transition: var(--gd-transition-all);
+    }
+
+    &__recipients-list {
+        margin-top: 5px;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    &__recipient {
+        background-color: var(--gd-palette-complementary-2);
+        padding: 0 3px;
+        border-radius: 3px;
     }
 }
 

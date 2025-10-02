@@ -158,6 +158,7 @@ export interface UiAsyncTableHeaderProps<T> {
 
 export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
     isFiltersTooLarge?: boolean;
+    isSmall?: boolean;
 }
 
 export interface UiAsyncTableRowProps<T extends { id: string }> {

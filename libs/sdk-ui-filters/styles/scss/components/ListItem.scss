@@ -41,4 +41,11 @@
         right: 13px;
         bottom: 0;
     }
+
+    .gd-list-items-group {
+        //reset all default ul styles
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 }

@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Ei aikataulutettuja vientejä",
     "automations.emptyState.schedule.description": "Luo aikataulun vienti koontinäytölle tai visualisointiin.",
     "automations.emptyState.alert.title": "Ei hälytyksiä",
-    "automations.emptyState.alert.description": "Luo ilmoitus visualisoinnista millä tahansa ohjauspaneelilla."
+    "automations.emptyState.alert.description": "Luo ilmoitus visualisoinnista millä tahansa ohjauspaneelilla.",
+    "automations.column.nextRun": "Seuraava suoritus",
+    "automations.accessibility.selectAll.alerts": "Valitse kaikki hälytykset",
+    "automations.accessibility.selectAll.schedules": "Valitse kaikki ajoitetut viennit",
+    "automations.accessibility.select.alert": "Valitse hälytys: {title}",
+    "automations.accessibility.select.schedule": "Valitse aikataulutettu vienti: {title}",
+    "automations.accessibility.search.alerts": "Hae hälytyksiä",
+    "automations.accessibility.search.schedules": "Hae ajoitettuja vientejä"
 }

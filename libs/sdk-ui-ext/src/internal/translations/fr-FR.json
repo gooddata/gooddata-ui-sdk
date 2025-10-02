@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "Pas d'exportations prévues",
     "automations.emptyState.schedule.description": "Créer un export de planning sur le tableau de bord ou la visualisation.",
     "automations.emptyState.alert.title": "Pas d'alertes",
-    "automations.emptyState.alert.description": "Créer une alerte sur la visualisation dans n'importe quel tableau de bord."
+    "automations.emptyState.alert.description": "Créer une alerte sur la visualisation dans n'importe quel tableau de bord.",
+    "automations.column.nextRun": "Prochaine manche",
+    "automations.accessibility.selectAll.alerts": "Sélectionner toutes les alertes",
+    "automations.accessibility.selectAll.schedules": "Sélectionner toutes les exportations programmées",
+    "automations.accessibility.select.alert": "Sélectionnez l'alerte : {title}",
+    "automations.accessibility.select.schedule": "Sélectionnez l'exportation programmée : {title}",
+    "automations.accessibility.search.alerts": "Alertes de recherche",
+    "automations.accessibility.search.schedules": "Recherche d'exportations programmées"
 }

@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
-import { FILTER_OPTION_ALL_VALUE } from "./constants.js";
+import { FILTER_CHIP_MAX_WIDTH, FILTER_OPTION_ALL_VALUE } from "./constants.js";
 import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
@@ -37,13 +37,18 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { isMultiSelect, isFiltersTooLarge } = props;
+    const { isMultiSelect, isFiltersTooLarge, isSmall } = props;
 
     return (
         <div className={e("filter")}>
             <Dropdown
                 renderButton={({ toggleDropdown, isOpen }) => (
-                    <UiChip label={labelWithSelected} onClick={() => toggleDropdown()} isActive={isOpen} />
+                    <UiChip
+                        label={labelWithSelected}
+                        maxWidth={isSmall ? FILTER_CHIP_MAX_WIDTH : undefined}
+                        onClick={() => toggleDropdown()}
+                        isActive={isOpen}
+                    />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (

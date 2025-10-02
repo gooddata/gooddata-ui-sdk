@@ -1060,14 +1060,21 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmExecutionResponse, any, {}>>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidDescendantsResponse, any, {}>>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidObjectsResponse, any, {}>>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiCreatedByRequest" needs to be exported by the entry point index.d.ts
+    createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmAnalyticsCatalogCreatedBy, any, {}>>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any, {}>>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ForecastResult, any, {}>>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetQualityIssuesRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "GetQualityIssuesResponse" needs to be exported by the entry point index.d.ts
+    getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<GetQualityIssuesResponse, any, {}>>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResponse, any, {}>>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResult, any, {}>>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedLlmEndpoints, any, {}>>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any, {}>>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any, {}>>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiTagsRequest" needs to be exported by the entry point index.d.ts
+    tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmAnalyticsCatalogTags, any, {}>>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
 }
@@ -1088,14 +1095,17 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
     computeReport: (workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidDescendants: (workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidObjects: (workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    createdBy: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     explainAFM: (workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | "COMPRESSED_SQL", options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     forecast: (workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     forecastResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    getQualityIssues: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     keyDriverAnalysis: (workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     keyDriverAnalysisResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     resolveLlmEndpoints: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveExecutionMetadata: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveResult: (workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    tags: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     validateLLMEndpoint: (validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     validateLLMEndpointById: (llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
 };
@@ -1116,14 +1126,17 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, 
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<GetQualityIssuesResponse>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+    tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 };
@@ -1144,14 +1157,17 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
     computeReport(workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>>;
     computeValidDescendants(workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>>;
     computeValidObjects(workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>>;
+    createdBy(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmAnalyticsCatalogCreatedBy>>;
     explainAFM(workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | "COMPRESSED_SQL", options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     forecast(workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>>;
     forecastResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>>;
+    getQualityIssues(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>>;
     keyDriverAnalysis(workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>>;
     keyDriverAnalysisResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>>;
     resolveLlmEndpoints(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>>;
     retrieveExecutionMetadata(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>>;
     retrieveResult(workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>>;
+    tags(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmAnalyticsCatalogTags>>;
     validateLLMEndpoint(validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
     validateLLMEndpointById(llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
 };
@@ -1172,16 +1188,38 @@ export interface AfmActionsApiInterface {
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
+    createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<GetQualityIssuesResponse>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+    tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+}
+
+// @public (undocumented)
+export interface AfmAnalyticsCatalogCreatedBy {
+    reasoning: string;
+    users: Array<AfmAnalyticsCatalogUser>;
+}
+
+// @public (undocumented)
+export interface AfmAnalyticsCatalogTags {
+    // (undocumented)
+    tags: Array<string>;
+}
+
+// @public
+export interface AfmAnalyticsCatalogUser {
+    firstname: string;
+    lastname: string;
+    userId: string;
 }
 
 // @public
@@ -24030,6 +24068,7 @@ export interface SearchRelationshipObject {
 // @public (undocumented)
 export interface SearchRequest {
     deepSearch?: boolean;
+    includeHidden?: boolean;
     limit?: number;
     objectTypes?: Array<SearchRequestObjectTypesEnum>;
     question: string;
@@ -24066,6 +24105,7 @@ export interface SearchResultObject {
     createdAt?: string;
     description?: string;
     id: string;
+    isHidden?: boolean;
     modifiedAt?: string;
     score?: number;
     scoreDescriptor?: number;
@@ -24601,7 +24641,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById">;
+export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "tags" | "createdBy">;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;

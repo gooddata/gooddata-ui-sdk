@@ -3505,7 +3505,6 @@ export interface ISettings {
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAccessibleChartTooltip?: boolean;
     enableAdDescriptionEdit?: boolean;
-    enableADMultipleDateFilters?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
     enableAlertAttributes?: boolean;
@@ -3520,7 +3519,6 @@ export interface ISettings {
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
     enableChartAccessibilityFeatures?: boolean;
-    enableChartsSorting?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
@@ -3581,8 +3579,6 @@ export interface ISettings {
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePreAggregationDatasets?: boolean;
     enableRawExports?: boolean;
-    // (undocumented)
-    enableRenamingProjectToWorkspace?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;
     enableScatterPlotClustering?: boolean;
@@ -3608,8 +3604,6 @@ export interface ISettings {
     enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     formatLocale?: string;
-    // (undocumented)
-    hidePixelPerfectExperience?: boolean;
     llmEndpoint?: ILlmEndpoint;
     metadataLocale?: string;
     metadataTimeZone?: string;

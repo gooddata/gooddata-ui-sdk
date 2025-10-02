@@ -50,7 +50,7 @@ import {
     isDualAxisOrSomeSecondaryAxisMeasure,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper.js";
-import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper.js";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -161,9 +161,6 @@ export class PluggableComboChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = applyUiConfig(newReferencePoint);
-        if (!this.featureFlags.enableChartsSorting) {
-            newReferencePoint = removeSort(newReferencePoint);
-        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }

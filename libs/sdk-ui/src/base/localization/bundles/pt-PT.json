@@ -776,5 +776,14 @@
     "attributesDropdown.onlyLabel": "Selecione apenas {itemTitle}",
     "attributesDropdown.actionsHint.withQuestion": "Valores de filtro. Use a tecla de seta para a direita para mover para a ação \"Selecionar apenas\" e, em seguida, para ouvir o valor alternativo.",
     "attributesDropdown.actionsHint.noQuestion": "Valores de filtro. Use a tecla de seta para a direita para ir para a ação \"Selecionar apenas\"",
-    "attributesDropdown.noChanges": "Nenhuma alteração a ser aplicada"
+    "attributesDropdown.noChanges": "Nenhuma alteração a ser aplicada",
+    "table.filter.error.tooLarge": "<strong>Erro: </strong>Seleção entre filtros muito grande — desmarque alguns valores e tente novamente.",
+    "visualizations.menu.sort": "Ordenar",
+    "visualizations.menu.sort.ascending": "Ascendente",
+    "visualizations.menu.sort.descending": "Descendente",
+    "dialogs.export.pdf.headline": "Configurações de exportação (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Incluir informações de exportação de página",
+    "dialogs.export.pdf.pageOrientation": "Orientação",
+    "dialogs.export.pdf.pageSize": "Tamanho da página",
+    "dialogs.export.submit": "Exportar"
 }

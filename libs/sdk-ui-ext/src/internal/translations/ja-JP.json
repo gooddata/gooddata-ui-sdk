@@ -537,5 +537,12 @@
     "automations.emptyState.schedule.title": "輸出予定なし",
     "automations.emptyState.schedule.description": "ダッシュボードまたは視覚化でスケジュールのエクスポートを作成します。",
     "automations.emptyState.alert.title": "アラートなし",
-    "automations.emptyState.alert.description": "任意のダッシュボードの可視化でアラートを作成します。"
+    "automations.emptyState.alert.description": "任意のダッシュボードの可視化でアラートを作成します。",
+    "automations.column.nextRun": "ネクスト・ラン",
+    "automations.accessibility.selectAll.alerts": "すべてのアラートを選択",
+    "automations.accessibility.selectAll.schedules": "スケジュールされたエクスポートをすべて選択する",
+    "automations.accessibility.select.alert": "アラートを選択する：{title}",
+    "automations.accessibility.select.schedule": "スケジュールされたエクスポートを選択します：{title}",
+    "automations.accessibility.search.alerts": "検索アラート",
+    "automations.accessibility.search.schedules": "スケジュールされたエクスポートを検索"
 }

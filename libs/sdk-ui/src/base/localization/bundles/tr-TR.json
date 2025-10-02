@@ -785,5 +785,14 @@
     "attributesDropdown.onlyLabel": "Yalnızca {itemTitle} seç",
     "attributesDropdown.actionsHint.withQuestion": "Filtre değerleri. 'Yalnızca seç' eylemine geçmek için sağ ok tuşunu kullanın, ardından alternatif değeri duymak için devam edin.",
     "attributesDropdown.actionsHint.noQuestion": "Değerleri filtrele. 'Yalnızca seç' eylemine geçmek için sağ ok tuşunu kullan",
-    "attributesDropdown.noChanges": "Uygulanacak değişiklik yok"
+    "attributesDropdown.noChanges": "Uygulanacak değişiklik yok",
+    "table.filter.error.tooLarge": "<strong>Hata:</strong> Filtreler arası seçim çok büyük — bazı değerleri kaldırın ve tekrar deneyin.",
+    "visualizations.menu.sort": "Sırala",
+    "visualizations.menu.sort.ascending": "Artan",
+    "visualizations.menu.sort.descending": "Azalan",
+    "dialogs.export.pdf.headline": "Dışa aktarma ayarları (.pdf)",
+    "dialogs.export.pdf.includePageExportInfo": "Sayfa dışa aktarma bilgilerini dahil et",
+    "dialogs.export.pdf.pageOrientation": "Yönlendirme",
+    "dialogs.export.pdf.pageSize": "Sayfa boyutu",
+    "dialogs.export.submit": "Dışa Aktar"
 }

@@ -407,10 +407,6 @@
         "value": "in period {calendarIcon} {range}",
         "comment": "Message displayed in filter alert showing a relative date range with period specification. Example: 'in period (calendar icon) from 2 months ago to 2 months ahead'."
     },
-    "filters.config.warning.multipleProjectConfigs": {
-        "value": "There is more than one project date filter configuration associated with this project. The first one was used.",
-        "comment": "Warning shown when multiple date filter configurations are found for a project, and the system automatically selects the first one"
-    },
     "filters.config.warning.multipleWorkspacesConfigs": {
         "value": "There is more than one workspace date filter configuration associated with this workspace. The first one was used.",
         "comment": "Displayed if there is more than one workspace date filter configuration associated with the workspace."
@@ -426,10 +422,6 @@
     "filters.config.warning.conflictingIdentifiers": {
         "value": "The dashboard date filter configuration was ignored because it contains date filter options with identical identifiers.",
         "comment": "Displayed if applying a dashboard config would make it contain more than one option with the same identifier."
-    },
-    "filters.config.warning.notAvailable": {
-        "value": "The project date filter configuration is either not defined or you do not have the permissions to access it.",
-        "comment": "Displayed if there is an error getting the project level config."
     },
     "filters.config.warning.workspace.notAvailable": {
         "value": "The workspace date filter configuration is either not defined or you do not have the permissions to access it.",
