@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { usePropState } from "@gooddata/sdk-ui";
 
@@ -15,18 +15,45 @@ import { Checkbox } from "../Form/index.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
-const pageSizeMenuItems: IUiMenuInteractiveItem<{ interactive: PageSize }>[] = [
-    { type: "interactive", id: "A3", stringTitle: "A3", data: "A3" },
-    { type: "interactive", id: "A4", stringTitle: "A4", data: "A4" },
-    { type: "interactive", id: "Letter", stringTitle: "Letter", data: "LETTER" },
-];
-
-const orientationMenuItems: IUiMenuInteractiveItem<{ interactive: PageOrientation }>[] = [
-    { type: "interactive", id: "Portrait", stringTitle: "Portrait", data: "PORTRAIT" },
-    { type: "interactive", id: "Landscape", stringTitle: "Landscape", data: "LANDSCAPE" },
-];
-
 const alignPoints = [{ align: "cc cc" as const }];
+
+const getPageSizeMenuItems = (intl: IntlShape): IUiMenuInteractiveItem<{ interactive: PageSize }>[] => [
+    {
+        type: "interactive",
+        id: "A3",
+        stringTitle: intl.formatMessage({ id: "dialogs.export.pdf.pageSize.option.a3" }),
+        data: "A3",
+    },
+    {
+        type: "interactive",
+        id: "A4",
+        stringTitle: intl.formatMessage({ id: "dialogs.export.pdf.pageSize.option.a4" }),
+        data: "A4",
+    },
+    {
+        type: "interactive",
+        id: "Letter",
+        stringTitle: intl.formatMessage({ id: "dialogs.export.pdf.pageSize.option.letter" }),
+        data: "LETTER",
+    },
+];
+
+const getOrientationMenuItems = (
+    intl: IntlShape,
+): IUiMenuInteractiveItem<{ interactive: PageOrientation }>[] => [
+    {
+        type: "interactive",
+        id: "Portrait",
+        stringTitle: intl.formatMessage({ id: "dialogs.export.pdf.pageOrientation.option.portrait" }),
+        data: "PORTRAIT",
+    },
+    {
+        type: "interactive",
+        id: "Landscape",
+        stringTitle: intl.formatMessage({ id: "dialogs.export.pdf.pageOrientation.option.landscape" }),
+        data: "LANDSCAPE",
+    },
+];
 
 /**
  * @internal
@@ -48,6 +75,10 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
     const [selectedSize, setSelectedSize] = usePropState(pageSize);
     const [selectedOrientation, setSelectedOrientation] = usePropState(pageOrientation);
     const [shouldShowInfoPage, setShouldShowInfoPage] = usePropState(showInfoPage);
+
+    const pageSizeMenuItems = useMemo(() => getPageSizeMenuItems(intl), [intl]);
+
+    const orientationMenuItems = useMemo(() => getOrientationMenuItems(intl), [intl]);
 
     const dialogId = useIdPrefixed("pdfExportDialog");
     const showInfoPageId = useIdPrefixed("showInfoPage");
@@ -92,7 +123,7 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                 }}
             >
                 <div className="gd-pdf-export-dialog-item">
-                    <h4>
+                    <h4 id="page-size-label">
                         <FormattedMessage id="dialogs.export.pdf.pageSize" />
                     </h4>
                     <Dropdown
@@ -104,6 +135,12 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 }
                                 isOpen={isOpen}
                                 onClick={toggleDropdown}
+                                accessibilityConfig={{
+                                    ariaLabelledBy: "page-size-label",
+                                    ariaHaspopup: "true",
+                                    ariaExpanded: isOpen,
+                                    ...(isOpen ? { ariaControls: "page-size-menu" } : {}),
+                                }}
                                 isFullWidth
                             />
                         )}
@@ -115,8 +152,9 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 }))}
                                 onSelect={(item) => {
                                     handlePageSizeChange(item.data);
-                                    closeDropdown();
                                 }}
+                                onClose={closeDropdown}
+                                shouldCloseOnSelect
                                 ariaAttributes={{
                                     "aria-label": "Page size options",
                                     id: "page-size-menu",
@@ -124,11 +162,12 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 maxWidth={150}
                             />
                         )}
+                        autofocusOnOpen
                     />
                 </div>
 
                 <div className="gd-pdf-export-dialog-item">
-                    <h4>
+                    <h4 id="orientation-label">
                         <FormattedMessage id="dialogs.export.pdf.pageOrientation" />
                     </h4>
                     <Dropdown
@@ -141,6 +180,12 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 }
                                 isOpen={isOpen}
                                 onClick={toggleDropdown}
+                                accessibilityConfig={{
+                                    ariaLabelledBy: "orientation-label",
+                                    ariaHaspopup: "true",
+                                    ariaExpanded: isOpen,
+                                    ...(isOpen ? { ariaControls: "orientation-menu" } : {}),
+                                }}
                                 isFullWidth
                             />
                         )}
@@ -152,8 +197,9 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 }))}
                                 onSelect={(item) => {
                                     handleOrientationChange(item.data);
-                                    closeDropdown();
                                 }}
+                                onClose={closeDropdown}
+                                shouldCloseOnSelect
                                 ariaAttributes={{
                                     "aria-label": "Orientation options",
                                     id: "orientation-menu",
@@ -161,6 +207,7 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 maxWidth={150}
                             />
                         )}
+                        autofocusOnOpen
                     />
                 </div>
 
