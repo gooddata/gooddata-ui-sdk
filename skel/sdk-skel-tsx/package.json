@@ -67,7 +67,6 @@
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
-        "concurrently": "^6.0.2",
         "dependency-cruiser": "^13.0.3",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.1.5",

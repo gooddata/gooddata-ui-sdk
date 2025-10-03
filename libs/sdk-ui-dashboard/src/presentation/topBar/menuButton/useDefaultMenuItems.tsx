@@ -6,9 +6,6 @@ import { useIntl } from "react-intl";
 
 import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
-import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
-import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import {
     selectCanCreateAutomation,
     selectCanExportPdf,
@@ -17,6 +14,7 @@ import {
     selectDeleteVisible,
     selectEnableAutomationManagement,
     selectEnableDashboardTabularExport,
+    selectEnableSnapshotExport,
     selectFilterViewsVisible,
     selectIsNewDashboard,
     selectIsReadOnly,
@@ -34,6 +32,9 @@ import {
 } from "../../../model/index.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { IMenuButtonItem } from "../types.js";
+import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
+import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
+import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import { useExportToTabular } from "./useExportToTabular.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
@@ -178,6 +179,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
     const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
+    const enableSnapshotExport = useDashboardSelector(selectEnableSnapshotExport);
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
     const isPdfExportVisible = useDashboardSelector(selectPdfExportVisible);
@@ -205,7 +207,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         exportDashboardToPptPresentationStatus === "running";
 
     const isSnapshotPdfExportVisible =
-        (menuButtonItemsVisibility.pdfExportButton ?? true) && canExportPdf && isExportVisible;
+        (menuButtonItemsVisibility.pdfExportButton ?? true) &&
+        canExportPdf &&
+        isExportVisible &&
+        enableSnapshotExport;
     const isSlideshowPdfExportVisible =
         (menuButtonItemsVisibility.pdfExportButton ?? true) && canExportPdf && isExportVisible;
     const isSlideshowPptxExportVisible =
@@ -460,5 +465,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isSlideshowPptxExportVisible,
         isXlsxExportVisible,
         isAutomationManagementEnabled,
+        enableSnapshotExport,
     ]);
 }

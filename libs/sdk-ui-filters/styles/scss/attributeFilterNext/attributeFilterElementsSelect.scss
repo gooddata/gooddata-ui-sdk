@@ -59,6 +59,11 @@
 }
 
 .gd-single-selection-attribute-filter-elements-select-item {
+    .gd-attribute-filter-list-item-label:focus-visible {
+        outline: none;
+        outline-offset: 0;
+    }
+
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin-left: 5px;
         margin-top: 2px;

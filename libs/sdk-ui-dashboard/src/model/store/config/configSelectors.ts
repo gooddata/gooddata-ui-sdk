@@ -870,3 +870,15 @@ export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean> = 
         return Boolean(state.settings?.enableAutomationEvaluationMode) ?? false;
     },
 );
+
+/**
+ * Selector for the snapshot export feature flag
+ *
+ * @internal
+ */
+export const selectEnableSnapshotExport: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableSnapshotExport ?? true;
+    },
+);

@@ -179,6 +179,7 @@ export type {
 
 export type {
     IWorkspaceMeasuresService,
+    IGetMeasureOptions,
     IMeasureReferencing,
     IMeasureKeyDrivers,
     IMeasuresQueryResult,

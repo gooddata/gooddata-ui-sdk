@@ -119,12 +119,21 @@ const formatWorkspaceUser = (user?: IWorkspaceUser | IOrganizationUser, intl?: I
     if (!user) {
         return { label: "" };
     }
-    const { fullName, email } = user;
+    const { fullName, email, ref } = user;
 
     if (fullName) {
         return { label: fullName, secondaryLabel: email };
     }
-    return { label: email ?? intl?.formatMessage(messages.untitledUser) };
+
+    if (email) {
+        return { label: email };
+    }
+
+    if (ref && isIdentifierRef(ref) && ref.identifier) {
+        return { label: ref.identifier };
+    }
+
+    return { label: intl?.formatMessage(messages.untitledUser) };
 };
 
 const getUserIdentifier = (user: IWorkspaceUser | IOrganizationUser) => {

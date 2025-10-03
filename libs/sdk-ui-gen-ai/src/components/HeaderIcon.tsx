@@ -1,47 +1,36 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC, useMemo } from "react";
-
-import cx from "classnames";
-
-import { Bubble, BubbleHoverTrigger, Button, IIconProps } from "@gooddata/sdk-ui-kit";
-
-const ALIGN_POINTS_TOOLTIP = [{ align: "tc bc" }, { align: "cl cr" }];
+import { IconType, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type HeaderIconProps = {
-    className?: string;
+    icon: IconType;
     tooltip?: string;
-    Icon: FC<IIconProps>;
     onClick?: () => void;
     disabled?: boolean;
 };
 
-export function HeaderIcon({ className, tooltip, Icon, onClick, disabled }: HeaderIconProps) {
-    const randClassName = useMemo(() => `gd-gen-ai-chat-anchor--${Math.random()}`, []);
-    const classes = cx("gd-gen-ai-chat__window__header__icon", className, {
-        "gd-gen-ai-chat__window__header__icon--disabled": disabled,
-        [randClassName]: true,
-    });
-
+export function HeaderIcon({ tooltip, icon, onClick, disabled }: HeaderIconProps) {
     return (
         <div>
-            <BubbleHoverTrigger showDelay={100}>
-                <Button
-                    className={classes}
-                    data-gd-tooltip={disabled ? undefined : tooltip}
-                    onClick={disabled ? undefined : onClick}
-                    accessibilityConfig={{
-                        ariaLabel: tooltip,
-                    }}
-                >
-                    <Icon ariaHidden />
-                </Button>
-                {!disabled && tooltip ? (
-                    <Bubble alignTo={randClassName} alignPoints={ALIGN_POINTS_TOOLTIP}>
-                        {tooltip}
-                    </Bubble>
-                ) : null}
-            </BubbleHoverTrigger>
+            <UiTooltip
+                arrowPlacement="bottom"
+                hoverOpenDelay={100}
+                disabled={!tooltip}
+                triggerBy={["focus", "hover"]}
+                anchor={
+                    <UiIconButton
+                        icon={icon}
+                        size="medium"
+                        isDisabled={disabled}
+                        onClick={disabled ? undefined : onClick}
+                        accessibilityConfig={{
+                            ariaLabel: tooltip,
+                        }}
+                        variant="tertiary"
+                    />
+                }
+                content={tooltip}
+            />
         </div>
     );
 }

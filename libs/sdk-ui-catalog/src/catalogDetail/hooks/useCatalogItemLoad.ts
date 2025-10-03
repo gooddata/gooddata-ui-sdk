@@ -135,10 +135,15 @@ async function loadObjectDefinition(
         case "measure":
             return workspace
                 .measures()
-                .getMeasure({
-                    type: "measure",
-                    identifier: id,
-                })
+                .getMeasure(
+                    {
+                        type: "measure",
+                        identifier: id,
+                    },
+                    {
+                        loadUserData: true,
+                    },
+                )
                 .then(convertMeasureToCatalogItem);
         case "fact":
             return workspace

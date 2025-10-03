@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Dialog, Icon } from "@gooddata/sdk-ui-kit";
+import { Dialog } from "@gooddata/sdk-ui-kit";
 
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { HeaderIcon } from "./HeaderIcon.js";
@@ -66,16 +66,14 @@ function GenAIChatOverlayComponent({
         >
             <div className="gd-gen-ai-chat__window__header">
                 <HeaderIcon
-                    Icon={Icon["Undo"]}
-                    className="gd-gen-ai-chat__window__header__icon--reset"
+                    icon="ccw"
                     tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
                     onClick={() => clearThread()}
                     disabled={!hasMessages}
                 />
                 <div className="gd-gen-ai-chat__window__header__gap"></div>
                 <HeaderIcon
-                    Icon={isFullscreen ? Icon["Contract"] : Icon["Expand"]}
-                    className="gd-gen-ai-chat__window__header__icon--fullscreen"
+                    icon={isFullscreen ? "minimize" : "expand"}
                     tooltip={
                         isFullscreen
                             ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
@@ -84,12 +82,7 @@ function GenAIChatOverlayComponent({
                     onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
                 />
                 <div className="gd-gen-ai-chat__window__header__divider"></div>
-                <HeaderIcon
-                    Icon={Icon["Close"]}
-                    className="gd-gen-ai-chat__window__header__icon--close"
-                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
-                    onClick={onClose}
-                />
+                <HeaderIcon icon="cross" onClick={onClose} />
             </div>
             <GenAIChatWrapper autofocus />
         </Dialog>

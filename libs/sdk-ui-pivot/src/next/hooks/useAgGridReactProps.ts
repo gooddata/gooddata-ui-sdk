@@ -9,8 +9,8 @@ import { useAgGridApiProps } from "./useAgGridApiProps.js";
 import { useAutoHeight } from "./useAutoHeight.js";
 import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { useDataLoadingProps } from "./useDataLoadingProps.js";
-import { useDrillingProps } from "./useDrillingProps.js";
 import { useHeaderComponents } from "./useHeaderComponents.js";
+import { useInteractionProps } from "./useInteractionProps.js";
 import { usePivotingProps } from "./usePivotingProps.js";
 import { useSortingProps } from "./useSortingProps.js";
 import { useTextWrappingProps } from "./useTextWrappingProps.js";
@@ -30,7 +30,7 @@ export function useAgGridReactProps() {
     const enhanceWithPivoting = usePivotingProps();
     const enhanceWithColumnSizing = useColumnSizingProps();
     const enhanceWithSorting = useSortingProps();
-    const enhanceWithDrilling = useDrillingProps();
+    const enhanceWithInteractions = useInteractionProps();
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithAutoHeight = useAutoHeight();
     const enhanceWithTheme = useThemeProps();
@@ -46,7 +46,7 @@ export function useAgGridReactProps() {
             enhanceWithPivoting,
             enhanceWithColumnSizing,
             enhanceWithSorting,
-            enhanceWithDrilling,
+            enhanceWithInteractions,
             enhanceWithTextWrapping,
             enhanceWithAutoHeight,
             enhanceWithTheme,
@@ -61,7 +61,7 @@ export function useAgGridReactProps() {
         enhanceWithPivoting,
         enhanceWithColumnSizing,
         enhanceWithSorting,
-        enhanceWithDrilling,
+        enhanceWithInteractions,
         enhanceWithTextWrapping,
         enhanceWithAutoHeight,
         enhanceWithTheme,

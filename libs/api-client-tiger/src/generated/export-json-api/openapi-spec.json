@@ -1049,7 +1049,7 @@
                 "properties": {
                     "exportInfo": {
                         "type": "boolean",
-                        "description": "Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)",
+                        "description": "If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)",
                         "example": true,
                         "default": false
                     },
@@ -1112,11 +1112,6 @@
                         "description": "Set page orientation. (PDF)",
                         "default": "PORTRAIT",
                         "enum": ["PORTRAIT", "LANDSCAPE"]
-                    },
-                    "showInfoPage": {
-                        "type": "boolean",
-                        "description": "Show info page with export information.",
-                        "default": false
                     }
                 },
                 "description": "Additional settings."
@@ -1154,7 +1149,7 @@
                     },
                     "visualizationObjectCustomFilters": {
                         "type": "array",
-                        "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.",
+                        "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. Those filters override the original filters defined in the visualization.",
                         "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]",
                         "items": {
                             "type": "object"
@@ -2415,7 +2410,7 @@
                 "properties": {
                     "exportInfo": {
                         "type": "boolean",
-                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
+                        "description": "If true, the export will contain the information about the export – exported date, dashboard filters, etc.",
                         "example": true,
                         "default": false
                     },
@@ -2424,6 +2419,18 @@
                         "description": "Merge equal headers in neighbouring cells. Used for [XLSX] format only.",
                         "example": true,
                         "default": false
+                    },
+                    "pageSize": {
+                        "type": "string",
+                        "description": "Set page size. (PDF)",
+                        "default": "A4",
+                        "enum": ["A3", "A4", "LETTER"]
+                    },
+                    "pageOrientation": {
+                        "type": "string",
+                        "description": "Set page orientation. (PDF)",
+                        "default": "PORTRAIT",
+                        "enum": ["PORTRAIT", "LANDSCAPE"]
                     }
                 },
                 "description": "Additional settings."
@@ -2447,7 +2454,7 @@
                         "type": "string",
                         "description": "Requested tabular export type.",
                         "example": "XLSX",
-                        "enum": ["XLSX"]
+                        "enum": ["XLSX", "PDF"]
                     },
                     "fileName": {
                         "type": "string",

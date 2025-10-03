@@ -84,7 +84,6 @@
         "@typescript-eslint/parser": "^8.38.0",
         "babel-loader": "^8.0.5",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
-        "concurrently": "^6.0.2",
         "css-loader": "^6.7.1",
         "dependency-cruiser": "^13.0.3",
         "dotenv": "16.0.3",

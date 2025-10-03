@@ -994,6 +994,11 @@ export interface IGetInsightOptions {
     loadUserData?: boolean;
 }
 
+// @public
+export interface IGetMeasureOptions {
+    loadUserData?: boolean;
+}
+
 // @alpha
 export interface IGetScheduledMailOptions {
     createdByCurrentUser?: boolean;
@@ -1792,7 +1797,7 @@ export interface IWorkspaceMeasuresService {
     }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject>;
+    getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
     getMeasuresQuery(): IMeasuresQuery;

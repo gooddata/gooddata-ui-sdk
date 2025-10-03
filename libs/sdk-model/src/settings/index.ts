@@ -249,7 +249,6 @@ export interface ISettings {
 
     enableDataSection?: boolean;
     enableAnalyticalDashboards?: boolean;
-    enableNewNavigationForResponsiveUi?: boolean;
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;
     enableOracleDataSource?: boolean;
@@ -536,6 +535,21 @@ export interface ISettings {
      * AI Chat search limit
      */
     aiChatSearchLimit?: number;
+
+    /**
+     * Enable snapshot export
+     */
+    enableSnapshotExport?: boolean;
+
+    /**
+     * Enable accessibility mode
+     */
+    enableAccessibilityMode?: boolean;
+
+    /**
+     * Registered pluggable applications
+     */
+    registeredPluggableApplications?: string;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

@@ -1901,7 +1901,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "ExtraCache" | "ManagedOIDC" | "Tier" | "UserCount" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
 
 // @public
 export interface IExecutionConfig {
@@ -3503,6 +3503,7 @@ export interface ISettings {
     dateFilterConfig?: IDateFilterConfig;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+    enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAdDescriptionEdit?: boolean;
     // @deprecated
@@ -3565,8 +3566,6 @@ export interface ISettings {
     enableMultipleDateFilters?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
-    // (undocumented)
-    enableNewNavigationForResponsiveUi?: boolean;
     enableNewPdfTabularExport?: boolean;
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
@@ -3592,6 +3591,7 @@ export interface ISettings {
     enableSlidesExport?: boolean;
     enableSlideshowExports?: boolean;
     enableSmtp?: boolean;
+    enableSnapshotExport?: boolean;
     enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
@@ -3612,6 +3612,7 @@ export interface ISettings {
     platformEdition?: PlatformEdition;
     // @alpha
     productionFeatures?: IProductionFeaturesConfig;
+    registeredPluggableApplications?: string;
     responsiveUiDateFormat?: string;
     timezone?: string;
     weekStart?: WeekStart;

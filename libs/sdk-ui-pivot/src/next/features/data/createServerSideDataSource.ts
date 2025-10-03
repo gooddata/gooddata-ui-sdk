@@ -5,7 +5,7 @@ import { isEqual } from "lodash-es";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IMeasure, ISeparators, ISortItem } from "@gooddata/sdk-model";
-import { DataViewFacade, OnDataView, OnError, convertError } from "@gooddata/sdk-ui";
+import { DataViewFacade, OnDataView, OnError, OnExportReady, convertError } from "@gooddata/sdk-ui";
 
 import { agGridSetLoading } from "./agGridLoadingApi.js";
 import { dataViewToRowData } from "./dataViewToRowData.js";
@@ -13,6 +13,7 @@ import { loadDataView } from "./loadDataView.js";
 import { AgGridApi } from "../../types/agGrid.js";
 import { AgGridRowData, IInitialExecutionData, ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { handleExportReady } from "../exports/exports.js";
 import { getSortModel } from "../sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../sorting/sortModelToSortItems.js";
 
@@ -33,6 +34,8 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
     initSizingForEmptyData: (gridApi: AgGridApi, rowData: AgGridRowData[]) => void;
     onDataView?: OnDataView;
     onError?: OnError;
+    onExportReady?: OnExportReady;
+    exportTitle?: string;
 }
 
 /**
@@ -58,6 +61,8 @@ export const createServerSideDataSource = ({
     initSizingForEmptyData,
     onDataView,
     onError,
+    onExportReady,
+    exportTitle,
     separators,
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
@@ -157,6 +162,11 @@ export const createServerSideDataSource = ({
                     isFirstRequest = false;
                     // Without setting pivot cols, tables without any row attributes do not work
                     setPivotResultColumns(params.api);
+                }
+
+                // After data is loaded with new sort, update the export function
+                if (onExportReady) {
+                    handleExportReady(nextDataView.result(), onExportReady, exportTitle);
                 }
 
                 setCurrentDataView(nextDataView);

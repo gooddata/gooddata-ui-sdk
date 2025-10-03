@@ -445,14 +445,39 @@ export type ExportDashboardDateFilterDateFilterFrom = number | string;
  */
 export interface ExportDashboardExportSettings {
     /**
-     * If true, the export will contain the information about the exported date and dashboard filters.
+     * If true, the export will contain the information about the export – exported date, dashboard filters, etc.
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
      */
     mergeHeaders?: boolean;
+    /**
+     * Set page size. (PDF)
+     */
+    pageSize?: ExportDashboardExportSettingsPageSizeEnum;
+    /**
+     * Set page orientation. (PDF)
+     */
+    pageOrientation?: ExportDashboardExportSettingsPageOrientationEnum;
 }
+
+export const ExportDashboardExportSettingsPageSizeEnum = {
+    A3: "A3",
+    A4: "A4",
+    LETTER: "LETTER",
+} as const;
+
+export type ExportDashboardExportSettingsPageSizeEnum =
+    (typeof ExportDashboardExportSettingsPageSizeEnum)[keyof typeof ExportDashboardExportSettingsPageSizeEnum];
+export const ExportDashboardExportSettingsPageOrientationEnum = {
+    PORTRAIT: "PORTRAIT",
+    LANDSCAPE: "LANDSCAPE",
+} as const;
+
+export type ExportDashboardExportSettingsPageOrientationEnum =
+    (typeof ExportDashboardExportSettingsPageOrientationEnum)[keyof typeof ExportDashboardExportSettingsPageOrientationEnum];
+
 /**
  * @type ExportDashboardFilter
  */
@@ -978,7 +1003,7 @@ export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum =
  */
 export interface ExportSettings {
     /**
-     * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
+     * If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)
      */
     exportInfo?: boolean;
     /**
@@ -1018,10 +1043,6 @@ export interface ExportSettings {
      * Set page orientation. (PDF)
      */
     pageOrientation?: ExportSettingsPageOrientationEnum;
-    /**
-     * Show info page with export information.
-     */
-    showInfoPage?: boolean;
 }
 
 export const ExportSettingsPageSizeEnum = {
@@ -1141,7 +1162,7 @@ export interface ExportTabularExportRequest {
      */
     visualizationObject?: string;
     /**
-     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. Those filters override the original filters defined in the visualization.
      */
     visualizationObjectCustomFilters?: Array<object>;
     /**

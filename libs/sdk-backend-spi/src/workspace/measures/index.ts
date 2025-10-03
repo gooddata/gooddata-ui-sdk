@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     IInsight,
     IMeasure,
@@ -23,6 +24,21 @@ import { IPagedResource } from "../../common/paging.js";
 export interface IMeasureReferencing {
     measures?: IMetadataObject[];
     insights?: IInsight[];
+}
+
+/**
+ * Options for getting a measure.
+ *
+ * @public
+ */
+export interface IGetMeasureOptions {
+    /**
+     * Specifies whether information about the users who created or modified the measure should be loaded.
+     *
+     * @remarks
+     * Defaults to false.
+     */
+    loadUserData?: boolean;
 }
 
 /**
@@ -124,9 +140,10 @@ export interface IWorkspaceMeasuresService {
      * Get measure by reference
      *
      * @param ref - ref of the measure to get
+     * @param options - options for getting the measure
      * @returns promise of measure
      */
-    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject>;
+    getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
 }
 
 /**

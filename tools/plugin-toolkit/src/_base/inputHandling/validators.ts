@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import url from "url";
 
 import axios, { AxiosError } from "axios";
@@ -39,6 +40,14 @@ export function pluginNameValidator(value: string): boolean | string {
                 return `${capitalize(e)}.`;
             })
             .join(" ")}`;
+    }
+
+    // Check for kebab-case (contains hyphens)
+    if (value.includes("-")) {
+        return (
+            "Invalid plugin name. Plugin names should use snake_case (underscores) instead of kebab-case (hyphens). " +
+            `Please use underscores instead of hyphens. Example: '${value.replace(/-/g, "_")}'`
+        );
     }
 
     return true;

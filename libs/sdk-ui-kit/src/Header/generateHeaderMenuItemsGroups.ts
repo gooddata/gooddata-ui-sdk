@@ -3,11 +3,7 @@
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { IHeaderMenuItem } from "./typings.js";
-import {
-    isFreemiumEdition,
-    shouldEnableNewNavigation,
-    shouldHidePPExperience,
-} from "../utils/featureFlags.js";
+import { isFreemiumEdition } from "../utils/featureFlags.js";
 
 /**
  * @internal
@@ -59,8 +55,6 @@ export function generateHeaderMenuItemsGroups(
     workspacePermissions: IWorkspacePermissions,
     hasAnalyticalDashboards: boolean = false,
     workspaceId: string = undefined,
-    dashboardId: string = undefined,
-    tabId: string = undefined,
     hasNoDataSet: boolean = false,
     backendSupportsDataItem: boolean = false,
     backendSupportsCsvUploader: boolean = true,
@@ -72,13 +66,7 @@ export function generateHeaderMenuItemsGroups(
         return [];
     }
 
-    const pixelPerfectItemsGroup = createPixelPerfectItemsGroup(
-        featureFlags,
-        workspacePermissions,
-        workspaceId,
-        dashboardId,
-        tabId,
-    );
+    const pixelPerfectItemsGroup = [];
     const insightItemsGroup = createInsightsItemsGroup(
         featureFlags,
         workspaceId,
@@ -97,33 +85,6 @@ export function generateHeaderMenuItemsGroups(
     );
 }
 
-function createPixelPerfectItemsGroup(
-    featureFlags: ISettings,
-    workspacePermissions: IWorkspacePermissions,
-    workspaceId: string,
-    dashboardId: string,
-    tabId: string,
-) {
-    const { canAccessWorkbench, canManageReport } = workspacePermissions;
-    const shouldHidePixelPerfectExperience = shouldHidePPExperience(featureFlags);
-    const pixelPerfectItemsGroup: IHeaderMenuItem[] = [];
-
-    const dashboardUrl = dashboardsItemUrl("workspace", workspaceId, dashboardId, tabId);
-    pushConditionally(
-        pixelPerfectItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_DASHBOARDS, "s-menu-dashboards", dashboardUrl),
-        !shouldHidePixelPerfectExperience && canAccessWorkbench === true,
-    );
-
-    const reportsUrl = reportsItemUrl("workspace", workspaceId);
-    pushConditionally(
-        pixelPerfectItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_REPORTS, "s-menu-reports", reportsUrl),
-        !shouldHidePixelPerfectExperience && canManageReport === true,
-    );
-
-    return pixelPerfectItemsGroup;
-}
 function createManageItemsGroup(
     workspacePermissions: IWorkspacePermissions,
     workspaceId: string,
@@ -156,10 +117,9 @@ function createInsightsItemsGroup(
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
     const kpisUrl = kpisItemUrl(baseUrl, workspaceId);
-    const kpisKey = shouldEnableNewNavigation(featureFlags) ? HEADER_ITEM_ID_KPIS_NEW : HEADER_ITEM_ID_KPIS;
     pushConditionally(
         insightItemsGroup,
-        createIHeaderMenuItem(kpisKey, "s-menu-kpis", kpisUrl),
+        createIHeaderMenuItem(HEADER_ITEM_ID_KPIS_NEW, "s-menu-kpis", kpisUrl),
         canShowKpisItem(featureFlags, workspacePermissions, hasAnalyticalDashboards),
     );
 
@@ -306,18 +266,4 @@ function canShowLoadItem(
         : canAccessLoadCsvPage;
 
     return Boolean(canShowLoadCsvItem && backendSupportsCsvUploader);
-}
-
-function dashboardsItemUrl(
-    workspaceRef: string,
-    workspaceId: string,
-    dashboardId?: string,
-    tabId?: string,
-): string {
-    const dashboardIdAndTabId = dashboardId && tabId ? `${dashboardId}|${tabId}` : "";
-    return `/#s=/gdc/${workspaceRef}s/${workspaceId}|${workspaceRef}DashboardPage|${dashboardIdAndTabId}`;
-}
-
-function reportsItemUrl(workspaceRef: string, workspaceId: string): string {
-    return `/#s=/gdc/${workspaceRef}s/${workspaceId}|domainPage|all-reports`;
 }

@@ -33,45 +33,9 @@
         @include kit-mixins.transition(all, 0.25s, ease-in-out);
 
         position: absolute;
-        top: 1px;
-        right: 1px;
-        bottom: 1px;
-        width: 40px;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        background: none;
-        border: none;
-        border-radius: 3px;
-
-        & path,
-        & rect {
-            fill: kit-variables.$gd-color-link;
-        }
-
-        &:hover path,
-        &:hover rect {
-            fill: kit-variables.$gd-palette-primary-base;
-        }
-
-        &:disabled:hover {
-            cursor: default;
-
-            path,
-            rect {
-                fill: kit-variables.$gd-color-disabled;
-            }
-        }
-
-        &:focus,
-        &:focus-within,
-        &:focus-visible,
-        &:active {
-            outline: 1px solid kit-variables.$gd-palette-primary-base;
-        }
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
     }
 
     &__info {

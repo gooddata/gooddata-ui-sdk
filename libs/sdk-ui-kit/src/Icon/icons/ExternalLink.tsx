@@ -6,7 +6,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export function ExternalLink({ color, className, width, height }: IIconProps) {
+export function ExternalLink({ color, className, width, height, ariaHidden }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -15,6 +15,7 @@ export function ExternalLink({ color, className, width, height }: IIconProps) {
             viewBox="0 0 16 16"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <path

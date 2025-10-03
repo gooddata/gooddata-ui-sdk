@@ -10,11 +10,27 @@ To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-
 This package implements GoodData Plugin Development Toolkit (PDT). The primary entry point to the toolkit is its
 CLI tool called `gdc-plugins`. Through this CLI tool you can currently:
 
--   Create a new project to develop a Dashboard Plugin
--   Add configuration for the Dashboard Plugin into a workspace of your choice
--   Configure an existing dashboard to use a Dashboard Plugin available in a workspace
+- Create a new project to develop a Dashboard Plugin
+- Add configuration for the Dashboard Plugin into a workspace of your choice
+- Configure an existing dashboard to use a Dashboard Plugin available in a workspace
 
 Read more about Dashboard Plugins in [official documentation](https://sdk.gooddata.com/gooddata-ui/docs/dashboard_plugins.html).
+
+## Plugin Naming Convention
+
+Plugin names must use **snake_case** (underscores) instead of kebab-case (hyphens). This is because plugin names are
+converted to snake_case internally for use in module federation identifiers, directory names, and asset file names.
+
+**Valid names:**
+
+- `my_plugin`
+- `dashboard_plugin`
+- `custom_analytics_plugin`
+
+**Invalid names:**
+
+- `my-plugin` (kebab-case - use `my_plugin` instead)
+- `dashboard-plugin` (kebab-case - use `dashboard_plugin` instead)
 
 ## License
 

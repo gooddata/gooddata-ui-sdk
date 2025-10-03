@@ -44,7 +44,7 @@ export function createColumnWidthItemForColumnDefinition(
                 if (s.type === "attributeScope") {
                     return newAttributeColumnLocator(
                         s.descriptor.attributeHeader.localIdentifier,
-                        s.header.attributeHeaderItem.name ?? undefined,
+                        s.header.attributeHeaderItem.uri ?? undefined,
                     );
                 }
 

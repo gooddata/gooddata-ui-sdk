@@ -64,7 +64,7 @@ export function DateFilterCustomPeriodButtons({
 
     return (
         <div className="gd-date-filter-form-buttons">
-            <div className="gd-date-filter-form-buttons-container">
+            <div role="group" className="gd-date-filter-form-buttons-container">
                 {filterOptions.absoluteForm ? (
                     <Button
                         id={DATE_FILTER_CUSTOM_STATIC_ID}

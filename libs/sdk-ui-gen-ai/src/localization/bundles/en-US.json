@@ -75,10 +75,6 @@
         "value": "Expand",
         "comment": "Tooltip for button that expands the AI chatbot interface"
     },
-    "gd.gen-ai.header.close-tooltip": {
-        "value": "Close",
-        "comment": "Tooltip for button that closes the AI chatbot interface"
-    },
     "gd.gen-ai.welcome.line-1": {
         "value": "Hi there,",
         "comment": "First line of the AI chatbot's welcome greeting"

@@ -281,15 +281,19 @@ export function DateFilterCore({
                                         // Dropdown component uses Children.map and adds special props to this component
                                         // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                         <div
-                                            role="dialog"
+                                            {...(!improveAccessibility && { role: "dialog" })}
                                             className="gd-extended-date-filter-container"
-                                            id={ariaAttributes.id}
+                                            {...(!improveAccessibility && { id: ariaAttributes.id })}
                                             ref={dateFilterContainerRef}
                                             onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
-                                            aria-label={customFilterName}
+                                            {...(!improveAccessibility && { ariaLabel: customFilterName })}
                                         >
                                             <DateFilterBodyComponent
                                                 {...dropdownBodyProps}
+                                                {...(improveAccessibility && { id: ariaAttributes.id })}
+                                                {...(improveAccessibility && {
+                                                    "aria-label": customFilterName,
+                                                })}
                                                 selectedFilterOption={selectedFilterOption}
                                                 excludeCurrentPeriod={excludeCurrentPeriod}
                                                 showHeaderMessage={showDropDownHeaderMessage}

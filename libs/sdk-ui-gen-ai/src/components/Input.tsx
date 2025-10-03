@@ -8,12 +8,11 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
 import { CatalogItem } from "@gooddata/sdk-model";
-import { Button, SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
+import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { makeTextContents, makeUserMessage } from "../model.js";
 import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
-import { SendIcon } from "./SendIcon.js";
-import { makeTextContents, makeUserMessage } from "../model.js";
 import { RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
 
 export type InputOwnProps = {
@@ -126,6 +125,8 @@ function InputComponent({
         "gd-gen-ai-chat__input__send_button--disabled": buttonDisabled,
     });
 
+    const sendLabel = intl.formatMessage(messages.send);
+
     return (
         <div
             className={cx("gd-gen-ai-chat__input", {
@@ -183,16 +184,25 @@ function InputComponent({
                 onKeyDown={handleKeyDown}
                 onCompletion={onCompletion}
             />
-            <Button
-                disabled={buttonDisabled}
-                className={buttonClasses}
-                onClick={buttonDisabled ? undefined : handleSubmit}
-                accessibilityConfig={{
-                    ariaLabel: intl.formatMessage(messages.send),
-                }}
-            >
-                <SendIcon />
-            </Button>
+            <div className={buttonClasses}>
+                <UiTooltip
+                    triggerBy={["focus", "hover"]}
+                    arrowPlacement="bottom"
+                    anchor={
+                        <UiIconButton
+                            icon="send"
+                            variant="tertiary"
+                            size="medium"
+                            isDisabled={buttonDisabled}
+                            onClick={buttonDisabled ? undefined : handleSubmit}
+                            accessibilityConfig={{
+                                ariaLabel: sendLabel,
+                            }}
+                        />
+                    }
+                    content={sendLabel}
+                />
+            </div>
         </div>
     );
 }

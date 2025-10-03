@@ -626,6 +626,10 @@ export interface ChatRequest {
      * Score, above which we return found objects. Below this score objects are not relevant.
      */
     relevantScoreThreshold?: number;
+    /**
+     * If true, includes hidden objects in search and visualization building. If false (default), excludes objects where isHidden=true.
+     */
+    includeHidden?: boolean;
 }
 export interface ChatResult {
     routing?: RouteResult;
@@ -771,7 +775,8 @@ export type CreatedVisualizationFiltersInner =
     | AttributeNegativeFilter
     | AttributePositiveFilter
     | DateAbsoluteFilter
-    | DateRelativeFilter;
+    | DateRelativeFilter
+    | RankingFilter;
 
 /**
  * Visualization definitions created by AI.
@@ -1393,6 +1398,71 @@ export interface MeasureResultHeader {
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 
+export interface MemoryItem {
+    /**
+     * Memory item ID
+     */
+    id: string;
+    useCases?: MemoryItemUseCases;
+    /**
+     * Defines the application strategy.
+     */
+    strategy?: MemoryItemStrategyEnum;
+    /**
+     * Instruction that will be injected into the prompt.
+     */
+    instruction: string;
+    /**
+     * List of keywords used to match the memory item.
+     */
+    keywords: Array<string>;
+}
+
+export const MemoryItemStrategyEnum = {
+    MEMORY_ITEM_STRATEGY_ALLWAYS: "MEMORY_ITEM_STRATEGY_ALLWAYS",
+    MEMORY_ITEM_STRATEGY_NEVER: "MEMORY_ITEM_STRATEGY_NEVER",
+    MEMORY_ITEM_STRATEGY_AUTO: "MEMORY_ITEM_STRATEGY_AUTO",
+} as const;
+
+export type MemoryItemStrategyEnum = (typeof MemoryItemStrategyEnum)[keyof typeof MemoryItemStrategyEnum];
+
+/**
+ * Defines the prompts where the given instruction should be applied.
+ */
+export interface MemoryItemUseCases {
+    /**
+     * Appy this memory item to the router prompt.
+     */
+    router: boolean;
+    /**
+     * Apply this memory item to the search keyword extraction prompt.
+     */
+    keywords: boolean;
+    /**
+     * Apply this memory item to the search prompt.
+     */
+    search: boolean;
+    /**
+     * Apply this memory item to the visualization prompt.
+     */
+    visualization: boolean;
+    /**
+     * Apply this memory item to the general answer prompt.
+     */
+    general: boolean;
+    /**
+     * Apply this memory item to the how-to prompt.
+     */
+    howto: boolean;
+    /**
+     * Apply this memory item to the normalize prompt.
+     */
+    normalize: boolean;
+    /**
+     * Apply this memory item to the metric selection prompt.
+     */
+    metric: boolean;
+}
 /**
  * List of metrics to be used in the new visualization
  */
@@ -2935,6 +3005,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMemoryItem: async (
+            workspaceId: string,
+            memoryItem: MemoryItem,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryItem' is not null or undefined
+            assertParamExists("createMemoryItem", "memoryItem", memoryItem);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof memoryItem !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(memoryItem !== undefined ? memoryItem : {})
+                : memoryItem || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
          * @param {string} workspaceId Workspace identifier
@@ -3159,7 +3281,49 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("getMemoryItem", "memoryId", memoryId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
@@ -3315,7 +3479,89 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMemoryItems: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("listMemoryItems", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("removeMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("removeMemoryItem", "memoryId", memoryId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -3501,6 +3747,61 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            memoryItem: MemoryItem,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("updateMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("updateMemoryItem", "memoryId", memoryId);
+            // verify required parameter 'memoryItem' is not null or undefined
+            assertParamExists("updateMemoryItem", "memoryItem", memoryItem);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof memoryItem !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(memoryItem !== undefined ? memoryItem : {})
+                : memoryItem || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3931,7 +4232,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-
+        /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createMemoryItem(
+            workspaceId: string,
+            memoryItem: MemoryItem,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createMemoryItem(
+                workspaceId,
+                memoryItem,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
@@ -4032,7 +4352,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-
+        /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemoryItem(
+                workspaceId,
+                memoryId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
@@ -4096,7 +4435,40 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listMemoryItems(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MemoryItem>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listMemoryItems(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeMemoryItem(
+                workspaceId,
+                memoryId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -4178,6 +4550,29 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            memoryItem: MemoryItem,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMemoryItem(
+                workspaceId,
+                memoryId,
+                memoryItem,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4487,6 +4882,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {ActionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMemoryItem(
+            requestParameters: ActionsApiCreateMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .createMemoryItem(requestParameters.workspaceId, requestParameters.memoryItem, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
          * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
@@ -4563,7 +4973,21 @@ export const ActionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
-
+        /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {ActionsApiGetMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemoryItem(
+            requestParameters: ActionsApiGetMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .getMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
+                .then((request) => request(axios, basePath));
+        },
         /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
@@ -4620,7 +5044,36 @@ export const ActionsApiFactory = function (
                 )
                 .then((request) => request(axios, basePath));
         },
-
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {ActionsApiListMemoryItemsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMemoryItems(
+            requestParameters: ActionsApiListMemoryItemsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<MemoryItem>> {
+            return localVarFp
+                .listMemoryItems(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {ActionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeMemoryItem(
+            requestParameters: ActionsApiRemoveMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .removeMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
+                .then((request) => request(axios, basePath));
+        },
         /**
          * Returns a list of available LLM Endpoints
          * @summary Get Active LLM Endpoints for this workspace
@@ -4689,7 +5142,26 @@ export const ActionsApiFactory = function (
                 .tags(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
-
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {ActionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemoryItem(
+            requestParameters: ActionsApiUpdateMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .updateMemoryItem(
+                    requestParameters.workspaceId,
+                    requestParameters.memoryId,
+                    requestParameters.memoryItem,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
         /**
          * Validates LLM endpoint with provided parameters.
          * @summary Validate LLM Endpoint
@@ -4916,6 +5388,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
+     * (EXPERIMENTAL) Creates a new memory item and returns it
+     * @summary (EXPERIMENTAL) Create new memory item
+     * @param {ActionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createMemoryItem(
+        requestParameters: ActionsApiCreateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItem>;
+
+    /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
@@ -4968,6 +5453,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ForecastResult>;
 
     /**
+     * (EXPERIMENTAL) Get memory item by id
+     * @summary (EXPERIMENTAL) Get memory item
+     * @param {ActionsApiGetMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getMemoryItem(
+        requestParameters: ActionsApiGetMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItem>;
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -5005,6 +5503,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<KeyDriversResult>;
+
+    /**
+     * (EXPERIMENTAL) Returns a list of memory items
+     * @summary (EXPERIMENTAL) List all memory items
+     * @param {ActionsApiListMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    listMemoryItems(
+        requestParameters: ActionsApiListMemoryItemsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<MemoryItem>>;
+
+    /**
+     * (EXPERIMENTAL) Removes memory item
+     * @summary (EXPERIMENTAL) Remove memory item
+     * @param {ActionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    removeMemoryItem(
+        requestParameters: ActionsApiRemoveMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -5057,6 +5581,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiTagsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AnalyticsCatalogTags>;
+
+    /**
+     * (EXPERIMENTAL) Updates memory item and returns it
+     * @summary (EXPERIMENTAL) Update memory item
+     * @param {ActionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    updateMemoryItem(
+        requestParameters: ActionsApiUpdateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItem>;
 
     /**
      * Validates LLM endpoint with provided parameters.
@@ -5464,6 +6001,27 @@ export interface ActionsApiComputeValidObjectsRequest {
 }
 
 /**
+ * Request parameters for createMemoryItem operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateMemoryItemRequest
+ */
+export interface ActionsApiCreateMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCreateMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {MemoryItem}
+     * @memberof ActionsApiCreateMemoryItem
+     */
+    readonly memoryItem: MemoryItem;
+}
+
+/**
  * Request parameters for createdBy operation in ActionsApi.
  * @export
  * @interface ActionsApiCreatedByRequest
@@ -5587,6 +6145,27 @@ export interface ActionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for getMemoryItem operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetMemoryItemRequest
+ */
+export interface ActionsApiGetMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetMemoryItem
+     */
+    readonly memoryId: string;
+}
+
+/**
  * Request parameters for getQualityIssues operation in ActionsApi.
  * @export
  * @interface ActionsApiGetQualityIssuesRequest
@@ -5661,6 +6240,41 @@ export interface ActionsApiKeyDriverAnalysisResultRequest {
      * @memberof ActionsApiKeyDriverAnalysisResult
      */
     readonly limit?: number;
+}
+
+/**
+ * Request parameters for listMemoryItems operation in ActionsApi.
+ * @export
+ * @interface ActionsApiListMemoryItemsRequest
+ */
+export interface ActionsApiListMemoryItemsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiListMemoryItems
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for removeMemoryItem operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRemoveMemoryItemRequest
+ */
+export interface ActionsApiRemoveMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRemoveMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiRemoveMemoryItem
+     */
+    readonly memoryId: string;
 }
 
 /**
@@ -5759,6 +6373,34 @@ export interface ActionsApiTagsRequest {
      * @memberof ActionsApiTags
      */
     readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for updateMemoryItem operation in ActionsApi.
+ * @export
+ * @interface ActionsApiUpdateMemoryItemRequest
+ */
+export interface ActionsApiUpdateMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiUpdateMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiUpdateMemoryItem
+     */
+    readonly memoryId: string;
+
+    /**
+     *
+     * @type {MemoryItem}
+     * @memberof ActionsApiUpdateMemoryItem
+     */
+    readonly memoryItem: MemoryItem;
 }
 
 /**
@@ -6066,6 +6708,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * (EXPERIMENTAL) Creates a new memory item and returns it
+     * @summary (EXPERIMENTAL) Create new memory item
+     * @param {ActionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createMemoryItem(
+        requestParameters: ActionsApiCreateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createMemoryItem(requestParameters.workspaceId, requestParameters.memoryItem, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
@@ -6139,6 +6798,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * (EXPERIMENTAL) Get memory item by id
+     * @summary (EXPERIMENTAL) Get memory item
+     * @param {ActionsApiGetMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getMemoryItem(requestParameters: ActionsApiGetMemoryItemRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -6197,6 +6870,40 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.limit,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Returns a list of memory items
+     * @summary (EXPERIMENTAL) List all memory items
+     * @param {ActionsApiListMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public listMemoryItems(
+        requestParameters: ActionsApiListMemoryItemsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .listMemoryItems(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Removes memory item
+     * @summary (EXPERIMENTAL) Remove memory item
+     * @param {ActionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public removeMemoryItem(
+        requestParameters: ActionsApiRemoveMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .removeMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -6267,6 +6974,28 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .tags(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Updates memory item and returns it
+     * @summary (EXPERIMENTAL) Update memory item
+     * @param {ActionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public updateMemoryItem(
+        requestParameters: ActionsApiUpdateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .updateMemoryItem(
+                requestParameters.workspaceId,
+                requestParameters.memoryId,
+                requestParameters.memoryItem,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -8400,7 +9129,58 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMemoryItem: async (
+            workspaceId: string,
+            memoryItem: MemoryItem,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryItem' is not null or undefined
+            assertParamExists("createMemoryItem", "memoryItem", memoryItem);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof memoryItem !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(memoryItem !== undefined ? memoryItem : {})
+                : memoryItem || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
@@ -8558,6 +9338,49 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("getMemoryItem", "memoryId", memoryId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
          * @param {string} workspaceId Workspace identifier
@@ -8581,6 +9404,89 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMemoryItems: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("listMemoryItems", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("removeMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("removeMemoryItem", "memoryId", memoryId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -8668,6 +9574,61 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemoryItem: async (
+            workspaceId: string,
+            memoryId: string,
+            memoryItem: MemoryItem,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("updateMemoryItem", "workspaceId", workspaceId);
+            // verify required parameter 'memoryId' is not null or undefined
+            assertParamExists("updateMemoryItem", "memoryId", memoryId);
+            // verify required parameter 'memoryItem' is not null or undefined
+            assertParamExists("updateMemoryItem", "memoryItem", memoryItem);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"memoryId"}}`, encodeURIComponent(String(memoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof memoryItem !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(memoryItem !== undefined ? memoryItem : {})
+                : memoryItem || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8984,6 +9945,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createMemoryItem(
+            workspaceId: string,
+            memoryItem: MemoryItem,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createMemoryItem(
+                workspaceId,
+                memoryItem,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
          * @param {string} workspaceId Workspace identifier
@@ -9050,6 +10031,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemoryItem(
+                workspaceId,
+                memoryId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
          * @param {string} workspaceId Workspace identifier
@@ -9061,6 +10062,40 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssues(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listMemoryItems(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MemoryItem>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listMemoryItems(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeMemoryItem(
+                workspaceId,
+                memoryId,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9092,6 +10127,29 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} memoryId
+         * @param {MemoryItem} memoryItem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMemoryItem(
+            workspaceId: string,
+            memoryId: string,
+            memoryItem: MemoryItem,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMemoryItem(
+                workspaceId,
+                memoryId,
+                memoryItem,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9305,6 +10363,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Creates a new memory item and returns it
+         * @summary (EXPERIMENTAL) Create new memory item
+         * @param {SmartFunctionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMemoryItem(
+            requestParameters: SmartFunctionsApiCreateMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .createMemoryItem(requestParameters.workspaceId, requestParameters.memoryItem, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of Users who created any object for this workspace
          * @summary Get Analytics Catalog CreatedBy
          * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
@@ -9362,6 +10435,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Get memory item by id
+         * @summary (EXPERIMENTAL) Get memory item
+         * @param {SmartFunctionsApiGetMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemoryItem(
+            requestParameters: SmartFunctionsApiGetMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .getMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns metadata quality issues detected by the platform linter.
          * @summary Get Quality Issues
          * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -9374,6 +10462,36 @@ export const SmartFunctionsApiFactory = function (
         ): AxiosPromise<GetQualityIssuesResponse> {
             return localVarFp
                 .getQualityIssues(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Returns a list of memory items
+         * @summary (EXPERIMENTAL) List all memory items
+         * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMemoryItems(
+            requestParameters: SmartFunctionsApiListMemoryItemsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<MemoryItem>> {
+            return localVarFp
+                .listMemoryItems(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Removes memory item
+         * @summary (EXPERIMENTAL) Remove memory item
+         * @param {SmartFunctionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeMemoryItem(
+            requestParameters: SmartFunctionsApiRemoveMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .removeMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -9404,6 +10522,26 @@ export const SmartFunctionsApiFactory = function (
         ): AxiosPromise<AnalyticsCatalogTags> {
             return localVarFp
                 .tags(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Updates memory item and returns it
+         * @summary (EXPERIMENTAL) Update memory item
+         * @param {SmartFunctionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMemoryItem(
+            requestParameters: SmartFunctionsApiUpdateMemoryItemRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItem> {
+            return localVarFp
+                .updateMemoryItem(
+                    requestParameters.workspaceId,
+                    requestParameters.memoryId,
+                    requestParameters.memoryItem,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -9565,6 +10703,20 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiClusteringResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ClusteringResult>;
+
+    /**
+     * (EXPERIMENTAL) Creates a new memory item and returns it
+     * @summary (EXPERIMENTAL) Create new memory item
+     * @param {SmartFunctionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    createMemoryItem(
+        requestParameters: SmartFunctionsApiCreateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItem>;
+
     /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy
@@ -9605,17 +10757,17 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<ForecastResult>;
 
     /**
-     * Returns a list of Users who created any object for this workspace
-     * @summary Get Analytics Catalog CreatedBy
-     * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+     * (EXPERIMENTAL) Get memory item by id
+     * @summary (EXPERIMENTAL) Get memory item
+     * @param {SmartFunctionsApiGetMemoryItemRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    createdBy(
-        requestParameters: SmartFunctionsApiCreatedByRequest,
+    getMemoryItem(
+        requestParameters: SmartFunctionsApiGetMemoryItemRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<AnalyticsCatalogCreatedBy>;
+    ): AxiosPromise<MemoryItem>;
 
     /**
      * Returns metadata quality issues detected by the platform linter.
@@ -9629,6 +10781,32 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<GetQualityIssuesResponse>;
+
+    /**
+     * (EXPERIMENTAL) Returns a list of memory items
+     * @summary (EXPERIMENTAL) List all memory items
+     * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    listMemoryItems(
+        requestParameters: SmartFunctionsApiListMemoryItemsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<MemoryItem>>;
+
+    /**
+     * (EXPERIMENTAL) Removes memory item
+     * @summary (EXPERIMENTAL) Remove memory item
+     * @param {SmartFunctionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    removeMemoryItem(
+        requestParameters: SmartFunctionsApiRemoveMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -9655,6 +10833,19 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiTagsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AnalyticsCatalogTags>;
+
+    /**
+     * (EXPERIMENTAL) Updates memory item and returns it
+     * @summary (EXPERIMENTAL) Update memory item
+     * @param {SmartFunctionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    updateMemoryItem(
+        requestParameters: SmartFunctionsApiUpdateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItem>;
 
     /**
      * Validates LLM endpoint with provided parameters.
@@ -9922,6 +11113,27 @@ export interface SmartFunctionsApiClusteringResultRequest {
 }
 
 /**
+ * Request parameters for createMemoryItem operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiCreateMemoryItemRequest
+ */
+export interface SmartFunctionsApiCreateMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiCreateMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {MemoryItem}
+     * @memberof SmartFunctionsApiCreateMemoryItem
+     */
+    readonly memoryItem: MemoryItem;
+}
+
+/**
  * Request parameters for createdBy operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiCreatedByRequest
@@ -10006,6 +11218,27 @@ export interface SmartFunctionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for getMemoryItem operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiGetMemoryItemRequest
+ */
+export interface SmartFunctionsApiGetMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiGetMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiGetMemoryItem
+     */
+    readonly memoryId: string;
+}
+
+/**
  * Request parameters for getQualityIssues operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiGetQualityIssuesRequest
@@ -10017,6 +11250,41 @@ export interface SmartFunctionsApiGetQualityIssuesRequest {
      * @memberof SmartFunctionsApiGetQualityIssues
      */
     readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for listMemoryItems operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiListMemoryItemsRequest
+ */
+export interface SmartFunctionsApiListMemoryItemsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiListMemoryItems
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for removeMemoryItem operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiRemoveMemoryItemRequest
+ */
+export interface SmartFunctionsApiRemoveMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiRemoveMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiRemoveMemoryItem
+     */
+    readonly memoryId: string;
 }
 
 /**
@@ -10045,6 +11313,34 @@ export interface SmartFunctionsApiTagsRequest {
      * @memberof SmartFunctionsApiTags
      */
     readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for updateMemoryItem operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiUpdateMemoryItemRequest
+ */
+export interface SmartFunctionsApiUpdateMemoryItemRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiUpdateMemoryItem
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiUpdateMemoryItem
+     */
+    readonly memoryId: string;
+
+    /**
+     *
+     * @type {MemoryItem}
+     * @memberof SmartFunctionsApiUpdateMemoryItem
+     */
+    readonly memoryItem: MemoryItem;
 }
 
 /**
@@ -10253,6 +11549,24 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
             )
             .then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * (EXPERIMENTAL) Creates a new memory item and returns it
+     * @summary (EXPERIMENTAL) Create new memory item
+     * @param {SmartFunctionsApiCreateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public createMemoryItem(
+        requestParameters: SmartFunctionsApiCreateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .createMemoryItem(requestParameters.workspaceId, requestParameters.memoryItem, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy
@@ -10311,6 +11625,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
+     * (EXPERIMENTAL) Get memory item by id
+     * @summary (EXPERIMENTAL) Get memory item
+     * @param {SmartFunctionsApiGetMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public getMemoryItem(
+        requestParameters: SmartFunctionsApiGetMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .getMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -10324,6 +11655,40 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .getQualityIssues(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Returns a list of memory items
+     * @summary (EXPERIMENTAL) List all memory items
+     * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public listMemoryItems(
+        requestParameters: SmartFunctionsApiListMemoryItemsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .listMemoryItems(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Removes memory item
+     * @summary (EXPERIMENTAL) Remove memory item
+     * @param {SmartFunctionsApiRemoveMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public removeMemoryItem(
+        requestParameters: SmartFunctionsApiRemoveMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .removeMemoryItem(requestParameters.workspaceId, requestParameters.memoryId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -10355,6 +11720,28 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     public tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApiFp(this.configuration)
             .tags(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Updates memory item and returns it
+     * @summary (EXPERIMENTAL) Update memory item
+     * @param {SmartFunctionsApiUpdateMemoryItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public updateMemoryItem(
+        requestParameters: SmartFunctionsApiUpdateMemoryItemRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .updateMemoryItem(
+                requestParameters.workspaceId,
+                requestParameters.memoryId,
+                requestParameters.memoryItem,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 

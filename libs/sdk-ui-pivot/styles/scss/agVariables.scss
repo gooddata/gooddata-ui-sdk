@@ -26,4 +26,9 @@
     // rows
     --ag-odd-row-background-color: transparent;
     --ag-row-hover-color: var(--gd-table-hoverBackgroundColor);
+
+    // selection
+    --ag-range-selection-border-color: var(--gd-palette-primary-base);
+    --ag-range-selection-background-color: var(--gd-palette-primary-base-t70);
+    --ag-range-selection-highlight-color: var(--gd-palette-primary-base-t50);
 }
