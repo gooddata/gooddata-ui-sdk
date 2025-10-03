@@ -14,12 +14,10 @@ export const getHelpMenuFeatureFlagsMock = (
 
 export const getAccountMenuFeatureFlagsMock = (
     enableDataSection: boolean,
-    hidePixelPerfectExperience: boolean,
     platformEdition: PlatformEdition,
 ): ISettings => {
     return {
         enableDataSection,
-        hidePixelPerfectExperience,
         platformEdition,
     };
 };

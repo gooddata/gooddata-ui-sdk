@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Added validation to ensure plugin names use snake_case instead of kebab-case",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

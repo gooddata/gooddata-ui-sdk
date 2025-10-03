@@ -29,7 +29,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
     const { initSizingForEmptyData } = useInitSizingForEmptyData();
     const { setPivotResultColumns } = useSetAgGridPivotResultColumns();
 
-    const { rows, measures, sortBy, config, pageSize, onDataView } = props;
+    const { rows, measures, sortBy, config, pageSize, onDataView, onExportReady, exportTitle } = props;
     const { columnHeadersPosition, separators } = config;
 
     const { setCurrentDataView } = useCurrentDataView();
@@ -52,6 +52,8 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
                 initSizingForEmptyData,
                 pageSize,
                 onDataView,
+                onExportReady,
+                exportTitle,
                 separators,
             }),
         [
@@ -68,6 +70,8 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
             initSizingForEmptyData,
             pageSize,
             onDataView,
+            onExportReady,
+            exportTitle,
             separators,
         ],
     );

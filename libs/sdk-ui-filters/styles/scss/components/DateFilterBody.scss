@@ -64,7 +64,7 @@
     }
 
     &-body-mobile &-body-wrapper,
-    &-body-mobile .gd-extended-date-filter-form-wrapper {
+    &-body-mobile &-form-wrapper {
         flex: 1 1 auto;
         max-height: none;
         padding: 0;
@@ -73,6 +73,10 @@
         .gd-list-item:last-child {
             border-bottom-color: transparent;
         }
+    }
+
+    &-form-wrapper {
+        padding-bottom: 10px;
     }
 
     &-actions {

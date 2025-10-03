@@ -66,7 +66,6 @@
         "@types/semver": "^7.3.9",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
-        "concurrently": "^6.0.2",
         "dependency-cruiser": "^13.0.3",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.1.5",

@@ -32,10 +32,3 @@ export function generateSupportUrl(projectId = "", sessionId = "", userEmail = "
         `&url=${encodeURIComponent(url)}`,
     ].join("");
 }
-
-/**
- * @internal
- */
-export function shouldEnableNewNavigation(featureFlags: ISettings): boolean {
-    return Boolean(featureFlags.enableNewNavigationForResponsiveUi);
-}

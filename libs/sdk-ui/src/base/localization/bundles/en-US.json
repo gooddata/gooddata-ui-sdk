@@ -1479,6 +1479,10 @@
         "value": "Irrelevant value selected.{nbsp}",
         "comment": "Message with non-breaking space for proper formatting. The {nbsp} represents a non-breaking space character."
     },
+    "attributesDropdown.selected": {
+        "value": "selected",
+        "comment": "Message for screen readers when an item is selected in the attribute filter dropdown."
+    },
     "attributesDropdown.irrelevantValues.tooltip": {
         "value": "Selected value is no longer relevant due to changes in <strong>{parents}</strong>.",
         "comment": "Message about parent filter restrictions. The <strong> tags emphasize filter names, and {parents} shows the list of conflicting filters."

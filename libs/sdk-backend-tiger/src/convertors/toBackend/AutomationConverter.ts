@@ -7,8 +7,8 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationInAttributes,
-    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributes,
+    JsonApiAutomationOutAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -226,7 +226,7 @@ export function convertAutomation(
             default:
                 return acc;
         }
-    }, {} as JsonApiAutomationInAttributes);
+    }, {} as JsonApiAutomationOutAttributes);
 
     const attributes = omitBy(
         {
@@ -265,7 +265,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationInAttributesAlert => {
+): JsonApiAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(

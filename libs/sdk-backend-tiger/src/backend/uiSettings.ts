@@ -32,13 +32,11 @@ export const DefaultUiSettings: ISettings = {
     enableSectionHeaders: true,
 
     // embedding AD in KD
-    enableEditInsightsFromKD: true,
     enableKPIDashboardNewInsight: true,
 
     // drilling
     enableFilterValuesResolution: false,
 
-    enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
     enableNewAnalyticalDashboardsNavigation: true,
 

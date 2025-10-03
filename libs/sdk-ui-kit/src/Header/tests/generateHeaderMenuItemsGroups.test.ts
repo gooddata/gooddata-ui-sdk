@@ -6,58 +6,12 @@ import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./m
 import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
 
 describe("generateHeaderMenuItemsGroups", () => {
-    it("should not return dashboards and report items if hidePixelPerfectExperience is false", () => {
+    it("should not return dashboards and report item", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, false, "enterprise"),
-            getWorkspacePermissionsMock(true, true),
-            true,
-            "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
-            false,
-            false,
-        );
-        expect(items).toEqual([
-            [
-                {
-                    className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
-                    key: "gs.header.kpis",
-                },
-                {
-                    className: "s-menu-analyze",
-                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
-                    key: "gs.header.analyze",
-                },
-                {
-                    className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
-                    key: "gs.header.data",
-                },
-                {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-            ],
-            [
-                {
-                    className: "s-menu-manage",
-                    href: "/#s=/gdc/workspaces/TestWorkspaceId|dataPage|",
-                    key: "gs.header.manage",
-                },
-            ],
-        ]);
-    });
-
-    it("should not return dashboards and report item if hidePixelPerfectExperience is true", () => {
-        const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, "enterprise"),
             getWorkspacePermissionsMock(true, true),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
         );
@@ -89,14 +43,12 @@ describe("generateHeaderMenuItemsGroups", () => {
         ]);
     });
 
-    it("should not return dashboards and report item with workspace in uri if hidePixelPerfectExperience is true", () => {
+    it("should not return dashboards and report item with workspace in uri", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, "enterprise"),
             getWorkspacePermissionsMock(true, true),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
         );
@@ -130,12 +82,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item if platformEdition is free and hasNoDataSet is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, true),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
         );
         expect(items).toEqual([
@@ -163,12 +113,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item with workspace in uri if platformEdition is free, hasNoDataSet is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, true),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
         );
         expect(items).toEqual([
@@ -196,12 +144,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item with datasource href if platformEdition is free and hasNoDataSet is true", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             true,
         );
         expect(items).toEqual([
@@ -209,7 +155,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
-                    key: "gs.header.kpis",
+                    key: "gs.header.kpis.new",
                 },
                 {
                     className: "s-menu-analyze",
@@ -234,12 +180,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item with datasource href and workspace in uri if platformEdition is free, hasNoDataSet is true", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             true,
         );
         expect(items).toEqual([
@@ -247,7 +191,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
-                    key: "gs.header.kpis",
+                    key: "gs.header.kpis.new",
                 },
                 {
                     className: "s-menu-analyze",
@@ -272,12 +216,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return manage item if canManageMetric is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, false),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
         );
         expect(items).toEqual([
@@ -298,12 +240,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return manage item with workspace in uri if canManageMetric is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, "free"),
             getWorkspacePermissionsMock(true, false),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
         );
         expect(items).toEqual([
@@ -324,12 +264,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return data item if backendSupportsDataItem is false and platform edition is not free", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, "enterprise"),
             getWorkspacePermissionsMock(true, false),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
         );
@@ -356,12 +294,10 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return data item with workspace in uri if backendSupportsDataItem is false, platform edition is not free", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, "enterprise"),
             getWorkspacePermissionsMock(true, false),
             false,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
         );
@@ -392,8 +328,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
             false,
@@ -404,7 +338,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
-                    key: "gs.header.kpis",
+                    key: "gs.header.kpis.new",
                 },
                 {
                     className: "s-menu-analyze",
@@ -428,8 +362,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            undefined,
             false,
             true,
             false,
@@ -446,8 +378,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            undefined,
             false,
             true,
             false,
@@ -465,8 +395,6 @@ describe("generateHeaderMenuItemsGroups", () => {
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            undefined,
             false,
             true,
             false,

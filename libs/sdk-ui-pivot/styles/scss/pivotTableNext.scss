@@ -4,6 +4,7 @@
 .gd-pivot-table-next {
     @include ag.ag-grid-theme-variables;
 
+    --transparent-dash-border: 1px dashed transparent;
     --dash-border: 1px dashed var(--gd-table-gridColor);
     --solid-border: 1px solid var(--gd-table-gridColor);
     --transparent-border: 1px solid transparent;
@@ -46,9 +47,9 @@
     }
 
     [row-index="0"] {
-        .ag-cell {
+        .ag-cell:not(.ag-cell-range-selected) {
             // stylelint-disable-next-line declaration-no-important
-            border-top: none !important;
+            border-top-color: transparent !important;
         }
     }
 
@@ -317,8 +318,17 @@
     }
 
     &__cell {
-        border: none;
+        border: var(--transparent-dash-border);
         border-top: var(--dash-border);
+
+        &.ag-cell-range-selected {
+            border-left: var(--dash-border);
+        }
+
+        &.ag-cell-range-single-cell {
+            border: var(--solid-border);
+            border-color: var(--ag-range-selection-border-color);
+        }
 
         &--drillable {
             font-weight: bold;
@@ -332,26 +342,29 @@
 
         &--attribute {
             text-align: left;
-            // stylelint-disable-next-line declaration-no-important
-            border-left: none !important;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-left-color: transparent !important;
+            }
         }
 
         &--metric {
             text-align: right;
         }
 
-        &--first-of-group:not(.ag-column-first) {
+        &--first-of-group:not(.ag-column-first):not(.ag-cell-range-selected) {
             // stylelint-disable-next-line declaration-no-important
             border-left: var(--dash-border) !important;
         }
 
-        &--separated {
+        &--separated:not(.ag-cell-range-selected) {
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
         }
 
-        &--grouped {
-            border: none;
+        &--grouped:not(.ag-cell-range-selected) {
+            border-color: transparent;
             // stylelint-disable-next-line declaration-no-important
             background-color: var(--gd-table-backgroundColor) !important;
         }
@@ -364,16 +377,22 @@
             font-weight: 800;
             color: var(--gd-table-valueColor);
             background-color: var(--subtotal-bg);
-            // stylelint-disable-next-line declaration-no-important
-            border-top: var(--solid-border) !important;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: var(--solid-border) !important;
+            }
         }
 
         &--total {
             font-weight: 800;
             color: var(--gd-table-totalValueColor);
             background-color: var(--total-bg);
-            // stylelint-disable-next-line declaration-no-important
-            border-top: var(--solid-border) !important;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: var(--solid-border) !important;
+            }
         }
 
         &--row-subtotal {
@@ -386,17 +405,23 @@
             font-weight: 800;
             color: var(--gd-table-totalValueColor);
             background-color: var(--total-bg);
-            // stylelint-disable-next-line declaration-no-important
-            border-top: var(--solid-border) !important;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: var(--solid-border) !important;
+            }
         }
 
         &--total-header {
             font-weight: 800;
             color: var(--gd-table-totalValueColor);
             background-color: var(--total-bg);
-            // stylelint-disable-next-line declaration-no-important
-            border-top: var(--solid-border) !important;
             text-align: left;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: var(--solid-border) !important;
+            }
         }
 
         &--subtotal-header {
@@ -454,8 +479,11 @@
             font-weight: 800;
             color: var(--gd-table-totalValueColor);
             background-color: var(--gd-table-overallTotalBackgroundColor);
-            // stylelint-disable-next-line declaration-no-important
-            border-top: var(--solid-border) !important;
+
+            &:not(.ag-cell-range-selected) {
+                // stylelint-disable-next-line declaration-no-important
+                border-top: var(--solid-border) !important;
+            }
         }
 
         &--transposed-left-border {
@@ -475,12 +503,12 @@
 
     // First cell row
     .ag-row-first {
-        #{$root}__cell {
-            border-top: none;
+        #{$root}__cell:not(.ag-cell-range-selected) {
+            border-top-color: transparent;
         }
     }
 
-    .ag-column-first {
-        border-left: none;
+    .ag-column-first:not(.ag-cell-range-selected) {
+        border-left-color: transparent;
     }
 }

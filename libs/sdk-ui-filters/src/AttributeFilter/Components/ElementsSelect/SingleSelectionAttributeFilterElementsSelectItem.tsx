@@ -71,20 +71,30 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
         <div
             className={classes}
             onClick={onItemClick}
-            role="option"
+            role="row"
             aria-selected={isSelected}
             aria-setsize={itemsCount}
             aria-posinset={index}
-            aria-label={itemTitle}
-            tabIndex={focusedAction === "selectItem" ? 0 : -1}
-            id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
         >
-            <span>{itemTitle}</span>
-            {isSelected && isMobile && fullscreenOnMobile ? (
-                <span className="gd-customizable-checkmark-mobile-navigation-wrapper">
-                    <CustomizableCheckmark className="gd-customizable-checkmark-mobile-navigation" />
-                </span>
-            ) : null}
+            <div
+                className="gd-attribute-filter-list-item-label "
+                role={"gridcell"}
+                tabIndex={focusedAction === "selectItem" ? 0 : -1}
+                id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+                {...(isSelected
+                    ? {
+                          "aria-label": intl.formatMessage({ id: "attributesDropdown.selected" }),
+                      }
+                    : {})}
+                aria-selected={isSelected}
+            >
+                <span>{itemTitle}</span>
+                {isSelected && isMobile && fullscreenOnMobile ? (
+                    <span className="gd-customizable-checkmark-mobile-navigation-wrapper">
+                        <CustomizableCheckmark className="gd-customizable-checkmark-mobile-navigation" />
+                    </span>
+                ) : null}
+            </div>
             <AttributeFilterElementsSelectItemTooltip
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}

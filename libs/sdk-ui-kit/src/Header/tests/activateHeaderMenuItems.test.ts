@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
-import { HEADER_ITEM_ID_KPIS, generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
+import { HEADER_ITEM_ID_KPIS_NEW, generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
 import { IHeaderMenuItem } from "../typings.js";
 
 describe("activateHeaderMenuItems", () => {
@@ -19,12 +19,10 @@ describe("activateHeaderMenuItems", () => {
 
     beforeAll(() => {
         items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, false, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, "enterprise"),
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
-            "TestDashboardId",
-            "TestTabId",
             false,
             false,
         );
@@ -37,8 +35,8 @@ describe("activateHeaderMenuItems", () => {
     });
 
     it("activate only one item", () => {
-        const changed = activateHeaderMenuItems(items, [HEADER_ITEM_ID_KPIS]);
+        const changed = activateHeaderMenuItems(items, [HEADER_ITEM_ID_KPIS_NEW]);
 
-        expect(findAllActiveIds(changed)).toEqual([HEADER_ITEM_ID_KPIS]);
+        expect(findAllActiveIds(changed)).toEqual([HEADER_ITEM_ID_KPIS_NEW]);
     });
 });

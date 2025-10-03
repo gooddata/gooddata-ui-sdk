@@ -63,13 +63,8 @@ export interface IDateFilterBodyProps {
     onConfigurationClick: () => void;
 
     withoutApply?: boolean;
-
-    /**
-     * Specifies whether to improve accessibility for the date filter content.
-     *
-     * @alpha
-     */
-    improveAccessibility?: boolean;
+    ariaLabel?: string;
+    id?: string;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {

@@ -646,14 +646,39 @@ export type AutomationDashboardDateFilterDateFilterFrom = number | string;
  */
 export interface AutomationDashboardExportSettings {
     /**
-     * If true, the export will contain the information about the exported date and dashboard filters.
+     * If true, the export will contain the information about the export – exported date, dashboard filters, etc.
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
      */
     mergeHeaders?: boolean;
+    /**
+     * Set page size. (PDF)
+     */
+    pageSize?: AutomationDashboardExportSettingsPageSizeEnum;
+    /**
+     * Set page orientation. (PDF)
+     */
+    pageOrientation?: AutomationDashboardExportSettingsPageOrientationEnum;
 }
+
+export const AutomationDashboardExportSettingsPageSizeEnum = {
+    A3: "A3",
+    A4: "A4",
+    LETTER: "LETTER",
+} as const;
+
+export type AutomationDashboardExportSettingsPageSizeEnum =
+    (typeof AutomationDashboardExportSettingsPageSizeEnum)[keyof typeof AutomationDashboardExportSettingsPageSizeEnum];
+export const AutomationDashboardExportSettingsPageOrientationEnum = {
+    PORTRAIT: "PORTRAIT",
+    LANDSCAPE: "LANDSCAPE",
+} as const;
+
+export type AutomationDashboardExportSettingsPageOrientationEnum =
+    (typeof AutomationDashboardExportSettingsPageOrientationEnum)[keyof typeof AutomationDashboardExportSettingsPageOrientationEnum];
+
 /**
  * @type AutomationDashboardFilter
  */
@@ -688,6 +713,7 @@ export interface AutomationDashboardTabularExportRequestV2 {
 
 export const AutomationDashboardTabularExportRequestV2FormatEnum = {
     XLSX: "XLSX",
+    PDF: "PDF",
 } as const;
 
 export type AutomationDashboardTabularExportRequestV2FormatEnum =
@@ -1412,7 +1438,7 @@ export interface AutomationRelativeWrapper {
  */
 export interface AutomationSettings {
     /**
-     * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
+     * If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)
      */
     exportInfo?: boolean;
     /**
@@ -1452,10 +1478,6 @@ export interface AutomationSettings {
      * Set page orientation. (PDF)
      */
     pageOrientation?: AutomationSettingsPageOrientationEnum;
-    /**
-     * Show info page with export information.
-     */
-    showInfoPage?: boolean;
 }
 
 export const AutomationSettingsPageSizeEnum = {
@@ -1623,7 +1645,7 @@ export interface AutomationTabularExportRequest {
      */
     visualizationObject?: string;
     /**
-     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. Those filters override the original filters defined in the visualization.
      */
     visualizationObjectCustomFilters?: Array<object>;
     /**

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import path from "path";
 
 import fse from "fs-extra";
@@ -52,7 +53,11 @@ export function safeJoin(initialPath: string, relativePath: string): string {
  * Converts plugin name to an identifier that can be used for module federation identifier, directory names,
  * asset file names etc.
  *
- * @param name - plugin name as entered by the user
+ * This function converts the plugin name to snake_case. For this reason, plugin names should already be in
+ * snake_case to avoid confusion. The validation in pluginNameValidator ensures this convention is followed.
+ *
+ * @param name - plugin name as entered by the user (should be in snake_case)
+ * @returns plugin identifier in the format `dp_{snake_case_name}`
  */
 export function convertToPluginIdentifier(name: string): string {
     return `dp_${snakeCase(name)}`;

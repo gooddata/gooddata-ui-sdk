@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useRef } from "react";
+import { MouseEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { camelCase } from "lodash-es";
@@ -40,7 +40,6 @@ export function AttributeFilterElementsSelectItem({
     index,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
-    const itemRef = useRef<HTMLDivElement>(null);
 
     const onItemClick = useCallback(() => {
         if (isSelected) {
@@ -89,7 +88,6 @@ export function AttributeFilterElementsSelectItem({
 
     return (
         <div
-            ref={itemRef}
             className={classes}
             onClick={onItemClick}
             role="row"

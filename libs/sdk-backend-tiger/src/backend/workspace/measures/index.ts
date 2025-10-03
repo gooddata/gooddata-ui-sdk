@@ -11,7 +11,8 @@ import {
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import {
+import type {
+    IGetMeasureOptions,
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
     IMeasureReferencing,
@@ -311,13 +312,14 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         return new MeasuresQuery(this.authCall, { workspaceId: this.workspace });
     }
 
-    public async getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject> {
+    public async getMeasure(ref: ObjRef, options: IGetMeasureOptions = {}): Promise<IMeasureMetadataObject> {
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
             client.entities.getEntityMetrics(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
+                    include: options.loadUserData ? ["createdBy", "modifiedBy"] : [],
                 },
                 {
                     headers: jsonApiHeaders,

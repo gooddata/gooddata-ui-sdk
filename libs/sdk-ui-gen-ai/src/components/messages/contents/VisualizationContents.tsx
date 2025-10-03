@@ -24,7 +24,17 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { Button, IAlignPoint, Icon, Overlay, UiFocusManager, UiMenu, useId } from "@gooddata/sdk-ui-kit";
+import {
+    IAlignPoint,
+    Icon,
+    Overlay,
+    UiButton,
+    UiFocusManager,
+    UiIconButton,
+    UiMenu,
+    UiTooltip,
+    useId,
+} from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { MarkdownComponent } from "./Markdown.js";
@@ -105,7 +115,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} ariaHidden />,
+                          icon: <SaveIcon width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-haspopup": "dialog",
                           },
@@ -115,7 +125,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden />,
+                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-description": intl.formatMessage({
                                   id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
@@ -127,7 +137,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
                           }),
-                          icon: <CopyIcon width={16} height={16} ariaHidden />,
+                          icon: <CopyIcon width={16} height={16} ariaHidden color="currentColor" />,
                       },
                   ] as IMenuButtonItem[])
                 : ([
@@ -136,7 +146,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} ariaHidden />,
+                          icon: <SaveIcon width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-haspopup": "dialog",
                           },
@@ -146,7 +156,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden />,
+                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-description": intl.formatMessage({
                                   id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
@@ -324,31 +334,38 @@ function VisualizationContentsComponentCore({
                     {config.canAnalyze && !hasVisError && !visLoading
                         ? (() => {
                               return (
-                                  <>
-                                      <Button
-                                          dataTestId="gen-ai-visualization-menu-button"
-                                          onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                          value="&#8943;"
-                                          id={MORE_MENU_BUTTON_ID}
-                                          className={cx(
-                                              "gd-button-primary gd-button",
-                                              "gd-gen-ai-chat__visualization__save",
-                                              dropdownAnchorClassName,
-                                              {
-                                                  hidden: !(isMenuButtonOpen || isHovered),
-                                              },
-                                          )}
-                                          accessibilityConfig={{
-                                              role: "button",
-                                              ariaLabel: tooltipText,
-                                              ariaDescribedBy: descId,
-                                              isExpanded: isMenuButtonOpen,
-                                              popupId: menuId,
-                                              popupType: "menu",
-                                          }}
+                                  <div
+                                      id={MORE_MENU_BUTTON_ID}
+                                      className={cx(
+                                          "gd-gen-ai-chat__visualization__save",
+                                          dropdownAnchorClassName,
+                                      )}
+                                  >
+                                      <UiTooltip
+                                          disabled={!tooltipText}
+                                          triggerBy={["focus", "hover"]}
+                                          arrowPlacement="bottom"
+                                          hoverOpenDelay={100}
+                                          anchor={
+                                              <UiIconButton
+                                                  dataTestId="gen-ai-visualization-menu-button"
+                                                  onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
+                                                  icon="ellipsisVertical"
+                                                  accessibilityConfig={{
+                                                      role: "button",
+                                                      ariaLabel: tooltipText,
+                                                      ariaDescribedBy: descId,
+                                                      isExpanded: isMenuButtonOpen,
+                                                      popupId: menuId,
+                                                      ariaHaspopup: "menu",
+                                                  }}
+                                                  isActive={isMenuButtonOpen}
+                                              />
+                                          }
+                                          content={tooltipText}
                                       />
                                       {isMenuButtonOpen ? renderMenuItems() : null}
-                                  </>
+                                  </div>
                               );
                           })()
                         : null}
@@ -455,10 +472,10 @@ function VisualizationContentsComponentCore({
             {showSuggestions && visualization?.suggestions?.length ? (
                 <div className="gd-gen-ai-chat__visualization__suggestions">
                     {visualization.suggestions.map((suggestion) => (
-                        <Button
+                        <UiButton
                             key={suggestion.label}
+                            label={suggestion.label}
                             variant="secondary"
-                            title={suggestion.query}
                             onClick={() => {
                                 dispatch(
                                     newMessageAction(
@@ -466,9 +483,8 @@ function VisualizationContentsComponentCore({
                                     ),
                                 );
                             }}
-                        >
-                            {suggestion.label}
-                        </Button>
+                            tooltip={suggestion.query}
+                        />
                     ))}
                 </div>
             ) : null}

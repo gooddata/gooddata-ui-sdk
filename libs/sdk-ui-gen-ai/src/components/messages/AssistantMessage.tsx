@@ -4,14 +4,12 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { AgentIcon } from "./AgentIcon.js";
 import { MessageContents } from "./MessageContents.js";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
-
-const { ThumbsUp: ThumbsUpIcon, ThumbsDown: ThumbsDownIcon } = Icon;
 
 type AssistantMessageProps = {
     message: AssistantMessage;
@@ -28,6 +26,9 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
         message.cancelled && "gd-gen-ai-chat__messages__message--cancelled",
     );
     const hasError = message.content.some(isErrorContents);
+
+    const thumbsUpLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.like" });
+    const thumbsDownLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" });
 
     return (
         <div className={classNames}>
@@ -56,43 +57,48 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                             "gd-gen-ai-chat__messages__feedback--assigned": message.feedback !== "NONE",
                         })}
                     >
-                        <Button
-                            className={cx({
-                                "gd-gen-ai-chat__messages__feedback__button": true,
-                                "gd-gen-ai-chat__messages__feedback__button--positive":
-                                    message.feedback === "POSITIVE",
-                            })}
-                            onClick={() =>
-                                setUserFeedback({
-                                    assistantMessageId: message.localId,
-                                    feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
-                                })
+                        <UiTooltip
+                            triggerBy={["focus", "hover"]}
+                            arrowPlacement="bottom"
+                            anchor={
+                                <UiIconButton
+                                    icon="thumbsUp"
+                                    variant="tertiary"
+                                    isActive={message.feedback === "POSITIVE"}
+                                    onClick={() =>
+                                        setUserFeedback({
+                                            assistantMessageId: message.localId,
+                                            feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
+                                        })
+                                    }
+                                    accessibilityConfig={{
+                                        ariaLabel: thumbsUpLabel,
+                                    }}
+                                />
                             }
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.like" }),
-                            }}
-                        >
-                            <ThumbsUpIcon />
-                        </Button>
-                        <Button
-                            className={cx({
-                                "gd-gen-ai-chat__messages__feedback__button": true,
-                                "gd-gen-ai-chat__messages__feedback__button--negative":
-                                    message.feedback === "NEGATIVE",
-                            })}
-                            type="button"
-                            onClick={() =>
-                                setUserFeedback({
-                                    assistantMessageId: message.localId,
-                                    feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
-                                })
+                            content={thumbsUpLabel}
+                        />
+                        <UiTooltip
+                            triggerBy={["focus", "hover"]}
+                            arrowPlacement="bottom"
+                            anchor={
+                                <UiIconButton
+                                    icon="thumbsDown"
+                                    variant="tertiary"
+                                    isActive={message.feedback === "NEGATIVE"}
+                                    onClick={() =>
+                                        setUserFeedback({
+                                            assistantMessageId: message.localId,
+                                            feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
+                                        })
+                                    }
+                                    accessibilityConfig={{
+                                        ariaLabel: thumbsDownLabel,
+                                    }}
+                                />
                             }
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" }),
-                            }}
-                        >
-                            <ThumbsDownIcon />
-                        </Button>
+                            content={thumbsDownLabel}
+                        />
                     </div>
                 ) : null}
             </div>

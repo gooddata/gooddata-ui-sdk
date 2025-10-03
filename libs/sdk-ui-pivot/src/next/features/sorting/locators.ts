@@ -13,7 +13,7 @@ export function columnScopeToLocators(columnScope: ITableDataHeaderScope[]): ILo
             return [
                 newAttributeLocatorWithNullElement(
                     scope.descriptor.attributeHeader.localIdentifier,
-                    scope.header.attributeHeaderItem.name,
+                    scope.header.attributeHeaderItem.uri,
                 ),
             ];
         }

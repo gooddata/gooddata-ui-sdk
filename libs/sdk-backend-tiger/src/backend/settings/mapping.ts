@@ -53,6 +53,12 @@ export function mapTypeToKey(
             return "allowUnsafeFlexConnectEndpoints";
         case "ENABLE_AUTOMATION_EVALUATION_MODE":
             return "enableAutomationEvaluationMode";
+        case "ENABLE_SNAPSHOT_EXPORT":
+            return "enableSnapshotExport";
+        case "ENABLE_ACCESSIBILITY_MODE":
+            return "enableAccessibilityMode";
+        case "REGISTERED_PLUGGABLE_APPLICATIONS":
+            return "registeredPluggableApplications";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "OPERATOR_OVERRIDES":
