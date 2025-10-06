@@ -11,7 +11,7 @@ import { makeItemId } from "./utils.js";
  */
 interface UiTreeviewRootProps {
     children?: ReactNode;
-    path?: number[];
+    path: number[];
     handleKeyDown: (event: KeyboardEvent) => void;
     ariaAttributes: UiTreeViewAriaAttributes;
 }
@@ -21,6 +21,7 @@ interface UiTreeviewRootProps {
  */
 export function UiTreeviewRoot(props: UiTreeviewRootProps) {
     const { handleKeyDown, children, ariaAttributes, path } = props;
+    const activeDescendant = path.length > 0 ? makeItemId(ariaAttributes.id, path) : undefined;
     return (
         <div
             {...ariaAttributes}
@@ -28,7 +29,7 @@ export function UiTreeviewRoot(props: UiTreeviewRootProps) {
             tabIndex={ariaAttributes.tabIndex ?? 0}
             onKeyDown={handleKeyDown}
             role="tree"
-            aria-activedescendant={makeItemId(ariaAttributes.id, path)}
+            aria-activedescendant={activeDescendant}
         >
             {children}
         </div>

@@ -9,6 +9,7 @@ import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { IconType } from "../@types/icon.js";
 import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall, SizeXXLarge } from "../@types/size.js";
 import {
+    VariantBare,
     VariantDanger,
     VariantPopOut,
     VariantPrimary,
@@ -34,7 +35,8 @@ export interface UiIconButtonPublicProps {
         | VariantTertiary
         | VariantPopOut
         | VariantDanger
-        | VariantTable;
+        | VariantTable
+        | VariantBare;
     isDisabled?: boolean;
     isActive?: boolean;
 

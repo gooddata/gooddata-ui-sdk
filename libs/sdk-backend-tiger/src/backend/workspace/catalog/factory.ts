@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap, sortBy, uniqBy } from "lodash-es";
+
+import { sortBy, uniqBy } from "lodash-es";
 
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
@@ -193,7 +194,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const groupableItems = catalogItems.filter(
             (item) => item.type !== "dateDataset" && item.type !== "attributeHierarchy",
         );
-        const allTags = flatMap(groupableItems, (item): ICatalogGroup[] => {
+        const allTags = groupableItems.flatMap((item): ICatalogGroup[] => {
             return (item as IGroupableCatalogItemBase).groups.map((tag) => ({
                 title: (tag as IdentifierRef).identifier,
                 tag: tag,

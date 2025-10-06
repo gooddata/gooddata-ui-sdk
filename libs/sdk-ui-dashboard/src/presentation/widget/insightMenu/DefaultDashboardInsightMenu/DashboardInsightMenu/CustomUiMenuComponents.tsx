@@ -137,8 +137,8 @@ export function CustomUiMenuHeaderComponent() {
                 renderMode={menuCtxData.renderMode}
             />
             <UiIconButton
-                size={"xsmall"}
-                variant={"tertiary"}
+                size={"small"}
+                variant={"bare"}
                 icon={"close"}
                 label={formatMessage({ id: "menu.close" })}
                 onClick={onClose}

@@ -30,7 +30,11 @@ import {
 } from "../../../queries/index.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
+import {
+    selectAllCatalogDateDatasetsMap,
+    selectCatalogDateDatasets,
+} from "../../../store/catalog/catalogSelectors.js";
+import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
@@ -71,7 +75,10 @@ export function* validateDatasetForInsightWidgetDateFilter(
         query,
         queryDateDatasetsForInsight(resolvedInsight || widget.insight),
     );
-    const dateDataSetsToValidate = insightDateDatasets.allAvailableDateDatasets;
+    const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
+    const dateDataSetsToValidate = enableUnavailableItemsVisible
+        ? yield select(selectCatalogDateDatasets)
+        : insightDateDatasets.allAvailableDateDatasets;
     const catalogDataSet = newCatalogDateDatasetMap(dateDataSetsToValidate).get(dateDataSet);
 
     if (!catalogDataSet) {
@@ -114,7 +121,10 @@ export function* validateDatasetForRichTextWidgetDateFilter(
         query,
         queryDateDatasetsForInsight(newInsight("local:table")),
     );
-    const dateDataSetsToValidate = insightDateDatasets.allAvailableDateDatasets;
+    const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
+    const dateDataSetsToValidate = enableUnavailableItemsVisible
+        ? yield select(selectCatalogDateDatasets)
+        : insightDateDatasets.allAvailableDateDatasets;
     const catalogDataSet = newCatalogDateDatasetMap(dateDataSetsToValidate).get(dateDataSet);
 
     if (!catalogDataSet) {

@@ -240,12 +240,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         backendSupportsElementUris: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
     private updateCustomSupportedProperties(insight: IInsightDefinition): void {

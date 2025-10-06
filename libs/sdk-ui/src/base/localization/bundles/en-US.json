@@ -63,6 +63,14 @@
         "value": "All",
         "comment": "Option in filter controls to select all items. Used in various dropdown lists and filter components."
     },
+    "gs.list.allAndCount": {
+        "value": "All ({count})",
+        "comment": "Label for option in filter controls to select all items with count."
+    },
+    "gs.list.allSearchResultsAndCount": {
+        "value": "All search results ({count})",
+        "comment": "Label for option in filter controls to select all search results."
+    },
     "gs.list.except": {
         "value": "except",
         "comment": "Used in filter expressions to indicate exclusion, e.g., 'All except [selected items]'. Appears in filter components."

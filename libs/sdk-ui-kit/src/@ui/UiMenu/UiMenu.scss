@@ -42,26 +42,20 @@
     }
 
     &__menu-header {
-        padding: 10px;
-        display: flex;
-        gap: 4px;
-        align-items: center;
-        width: 100%;
         background: variables.$is-focused-background;
 
-        &-title {
+        &-button {
             cursor: pointer;
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            flex-grow: 1;
             background: none;
             border: none;
             padding: 0;
             color: variables.$gd-color-state-blank;
-            overflow: hidden;
+        }
 
+        &-title {
             &-text {
+                flex-grow: 1;
+                color: variables.$gd-color-state-blank;
                 margin: 0;
                 white-space: nowrap;
                 font-size: 11px;

@@ -4,9 +4,7 @@ import { CSSProperties, ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
-import { UiIconButton } from "@gooddata/sdk-ui-kit";
-
-import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader.js";
+import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 interface IDashboardInsightSubmenuContainerProps {
     children: ReactNode;
@@ -23,18 +21,13 @@ export function DashboardInsightSubmenuContainer(props: IDashboardInsightSubmenu
 
     return (
         <div className="configuration-panel">
-            <div className="configuration-panel-header">
-                <DashboardInsightSubmenuHeader title={props.title} onHeaderClick={props.onBack} />
-                <UiIconButton
-                    size={"xsmall"}
-                    variant={"tertiary"}
-                    icon={"close"}
-                    label={closeLabel}
-                    onClick={props.onClose}
-                    dataId="s-configuration-panel-header-close-button"
-                    dataTestId="s-configuration-panel-header-close-button"
-                />
-            </div>
+            <UiSubmenuHeader
+                title={props.title}
+                onBack={props.onBack}
+                onClose={props.onClose}
+                closeAriaLabel={closeLabel}
+                height="large"
+            />
             <div className="configuration-panel-screen" style={screenWrapperStyle}>
                 {props.children}
             </div>

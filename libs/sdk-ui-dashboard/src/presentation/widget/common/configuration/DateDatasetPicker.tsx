@@ -28,6 +28,7 @@ export interface IDateDatasetPickerProps {
     onDateDatasetChange: (id: string) => void;
     className?: string;
     isLoading?: boolean;
+    enableUnrelatedItemsVisibility?: boolean;
     unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
@@ -40,6 +41,7 @@ export function DateDatasetPicker(props: IDateDatasetPickerProps) {
         dateFromVisualization,
         autoOpen,
         isLoading,
+        enableUnrelatedItemsVisibility,
         unrelatedDateDatasets,
 
         onDateDatasetChange,
@@ -62,6 +64,7 @@ export function DateDatasetPicker(props: IDateDatasetPickerProps) {
                 onDateDatasetChange={onDateDatasetChange}
                 isLoading={isLoading}
                 width={width}
+                enableUnrelatedItemsVisibility={enableUnrelatedItemsVisibility}
                 unrelatedDateDatasets={unrelatedDateDatasets}
             />
         </div>

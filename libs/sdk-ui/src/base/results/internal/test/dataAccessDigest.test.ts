@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -29,7 +28,7 @@ describe("createDataAccessDigest", () => {
         expect(digestSnapshot(digest)).toMatchSnapshot();
     });
 
-    const allScenarioRecordings = flatMap(Object.values(ReferenceRecordings.Scenarios), (group) =>
+    const allScenarioRecordings = Object.values(ReferenceRecordings.Scenarios).flatMap((group) =>
         Object.entries(group),
     );
 

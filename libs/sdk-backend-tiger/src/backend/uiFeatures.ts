@@ -46,6 +46,7 @@ export enum TigerFeaturesNames {
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
+    EnableMongoDbDataSource = "enableMongoDbDataSource",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
@@ -53,7 +54,6 @@ export enum TigerFeaturesNames {
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
-    EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
@@ -155,13 +155,13 @@ export type ITigerFeatureFlags = {
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
     enableSmartFunctions: (typeof FeatureFlagsValues)["enableSmartFunctions"][number];
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
+    enableMongoDbDataSource: (typeof FeatureFlagsValues)["enableMongoDbDataSource"][number];
     enableKeyDriverAnalysis: (typeof FeatureFlagsValues)["enableKeyDriverAnalysis"][number];
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
     enableFlexAi: (typeof FeatureFlagsValues)["enableFlexAi"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
-    enableDuplicatedLabelValuesInAttributeFilter: (typeof FeatureFlagsValues)["enableDuplicatedLabelValuesInAttributeFilter"][number];
     enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: (typeof FeatureFlagsValues)["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: (typeof FeatureFlagsValues)["enableScatterPlotClustering"][number];
@@ -257,6 +257,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
     enableMotherDuckDataSource: false,
+    enableMongoDbDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
@@ -272,7 +273,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableSnowflakeKeyPairAuthentication: true,
-    enableDuplicatedLabelValuesInAttributeFilter: true,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
@@ -364,6 +364,7 @@ export const FeatureFlagsValues = {
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,
+    enableMongoDbDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
@@ -383,7 +384,6 @@ export const FeatureFlagsValues = {
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
-    enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,

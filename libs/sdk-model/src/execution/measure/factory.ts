@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { cloneDeep, identity, isEmpty } from "lodash-es";
+
+import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { InvariantError, invariant } from "ts-invariant";
 
@@ -766,7 +767,7 @@ export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
  */
 export function newMeasure(
     measure: ObjRef | Identifier,
-    modifications: MeasureModifications<MeasureBuilder> = identity,
+    modifications: MeasureModifications<MeasureBuilder> = (v) => v,
 ): IMeasure<IMeasureDefinition> {
     const ref = isObjRef(measure) ? measure : idRef(measure);
     const builder = new MeasureBuilder(ref);
@@ -794,7 +795,7 @@ export function newMeasure(
  */
 export function modifyMeasure<T extends IMeasureDefinitionType>(
     measure: IMeasure<T>,
-    modifications: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>> = identity,
+    modifications: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>> = (v) => v,
 ): IMeasure<T> {
     invariant(measure, "measure must be specified");
 
@@ -836,7 +837,7 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
  */
 export function modifySimpleMeasure(
     measure: IMeasure<IMeasureDefinition>,
-    modifications: MeasureModifications<MeasureBuilder> = identity,
+    modifications: MeasureModifications<MeasureBuilder> = (v) => v,
 ): IMeasure<IMeasureDefinition> {
     invariant(measure, "measure must be specified");
 
@@ -876,7 +877,7 @@ export function newInlineMeasure(maql: string): IMeasure<IInlineMeasureDefinitio
  */
 export function modifyInlineMeasure(
     measure: IMeasure<IInlineMeasureDefinition>,
-    modifications: MeasureModifications<InlineMeasureBuilder> = identity,
+    modifications: MeasureModifications<InlineMeasureBuilder> = (v) => v,
 ): IMeasure<IInlineMeasureDefinition> {
     invariant(measure, "measure must be specified");
 
@@ -902,7 +903,7 @@ export function modifyInlineMeasure(
  */
 export function modifyPopMeasure(
     measure: IMeasure<IPoPMeasureDefinition>,
-    modifications: MeasureModifications<PoPMeasureBuilder> = identity,
+    modifications: MeasureModifications<PoPMeasureBuilder> = (v) => v,
 ): IMeasure<IPoPMeasureDefinition> {
     invariant(measure, "measure must be specified");
 
@@ -928,7 +929,7 @@ export function modifyPopMeasure(
  */
 export function modifyPreviousPeriodMeasure(
     measure: IMeasure<IPreviousPeriodMeasureDefinition>,
-    modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
+    modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = (v) => v,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
     invariant(measure, "measure must be specified");
 
@@ -947,7 +948,7 @@ export function modifyPreviousPeriodMeasure(
 export function newArithmeticMeasure(
     measuresOrIds: ReadonlyArray<MeasureOrLocalId>,
     operator: ArithmeticMeasureOperator,
-    modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
+    modifications: MeasureModifications<ArithmeticMeasureBuilder> = (v) => v,
 ): IMeasure<IArithmeticMeasureDefinition> {
     const builder = new ArithmeticMeasureBuilder({ measuresOrIds, operator });
 
@@ -966,7 +967,7 @@ export function newArithmeticMeasure(
 export function newVirtualArithmeticMeasure(
     measuresOrIds: ReadonlyArray<MeasureOrLocalId>,
     operator: ArithmeticMeasureOperator,
-    modifications: MeasureModifications<VirtualArithmeticMeasureBuilder> = identity,
+    modifications: MeasureModifications<VirtualArithmeticMeasureBuilder> = (v) => v,
 ): IMeasure<IVirtualArithmeticMeasureDefinition> {
     const builder = new VirtualArithmeticMeasureBuilder({ measuresOrIds, operator });
 
@@ -983,7 +984,7 @@ export function newVirtualArithmeticMeasure(
 export function newPopMeasure(
     measureOrLocalId: MeasureOrLocalId,
     popAttrIdOrRef: ObjRef | Identifier,
-    modifications: MeasureModifications<PoPMeasureBuilder> = identity,
+    modifications: MeasureModifications<PoPMeasureBuilder> = (v) => v,
 ): IMeasure<IPoPMeasureDefinition> {
     const builder = new PoPMeasureBuilder({ measureOrLocalId, popAttrIdOrRef });
 
@@ -1000,7 +1001,7 @@ export function newPopMeasure(
 export function newPreviousPeriodMeasure(
     measureIdOrLocalId: MeasureOrLocalId,
     dateDataSets: IPreviousPeriodDateDataSetSimple[],
-    modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
+    modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = (v) => v,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
     const builder = new PreviousPeriodMeasureBuilder({ measureIdOrLocalId, dateDataSets });
 

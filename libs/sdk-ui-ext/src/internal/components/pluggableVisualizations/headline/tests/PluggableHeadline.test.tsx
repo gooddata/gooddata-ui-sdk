@@ -156,6 +156,27 @@ describe("PluggableHeadline", () => {
             expect(renderEl.type).toBe(CoreHeadline);
             expect(renderEl.props.config.enableCompactSize).toEqual(true);
         });
+
+        it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
+            const headline = createComponent({
+                featureFlags: {
+                    disableKpiDashboardHeadlineUnderline: true,
+                },
+            });
+
+            const options: IVisProps = getTestOptions();
+
+            headline.update(
+                options,
+                testMocks.insightWithSingleMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.disableDrillUnderline).toEqual(true);
+        });
     });
 
     describe("getExtendedReferencePoint", () => {

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { ICatalogFact, IFactMetadataObject, ObjRef, isFactMetadataObject } from "@gooddata/sdk-model";
 
@@ -37,5 +36,5 @@ export class CatalogFactBuilder<
  * @beta
  */
 export const newCatalogFact = (
-    modifications: BuilderModifications<CatalogFactBuilder> = identity,
+    modifications: BuilderModifications<CatalogFactBuilder> = (v) => v,
 ): ICatalogFact => builderFactory(CatalogFactBuilder, { type: "fact" }, modifications);

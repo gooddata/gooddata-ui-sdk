@@ -24,12 +24,10 @@ import { Dashboard } from "./visualizations/Dashboard.js";
 import { Insight } from "./visualizations/Insight.js";
 
 // Include styles async to use native link injection from MiniCssExtractPlugin
-import("./visualizations/components.css").catch((error) => {
-    console.error("Failed to load analytics styles", error);
-});
-import("./gen-ai/components.css").catch((error) => {
-    console.error("Failed to load ai chat styles", error);
-});
+// eslint-disable-next-line import/no-unassigned-import
+import "./visualizations/components.css";
+// eslint-disable-next-line import/no-unassigned-import
+import "./gen-ai/components.css";
 
 initializeAutoAuth(import.meta.url).catch((error) => {
     console.error("Failed to configure automatic authentication flow", error);

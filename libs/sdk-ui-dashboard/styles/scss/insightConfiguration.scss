@@ -121,8 +121,10 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     .insight-configuration .insight-configuration-panel-header {
         background-color: $insight-panel-header-bg;
         position: relative;
-        padding: variables.$item-inner-padding variables.$item-outer-padding variables.$item-inner-padding
-            variables.$gd-configuration-bubble-margin;
+        height: 40px;
+        min-height: 40px;
+        align-items: center;
+        padding: 0 variables.$item-outer-padding 0 variables.$gd-configuration-bubble-margin;
         margin-bottom: 8px;
     }
 

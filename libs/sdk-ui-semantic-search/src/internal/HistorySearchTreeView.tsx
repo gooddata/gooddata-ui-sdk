@@ -12,7 +12,7 @@ type Props = {
     id: string;
     searchHistory: string[];
     onSelect: (value: string) => void;
-    onFocus: (nodeId: string) => void;
+    onFocus: (nodeId?: string) => void;
 };
 
 /**
@@ -42,6 +42,7 @@ export function HistorySearchTreeView({ id, searchHistory, onSelect, onFocus }: 
             onFocus={onFocus}
             ItemComponent={HistorySearchTreeViewItem}
             shouldKeyboardActionPreventDefault={false}
+            autoFocus={false}
         />
     );
 }

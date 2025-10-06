@@ -12,11 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DisplayFormParam } from "./DisplayFormParam.js";
-import {
-    selectAllCatalogDisplayFormsMap,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { IParametersPanelSectionsCommonProps } from "../types.js";
 
@@ -31,9 +27,6 @@ export function DashboardParametersSection({
     onAdd,
 }: IDashboardParametersSectionProps) {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
-        selectEnableDuplicatedLabelValuesInAttributeFilter,
-    );
 
     return dashboardFilters && dashboardFilters.length > 0 ? (
         <>
@@ -68,7 +61,7 @@ export function DashboardParametersSection({
                                 isFilter
                             />
                         ) : null}
-                        {enableDuplicatedLabelValuesInAttributeFilter && secondaryDf && areDfsDifferent ? (
+                        {secondaryDf && areDfsDifferent ? (
                             <DisplayFormParam
                                 item={secondaryDf}
                                 iconClassName="gd-icon-filter"

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IExecuteProps } from "@gooddata/sdk-ui";
@@ -12,7 +11,7 @@ import { mountChartAndCapture } from "../../_infra/render.js";
 const Component = "Execute";
 
 describe(Component, () => {
-    const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = flatMap([executeScenarios], (group) =>
+    const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = [executeScenarios].flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 

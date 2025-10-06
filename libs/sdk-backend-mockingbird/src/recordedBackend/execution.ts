@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { flatMap, isEmpty, isEqual } from "lodash-es";
+import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { AbstractExecutionFactory, Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
@@ -636,7 +636,7 @@ export function recordedDataViews(recordings: RecordingIndex): NamedDataView[] {
 
     const executionRecordings = Object.values(recordings.executions);
 
-    return flatMap(executionRecordings, expandRecordingToDataViews);
+    return executionRecordings.flatMap(expandRecordingToDataViews);
 }
 
 /**

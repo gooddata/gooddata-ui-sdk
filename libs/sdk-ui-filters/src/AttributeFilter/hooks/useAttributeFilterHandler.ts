@@ -26,7 +26,6 @@ export interface IUseAttributeFilterHandlerProps {
 
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
-    enableDuplicatedLabelValuesInAttributeFilter: boolean;
     withoutApply?: boolean;
 }
 
@@ -45,7 +44,6 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
 
         hiddenElements,
         staticElements,
-        enableDuplicatedLabelValuesInAttributeFilter = true,
         withoutApply = false,
     } = props;
 
@@ -66,21 +64,11 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 selectionMode: "multi",
                 hiddenElements,
                 staticElements,
-                enableDuplicatedLabelValuesInAttributeFilter,
                 displayAsLabel,
                 withoutApply,
             },
         );
-    }, [
-        backend,
-        workspace,
-        filter,
-        hiddenElements,
-        staticElements,
-        enableDuplicatedLabelValuesInAttributeFilter,
-        displayAsLabel,
-        withoutApply,
-    ]);
+    }, [backend, workspace, filter, hiddenElements, staticElements, displayAsLabel, withoutApply]);
 
     if (!handlerRef.current) {
         createNewHandler();
@@ -95,24 +83,17 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             invalidate();
         });
 
-        const filterChanged = (
-            filter: IAttributeFilter,
-            handler: IMultiSelectAttributeFilterHandler,
-            enableDuplicatedLabelValuesInAttributeFilter: boolean,
-        ) => {
-            if (enableDuplicatedLabelValuesInAttributeFilter) {
-                return (
-                    !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
-                    !isEqual(filterObjRef(filter), filterObjRef(handler.getOriginalFilter()))
-                );
-            }
-            return !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter()));
+        const filterChanged = (filter: IAttributeFilter, handler: IMultiSelectAttributeFilterHandler) => {
+            return (
+                !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
+                !isEqual(filterObjRef(filter), filterObjRef(handler.getOriginalFilter()))
+            );
         };
 
         if (
             backend !== prevProps.backend ||
             workspace !== prevProps.workspace ||
-            filterChanged(filter, handler, enableDuplicatedLabelValuesInAttributeFilter) ||
+            filterChanged(filter, handler) ||
             !isEqual(staticElements, prevProps.staticElements) ||
             !isEqual(hiddenElements, prevProps.hiddenElements)
         ) {
@@ -122,17 +103,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         return () => {
             unsubscribe();
         };
-    }, [
-        backend,
-        workspace,
-        filter,
-        staticElements,
-        hiddenElements,
-        prevProps,
-        handler,
-        createNewHandler,
-        enableDuplicatedLabelValuesInAttributeFilter,
-    ]);
+    }, [backend, workspace, filter, staticElements, hiddenElements, prevProps, handler, createNewHandler]);
 
     return handler;
 };

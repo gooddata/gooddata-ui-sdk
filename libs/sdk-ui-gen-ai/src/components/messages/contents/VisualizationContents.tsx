@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { AriaAttributes, KeyboardEvent, MouseEvent, ReactNode, useMemo, useState } from "react";
+import { AriaAttributes, KeyboardEvent, MouseEvent, ReactNode, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import copy from "copy-to-clipboard";
@@ -36,6 +36,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
@@ -48,6 +49,7 @@ import {
     copyToClipboardAction,
     newMessageAction,
     saveVisualisationRenderStatusAction,
+    settingsSelector,
     visualizationErrorAction,
 } from "../../../store/index.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
@@ -72,6 +74,7 @@ export type VisualizationContentsProps = {
     useMarkdown?: boolean;
     showSuggestions?: boolean;
     colorPalette?: IColorPalette;
+    enableNewPivotTable?: boolean;
     onCopyToClipboard?: (data: { content: string }) => void;
 };
 
@@ -80,6 +83,7 @@ function VisualizationContentsComponentCore({
     messageId,
     useMarkdown,
     colorPalette,
+    enableNewPivotTable = false,
     showSuggestions = false,
     onCopyToClipboard,
 }: VisualizationContentsProps) {
@@ -96,10 +100,14 @@ function VisualizationContentsComponentCore({
     const [visLoading, setVisLoading] = useState(true);
     const workspaceId = useWorkspaceStrict();
     const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
-    const [isHovered, setHovered] = useState(false);
+    const [isTable, setIsTable] = useState(false);
 
     const intl = useIntl();
-    const tooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
+    const moreButtonTooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
+    const toggleButtonTableTooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.table" });
+    const toggleButtonOriginalTooltipText = intl.formatMessage({
+        id: "gd.gen-ai.visualisation.toggle.original",
+    });
 
     // generate unique IDs for accessibility and dropdown positioning
     const id = useId();
@@ -220,7 +228,7 @@ function VisualizationContentsComponentCore({
         }
     };
 
-    const handleSuccess = () => {
+    const handleSuccess = useCallback(() => {
         dispatch(
             saveVisualisationRenderStatusAction({
                 visualizationId: visualization.id,
@@ -228,55 +236,58 @@ function VisualizationContentsComponentCore({
                 status: "SUCCESSFUL",
             }),
         );
-    };
+    }, [dispatch, visualization.id, messageId]);
 
-    const handleSdkError = (error: GoodDataSdkError) => {
-        // Ignore NO_DATA error, we still want an option to save the visualization
-        if (!isNoDataSdkError(error)) {
-            setHasVisError(true);
-        }
-        dispatch(
-            visualizationErrorAction({
-                errorType: error.seType,
-                errorMessage: error.getMessage(),
-            }),
-        );
+    const handleSdkError = useCallback(
+        (error: GoodDataSdkError) => {
+            // Ignore NO_DATA error, we still want an option to save the visualization
+            if (!isNoDataSdkError(error)) {
+                setHasVisError(true);
+            }
+            dispatch(
+                visualizationErrorAction({
+                    errorType: error.seType,
+                    errorMessage: error.getMessage(),
+                }),
+            );
 
-        switch (error.seType) {
-            case "NO_DATA":
-                dispatch(
-                    saveVisualisationRenderStatusAction({
-                        visualizationId: visualization.id,
-                        assistantMessageId: messageId,
-                        status: "NO_DATA",
-                    }),
-                );
-                break;
-            case "DATA_TOO_LARGE_TO_COMPUTE":
-            case "DATA_TOO_LARGE_TO_DISPLAY":
-                dispatch(
-                    saveVisualisationRenderStatusAction({
-                        visualizationId: visualization.id,
-                        assistantMessageId: messageId,
-                        status: "TOO_MANY_DATA_POINTS",
-                    }),
-                );
-                break;
-            default:
-                dispatch(
-                    saveVisualisationRenderStatusAction({
-                        visualizationId: visualization.id,
-                        assistantMessageId: messageId,
-                        status: "UNEXPECTED_ERROR",
-                    }),
-                );
-                break;
-        }
-    };
+            switch (error.seType) {
+                case "NO_DATA":
+                    dispatch(
+                        saveVisualisationRenderStatusAction({
+                            visualizationId: visualization.id,
+                            assistantMessageId: messageId,
+                            status: "NO_DATA",
+                        }),
+                    );
+                    break;
+                case "DATA_TOO_LARGE_TO_COMPUTE":
+                case "DATA_TOO_LARGE_TO_DISPLAY":
+                    dispatch(
+                        saveVisualisationRenderStatusAction({
+                            visualizationId: visualization.id,
+                            assistantMessageId: messageId,
+                            status: "TOO_MANY_DATA_POINTS",
+                        }),
+                    );
+                    break;
+                default:
+                    dispatch(
+                        saveVisualisationRenderStatusAction({
+                            visualizationId: visualization.id,
+                            assistantMessageId: messageId,
+                            status: "UNEXPECTED_ERROR",
+                        }),
+                    );
+                    break;
+            }
+        },
+        [dispatch, visualization.id, messageId],
+    );
 
-    const handleLoadingChanged: OnLoadingChanged = ({ isLoading }) => {
+    const handleLoadingChanged: OnLoadingChanged = useCallback(({ isLoading }) => {
         setVisLoading(isLoading);
-    };
+    }, []);
 
     const renderMenuItems = () => {
         return (
@@ -314,7 +325,7 @@ function VisualizationContentsComponentCore({
         );
     };
 
-    const descId = useId();
+    const moreButtonDescId = useId();
 
     return (
         <div className={className}>
@@ -325,51 +336,77 @@ function VisualizationContentsComponentCore({
                         "gd-gen-ai-chat__visualization",
                         `gd-gen-ai-chat__visualization--${visualization.visualizationType.toLowerCase()}`,
                         {
-                            active: isMenuButtonOpen || isHovered,
+                            active: isMenuButtonOpen,
                         },
                     )}
-                    onPointerEnter={() => setHovered(true)}
-                    onPointerLeave={() => setHovered(false)}
                 >
-                    {config.canAnalyze && !hasVisError && !visLoading
+                    {config.canAnalyze
                         ? (() => {
                               return (
-                                  <div
-                                      id={MORE_MENU_BUTTON_ID}
-                                      className={cx(
-                                          "gd-gen-ai-chat__visualization__save",
-                                          dropdownAnchorClassName,
-                                      )}
-                                  >
-                                      <UiTooltip
-                                          disabled={!tooltipText}
-                                          triggerBy={["focus", "hover"]}
-                                          arrowPlacement="bottom"
-                                          hoverOpenDelay={100}
-                                          anchor={
-                                              <UiIconButton
-                                                  dataTestId="gen-ai-visualization-menu-button"
-                                                  onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                                  icon="ellipsisVertical"
-                                                  accessibilityConfig={{
-                                                      role: "button",
-                                                      ariaLabel: tooltipText,
-                                                      ariaDescribedBy: descId,
-                                                      isExpanded: isMenuButtonOpen,
-                                                      popupId: menuId,
-                                                      ariaHaspopup: "menu",
-                                                  }}
-                                                  isActive={isMenuButtonOpen}
-                                              />
-                                          }
-                                          content={tooltipText}
-                                      />
-                                      {isMenuButtonOpen ? renderMenuItems() : null}
+                                  <div className={cx("gd-gen-ai-chat__visualization__buttons")}>
+                                      <div className={cx("gd-gen-ai-chat__visualization__table")}>
+                                          <UiTooltip
+                                              triggerBy={["focus", "hover"]}
+                                              arrowPlacement="bottom"
+                                              anchor={
+                                                  <UiIconButton
+                                                      dataTestId="gen-ai-visualization-toggle-button"
+                                                      onClick={() => {
+                                                          setIsTable(!isTable);
+                                                      }}
+                                                      icon={isTable ? "visualization" : "table"}
+                                                      accessibilityConfig={{
+                                                          role: "button",
+                                                          ariaLabel: isTable
+                                                              ? toggleButtonOriginalTooltipText
+                                                              : toggleButtonTableTooltipText,
+                                                      }}
+                                                  />
+                                              }
+                                              content={
+                                                  isTable
+                                                      ? toggleButtonOriginalTooltipText
+                                                      : toggleButtonTableTooltipText
+                                              }
+                                          />
+                                      </div>
+                                      <div
+                                          id={MORE_MENU_BUTTON_ID}
+                                          className={cx(
+                                              "gd-gen-ai-chat__visualization__save",
+                                              dropdownAnchorClassName,
+                                          )}
+                                      >
+                                          <UiTooltip
+                                              disabled={!moreButtonTooltipText}
+                                              triggerBy={["focus", "hover"]}
+                                              arrowPlacement="bottom"
+                                              anchor={
+                                                  <UiIconButton
+                                                      dataTestId="gen-ai-visualization-menu-button"
+                                                      onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
+                                                      icon="ellipsisVertical"
+                                                      isDisabled={hasVisError || visLoading}
+                                                      accessibilityConfig={{
+                                                          role: "button",
+                                                          ariaLabel: moreButtonTooltipText,
+                                                          ariaDescribedBy: moreButtonDescId,
+                                                          isExpanded: isMenuButtonOpen,
+                                                          popupId: menuId,
+                                                          ariaHaspopup: "menu",
+                                                      }}
+                                                      isActive={isMenuButtonOpen}
+                                                  />
+                                              }
+                                              content={moreButtonTooltipText}
+                                          />
+                                          {isMenuButtonOpen ? renderMenuItems() : null}
+                                      </div>
                                   </div>
                               );
                           })()
                         : null}
-                    <div className="gd-gen-ai-chat__visualization__title" id={descId}>
+                    <div className="gd-gen-ai-chat__visualization__title" id={moreButtonDescId}>
                         <MarkdownComponent allowMarkdown={useMarkdown}>
                             {visualization.title}
                         </MarkdownComponent>
@@ -382,6 +419,20 @@ function VisualizationContentsComponentCore({
                     >
                         <VisualizationErrorBoundary>
                             {(() => {
+                                if (isTable) {
+                                    return renderTable(
+                                        intl.locale,
+                                        metrics,
+                                        dimensions,
+                                        filters,
+                                        sorts,
+                                        enableNewPivotTable,
+                                        handleSdkError,
+                                        handleLoadingChanged,
+                                        handleSuccess,
+                                    );
+                                }
+
                                 switch (visualization.visualizationType) {
                                     case "BAR":
                                         return renderBarChart(
@@ -438,6 +489,7 @@ function VisualizationContentsComponentCore({
                                             dimensions,
                                             filters,
                                             sorts,
+                                            enableNewPivotTable,
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
@@ -636,21 +688,25 @@ const renderTable = (
     dimensions: IAttribute[],
     filters: IFilter[],
     sortBy: ISortItem[],
+    enableNewPivotTable: boolean,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
-) => (
-    <PivotTable
-        locale={locale}
-        measures={metrics}
-        rows={dimensions}
-        filters={filters}
-        sortBy={sortBy}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-    />
-);
+) => {
+    const TableComponent = enableNewPivotTable ? PivotTableNext : PivotTable;
+    return (
+        <TableComponent
+            locale={locale}
+            measures={metrics}
+            rows={dimensions}
+            filters={filters}
+            sortBy={sortBy}
+            onError={onError}
+            onLoadingChanged={onLoadingChanged}
+            onExportReady={onSuccess}
+        />
+    );
+};
 
 const renderHeadline = (
     locale: string,
@@ -682,9 +738,15 @@ const mapDispatchToProps = {
     onCopyToClipboard: copyToClipboardAction,
 };
 
-const mapStateToProps = (state: RootState): Pick<VisualizationContentsProps, "colorPalette"> => ({
-    colorPalette: colorPaletteSelector(state),
-});
+const mapStateToProps = (
+    state: RootState,
+): Pick<VisualizationContentsProps, "colorPalette" | "enableNewPivotTable"> => {
+    const settings = settingsSelector(state);
+    return {
+        colorPalette: colorPaletteSelector(state),
+        enableNewPivotTable: settings?.enableNewPivotTable,
+    };
+};
 
 export const VisualizationContentsComponent: any = connect(
     mapStateToProps,

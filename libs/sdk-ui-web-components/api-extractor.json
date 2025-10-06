@@ -14,5 +14,5 @@
         "enabled": true,
         "tsdocMetadataFilePath": "<projectFolder>/esm/tsdoc-metadata.json"
     },
-    "mainEntryPointFilePath": "<projectFolder>/esm/index.d.ts"
+    "mainEntryPointFilePath": "<projectFolder>/temp/index.d.ts"
 }

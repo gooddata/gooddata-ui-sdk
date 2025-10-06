@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap } from "lodash-es";
 
 import { IDashboardLayoutSection } from "@gooddata/sdk-model";
 
@@ -49,7 +48,7 @@ export class DashboardLayoutSectionsFacade<TWidget> implements IDashboardLayoutS
     public flatMap<TReturn>(
         callback: (section: IDashboardLayoutSectionFacade<TWidget>) => TReturn[],
     ): TReturn[] {
-        return flatMap(this.sectionFacades, callback);
+        return this.sectionFacades.flatMap(callback);
     }
 
     public count(): number {

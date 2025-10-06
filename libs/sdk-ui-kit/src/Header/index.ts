@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 export { AppHeader } from "./Header.js";
 export type { IWorkspacePickerHomeFooterProps } from "./WorkspacePickerHomeFooter.js";
 export { WorkspacePickerHomeFooter } from "./WorkspacePickerHomeFooter.js";
@@ -18,3 +19,4 @@ export * from "./generateHeaderMenuItemsGroups.js";
 export * from "./activateHeaderMenuItems.js";
 export type * from "./typings.js";
 export * from "./headerSearchContext.js";
+export { HEADER_CHAT_BUTTON_ID } from "./HeaderChatButton.js";

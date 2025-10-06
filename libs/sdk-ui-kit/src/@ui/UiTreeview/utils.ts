@@ -171,14 +171,15 @@ export function getPrevPathIndex<T>(
     const currentKey = convertPathToKey(path);
 
     let currentIndex = map.findIndex(([key]) => key === currentKey);
-    // Index not found
+
+    // Index not found → prefer last focusable visible item
     if (currentIndex < 0) {
-        const first = map[0];
-        const [key, item, expanded] = first;
+        const last = map[map.length - 1];
+        const [key, item, expanded] = last;
         if (isFocusableItem(item) && expanded) {
             return convertKeyToPath(key);
         }
-        return getNextPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
+        return getPrevPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
     }
 
     // Previous item index
@@ -213,14 +214,15 @@ export function getNextPathIndex<T>(
 
     let currentIndex = map.findIndex(([key]) => key === currentKey);
     currentIndex = currentIndex === -1 ? map.length : currentIndex;
-    // Index not found
+
+    // Index not found → prefer first focusable visible item
     if (currentIndex > map.length - 1) {
-        const last = map[map.length - 1];
-        const [key, item, expanded] = last;
+        const first = map[0];
+        const [key, item, expanded] = first;
         if (isFocusableItem(item) && expanded) {
             return convertKeyToPath(key);
         }
-        return getPrevPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
+        return getNextPathIndex(items, getState, convertKeyToPath(key), isFocusableItem);
     }
 
     // Next item index

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { identity } from "lodash-es";
+
 import { describe, expect, it } from "vitest";
 
 import { dateStringComparatorFactory, stringComparatorFactory } from "../comparators.js";
@@ -14,7 +14,7 @@ describe("stringComparatorFactory", () => {
         ${undefined} | ${"b"}       | ${1}
         ${undefined} | ${undefined} | ${0}
     `("should compare $a and $b as $expected", ({ a, b, expected }) => {
-        const comparator = stringComparatorFactory<string | undefined>(identity);
+        const comparator = stringComparatorFactory<string | undefined>((v) => v);
         expect(comparator("asc")(a, b)).toEqual(expected);
     });
 });
@@ -29,7 +29,7 @@ describe("dateStringComparatorFactory", () => {
         ${undefined}             | ${"2020-10-12 12:00:00"} | ${1}
         ${undefined}             | ${undefined}             | ${0}
     `("should compare $a and $b as $expected", ({ a, b, expected }) => {
-        const comparator = dateStringComparatorFactory<string | undefined>(identity);
+        const comparator = dateStringComparatorFactory<string | undefined>((v) => v);
         expect(Math.sign(comparator("asc")(a, b))).toEqual(expected);
     });
 });

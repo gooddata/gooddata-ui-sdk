@@ -53,7 +53,6 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
-        enableDuplicatedLabelValuesInAttributeFilter = true,
         enableAttributeFilterVirtualised,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         enableDashboardFiltersApplyWithoutLoading = false,
@@ -114,9 +113,6 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     selectFirst={selectFirst}
                     disabled={disabled}
                     customIcon={customIcon}
-                    enableDuplicatedLabelValuesInAttributeFilter={
-                        enableDuplicatedLabelValuesInAttributeFilter
-                    }
                     enableImmediateAttributeFilterDisplayAsLabelMigration={
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }

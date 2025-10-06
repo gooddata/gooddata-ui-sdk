@@ -155,13 +155,13 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
     const [selection, setSelection] = useState<T[]>(initialValue ?? []);
     const [isInverted, setIsInverted] = useState<boolean>(initialIsInverted ?? true);
 
-    const selectionStatusText = useInvertableSelectionStatusText(
+    const { text, count } = useInvertableSelectionStatusText(
         committedSelection,
         committedIsInverted,
         getItemTitle,
     );
 
-    const buttonText = title ? `${title}: ${selectionStatusText}` : selectionStatusText;
+    const buttonText = title ? `${title}: ${text}` : text;
 
     const onSearch = (searchString: string) => {
         setSearchString(searchString);
@@ -194,6 +194,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
             (({ toggleDropdown }) => (
                 <UiButton
                     label={buttonText}
+                    badgeAfter={count}
                     onClick={toggleDropdown}
                     size="small"
                     variant="secondary"
@@ -201,7 +202,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                 />
             ))
         );
-    }, [buttonText, props.renderButton]);
+    }, [buttonText, count, props.renderButton]);
 
     return (
         <Dropdown

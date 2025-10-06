@@ -22,7 +22,7 @@ export function useInvertableSelectionStatusText<T>(
     selectedItems: T[],
     isInverted: boolean,
     getItemTitle: (item: T) => string,
-) {
+): { text: string; count: number | undefined; whole: string } {
     const intl = useIntl();
 
     const isSelectionEmpty = selectedItems.length === 0;
@@ -47,11 +47,20 @@ export function useInvertableSelectionStatusText<T>(
             intl.formatMessage({ id: "gs.list.except" }),
         );
     }
+
+    let count = undefined;
+    const selectedChunks = stringChunks.slice();
     if (!isAll && !isSelectionEmpty) {
         stringChunks.push(selectionString, `(${selectedItems.length})`);
+        selectedChunks.push(selectionString);
+        count = selectedItems.length;
     }
 
-    return stringChunks.join(" ");
+    return {
+        count,
+        text: selectedChunks.join(" "),
+        whole: stringChunks.join(" "),
+    };
 }
 
 /**

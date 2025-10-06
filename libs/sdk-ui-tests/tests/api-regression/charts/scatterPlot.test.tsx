@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 // Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
@@ -33,8 +32,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreScatterPlot", async () => {
 });
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioAndDescription<IScatterPlotProps>> = flatMap(
-        scatterPlotScenarios,
+    const Scenarios: Array<ScenarioAndDescription<IScatterPlotProps>> = scatterPlotScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 

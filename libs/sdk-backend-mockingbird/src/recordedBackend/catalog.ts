@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     IWorkspaceCatalog,
@@ -285,7 +284,7 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
         super(groups, items);
 
         // without this inference starts thinking the identity may return undefined :/
-        const typedIdentity: <T>(obj: T) => T = identity;
+        const typedIdentity: <T>(obj: T) => T = (v) => v;
         const {
             availableAttributes = typedIdentity,
             availableMeasures = typedIdentity,

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
@@ -46,6 +45,6 @@ export class AttributeDisplayFormMetadataObjectBuilder<
  */
 export const newAttributeDisplayFormMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder> = (v) => v,
 ): IAttributeDisplayFormMetadataObject =>
     builderFactory(AttributeDisplayFormMetadataObjectBuilder, { type: "displayForm", ref }, modifications);

@@ -68,7 +68,6 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const drillDownInsight = modifyBucketsAttributesForDrillDown(
             insight,
@@ -78,7 +77,6 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

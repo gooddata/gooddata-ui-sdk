@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import * as path from "path";
 
-import { flatMap } from "lodash-es";
+import * as path from "path";
 
 import { IRecording, isNonNullRecording, readJsonSync } from "./common.js";
 import { InsightRecording } from "./insights.js";
@@ -33,5 +32,5 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
 }
 
 export async function discoverInsightRecordings(recordingDir: string): Promise<IRecording[]> {
-    return flatMap(findFiles(recordingDir, RecordingFiles.Insights.Index), loadRecordings);
+    return findFiles(recordingDir, RecordingFiles.Insights.Index).flatMap(loadRecordings);
 }

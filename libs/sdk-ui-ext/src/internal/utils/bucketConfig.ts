@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep, includes, isEmpty, isEqual, set } from "lodash-es";
+import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
 
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
@@ -35,10 +35,8 @@ export function configureOverTimeComparison(
     const { supportedOverTimeComparisonTypes } = uiConfig;
 
     const appliedComparisonType = getComparisonTypeFromFilters(filters);
-    const isSelectedComparisonSupportedByVis = includes(
-        supportedOverTimeComparisonTypes,
-        appliedComparisonType,
-    );
+    const isSelectedComparisonSupportedByVis =
+        supportedOverTimeComparisonTypes.includes(appliedComparisonType);
     const derivedOfTypeToKeep = getTypeOfDerivedToKeep(
         supportedOverTimeComparisonTypes,
         appliedComparisonType,

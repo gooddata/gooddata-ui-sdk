@@ -239,9 +239,9 @@ export const useInsightExport = (config: {
                     );
                 },
                 headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
-                mergeHeaders: true,
+                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
                 mergeHeadersTitle: null,
-                includeFilterContext: true,
+                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
                 filterContextVisible: true,
                 filterContextTitle: null,
                 filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
@@ -267,8 +267,8 @@ export const useInsightExport = (config: {
                         title,
                     }).finally(() => setIsExporting(false));
                 },
-                includeFilterContext: true,
-                mergeHeaders: true,
+                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
+                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
                 filterContextVisible: false,
             });
         }
@@ -276,6 +276,8 @@ export const useInsightExport = (config: {
         dashboardTabularExportEnabled,
         openXlsxDialog,
         intl,
+        settings?.["cellMergedByDefault"],
+        settings?.["activeFiltersByDefault"],
         closeXlsxDialog,
         exportToTabular,
         widget,
@@ -302,7 +304,7 @@ export const useInsightExport = (config: {
     const canExportXLSX = useDashboardSelector(selectIsExportableToXLSX);
     const canExportCSVAndXLSX = isInsightExportable && canExportCSV && canExportXLSX;
 
-    const isExportRawVisible = settings["enableRawExports"] === true && canExportCSVAndXLSX;
+    const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
 
     const isExportPngImageVisible = useDashboardSelector(selectIsExportableToPngImage);
 
@@ -311,10 +313,13 @@ export const useInsightExport = (config: {
         (ref) => widgetRef && ref && areObjRefsEqual(ref, widgetRef),
     );
 
+    const isAccessibilityModeEnabled = settings.enableAccessibilityMode === true;
+
     const isExportPdfTabularVisible =
         useDashboardSelector(selectIsExportableToPdfTabular) &&
         !!insight &&
-        (insightVisualizationType(insight) === VisualizationTypes.TABLE || isWidgetShownAsTable);
+        (insightVisualizationType(insight) === VisualizationTypes.TABLE || isWidgetShownAsTable) &&
+        !isAccessibilityModeEnabled;
 
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;

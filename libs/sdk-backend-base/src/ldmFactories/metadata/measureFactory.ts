@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IMeasureMetadataObject, IUser, ObjRef } from "@gooddata/sdk-model";
 
@@ -66,6 +65,6 @@ export class MeasureMetadataObjectBuilder<
  */
 export const newMeasureMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<MeasureMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<MeasureMetadataObjectBuilder> = (v) => v,
 ): IMeasureMetadataObject =>
     builderFactory(MeasureMetadataObjectBuilder, { type: "measure", ref }, modifications);

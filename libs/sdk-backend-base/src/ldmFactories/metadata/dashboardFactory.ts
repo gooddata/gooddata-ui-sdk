@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IDashboardMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
@@ -26,6 +25,6 @@ export class DashboardMetadataObjectBuilder<
  */
 export const newDashboardMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<DashboardMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<DashboardMetadataObjectBuilder> = (v) => v,
 ): IDashboardMetadataObject =>
     builderFactory(DashboardMetadataObjectBuilder, { type: "analyticalDashboard", ref }, modifications);

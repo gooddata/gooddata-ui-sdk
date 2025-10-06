@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { flatMap, isEqual } from "lodash-es";
+
+import { isEqual } from "lodash-es";
 
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import {
@@ -58,34 +59,36 @@ export function convertTotals(def: IExecutionDefinition): Total[] {
         };
     });
 
-    const totals = flatMap(dimensions, (dim, dimIdx) => {
-        const mappedTotals = dim.totals?.map((total) => {
-            const tigerTotal: Total = {
-                localIdentifier: totalLocalIdentifier(total, dimIdx),
-                function: convertTotalType(total.type),
-                metric: total.measureIdentifier,
-                totalDimensions: convertTotalDimensions(
-                    total,
-                    dim,
-                    dimensionLocalIdentifier(dimIdx),
-                    allTotalDimensions,
-                ),
-            };
-            return tigerTotal;
-        });
+    const totals = dimensions
+        .flatMap((dim, dimIdx) => {
+            const mappedTotals = dim.totals?.map((total) => {
+                const tigerTotal: Total = {
+                    localIdentifier: totalLocalIdentifier(total, dimIdx),
+                    function: convertTotalType(total.type),
+                    metric: total.measureIdentifier,
+                    totalDimensions: convertTotalDimensions(
+                        total,
+                        dim,
+                        dimensionLocalIdentifier(dimIdx),
+                        allTotalDimensions,
+                    ),
+                };
+                return tigerTotal;
+            });
 
-        // need to send these totals ordered to the backend so that we get executed totals in correct order
-        // -- order by total function and also by measure order
-        const totalsWithOrders = mappedTotals?.map((total) =>
-            enrichTotalWithMeasureIndex(total, def.measures),
-        );
-        return totalsWithOrders
-            ?.sort((total1, total2) => {
-                const fnOrder = total1.functionOrder - total2.functionOrder;
-                return fnOrder === 0 ? total1.order - total2.order : fnOrder;
-            })
-            .map((t) => t.total);
-    }).filter((total): total is Total => total !== undefined);
+            // need to send these totals ordered to the backend so that we get executed totals in correct order
+            // -- order by total function and also by measure order
+            const totalsWithOrders = mappedTotals?.map((total) =>
+                enrichTotalWithMeasureIndex(total, def.measures),
+            );
+            return totalsWithOrders
+                ?.sort((total1, total2) => {
+                    const fnOrder = total1.functionOrder - total2.functionOrder;
+                    return fnOrder === 0 ? total1.order - total2.order : fnOrder;
+                })
+                .map((t) => t.total);
+        })
+        .filter((total): total is Total => total !== undefined);
 
     /**
      * With new column totals, we need to have in consideration the cases where same totals/subtotals are selected for rows and columns.

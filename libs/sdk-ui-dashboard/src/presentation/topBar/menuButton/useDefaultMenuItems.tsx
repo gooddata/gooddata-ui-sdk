@@ -22,6 +22,7 @@ import {
     selectMenuButtonItemsVisibility,
     selectPdfExportVisible,
     selectSaveAsVisible,
+    selectSettings,
     selectSettingsVisible,
     selectSlideShowExportVisible,
     uiActions,
@@ -69,6 +70,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isSmall = useMediaQuery("<=md");
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
+    const settings = useDashboardSelector(selectSettings);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
 
     const {
@@ -147,14 +149,23 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 );
             },
             headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
-            mergeHeaders: true,
+            mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
             mergeHeadersTitle: null,
-            includeFilterContext: true,
+            includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
             filterContextVisible: true,
             filterContextTitle: null,
             filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
         });
-    }, [isNewDashboard, openDialog, intl, closeDialog, exportToTabular, dashboardTitle]);
+    }, [
+        isNewDashboard,
+        openDialog,
+        intl,
+        settings?.["cellMergedByDefault"],
+        settings?.["activeFiltersByDefault"],
+        closeDialog,
+        exportToTabular,
+        dashboardTitle,
+    ]);
 
     const { exportDashboardToPdfPresentation, exportDashboardToPdfPresentationStatus } =
         useExportDashboardToPdfPresentation();

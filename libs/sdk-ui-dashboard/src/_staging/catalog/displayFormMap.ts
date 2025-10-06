@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
-
 import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,
@@ -27,9 +25,9 @@ export function createDisplayFormMap(
     dateDatasets: ICatalogDateDataset[],
     strictTypeChecking: boolean = false,
 ): ObjRefMap<IAttributeDisplayFormMetadataObject> {
-    const nonDateDisplayForms = flatMap(attributes, (a) => [...a.displayForms, ...a.geoPinDisplayForms]);
-    const dateDisplayForms = flatMap(dateDatasets, (d) =>
-        flatMap(d.dateAttributes, (a) => a.attribute.displayForms),
+    const nonDateDisplayForms = attributes.flatMap((a) => [...a.displayForms, ...a.geoPinDisplayForms]);
+    const dateDisplayForms = dateDatasets.flatMap((d) =>
+        d.dateAttributes.flatMap((a) => a.attribute.displayForms),
     );
 
     return newDisplayFormMap([...nonDateDisplayForms, ...dateDisplayForms], strictTypeChecking);

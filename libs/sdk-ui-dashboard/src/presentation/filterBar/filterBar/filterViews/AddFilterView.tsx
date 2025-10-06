@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Button, Checkbox, Input, Typography, UiFocusManager } from "@gooddata/sdk-ui-kit";
+import { Button, Checkbox, Input, UiFocusManager, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { saveFilterView, useDashboardDispatch } from "../../../../model/index.js";
 
@@ -32,16 +32,13 @@ export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
     return (
         <UiFocusManager enableFocusTrap enableAutofocus>
             <div className="configuration-panel configuration-panel__filter-view__add">
-                <div className="configuration-panel-header">
-                    <Button onClick={onClose} className={"configuration-panel-header-title-button"}>
-                        <Typography tagName="h3" className="configuration-panel-header-title">
-                            <div className="gd-title-with-icon">
-                                <span className="gd-icon-navigateleft" />
-                                <FormattedMessage id="filters.filterViews.add.title" />
-                            </div>
-                        </Typography>
-                    </Button>
-                </div>
+                <UiSubmenuHeader
+                    title={intl.formatMessage({ id: "filters.filterViews.add.title" })}
+                    onBack={onClose}
+                    backAriaLabel={intl.formatMessage({ id: "menu.back" })}
+                    useShortenedTitle={false}
+                    height="medium"
+                />
                 <div className="configuration-category">
                     <Input
                         value={name}

@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { AxiosPromise, GenericAbortSignal } from "axios";
-import { flatMap, merge, uniqBy } from "lodash-es";
+import { merge, uniqBy } from "lodash-es";
 
 import { ITigerClient } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
@@ -248,10 +248,10 @@ export class MetadataUtilities {
      */
     public static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T {
         return {
-            data: flatMap(pages, (page) => page.data) as any,
+            data: pages.flatMap((page: any) => page.data) as any,
             included: uniqBy(
                 // we need the as any because the JsonApiDashboardPluginOutList does not have the "included" property
-                flatMap(pages, (page) => (page as any).included ?? []),
+                pages.flatMap((page: any) => (page as any).included ?? []),
                 (item: any) => `${item.id}_${item.type}`,
             ) as any,
         } as T;

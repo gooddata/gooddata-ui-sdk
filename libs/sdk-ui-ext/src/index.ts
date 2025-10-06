@@ -86,7 +86,6 @@ export function getInsightWithAppliedDrillDown(
     drillEvent: IDrillEvent,
     drillDefinition: IDrillDownDefinition,
     backendSupportsElementUris: boolean,
-    enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ): IInsight {
     return FullVisualizationCatalog.forInsight(insight).applyDrillDown(
         insight,
@@ -95,7 +94,6 @@ export function getInsightWithAppliedDrillDown(
             event: drillEvent,
         },
         backendSupportsElementUris,
-        enableDuplicatedLabelValuesInAttributeFilter,
     );
 }
 

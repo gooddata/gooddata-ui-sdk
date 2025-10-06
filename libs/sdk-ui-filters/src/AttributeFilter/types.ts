@@ -113,7 +113,7 @@ export interface IAttributeFilterCoreProps {
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
-     * if enableDuplicatedLabelValuesInAttributeFilter is true, then this filter definition needs to use primary label of given attribute
+     * This filter definition needs to use primary label of given attribute
      */
     filter?: IAttributeFilter;
 
@@ -301,11 +301,6 @@ export interface IAttributeFilterCoreProps {
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Enables duplicated values in secondary labels.
-     */
-    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     /**
      * Enables the migration of displayAsLabel to be immediately reported to the parent app.

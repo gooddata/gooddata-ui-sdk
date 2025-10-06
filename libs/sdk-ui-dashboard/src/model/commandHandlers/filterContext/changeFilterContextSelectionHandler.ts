@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { AnyAction } from "@reduxjs/toolkit";
 import { compact, partition, uniqBy } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -31,7 +32,6 @@ import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/
 import { ChangeFilterContextSelection } from "../../commands/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 import {
     IUpdateAttributeFilterSelectionPayload,
@@ -71,16 +71,12 @@ export function* changeFilterContextSelectionHandler(
         }
     });
 
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
-
     const uniqueFilters = uniqBy(normalizedFilters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
             ? filter.attributeFilter.displayForm
             : filter.dateFilter.dataSet;
         let config;
-        if (isDashboardAttributeFilter(filter) && enableDuplicatedLabelValuesInAttributeFilter) {
+        if (isDashboardAttributeFilter(filter)) {
             config = attributeFilterConfigs.find(
                 (config) => config.localIdentifier === filter.attributeFilter.localIdentifier,
             );
@@ -196,9 +192,6 @@ function* getAttributeFiltersUpdateActions(
 ): SagaIterator<AnyAction[]> {
     const updateActions: AnyAction[] = [];
     const handledLocalIds = new Set<string>();
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
@@ -222,7 +215,7 @@ function* getAttributeFiltersUpdateActions(
         let foundByDisplayAsLabel = false;
         let foundByDashboardFilterDisplayAsLabel = false;
 
-        if (enableDuplicatedLabelValuesInAttributeFilter && !dashboardFilter) {
+        if (!dashboardFilter) {
             const result = yield call(
                 getDashboardFilterByDisplayAsLabelMatching,
                 attributeFilter,
@@ -243,8 +236,6 @@ function* getAttributeFiltersUpdateActions(
                     filterContextActions.changeAttributeDisplayForm({
                         filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
                         displayForm: filterRef,
-                        supportsElementUris: ctx.backend.capabilities.supportsElementUris,
-                        enableDuplicatedLabelValuesInAttributeFilter,
                     }),
                     // backup current displayForm to the displayAsLabel
                     attributeFilterConfigsActions.changeDisplayAsLabel({
@@ -260,8 +251,6 @@ function* getAttributeFiltersUpdateActions(
                     filterContextActions.changeAttributeDisplayForm({
                         filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
                         displayForm: filterRef,
-                        supportsElementUris: ctx.backend.capabilities.supportsElementUris,
-                        enableDuplicatedLabelValuesInAttributeFilter,
                     }),
                     // clear displayAsLabel
                     attributeFilterConfigsActions.changeDisplayAsLabel({

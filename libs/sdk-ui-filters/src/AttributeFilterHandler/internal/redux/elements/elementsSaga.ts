@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { omit } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
@@ -40,10 +41,8 @@ export function* elementsSaga(
 
     const staticElements: ReturnType<typeof selectStaticElements> = yield select(selectStaticElements);
 
-    const { enableDuplicatedLabelValuesInAttributeFilter } = context;
-
     const filterByPrimaryLabelProp =
-        enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsLabelRef && !options.search // when searching by string, we need to apply it to the displayAsLabel directly not primary label
+        attributeFilterDisplayAsLabelRef && !options.search // when searching by string, we need to apply it to the displayAsLabel directly not primary label
             ? { filterByPrimaryLabel: true }
             : {};
 
@@ -56,10 +55,7 @@ export function* elementsSaga(
         loadElements,
         context,
         {
-            displayFormRef:
-                enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsLabelRef
-                    ? attributeFilterDisplayAsLabelRef
-                    : attributeFilterDisplayFormRef,
+            displayFormRef: attributeFilterDisplayAsLabelRef || attributeFilterDisplayFormRef,
             ...allOptions,
         },
         {

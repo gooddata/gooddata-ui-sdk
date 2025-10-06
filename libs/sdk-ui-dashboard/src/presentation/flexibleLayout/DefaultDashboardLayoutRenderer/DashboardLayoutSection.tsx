@@ -2,8 +2,6 @@
 
 import { ReactElement, useMemo } from "react";
 
-import { flatMap } from "lodash-es";
-
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
@@ -120,22 +118,25 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
             );
         }
 
-        return flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
-            return (
-                <DashboardLayoutGridRow
-                    key={index.toString()}
-                    section={section}
-                    items={itemsInRow}
-                    gridRowRenderer={gridRowRenderer}
-                    itemKeyGetter={itemKeyGetter}
-                    itemRenderer={itemRenderer}
-                    widgetRenderer={widgetRenderer}
-                    renderMode={renderMode}
-                    getLayoutDimensions={getLayoutDimensions}
-                    rowIndex={index}
-                />
-            );
-        });
+        return section
+            .items()
+            .asGridRows(screen)
+            .flatMap((itemsInRow, index) => {
+                return (
+                    <DashboardLayoutGridRow
+                        key={index.toString()}
+                        section={section}
+                        items={itemsInRow}
+                        gridRowRenderer={gridRowRenderer}
+                        itemKeyGetter={itemKeyGetter}
+                        itemRenderer={itemRenderer}
+                        widgetRenderer={widgetRenderer}
+                        renderMode={renderMode}
+                        getLayoutDimensions={getLayoutDimensions}
+                        rowIndex={index}
+                    />
+                );
+            });
     }, [
         getLayoutDimensions,
         gridRowRenderer,

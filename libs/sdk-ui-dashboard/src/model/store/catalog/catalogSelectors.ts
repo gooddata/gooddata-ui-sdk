@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { flatMap, isEmpty, negate } from "lodash-es";
+import { isEmpty, negate } from "lodash-es";
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -66,7 +66,7 @@ export const selectHasCatalogAttributes: DashboardSelector<boolean> = createSele
  */
 export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]> =
     createSelector(selectCatalogAttributes, (attributes) => {
-        return flatMap(attributes, (attribute) => [
+        return attributes.flatMap((attribute) => [
             ...attribute.displayForms,
             ...attribute.geoPinDisplayForms,
         ]);
@@ -158,7 +158,7 @@ export const selectCatalogIsLoaded: DashboardSelector<boolean> = createSelector(
 export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribute[]> = createSelector(
     selectCatalogDateDatasets,
     (dateDatasets) => {
-        return flatMap(dateDatasets, (dd) => dd.dateAttributes);
+        return dateDatasets.flatMap((dd) => dd.dateAttributes);
     },
 );
 
@@ -297,7 +297,7 @@ export const selectAllCatalogAttributesMap: DashboardSelector<
 > = createSelector(
     [selectCatalogAttributes, selectCatalogDateDatasets, selectBackendCapabilities],
     (attributes, dateDatasets, capabilities) => {
-        const dateAttributes = flatMap(dateDatasets, (d) => d.dateAttributes);
+        const dateAttributes = dateDatasets.flatMap((d) => d.dateAttributes);
 
         return newCatalogAttributeMap(
             [...attributes, ...dateAttributes],
@@ -328,7 +328,7 @@ export const selectAllCatalogMeasuresMap: DashboardSelector<ObjRefMap<ICatalogMe
 export const selectCatalogDateAttributeToDataset: DashboardSelector<
     ObjRefMap<CatalogDateAttributeWithDataset>
 > = createSelector([selectCatalogDateDatasets, selectBackendCapabilities], (dateDatasets, capabilities) => {
-    const attributesWithDatasets: CatalogDateAttributeWithDataset[] = flatMap(dateDatasets, (dataset) =>
+    const attributesWithDatasets: CatalogDateAttributeWithDataset[] = dateDatasets.flatMap((dataset) =>
         dataset.dateAttributes.map((attribute) => {
             return {
                 attribute,

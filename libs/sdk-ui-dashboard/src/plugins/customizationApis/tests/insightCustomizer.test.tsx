@@ -3,7 +3,6 @@
 import { FC } from "react";
 
 import { render } from "@testing-library/react";
-import { includes } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -356,7 +355,7 @@ describe("insight customizer", () => {
 
         it("should only use only those decorators that match criteria and then use custom component", () => {
             const factory1 = createTestDecoratorFactory("decorator1", (insight) =>
-                includes(insightTags(insight), "tag1"),
+                insightTags(insight).includes("tag1"),
             );
             const factory2 = createTestDecoratorFactory(
                 "decorator2",

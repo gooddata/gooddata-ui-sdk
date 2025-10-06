@@ -41,6 +41,7 @@ export interface UiButtonProps {
         | VariantTooltip
         | VariantLink;
     iconBefore?: IconType;
+    badgeAfter?: number;
     iconAfter?: IconType;
     label: string;
     isDisabled?: boolean;
@@ -78,6 +79,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             isLoading,
             iconBefore,
             iconAfter,
+            badgeAfter,
             onClick,
             onKeyDown,
             dataId,
@@ -121,6 +123,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 <span className={e("text")} style={{ maxWidth }}>
                     {label}
                 </span>
+                {badgeAfter === undefined ? null : <span className={e("badge")}>({badgeAfter})</span>}
                 {iconAfter ? (
                     <UiIcon
                         type={iconAfter}

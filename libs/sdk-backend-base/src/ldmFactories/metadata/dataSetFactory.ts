@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IDataSetMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
@@ -26,6 +25,6 @@ export class DataSetMetadataObjectBuilder<
  */
 export const newDataSetMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<DataSetMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<DataSetMetadataObjectBuilder> = (v) => v,
 ): IDataSetMetadataObject =>
     builderFactory(DataSetMetadataObjectBuilder, { type: "dataSet", ref }, modifications);

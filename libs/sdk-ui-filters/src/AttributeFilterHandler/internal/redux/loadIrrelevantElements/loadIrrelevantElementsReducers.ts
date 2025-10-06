@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -10,7 +9,7 @@ import { AttributeFilterReducer } from "../store/state.js";
 
 const loadIrrelevantElementsRequest: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const loadIrrelevantElementsStart: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
@@ -32,15 +31,15 @@ const loadIrrelevantElementsSuccess: AttributeFilterReducer<
 
 const loadIrrelevantElementsError: AttributeFilterReducer<
     PayloadAction<{ error: GoodDataSdkError; correlation: Correlation }>
-> = identity;
+> = (v) => v;
 
 const loadIrrelevantElementsCancelRequest: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const loadIrrelevantElementsCancel: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 /**
  * @internal

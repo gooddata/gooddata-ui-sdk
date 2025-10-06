@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { flatMap } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import { IntlShape, defineMessages, useIntl } from "react-intl";
 
@@ -102,8 +101,8 @@ const useSupportsEnumeration = (displayFormRef: ObjRef) => {
         return true;
     }
 
-    const dateAttributes = flatMap(dateDatasets, (dateDataset) => dateDataset.dateAttributes);
-    const displayForms = flatMap(dateAttributes, (dateAttribute) => dateAttribute.attribute.displayForms);
+    const dateAttributes = dateDatasets.flatMap((dateDataset) => dateDataset.dateAttributes);
+    const displayForms = dateAttributes.flatMap((dateAttribute) => dateAttribute.attribute.displayForms);
     const displayFormMap = newDisplayFormMap(displayForms, hasTypeScopedIdentifiers);
     const isDateAttribute = Boolean(displayFormMap.get(displayFormRef));
 

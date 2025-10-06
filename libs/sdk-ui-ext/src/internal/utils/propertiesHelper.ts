@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 // eslint-disable-next-line no-restricted-imports
-import { cloneDeep, flow, get, has, isEmpty, set } from "lodash-es";
+import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
 
 import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -318,24 +318,25 @@ export function getChartSupportedControls(
     controlProperties: IVisualizationProperties | undefined,
     insight: IInsightDefinition,
 ): IVisualizationProperties | undefined {
-    return flow(
-        (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
-        (c) => getLegendConfiguration(c, insight),
-        (c) => getHighchartsAxisNameConfiguration(c),
-        (c) => getDataPointsConfiguration(c),
-    )(controlProperties);
+    return getDataPointsConfiguration(
+        getHighchartsAxisNameConfiguration(
+            getLegendConfiguration(cloneDeep<IVisualizationProperties>(controlProperties ?? {}), insight),
+        ),
+    );
 }
 
 export function getChartSupportedControlsDashboardsEnv(
     controlProperties: IVisualizationProperties | undefined,
     options: IVisProps,
 ): IVisualizationProperties | undefined {
-    return flow(
-        (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
-        (c) => getLegendConfigurationDashboardsEnv(c, options),
-        (c) => getHighchartsAxisNameConfiguration(c),
-        (c) => getDataPointsConfiguration(c),
-    )(controlProperties);
+    return getDataPointsConfiguration(
+        getHighchartsAxisNameConfiguration(
+            getLegendConfigurationDashboardsEnv(
+                cloneDeep<IVisualizationProperties>(controlProperties ?? {}),
+                options,
+            ),
+        ),
+    );
 }
 
 function getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsightDefinition) {

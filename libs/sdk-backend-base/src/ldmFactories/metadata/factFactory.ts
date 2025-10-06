@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { identity } from "lodash-es";
-
 import { IDataSetMetadataObject, IFactMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
@@ -37,5 +35,5 @@ export class FactMetadataObjectBuilder<
  */
 export const newFactMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<FactMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<FactMetadataObjectBuilder> = (v) => v,
 ): IFactMetadataObject => builderFactory(FactMetadataObjectBuilder, { type: "fact", ref }, modifications);

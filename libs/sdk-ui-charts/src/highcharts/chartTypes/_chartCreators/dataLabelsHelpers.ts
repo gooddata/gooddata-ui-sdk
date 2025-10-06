@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
-
 import { ITheme } from "@gooddata/sdk-model";
 
 import {
@@ -155,10 +153,10 @@ export function showStackLabelInAxisRange(
 }
 
 export const hideAllLabels = ({ series }: { series: Highcharts.Series[] }): void =>
-    hideDataLabels(flatMap(series, (s) => s.points));
+    hideDataLabels(series.flatMap((s) => s.points));
 
 export const showAllLabels = ({ series }: { series: Highcharts.Series[] }): void =>
-    showDataLabels(flatMap(series, (s) => s.points));
+    showDataLabels(series.flatMap((s) => s.points));
 
 export function setStackVisibilityByOpacity(stackTotalGroup: Highcharts.SVGAttributes, visible: boolean) {
     stackTotalGroup["attr"]({ opacity: visible ? 1 : 0 });

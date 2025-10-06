@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import {
     IDashboardAttributeFilter,
     ObjRef,
@@ -37,8 +38,6 @@ export interface IConversionResult {
 export function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
-    backendSupportsElementUris: boolean,
-    enableDuplicatedLabelValuesInAttributeFilter: boolean,
     enableAliasTitles = false,
     filtersCount: number = 0,
 ): IConversionResult[] {
@@ -48,10 +47,7 @@ export function convertIntersectionToAttributeFilters(
         .filter(isDrillIntersectionAttributeItem)
         .reduce((result, h: IDrillIntersectionAttributeItem) => {
             const ref = h.attributeHeader.ref;
-            const elementValue =
-                backendSupportsElementUris || enableDuplicatedLabelValuesInAttributeFilter
-                    ? h.attributeHeaderItem.uri
-                    : h.attributeHeaderItem.name;
+            const elementValue = h.attributeHeaderItem.uri;
             const titleObj = enableAliasTitles ? { title: h.attributeHeader.formOf?.name } : {};
             result.push({
                 attributeFilter: {
@@ -63,9 +59,7 @@ export function convertIntersectionToAttributeFilters(
                         ...titleObj,
                     },
                 },
-                ...(enableDuplicatedLabelValuesInAttributeFilter
-                    ? { primaryLabel: h.attributeHeader.primaryLabel }
-                    : {}),
+                primaryLabel: h.attributeHeader.primaryLabel,
             });
             return result;
         }, [] as IConversionResult[]);

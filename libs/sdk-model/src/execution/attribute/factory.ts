@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { cloneDeep, identity, isEmpty } from "lodash-es";
+
+import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
 import { IAttribute, isAttribute } from "./index.js";
@@ -191,7 +192,7 @@ export type AttributeModifications = (builder: AttributeBuilder) => AttributeBui
  */
 export function newAttribute(
     displayFormRefOrId: ObjRef | Identifier,
-    modifications: AttributeModifications = identity,
+    modifications: AttributeModifications = (v) => v,
 ): IAttribute {
     const builder = new AttributeBuilder(displayFormRefOrId);
 
@@ -212,7 +213,7 @@ export function newAttribute(
  */
 export function modifyAttribute(
     attribute: IAttribute,
-    modifications: AttributeModifications = identity,
+    modifications: AttributeModifications = (v) => v,
 ): IAttribute {
     const builder = new AttributeBuilder(attribute);
 

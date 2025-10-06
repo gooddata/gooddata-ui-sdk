@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap, identity, intersection, isEmpty, uniqBy } from "lodash-es";
+
+import { intersection, isEmpty, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAuditable } from "../base/metadata.js";
@@ -778,7 +779,7 @@ export function insightSetBuckets<T extends IInsightDefinition>(
  */
 export function insightModifyItems<T extends IInsightDefinition>(
     insight: T,
-    modifications: BucketItemModifications = identity,
+    modifications: BucketItemModifications = (v) => v,
 ): T {
     invariant(insight, "insight must be specified");
     const buckets: IBucket[] = insightBuckets(insight);
@@ -805,7 +806,7 @@ export function insightModifyItems<T extends IInsightDefinition>(
  */
 export function insightReduceItems<T extends IInsightDefinition>(
     insight: T,
-    reducer: BucketItemReducer = identity,
+    reducer: BucketItemReducer = (v) => v,
 ): T {
     invariant(insight, "insight must be specified");
 
@@ -863,7 +864,7 @@ export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T
             serializeObjRef,
         ),
         inMeasureFilters: uniqBy(
-            flatMap(insightMeasures(insight), (measure) => {
+            insightMeasures(insight).flatMap((measure) => {
                 const filters = measureFilters(measure) ?? [];
 
                 return filters

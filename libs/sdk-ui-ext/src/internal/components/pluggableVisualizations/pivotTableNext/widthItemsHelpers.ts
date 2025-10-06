@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import { includes } from "lodash-es";
-
 import {
     IInsightDefinition,
     areObjRefsEqual,
@@ -111,18 +109,15 @@ const removeInvalidLocators = (
     return columnWidth.measureColumnWidthItem.locators.filter((locator) => {
         // filter out invalid measure locators
         if (isMeasureLocator(locator)) {
-            return includes(measureLocalIdentifiers, locator.measureLocatorItem.measureIdentifier);
+            return measureLocalIdentifiers.includes(locator.measureLocatorItem.measureIdentifier);
         }
         // filter out invalid column attribute locators
         if (isAttributeLocator(locator)) {
-            return includes(
-                columnAttributeLocalIdentifiers,
-                locator.attributeLocatorItem.attributeIdentifier,
-            );
+            return columnAttributeLocalIdentifiers.includes(locator.attributeLocatorItem.attributeIdentifier);
         }
 
         if (isTotalLocator(locator)) {
-            return includes(columnAttributeLocalIdentifiers, locator.totalLocatorItem.attributeIdentifier);
+            return columnAttributeLocalIdentifiers.includes(locator.totalLocatorItem.attributeIdentifier);
         }
 
         return false;
@@ -239,8 +234,7 @@ const adaptWidthItemsToPivotTable = (
             }
         } else if (isAttributeColumnWidthItem(columnWidth)) {
             if (
-                includes(
-                    rowAttributeLocalIdentifiers,
+                rowAttributeLocalIdentifiers.includes(
                     columnWidth.attributeColumnWidthItem.attributeIdentifier,
                 )
             ) {

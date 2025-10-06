@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     ICatalogMeasure,
@@ -37,7 +36,7 @@ export class CatalogMeasureBuilder<
         return this;
     }
 
-    public toExecutionModel(modifications: MeasureModifications<MeasureBuilder> = identity): IMeasure {
+    public toExecutionModel(modifications: MeasureModifications<MeasureBuilder> = (v) => v): IMeasure {
         if (!this.item.measure) {
             throw new Error("Cannot convert catalog measure to execution model, no measure found!");
         }
@@ -57,5 +56,5 @@ export class CatalogMeasureBuilder<
  * @beta
  */
 export const newCatalogMeasure = (
-    modifications: BuilderModifications<CatalogMeasureBuilder> = identity,
+    modifications: BuilderModifications<CatalogMeasureBuilder> = (v) => v,
 ): ICatalogMeasure => builderFactory(CatalogMeasureBuilder, { type: "measure" }, modifications);

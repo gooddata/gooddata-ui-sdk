@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
@@ -47,11 +48,6 @@ export interface IAttributeFilterHandlerOptionsBase {
      * the static elements yourself.
      */
     staticElements?: IAttributeElement[];
-
-    /**
-     * Enables duplicated values in secondary labels.
-     */
-    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     /**
      * If specified, the attribute filter will display the elements in specified label form.
@@ -120,18 +116,10 @@ export function newAttributeFilterHandler(
     options: IAttributeFilterHandlerOptions = {
         selectionMode: "multi",
         displayAsLabel: undefined,
-        enableDuplicatedLabelValuesInAttributeFilter: true,
         withoutApply: false,
     },
 ): IAttributeFilterHandler {
-    const {
-        selectionMode,
-        hiddenElements,
-        staticElements,
-        enableDuplicatedLabelValuesInAttributeFilter,
-        displayAsLabel,
-        withoutApply,
-    } = options;
+    const { selectionMode, hiddenElements, staticElements, displayAsLabel, withoutApply } = options;
 
     if (selectionMode === "multi") {
         return new MultiSelectAttributeFilterHandler({
@@ -140,7 +128,6 @@ export function newAttributeFilterHandler(
             attributeFilter,
             hiddenElements,
             staticElements,
-            enableDuplicatedLabelValuesInAttributeFilter,
             displayAsLabel,
             withoutApply,
         });
@@ -152,7 +139,6 @@ export function newAttributeFilterHandler(
         attributeFilter,
         hiddenElements,
         staticElements,
-        enableDuplicatedLabelValuesInAttributeFilter,
         displayAsLabel,
         withoutApply,
     });

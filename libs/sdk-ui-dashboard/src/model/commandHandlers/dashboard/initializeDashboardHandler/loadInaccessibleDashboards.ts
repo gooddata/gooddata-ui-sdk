@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { compact, flatMap } from "lodash-es";
+import { compact } from "lodash-es";
 import { call, put, select } from "redux-saga/effects";
 
 import { IWidget, ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";
@@ -15,9 +15,9 @@ export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWid
     const accessibleDashboardsMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(
         selectAccessibleDashboardsMap,
     );
-    const dashboardDrillTargets = flatMap(
-        widgets.filter(isInsightWidget).map(({ drills }) => drills.filter(isDrillToDashboard)),
-    );
+    const dashboardDrillTargets = widgets
+        .filter(isInsightWidget)
+        .flatMap(({ drills }) => drills.filter(isDrillToDashboard));
     const dashboardDrillTargetRefs = compact(dashboardDrillTargets.map(({ target }) => target));
     const unknownDashboardDrillTargetRefs = dashboardDrillTargetRefs.filter(
         (ref) => !accessibleDashboardsMap.get(ref),

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { clone, escape, includes, isEqual, setWith, unescape } from "lodash-es";
+import { clone, escape, isEqual, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { DataValue } from "@gooddata/sdk-model";
@@ -144,8 +144,9 @@ export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
  */
 export const isInvertedChartType = (type: string, orientationPosition?: ChartOrientationType): boolean =>
     isBarChart(type) || isBulletChart(type) || (isWaterfall(type) && orientationPosition === "vertical");
-export const isChartSupported = (type: string): boolean => includes(VisualizationTypes, type);
-export const isOneOfTypes = (type: string, types: string[]): boolean => includes(types, type);
+export const isChartSupported = (type: string): boolean =>
+    Object.values<string>(VisualizationTypes).includes(type);
+export const isOneOfTypes = (type: string, types: string[]): boolean => types.includes(type);
 export const stringifyChartTypes = (): string => Object.values(VisualizationTypes).join(", ");
 
 export function formatLegendLabel(

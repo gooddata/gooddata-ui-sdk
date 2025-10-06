@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -8,8 +8,9 @@ import { Correlation, ILoadElementsResult } from "../../../types/index.js";
 import { getElementCacheKey } from "../common/selectors.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
-const loadNextElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> =
-    identity;
+const loadNextElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
+    v,
+) => v;
 
 const loadNextElementsPageStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
     state,
@@ -22,22 +23,18 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation: Correlation;
-            enableDuplicatedLabelValuesInAttributeFilter: boolean;
         }
     >
 > = (state, action) => {
-    const { enableDuplicatedLabelValuesInAttributeFilter } = action.payload;
     state.elements.nextPageLoad.status = "success";
     action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
+        const cacheKey = getElementCacheKey(el);
         if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
     state.elements.data = state.elements.data.concat(
-        action.payload.elements.map((el) =>
-            getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter),
-        ),
+        action.payload.elements.map((el) => getElementCacheKey(el)),
     );
     state.elements.lastLoadedOptions = action.payload.options;
 };
@@ -49,7 +46,7 @@ const loadNextElementsPageError: AttributeFilterReducer<
     state.elements.nextPageLoad.error = action.payload.error;
 };
 
-const loadNextElementsPageCancelRequest: AttributeFilterReducer = identity;
+const loadNextElementsPageCancelRequest: AttributeFilterReducer = (v) => v;
 
 const loadNextElementsPageCancel: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
     state,

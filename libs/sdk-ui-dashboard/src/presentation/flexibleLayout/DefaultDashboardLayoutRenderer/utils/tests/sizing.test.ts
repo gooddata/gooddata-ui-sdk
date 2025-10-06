@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { chunk, flatMap } from "lodash-es";
+import { chunk } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
@@ -80,7 +80,7 @@ describe("sizing", () => {
     describe("getDashboardLayoutItemHeightForRatioAndScreen", () => {
         const allGridWidths = Array.from(new Array(DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT)).map((_, i) => i);
         const createTestCasesForRatio = (heightAsRatio: number) =>
-            flatMap(ALL_SCREENS, (screen) =>
+            ALL_SCREENS.flatMap((screen) =>
                 allGridWidths.map((gridWidth): [ScreenSize, IDashboardLayoutSize] => [
                     screen,
                     { gridWidth, heightAsRatio },

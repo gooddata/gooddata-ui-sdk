@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+@use "sass:color";
 @use "variables";
 
 .gd-invertable-select {
@@ -51,9 +52,70 @@ input[type="search"]::-webkit-search-cancel-button {
     font-size: 12px;
     padding-bottom: 5px;
     border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    cursor: pointer;
 
     .input-checkbox-label {
         cursor: pointer;
+    }
+
+    // Pure ARIA checkbox styling based on aria-checked attribute
+    &[role="checkbox"] {
+        // Checked state - show checkmark
+        &[aria-checked="true"] .input-label-text {
+            &::before {
+                border-color: transparent;
+                background-color: variables.$gd-palette-primary-base;
+            }
+
+            &::after {
+                transform: scale(1) rotate(315deg) skew(-2deg);
+            }
+        }
+
+        // Mixed state - show dash
+        &[aria-checked="mixed"] .input-label-text {
+            &::before {
+                border-color: transparent;
+                background-color: variables.$gd-palette-primary-base;
+            }
+
+            &::after {
+                top: 9px;
+                left: 6px;
+                width: 8px;
+                height: 0;
+                transform: scale(1);
+                border-left: none;
+                border-bottom: 2px solid variables.$gd-color-text-light;
+            }
+        }
+
+        // Unchecked state - default styling from .input-label-text::before
+
+        // Hover state
+        &:hover .input-label-text::before {
+            box-shadow: inset 0 1px 2px 0
+                color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.75);
+        }
+
+        &:hover[aria-checked="true"] .input-label-text::before,
+        &:hover[aria-checked="mixed"] .input-label-text::before {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        // Active state
+        &:active .input-label-text::before {
+            border-color: variables.$gd-palette-primary-base;
+            background-color: variables.$gd-palette-primary-dimmed;
+        }
+
+        // Focus visible state
+        &:focus-visible .input-label-text::before {
+            outline: 2px solid variables.$gd-input-text-border-outline;
+            outline-offset: 2px;
+            transition: none;
+        }
     }
 }
 

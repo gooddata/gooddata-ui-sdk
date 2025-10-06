@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
+
 import * as fs from "fs";
 import * as path from "path";
 
 import { OptionValues } from "commander";
-import { identity, pick, pickBy } from "lodash-es";
+import { pick, pickBy } from "lodash-es";
 
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants.js";
 import { DataRecorderConfig } from "./types.js";
@@ -13,7 +14,7 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
         ...prevConfig,
         ...pickBy(
             pick(config, ["hostname", "projectId", "tigerToken", "recordingDir", "replaceProjectId"]),
-            identity,
+            (v) => v,
         ),
     };
 }

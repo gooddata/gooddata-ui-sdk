@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 
 import cx from "classnames";
-import { includes, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
@@ -104,7 +104,7 @@ export default class BaseChartConfigurationPanel<
     protected getControlProperties(): { gridEnabled: boolean; axes: IAxisProperties[] } {
         const props = this.props;
         const gridEnabled = props.properties?.controls?.["grid"]?.enabled ?? true;
-        const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
+        const axisType = DUAL_AXES_SUPPORTED_CHARTS.includes(props.type)
             ? (props.axis ?? AXIS.PRIMARY)
             : AXIS.PRIMARY;
         const configurations = this.getAxesConfiguration(axisType);

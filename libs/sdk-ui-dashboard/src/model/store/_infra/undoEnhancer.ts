@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { Patch, applyPatches, enablePatches, original, produce, produceWithPatches } from "immer";
-import { flatMap } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboardCommand } from "../../commands/index.js";
@@ -183,7 +183,7 @@ export const undoReducer = <TState extends UndoEnhancedState>(
      * Concat all the undo patches from all undo stack entries. Since the entries are ordered from the newest to the
      * oldest order, this naturally translates to ordering of the patches.
      */
-    const allPatches = flatMap(entriesToUndo, (entry) => entry.undoPatches);
+    const allPatches = entriesToUndo.flatMap((entry) => entry.undoPatches);
 
     /*
      * Apply patches to restore the state.

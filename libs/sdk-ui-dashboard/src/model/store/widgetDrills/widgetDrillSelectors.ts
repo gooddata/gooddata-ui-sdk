@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { compact, flatMap } from "lodash-es";
+import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -573,19 +573,19 @@ export const selectValidConfiguredDrillsByWidgetRef: (
 
 const selectImplicitDrillToUrlPredicates = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectImplicitDrillsToUrlByWidgetRef(ref), (drillToUrlDrills) => {
-        return flatMap(drillToUrlDrills, (drill) => drill.predicates);
+        return drillToUrlDrills.flatMap((drill) => drill.predicates);
     }),
 );
 
 const selectImplicitDrillDownPredicates = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectImplicitDrillsDownByWidgetRef(ref), (drillDownDrills) => {
-        return flatMap(drillDownDrills, (drill) => drill.predicates);
+        return drillDownDrills.flatMap((drill) => drill.predicates);
     }),
 );
 
 const selectConfiguredDrillPredicates = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectValidConfiguredDrillsByWidgetRef(ref), (configuredDrills = []) => {
-        return flatMap(configuredDrills, (drill) => drill.predicates);
+        return configuredDrills.flatMap((drill) => drill.predicates);
     }),
 );
 
@@ -731,7 +731,7 @@ export const selectDrillableItemsByAvailableDrillTargets: (
         createSelector(
             selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets, ignoredDrillDownHierarchies),
             (implicitDrillDowns) => {
-                return flatMap(implicitDrillDowns, (implicitDrill) => implicitDrill.predicates);
+                return implicitDrillDowns.flatMap((implicitDrill) => implicitDrill.predicates);
             },
         ),
 );

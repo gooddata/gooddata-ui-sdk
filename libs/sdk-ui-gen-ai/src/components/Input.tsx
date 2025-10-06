@@ -193,6 +193,7 @@ function InputComponent({
                             icon="send"
                             variant="tertiary"
                             size="medium"
+                            dataTestId="send_message"
                             isDisabled={buttonDisabled}
                             onClick={buttonDisabled ? undefined : handleSubmit}
                             accessibilityConfig={{

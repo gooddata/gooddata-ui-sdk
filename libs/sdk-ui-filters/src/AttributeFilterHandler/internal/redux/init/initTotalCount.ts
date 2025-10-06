@@ -1,22 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, fork, put, race, select, take } from "redux-saga/effects";
+import { fork, put, race, take } from "redux-saga/effects";
 
 import { Correlation } from "../../../types/index.js";
-import { getAttributeFilterContext } from "../common/sagas.js";
-import { selectElementsForm } from "../common/selectors.js";
 import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga.js";
 import { actions } from "../store/slice.js";
-import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
  */
 export function* initTotalCountSaga(correlation: Correlation): SagaIterator<void> {
     const initTotalCountCorrelation = `initTotalCount_${correlation}`;
-    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
-    const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
     yield fork(
         loadCustomElementsSaga,
@@ -24,7 +20,7 @@ export function* initTotalCountSaga(correlation: Correlation): SagaIterator<void
             options: {
                 limit: 1,
                 includeTotalCountWithoutFilters: true,
-                excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
+                excludePrimaryLabel: false,
             },
             correlation: initTotalCountCorrelation,
         }),

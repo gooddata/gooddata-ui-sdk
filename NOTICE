@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-10-2
+Date generated: 2025-10-3
 
-Revision ID: 5d604071654c3df860a5d5193b3d06521d0d034a
+Revision ID: b179d16d5d347bb53021838984e3031285c282c2
 
 ================================================================================
 ================================================================================
@@ -626,7 +626,7 @@ Revision ID: 5d604071654c3df860a5d5193b3d06521d0d034a
 - lines-and-columns (1.2.4) [MIT]
 - loader-runner (4.3.0) [MIT]
 - locate-path (5.0.0) [MIT]
-- lodash (4.17.21) [CC0-1.0, MIT]
+- lodash (4.17.21) [MIT, CC0-1.0]
 - lodash-es (4.17.21) [CC0-1.0, MIT]
 - lodash.debounce (4.0.8) [CC0-1.0, MIT]
 - log-symbols (4.1.0) [MIT]
@@ -688,7 +688,6 @@ Revision ID: 5d604071654c3df860a5d5193b3d06521d0d034a
 - mime-types (2.1.35) [MIT]
 - mime-types (3.0.1) [MIT]
 - mimic-fn (2.1.0) [MIT]
-- mini-css-extract-plugin (2.6.1) [MIT]
 - minimalistic-assert (1.0.1) [ISC]
 - minimatch (10.0.3) [MIT]
 - minimatch (3.1.2) [MIT]
@@ -19240,7 +19239,7 @@ Package Depth: Transitive
 MIT
 
 
-Copyright (c) 2016 Titus Wormer 
+Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -21493,7 +21492,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: ktsang.work@gmail.com, monastic.panic@gmail.com, tesrin@gmail.com
+Authors: monastic.panic@gmail.com, tesrin@gmail.com, ktsang.work@gmail.com
 
 Package Download URL: https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz
 
@@ -30078,7 +30077,28 @@ Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-CC0-1.0, MIT
+MIT, CC0-1.0
+
+* MIT *
+
+Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 * CC0-1.0 *
 
@@ -30130,27 +30150,6 @@ maintained libraries used by this software which have their own
 licenses; we recommend you read them, as their terms may differ from the
 terms above.
 
-
-* MIT *
-
-Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 
 
 * Package Info *
@@ -30395,7 +30394,7 @@ Package Depth: Transitive
 MIT
 
 
-Copyright (c) 2015 Titus Wormer 
+Copyright (c) 2015 Titus Wormer <mailto:tituswormer@gmail.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -32717,47 +32716,6 @@ SOFTWARE.
 Authors: sindresorhus@gmail.com
 
 Package Download URL: https://registry.npmjs.org/mimic-fn/-/mimic-fn-2.1.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: mini-css-extract-plugin (2.6.1)
-
-Package Locator: npm+mini-css-extract-plugin$2.6.1
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright JS Foundation and other contributors
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: sheo13666q@gmail.com, tobias.koppers@googlemail.com, mail@johannesewald.de
-
-Package Download URL: https://registry.npmjs.org/mini-css-extract-plugin/-/mini-css-extract-plugin-2.6.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: minimalistic-assert (1.0.1)
@@ -43309,7 +43267,7 @@ Package Depth: Transitive
 MIT
 
 
-Copyright (c) 2016 Titus Wormer 
+Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -60006,7 +59964,7 @@ Package Depth: Transitive
 MIT
 
 
-Copyright (c) 2016 Titus Wormer 
+Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -82385,4 +82343,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-10-2
+Report Generated by FOSSA on 2025-10-3

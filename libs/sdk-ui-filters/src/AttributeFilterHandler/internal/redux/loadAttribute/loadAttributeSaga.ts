@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
@@ -52,34 +53,33 @@ export function* loadAttributeSaga(
             displayFormRef,
         );
 
-        if (context.enableDuplicatedLabelValuesInAttributeFilter) {
-            const primaryLabel = attribute.displayForms.find((df) => df.isPrimary);
-            // validate that both DFs are not the secondary ones
-            const displayAsDisplayFormRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> =
-                yield select(selectAttributeFilterDisplayAsLabel);
-            if (
-                primaryLabel?.ref &&
-                displayAsDisplayFormRef &&
-                !areObjRefsEqual(displayFormRef, primaryLabel?.ref) &&
-                !areObjRefsEqual(displayAsDisplayFormRef, primaryLabel?.ref)
-            ) {
-                console.error(
-                    "AttributeFilter: Filter's displayForm is not primary and provided displayAsLabel is not primary either -> filter will not work correctly. Please provide primary display form in filter definition.",
-                );
-            }
-            // check if AF's DF is primary or not
-            if (primaryLabel?.ref && !areObjRefsEqual(displayFormRef, primaryLabel?.ref)) {
-                console.warn(
-                    "AttributeFilter: Filter's displayForm is not primary but enableDuplicatedLabelValuesInAttributeFilter is set -> migrating filter to primary label",
-                );
-                yield put(
-                    actions.transformFilterToPrimaryLabel({
-                        primaryLabelRef: primaryLabel?.ref,
-                        secondaryLabelRef: displayFormRef,
-                        correlation,
-                    }),
-                );
-            }
+        const primaryLabel = attribute.displayForms.find((df) => df.isPrimary);
+        // validate that both DFs are not the secondary ones
+        const displayAsDisplayFormRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> = yield select(
+            selectAttributeFilterDisplayAsLabel,
+        );
+        if (
+            primaryLabel?.ref &&
+            displayAsDisplayFormRef &&
+            !areObjRefsEqual(displayFormRef, primaryLabel?.ref) &&
+            !areObjRefsEqual(displayAsDisplayFormRef, primaryLabel?.ref)
+        ) {
+            console.error(
+                "AttributeFilter: Filter's displayForm is not primary and provided displayAsLabel is not primary either -> filter will not work correctly. Please provide primary display form in filter definition.",
+            );
+        }
+        // check if AF's DF is primary or not
+        if (primaryLabel?.ref && !areObjRefsEqual(displayFormRef, primaryLabel?.ref)) {
+            console.warn(
+                "AttributeFilter: Filter's displayForm is not primary -> migrating filter to primary label",
+            );
+            yield put(
+                actions.transformFilterToPrimaryLabel({
+                    primaryLabelRef: primaryLabel?.ref,
+                    secondaryLabelRef: displayFormRef,
+                    correlation,
+                }),
+            );
         }
 
         yield put(actions.loadAttributeSuccess({ attribute, correlation }));

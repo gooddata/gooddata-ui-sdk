@@ -61,12 +61,11 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
     const isColumnBucket = (bucket: IBucket) =>
         ["columns", "stack", "segment"].includes(bucket.localIdentifier ?? "");
 
-    // Find first row and first column bucket
-    const rowBucket = buckets.find(isRowBucket);
-    const columnBucket = buckets.find(isColumnBucket);
+    const rowBuckets = buckets.filter(isRowBucket);
+    const columnBuckets = buckets.filter(isColumnBucket);
 
-    const rowAttributes = rowBucket?.items ?? [];
-    const columnAttributes = columnBucket?.items ?? [];
+    const rowAttributes = rowBuckets.map((bucket) => bucket.items).flat();
+    const columnAttributes = columnBuckets.map((bucket) => bucket.items).flat();
 
     const tableBuckets = [
         {

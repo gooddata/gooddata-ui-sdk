@@ -13,12 +13,18 @@ type HeaderChatButtonProps = {
     onClick: (e: MouseEvent) => void;
 };
 
+/**
+ * @internal
+ */
+export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
+
 export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProps) {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
     const GenAIIcon = Icon["GenAI"];
     // The text is not l18n-ed because it is not final
     return (
         <Button
+            id={HEADER_CHAT_BUTTON_ID}
             title={title}
             className={classNames}
             onClick={onClick}

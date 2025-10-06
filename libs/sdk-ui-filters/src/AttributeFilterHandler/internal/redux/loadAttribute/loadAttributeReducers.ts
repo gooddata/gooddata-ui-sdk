@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -8,7 +8,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Correlation } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
-const loadAttributeRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
+const loadAttributeRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (v) => v;
 
 const loadAttributeStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.attribute.status = "loading";
@@ -30,7 +30,7 @@ const loadAttributeError: AttributeFilterReducer<
     state.attribute.error = action.payload.error;
 };
 
-const loadAttributeCancelRequest: AttributeFilterReducer = identity;
+const loadAttributeCancelRequest: AttributeFilterReducer = (v) => v;
 
 const loadAttributeCancel: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.attribute.status = "canceled";

@@ -1,0 +1,95 @@
+// (C) 2025 GoodData Corporation
+
+import { MouseEvent } from "react";
+
+import cx from "classnames";
+
+import { ShortenedText } from "../../ShortenedText/index.js";
+import { Typography } from "../../Typography/index.js";
+import { SizeLarge, SizeMedium } from "../@types/size.js";
+import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+
+/**
+ * @internal
+ */
+export interface UiSubmenuHeaderProps {
+    title?: string;
+    onBack?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onClose?: (e: MouseEvent<HTMLButtonElement>) => void;
+    backAriaLabel?: string;
+    closeAriaLabel?: string;
+    useShortenedTitle?: boolean;
+    textColor?: string;
+    backgroundColor?: string;
+    height?: SizeMedium | SizeLarge;
+}
+
+/**
+ * Unified submenu header: optional back button, title, and optional close button.
+ * Title can render as Typography h3 or ShortenedText h3.
+ * @internal
+ */
+export function UiSubmenuHeader(props: UiSubmenuHeaderProps) {
+    const {
+        title = "",
+        onBack,
+        onClose,
+        backAriaLabel,
+        closeAriaLabel,
+        useShortenedTitle,
+        textColor,
+        backgroundColor,
+        height = "medium",
+    } = props;
+
+    const heightClass = cx({
+        "gd-ui-kit-submenu-header--large": height === "large",
+        "gd-ui-kit-submenu-header--medium": height === "medium",
+    });
+
+    const backButtonSize = "small";
+    const closeButtonSize = "small";
+
+    return (
+        <div
+            className={cx("gd-ui-kit-submenu-header", heightClass)}
+            style={{ backgroundColor: backgroundColor, color: textColor }}
+        >
+            {onBack ? (
+                <UiIconButton
+                    icon={"navigateLeft"}
+                    variant="bare"
+                    size={backButtonSize}
+                    onClick={onBack}
+                    label={backAriaLabel}
+                    dataId={"s-submenu-header-back-button"}
+                    dataTestId={"s-submenu-header-back-button"}
+                />
+            ) : null}
+
+            <div className={cx("gd-ui-kit-submenu-header__title")}>
+                {useShortenedTitle ? (
+                    <ShortenedText tagName={"h3"} className={cx("gd-ui-kit-submenu-header__title-text")}>
+                        {title}
+                    </ShortenedText>
+                ) : (
+                    <Typography tagName="h3" className={cx("gd-ui-kit-submenu-header__title-text")}>
+                        {title}
+                    </Typography>
+                )}
+            </div>
+
+            {onClose ? (
+                <UiIconButton
+                    size={closeButtonSize}
+                    variant="bare"
+                    icon="close"
+                    label={closeAriaLabel}
+                    onClick={onClose}
+                    dataId={"s-submenu-header-close-button"}
+                    dataTestId={"s-submenu-header-close-button"}
+                />
+            ) : null}
+        </div>
+    );
+}

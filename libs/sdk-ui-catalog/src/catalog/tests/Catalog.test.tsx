@@ -53,6 +53,9 @@ const createMockedBackend = () => {
         ...backend.workspace("test-workspace"),
         genAI: () => ({
             getMemory: () => mockMemoryService,
+            getAnalyticsCatalog: () => ({
+                getTags: vi.fn().mockResolvedValue({ tags: [] }),
+            }),
         }),
     } as unknown as ReturnType<typeof backend.workspace>);
     return backend;

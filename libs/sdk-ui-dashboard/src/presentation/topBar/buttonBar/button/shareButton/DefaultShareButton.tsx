@@ -54,7 +54,11 @@ export function DefaultShareButton({
                     className={
                         "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"
                     }
-                    accessibilityConfig={{ ariaLabel: tooltipText }}
+                    accessibilityConfig={{
+                        ariaLabel: tooltipText,
+                        popupType: "dialog",
+                        popupId: "share-dialog",
+                    }}
                 />
             }
             triggerBy={["hover", "focus"]}

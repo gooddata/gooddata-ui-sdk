@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
+
 import { ITableMeasureGroupValueColumnDefinition } from "@gooddata/sdk-ui";
 
 import { MEASURE_GROUP_VALUE_COL_DEF_ID } from "../../constants/internal.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
-import { getCellClassName } from "../styling/cell.js";
+import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -26,6 +27,7 @@ export const createMeasureGroupValueColDef = (
             return extractFormattedValue(params, MEASURE_GROUP_VALUE_COL_DEF_ID);
         },
         cellClass: getCellClassName,
+        cellStyle: getMeasureCellStyle,
         cellRenderer: metricCellRenderer,
         headerClass: getHeaderCellClassName,
         headerComponent: "EmptyMeasureGroupHeader",

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { compact, identity, partition } from "lodash-es";
+import { compact, partition } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -1788,12 +1788,12 @@ export function withCaching(
         capabilities: realBackend.capabilities,
     };
 
-    const execution = execCaching ? cachedExecutions(ctx) : identity;
-    const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
-    const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
-    const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
-    const automations = automationsCaching ? cachedAutomations(ctx) : identity;
-    const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : identity;
+    const execution = execCaching ? cachedExecutions(ctx) : (v: any) => v;
+    const catalog = catalogCaching ? cachedCatalog(ctx) : (v: any) => v;
+    const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : (v: any) => v;
+    const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
+    const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
+    const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : (v: any) => v;
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));

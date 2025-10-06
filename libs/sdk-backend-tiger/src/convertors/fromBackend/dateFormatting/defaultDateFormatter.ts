@@ -23,7 +23,6 @@ import {
     zhCN,
 } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
-import { identity } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
@@ -149,7 +148,7 @@ export const defaultDateFormatter = (
     }
 
     const transformFormatPattern =
-        granularityPatternTransformations[granularity] ?? (identity as PatternTransform);
+        granularityPatternTransformations[granularity] ?? (((v) => v) as PatternTransform);
     const transformedFormatPattern = transformFormatPattern(formatPattern);
 
     try {

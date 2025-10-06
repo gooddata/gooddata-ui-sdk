@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { identity } from "lodash-es";
-
 import {
     IDashboardFilterReference,
     IInsight,
@@ -28,7 +26,7 @@ export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => Insi
  *
  * @internal
  */
-export function newInsightWidget(insight: IInsight, modifications: InsightWidgetModifications = identity) {
+export function newInsightWidget(insight: IInsight, modifications: InsightWidgetModifications = (v) => v) {
     const ref = insightRef(insight);
     const title = insightTitle(insight);
     const builder = new InsightWidgetBuilder(ref, title);

@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
+
 import path from "path";
 
 import fse from "fs-extra";
-import { flatMap } from "lodash-es";
 
 type ReadFileFn = typeof fse.readFile;
 type WriteFileFn = typeof fse.writeFile;
@@ -15,7 +15,7 @@ type FileReplacements = {
 type FileReplacementProcessor = (rep: FileReplacements) => Promise<void>;
 
 function collectFileReplacements(currentPath: string, spec: FileReplacementSpec): FileReplacements[] {
-    return flatMap(Object.entries(spec), ([key, value]) => {
+    return Object.entries(spec).flatMap(([key, value]) => {
         const nextPath = path.join(currentPath, key);
 
         if (Array.isArray(value)) {

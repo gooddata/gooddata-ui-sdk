@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     AttributeModifications,
@@ -74,7 +73,7 @@ export class CatalogAttributeBuilder<
         return this;
     }
 
-    public toExecutionModel(modifications: AttributeModifications = identity): IAttribute {
+    public toExecutionModel(modifications: AttributeModifications = (v) => v): IAttribute {
         if (!this.item.defaultDisplayForm) {
             throw new Error("Cannot convert catalog attribute to execution model, no displayForm found!");
         }
@@ -94,5 +93,5 @@ export class CatalogAttributeBuilder<
  * @beta
  */
 export const newCatalogAttribute = (
-    modifications: BuilderModifications<CatalogAttributeBuilder> = identity,
+    modifications: BuilderModifications<CatalogAttributeBuilder> = (v) => v,
 ): ICatalogAttribute => builderFactory(CatalogAttributeBuilder, { type: "attribute" }, modifications);

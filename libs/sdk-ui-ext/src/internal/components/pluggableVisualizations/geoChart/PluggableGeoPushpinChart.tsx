@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep, includes, isEmpty, set } from "lodash-es";
+import { cloneDeep, isEmpty, set } from "lodash-es";
 import { WrappedComponentProps } from "react-intl";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -188,13 +188,13 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const sizeMeasures: IBucketItem[] = (
             primaryMeasures.length > 0
                 ? primaryMeasures
-                : allMeasures.filter((measure: IBucketItem): boolean => !includes(secondaryMeasures, measure))
+                : allMeasures.filter((measure: IBucketItem): boolean => !secondaryMeasures.includes(measure))
         ).slice(0, this.getPreferredBucketItemLimit(BucketNames.SIZE));
 
         const colorMeasures: IBucketItem[] = (
             secondaryMeasures.length > 0
                 ? secondaryMeasures
-                : allMeasures.filter((measure: IBucketItem): boolean => !includes(sizeMeasures, measure))
+                : allMeasures.filter((measure: IBucketItem): boolean => !sizeMeasures.includes(measure))
         ).slice(0, this.getPreferredBucketItemLimit(BucketNames.COLOR));
 
         set(newExtendedReferencePoint, BUCKETS, [
@@ -379,7 +379,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         if (nonSegmentAttributes.length > 1 && isEmpty(segments)) {
             const locationItems = this.getLocationItems(buckets);
             segments = nonSegmentAttributes
-                .filter((attribute) => !includes(locationItems, attribute))
+                .filter((attribute) => !locationItems.includes(attribute))
                 .filter((attribute) => !isDateBucketItem(attribute))
                 .slice(0, 1);
         }

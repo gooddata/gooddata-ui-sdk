@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
+
 import * as fs from "fs/promises";
 import * as path from "path";
 
 import { OptionValues } from "commander";
-import { identity, pick, pickBy } from "lodash-es";
+import { pick, pickBy } from "lodash-es";
 
 import { API_TOKEN_VAR_NAME } from "./constants.js";
 import { CatalogExportConfig } from "./types.js";
@@ -12,7 +13,7 @@ export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): Catalo
     return Object.assign(
         {},
         ...configs.map((config) =>
-            pickBy(pick(config, ["hostname", "workspaceId", "token", "catalogOutput"]), identity),
+            pickBy(pick(config, ["hostname", "workspaceId", "token", "catalogOutput"]), (v) => v),
         ),
     );
 }
@@ -59,7 +60,7 @@ export async function getConfigFromPackage(workingDir: string): Promise<Partial<
 
     return mergeConfigs(
         ...packages
-            .filter(identity)
+            .filter((v) => v)
             .map((pack) => pick(pack.gooddata ?? {}, ["hostname", "workspaceId", "catalogOutput"]))
             .reverse(),
     );

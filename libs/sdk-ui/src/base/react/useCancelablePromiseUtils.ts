@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise.js";
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
@@ -56,7 +55,7 @@ export function resolveUseCancelablePromisesError<TError>(
     states: UseCancelablePromiseState<unknown, TError>[],
 ): TError | undefined {
     const errors = collectUseCancelablePromiseErrors(states);
-    return errors.find(identity);
+    return errors.find((v) => v);
 }
 
 /**

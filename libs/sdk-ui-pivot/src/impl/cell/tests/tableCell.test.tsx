@@ -4,7 +4,6 @@ import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
 import { ICellRendererParams } from "ag-grid-community";
-import { identity } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ITheme } from "@gooddata/sdk-model";
@@ -37,7 +36,7 @@ describe("cellRenderer", () => {
         const props: ICellRendererParams = {
             node: {},
             value: 123,
-            formatValue: identity,
+            formatValue: (v: any) => v,
             colDef: {
                 colId: "r_0",
                 type: "ROW_ATTRIBUTE_COLUMN",
@@ -49,7 +48,7 @@ describe("cellRenderer", () => {
 
     it("should escape value", async () => {
         const fakeParams: any = {
-            formatValue: identity,
+            formatValue: (v: any) => v,
             value: "<button>xss</button>",
             node: {
                 id: "01",
@@ -71,7 +70,7 @@ describe("cellRenderer", () => {
         const props: ICellRendererParams = {
             node: {},
             value: 123,
-            formatValue: identity,
+            formatValue: (v: any) => v,
             colDef: {
                 colId: "r_0",
                 type: "ROW_ATTRIBUTE_COLUMN",

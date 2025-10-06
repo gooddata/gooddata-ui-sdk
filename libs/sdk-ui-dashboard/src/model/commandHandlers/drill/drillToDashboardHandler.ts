@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { compact, isEmpty, isEqual } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -47,10 +48,7 @@ import {
 } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import {
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-    selectEnableMultipleDateFilters,
-} from "../../store/config/configSelectors.js";
+import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
@@ -116,10 +114,6 @@ export function* drillToDashboardHandler(
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
         yield select(selectCatalogDateAttributes);
 
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
-
     const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
         ? removeIgnoredValuesFromDrillIntersection(
               cmd.payload.drillEvent.drillContext.intersection ?? [],
@@ -131,8 +125,6 @@ export function* drillToDashboardHandler(
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         filteredIntersection,
         dateAttributes.map((dA) => dA.attribute.ref),
-        ctx.backend.capabilities.supportsElementUris ?? true,
-        enableDuplicatedLabelValuesInAttributeFilter,
         false,
         filtersCount,
     );
@@ -143,21 +135,17 @@ export function* drillToDashboardHandler(
     );
 
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] =
-        enableDuplicatedLabelValuesInAttributeFilter ? attributeFilterConfigsFromTransformation : [];
-    const intersectionFilters = enableDuplicatedLabelValuesInAttributeFilter
-        ? transformedFilters
-        : drillIntersectionFilters.map((f) => f.attributeFilter);
+        attributeFilterConfigsFromTransformation;
+    const intersectionFilters = transformedFilters;
 
     const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
         yield select(selectAttributeFilterConfigsDisplayAsLabelMap);
 
-    if (enableDuplicatedLabelValuesInAttributeFilter) {
-        const dashboardFilterConfigs = getDashboardFilterConfigs(
-            dashboardFilters,
-            attributeFilterDisplayAsLabelMap,
-        );
-        attributeFilterConfigs.push(...dashboardFilterConfigs);
-    }
+    const dashboardFilterConfigs = getDashboardFilterConfigs(
+        dashboardFilters,
+        attributeFilterDisplayAsLabelMap,
+    );
+    attributeFilterConfigs.push(...dashboardFilterConfigs);
 
     // concat everything, order is important – drill filters must go first
     const resultingFilters = compact([commonDateFilter, ...intersectionFilters, ...dashboardFilters]);

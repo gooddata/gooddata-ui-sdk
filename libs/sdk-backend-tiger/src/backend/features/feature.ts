@@ -270,6 +270,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMongoDbDataSource,
+            "enableMongoDbDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMongoDbDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",
@@ -309,13 +316,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSnowflakeKeyPairAuthentication",
             "BOOLEAN",
             FeatureFlagsValues.enableSnowflakeKeyPairAuthentication,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDuplicatedLabelValuesInAttributeFilter,
-            "enableDuplicatedLabelValuesInAttributeFilter",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDuplicatedLabelValuesInAttributeFilter,
         ),
         ...loadFeature(
             features,

@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import { cloneDeep, includes, isEmpty, set, tail } from "lodash-es";
+import { cloneDeep, isEmpty, set, tail } from "lodash-es";
 
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
@@ -111,7 +111,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
 
         const measures = getMeasureItems(buckets);
         const rowItems = allAttributes.filter((attribute) => {
-            return !includes(stackItems, attribute);
+            return !stackItems.includes(attribute);
         });
         const columnItems = rowItems.length > 1 ? tail(rowItems) : stackItems;
 
@@ -153,12 +153,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 isDrillIntersectionAttributeItem(i.header) &&
                 i.header.attributeHeader.localIdentifier === clicked,
         );
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
     public override getInsightWithDrillDownApplied(

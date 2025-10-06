@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { includes, merge, partial, set } from "lodash-es";
+import { merge, partial, set } from "lodash-es";
 
 import { IDrillConfig } from "@gooddata/sdk-ui";
 
@@ -359,7 +359,7 @@ export default function getOptionalStackingConfiguration(
     drillConfig?: IDrillConfig,
 ): HighchartsOptions {
     const { type } = chartOptions;
-    return includes(supportedStackingAttributesChartTypes, type)
+    return (supportedStackingAttributesChartTypes as string[]).includes(type)
         ? merge(
               {},
               setDrillConfigToXAxis(drillConfig),

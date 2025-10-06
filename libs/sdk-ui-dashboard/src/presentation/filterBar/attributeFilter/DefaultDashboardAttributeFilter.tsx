@@ -46,7 +46,6 @@ import {
     selectAttributeFilterConfigsModeMap,
     selectBackendCapabilities,
     selectEnableAttributeFilterVirtualisedList,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsAttributeFilterDependentByLocalIdentifier,
@@ -111,9 +110,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     );
     const isVirtualAttributeFilter = useDashboardSelector(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
-    );
-    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
-        selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
     const enableImmediateAttributeFilterDisplayAsLabelMigration = useDashboardSelector(
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
@@ -542,7 +538,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 }
                 customIcon={visibilityIcon}
                 StatusBarComponent={CustomStatusBarComponent}
-                enableDuplicatedLabelValuesInAttributeFilter={enableDuplicatedLabelValuesInAttributeFilter}
                 enableImmediateAttributeFilterDisplayAsLabelMigration={
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }

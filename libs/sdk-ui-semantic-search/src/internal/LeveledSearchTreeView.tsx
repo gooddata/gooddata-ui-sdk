@@ -14,7 +14,7 @@ type Props = {
     id: string;
     items: SearchTreeViewItem[];
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
-    onFocus: (nodeId: string) => void;
+    onFocus: (nodeId?: string) => void;
 };
 
 /**

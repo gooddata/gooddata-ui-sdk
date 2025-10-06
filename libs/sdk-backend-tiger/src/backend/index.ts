@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { AxiosInstance, AxiosResponse } from "axios";
-import { identity, inRange, isEmpty, isError, omit } from "lodash-es";
+import { inRange, isEmpty, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
@@ -370,23 +370,26 @@ function createAxios(
 }
 
 function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
-    client.interceptors.response.use(identity, (error) => {
-        const response: AxiosResponse = error.response;
+    client.interceptors.response.use(
+        (v) => v,
+        (error) => {
+            const response: AxiosResponse = error.response;
 
-        // If there is no response object (for example for blocked requests), print the whole error.
-        if (!response) {
-            console.error("Tiger backend threw an error:", error);
-        }
-        // Else if the response is an object (JSON parsed by axios) and there is a problem, then log error
-        // into console for easier diagnostics.
-        else if (inRange(response.status, 400, 600) && typeof response.data === "object") {
-            // Title is redundant (Bad Request)
-            const details = omit(response.data, ["title"]);
-            console.error("Tiger backend threw an error:", details);
-        }
+            // If there is no response object (for example for blocked requests), print the whole error.
+            if (!response) {
+                console.error("Tiger backend threw an error:", error);
+            }
+            // Else if the response is an object (JSON parsed by axios) and there is a problem, then log error
+            // into console for easier diagnostics.
+            else if (inRange(response.status, 400, 600) && typeof response.data === "object") {
+                // Title is redundant (Bad Request)
+                const details = omit(response.data, ["title"]);
+                console.error("Tiger backend threw an error:", details);
+            }
 
-        return Promise.reject(error);
-    });
+            return Promise.reject(error);
+        },
+    );
 
     return client;
 }

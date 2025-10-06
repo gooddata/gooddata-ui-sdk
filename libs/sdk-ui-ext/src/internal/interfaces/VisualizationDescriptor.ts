@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -234,7 +235,6 @@ export interface IVisualizationDescriptor {
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight;
 
     /**

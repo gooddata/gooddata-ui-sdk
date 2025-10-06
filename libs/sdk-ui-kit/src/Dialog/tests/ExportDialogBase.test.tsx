@@ -6,16 +6,16 @@ import { assignIn } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ExportDialogBase } from "../ExportDialogBase.js";
-import { IExportDialogBaseProps } from "../typings.js";
 
 describe("ExportDialogBase", () => {
     const defaultProps = {
         filterContextVisible: true,
         includeFilterContext: false,
+        mergeHeaders: false,
         mergeHeadersDisabled: false,
     };
 
-    const renderExportDialog = (options: Partial<IExportDialogBaseProps>) => {
+    const renderExportDialog = (options: any) => {
         render(<ExportDialogBase {...options} />);
         const includeFilterContextCheckbox: HTMLElement = screen.getAllByRole("checkbox")[1];
         const mergeHeadersCheckbox: HTMLElement = screen.getAllByRole("checkbox")[0];
@@ -49,6 +49,7 @@ describe("ExportDialogBase", () => {
         const submitSpy = vi.fn();
         const newProps = {
             includeFilterContext: defaultProps.includeFilterContext,
+            mergeHeaders: defaultProps.mergeHeaders,
         };
 
         const { includeFilterContextCheckbox, mergeHeadersCheckbox } = renderExportDialog(
@@ -60,11 +61,12 @@ describe("ExportDialogBase", () => {
         newProps.includeFilterContext = !newProps.includeFilterContext;
         await userEvent.click(includeFilterContextCheckbox);
 
+        newProps.mergeHeaders = !newProps.mergeHeaders;
         await userEvent.click(mergeHeadersCheckbox);
 
         await userEvent.click(screen.getByText("Export"));
 
-        await waitFor(() => expect(submitSpy).toHaveBeenCalledWith({ ...newProps, mergeHeaders: false }));
+        await waitFor(() => expect(submitSpy).toHaveBeenCalledWith(newProps));
 
         submitSpy.mockRestore();
     });

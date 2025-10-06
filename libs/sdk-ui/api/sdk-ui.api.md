@@ -1444,6 +1444,22 @@ export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
 
 // @alpha
+export function isStandardGrandTotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableGrandTotalColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+};
+
+// @alpha
+export function isStandardSubtotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableSubtotalColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+};
+
+// @alpha
 export function isStandardValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition & {
     isEmpty: false;
     isTransposed: false;

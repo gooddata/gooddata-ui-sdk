@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     IWorkspaceCatalog,
@@ -33,7 +32,7 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 
     protected constructor(
         private decorated: IWorkspaceCatalogFactory,
-        protected readonly wrapper: WorkspaceCatalogWrapper = identity,
+        protected readonly wrapper: WorkspaceCatalogWrapper = (v) => v,
     ) {
         this.workspace = this.decorated.workspace;
         this.options = this.decorated.options;

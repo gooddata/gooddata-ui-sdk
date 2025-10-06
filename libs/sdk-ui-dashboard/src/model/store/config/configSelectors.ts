@@ -324,6 +324,18 @@ export const selectEnableAutomations: DashboardSelector<boolean> = createSelecto
 );
 
 /**
+ * Returns whether we should disable the underline in KPIs when they are drillable.
+ *
+ * @internal
+ */
+export const selectDisableKpiDashboardHeadlineUnderline: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
+    },
+);
+
+/**
  * Returns whether unfinished features are allowed.
  *
  * @internal
@@ -406,6 +418,18 @@ export const selectIsDisableUserFilterReset: DashboardSelector<boolean> = create
 );
 
 /**
+ * Returns whether the unrelated data datasets are shown.
+ *
+ * @internal
+ */
+export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.showHiddenCatalogItems ?? false;
+    },
+);
+
+/**
  * Returns whether multiple date filters are enabled.
  *
  * @internal
@@ -447,18 +471,6 @@ export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boo
     selectConfig,
     (state) => {
         return state.settings?.enableKDAttributeFilterDatesValidation ?? true;
-    },
-);
-
-/**
- * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
- *
- * @internal
- */
-export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? true;
     },
 );
 

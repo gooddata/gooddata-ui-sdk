@@ -61,7 +61,7 @@ export const AddDataSourceToSubjects: {
 };
 
 // @internal (undocumented)
-export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
 
 // @internal (undocumented)
 export const AddUserGroupsToUsersDialog: {
@@ -262,7 +262,7 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
 export function getInsightVisualizationMeta(insight: IInsightDefinition, settings?: ISettings): IVisualizationMeta;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
 
 // @internal (undocumented)
 export const getRelativeOperatorTitle: (operator: IAlertRelativeOperator, art: IAlertRelativeArithmeticOperator, intl: IntlShape) => string;

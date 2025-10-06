@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap, identity } from "lodash-es";
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -52,7 +52,7 @@ export function bucketsAttributes(
         return [];
     }
 
-    return flatMap(buckets, (b) => bucketAttributes(b, predicate));
+    return buckets.flatMap((b) => bucketAttributes(b, predicate));
 }
 
 /**
@@ -74,7 +74,7 @@ export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate 
         return [];
     }
 
-    return flatMap(buckets, (b) => bucketMeasures(b, predicate));
+    return buckets.flatMap((b) => bucketMeasures(b, predicate));
 }
 
 /**
@@ -216,7 +216,7 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
 export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[] {
     invariant(buckets, "buckets must be specified");
 
-    return flatMap(buckets, (b) => bucketItems(b));
+    return buckets.flatMap((b) => bucketItems(b));
 }
 
 /**
@@ -229,7 +229,7 @@ export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[] {
 export function bucketsTotals(buckets: IBucket[]): ITotal[] {
     invariant(buckets, "buckets must be specified");
 
-    return flatMap(buckets, (b) => bucketTotals(b));
+    return buckets.flatMap((b) => bucketTotals(b));
 }
 
 /**
@@ -260,7 +260,7 @@ export function bucketsIsEmpty(buckets: IBucket[]): boolean {
  */
 export function bucketsModifyItem(
     buckets: IBucket[],
-    modifications: BucketItemModifications = identity,
+    modifications: BucketItemModifications = (v) => v,
 ): IBucket[] {
     invariant(buckets, "buckets must be specified");
     return buckets.map((bucket: IBucket): IBucket => bucketModifyItems(bucket, modifications));
@@ -274,7 +274,7 @@ export function bucketsModifyItem(
  * @returns a new array of buckets, each bucket in the array contains modified bucket items
  * @public
  */
-export function bucketsReduceItem(buckets: IBucket[], reducer: BucketItemReducer = identity): IBucket[] {
+export function bucketsReduceItem(buckets: IBucket[], reducer: BucketItemReducer = (v) => v): IBucket[] {
     invariant(buckets, "buckets must be specified");
     return buckets.map((bucket: IBucket): IBucket => bucketItemReduce(bucket, reducer));
 }

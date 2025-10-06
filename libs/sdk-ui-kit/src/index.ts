@@ -93,6 +93,7 @@ export type {
     VariantTooltip,
     VariantTable,
     VariantLink,
+    VariantBare,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
@@ -325,3 +326,6 @@ export type { UiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/type
 
 export { UiCard } from "./@ui/UiCard/UiCard.js";
 export type { UiCardProps } from "./@ui/UiCard/UiCard.js";
+
+export { UiSubmenuHeader } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
+export type { UiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";

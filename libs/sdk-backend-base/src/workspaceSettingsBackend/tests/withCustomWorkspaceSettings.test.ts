@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { identity } from "lodash-es";
+
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "../../dummyBackend/index.js";
@@ -31,8 +31,8 @@ describe("withCustomWorkspaceSettings backend", () => {
             .settings()
             .getSettingsForCurrentUser();
         const backend = withCustomWorkspaceSettings(dummyBackend(), {
-            currentUserSettingsWrapper: identity,
-            settingsWrapper: identity,
+            currentUserSettingsWrapper: (v) => v,
+            settingsWrapper: (v) => v,
         });
 
         const settings = await backend.workspace("test_workspace_id").settings().getSettings();

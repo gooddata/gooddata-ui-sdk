@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { includes } from "lodash-es";
 
 import { ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -11,5 +10,5 @@ const openAsReportSupportingVisualizations: ChartType[] = [
 ];
 
 export function isOpenAsReportSupportedByVisualization(type: ChartType): boolean {
-    return includes(openAsReportSupportingVisualizations, type);
+    return openAsReportSupportingVisualizations.includes(type);
 }

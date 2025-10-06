@@ -35,9 +35,7 @@ export function createTotalHeaderColDef(
             return extractFormattedValue(params, colId);
         },
         cellClass: getCellClassName,
-        cellStyle: (params) => {
-            return getMeasureCellStyle(params);
-        },
+        cellStyle: getMeasureCellStyle,
         cellRenderer: metricCellRenderer,
         headerClass: getHeaderCellClassName,
         sortable: false,

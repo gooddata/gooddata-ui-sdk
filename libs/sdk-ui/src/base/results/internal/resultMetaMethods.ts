@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap } from "lodash-es";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -210,7 +209,7 @@ class ResultMetaMethods implements IResultMetaMethods {
     }
 
     public attributeDescriptors(): IAttributeDescriptor[] {
-        return flatMap(this.dataView.result.dimensions, (dim) => {
+        return this.dataView.result.dimensions.flatMap((dim) => {
             return dim.headers.filter(isAttributeDescriptor);
         });
     }

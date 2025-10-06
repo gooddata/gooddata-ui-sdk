@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { includes } from "lodash-es";
+
 import { invariant } from "ts-invariant";
 
 import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
@@ -35,7 +35,7 @@ export const MockAvailabilityWithDifferentRelevance = (
     datasets: ICatalogDateDataset[],
 ): ICatalogDateDataset[] => {
     const available = datasets
-        .filter((d) => includes(["Activity", "Timeline"], d.dataSet.title))
+        .filter((d) => ["Activity", "Timeline"].includes(d.dataSet.title))
         .map((d) => {
             return {
                 ...d,
@@ -52,7 +52,7 @@ export const MockAvailabilityWithDifferentRelevance = (
  */
 export const MockAvailabilityWithSameRelevance = (datasets: ICatalogDateDataset[]): ICatalogDateDataset[] => {
     const available = datasets
-        .filter((d) => includes(["Activity", "Timeline"], d.dataSet.title))
+        .filter((d) => ["Activity", "Timeline"].includes(d.dataSet.title))
         .map((d) => {
             return {
                 ...d,

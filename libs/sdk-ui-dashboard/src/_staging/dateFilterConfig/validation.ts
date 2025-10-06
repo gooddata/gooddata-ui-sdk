@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { groupBy, includes, isEmpty } from "lodash-es";
+import { groupBy, isEmpty } from "lodash-es";
 
 import {
     IDateFilterConfig,
@@ -140,7 +140,7 @@ export function getValidDateFilterConfig(
     settings: ISettings,
 ): [IDateFilterConfig, DateFilterConfigValidationResult] {
     const configValidation = validateDateFilterConfig(config);
-    const validConfig = includes(FallbackToDefault, configValidation)
+    const validConfig = FallbackToDefault.includes(configValidation)
         ? defaultDateFilterConfig
         : conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true);
 

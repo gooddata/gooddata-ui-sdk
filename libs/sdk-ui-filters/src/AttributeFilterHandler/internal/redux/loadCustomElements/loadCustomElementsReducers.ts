@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import {
     ElementsQueryOptionsElementsSpecification,
@@ -16,11 +16,11 @@ import { AttributeFilterReducer } from "../store/state.js";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const loadCustomElementsStart: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const getElementValues = (elements: ElementsQueryOptionsElementsSpecification): string[] => {
     if (!elements) {
@@ -39,21 +39,19 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation?: Correlation;
-            enableDuplicatedLabelValuesInAttributeFilter: boolean;
         }
     >
 > = (state, action) => {
     const keys = [];
 
     const {
-        enableDuplicatedLabelValuesInAttributeFilter,
         options: { elements, filterByPrimaryLabel },
         correlation,
     } = action.payload;
 
     const shouldOverrideKeys =
         state.initialization.status === "loading" && correlation.startsWith(INIT_SELECTION_PREFIX);
-    if (enableDuplicatedLabelValuesInAttributeFilter && elements) {
+    if (elements) {
         const originalElements = getElementValues(elements);
         // iterate over original elements to keep the order in selection,
         // fetched elements are sorted by default
@@ -61,11 +59,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
             action.payload.elements
                 .filter((el) => (filterByPrimaryLabel ? el.uri === originalEl : el.title === originalEl))
                 .forEach((el) => {
-                    const cacheKey = getElementCacheKey(
-                        state,
-                        el,
-                        enableDuplicatedLabelValuesInAttributeFilter,
-                    );
+                    const cacheKey = getElementCacheKey(el);
                     if (!state.elements.cache[cacheKey]) {
                         state.elements.cache[cacheKey] = el;
                     }
@@ -76,7 +70,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
         });
     } else {
         action.payload.elements.forEach((el) => {
-            const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
+            const cacheKey = getElementCacheKey(el);
             if (!state.elements.cache[cacheKey]) {
                 state.elements.cache[cacheKey] = el;
             }
@@ -86,7 +80,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
         });
     }
 
-    if (enableDuplicatedLabelValuesInAttributeFilter && shouldOverrideKeys) {
+    if (shouldOverrideKeys) {
         state.selection.working.keys = keys;
         state.selection.commited.keys = keys;
     }
@@ -94,15 +88,15 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
 
 const loadCustomElementsError: AttributeFilterReducer<
     PayloadAction<{ error: GoodDataSdkError; correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const loadCustomElementsCancelRequest: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 const loadCustomElementsCancel: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
-> = identity;
+> = (v) => v;
 
 /**
  * @internal

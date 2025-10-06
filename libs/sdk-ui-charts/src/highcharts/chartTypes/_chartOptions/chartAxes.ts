@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { compact, includes, isEmpty, range } from "lodash-es";
+
+import { compact, isEmpty, range } from "lodash-es";
 
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
@@ -213,7 +214,7 @@ function assignMeasuresToAxes(
             { measureHeaderItem: { name, format, localIdentifier } }: IMeasureDescriptor,
             index,
         ) => {
-            if (includes(secondMeasures, localIdentifier)) {
+            if (secondMeasures.includes(localIdentifier)) {
                 result.measuresInSecondAxis.push({ name, format, index });
             } else {
                 result.measuresInFirstAxis.push({ name, format, index });
@@ -243,7 +244,7 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
     return series.reduce((result, item, index) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
-            return includes(axis.seriesIndices ?? [], index);
+            return (axis.seriesIndices ?? []).includes(index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one

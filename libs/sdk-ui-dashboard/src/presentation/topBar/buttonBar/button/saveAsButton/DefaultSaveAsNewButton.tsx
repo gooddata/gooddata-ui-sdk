@@ -46,6 +46,10 @@ export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsN
             className="gd-button-secondary s-save_as_new_button"
             value={intl.formatMessage({ id: "save.as.new" })}
             onClick={onSaveAsNewClick}
+            accessibilityConfig={{
+                popupType: "dialog",
+                popupId: "save-as-new-dialog",
+            }}
         />
     );
 }

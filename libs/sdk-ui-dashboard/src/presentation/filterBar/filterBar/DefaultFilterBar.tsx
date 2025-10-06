@@ -51,7 +51,6 @@ import {
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFiltersModeMap,
     selectEnableDateFilterIdentifiers,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectFilterContextFilters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
@@ -82,9 +81,6 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
     const workingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
-    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
-        selectEnableDuplicatedLabelValuesInAttributeFilter,
-    );
 
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
@@ -102,39 +98,35 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
             const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
-            if (enableDuplicatedLabelValuesInAttributeFilter) {
-                const getCurrentFilter = (
-                    existingFilter: FilterContextItem[],
-                    filterLocalId: string | undefined,
-                ) => {
-                    return existingFilter
-                        .filter(isDashboardAttributeFilter)
-                        .find(
-                            (existingFilter) =>
-                                existingFilter.attributeFilter.localIdentifier === filterLocalId,
-                        );
-                };
-                const currentFilter = getCurrentFilter(filters, localIdentifier);
-                if (
-                    !areObjRefsEqual(
+
+            const getCurrentFilter = (
+                existingFilter: FilterContextItem[],
+                filterLocalId: string | undefined,
+            ) => {
+                return existingFilter
+                    .filter(isDashboardAttributeFilter)
+                    .find(
+                        (existingFilter) => existingFilter.attributeFilter.localIdentifier === filterLocalId,
+                    );
+            };
+            const currentFilter = getCurrentFilter(filters, localIdentifier);
+            if (
+                !areObjRefsEqual(
+                    filter.attributeFilter.displayForm,
+                    currentFilter?.attributeFilter.displayForm,
+                )
+            ) {
+                dispatch(
+                    setAttributeFilterDisplayForm(
+                        localIdentifier!,
                         filter.attributeFilter.displayForm,
-                        currentFilter?.attributeFilter.displayForm,
-                    )
-                ) {
-                    dispatch(
-                        setAttributeFilterDisplayForm(
-                            localIdentifier!,
-                            filter.attributeFilter.displayForm,
-                            isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
-                            isResultOfMigration,
-                        ),
-                    );
-                }
-                if (displayAsLabel) {
-                    dispatch(
-                        setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier!, displayAsLabel),
-                    );
-                }
+                        isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
+                        isResultOfMigration,
+                    ),
+                );
+            }
+            if (displayAsLabel) {
+                dispatch(setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier!, displayAsLabel));
             }
 
             if (isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet) {
@@ -165,13 +157,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             }
         },
-        [
-            dispatch,
-            supportElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
-            filters,
-            isApplyAllAtOnceEnabledAndSet,
-        ],
+        [dispatch, supportElementUris, filters, isApplyAllAtOnceEnabledAndSet],
     );
 
     const onDateFilterChanged = useCallback(

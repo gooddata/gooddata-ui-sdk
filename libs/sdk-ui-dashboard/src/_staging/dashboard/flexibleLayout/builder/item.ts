@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -109,7 +109,7 @@ export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItem
 
     public newInsightWidget(
         insight: ObjRef,
-        create: (builder: InsightWidgetBuilder) => InsightWidgetBuilder = identity,
+        create: (builder: InsightWidgetBuilder) => InsightWidgetBuilder = (v) => v,
     ): this {
         this.widget(create(InsightWidgetBuilder.forNew(insight)).build() as unknown as TWidget);
         return this;
@@ -127,7 +127,7 @@ export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItem
 
     public newKpiWidget(
         measure: ObjRef,
-        create: (builder: KpiWidgetBuilder) => KpiWidgetBuilder = identity,
+        create: (builder: KpiWidgetBuilder) => KpiWidgetBuilder = (v) => v,
     ): this {
         this.widget(create(KpiWidgetBuilder.forNew(measure)).build() as unknown as TWidget);
         return this;

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { ICatalogGroup, IGroupableCatalogItemBase, ObjRef } from "@gooddata/sdk-model";
 
@@ -57,5 +56,5 @@ export class CatalogGroupBuilder<T extends ICatalogGroup = ICatalogGroup> extend
  * @beta
  */
 export const newCatalogGroup = (
-    modifications: BuilderModifications<CatalogGroupBuilder> = identity,
+    modifications: BuilderModifications<CatalogGroupBuilder> = (v) => v,
 ): ICatalogGroup => builderFactory(CatalogGroupBuilder, {}, modifications);

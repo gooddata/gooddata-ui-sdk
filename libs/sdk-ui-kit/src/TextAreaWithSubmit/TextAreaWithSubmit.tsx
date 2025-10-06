@@ -13,8 +13,6 @@ import {
     useState,
 } from "react";
 
-import { identity } from "lodash-es";
-
 import { ITextAreaWithSubmitProps } from "./typings.js";
 
 /**
@@ -24,9 +22,9 @@ export function TextAreaWithSubmit({
     className = "",
     maxLength = 100000,
     rows = 1,
-    onCancel = identity,
-    onEditingStart = identity,
-    onChange = identity,
+    onCancel = (v) => v,
+    onEditingStart = (v?: any) => v,
+    onChange = (v) => v,
     placeholder = "",
     scrollToEndOnEditingStart = true,
     autofocus = false,

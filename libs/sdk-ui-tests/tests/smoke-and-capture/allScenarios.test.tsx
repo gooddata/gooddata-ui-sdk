@@ -3,7 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { flatMap, unionBy } from "lodash-es";
+import { unionBy } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
@@ -252,7 +252,7 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
 const PlugVisUnsupported: string[] = [];
 
 describe("all scenarios", () => {
-    const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
+    const Scenarios: AllScenariosType[] = allScenarios.flatMap((s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 
         return testInputs.map((t) => {

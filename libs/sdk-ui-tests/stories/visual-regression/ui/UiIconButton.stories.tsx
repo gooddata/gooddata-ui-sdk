@@ -6,19 +6,28 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
     label: "Icon Button Label",
-    icon: "check",
+    icon: "plus",
 } as UiIconButtonProps);
 
 const sizes = propCombination("size", ["small", "medium", "large"]);
-const variants = propCombination("variant", ["primary", "secondary", "tertiary", "popout", "danger"]);
+const variants = propCombination("variant", [
+    "primary",
+    "secondary",
+    "tertiary",
+    "popout",
+    "danger",
+    "table",
+    "bare",
+]);
 const disabled = propCombination("isDisabled", [true]);
+const active = propCombination("isActive", [true]);
 
 function UiIconButtonTest({ showCode }: { showCode?: boolean }) {
     return (
         <div className="screenshot-target">
             <ComponentTable
                 columnsBy={variants}
-                rowsBy={[sizes, disabled]}
+                rowsBy={[sizes, disabled, active]}
                 Component={UiIconButton}
                 codeSnippet={showCode ? "UiIconButton" : undefined}
                 align="center"

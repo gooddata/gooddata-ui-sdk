@@ -128,19 +128,40 @@ export interface ISettings {
     enableChartAccessibilityFeatures?: boolean;
 
     /**
+     * Headline component will not be underlined when it is set up with drilling.
+     */
+    disableKpiDashboardHeadlineUnderline?: boolean;
+
+    /**
      * Indicates whether the Waterfall Chart is available in AD.
      */
     enableWaterfallChart?: boolean;
 
     /**
+     * Indicates whether unavailable data items are visible in the settings API
+     * only available on Tiger/Panther
+     */
+    showHiddenCatalogItems?: boolean;
+
+    /**
+     * Indicates whether the catalog groups in analytical designer are expanded by default.
+     */
+    ADCatalogGroupsExpanded?: boolean;
+
+    /**
+     * Indicates whether the Embed dashboard button is available in KPI dashboards.
+     */
+    enableEmbedButtonInKD?: boolean;
+
+    /**
+     * Indicates whether the Embed button/dialog is available in AD.
+     */
+    enableEmbedButtonInAD?: boolean;
+
+    /**
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
-
-    /**
-     * Enable editing of insight description in AD.
-     */
-    enableAdDescriptionEdit?: boolean;
 
     /**
      * Enable use of composite grain
@@ -186,11 +207,6 @@ export interface ISettings {
      * Enable attribute filter values validation by date filters.
      */
     enableKDAttributeFilterDatesValidation?: boolean;
-
-    /**
-     * Enable listing of the non-unique (duplicated) secondary label values in attribute filter.
-     */
-    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     /**
      * Enable multiple data sources to be used in a single workspace.
@@ -248,12 +264,12 @@ export interface ISettings {
     enableWidgetIdentifiersRollout?: boolean;
 
     enableDataSection?: boolean;
-    enableAnalyticalDashboards?: boolean;
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;
     enableOracleDataSource?: boolean;
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
+    enableMongoDbDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
 
     /**
