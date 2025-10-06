@@ -18,6 +18,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
+                {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
@@ -55,6 +60,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
+                {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
@@ -91,6 +101,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
+                {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
@@ -121,6 +136,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
                 {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
@@ -225,6 +245,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
+                {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
@@ -248,6 +273,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
                 {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
@@ -273,6 +303,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
                 {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
@@ -303,6 +338,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    key: "gs.header.kpis.new",
+                },
                 {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",

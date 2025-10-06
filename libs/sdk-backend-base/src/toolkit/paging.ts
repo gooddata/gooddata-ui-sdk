@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap, range } from "lodash-es";
+
+import { range } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
@@ -186,7 +187,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
             const pagesToLoad = allPagesToLoad.slice(0, maxRequests);
             allPagesToLoad.splice(0, maxRequests);
             const loadedPages = await Promise.all(pagesToLoad.map((page) => this.goTo(page)));
-            results.push(...flatMap(loadedPages, (page) => page.items));
+            results.push(...loadedPages.flatMap((page) => page.items));
         }
 
         return results;

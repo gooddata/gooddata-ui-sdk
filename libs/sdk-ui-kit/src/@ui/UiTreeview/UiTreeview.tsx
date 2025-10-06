@@ -88,6 +88,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     shouldCloseOnSelect = true,
     isDisabledFocusable = false,
     isCompact = false,
+    autoFocus = true,
 
     ariaAttributes,
 }: IUiStaticTreeViewProps<Level>): ReactNode {
@@ -115,12 +116,15 @@ function UiTreeview<Levels extends unknown[], Level>({
     );
 
     const [focusedPath, setFocusedPath] = useState<number[]>(() => {
+        if (!autoFocus) {
+            return [];
+        }
         return findPath(items, selectedItemId, isItemFocusable) ?? [];
     });
-
     const focusedItem = getItemOnFocusedPath(items, focusedPath);
-    // Scroll focused item into view
     const focusedItemNode = getRefOnFocusedPath(itemsRef.current, focusedPath);
+
+    // Scroll focused item into view
     useEffect(() => {
         if (!focusedItemNode?.scrollIntoView) {
             return;
@@ -130,6 +134,10 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     // Notify parent about focus change
     useEffect(() => {
+        if (!focusedPath.length) {
+            onFocus?.();
+            return;
+        }
         onFocus?.(makeItemId(treeViewId, focusedPath));
     }, [treeViewId, focusedPath, onFocus]);
 
@@ -221,12 +229,12 @@ function UiTreeview<Levels extends unknown[], Level>({
                     },
                     onFocusFirst: () => {
                         setFocusedPath(() => {
-                            return getPrevPathIndex(items, getState, [], isItemFocusable);
+                            return getNextPathIndex(items, getState, [], isItemFocusable);
                         });
                     },
                     onFocusLast: () => {
                         setFocusedPath(() => {
-                            return getNextPathIndex(items, getState, [], isItemFocusable);
+                            return getPrevPathIndex(items, getState, [], isItemFocusable);
                         });
                     },
                     onEnterLevel: () => {

@@ -187,6 +187,14 @@
         "value": "More actions",
         "comment": "Accessibility label for the visualization actions menu"
     },
+    "gd.gen-ai.visualisation.toggle.table": {
+        "value": "Show table",
+        "comment": "Accessibility label for the visualization switch to table button"
+    },
+    "gd.gen-ai.visualisation.toggle.original": {
+        "value": "Show original",
+        "comment": "Accessibility label for the visualization switch to original button"
+    },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
         "value": "Save visualization",
         "comment": "Menu option to save the current visualization"

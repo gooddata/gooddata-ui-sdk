@@ -2,7 +2,6 @@
 
 import { parse } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
-import { identity } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
@@ -66,7 +65,8 @@ export const parseDateValue = (
         throw new UnexpectedError(`No date parser for the "${granularity}" granularity available.`);
     }
 
-    const valueTransform = granularityParseValueTransformations[granularity] ?? (identity as ValueTransform);
+    const valueTransform =
+        granularityParseValueTransformations[granularity] ?? (((v) => v) as ValueTransform);
 
     // parse date in the context of 366 days (2020 = leap year) and 31 days (0 = January)
     const referenceDate = new Date(2020, 0);

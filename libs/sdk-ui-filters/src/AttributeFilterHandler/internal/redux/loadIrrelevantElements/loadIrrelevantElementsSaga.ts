@@ -7,13 +7,11 @@ import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-
 import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 
 import { ILoadElementsOptions } from "../../../types/index.js";
-import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm, selectWithoutApply } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
 import { selectCommittedSelection, selectWorkingSelection } from "../store/selectors.js";
 import { actions } from "../store/slice.js";
-import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -38,7 +36,6 @@ export function* loadIrrelevantElementsSaga(
         return;
     }
 
-    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
     const abortController = new AbortController();
 
     const {
@@ -65,7 +62,7 @@ export function* loadIrrelevantElementsSaga(
         const loadOptionsWithElements: ILoadElementsOptions & CancelableOptions = {
             ...loadOptions,
             signal: abortController.signal,
-            excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
+            excludePrimaryLabel: false,
             search: "", // search is not relevant here
             elements,
         };
@@ -75,9 +72,7 @@ export function* loadIrrelevantElementsSaga(
             loadOptionsWithElements,
         );
 
-        const relevantElementTitles = relevantElementsResult.elements.map((elem) =>
-            context.enableDuplicatedLabelValuesInAttributeFilter ? elem.uri : elem.title,
-        );
+        const relevantElementTitles = relevantElementsResult.elements.map((elem) => elem.uri);
         const irrelevantSelectionTitles = difference(allSelectedElementTitles, relevantElementTitles);
 
         yield put(

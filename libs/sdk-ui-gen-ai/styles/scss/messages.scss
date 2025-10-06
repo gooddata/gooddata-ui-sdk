@@ -283,18 +283,31 @@
         }
     }
 
-    &__save {
+    &__buttons {
         position: absolute;
         top: 0.5em;
         right: 0.5em;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
     }
 
     &__save button:not(:focus):not(:focus-visible) {
         opacity: 0;
     }
 
+    &__table button:not(:focus):not(:focus-visible) {
+        opacity: 0;
+    }
+
+    // Show menu button on hover or when menu is open (active class)
+    &:hover,
     &.active {
         .gd-gen-ai-chat__visualization__save button {
+            opacity: 1;
+        }
+
+        .gd-gen-ai-chat__visualization__table button {
             opacity: 1;
         }
     }

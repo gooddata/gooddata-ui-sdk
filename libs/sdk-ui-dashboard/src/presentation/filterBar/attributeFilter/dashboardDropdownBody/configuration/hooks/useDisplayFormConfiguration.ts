@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import {
@@ -10,8 +11,6 @@ import {
 
 import {
     selectCatalogAttributes,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-    setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
     useDashboardCommandProcessing,
     useDashboardSelector,
@@ -23,15 +22,6 @@ export function useDisplayFormConfiguration(
     displayAsLabel?: ObjRef,
 ) {
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
-    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
-        selectEnableDuplicatedLabelValuesInAttributeFilter,
-    );
-
-    const { run: changeDisplayForm, status: displayFormChangeStatus } = useDashboardCommandProcessing({
-        commandCreator: setAttributeFilterDisplayForm,
-        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-    });
 
     const { run: changeDisplayAsLabel, status: displayAsLabelChangeStatus } = useDashboardCommandProcessing({
         commandCreator: setDashboardAttributeFilterConfigDisplayAsLabel,
@@ -76,20 +66,9 @@ export function useDisplayFormConfiguration(
 
     const onDisplayFormChange = useCallback(() => {
         if (!areObjRefsEqual(originalDisplayForm, selectedDisplayForm)) {
-            if (enableDuplicatedLabelValuesInAttributeFilter) {
-                changeDisplayAsLabel(currentFilter.attributeFilter.localIdentifier!, selectedDisplayForm);
-            } else {
-                changeDisplayForm(currentFilter.attributeFilter.localIdentifier!, selectedDisplayForm);
-            }
+            changeDisplayAsLabel(currentFilter.attributeFilter.localIdentifier!, selectedDisplayForm);
         }
-    }, [
-        selectedDisplayForm,
-        originalDisplayForm,
-        currentFilter,
-        changeDisplayForm,
-        enableDuplicatedLabelValuesInAttributeFilter,
-        changeDisplayAsLabel,
-    ]);
+    }, [selectedDisplayForm, originalDisplayForm, currentFilter, changeDisplayAsLabel]);
 
     const onConfigurationClose = useCallback(() => {
         setSelectedDisplayForm(originalDisplayForm);
@@ -101,8 +80,6 @@ export function useDisplayFormConfiguration(
         displayFormChanged,
         onDisplayFormChange,
         onConfigurationClose,
-        displayFormChangeStatus: enableDuplicatedLabelValuesInAttributeFilter
-            ? displayAsLabelChangeStatus
-            : displayFormChangeStatus,
+        displayFormChangeStatus: displayAsLabelChangeStatus,
     };
 }

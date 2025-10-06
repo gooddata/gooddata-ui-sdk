@@ -678,6 +678,9 @@ export const handleOnGoodstrapDragEvent: DebouncedFunc<() => void>;
 export function Header({ children, ...restProps }: IHeaderProps): JSX.Element;
 
 // @internal (undocumented)
+export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
+
+// @internal (undocumented)
 export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
 
 // @internal (undocumented)
@@ -1318,7 +1321,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw";
+export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -5230,6 +5233,8 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     // (undocumented)
     ariaAttributes: UiTreeViewAriaAttributes;
     // (undocumented)
+    autoFocus?: boolean;
+    // (undocumented)
     dataTestId?: string;
     // (undocumented)
     expandedMode?: "default-expanded" | "default-collapsed";
@@ -5248,7 +5253,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onFocus?: (nodeId: string) => void;
+    onFocus?: (nodeId?: string) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiTreeviewContext<Levels, Level>) => void;
     // (undocumented)
@@ -6130,6 +6135,8 @@ export interface UiButtonProps {
     // (undocumented)
     accessibilityConfig?: IUiButtonAccessibilityConfig;
     // (undocumented)
+    badgeAfter?: number;
+    // (undocumented)
     dataId?: string;
     // (undocumented)
     dataTestId?: string;
@@ -6358,7 +6365,7 @@ export interface UiIconButtonPublicProps {
     // (undocumented)
     tabIndex?: number;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable | VariantBare;
 }
 
 // @internal (undocumented)
@@ -6639,6 +6646,31 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 // @internal
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
+// @internal
+export function UiSubmenuHeader(props: UiSubmenuHeaderProps): JSX.Element;
+
+// @internal (undocumented)
+export interface UiSubmenuHeaderProps {
+    // (undocumented)
+    backAriaLabel?: string;
+    // (undocumented)
+    backgroundColor?: string;
+    // (undocumented)
+    closeAriaLabel?: string;
+    // (undocumented)
+    height?: SizeMedium | SizeLarge;
+    // (undocumented)
+    onBack?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onClose?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    textColor?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    useShortenedTitle?: boolean;
+}
+
 // @internal (undocumented)
 export interface UiTab {
     // (undocumented)
@@ -6847,7 +6879,11 @@ export const useId: () => string;
 export const useIdPrefixed: (prefix?: string) => string;
 
 // @internal (undocumented)
-export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;
+export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): {
+    text: string;
+    count: number | undefined;
+    whole: string;
+};
 
 // @internal
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
@@ -6951,6 +6987,9 @@ export function useUiTreeViewEventSubscriber<T extends UiTreeViewEventType>(even
 // @internal
 export const useZoom: () => IZoomContextState;
 
+// @internal
+export type VariantBare = "bare";
+
 // @internal (undocumented)
 export type VariantDanger = "danger";
 
@@ -6966,7 +7005,7 @@ export type VariantPrimary = "primary";
 // @internal (undocumented)
 export type VariantSecondary = "secondary";
 
-// @internal (undocumented)
+// @internal
 export type VariantTable = "table";
 
 // @internal (undocumented)

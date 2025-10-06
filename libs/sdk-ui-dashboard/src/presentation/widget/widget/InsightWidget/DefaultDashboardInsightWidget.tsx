@@ -14,6 +14,7 @@ import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
 import {
+    selectRenderMode,
     selectSettings,
     useDashboardAlerts,
     useDashboardScheduledEmails,
@@ -30,7 +31,7 @@ import { useInsightExport } from "../../common/index.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 import { DashboardInsight } from "../../insight/index.js";
-import { supportsShowAsTable } from "../../insight/insightToTable.js";
+import { convertInsightToTableDefinition, supportsShowAsTable } from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 
@@ -53,6 +54,9 @@ function DefaultDashboardInsightWidgetCore({
 }: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
+    const renderMode = useDashboardSelector(selectRenderMode);
+    const isExportMode = renderMode === "export";
+    const isAccessibilityMode = settings.enableAccessibilityMode === true;
 
     const {
         isScheduledEmailingVisible,
@@ -192,86 +196,116 @@ function DefaultDashboardInsightWidgetCore({
 
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(widget);
 
+    const accessibilityTableInsight = useMemo(() => {
+        if (!isExportMode || !insight || !isAccessibilityMode) {
+            return null;
+        }
+        return convertInsightToTableDefinition(insight);
+    }, [isExportMode, insight, isAccessibilityMode]);
+
     return (
-        <DashboardItem
-            className={cx(
-                dashboardItemClasses,
-                "type-visualization",
-                "gd-dashboard-view-widget",
-                getVisTypeCssClass(widget.type, visType),
-                { "gd-highlighted": highlighted },
-            )}
-            screen={screen}
-            ref={elementRef}
-            description={accessibilityWidgetDescription}
-            exportData={exportData?.section}
-            titleId={titleId}
-        >
-            <DashboardItemVisualization
-                isExport={!!exportData}
-                renderHeadline={(clientHeight) =>
-                    !widget.configuration?.hideTitle && (
-                        <DashboardItemHeadline
-                            title={widget.title}
-                            titleId={titleId}
-                            clientHeight={clientHeight}
-                            exportData={exportData?.title}
-                        />
-                    )
-                }
-                renderBeforeVisualization={() => (
-                    <div className="gd-absolute-row">
-                        {settings?.enableDescriptions ? (
-                            <InsightWidgetDescriptionComponent
+        <>
+            <DashboardItem
+                className={cx(
+                    dashboardItemClasses,
+                    "type-visualization",
+                    "gd-dashboard-view-widget",
+                    getVisTypeCssClass(widget.type, visType),
+                    { "gd-highlighted": highlighted },
+                )}
+                screen={screen}
+                ref={elementRef}
+                description={accessibilityWidgetDescription}
+                exportData={exportData?.section}
+                titleId={titleId}
+            >
+                <DashboardItemVisualization
+                    isExport={!!exportData}
+                    renderHeadline={(clientHeight) =>
+                        !widget.configuration?.hideTitle && (
+                            <DashboardItemHeadline
+                                title={widget.title}
+                                titleId={titleId}
+                                clientHeight={clientHeight}
+                                exportData={exportData?.title}
+                            />
+                        )
+                    }
+                    renderBeforeVisualization={() => (
+                        <div className="gd-absolute-row">
+                            {settings?.enableDescriptions ? (
+                                <InsightWidgetDescriptionComponent
+                                    insight={insight}
+                                    widget={widget}
+                                    screen={screen}
+                                    exportData={exportData?.description}
+                                />
+                            ) : null}
+                            {(() => {
+                                const visType = insight ? insightVisualizationType(insight) : undefined;
+                                if (supportsShowAsTable(visType)) {
+                                    return (
+                                        <ShowAsTableButton
+                                            widget={widget}
+                                            isWidgetAsTable={isWidgetAsTable}
+                                            onClick={toggleWidgetAsTable}
+                                        />
+                                    );
+                                }
+                                return null;
+                            })()}
+                            <InsightMenuButtonComponent
                                 insight={insight}
                                 widget={widget}
-                                screen={screen}
-                                exportData={exportData?.description}
+                                isOpen={isMenuOpen}
+                                onClick={toggleMenu}
+                                items={menuItems}
                             />
-                        ) : null}
-                        {(() => {
-                            const visType = insight ? insightVisualizationType(insight) : undefined;
-                            if (supportsShowAsTable(visType)) {
-                                return (
-                                    <ShowAsTableButton
-                                        widget={widget}
-                                        isWidgetAsTable={isWidgetAsTable}
-                                        onClick={toggleWidgetAsTable}
-                                    />
-                                );
-                            }
+                        </div>
+                    )}
+                    renderAfterContent={() => {
+                        if (!isMenuOpen) {
                             return null;
-                        })()}
-                        <InsightMenuButtonComponent
-                            insight={insight}
-                            widget={widget}
-                            isOpen={isMenuOpen}
-                            onClick={toggleMenu}
-                            items={menuItems}
-                        />
-                    </div>
-                )}
-                renderAfterContent={() => {
-                    if (!isMenuOpen) {
-                        return null;
-                    }
+                        }
 
-                    return (
-                        <InsightMenuComponent
+                        return (
+                            <InsightMenuComponent
+                                insight={insight}
+                                widget={widget}
+                                isOpen={isMenuOpen}
+                                onClose={closeMenu}
+                                items={menuItems}
+                            />
+                        );
+                    }}
+                >
+                    {({ clientHeight, clientWidth }) => (
+                        <DashboardInsight
+                            clientHeight={clientHeight}
+                            clientWidth={clientWidth}
                             insight={insight}
                             widget={widget}
-                            isOpen={isMenuOpen}
-                            onClose={closeMenu}
-                            items={menuItems}
+                            onExportReady={onExportReady}
+                            onLoadingChanged={onLoadingChanged}
+                            onError={onError}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                            exportData={exportData?.widget}
                         />
-                    );
-                }}
-            >
-                {({ clientHeight, clientWidth }) => (
+                    )}
+                </DashboardItemVisualization>
+            </DashboardItem>
+
+            {/* Accessibility table for export mode */}
+            {accessibilityTableInsight ? (
+                <div
+                    className="accessibility-data-table"
+                    data-widget-id={widget.identifier}
+                    data-export-type="accessibility-table"
+                    aria-hidden="true"
+                >
                     <DashboardInsight
-                        clientHeight={clientHeight}
-                        clientWidth={clientWidth}
-                        insight={insight}
+                        insight={accessibilityTableInsight}
                         widget={widget}
                         onExportReady={onExportReady}
                         onLoadingChanged={onLoadingChanged}
@@ -280,8 +314,8 @@ function DefaultDashboardInsightWidgetCore({
                         LoadingComponent={LoadingComponent}
                         exportData={exportData?.widget}
                     />
-                )}
-            </DashboardItemVisualization>
-        </DashboardItem>
+                </div>
+            ) : null}
+        </>
     );
 }

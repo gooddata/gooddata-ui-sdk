@@ -589,8 +589,12 @@ $attribute-filter-drag-handle-left: 10px;
             .configuration-panel-header {
                 display: flex;
                 align-items: center;
-                height: 35px;
+                height: 36px;
                 padding: 0 10px;
+            }
+
+            .configuration-panel-header-title {
+                line-height: normal;
             }
         }
 
@@ -604,6 +608,10 @@ $attribute-filter-drag-handle-left: 10px;
             .gd-filter-view-add-hint {
                 font-size: 12px;
                 margin: 5px 0;
+            }
+
+            .configuration-panel-header-title-button {
+                color: kit-variables.$gd-color-state-blank;
             }
         }
 

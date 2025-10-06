@@ -220,6 +220,33 @@
                 border-color: transparent;
             }
         }
+
+        &-bare {
+            --gd-icon-fill-color: var(--gd-palette-complementary-6); // same as text
+            background-color: transparent;
+            border-color: transparent;
+            border-width: 0;
+            &#{$root}--size-small,
+            &#{$root}--size-medium,
+            &#{$root}--size-large,
+            &#{$root}--size-xlarge,
+            &#{$root}--size-xxlarge {
+                height: auto;
+                width: auto;
+            }
+
+            &:not(&:disabled) {
+                &:focus-visible,
+                &:hover,
+                &:active {
+                    --gd-icon-fill-color: var(--gd-palette-complementary-7);
+                }
+            }
+
+            &:disabled {
+                --gd-icon-fill-color: var(--gd-palette-complementary-4);
+            }
+        }
     }
 
     /**
@@ -230,6 +257,10 @@
 
         &#{$root}--variant-primary {
             --gd-icon-fill-color: var(--gd-palette-complementary-0);
+        }
+
+        &#{$root}--variant-bare {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
         }
     }
 }

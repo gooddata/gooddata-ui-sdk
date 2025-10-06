@@ -134,12 +134,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
     public override getInsightWithDrillDownApplied(

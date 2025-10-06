@@ -2,8 +2,6 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-import { identity } from "lodash-es";
-
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
@@ -87,7 +85,7 @@ export function ScopedThemeProvider({
     theme: themeParam,
     backend: backendParam,
     workspace: workspaceParam,
-    modifier = identity,
+    modifier = (v) => v,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
 }: IScopedThemeProviderProps) {

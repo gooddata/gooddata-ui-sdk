@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import { cloneDeep, identity, intersection } from "lodash-es";
+import { cloneDeep, intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ISettings } from "@gooddata/sdk-model";
@@ -131,7 +131,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public addScenario(
         name: string,
         props: UnboundVisProps<T>,
-        m: ScenarioModification<T> = identity,
+        m: ScenarioModification<T> = (v) => v,
     ): ScenarioGroup<T> {
         const exists = this.scenarioIndex[name];
 
@@ -169,7 +169,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         baseName: string,
         baseProps: UnboundVisProps<T>,
         customizer: ScenarioCustomizer<T>,
-        m: ScenarioModification<T> = identity,
+        m: ScenarioModification<T> = (v) => v,
     ): ScenarioGroup<T> {
         const variants = customizer(baseName, baseProps, this.defaultTags);
 
@@ -213,7 +213,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public addCustomizedScenarios(
         fromGroup: ScenarioGroup<T>,
         customizer: ScenarioCustomizer<T> = copyCustomizer,
-        m: ScenarioModification<T> = identity,
+        m: ScenarioModification<T> = (v) => v,
     ): ScenarioGroup<T> {
         fromGroup.scenarioList.forEach((scenario) => {
             this.addScenarios(scenario.name, scenario.props, customizer, m);

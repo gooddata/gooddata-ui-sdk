@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -500,6 +501,27 @@ export function isSubtotalColumnDefinition(
 }
 
 /**
+ * Type guard to check if a subtotal column definition is a standard case
+ * @alpha
+ */
+export function isStandardSubtotalColumnDefinition(
+    columnDefinition: unknown,
+): columnDefinition is ITableSubtotalColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+} {
+    return (
+        isSubtotalColumnDefinition(columnDefinition) &&
+        columnDefinition.isTransposed === false &&
+        columnDefinition.isEmpty === false &&
+        "totalHeader" in columnDefinition &&
+        "measureDescriptor" in columnDefinition
+    );
+}
+
+/**
  * Type guard to check if a column definition is a grand total column
  * @alpha
  */
@@ -509,6 +531,27 @@ export function isGrandTotalColumnDefinition(
     return (
         !isEmpty(columnDefinition) &&
         (columnDefinition as ITableGrandTotalColumnDefinition).type === "grandTotal"
+    );
+}
+
+/**
+ * Type guard to check if a grand total column definition is a standard case
+ * @alpha
+ */
+export function isStandardGrandTotalColumnDefinition(
+    columnDefinition: unknown,
+): columnDefinition is ITableGrandTotalColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    totalHeader: IResultTotalHeader;
+    measureDescriptor: IMeasureDescriptor;
+} {
+    return (
+        isGrandTotalColumnDefinition(columnDefinition) &&
+        columnDefinition.isTransposed === false &&
+        columnDefinition.isEmpty === false &&
+        "totalHeader" in columnDefinition &&
+        "measureDescriptor" in columnDefinition
     );
 }
 

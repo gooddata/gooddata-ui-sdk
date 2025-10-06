@@ -18,6 +18,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
     return {
         ...(config || {}),
         enableCompactSize: true,
+        ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {
                   enableJoinedAttributeAxisName: true,

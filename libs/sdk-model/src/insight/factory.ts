@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IAttributeFilterConfigs, IInsightDefinition, VisualizationProperties } from "./index.js";
 import { ISortItem } from "../execution/base/sort.js";
@@ -20,7 +19,7 @@ import { IFilter } from "../execution/filter/index.js";
  */
 export function newInsightDefinition(
     visualizationUrl: string,
-    modifications: InsightModifications = identity,
+    modifications: InsightModifications = (v) => v,
 ): IInsightDefinition {
     const builder = new InsightDefinitionBuilder(visualizationUrl);
 

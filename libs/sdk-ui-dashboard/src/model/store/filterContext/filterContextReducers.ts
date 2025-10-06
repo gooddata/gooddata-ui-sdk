@@ -562,8 +562,6 @@ const clearAttributeFiltersSelection: FilterContextReducer<
 export interface IChangeAttributeDisplayFormPayload {
     readonly filterLocalId: string;
     readonly displayForm: ObjRef;
-    readonly supportsElementUris?: boolean;
-    readonly enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     readonly isWorkingSelectionChange?: boolean;
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     readonly isResultOfMigration?: boolean;
@@ -579,8 +577,6 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     const {
         filterLocalId,
         displayForm,
-        supportsElementUris,
-        enableDuplicatedLabelValuesInAttributeFilter,
         isWorkingSelectionChange,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
         isResultOfMigration,
@@ -613,16 +609,6 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     const currentFilter = filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter;
 
     currentFilter.attributeFilter.displayForm = { ...displayForm };
-
-    if (!supportsElementUris && !enableDuplicatedLabelValuesInAttributeFilter) {
-        currentFilter.attributeFilter.negativeSelection =
-            currentFilter.attributeFilter.selectionMode !== "single";
-        currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
-            currentFilter.attributeFilter.attributeElements,
-        )
-            ? { uris: [] }
-            : { values: [] };
-    }
 
     // update original filters to not show "reset filters" button, that will revert filter to wrong state
     if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {

@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     IAnalyticalBackend,
@@ -65,8 +64,8 @@ function customWorkspaceSettings(config: WorkspaceSettingsConfiguration): Worksp
     return (original: IWorkspaceSettingsService) =>
         new WithModifiedWorkspaceSettingsService(
             original,
-            config.settingsWrapper || identity,
-            config.currentUserSettingsWrapper || identity,
+            config.settingsWrapper || ((v) => v),
+            config.currentUserSettingsWrapper || ((v) => v),
             config.commonSettingsWrapper || emptySettingsSetter,
         );
 }

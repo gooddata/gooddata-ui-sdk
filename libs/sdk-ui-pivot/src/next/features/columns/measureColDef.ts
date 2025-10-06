@@ -41,9 +41,7 @@ export function createMeasureColDef(
         cellClass: (params) => {
             return getCellClassName(params, drillableItems, dv);
         },
-        cellStyle: (params) => {
-            return getMeasureCellStyle(params);
-        },
+        cellStyle: getMeasureCellStyle,
         headerName: measureDescriptor.measureHeaderItem.name,
         valueGetter: (params) => {
             return extractFormattedValue(params, colId);

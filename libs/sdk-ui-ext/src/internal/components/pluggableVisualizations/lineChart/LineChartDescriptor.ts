@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
@@ -41,14 +42,12 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFilters(
             source,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -86,14 +85,8 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 }

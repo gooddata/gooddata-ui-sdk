@@ -2,7 +2,6 @@
 
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
-import { includes } from "lodash-es";
 
 import {
     IAttributeSortItem,
@@ -42,15 +41,13 @@ function filterInvalidSortItems(
                     locators: sortItem.measureSortItem.locators.filter((locator) => {
                         // filter out invalid measure locators
                         if (isMeasureLocator(locator)) {
-                            return includes(
-                                measureLocalIdentifiers,
+                            return measureLocalIdentifiers.includes(
                                 locator.measureLocatorItem.measureIdentifier,
                             );
                         }
                         // filter out invalid column attribute locators
                         if (isAttributeLocator(locator)) {
-                            return includes(
-                                columnAttributeLocalIdentifiers,
+                            return columnAttributeLocalIdentifiers.includes(
                                 locator.attributeLocatorItem.attributeIdentifier,
                             );
                         }
@@ -87,7 +84,7 @@ function filterInvalidSortItems(
          * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
          * issues. Because of the flurry of calls, the table may not render or load indefinitely.
          */
-        if (includes(rowAttributeLocalIdentifiers, sortItem.attributeSortItem.attributeIdentifier)) {
+        if (rowAttributeLocalIdentifiers.includes(sortItem.attributeSortItem.attributeIdentifier)) {
             return [...sortItems, sortItem];
         }
         return sortItems;

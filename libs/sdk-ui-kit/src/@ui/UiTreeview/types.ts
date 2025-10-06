@@ -121,7 +121,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     expandedMode?: "default-expanded" | "default-collapsed";
     expansionMode?: "multiple" | "single";
 
-    onFocus?: (nodeId: string) => void;
+    onFocus?: (nodeId?: string) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
 
@@ -132,6 +132,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
     shouldCloseOnSelect?: boolean;
     isDisabledFocusable?: boolean;
     isCompact?: boolean;
+    autoFocus?: boolean;
 
     ariaAttributes: UiTreeViewAriaAttributes;
 }

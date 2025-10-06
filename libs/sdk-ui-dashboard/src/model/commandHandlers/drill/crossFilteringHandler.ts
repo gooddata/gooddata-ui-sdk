@@ -20,7 +20,6 @@ import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attri
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import {
     selectEnableCrossFilteringAliasTitles,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../store/config/configSelectors.js";
 import {
@@ -39,13 +38,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         crossFilteringRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent, cmd.correlationId),
     );
 
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
     const enableCrossFilteringAliasTitles: ReturnType<typeof selectEnableCrossFilteringAliasTitles> =
         yield select(selectEnableCrossFilteringAliasTitles);
 
-    const backendSupportsElementUris = !!ctx.backend.capabilities.supportsElementUris;
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
     const currentFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
         selectFilterContextDraggableFilters,
@@ -70,8 +65,6 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
-        backendSupportsElementUris,
-        enableDuplicatedLabelValuesInAttributeFilter,
         enableCrossFilteringAliasTitles,
         filtersCount,
     );
@@ -93,21 +86,18 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
-                  if (enableDuplicatedLabelValuesInAttributeFilter) {
-                      const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(
-                          vf.attributeFilter.localIdentifier!,
-                      );
-                      const useDisplayAsLabel =
-                          displayForm && primaryLabel && !areObjRefsEqual(displayForm, primaryLabel);
-                      // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
-                      return (
-                          areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) &&
-                          (vfDisplayAsLabel || useDisplayAsLabel
-                              ? areObjRefsEqual(vfDisplayAsLabel, displayForm)
-                              : true)
-                      );
-                  }
-                  return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
+                  const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(
+                      vf.attributeFilter.localIdentifier!,
+                  );
+                  const useDisplayAsLabel =
+                      displayForm && primaryLabel && !areObjRefsEqual(displayForm, primaryLabel);
+                  // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
+                  return (
+                      areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) &&
+                      (vfDisplayAsLabel || useDisplayAsLabel
+                          ? areObjRefsEqual(vfDisplayAsLabel, displayForm)
+                          : true)
+                  );
               })
             : undefined;
 

@@ -811,6 +811,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     border: 1px solid transparent;
 
     .configuration-panel-header-back-button {
+        cursor: pointer;
         border: none;
         background: none;
         color: kit-variables.$gd-color-state-blank;

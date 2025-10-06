@@ -124,12 +124,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
 
         const reorderedIntersection = this.adjustIntersectionForColumnBar(source, event);
         const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
     public override getInsightWithDrillDownApplied(

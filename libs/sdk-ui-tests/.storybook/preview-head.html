@@ -1,6 +1,7 @@
 <script type="module">
     // only load the web-components stuff for the web-components stories
-    if (window.location.href.includes("13-web-components")) {
+
+    if (!window.__setWebComponentsContext) {
         import("/web-components/index.js").then((m) => {
             window.__setWebComponentsContext = m.setContext;
         });

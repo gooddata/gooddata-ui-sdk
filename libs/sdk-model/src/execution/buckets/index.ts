@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+
 import stringify from "json-stable-stringify";
-import { identity, intersection, isEmpty } from "lodash-es";
+import { intersection, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { Identifier } from "../../objRef/index.js";
@@ -535,7 +536,7 @@ export type BucketItemReducer = (
  */
 export function bucketModifyItems(
     bucket: IBucket,
-    modifications: BucketItemModifications = identity,
+    modifications: BucketItemModifications = (v) => v,
 ): IBucket {
     invariant(bucket, "bucket must be specified");
     const items: IAttributeOrMeasure[] = bucketItems(bucket);
@@ -558,7 +559,7 @@ export function bucketModifyItems(
  * @returns new instance of bucket with modified bucket items
  * @public
  */
-export function bucketItemReduce(bucket: IBucket, reducer: BucketItemReducer = identity): IBucket {
+export function bucketItemReduce(bucket: IBucket, reducer: BucketItemReducer = (v) => v): IBucket {
     invariant(bucket, "bucket must be specified");
     const items: IAttributeOrMeasure[] = bucketItems(bucket);
 

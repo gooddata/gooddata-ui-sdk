@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
-
 import { ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { getContrastRatio, getRgbFromWebColor, parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
@@ -45,8 +43,10 @@ const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) =>
 };
 
 function getVisiblePointsWithLabel(chart: any) {
-    return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
-        (point: any) => point.dataLabel && point.graphic,
+    return (
+        getVisibleSeries(chart)
+            ?.flatMap((series) => series.points)
+            ?.filter((point: any) => point.dataLabel && point.graphic) ?? []
     );
 }
 

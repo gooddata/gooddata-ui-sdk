@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -21,7 +22,6 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
@@ -59,18 +59,9 @@ export function* addAttributeFilterHandler(
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> =
         yield select(selectCanAddMoreFilters);
 
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
-
-    const usedDisplayForm =
-        enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? primaryDisplayForm : displayForm;
+    const usedDisplayForm = primaryDisplayForm || displayForm;
     const displayAsLabel =
-        enableDuplicatedLabelValuesInAttributeFilter &&
-        primaryDisplayForm &&
-        !areObjRefsEqual(primaryDisplayForm, displayForm)
-            ? displayForm
-            : undefined;
+        primaryDisplayForm && !areObjRefsEqual(primaryDisplayForm, displayForm) ? displayForm : undefined;
 
     if (!isUnderFilterCountLimit && type !== "crossfilter") {
         throw invalidArgumentsProvided(
@@ -166,7 +157,7 @@ export function* addAttributeFilterHandler(
             }),
         );
     }
-    if (enableDuplicatedLabelValuesInAttributeFilter && displayAsLabel) {
+    if (displayAsLabel) {
         attributeFilterConfigActions.push(
             attributeFilterConfigsActions.changeDisplayAsLabel({
                 localIdentifier: addedFilter.attributeFilter.localIdentifier!,

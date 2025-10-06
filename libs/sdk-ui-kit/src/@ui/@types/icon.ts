@@ -23,6 +23,7 @@ export type IconType =
     | "navigateUp"
     | "navigateDown"
     | "navigateRight"
+    | "navigateLeft"
     | "download"
     | "slack"
     | "expand"

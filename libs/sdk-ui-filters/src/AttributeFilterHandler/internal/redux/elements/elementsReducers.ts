@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -24,7 +24,7 @@ const setElementsTotalCount: AttributeFilterReducer<
     state.elements.totalCount = action.payload.totalCount;
 };
 
-const initTotalCount: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
+const initTotalCount: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (v) => v;
 
 const initTotalCountStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.elements.totalCountInitialization.status = "loading";

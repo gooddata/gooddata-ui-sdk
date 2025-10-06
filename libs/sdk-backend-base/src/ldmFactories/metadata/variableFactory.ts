@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import { IVariableMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
@@ -26,6 +25,6 @@ export class VariableMetadataObjectBuilder<
  */
 export const newVariableMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<VariableMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<VariableMetadataObjectBuilder> = (v) => v,
 ): IVariableMetadataObject =>
     builderFactory(VariableMetadataObjectBuilder, { type: "variable", ref }, modifications);

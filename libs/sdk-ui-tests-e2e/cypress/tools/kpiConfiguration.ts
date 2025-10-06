@@ -73,7 +73,11 @@ export class KpiConfiguration {
     }
 
     close() {
-        this.getElement().find("[data-id='s-configuration-panel-header-close-button']").click();
+        this.getElement()
+            .find(
+                "[data-id='s-configuration-panel-header-close-button'], [data-id='s-submenu-header-close-button']",
+            )
+            .click();
         this.getElement().should("not.exist");
         return this;
     }

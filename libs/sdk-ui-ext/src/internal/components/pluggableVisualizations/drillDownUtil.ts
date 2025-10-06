@@ -152,26 +152,19 @@ export function sanitizeTableProperties(insight: IInsight): IInsight {
 export function convertIntersectionToFilters(
     intersections: IDrillEventIntersectionElement[],
     backendSupportsElementUris: boolean = true,
-    enableDuplicatedLabelValuesInAttributeFilter: boolean = true,
 ): IFilter[] {
     return intersections
         .map((intersection) => intersection.header)
         .filter(isDrillIntersectionAttributeItem)
         .map((header) => {
-            const ref = enableDuplicatedLabelValuesInAttributeFilter
-                ? header.attributeHeader.primaryLabel
-                : header.attributeHeader.ref;
+            const ref = header.attributeHeader.primaryLabel;
             if (backendSupportsElementUris) {
                 return newPositiveAttributeFilter(ref, {
                     uris: [header.attributeHeaderItem.uri],
                 });
             }
             return newPositiveAttributeFilter(ref, {
-                values: [
-                    enableDuplicatedLabelValuesInAttributeFilter
-                        ? header.attributeHeaderItem.uri
-                        : header.attributeHeaderItem.name,
-                ],
+                values: [header.attributeHeaderItem.uri],
             });
         });
 }
@@ -196,13 +189,8 @@ export function addIntersectionFiltersToInsight(
     source: IInsight,
     intersection: IDrillEventIntersectionElement[],
     backendSupportsElementUris: boolean,
-    enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ): IInsight {
-    const filters = convertIntersectionToFilters(
-        intersection,
-        backendSupportsElementUris,
-        enableDuplicatedLabelValuesInAttributeFilter,
-    );
+    const filters = convertIntersectionToFilters(intersection, backendSupportsElementUris);
     const resultFilters = [...source.insight.filters, ...filters];
 
     return insightSetFilters(source, resultFilters);

@@ -14,7 +14,7 @@ import {
     isSimpleMeasure,
     measureFilters,
 } from "@gooddata/sdk-model";
-import { IDateDataset, IDateDatasetHeader, sortDateDatasets } from "@gooddata/sdk-ui-kit";
+import { IDateDataset, IDateDatasetHeader, sortDateDatasets, unrelatedHeader } from "@gooddata/sdk-ui-kit";
 
 const DATE_DROPDOWN_BODY_MARGIN = 6;
 const UNRELATED_HEIGHT = 37;
@@ -98,7 +98,24 @@ export function getSortedDateDatasetsItems(
     relatedDateDatasets: readonly ICatalogDateDataset[],
     recommendedDateDataSet: ICatalogDateDataset | undefined,
     unrelatedDateDataset: ICatalogDateDataset | undefined,
+    unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined,
+    shouldDisplayUnrelatedDatasets = false,
 ): (IDateDataset | IDateDatasetHeader)[] {
+    const sortedUnrelatedDateDataset = sortDateDatasets(
+        (unrelatedDateDatasets || []).map(catalogDateDatasetToDateDataset),
+    );
+    const withUnrelatedHeader = [unrelatedHeader, ...sortedUnrelatedDateDataset];
+
+    if (shouldDisplayUnrelatedDatasets) {
+        return [
+            ...sortDateDatasets(
+                relatedDateDatasets.map(catalogDateDatasetToDateDataset),
+                recommendedDateDataSet ? catalogDateDatasetToDateDataset(recommendedDateDataSet) : undefined,
+            ),
+            ...withUnrelatedHeader,
+        ];
+    }
+
     return sortDateDatasets(
         relatedDateDatasets.map(catalogDateDatasetToDateDataset),
         recommendedDateDataSet ? catalogDateDatasetToDateDataset(recommendedDateDataSet) : undefined,

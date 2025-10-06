@@ -67,11 +67,11 @@ module.exports = {
                         importNames: ["map"],
                         message: "Please use Array.prototype.map() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["flatMap"],
-                    //     message: "Please use Array.prototype.flatMap() instead.",
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["flatMap"],
+                        message: "Please use Array.prototype.flatMap() instead.",
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["filter"],
@@ -87,11 +87,11 @@ module.exports = {
                         importNames: ["findIndex"],
                         message: "Please use Array.prototype.findIndex() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["includes"],
-                    //     message: "Please use Array.prototype.includes() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["includes"],
+                        message: "Please use Array.prototype.includes() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["some"],

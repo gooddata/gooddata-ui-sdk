@@ -449,6 +449,8 @@ export {
     isTransposedValueColumnDefinition,
     isStandardValueColumnDefinition,
     isEmptyValueColumnDefinition,
+    isStandardSubtotalColumnDefinition,
+    isStandardGrandTotalColumnDefinition,
 } from "./results/tableData/interfaces/columns.js";
 export type {
     ITableRowDefinition,

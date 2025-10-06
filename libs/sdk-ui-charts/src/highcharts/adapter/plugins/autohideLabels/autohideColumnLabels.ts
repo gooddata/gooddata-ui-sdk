@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { identity, isEmpty, zip } from "lodash-es";
+import { isEmpty, zip } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -242,7 +242,7 @@ export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point
         }),
     )
         .flat()
-        .filter(identity);
+        .filter((v) => v);
 }
 
 export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
@@ -253,7 +253,7 @@ export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
             }
             return axis.series.map((serie: Highcharts.Series) => (serie as UnsafeInternals).dataLabelsGroup);
         })
-        .filter(identity);
+        .filter((v) => v);
 }
 
 function toggleStackedLabelsForDualAxis(this: any) {
@@ -364,7 +364,7 @@ export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highch
         .map((point: UnsafeInternals) => {
             return point.label || point.dataLabel;
         })
-        .filter(identity);
+        .filter((v) => v);
 }
 
 export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {

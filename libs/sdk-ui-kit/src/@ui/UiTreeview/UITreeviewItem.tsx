@@ -61,7 +61,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
     const level = props.path.length;
 
     const id = makeItemId(treeViewId, path);
-    const isFocused = item === focusedItem.item;
+    const isFocused = item === focusedItem?.item;
     const isSelected = item.id === selectedItemId;
     const isExpanded = childCount > 0 ? state.expanded : undefined;
     const isDisabled = !isDisabledFocusable && item.isDisabled;

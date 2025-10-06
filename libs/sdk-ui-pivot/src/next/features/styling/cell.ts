@@ -8,8 +8,15 @@ import { DataValue } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     ExplicitDrill,
+    ITableColumnDefinition,
     ITableDataValue,
+    isGrandTotalColumnDefinition,
+    isGrandTotalRowDefinition,
+    isMeasureGroupValueColumnDefinition,
+    isStandardGrandTotalColumnDefinition,
+    isStandardSubtotalColumnDefinition,
     isStandardValueColumnDefinition,
+    isSubtotalColumnDefinition,
     isSubtotalRowDefinition,
     isTableAttributeHeaderValue,
     isTableGrandTotalHeaderValue,
@@ -20,6 +27,8 @@ import {
     isTableOverallTotalMeasureValue,
     isTableSubtotalMeasureValue,
     isTableTotalHeaderValue,
+    isValueColumnDefinition,
+    isValueRowDefinition,
 } from "@gooddata/sdk-ui";
 
 import { CELL_CLASSNAME, e } from "./bem.js";
@@ -379,13 +388,37 @@ const isNullValue = (colData: ITableDataValue) => {
  * @returns Object containing color and backgroundColor CSS values
  */
 function extractColorsFromCellData(cellData: ITableDataValue): { color?: string; backgroundColor?: string } {
-    if (!("value" in cellData) || !cellData.value || !cellData.columnDefinition) {
+    if (!("value" in cellData) || cellData.value == null || !cellData.columnDefinition) {
         return {};
     }
 
-    const format = isStandardValueColumnDefinition(cellData.columnDefinition)
-        ? cellData.columnDefinition.measureDescriptor.measureHeaderItem.format
-        : undefined;
+    const isTransposed = isTransposedColumnDefinition(cellData.columnDefinition);
+
+    let format: string | undefined = undefined;
+    if (isTransposed) {
+        if (isValueRowDefinition(cellData.rowDefinition)) {
+            const rowsScope = cellData.rowDefinition.rowScope;
+            const measureDescriptor = rowsScope.find((s) => s.type === "measureScope")?.descriptor;
+            format = measureDescriptor?.measureHeaderItem.format;
+        } else if (isSubtotalRowDefinition(cellData.rowDefinition)) {
+            const rowsScope = cellData.rowDefinition.rowScope;
+            const measureDescriptor = rowsScope.find((s) => s.type === "measureTotalScope")?.descriptor;
+            format = measureDescriptor?.measureHeaderItem.format;
+        } else if (isGrandTotalRowDefinition(cellData.rowDefinition)) {
+            const measureDescriptors = cellData.rowDefinition.measureDescriptors;
+            // In transposed tables, each grand total row represents one measure
+            format = measureDescriptors[0]?.measureHeaderItem.format;
+        }
+    } else {
+        // Non-transposed: get format from column definition's measure descriptor
+        if (
+            isStandardValueColumnDefinition(cellData.columnDefinition) ||
+            isStandardSubtotalColumnDefinition(cellData.columnDefinition) ||
+            isStandardGrandTotalColumnDefinition(cellData.columnDefinition)
+        ) {
+            format = cellData.columnDefinition.measureDescriptor.measureHeaderItem.format;
+        }
+    }
 
     if (!format) {
         return {};
@@ -399,6 +432,24 @@ function extractColorsFromCellData(cellData: ITableDataValue): { color?: string;
         backgroundColor: formattedResult.colors?.backgroundColor,
     };
 }
+
+const isTransposedColumnDefinition = (columnDefinition: ITableColumnDefinition): boolean => {
+    // measureGroupValue column only exists in transposed tables
+    if (isMeasureGroupValueColumnDefinition(columnDefinition)) {
+        return true;
+    }
+
+    // Check isTransposed flag for value and total columns
+    if (
+        isValueColumnDefinition(columnDefinition) ||
+        isGrandTotalColumnDefinition(columnDefinition) ||
+        isSubtotalColumnDefinition(columnDefinition)
+    ) {
+        return columnDefinition.isTransposed;
+    }
+
+    return false;
+};
 
 /**
  * Creates cell style for measure columns with color formatting support.

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Return default feature flags on FeatureHub request failure.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

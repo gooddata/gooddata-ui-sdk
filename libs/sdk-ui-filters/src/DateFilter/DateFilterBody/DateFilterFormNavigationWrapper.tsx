@@ -1,43 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, useCallback } from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
-import { Button, Typography, UiFocusManager } from "@gooddata/sdk-ui-kit";
+import { UiFocusManager, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterHeader } from "./DateFilterHeader.js";
-
-interface IHeaderProps {
-    title: string;
-    onHeaderClick: () => void;
-    backLabel?: string;
-}
-
-function Header({ title, onHeaderClick, backLabel }: IHeaderProps) {
-    const onClick = useCallback(
-        (e: MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onHeaderClick();
-        },
-        [onHeaderClick],
-    );
-    return (
-        <div className="header">
-            <Button
-                className="header-back-button configuration-panel-header-back-button gd-icon-navigateleft"
-                onClick={onClick}
-                accessibilityConfig={{
-                    ariaLabel: backLabel,
-                }}
-            />
-            <Typography tagName="h3" className="header-title" onClick={onHeaderClick}>
-                {title}
-            </Typography>
-        </div>
-    );
-}
 
 export interface IDateFilterFormNavigationWrapperProps {
     /**
@@ -80,9 +50,10 @@ export function DateFilterFormNavigationWrapper({
     onBack,
     children,
     className,
-    backLabel = "menu.back",
+    backLabel,
     isMobile,
 }: IDateFilterFormNavigationWrapperProps) {
+    const intl = useIntl();
     return (
         <div
             className={cx(
@@ -94,7 +65,12 @@ export function DateFilterFormNavigationWrapper({
             {isMobile ? (
                 <DateFilterHeader onBack={onBack} title={title} ariaLabel={backLabel} />
             ) : (
-                <Header title={title} onHeaderClick={onBack} backLabel={backLabel} />
+                <UiSubmenuHeader
+                    title={title}
+                    onBack={() => onBack()}
+                    backAriaLabel={backLabel ?? intl.formatMessage({ id: "menu.back" })}
+                    useShortenedTitle={false}
+                />
             )}
             <UiFocusManager enableAutofocus>
                 <div className="gd-date-filter-form-navigation-content">{children}</div>

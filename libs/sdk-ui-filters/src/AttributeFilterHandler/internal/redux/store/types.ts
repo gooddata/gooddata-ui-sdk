@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { Action, AnyAction } from "@reduxjs/toolkit";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -42,6 +43,5 @@ export interface AttributeFilterHandlerStoreContext {
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     eventListener: AttributeFilterHandlerEventListener;
-    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     withoutApply?: boolean;
 }

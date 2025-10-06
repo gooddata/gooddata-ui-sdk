@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
+
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -65,10 +65,9 @@ export function newComposedPlaceholder<
     TContext = UnionToIntersection<ComposedPlaceholderResolutionContext<Flatten<TValue>>>,
 >(
     placeholders: [...TValue],
-    computeValue: (
-        values: PlaceholdersResolvedValues<TValue>,
-        resolutionContext: TContext,
-    ) => TReturn = identity,
+    computeValue: (values: PlaceholdersResolvedValues<TValue>, resolutionContext: TContext) => TReturn = (
+        v,
+    ) => v as any,
 ): IComposedPlaceholder<TReturn, TValue, TContext> {
     const placeholder: IComposedPlaceholder<TReturn, TValue, TContext> = {
         type: "IComposedPlaceholder",

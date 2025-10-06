@@ -80,9 +80,9 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was successful sho
         "uri": "Grammar Plus",
       },
     ],
-    "enableDuplicatedLabelValuesInAttributeFilter": undefined,
     "options": {
       "excludePrimaryLabel": false,
+      "filterByPrimaryLabel": true,
       "limit": 2,
       "limitingAttributeFilters": [],
       "limitingDateFilters": [],

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC } from "react";
+import { FC, RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -19,6 +19,7 @@ import {
 } from "../store/index.js";
 
 type GenAIChatOverlayOwnProps = {
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     onClose: () => void;
 };
 
@@ -38,6 +39,7 @@ export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
 
 function GenAIChatOverlayComponent({
     onClose,
+    returnFocusTo,
     hasMessages,
     clearThread,
     isFullscreen,
@@ -52,6 +54,8 @@ function GenAIChatOverlayComponent({
     return (
         <Dialog
             isModal={isFullscreen}
+            returnFocusTo={returnFocusTo}
+            returnFocusAfterClose={!!returnFocusTo}
             alignPoints={[{ align: isFullscreen ? "cc cc" : "br br" }]}
             submitOnEnterKey={false}
             closeOnEscape={true}

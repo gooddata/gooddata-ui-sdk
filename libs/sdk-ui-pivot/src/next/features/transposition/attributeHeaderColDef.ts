@@ -10,7 +10,7 @@ import {
     getAttributeHeaderName,
     transposedMetricCellRenderer,
 } from "../columns/shared.js";
-import { getCellClassName } from "../styling/cell.js";
+import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -40,6 +40,7 @@ export function createAttributeHeaderColDef(
         cellClass: (params) => {
             return getCellClassName(params, drillableItems, dv);
         },
+        cellStyle: getMeasureCellStyle,
         cellRenderer: (params: AgGridCellRendererParams) => {
             return transposedMetricCellRenderer(params, tableHasMeasures);
         },

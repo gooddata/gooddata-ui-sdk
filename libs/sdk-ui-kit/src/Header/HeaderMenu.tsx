@@ -3,14 +3,13 @@
 import { MouseEvent, ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { identity } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { IHeaderMenuItem, IHeaderMenuProps } from "./typings.js";
 
 function WrappedHeaderMenu(props: IHeaderMenuProps & WrappedComponentProps): ReactNode {
-    const { className = "", onMenuItemClick = identity, sections = [], intl } = props;
+    const { className = "", onMenuItemClick = (v) => v, sections = [], intl } = props;
 
     const classNames = useMemo(() => cx("gd-header-menu", className), [className]);
 

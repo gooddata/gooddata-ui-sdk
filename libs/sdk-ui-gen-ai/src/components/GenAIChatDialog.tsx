@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useEffect, useMemo } from "react";
+import { RefObject, useEffect, useMemo } from "react";
 
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
@@ -30,6 +30,7 @@ export type GenAIChatDialogProps = {
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
     catalogItems?: CatalogItem[];
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
 };
@@ -46,6 +47,7 @@ export function GenAIChatDialog({
     isOpen,
     onClose,
     settings,
+    returnFocusTo,
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
@@ -99,7 +101,7 @@ export function GenAIChatDialog({
                                 canAnalyze={canAnalyze}
                                 canFullControl={canFullControl}
                             >
-                                <GenAIChatOverlay onClose={onClose} />
+                                <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onClose} />
                             </ConfigProvider>
                         </OverlayControllerProvider>
                     </WorkspaceProvider>

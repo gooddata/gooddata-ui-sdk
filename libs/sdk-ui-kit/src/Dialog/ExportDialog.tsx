@@ -28,6 +28,7 @@ export const ExportDialog = memo<IExportDialogProps>(function ExportDialog({
     filterContextVisible = true,
     includeFilterContext = true,
 
+    mergeHeaders = true,
     mergeHeadersDisabled = false,
     mergeHeadersText = "Keep attribute cells merged",
     mergeHeadersTitle = "CELLS",
@@ -54,6 +55,7 @@ export const ExportDialog = memo<IExportDialogProps>(function ExportDialog({
                 filterContextTitle={filterContextTitle}
                 filterContextVisible={filterContextVisible}
                 includeFilterContext={includeFilterContext}
+                mergeHeaders={mergeHeaders}
                 mergeHeadersDisabled={mergeHeadersDisabled}
                 mergeHeadersText={mergeHeadersText}
                 mergeHeadersTitle={mergeHeadersTitle}

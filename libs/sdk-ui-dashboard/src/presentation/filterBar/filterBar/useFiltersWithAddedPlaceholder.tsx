@@ -24,7 +24,6 @@ import {
     getFilterIdentifier,
     selectAllCatalogDateDatasetsMap,
     selectCatalogAttributes,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectSelectedFilterIndex,
     uiActions,
     useDashboardDispatch,
@@ -130,9 +129,6 @@ export function useFiltersWithAddedPlaceholder(
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
-    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
-        selectEnableDuplicatedLabelValuesInAttributeFilter,
-    );
 
     const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);
     const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
@@ -266,11 +262,9 @@ export function useFiltersWithAddedPlaceholder(
                     );
                 });
 
-                const primaryDisplayForm = enableDuplicatedLabelValuesInAttributeFilter
-                    ? relatedAttribute?.displayForms.find((df) => {
-                          return df.isPrimary;
-                      })
-                    : undefined;
+                const primaryDisplayForm = relatedAttribute?.displayForms.find((df) => {
+                    return df.isPrimary;
+                });
 
                 // We allowed just one attributeFilter for one attribute,
                 if (usedDisplayForm) {
@@ -304,7 +298,6 @@ export function useFiltersWithAddedPlaceholder(
             allAttributes,
             clearAddedFilter,
             dispatch,
-            enableDuplicatedLabelValuesInAttributeFilter,
         ],
     );
 

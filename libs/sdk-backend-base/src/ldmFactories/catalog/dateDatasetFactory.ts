@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     DateAttributeGranularity,
@@ -72,7 +71,7 @@ export class CatalogDateAttributeBuilder<
  * @beta
  */
 export const newCatalogDateAttribute = (
-    modifications: BuilderModifications<CatalogDateAttributeBuilder> = identity,
+    modifications: BuilderModifications<CatalogDateAttributeBuilder> = (v) => v,
 ): ICatalogDateAttribute => builderFactory(CatalogDateAttributeBuilder, {}, modifications);
 
 /**
@@ -115,5 +114,5 @@ export class CatalogDateDatasetBuilder<
  * @beta
  */
 export const newCatalogDateDataset = (
-    modifications: BuilderModifications<CatalogDateDatasetBuilder> = identity,
+    modifications: BuilderModifications<CatalogDateDatasetBuilder> = (v) => v,
 ): ICatalogDateDataset => builderFactory(CatalogDateDatasetBuilder, { type: "dateDataset" }, modifications);

@@ -1851,6 +1851,18 @@
         "value": "Unrelated",
         "comment": "Label for section containing unrelated date datasets"
     },
+    "gs.date.date-dataset.unrelated_hidden": {
+        "value": "{count} unrelated {count, plural, one {date} other {dates}} {isShow, select, true {visible} other {hidden}}.",
+        "comment": "Status message showing count of unrelated dates that are visible or hidden"
+    },
+    "gs.date.date-dataset.unrelated.show": {
+        "value": "Show",
+        "comment": "Button to display unrelated date items"
+    },
+    "gs.date.date-dataset.unrelated.hide": {
+        "value": "Hide",
+        "comment": "Button to hide unrelated date items"
+    },
     "gs.date.date-dataset.duplicityWarning": {
         "value": "Another filter is using the same date dataset. Disable this filter or set a different date.",
         "comment": "Warning shown when multiple filters are using the same date dataset"
@@ -2798,5 +2810,9 @@
     "kdaDialog.dialog.keyDrives.empty_down": {
         "value": "No decreasing drivers",
         "comment": "Key drivers dialog empty down in key driver analysis dialog"
+    },
+    "menu.back": {
+        "value": "Back to the parent menu",
+        "comment": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."
     }
 }

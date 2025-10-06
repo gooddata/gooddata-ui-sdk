@@ -1,8 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
+import { useEffect, useState } from "react";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-import "../../_infra/webComponents.js";
+import { setWebComponentsContext } from "../../_infra/webComponents.js";
 
 const insightIds = [
     ReferenceRecordings.Insights.PivotTable.TwoMeasuresAndGrandTotalsAndMultipleSubtotals,
@@ -34,8 +36,16 @@ type InsightContainerProps = {
 };
 
 function InsightContainer(props: InsightContainerProps) {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        setWebComponentsContext(() => {
+            setIsLoaded(true);
+        });
+    }, []);
+
     // @ts-expect-error Unrecognised tag
-    return <gd-insight style={{ height: 500 }} {...props} />;
+    return isLoaded ? <gd-insight style={{ height: 500 }} {...props} /> : <div>Loading...</div>;
 }
 
 export default {
@@ -44,6 +54,7 @@ export default {
 export function Base() {
     return <InsightContainer insight={insightIds[0]} />;
 }
+
 Base.parameters = { kind: "Base", screenshot: true };
 
 export function WithLocalization() {

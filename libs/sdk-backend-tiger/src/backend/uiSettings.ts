@@ -25,11 +25,14 @@ export const DefaultSeparators = {
  * settings are thus hardcoded here.
  */
 export const DefaultUiSettings: ISettings = {
+    activeFiltersByDefault: true,
+    cellMergedByDefault: true,
     platformEdition: "enterprise",
     portalLogoPage: false,
-    enableAnalyticalDashboards: true,
     enableKPIDashboardDependentFilters: false,
     enableSectionHeaders: true,
+    enableEmbedButtonInKD: true,
+    enableEmbedButtonInAD: true,
 
     // embedding AD in KD
     enableKPIDashboardNewInsight: true,
@@ -38,13 +41,13 @@ export const DefaultUiSettings: ISettings = {
     enableFilterValuesResolution: false,
 
     enableDataSection: true,
+    ADCatalogGroupsExpanded: true,
     enableNewAnalyticalDashboardsNavigation: true,
 
     // enable the plugin-ready Dashboard component in gdc-dashboards
     dashboardComponentDevRollout: true,
 
     enableKPIDashboardExport: true,
-    enableAdDescriptionEdit: true,
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
 

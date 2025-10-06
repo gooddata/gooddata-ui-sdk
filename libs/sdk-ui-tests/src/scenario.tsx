@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import { identity, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
 import { DataViewRequests } from "@gooddata/mock-handling";
@@ -153,7 +153,7 @@ export type ScenarioDataCapture = DataViewRequests;
 export class ScenarioBuilder<T extends VisProps> {
     private tags: ScenarioTag[] = [];
     private tests: TestTypes[] = ["api", "visual"];
-    private insightConverter: InsightConverter = identity;
+    private insightConverter: InsightConverter = (v) => v;
     private workspaceType: WorkspaceType = "reference-workspace";
     private customDataCapture: ScenarioDataCapture = {};
     private backendSettings: ISettings = {};

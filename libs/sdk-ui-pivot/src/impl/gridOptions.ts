@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { FocusGridInnerElementParams } from "ag-grid-community";
 
 import {
@@ -105,6 +106,10 @@ export function createGridOptions(
             minWidth: MIN_WIDTH,
             sortable: true,
             resizable: true,
+            // Suppress AG Grid header menus to prevent leakage from PivotTableNext's enterprise modules
+            suppressHeaderMenuButton: true,
+            suppressHeaderFilterButton: true,
+            suppressHeaderContextMenu: true,
         },
         defaultColGroupDef: {
             headerClass: headerClassFactory(table, props),
@@ -150,6 +155,8 @@ export function createGridOptions(
         suppressCellFocus: false,
         suppressHeaderFocus: false,
         suppressAutoSize: tableMethods.hasColumnWidths,
+        // Suppress AG Grid menus to prevent leakage from PivotTableNext's enterprise modules
+        suppressContextMenu: true,
 
         // infinite scrolling model
         rowModelType: "infinite",

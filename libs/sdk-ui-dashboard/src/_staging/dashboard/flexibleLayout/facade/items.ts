@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { flatMap } from "lodash-es";
+
 import { invariant } from "ts-invariant";
 
 import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";
@@ -81,7 +81,7 @@ export class DashboardLayoutItemsFacade<TWidget> implements IDashboardLayoutItem
     }
 
     public flatMap<TResult>(callback: (column: IDashboardLayoutItemFacade<TWidget>) => TResult[]): TResult[] {
-        return flatMap(this.itemFacades, callback);
+        return this.itemFacades.flatMap(callback);
     }
 
     public count(): number {

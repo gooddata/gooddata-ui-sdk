@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
-import { identity } from "lodash-es";
 
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { Correlation } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
-const init: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = identity;
+const init: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (v) => v;
 
 const initStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {
     state.initialization.status = "loading";

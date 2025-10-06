@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { difference, identity } from "lodash-es";
+import { difference } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -67,9 +67,9 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
 
     public createItem(
         xlSize: IDashboardLayoutSize,
-        create: (
-            builder: IDashboardLayoutItemBuilder<TContent>,
-        ) => IDashboardLayoutItemBuilder<TContent> = identity,
+        create: (builder: IDashboardLayoutItemBuilder<TContent>) => IDashboardLayoutItemBuilder<TContent> = (
+            v,
+        ) => v,
         index: number = this.facade().items().count(),
     ): this {
         const emptyItem: IDashboardLayoutItem<TContent> = {

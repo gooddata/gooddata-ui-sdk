@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import { compact, flatMap } from "lodash-es";
+
+import { compact } from "lodash-es";
 
 import { ICatalogAttribute, ICatalogDateDataset, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
@@ -23,15 +24,14 @@ export const convertToCatalogAttributeData = (
         icon: "gd-icon-attribute",
     }));
 
-    const dateAttributes = flatMap(
-        flatMap(dates ?? [], (it) => it.dateAttributes),
-        (it) => ({
+    const dateAttributes = (dates ?? [])
+        .flatMap((it) => it.dateAttributes)
+        .flatMap((it) => ({
             type: CatalogAttributeDataType.DATE_ATTRIBUTE,
             ref: it.attribute.ref,
             title: it.attribute.title,
             icon: "gd-icon-date",
-        }),
-    );
+        }));
 
     return [...attrs, ...dateAttributes].reduce((map, attribute) => {
         map.set(getCatalogKey(attribute.ref), attribute);

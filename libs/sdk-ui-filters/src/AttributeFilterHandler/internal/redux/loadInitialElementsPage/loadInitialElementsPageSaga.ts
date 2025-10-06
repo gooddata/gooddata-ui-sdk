@@ -1,14 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
-import { selectElementsForm } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectCacheId, selectLoadElementsOptions } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
-import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -48,12 +47,10 @@ export function* loadInitialElementsPageSaga(
 
         const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
 
-        const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
-
         const loadOptionsWithExcludePrimaryLabel: Parameters<typeof elementsSaga>[0] = {
             ...loadOptions,
             signal: abortController.signal,
-            excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
+            excludePrimaryLabel: false,
         };
 
         const result: SagaReturnType<typeof elementsSaga> = yield call(
@@ -75,8 +72,6 @@ export function* loadInitialElementsPageSaga(
             actions.loadInitialElementsPageSuccess({
                 ...result,
                 correlation,
-                enableDuplicatedLabelValuesInAttributeFilter:
-                    context.enableDuplicatedLabelValuesInAttributeFilter,
             }),
         );
     } catch (error) {

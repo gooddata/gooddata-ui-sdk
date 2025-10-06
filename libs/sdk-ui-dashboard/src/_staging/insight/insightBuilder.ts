@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { identity } from "lodash-es";
-
 import { IBucket, IFilter, IInsight, ISortItem, VisualizationProperties, uriRef } from "@gooddata/sdk-model";
 
 /**
@@ -13,7 +11,7 @@ import { IBucket, IFilter, IInsight, ISortItem, VisualizationProperties, uriRef 
  *  lack the logic that ensures that a correct insight is created. These two things are really useful only for
  *  convenient creation of test fixtures.
  */
-export function newInsight(visClassId: string, modifications: InsightsModifications = identity): IInsight {
+export function newInsight(visClassId: string, modifications: InsightsModifications = (v) => v): IInsight {
     const builder = new InsightBuilder(visClassId);
 
     return modifications(builder).build();

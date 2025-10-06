@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { includes, union } from "lodash-es";
+
+import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { insightTags } from "@gooddata/sdk-model";
@@ -250,7 +251,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         }
 
         const newProvider: OptionalInsightComponentProvider = (insight) => {
-            if (includes(insightTags(insight), tag)) {
+            if (insightTags(insight).includes(tag)) {
                 return component;
             }
             return undefined;

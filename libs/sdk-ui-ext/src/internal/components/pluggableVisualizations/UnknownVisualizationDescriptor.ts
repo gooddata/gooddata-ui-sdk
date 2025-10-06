@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight } from "@gooddata/sdk-model";
 
 import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
@@ -25,7 +26,6 @@ export class UnknownVisualizationDescriptor extends BaseChartDescriptor implemen
         insight: IInsight,
         _drillDownContext: IDrillDownContext,
         _backendSupportsElementUris: boolean,
-        _enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         return insight;
     }

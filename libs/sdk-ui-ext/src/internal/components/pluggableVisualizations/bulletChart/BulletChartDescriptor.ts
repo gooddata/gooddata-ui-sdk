@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
@@ -34,14 +35,12 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFiltersForBullet(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -85,16 +84,10 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
-        return addIntersectionFiltersToInsight(
-            insight,
-            cutIntersection,
-            backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(insight, cutIntersection, backendSupportsElementUris);
     }
 }

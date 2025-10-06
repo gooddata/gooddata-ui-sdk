@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import { flatMap, isEmpty } from "lodash-es";
+
+import { isEmpty } from "lodash-es";
 
 import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import {
@@ -175,7 +176,7 @@ function getHeadersAtPosition(
     position: number[],
     skipDimensions: number[] = [],
 ): IResultHeader[] {
-    return flatMap(position, (coord, dimIdx) => {
+    return position.flatMap((coord, dimIdx) => {
         if (skipDimensions.includes(dimIdx)) {
             return [];
         }

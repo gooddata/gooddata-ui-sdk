@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import * as path from "path";
 
-import { flatMap } from "lodash-es";
+import * as path from "path";
 
 import { CatalogDefinition, CatalogRecording } from "./catalog.js";
 import { IRecording, isNonNullRecording } from "./common.js";
@@ -27,5 +26,5 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
 }
 
 export async function discoverCatalogRecordings(recordingDir: string): Promise<IRecording[]> {
-    return flatMap(findFiles(recordingDir, CatalogDefinition), loadRecordings);
+    return findFiles(recordingDir, CatalogDefinition).flatMap(loadRecordings);
 }

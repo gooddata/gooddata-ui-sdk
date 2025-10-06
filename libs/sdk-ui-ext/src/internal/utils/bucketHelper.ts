@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep, compact, flatMap, includes, isEmpty, negate, set, uniqBy, without } from "lodash-es";
+import { cloneDeep, compact, isEmpty, negate, set, uniqBy, without } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
@@ -201,7 +201,7 @@ export function getDerivedTypesFromArithmeticMeasure(
         return [];
     }
 
-    const allMeasures = flatMap<IBucketOfFun, IBucketItem>(buckets, (bucket) => bucket.items);
+    const allMeasures = buckets.flatMap((bucket) => bucket.items);
     const overTimeComparisonTypes = findDerivedTypesReferencedByArithmeticMeasure(
         measure,
         allMeasures,
@@ -266,7 +266,7 @@ export function getDateFilter(filtersBucket: IFilters): IDateFilter {
     if (!filtersBucket) {
         return null;
     }
-    const dateFiltersInclEmpty = flatMap(filtersBucket.items, (filterItem) => {
+    const dateFiltersInclEmpty = filtersBucket.items.flatMap((filterItem) => {
         const filters = filterItem.filters ?? [];
         return filters.find(isDateFilter);
     });
@@ -390,7 +390,7 @@ export function getBucketItemsByType(
     const bucketItems: IBucketItem[] = getBucketItems(buckets, localIdentifier);
 
     bucketItems.forEach((item: IBucketItem) => {
-        if (includes(types, item.type)) {
+        if (types.includes(item.type)) {
             itemsOfType.push(item);
         }
     });
@@ -423,7 +423,7 @@ function getPreferredBucket(buckets: IBucketOfFun[], preference: string[], type:
 
 function getAllBucketItemsByType(bucket: IBucketOfFun, types: string[]): IBucketItem[] {
     return bucket.items.reduce((resultItems: IBucketItem[], item: IBucketItem): IBucketItem[] => {
-        if (includes(types, item.type)) {
+        if (types.includes(item.type)) {
             resultItems.push(item);
         }
         return resultItems;
@@ -518,7 +518,7 @@ export function getBucketItemsWithExcludeByType(
     type: string[],
 ): IBucketItem[] {
     const includedBuckets = buckets.filter(
-        (bucket: IBucketOfFun) => !includes(excludedBucket, bucket.localIdentifier),
+        (bucket: IBucketOfFun) => !excludedBucket.includes(bucket.localIdentifier),
     );
     return getAllItemsByType(includedBuckets, type);
 }
@@ -562,14 +562,14 @@ export function getAttributeItemsWithoutStacks(
     itemTypes: string[] = [ATTRIBUTE],
 ): IBucketItem[] {
     return getAttributeItems(buckets).filter((attribute) => {
-        return !includes(getStackItems(buckets, itemTypes), attribute);
+        return !getStackItems(buckets, itemTypes).includes(attribute);
     });
 }
 
 export function getAllCategoriesAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     const stackItemsWithDate = getStackItems(buckets, [ATTRIBUTE, DATE]);
     return getAttributeItems(buckets).filter((attribute: IBucketItem) => {
-        return !includes(stackItemsWithDate, attribute);
+        return !stackItemsWithDate.includes(attribute);
     });
 }
 
@@ -594,7 +594,7 @@ export function getAllAttributeItemsWithPreference(
         return acc;
     }, []);
     const allBucketNames = buckets.map((bucket) => bucket?.localIdentifier);
-    const otherBucketNames = allBucketNames.filter((bucketName) => !includes(preference, bucketName));
+    const otherBucketNames = allBucketNames.filter((bucketName) => !preference.includes(bucketName));
     const allOtherAttributes = otherBucketNames.reduce((attributes: IBucketItem[], bucketName) => {
         attributes.push(...getBucketItemsByType(buckets, bucketName, [ATTRIBUTE, DATE]));
         return attributes;
@@ -662,7 +662,7 @@ export function findBucket(buckets: IBucketOfFun[], localIdentifier: string): IB
 }
 
 export function getBucketsByNames(buckets: IBucketOfFun[], names: string[]): IBucketOfFun[] {
-    return buckets.filter((bucket) => includes(names, bucket?.localIdentifier));
+    return buckets.filter((bucket) => names.includes(bucket?.localIdentifier));
 }
 
 export function getFirstMasterWithDerived(measureItems: IBucketItem[]): IBucketItem[] {

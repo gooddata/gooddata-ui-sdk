@@ -2,7 +2,6 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { includes } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -25,7 +24,7 @@ describe("LegacyMultiSelectList", () => {
     const items: any[] = [firstItem, secondItem];
 
     function renderList(customProps: Partial<ILegacyMultiSelectListProps<any>> = {}) {
-        const isSelected = (item: any) => includes(customProps.selection, item);
+        const isSelected = (item: any) => customProps.selection?.includes(item);
         const itemsCount = customProps.itemsCount || customProps.items.length;
         const props = {
             items: customProps.items,

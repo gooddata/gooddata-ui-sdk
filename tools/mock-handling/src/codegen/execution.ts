@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { flatMap, groupBy } from "lodash-es";
+import { groupBy } from "lodash-es";
 
 import { createUniqueVariableName } from "../base/variableNaming.js";
 import { ExecutionRecording } from "../recordings/execution.js";
@@ -42,7 +42,7 @@ function generateScenarioForVis(entries: VisScenarioRecording[]): string {
 }
 
 function generateScenariosConst(recordings: ExecutionRecording[]): string {
-    const recsWithVisAndScenario = flatMap(recordings, (rec) =>
+    const recsWithVisAndScenario = recordings.flatMap((rec) =>
         rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
 

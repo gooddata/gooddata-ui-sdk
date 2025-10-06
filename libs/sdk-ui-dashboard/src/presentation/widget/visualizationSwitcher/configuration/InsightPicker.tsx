@@ -3,9 +3,9 @@
 import { useIntl } from "react-intl";
 
 import { IInsight } from "@gooddata/sdk-model";
+import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { InsightList } from "../../../insightList/index.js";
-import { DashboardInsightSubmenuHeader } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuHeader.js";
 
 interface IInsightPickerProps {
     onInsightSelect: (insight: IInsight) => void;
@@ -16,14 +16,13 @@ export function InsightPicker({ onInsightSelect, onBack }: IInsightPickerProps) 
     const intl = useIntl();
     return (
         <div className="visualization-picker">
-            <div className="configuration-panel-header" onClick={onBack}>
-                <DashboardInsightSubmenuHeader
-                    title={intl.formatMessage({
-                        id: "visualizationSwitcherToolbar.visualizationsList.add",
-                    })}
-                    onHeaderClick={onBack}
-                />
-            </div>
+            <UiSubmenuHeader
+                title={intl.formatMessage({
+                    id: "visualizationSwitcherToolbar.visualizationsList.add",
+                })}
+                onBack={onBack}
+                height="large"
+            />
             <div className="open-visualizations s-open-visualizations">
                 <InsightList
                     height={270}

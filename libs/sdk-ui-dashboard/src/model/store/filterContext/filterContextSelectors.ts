@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
-import { compact, identity, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
+import { compact, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -184,7 +185,7 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                 // Date filters
                 return isEqual(appliedFilter, workingFilter);
             })
-            .every(identity);
+            .every((v) => v);
     },
 );
 

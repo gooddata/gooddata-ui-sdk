@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { includes, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import {
     IAttributeSortItem,
@@ -68,15 +68,13 @@ const filterInvalidSortItems = (
                     locators: sortItem.measureSortItem.locators.filter((locator) => {
                         // filter out invalid measure locators
                         if (isMeasureLocator(locator)) {
-                            return includes(
-                                measureLocalIdentifiers,
+                            return measureLocalIdentifiers.includes(
                                 locator.measureLocatorItem.measureIdentifier,
                             );
                         }
                         // filter out invalid column attribute locators
                         if (isAttributeLocator(locator)) {
-                            return includes(
-                                columnAttributeLocalIdentifiers,
+                            return columnAttributeLocalIdentifiers.includes(
                                 locator.attributeLocatorItem.attributeIdentifier,
                             );
                         }
@@ -113,7 +111,7 @@ const filterInvalidSortItems = (
          * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
          * issues. Because of the flurry of calls, the table may not render or load indefinitely.
          */
-        if (includes(rowAttributeLocalIdentifiers, sortItem.attributeSortItem.attributeIdentifier)) {
+        if (rowAttributeLocalIdentifiers.includes(sortItem.attributeSortItem.attributeIdentifier)) {
             return [...sortItems, sortItem];
         }
         return sortItems;

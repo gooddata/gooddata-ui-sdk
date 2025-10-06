@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { flatMap } from "lodash-es";
+
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -17,7 +17,6 @@ import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
 import {
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
@@ -31,11 +30,6 @@ export function* changeAttributeDisplayFormHandler(
     cmd: SetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
     const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
-    const {
-        backend: {
-            capabilities: { supportsElementUris },
-        },
-    } = ctx;
 
     const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
@@ -46,7 +40,7 @@ export function* changeAttributeDisplayFormHandler(
         queryAttributeByDisplayForm([displayForm]),
     );
 
-    const attributeDisplayFormsMap = newDisplayFormMap([...flatMap(attributes, (a) => a.displayForms)]);
+    const attributeDisplayFormsMap = newDisplayFormMap([...attributes.flatMap((a) => a.displayForms)]);
 
     const displayFormData =
         catalogDisplayFormsMap.get(displayForm) || attributeDisplayFormsMap.get(displayForm);
@@ -73,9 +67,6 @@ export function* changeAttributeDisplayFormHandler(
 
         throw invalidArgumentsProvided(ctx, cmd, message);
     }
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
@@ -89,8 +80,6 @@ export function* changeAttributeDisplayFormHandler(
             filterContextActions.changeAttributeDisplayForm({
                 filterLocalId,
                 displayForm,
-                supportsElementUris,
-                enableDuplicatedLabelValuesInAttributeFilter,
                 isWorkingSelectionChange:
                     isWorkingSelectionChange &&
                     !enableImmediateAttributeFilterDisplayAsLabelMigration &&

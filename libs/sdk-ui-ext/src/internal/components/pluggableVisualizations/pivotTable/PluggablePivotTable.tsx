@@ -3,7 +3,7 @@
 import { CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
-import { cloneDeep, flatMap, isEmpty, isEqual } from "lodash-es";
+import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 import Measure from "react-measure";
 
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -207,7 +207,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             previousReferencePoint && getColumnAttributes(previousReferencePoint.buckets);
 
         const filters: IBucketFilter[] = newReferencePoint.filters
-            ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
+            ? newReferencePoint.filters.items.flatMap((item) => item.filters)
             : [];
 
         const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
@@ -334,7 +334,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
             backendSupportsElementUris,
-            this.settings?.enableDuplicatedLabelValuesInAttributeFilter,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

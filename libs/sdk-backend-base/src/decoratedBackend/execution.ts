@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { identity } from "lodash-es";
 
 import {
     ExplainConfig,
@@ -54,7 +53,7 @@ export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPrepa
 export class DecoratedExecutionFactory implements IExecutionFactory {
     constructor(
         protected readonly decorated: IExecutionFactory,
-        private readonly wrapper: PreparedExecutionWrapper = identity,
+        private readonly wrapper: PreparedExecutionWrapper = (v) => v,
     ) {}
 
     public forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution {
@@ -190,7 +189,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     protected constructor(
         private readonly decorated: IExecutionResult,
-        private readonly wrapper: PreparedExecutionWrapper = identity,
+        private readonly wrapper: PreparedExecutionWrapper = (v) => v,
     ) {
         this.definition = decorated.definition;
         this.dimensions = decorated.dimensions;

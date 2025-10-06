@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
@@ -26,7 +25,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
     return {
         hasColumnWidths: false,
         getExecutionDefinition: () => dv.definition,
-        getColumnTotals: () => flatMap(dv.definition.dimensions, (dim) => dim.totals ?? []),
+        getColumnTotals: () => dv.definition.dimensions.flatMap((dim) => dim.totals ?? []),
         getRowTotals: () => [],
         getGroupRows: () => true,
         getMenuConfig: () => ({}),

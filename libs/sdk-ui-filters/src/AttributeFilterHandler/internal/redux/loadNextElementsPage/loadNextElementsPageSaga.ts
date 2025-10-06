@@ -1,14 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
+import { call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors.js";
-import { getAttributeFilterContext } from "../common/sagas.js";
-import { selectElementsForm } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectCacheId } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
-import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -33,8 +31,6 @@ export function* loadNextElementsPageSaga(
         | ReturnType<typeof actions.loadNextElementsPageCancelRequest>
         | ReturnType<typeof actions.loadInitialElementsPageRequest>,
 ): SagaIterator<void> {
-    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
-
     if (
         actions.loadNextElementsPageCancelRequest.match(action) ||
         actions.loadInitialElementsPageRequest.match(action)
@@ -62,11 +58,9 @@ export function* loadNextElementsPageSaga(
 
         const cacheId: ReturnType<typeof selectCacheId> = yield select(selectCacheId);
 
-        const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
-
         const loadOptionsWithExcludePrimaryLabel: Parameters<typeof elementsSaga>[0] = {
             ...loadOptions,
-            excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
+            excludePrimaryLabel: false,
         };
 
         const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, cacheId);
@@ -75,8 +69,6 @@ export function* loadNextElementsPageSaga(
             actions.loadNextElementsPageSuccess({
                 ...result,
                 correlation,
-                enableDuplicatedLabelValuesInAttributeFilter:
-                    context.enableDuplicatedLabelValuesInAttributeFilter,
             }),
         );
     } catch (error) {

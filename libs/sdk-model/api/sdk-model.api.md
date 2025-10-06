@@ -3492,6 +3492,7 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
+    ADCatalogGroupsExpanded?: boolean;
     aiChatSearchLimit?: number;
     aiRateLimit?: number;
     alertDefault?: IAlertDefault;
@@ -3501,11 +3502,11 @@ export interface ISettings {
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
+    disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
-    enableAdDescriptionEdit?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
     enableAlertAttributes?: boolean;
@@ -3513,8 +3514,6 @@ export interface ISettings {
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
-    // (undocumented)
-    enableAnalyticalDashboards?: boolean;
     enableAttributeFilterVirtualised?: boolean;
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
@@ -3538,7 +3537,8 @@ export interface ISettings {
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
     enableDrilledTooltip?: boolean;
-    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableEmbedButtonInAD?: boolean;
+    enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
     enableExportToDocumentStorage?: boolean;
@@ -3560,6 +3560,8 @@ export interface ISettings {
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
+    // (undocumented)
+    enableMongoDbDataSource?: boolean;
     // (undocumented)
     enableMotherDuckDataSource?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
@@ -3614,6 +3616,7 @@ export interface ISettings {
     productionFeatures?: IProductionFeaturesConfig;
     registeredPluggableApplications?: string;
     responsiveUiDateFormat?: string;
+    showHiddenCatalogItems?: boolean;
     timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;

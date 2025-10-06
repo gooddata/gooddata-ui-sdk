@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { identity } from "lodash-es";
-
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -61,6 +59,6 @@ export class AttributeMetadataObjectBuilder<
  */
 export const newAttributeMetadataObject = (
     ref: ObjRef,
-    modifications: BuilderModifications<AttributeMetadataObjectBuilder> = identity,
+    modifications: BuilderModifications<AttributeMetadataObjectBuilder> = (v) => v,
 ): IAttributeMetadataObject =>
     builderFactory(AttributeMetadataObjectBuilder, { type: "attribute", ref }, modifications);

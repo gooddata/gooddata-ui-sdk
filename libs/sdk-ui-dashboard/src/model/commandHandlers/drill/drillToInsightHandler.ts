@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -11,7 +12,6 @@ import {
     drillToInsightRequested,
     drillToInsightResolved,
 } from "../../events/drill.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
@@ -22,10 +22,6 @@ export function* drillToInsightHandler(
     const { drillDefinition, drillEvent } = cmd.payload;
     const insight = yield select(selectInsightByRef(drillDefinition.target));
     yield put(drillToInsightRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));
-
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
     const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
         ? removeIgnoredValuesFromDrillIntersection(
@@ -38,7 +34,6 @@ export function* drillToInsightHandler(
         insight,
         filteredIntersection!,
         ctx.backend.capabilities.supportsElementUris ?? true,
-        enableDuplicatedLabelValuesInAttributeFilter,
     );
 
     return drillToInsightResolved(

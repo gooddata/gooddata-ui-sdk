@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -9,7 +10,6 @@ import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionU
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
 import { DrillDown } from "../../commands/drill.js";
 import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
@@ -20,10 +20,6 @@ export function* drillDownHandler(
     const { drillDefinition, drillEvent, insight } = cmd.payload;
 
     yield put(drillDownRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));
-
-    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
-        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
-    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
     let effectiveDrillEvent = drillEvent;
 
@@ -64,7 +60,6 @@ export function* drillDownHandler(
         effectiveDrillEvent,
         drillDefinition,
         ctx.backend.capabilities.supportsElementUris ?? true,
-        enableDuplicatedLabelValuesInAttributeFilter,
     );
 
     return drillDownResolved(

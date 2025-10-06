@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { difference, identity } from "lodash-es";
+import { difference } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -76,7 +76,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
     public createSection(
         create: (
             builder: IDashboardLayoutSectionBuilder<TWidget>,
-        ) => IDashboardLayoutSectionBuilder<TWidget> = identity,
+        ) => IDashboardLayoutSectionBuilder<TWidget> = (v) => v,
         indexOrPath?: number | ILayoutSectionPath,
     ): this {
         if (typeof indexOrPath === "number" || typeof indexOrPath === "undefined") {

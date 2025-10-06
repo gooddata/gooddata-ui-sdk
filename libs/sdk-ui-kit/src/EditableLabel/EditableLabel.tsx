@@ -15,7 +15,6 @@ import {
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { identity } from "lodash-es";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { v4 as uuid } from "uuid";
 
@@ -38,9 +37,9 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         maxLength = 100000,
         maxRows = 1,
         onSubmit,
-        onCancel = identity,
-        onEditingStart = identity,
-        onChange = identity,
+        onCancel = (v) => v,
+        onEditingStart = (v?: any) => v,
+        onChange = (v) => v,
         placeholder = "",
         scrollToEndOnEditingStart = true,
         textareaInOverlay = false,

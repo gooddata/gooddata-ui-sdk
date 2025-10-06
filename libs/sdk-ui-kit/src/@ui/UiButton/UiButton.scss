@@ -24,6 +24,10 @@
         white-space: nowrap;
     }
 
+    &__badge {
+        margin-left: calc((var(--gd-spacing-5px) / 2) * -1);
+    }
+
     /**
      * Size
      */

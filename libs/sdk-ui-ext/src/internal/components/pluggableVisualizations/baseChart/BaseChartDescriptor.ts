@@ -59,14 +59,12 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
         const withFilters = addIntersectionFiltersToInsight(
             insight,
             intersection,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }

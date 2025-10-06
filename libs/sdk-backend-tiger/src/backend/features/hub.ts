@@ -1,10 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
+
 import axios, { AxiosResponse } from "axios";
 
 import { FeatureContext, ILiveFeatures } from "@gooddata/api-client-tiger";
 
 import { FeatureDef, FeaturesMap, mapFeatures } from "./feature.js";
-import { ITigerFeatureFlags } from "../uiFeatures.js";
+import { DefaultFeatureFlags, ITigerFeatureFlags } from "../uiFeatures.js";
 
 type HubServiceState = Record<
     string,
@@ -28,8 +29,9 @@ export async function getFeatureHubFeatures(
         return mapFeatures(featuresMap);
     } catch (err) {
         console.error("Loading features from FeatureHub was not successful. Err: " + err);
-        return {};
     }
+
+    return DefaultFeatureFlags;
 }
 
 //NOTE: Use FeatureHub SDK after we upgrade version of typescript

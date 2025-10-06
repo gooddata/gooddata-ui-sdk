@@ -154,7 +154,7 @@ const ScenarioConfig = [
         idRegex: /(13).*/g,
         config: {
             misMatchThreshold: 0.01,
-            delay: 1000, // wait for a bit for the async import to resolve
+            delay: 2000, // wait for a bit for the async import to resolve
         },
     },
     {

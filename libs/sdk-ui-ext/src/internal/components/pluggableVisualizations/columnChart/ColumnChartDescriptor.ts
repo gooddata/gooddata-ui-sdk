@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -41,14 +42,12 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFiltersForColumnBar(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -96,17 +95,11 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const reorderedIntersection = this.adjustIntersectionForColumnBar(insight, event);
         const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
-        return addIntersectionFiltersToInsight(
-            insight,
-            cutIntersection,
-            backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(insight, cutIntersection, backendSupportsElementUris);
     }
 }

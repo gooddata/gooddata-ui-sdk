@@ -23,6 +23,7 @@ import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import {
     selectCanExportTabular,
     selectEnableExportToPdfTabular,
+    selectSettings,
     useDashboardSelector,
 } from "../../../../../model/index.js";
 
@@ -102,6 +103,8 @@ export function DrillDialog({
 
     const canExport = useDashboardSelector(selectCanExportTabular);
     const enablePdfTabularExport = useDashboardSelector(selectEnableExportToPdfTabular);
+    const settings = useDashboardSelector(selectSettings);
+    const isAccessibilityModeEnabled = settings.enableAccessibilityMode === true;
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 
@@ -194,7 +197,8 @@ export function DrillDialog({
                                 exportCSVRawEnabled={exportCSVRawEnabled}
                                 exportPDFEnabled={exportPDFEnabled}
                                 exportPDFVisible={
-                                    exportPDFVisible || (isWidgetAsTable && enablePdfTabularExport)
+                                    exportPDFVisible ||
+                                    (isWidgetAsTable && enablePdfTabularExport && !isAccessibilityModeEnabled)
                                 }
                                 onExportXLSX={onExportXLSX}
                                 onExportCSV={onExportCSV}

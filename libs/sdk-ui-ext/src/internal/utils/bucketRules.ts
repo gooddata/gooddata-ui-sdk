@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { flatMap, isEmpty, reduce } from "lodash-es";
+import { isEmpty, reduce } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -64,7 +64,7 @@ export function filteredByDerivedMeasure(buckets: IBucketOfFun[], filters: IFilt
         return acc;
     }, []);
 
-    const allBucketFilters = flatMap(filters.items, (filterItem) => filterItem.filters);
+    const allBucketFilters = filters.items.flatMap((filterItem) => filterItem.filters);
     return allBucketFilters
         .filter(isMeasureValueFilter)
         .some((measureValueFilter) =>
@@ -205,7 +205,7 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
 }
 
 function hasNoRankingFilter(_: IBucketOfFun[], filters: IFilters): boolean {
-    const allBucketFilters = flatMap(filters.items, (filterItem) => filterItem.filters);
+    const allBucketFilters = filters.items.flatMap((filterItem) => filterItem.filters);
     return !allBucketFilters.some(isRankingFilter);
 }
 

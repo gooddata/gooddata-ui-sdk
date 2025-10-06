@@ -8660,6 +8660,9 @@ export const selectDisableDefaultDrills: DashboardSelector<boolean>;
 // @public
 export const selectDisableFilterViews: DashboardSelector<boolean>;
 
+// @internal
+export const selectDisableKpiDashboardHeadlineUnderline: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem | undefined>;
 
@@ -8759,9 +8762,6 @@ export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;
-
 // @internal (undocumented)
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 
@@ -8830,6 +8830,9 @@ export const selectEnableSnapshotExport: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;

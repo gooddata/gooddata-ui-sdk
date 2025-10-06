@@ -18,15 +18,15 @@ section of your application.
 <script type="module" src="https://example.gooddata.com/components/my-workspace.js?auth=sso"></script>
 ```
 
-Script has to be of type `module`, as we are using JavaScript modules for this distribution.
+The script must be of type `module`, as we are using JavaScript modules for this distribution.
 
-An `auth` query parameter is optional. When set to `sso`, the library will trigger automatic SSO flow when user is not
-authenticated with GoodData.CN or GoodData Cloud server, i.e. will redirect user to the authentication flow and then
-back once user is authorized.
+The `auth` query parameter is optional. When set to `sso`, the library will trigger an automatic SSO flow when the user is not
+authenticated with the GoodData.CN or GoodData Cloud server, i.e., it will redirect the user to the authentication flow and then
+back once the user is authorized.
 
 ## Custom authentication flow
 
-If you want to customize the authentication flow, you'll need to provide the authenticated backend by yourself. For example:
+If you want to customize the authentication flow, you'll need to provide the authenticated backend yourself. For example:
 
 ```html
 <script type="module">
@@ -50,7 +50,7 @@ If you want to customize the authentication flow, you'll need to provide the aut
 
 ## Embedding
 
-Once authentication is set and ready, you can embed Dashboard, single visualization or AI Assistant as follows:
+Once authentication is set up and ready, you can embed a Dashboard, single visualization, or AI Assistant as follows:
 
 ```html
 <!-- Embedding dashboard with ID "my-dashboard-id" -->
@@ -128,7 +128,7 @@ Events do not bubble and are not cancelable. Here is how you can subscribe to on
 -   `loadingChanged` - loading state of the insight has changed.
 -   `insightLoaded` - insight data is fully loaded.
 
-All events are not cancellable and do not bubble. For more info on the event payload, see callback description of [the
+All events are not cancelable and do not bubble. For more information on the event payload, see the callback description of [the
 InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties).
 
 ```html
@@ -150,10 +150,10 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 -   `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
 
 ```html
-<!-- rewrite currently used workspace -->
+<!-- override currently used workspace -->
 <gd-ai-assistant workspace="my-workspace"></gd-ai-assistant>
 
-<!-- rewriting used locales in chat -->
+<!-- override locale used in chat -->
 <gd-ai-assistant locale="cs-CZ"></gd-ai-assistant>
 ```
 
@@ -168,7 +168,7 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 -   `chatFeedback` - when user provides feedback on the assistant message.
 -   `chatVisualizationError` - when an error occurs while rendering the visualization in the chat.
 
-All events are not cancellable and do not bubble.
+All events are not cancelable and do not bubble.
 
 ```html
 <gd-ai-assistant id="some-dom-id"></gd-ai-assistant>
@@ -180,6 +180,19 @@ All events are not cancellable and do not bubble.
     });
 </script>
 ```
+
+### Debug local build
+
+You need to define the following variables in an `.env` file: `VITE_BACKEND_URL`, `VITE_AUTH_TOKEN`, `VITE_WORKSPACE`, `VITE_DASHBOARD`, `VITE_INSIGHT`.
+
+For the `VITE_BACKEND_URL`, you need to go to your GoodData server settings and configure Cross-Origin Resource Sharing (CORS) to allow requests from:
+
+`http://localhost:9999/`
+
+First, you need to build your changes by running `rushx build-dev`. This will produce a fresh build in the `esm` directory.
+Once you have a fresh build, you can run `rushx dev` to start the development server and view the web components.
+
+After each code change, you need to run `rushx build-dev` again.
 
 ## License
 

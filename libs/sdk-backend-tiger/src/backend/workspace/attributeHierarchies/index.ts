@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import { flatMap, uniqBy } from "lodash-es";
+
+import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import {
@@ -114,7 +115,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
         );
 
         const validDescendants = response.data.validDescendants;
-        const result = flatMap(Object.keys(response.data.validDescendants), (it: string) => {
+        const result = Object.keys(response.data.validDescendants).flatMap((it: string) => {
             const validAttributes: AfmObjectIdentifierAttribute[] = validDescendants[it];
             return validAttributes.map(toObjRef);
         });

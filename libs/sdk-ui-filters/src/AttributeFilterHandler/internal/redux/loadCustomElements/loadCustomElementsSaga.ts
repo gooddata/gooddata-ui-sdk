@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, race, take, takeEvery } from "redux-saga/effects";
 
 import { ILoadElementsResult } from "../../../types/index.js";
-import { getAttributeFilterContext } from "../common/sagas.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
 
@@ -27,8 +27,6 @@ export function* loadCustomElementsSaga(
 
     try {
         yield put(actions.loadCustomElementsStart({ correlation }));
-        const context: SagaReturnType<typeof getAttributeFilterContext> =
-            yield call(getAttributeFilterContext);
 
         const {
             result,
@@ -57,8 +55,6 @@ export function* loadCustomElementsSaga(
                 actions.loadCustomElementsSuccess({
                     ...result,
                     correlation,
-                    enableDuplicatedLabelValuesInAttributeFilter:
-                        context.enableDuplicatedLabelValuesInAttributeFilter,
                 }),
             );
             return result;

@@ -1259,6 +1259,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "vite-plugin-css-injected-by-js",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "vite-plugin-environment",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "vite-plugin-html",
       "allowedCategories": [ "examples" ]
     },

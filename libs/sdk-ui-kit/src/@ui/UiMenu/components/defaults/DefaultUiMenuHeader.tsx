@@ -2,12 +2,9 @@
 
 import { FC, ReactElement, memo, useCallback } from "react";
 
-import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Button } from "../../../../Button/index.js";
-import { ShortenedText } from "../../../../ShortenedText/index.js";
-import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
+import { UiSubmenuHeader } from "../../../UiSubmenuHeader/UiSubmenuHeader.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { getItemInteractiveParent } from "../../itemUtils.js";
 import { e } from "../../menuBem.js";
@@ -63,29 +60,14 @@ export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader<
 
     return (
         <div role={"presentation"} className={e("menu-header")}>
-            <Button
-                onClick={handleBack}
-                className={cx(e("menu-header-title"), "gd-icon-navigateleft")}
-                accessibilityConfig={{
-                    ariaLabel: formatMessage({ id: "menu.back" }),
-                }}
-            >
-                <ShortenedText
-                    tagName={"h3"}
-                    ellipsisPosition={"end"}
-                    className={e("menu-header-title-text")}
-                >
-                    {title}
-                </ShortenedText>
-            </Button>
-            <UiIconButton
-                size={"xsmall"}
-                variant={"tertiary"}
-                icon={"close"}
-                label={formatMessage({ id: "menu.close" })}
-                onClick={onClose}
-                dataId={"s-menu-close-button"}
-                dataTestId={"s-menu-close-button"}
+            <UiSubmenuHeader
+                title={title}
+                onBack={handleBack}
+                onClose={onClose}
+                backAriaLabel={formatMessage({ id: "menu.back" })}
+                closeAriaLabel={formatMessage({ id: "menu.close" })}
+                useShortenedTitle={true}
+                height="large"
             />
         </div>
     );

@@ -120,7 +120,7 @@ function createInsightsItemsGroup(
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_KPIS_NEW, "s-menu-kpis", kpisUrl),
-        canShowKpisItem(featureFlags, workspacePermissions, hasAnalyticalDashboards),
+        canShowKpisItem(workspacePermissions, hasAnalyticalDashboards),
     );
 
     const analyzeUrl = analyzeItemUrl(baseUrl, workspaceId);
@@ -211,15 +211,10 @@ function kpisItemUrl(baseUrl: string, workspaceId: string): string {
     return withBaseUrl(baseUrl, `/dashboards/#/workspace/${workspaceId}`);
 }
 function canShowKpisItem(
-    featureFlags: ISettings,
     workspacePermissions: IWorkspacePermissions,
     hasAnalyticalDashboards: boolean,
 ): boolean {
-    return Boolean(
-        hasAnalyticalDashboards ||
-            (workspacePermissions.canCreateAnalyticalDashboard === true &&
-                featureFlags.enableAnalyticalDashboards),
-    );
+    return Boolean(hasAnalyticalDashboards || workspacePermissions.canCreateAnalyticalDashboard === true);
 }
 
 function analyzeItemUrl(baseUrl: string, workspaceId: string): string {

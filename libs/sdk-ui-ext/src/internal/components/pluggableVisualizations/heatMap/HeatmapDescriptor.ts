@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
@@ -34,14 +35,12 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFilters(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -78,7 +77,6 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
-        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
         const cutIntersection = (event.drillContext.intersection || []).filter(
@@ -86,11 +84,6 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
                 isDrillIntersectionAttributeItem(i.header) &&
                 i.header.attributeHeader.localIdentifier === clicked,
         );
-        return addIntersectionFiltersToInsight(
-            source,
-            cutIntersection,
-            backendSupportsElementUris,
-            enableDuplicatedLabelValuesInAttributeFilter,
-        );
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 }

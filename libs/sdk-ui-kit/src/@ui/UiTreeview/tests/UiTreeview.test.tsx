@@ -480,7 +480,10 @@ describe("UiTreeview", () => {
             const tree = screen.getByRole("tree");
 
             // Initial focus is on first item
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
 
             // Navigate down
 
@@ -513,7 +516,10 @@ describe("UiTreeview", () => {
             );
             // Skip disabled item
             fireEvent.keyDown(tree, { code: "ArrowDown" });
-            expect(screen.getByText("File B5").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "File B5" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
             fireEvent.keyDown(tree, { code: "ArrowDown" });
 
             // Navigate up
@@ -548,7 +554,10 @@ describe("UiTreeview", () => {
                 e("item", { isFocused: true }),
             );
             fireEvent.keyDown(tree, { code: "ArrowUp" });
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
         });
 
         it("should navigate with keyboard arrows down up in collapsed", () => {
@@ -559,19 +568,72 @@ describe("UiTreeview", () => {
             const tree = screen.getByRole("tree");
 
             // Initial focus is on first item
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
 
             // Navigate down
             fireEvent.keyDown(tree, { code: "ArrowDown" });
-            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent B" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
             fireEvent.keyDown(tree, { code: "ArrowDown" });
-            expect(screen.getByText("Parent B").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent B" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
 
             // Navigate up
             fireEvent.keyDown(tree, { code: "ArrowUp" });
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
             fireEvent.keyDown(tree, { code: "ArrowUp" });
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
+        });
+
+        it("should focus first item on ArrowDown when autoFocus is false", () => {
+            renderStaticTreeView({ autoFocus: false });
+
+            const tree = screen.getByRole("tree");
+
+            // Initially nothing is focused
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "false",
+            );
+
+            // ArrowDown focuses first focusable visible item
+            fireEvent.keyDown(tree, { code: "ArrowDown" });
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
+        });
+
+        it("should focus last item on ArrowUp when autoFocus is false", () => {
+            renderStaticTreeView({ autoFocus: false });
+
+            const tree = screen.getByRole("tree");
+
+            // Initially nothing is focused
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "false",
+            );
+
+            // ArrowUp focuses last focusable visible item
+            fireEvent.keyDown(tree, { code: "ArrowUp" });
+            expect(screen.getByRole("treeitem", { name: "File B5" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
         });
 
         it("should navigate with keyboard home, end", () => {
@@ -580,15 +642,21 @@ describe("UiTreeview", () => {
             const tree = screen.getByRole("tree");
 
             // Initial focus is on first item
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
 
-            // Navigate emd
+            // Navigate end
             fireEvent.keyDown(tree, { code: "End" });
             expect(screen.getByText("File B5").closest("div")).toHaveClass(e("item", { isFocused: true }));
 
             // Navigate home
             fireEvent.keyDown(tree, { code: "Home" });
-            expect(screen.getByText("Parent A").closest("div")).toHaveClass(e("item", { isFocused: true }));
+            expect(screen.getByRole("treeitem", { name: "Parent A" })).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
         });
 
         it("should navigate with keyboard arrows home end in collapsed", () => {
