@@ -31,11 +31,11 @@ function ComparisonDataWithSubItemComponent({
             <ResponsiveText minFontSize={10}>
                 <div
                     className="comparison-headline-value-wrapper s-comparison-headline-value-wrapper"
-                    aria-hidden={true}
+                    aria-hidden
                 >
                     {ComparisonIndicator ? <ComparisonIndicator /> : null}
                     <ComparisonValue dataItem={dataItem.item} comparisonStyle={style} />
-                    <ComparisonValue dataItem={dataItem.subItem} comparisonStyle={style} isSubItem={true} />
+                    <ComparisonValue dataItem={dataItem.subItem} comparisonStyle={style} isSubItem />
                 </div>
             </ResponsiveText>
             <span className="sr-only">{comparisonAriaLabelFactory?.(intl)}</span>

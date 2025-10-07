@@ -42,7 +42,7 @@ function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
             valuePath={`${props.axis}.labelsEnabled`}
             properties={props.properties}
             pushData={props.pushData}
-            canBeToggled={true}
+            canBeToggled
             toggledOn={axisLabelsEnabled}
             toggleDisabled={props.disabled || !axisVisible}
             showDisabledMessage={!props.configPanelDisabled && props.disabled}

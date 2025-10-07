@@ -691,6 +691,10 @@
         "value": "<b>Warning:</b> Some filters couldn't be applied — they're no longer available on the dashboard.",
         "comment": "Warning message when saved filters are no longer available on the dashboard"
     },
+    "dialogs.automation.attachments.add": {
+        "value": "Add attachments",
+        "comment": "Title of the dialog for adding attachments to automation"
+    },
     "dialogs.automation.applyCurrentFilters.confirm.title": {
         "value": "Edit with current filters?",
         "comment": "Title of the dialog, that confirms that the user wants to edit the automation with the current dashboard filters."
@@ -798,10 +802,6 @@
     "dialogs.schedule.management.attachments.message": {
         "value": "<strong>Note</strong>. Cross-filtering will not be applied in the scheduled export.",
         "comment": "Important notice about scheduled exports. The <strong> tags emphasize that cross-filtering won't apply to exported data."
-    },
-    "dialogs.schedule.management.attachments.title": {
-        "value": "Attachments",
-        "comment": "Header for attachments section in scheduled export dialog"
     },
     "scheduledEmail.attachmentFormat.widget.png": {
         "value": "Snapshot (.png)",

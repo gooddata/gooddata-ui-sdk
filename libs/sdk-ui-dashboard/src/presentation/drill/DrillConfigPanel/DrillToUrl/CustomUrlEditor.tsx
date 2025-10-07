@@ -388,7 +388,7 @@ function CustomUrlEditorDialog(props: CustomUrlEditorProps) {
     return (
         <ConfirmDialogBase
             className="gd-drill-custom-url-editor s-gd-drill-custom-url-editor"
-            isPositive={true}
+            isPositive
             headline={
                 previousValue
                     ? intl.formatMessage({ id: "configurationPanel.drillIntoUrl.editor.editUrlTitle" })
@@ -444,9 +444,9 @@ export function CustomUrlEditor(props: CustomUrlEditorProps) {
         <OverlayControllerProvider overlayController={overlayController}>
             <SelectedOverlay
                 onClose={props.onClose}
-                isModal={true}
+                isModal
                 closeOnOutsideClick={false}
-                closeOnEscape={true}
+                closeOnEscape
                 positionType="fixed"
                 className="gd-modal-overlay"
             >

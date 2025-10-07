@@ -32,7 +32,7 @@ export function DraggableInsightList(props: IDraggableInsightListProps) {
         <div className="gd-visualizations-list gd-flex-item-stretch gd-flex-row-container">
             <FlexDimensions
                 ref={flexRef}
-                measureHeight={true}
+                measureHeight
                 measureWidth={false}
                 className="visualizations-flex-dimensions"
             >

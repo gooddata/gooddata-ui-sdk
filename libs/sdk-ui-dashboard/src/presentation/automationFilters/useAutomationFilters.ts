@@ -57,7 +57,8 @@ export const useAutomationFilters = ({
 
     const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
 
-    const addFilterButtonRef = useRef<HTMLButtonElement>(null);
+    const addFilterButtonRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
+    const filterGroupRef = useRef<HTMLDivElement>(null);
 
     const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
@@ -87,6 +88,31 @@ export const useAutomationFilters = ({
         });
     }, []);
 
+    const focusFilterGroup = useCallback(() => {
+        requestAnimationFrame(() => {
+            if (filterGroupRef.current) {
+                // set tabindex to 0 to make the filter group focusable and preserve the tab order
+                filterGroupRef.current.tabIndex = 0;
+                filterGroupRef.current.focus();
+            }
+        });
+    }, []);
+
+    const announceFiltersChanged = useCallback((message: string) => {
+        setTimeout(() => {
+            // Defer announcement to next render so screen reader doesn't skip it
+            setFilterAnnouncement(message);
+        });
+    }, []);
+
+    const makeFilterGroupUnfocusable = useCallback(() => {
+        requestAnimationFrame(() => {
+            if (filterGroupRef.current) {
+                filterGroupRef.current.removeAttribute("tabindex");
+            }
+        });
+    }, []);
+
     const handleChangeFilter = useCallback(
         (filter: FilterContextItem | undefined) => {
             if (!filter) {
@@ -98,7 +124,7 @@ export const useAutomationFilters = ({
                 { id: "automationFilters.announcement.filterChanged" },
                 { title: filterTitle },
             );
-            setFilterAnnouncement(message);
+            announceFiltersChanged(message);
 
             const updatedFilters = selectedFilters.map((prevFilter) => {
                 if (areFiltersMatchedByIdentifier(prevFilter, filter)) {
@@ -118,16 +144,16 @@ export const useAutomationFilters = ({
                 { id: "automationFilters.announcement.filterRemoved" },
                 { title: filterTitle },
             );
-            setFilterAnnouncement(message);
+            announceFiltersChanged(message);
 
             const updatedFilters = selectedFilters.filter(
                 (prevFilter) => !areFiltersMatchedByIdentifier(prevFilter, filter),
             );
             onFiltersChange(updatedFilters);
 
-            focusAddFilterButton();
+            focusFilterGroup();
         },
-        [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl, focusAddFilterButton],
+        [onFiltersChange, focusFilterGroup, selectedFilters, allAttributes, allDateDatasets, intl],
     );
 
     const handleAddFilter = useCallback(
@@ -164,7 +190,7 @@ export const useAutomationFilters = ({
                     { id: "automationFilters.announcement.filterAdded" },
                     { title: filterTitle },
                 );
-                setFilterAnnouncement(message);
+                announceFiltersChanged(message);
 
                 const updatedFilters = [...selectedFilters, filter];
                 onFiltersChange(updatedFilters);
@@ -192,7 +218,10 @@ export const useAutomationFilters = ({
 
     // Function to set ref for AttributesDropdown and also add filter button ref for custom focus management
     const setAddFilterButtonRefs = useCallback(
-        (element: HTMLButtonElement | null, dropdownButtonRef?: MutableRefObject<HTMLElement>) => {
+        (
+            element: HTMLButtonElement | HTMLDivElement | null,
+            dropdownButtonRef?: MutableRefObject<HTMLElement>,
+        ) => {
             addFilterButtonRef.current = element;
             if (dropdownButtonRef && element) {
                 dropdownButtonRef.current = element;
@@ -210,6 +239,8 @@ export const useAutomationFilters = ({
         attributeConfigs,
         dateConfigs,
         filterAnnouncement,
+        filterGroupRef,
+        makeFilterGroupUnfocusable,
         handleChangeFilter,
         handleDeleteFilter,
         handleAddFilter,

@@ -76,7 +76,7 @@ export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement 
                         aria-label={title}
                     >
                         <div className={asTableIconClasses}>
-                            <UiIcon ariaHidden={true} size={18} type={iconType} color="complementary-7" />
+                            <UiIcon ariaHidden size={18} type={iconType} color="complementary-7" />
                         </div>
                     </div>
                 }

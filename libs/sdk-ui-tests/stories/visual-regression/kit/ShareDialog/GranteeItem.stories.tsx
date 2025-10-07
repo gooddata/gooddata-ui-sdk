@@ -126,7 +126,7 @@ function GranularGranteeBasicExample(): ReactElement {
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
                     grantee={granularUser}
-                    areGranularPermissionsSupported={true}
+                    areGranularPermissionsSupported
                     {...defaultGranteeItemComponentProps}
                 />
             </div>
@@ -134,7 +134,7 @@ function GranularGranteeBasicExample(): ReactElement {
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
                     grantee={granularGroup}
-                    areGranularPermissionsSupported={true}
+                    areGranularPermissionsSupported
                     {...defaultGranteeItemComponentProps}
                 />
             </div>

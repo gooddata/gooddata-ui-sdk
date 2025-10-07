@@ -595,6 +595,7 @@ export interface IDashboardsQuery {
     query(): Promise<IDashboardsQueryResult>;
     withFilter(filter: IFilterBaseOptions): IDashboardsQuery;
     withInclude(include: string[]): IDashboardsQuery;
+    withMetaInclude(metaInclude: string[]): IDashboardsQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IDashboardsQuery;
     withPage(page: number): IDashboardsQuery;
     withSize(size: number): IDashboardsQuery;

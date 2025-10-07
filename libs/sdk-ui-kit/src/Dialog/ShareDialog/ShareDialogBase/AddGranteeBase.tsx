@@ -44,14 +44,14 @@ export function AddGranteeBase(props: IAddGranteeBaseProps) {
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-users s-gd-share-add-grantees"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={!isDirty}
             headline={intl.formatMessage({ id: "shareDialog.share.grantee.add.info" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "shareDialog.share.grantee.share" })}
             submitOnEnterKey={false}
-            shouldCloseOnEscape={true}
+            shouldCloseOnEscape
             returnFocusTo={previouslyFocusedRef}
             onCancel={onBackClick}
             onSubmit={onSubmit}

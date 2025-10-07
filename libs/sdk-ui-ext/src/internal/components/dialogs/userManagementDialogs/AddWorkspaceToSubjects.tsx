@@ -34,7 +34,7 @@ function AddWorkspaceToSubjectsComponent({
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay
                 alignPoints={alignPoints}
-                isModal={true}
+                isModal
                 positionType="fixed"
                 className="gd-user-management-dialog"
                 resizeObserverThreshold={0.2}

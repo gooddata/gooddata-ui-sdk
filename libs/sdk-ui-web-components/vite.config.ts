@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import environment from "vite-plugin-environment";
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 const require = createRequire(import.meta.url);
 const npmPackage = require("./package.json");
@@ -14,7 +14,7 @@ const sdkModelVersion = sdkModelDependency.replace(/[\^~]/, "");
 const projectDir = dirname(fileURLToPath(import.meta.url));
 export default defineConfig(({ command, mode }) => {
     // Load env file based on `mode` in the current working directory.
-    const env = loadEnv(mode, projectDir, '');
+    const env = loadEnv(mode, projectDir, "");
 
     const debugDir = resolve(projectDir, "debug");
     const assetDir = resolve(projectDir, "esm");
@@ -30,7 +30,7 @@ export default defineConfig(({ command, mode }) => {
                 {
                     name: "inject-insight-id",
                     transformIndexHtml(html) {
-                      return html.replaceAll("{__variable__}", env["VITE_INSIGHT"]);
+                        return html.replaceAll("{__variable__}", env["VITE_INSIGHT"]);
                     },
                 },
             ],
@@ -42,11 +42,12 @@ export default defineConfig(({ command, mode }) => {
                 VITE_WORKSPACE: JSON.stringify(env["VITE_WORKSPACE"]),
                 VITE_INSIGHT: JSON.stringify(env["VITE_INSIGHT"]),
                 VITE_AUTH_TOKEN: JSON.stringify(env["VITE_AUTH_TOKEN"]),
+                'process.env': {NODE_ENV:mode},
             },
             root: debugDir,
             publicDir: false,
             server: {
-                port:9999,
+                port: 9999,
                 open: "/index.html",
                 fs: {
                     allow: [debugDir, projectDir],
@@ -72,6 +73,7 @@ export default defineConfig(({ command, mode }) => {
         define: {
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
             NPM_PACKAGE_VERSION: JSON.stringify(sdkModelVersion),
+            'process.env': {NODE_ENV:mode},
         },
         build: {
             minify: mode === "production" ? true : false,
@@ -87,7 +89,7 @@ export default defineConfig(({ command, mode }) => {
             rollupOptions: {
                 onwarn(warning, warn) {
                     // Suppress "use client" directive warnings
-                    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+                    if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
                         return;
                     }
                     warn(warning);

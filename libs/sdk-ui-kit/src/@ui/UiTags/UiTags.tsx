@@ -247,7 +247,7 @@ export function UiTags({
                                     }}
                                     value={tag}
                                     autocomplete="on"
-                                    labelPositionTop={true}
+                                    labelPositionTop
                                     className={e("add-input")}
                                     onChange={(value) => {
                                         setTag(String(value));

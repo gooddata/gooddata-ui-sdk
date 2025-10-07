@@ -17,7 +17,7 @@ function AddButtonTest() {
             <AddButton title={<>Create</>} onClick={onClick} />
 
             <h4>Disabled</h4>
-            <AddButton title={<>Can&apos;t touch this</>} isDisabled={true} onClick={onClick} />
+            <AddButton title={<>Can&apos;t touch this</>} isDisabled onClick={onClick} />
 
             <h4>With tooltip</h4>
             <AddButton title={<>Hover</>} tooltip={<>Some information here!</>} onClick={onClick} />

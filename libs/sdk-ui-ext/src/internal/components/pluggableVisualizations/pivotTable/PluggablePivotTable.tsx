@@ -451,7 +451,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
             this.renderFun(
-                <ReactMeasure client={true}>
+                <ReactMeasure client>
                     {({ measureRef, contentRect }: any) => {
                         const clientHeight = contentRect.client.height;
 

@@ -124,8 +124,8 @@ function AttributeHierarchyDropdown({
         <Dropdown
             className="drill-config-hierarchy-target-select s-drill-config-hierarchy-target-select"
             closeOnMouseDrag={false}
-            closeOnParentScroll={true}
-            closeOnOutsideClick={true}
+            closeOnParentScroll
+            closeOnOutsideClick
             alignPoints={DROPDOWN_ALIGN_POINTS}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton

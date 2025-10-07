@@ -398,7 +398,7 @@ describe("ValidationContext", () => {
 
             const { rerender } = render(
                 <TestValidationProvider initialValue={parentInitialValue}>
-                    <TestComponent shouldRender={true} />
+                    <TestComponent shouldRender />
                 </TestValidationProvider>,
             );
 

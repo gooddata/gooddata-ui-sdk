@@ -76,7 +76,7 @@ function RecurrenceFormTest() {
                         timezone="America/New_York"
                         weekStart="Sunday"
                         repeatLabel=""
-                        showRepeatTypeDescription={true}
+                        showRepeatTypeDescription
                     />
                 </div>
             </div>

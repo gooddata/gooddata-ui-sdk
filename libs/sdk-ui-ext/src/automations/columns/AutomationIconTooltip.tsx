@@ -46,7 +46,7 @@ function AutomationIconTooltipCore({
 
 export function AutomationIconTooltip({ header, content, sections, children }: IAutomationIconTooltipProps) {
     return (
-        <BubbleHoverTrigger hideDelay={300} eventsOnBubble={true}>
+        <BubbleHoverTrigger hideDelay={300} eventsOnBubble>
             {children}
             <Bubble
                 className="bubble-light"

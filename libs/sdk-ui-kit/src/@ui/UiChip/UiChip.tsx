@@ -24,6 +24,7 @@ export function UiChip({
     iconBefore,
     onClick,
     onDelete,
+    onKeyDown,
     onDeleteKeyDown,
     accessibilityConfig,
     dataTestId,
@@ -44,7 +45,7 @@ export function UiChip({
         }
     }, [label, tag, effectiveButtonRef]);
 
-    const { deleteAriaLabel } = accessibilityConfig ?? {};
+    const { deleteAriaLabel, deleteAriaDescribedBy } = accessibilityConfig ?? {};
 
     const chipContent = (
         <ChipContent
@@ -52,6 +53,7 @@ export function UiChip({
             tag={tag}
             iconBefore={iconBefore}
             onClick={onClick}
+            onKeyDown={onKeyDown}
             isActive={isActive}
             isLocked={isLocked}
             isExpandable={isExpandable}
@@ -70,6 +72,7 @@ export function UiChip({
             onDelete={onDelete}
             onDeleteKeyDown={onDeleteKeyDown}
             deleteAriaLabel={deleteAriaLabel}
+            deleteAriaDescribedBy={deleteAriaDescribedBy}
             dataTestId={dataTestId}
         />
     ) : null;

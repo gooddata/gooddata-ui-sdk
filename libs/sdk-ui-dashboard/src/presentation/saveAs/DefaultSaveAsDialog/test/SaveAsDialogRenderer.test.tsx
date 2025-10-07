@@ -68,7 +68,7 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
 
         await userEvent.clear(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`));
 
-        rerender(<SaveAsDialogRenderer {...defaultProps} isDashboardSaving={true} />);
+        rerender(<SaveAsDialogRenderer {...defaultProps} isDashboardSaving />);
 
         await userEvent.click(screen.getByText("Create dashboard"));
 

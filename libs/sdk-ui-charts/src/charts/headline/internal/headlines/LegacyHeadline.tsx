@@ -288,7 +288,7 @@ function LegacyHeadline({
 
     return (
         <Measure
-            client={true}
+            client
             onResize={(dimensions) => {
                 if (
                     dimensions?.client?.width > 0 &&

@@ -82,7 +82,7 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <div
@@ -140,8 +140,8 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
 
                 return (
                     <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
-                        shouldKeyboardActionStopPropagation={true}
-                        shouldKeyboardActionPreventDefault={true}
+                        shouldKeyboardActionStopPropagation
+                        shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-operator-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}

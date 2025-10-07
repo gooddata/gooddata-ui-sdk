@@ -62,7 +62,7 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                             overlayPositionType={OVERLAY_POSITION_TYPE}
                             alignPoints={DROPDOWN_ALIGN_POINTS}
-                            autofocusOnOpen={true}
+                            autofocusOnOpen
                             onOpenStateChanged={(isOpen) => {
                                 if (!isOpen) {
                                     setMergeHeaders(xlsxSettings.mergeHeaders ?? true);

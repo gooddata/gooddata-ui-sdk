@@ -88,7 +88,7 @@ export function DefaultAlertingManagementDialogOld(props: IAlertingManagementDia
     return (
         <>
             <Dialog
-                displayCloseButton={true}
+                displayCloseButton
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
                 className="gd-notifications-channels-management-dialog s-alerting-management-dialog"

@@ -38,7 +38,7 @@ function AttributeFilterElementsSelectItemExamples(): ReactElement {
                     <h4>AttributeFilterElementsSelectItem selected</h4>
                     <AttributeFilterElementsSelectItem
                         item={item}
-                        isSelected={true}
+                        isSelected
                         onSelect={action("onSelect")}
                         onDeselect={action("onDeselect")}
                         onSelectOnly={action("onSelectOnly")}

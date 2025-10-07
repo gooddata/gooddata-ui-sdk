@@ -49,7 +49,7 @@ function VisualizationSaveDialogCore({
             }}
             isPositive
             autofocusOnOpen={false}
-            submitOnEnterKey={true}
+            submitOnEnterKey
             headline={intl.formatMessage({ id: "gd.gen-ai.save-dialog.title" })}
             cancelButtonText={intl.formatMessage({ id: "gd.gen-ai.button.cancel" })}
             submitButtonText={
@@ -68,7 +68,7 @@ function VisualizationSaveDialogCore({
                     : intl.formatMessage({ id: "gd.gen-ai.save-dialog.description.explore" })}
             </Typography>
             <Input
-                autofocus={true}
+                autofocus
                 label={intl.formatMessage({ id: "gd.gen-ai.save-dialog.label" })}
                 labelPositionTop
                 placeholder={visualization.title}

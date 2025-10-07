@@ -58,7 +58,7 @@ export function WithTreatNullAsOptionEnabled() {
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
                 anchorEl="screenshot-target"
-                displayTreatNullAsZeroOption={true}
+                displayTreatNullAsZeroOption
             />
         </div>
     );
@@ -77,8 +77,8 @@ export function WithTreatNullAsOptionEnabledAndCheckedByDefault() {
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
                 anchorEl="screenshot-target"
-                displayTreatNullAsZeroOption={true}
-                treatNullAsZeroDefaultValue={true}
+                displayTreatNullAsZeroOption
+                treatNullAsZeroDefaultValue
             />
         </div>
     );

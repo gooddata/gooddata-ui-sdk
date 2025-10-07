@@ -97,7 +97,7 @@ export function AddWorkspaceSelect({
         <div className="gd-share-dialog-content-select s-user-management-workspace-select">
             <AsyncSelect<ISelectOption | ISelectErrorOption>
                 ref={selectRef}
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
                     DropdownIndicator: EmptyRenderer,
@@ -111,7 +111,7 @@ export function AddWorkspaceSelect({
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage(messages.searchWorkspacePlaceholder)}
                 onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}

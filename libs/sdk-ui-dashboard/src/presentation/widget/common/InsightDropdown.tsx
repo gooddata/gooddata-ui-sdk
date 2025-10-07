@@ -67,7 +67,7 @@ export function InsightDropdown({ insight, insightRef, insightType, onSelect }: 
                             selectedRef={insightRef}
                             height={300}
                             width={275}
-                            searchAutofocus={true}
+                            searchAutofocus
                             onSelect={(insight) => {
                                 onSelect(insight);
                                 closeDropdown();

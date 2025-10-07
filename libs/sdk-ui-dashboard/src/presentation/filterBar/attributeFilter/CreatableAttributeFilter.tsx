@@ -54,7 +54,7 @@ export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) 
         ) : undefined;
 
     return (
-        <BubbleHoverTrigger eventsOnBubble={true} className="s-add-attribute-filter-bubble-trigger">
+        <BubbleHoverTrigger eventsOnBubble className="s-add-attribute-filter-bubble-trigger">
             <DraggableAttributeFilterCreatePanelItem
                 CreatePanelItemComponent={AddAttributeFilterPlaceholder}
                 WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}

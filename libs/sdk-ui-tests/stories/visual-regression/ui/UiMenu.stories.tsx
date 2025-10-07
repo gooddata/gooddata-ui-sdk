@@ -167,7 +167,7 @@ function UiMenuExamples() {
                 <Example title="Menu with Disabled Items Focusable">
                     <UiMenu
                         items={interactiveItems}
-                        isDisabledFocusable={true}
+                        isDisabledFocusable
                         onSelect={() => {}}
                         ariaAttributes={defaultAriaAttributes}
                     />

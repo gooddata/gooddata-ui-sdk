@@ -21,7 +21,7 @@ export function ExportableDashboardRichTextWidget({
             screen={screen}
             exportData={exportData?.section}
         >
-            <DashboardItemBase visualizationClassName="gd-rich-text-widget-wrapper" isExport={true}>
+            <DashboardItemBase visualizationClassName="gd-rich-text-widget-wrapper" isExport>
                 {() => <DashboardRichText widget={widget} exportData={exportData?.widget} />}
             </DashboardItemBase>
         </DashboardItem>

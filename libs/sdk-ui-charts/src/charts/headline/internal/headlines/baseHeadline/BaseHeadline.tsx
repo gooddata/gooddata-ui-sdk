@@ -59,7 +59,7 @@ export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadline
 
     return (
         <Measure
-            client={true}
+            client
             onResize={(dimensions) => {
                 // onResize is called also initially when dimensions
                 // are not yet fully materialized, defer afterRender

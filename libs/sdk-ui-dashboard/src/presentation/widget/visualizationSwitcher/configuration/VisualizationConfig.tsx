@@ -58,7 +58,7 @@ function VisualizationConfigContent({
             insight={insight}
             items={menuItems}
             renderMode={renderMode}
-            isOpen={true}
+            isOpen
             onClose={() => {}}
         />
     );

@@ -57,7 +57,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         id="xaxis_section"
                         title={messages["xaxisTitle"].id}
                         valuePath="xaxis.visible"
-                        canBeToggled={true}
+                        canBeToggled
                         toggledOn={xAxisVisible}
                         toggleDisabled={controlsDisabled}
                         propertiesMeta={propertiesMeta}
@@ -86,7 +86,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         id="yaxis_section"
                         title={messages["yaxisTitle"].id}
                         valuePath="yaxis.visible"
-                        canBeToggled={true}
+                        canBeToggled
                         toggledOn={yAxisVisible}
                         toggleDisabled={controlsDisabled}
                         propertiesMeta={propertiesMeta}

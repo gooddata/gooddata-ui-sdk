@@ -62,7 +62,7 @@ export default function AggregationsSubMenu({
                             measureLocalIdentifiers={measureLocalIdentifiers}
                             totalType={totalType}
                             totals={columnTotals}
-                            isColumn={true}
+                            isColumn
                             icon={<RowsHeaderIcon />}
                             headerText={intl.formatMessage({
                                 id: "visualizations.menu.aggregations.rows",

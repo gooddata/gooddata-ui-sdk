@@ -16,7 +16,7 @@ export function CatalogItemLock({ intl }: Props) {
             arrowPlacement="top"
             optimalPlacement
             triggerBy={["hover"]}
-            anchor={<UiIcon type="lock" color="complementary-7" size={16} ariaHidden={true} />}
+            anchor={<UiIcon type="lock" color="complementary-7" size={16} ariaHidden />}
             content={intl.formatMessage({ id: "analyticsCatalog.catalogItem.lock" })}
             width={255}
         />

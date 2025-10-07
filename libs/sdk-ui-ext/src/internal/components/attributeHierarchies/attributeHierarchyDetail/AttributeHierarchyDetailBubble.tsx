@@ -29,7 +29,7 @@ const BUBBLE_ALIGN_POINTS = [
 export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps) {
     const { children, className } = props;
     return (
-        <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
+        <BubbleHoverTrigger showDelay={0} eventsOnBubble>
             <div
                 className={cx(
                     "s-description-trigger",
@@ -44,7 +44,7 @@ export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailB
             <Bubble
                 className="gd-attribute-hierarchy-detail-panel-bubble"
                 alignPoints={BUBBLE_ALIGN_POINTS}
-                closeOnOutsideClick={true}
+                closeOnOutsideClick
                 arrowStyle={{ display: "none" }}
             >
                 {children}

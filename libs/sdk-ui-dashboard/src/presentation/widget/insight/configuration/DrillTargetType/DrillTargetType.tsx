@@ -51,9 +51,9 @@ export function DrillTargetType(props: IDrillTargetProps) {
 
     return (
         <Dropdown
-            closeOnParentScroll={true}
+            closeOnParentScroll
             closeOnMouseDrag={false}
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignPoints={[
                 {
                     align: "bl tl",

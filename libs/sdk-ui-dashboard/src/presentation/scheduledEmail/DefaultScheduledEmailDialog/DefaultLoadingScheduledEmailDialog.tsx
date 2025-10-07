@@ -24,11 +24,11 @@ export function DefaultLoadingScheduledEmailDialog({
 
     return (
         <>
-            <Overlay className="gd-notifications-channels-dialog-overlay" isModal={true} positionType="fixed">
+            <Overlay className="gd-notifications-channels-dialog-overlay" isModal positionType="fixed">
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ConfirmDialogBase
                         className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
-                        isPositive={true}
+                        isPositive
                         cancelButtonText={intl.formatMessage({ id: "cancel" })}
                         submitButtonText={
                             scheduledExportToEdit

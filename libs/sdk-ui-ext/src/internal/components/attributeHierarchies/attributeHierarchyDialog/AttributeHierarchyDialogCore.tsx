@@ -19,7 +19,7 @@ function AttributeHierarchyDialogCore() {
         <Dialog
             containerClassName="attribute-hierarchy-overlay s-attribute-hierarchy-overlay"
             className="attribute-hierarchy-dialog s-attribute-hierarchy-dialog"
-            displayCloseButton={true}
+            displayCloseButton
             onClose={onClose}
             accessibilityConfig={{ titleElementId }}
         >

@@ -6,6 +6,10 @@ import { useIntl } from "react-intl";
 
 import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
+import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
+import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
+import { useExportToTabular } from "./useExportToTabular.js";
 import {
     selectCanCreateAutomation,
     selectCanExportPdf,
@@ -33,10 +37,6 @@ import {
 } from "../../../model/index.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { IMenuButtonItem } from "../types.js";
-import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
-import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
-import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
-import { useExportToTabular } from "./useExportToTabular.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>

@@ -158,7 +158,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
                         align: "tl bl",
                     },
                 ]}
-                autofocusOnOpen={true}
+                autofocusOnOpen
                 renderButton={({ openDropdown, isOpen, dropdownId, buttonRef }) => (
                     <DropdownButton
                         accessibilityConfig={{
@@ -193,8 +193,8 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
 
                         return (
                             <UiListbox
-                                shouldKeyboardActionStopPropagation={true}
-                                shouldKeyboardActionPreventDefault={true}
+                                shouldKeyboardActionStopPropagation
+                                shouldKeyboardActionPreventDefault
                                 dataTestId="s-timepicker-list"
                                 items={listboxItems}
                                 maxWidth={dropdownWidth}

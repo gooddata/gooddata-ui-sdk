@@ -70,7 +70,7 @@ function AttributeFilterDropdownButtonExamples(
                         subtitle={"All"}
                         selectedItemsCount={10}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -78,12 +78,12 @@ function AttributeFilterDropdownButtonExamples(
                     />
                     <h4>AttributeFilterDropdownButton opened</h4>
                     <AttributeFilterDropdownButton
-                        isOpen={true}
+                        isOpen
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={10}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -97,7 +97,7 @@ function AttributeFilterDropdownButtonExamples(
                         selectedItemsCount={10}
                         isFiltering={false}
                         isLoaded={false}
-                        isLoading={true}
+                        isLoading
                         isDraggable={isDraggable}
                         icon={icon}
                         onClick={action("onClick")}
@@ -108,8 +108,8 @@ function AttributeFilterDropdownButtonExamples(
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={10}
-                        isFiltering={true}
-                        isLoaded={true}
+                        isFiltering
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -122,7 +122,7 @@ function AttributeFilterDropdownButtonExamples(
                         subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
                         selectedItemsCount={3}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -136,7 +136,7 @@ function AttributeFilterDropdownButtonExamples(
                         selectedItemsCount={3}
                         showSelectionCount={false}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -150,7 +150,7 @@ function AttributeFilterDropdownButtonExamples(
                             subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
                             selectedItemsCount={3}
                             isFiltering={false}
-                            isLoaded={true}
+                            isLoaded
                             isLoading={false}
                             isDraggable={isDraggable}
                             icon={icon}
@@ -160,12 +160,12 @@ function AttributeFilterDropdownButtonExamples(
                     <h4>AttributeFilterDropdownButton opened with tooltip</h4>
                     <div style={{ width: 120 }}>
                         <AttributeFilterDropdownButton
-                            isOpen={true}
+                            isOpen
                             title={attributeTitle}
                             subtitle={"All"}
                             selectedItemsCount={3}
                             isFiltering={false}
-                            isLoaded={true}
+                            isLoaded
                             isLoading={false}
                             isDraggable={isDraggable}
                             icon={icon}
@@ -175,12 +175,12 @@ function AttributeFilterDropdownButtonExamples(
                     </div>
                     <h4>AttributeFilterDropdownButton with title extension</h4>
                     <AttributeFilterDropdownButton
-                        isOpen={true}
+                        isOpen
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={10}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         isDraggable={isDraggable}
                         icon={icon}
@@ -208,12 +208,12 @@ export function FullFeaturedWithIcon() {
 FullFeaturedWithIcon.parameters = { kind: "full-featured-with-icon", screenshot: true };
 
 export function Draggable() {
-    return <AttributeFilterDropdownButtonExamples isDraggable={true} />;
+    return <AttributeFilterDropdownButtonExamples isDraggable />;
 }
 Draggable.parameters = { kind: "draggable", screenshot: true };
 
 export function DraggableWithIcon() {
-    return <AttributeFilterDropdownButtonExamples isDraggable={true} icon={AttributeIcon} />;
+    return <AttributeFilterDropdownButtonExamples isDraggable icon={AttributeIcon} />;
 }
 DraggableWithIcon.parameters = { kind: "draggable-with-icon", screenshot: true };
 

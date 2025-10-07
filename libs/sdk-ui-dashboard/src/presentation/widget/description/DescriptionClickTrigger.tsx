@@ -122,7 +122,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                     ignoreClicksOn={[iconRef.current ?? undefined]}
                     closeOnParentScroll={false}
                     alignTo={`.${props.className}`}
-                    ensureVisibility={true}
+                    ensureVisibility
                 >
                     {isOpen ? <DescriptionPanelContent {...props} /> : null}
                 </Bubble>

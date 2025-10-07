@@ -39,7 +39,7 @@ export function AlertDestinationSelect({
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <DropdownButton
@@ -74,12 +74,12 @@ export function AlertDestinationSelect({
 
                 return (
                     <UiListbox
-                        shouldKeyboardActionStopPropagation={true}
-                        shouldKeyboardActionPreventDefault={true}
+                        shouldKeyboardActionStopPropagation
+                        shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-destination-select-list"
                         items={listboxItems}
                         selectedItemId={selectedDestination}
-                        shouldCloseOnSelect={true}
+                        shouldCloseOnSelect
                         onSelect={(item) => {
                             if (item.id !== selectedDestination) {
                                 onDestinationChange(item.id);

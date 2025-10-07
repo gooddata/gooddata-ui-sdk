@@ -64,7 +64,7 @@ export function InvertableSelectItem(props: IInvertableSelectItem) {
                 <input
                     type="checkbox"
                     className="input-checkbox"
-                    readOnly={true}
+                    readOnly
                     checked={isSelected}
                     disabled={isDisabled}
                 />

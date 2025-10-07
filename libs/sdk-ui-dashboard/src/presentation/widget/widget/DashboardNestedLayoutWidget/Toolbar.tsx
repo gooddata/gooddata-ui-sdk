@@ -57,7 +57,7 @@ function ToggleDirectionButton({
                     <UiTooltip
                         arrowPlacement="bottom"
                         triggerBy={["hover", "focus"]}
-                        optimalPlacement={true}
+                        optimalPlacement
                         content={buttonTooltip}
                         anchor={
                             <UiDropdownIconButton
@@ -128,7 +128,7 @@ function ToggleSectionHeaderButton({
             <UiTooltip
                 arrowPlacement="bottom"
                 triggerBy={["hover", "focus"]}
-                optimalPlacement={true}
+                optimalPlacement
                 content={tooltipContent}
                 anchor={
                     <UiIconButton
@@ -159,7 +159,7 @@ function RemoveContainerButton({ onWidgetDelete }: { onWidgetDelete: () => void 
             <UiTooltip
                 arrowPlacement="bottom"
                 triggerBy={["hover", "focus"]}
-                optimalPlacement={true}
+                optimalPlacement
                 content={tooltipContent}
                 anchor={
                     <UiIconButton
@@ -190,7 +190,7 @@ export function Toolbar({
             overlayClassName="gd-nested-layout__toolbar s-nested-layout__toolbar"
             alignTo={ALIGN_TOOLBAR_TO}
             alignPoints={TOOLBAR_ALIGN_POINTS}
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             closeOnParentScroll={false}
             ignoreClicksOnByClass={IGNORE_TOOLBAR_CLICKS_ON_BY_CLASS}
             arrowStyle={ARROW_STYLES}

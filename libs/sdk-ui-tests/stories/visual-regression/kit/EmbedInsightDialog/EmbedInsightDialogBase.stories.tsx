@@ -41,7 +41,7 @@ function EmbedInsightDialogBaseExamples() {
                 <EmbedInsightDialogBase
                     code={code}
                     embedTab={"react"}
-                    showWebComponentsTab={true}
+                    showWebComponentsTab
                     embedTypeOptions={reactOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -64,7 +64,7 @@ function EmbedInsightDialogBaseExamples() {
                 <EmbedInsightDialogBase
                     code={""}
                     embedTab={"react"}
-                    showWebComponentsTab={true}
+                    showWebComponentsTab
                     embedTypeOptions={reactOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -110,7 +110,7 @@ function EmbedInsightDialogBaseExamples() {
                 <EmbedInsightDialogBase
                     code={code}
                     embedTab={"webComponents"}
-                    showWebComponentsTab={true}
+                    showWebComponentsTab
                     embedTypeOptions={webComponentOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
@@ -133,7 +133,7 @@ function EmbedInsightDialogBaseExamples() {
                 <EmbedInsightDialogBase
                     code={""}
                     embedTab={"webComponents"}
-                    showWebComponentsTab={true}
+                    showWebComponentsTab
                     embedTypeOptions={webComponentOptions}
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"

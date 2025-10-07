@@ -37,7 +37,7 @@ const LegendSection = memo(function LegendSection({
             title={messages["title"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
-            canBeToggled={true}
+            canBeToggled
             toggleDisabled={toggleDisabled}
             toggledOn={legendEnabled}
             pushData={pushData}

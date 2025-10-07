@@ -4,13 +4,17 @@ import { type MouseEvent, type RefObject, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { ErrorComponent, LoadingComponent, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { EditableLabel, UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
-import { CatalogItemLockMemo, type ICatalogItem, type ICatalogItemRef } from "../catalogItem/index.js";
+import {
+    CatalogItemLockMemo,
+    type ICatalogItem,
+    type ICatalogItemRef,
+    canEditCatalogItem,
+} from "../catalogItem/index.js";
 import { type ObjectType, ObjectTypeIconMemo } from "../objectType/index.js";
 import { usePermissionsState } from "../permission/index.js";
 
@@ -101,7 +105,7 @@ export function CatalogDetailContent({
             onError: onCatalogItemUpdateError,
         });
 
-    const canUpdate = canUpdateCatalogItem(permissionsState.result?.permissions, item);
+    const canEdit = canEditCatalogItem(permissionsState.result?.permissions, item);
 
     const tabs = useMemo(
         () =>
@@ -143,9 +147,9 @@ export function CatalogDetailContent({
                                     />
                                     {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
                                     <div className="gd-analytics-catalog-detail__card__header__title__name">
-                                        {canUpdate ? (
+                                        {canEdit ? (
                                             <EditableLabel
-                                                isEditableLabelWidthBasedOnText={true}
+                                                isEditableLabelWidthBasedOnText
                                                 placeholder={intl.formatMessage({
                                                     id: "analyticsCatalog.catalogItem.title.add",
                                                 })}
@@ -164,7 +168,7 @@ export function CatalogDetailContent({
                                         )}
                                     </div>
                                 </div>
-                                {canUpdate ? (
+                                {canEdit ? (
                                     <div className="gd-analytics-catalog-detail__card__header__row">
                                         <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
                                             <FormattedMessage id="analyticsCatalog.catalogItem.description" />
@@ -175,7 +179,7 @@ export function CatalogDetailContent({
                                                 placeholder={intl.formatMessage({
                                                     id: "analyticsCatalog.catalogItem.description.add",
                                                 })}
-                                                isEditableLabelWidthBasedOnText={true}
+                                                isEditableLabelWidthBasedOnText
                                                 onSubmit={updateItemDescription}
                                                 value={item.description}
                                             >
@@ -276,10 +280,10 @@ export function CatalogDetailContent({
                                         tags={item.tags.map((tag) => ({
                                             id: tag,
                                             label: tag,
-                                            isDeletable: canUpdate,
+                                            isDeletable: canEdit,
                                         }))}
-                                        canCreateTag={canUpdate}
-                                        canDeleteTags={canUpdate}
+                                        canCreateTag={canEdit}
+                                        canDeleteTags={canEdit}
                                         mode="multi-line"
                                         onTagClick={(tag) => {
                                             onTagClick?.(tag.label);
@@ -323,27 +327,4 @@ export function CatalogDetailContent({
             ) : null}
         </div>
     );
-}
-
-function canUpdateCatalogItem(workspacePermissions?: IWorkspacePermissions, item?: ICatalogItem | null) {
-    const isLocked = item?.isLocked;
-
-    // if item is locked, user cannot update it at all
-    if (isLocked) {
-        return false;
-    }
-    // if user has manage project permission, they can update it not matter what
-    // type of item it is
-    if (workspacePermissions?.canManageProject) {
-        return true;
-    }
-
-    // if user has create visualization permission, they can update it if it is visualization
-    // or dashboard with access to it
-    const allowed: ObjectType[] = ["analyticalDashboard", "insight"];
-    if (workspacePermissions?.canCreateVisualization) {
-        return !!item && allowed.includes(item.type);
-    }
-
-    return false;
 }

@@ -127,14 +127,14 @@ export function DescriptionIcon({ className }: IDescriptionTriggerProps) {
 function DescriptionPanelCore(props: IDescriptionPanelProps) {
     const { arrowOffsets = DESCRIPTION_PANEL_ARROW_OFFSETS } = props;
     return (
-        <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble={true}>
+        <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble>
             <DescriptionIcon className={props.className} />
             <Bubble
                 className="bubble-light gd-description-panel-bubble"
                 alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
                 arrowOffsets={arrowOffsets}
                 arrowStyle={{ display: "none" }}
-                ensureVisibility={true}
+                ensureVisibility
             >
                 <DescriptionPanelContentCore {...props} />
             </Bubble>

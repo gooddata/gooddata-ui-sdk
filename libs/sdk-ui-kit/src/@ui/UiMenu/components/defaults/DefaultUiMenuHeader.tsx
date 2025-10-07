@@ -66,7 +66,7 @@ export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader<
                 onClose={onClose}
                 backAriaLabel={formatMessage({ id: "menu.back" })}
                 closeAriaLabel={formatMessage({ id: "menu.close" })}
-                useShortenedTitle={true}
+                useShortenedTitle
                 height="large"
             />
         </div>

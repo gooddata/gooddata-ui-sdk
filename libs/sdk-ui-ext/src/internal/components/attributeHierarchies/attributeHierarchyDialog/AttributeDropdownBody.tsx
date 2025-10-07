@@ -53,13 +53,13 @@ function AttributeDropdownBody({ items, isLoading, closeDropdown, onSelect }: IA
             tabsClassName="date-attribute-dropdown-tabs s-attribute-hierarchy-attribute-dropdown-tabs"
             width={DEFAULT_DROPDOWN_WIDTH}
             maxHeight={DEFAULT_DROPDOWN_MAX_HEIGHT}
-            showSearch={true}
+            showSearch
             searchPlaceholder={searchPlaceholderText}
             searchString={searchString}
             onSearch={setSearchString}
             items={displayItems}
             itemsCount={displayItems.length}
-            showTabs={true}
+            showTabs
             tabs={TABS}
             onTabSelect={handleTabSelect}
             selectedTabId={selectedTab}

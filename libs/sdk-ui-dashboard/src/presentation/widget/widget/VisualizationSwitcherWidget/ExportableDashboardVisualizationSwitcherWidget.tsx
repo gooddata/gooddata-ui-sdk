@@ -21,10 +21,7 @@ export function ExportableDashboardVisualizationSwitcherWidget({
             screen={screen}
             exportData={exportData?.section}
         >
-            <DashboardItemBase
-                visualizationClassName="gd-visualization-switcher-widget-wrapper"
-                isExport={true}
-            >
+            <DashboardItemBase visualizationClassName="gd-visualization-switcher-widget-wrapper" isExport>
                 {() => (
                     <DashboardVisualizationSwitcher widget={widget} screen={screen} exportData={exportData} />
                 )}

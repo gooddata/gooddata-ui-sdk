@@ -42,9 +42,7 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
             resultCounter={<GroupResultCounter count={childCount} isExpanded={isExpanded} />}
         >
             <span className="gd-semantic-search__results-item__text__row">
-                {item.isDisabled ? (
-                    <UiIcon type="lock" color="complementary-7" size={16} ariaHidden={true} />
-                ) : null}
+                {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} ariaHidden /> : null}
                 <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
             </span>
             <span className="gd-semantic-search__results-item__text__row">

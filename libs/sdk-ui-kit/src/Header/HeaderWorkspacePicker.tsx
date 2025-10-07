@@ -86,9 +86,9 @@ export function CoreHeaderWorkspacePicker({
     return (
         <Dropdown
             className={dropdownClassNames}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnEscape={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnEscape
             autofocusOnOpen={!showSearch}
             onOpenStateChanged={(isOpen) => {
                 if (isOpen && onOpen) {

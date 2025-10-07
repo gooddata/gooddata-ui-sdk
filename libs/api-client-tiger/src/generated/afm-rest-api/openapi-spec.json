@@ -374,6 +374,48 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis": {
+            "post": {
+                "tags": ["Computation", "actions"],
+                "summary": "Compute change analysis",
+                "description": "Computes change analysis for the provided execution definition.",
+                "operationId": "changeAnalysis",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangeAnalysisRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChangeAnalysisResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "post": {
                 "tags": ["Computation", "actions"],
@@ -1292,6 +1334,48 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/KeyDriversResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}": {
+            "get": {
+                "tags": ["Computation", "actions"],
+                "summary": "Get change analysis result",
+                "description": "Gets change analysis result.",
+                "operationId": "changeAnalysisResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChangeAnalysisResult"
                                 }
                             }
                         }
@@ -2483,6 +2567,94 @@
                     }
                 },
                 "description": "Object identifier."
+            },
+            "ChangeAnalysisRequest": {
+                "required": [
+                    "analyzedPeriod",
+                    "attributeIdentifiers",
+                    "dateAttributeIdentifier",
+                    "metricIdentifier",
+                    "referencePeriod"
+                ],
+                "type": "object",
+                "properties": {
+                    "metricIdentifier": {
+                        "$ref": "#/components/schemas/ObjectIdentifier"
+                    },
+                    "dateAttributeIdentifier": {
+                        "$ref": "#/components/schemas/ObjectIdentifier"
+                    },
+                    "referencePeriod": {
+                        "type": "string",
+                        "description": "The reference time period (e.g., '2025-01')"
+                    },
+                    "analyzedPeriod": {
+                        "type": "string",
+                        "description": "The analyzed time period (e.g., '2025-02')"
+                    },
+                    "attributeIdentifiers": {
+                        "type": "array",
+                        "description": "The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjectIdentifier"
+                        }
+                    },
+                    "significanceThreshold": {
+                        "type": "number",
+                        "description": "The significance threshold for changes (default: 2.0 standard deviations)",
+                        "format": "double"
+                    }
+                },
+                "description": "Request for change analysis computation"
+            },
+            "ObjectIdentifier": {
+                "required": ["id", "space", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "analyticalDashboard",
+                            "attribute",
+                            "attributeHierarchy",
+                            "dashboardPlugin",
+                            "dataset",
+                            "fact",
+                            "aggregatedFact",
+                            "label",
+                            "metric",
+                            "userDataFilter",
+                            "exportDefinition",
+                            "automation",
+                            "automationResult",
+                            "prompt",
+                            "visualizationObject",
+                            "filterContext",
+                            "workspaceSettings",
+                            "customApplicationSetting",
+                            "workspaceDataFilter",
+                            "workspaceDataFilterSetting",
+                            "filterView"
+                        ]
+                    },
+                    "space": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "description": "The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered."
+            },
+            "ChangeAnalysisResponse": {
+                "required": ["links"],
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                },
+                "description": "Response for change analysis computation"
             },
             "Element": {
                 "required": ["primaryTitle", "title"],
@@ -4464,6 +4636,21 @@
                         "type": "object"
                     }
                 }
+            },
+            "ChangeAnalysisResult": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "description": "The change analysis result data containing significant changes."
+                        },
+                        "description": "The change analysis result data containing significant changes."
+                    }
+                },
+                "description": "Result of a change analysis execution."
             },
             "ResultCacheMetadata": {
                 "required": ["afm", "executionResponse", "resultSize", "resultSpec"],

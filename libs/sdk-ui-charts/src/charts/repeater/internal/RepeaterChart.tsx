@@ -188,7 +188,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                 rowHeight={rowHeight}
                 suppressCellFocus={false}
                 suppressHeaderFocus={false}
-                suppressMovableColumns={true}
+                suppressMovableColumns
                 onCellClicked={onCellClicked}
                 onCellKeyDown={onCellKeyDown}
                 focusGridInnerElement={focusGridInnerElement}
@@ -200,7 +200,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                 }}
                 onColumnResized={onColumnResized}
                 onFirstDataRendered={onFirstDataRendered}
-                suppressContextMenu={true}
+                suppressContextMenu
             />
         </div>
     );

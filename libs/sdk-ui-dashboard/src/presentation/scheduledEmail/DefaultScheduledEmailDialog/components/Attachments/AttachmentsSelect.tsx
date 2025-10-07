@@ -12,8 +12,11 @@ import {
     IAlignPoint,
     Message,
     UiIconButton,
+    UiTooltip,
     isEscapeKey,
 } from "@gooddata/sdk-ui-kit";
+
+import { AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID } from "../../../../constants/automations.js";
 
 export const widgetAttachmentLabels: Record<WidgetAttachmentType, ReactNode> = {
     PNG: <FormattedMessage id="scheduledEmail.attachmentFormat.widget.png" />,
@@ -83,32 +86,43 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
 
     const isDirty = !areAttachmentsEqual<T>(attachments, initialAttachments);
 
+    const dialogTitle = intl.formatMessage({
+        id: "dialogs.automation.attachments.add",
+    });
+
     return (
         <>
             <Dropdown
                 closeOnParentScroll
                 overlayPositionType="sameAsTarget"
                 alignPoints={DROPDOWN_ALIGN_POINTS}
-                autofocusOnOpen={true}
+                autofocusOnOpen
                 onOpenStateChanged={(isOpen) => {
                     if (!isOpen) {
                         setAttachments(initialAttachments);
                     }
                 }}
                 renderButton={({ toggleDropdown, buttonRef }) => (
-                    <UiIconButton
-                        icon="plus"
-                        label={intl.formatMessage({
-                            id: "dialogs.automation.filters.add",
-                        })}
-                        onClick={toggleDropdown}
-                        variant="popout"
-                        ref={buttonRef as RefObject<HTMLButtonElement>}
+                    <UiTooltip
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                        content={dialogTitle}
+                        anchor={
+                            <UiIconButton
+                                icon="plus"
+                                label={dialogTitle}
+                                onClick={toggleDropdown}
+                                variant="popout"
+                                ref={buttonRef as RefObject<HTMLButtonElement>}
+                            />
+                        }
                     />
                 )}
                 renderBody={({ closeDropdown }) => (
                     <div
                         className="gd-attachment-settings-dropdown"
+                        role="dialog"
+                        aria-labelledby={AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID}
                         onKeyDown={(e) => {
                             if (isEscapeKey(e)) {
                                 e.stopPropagation();
@@ -116,8 +130,8 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                             }
                         }}
                     >
-                        <div className="gd-list-title">
-                            <FormattedMessage id="dialogs.schedule.management.attachments.title" />
+                        <div className="gd-list-title" id={AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID}>
+                            {dialogTitle}
                             <div className="gd-close-button">
                                 <Button
                                     className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"

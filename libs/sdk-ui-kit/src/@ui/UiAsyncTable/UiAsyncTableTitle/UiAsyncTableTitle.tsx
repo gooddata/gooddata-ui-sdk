@@ -51,7 +51,7 @@ const useAsyncTableTitle = (
         return onSearch ? (
             <div className={e("title-search")}>
                 <Input
-                    isSearch={true}
+                    isSearch
                     type="search"
                     clearOnEsc
                     placeholder={placeholder}

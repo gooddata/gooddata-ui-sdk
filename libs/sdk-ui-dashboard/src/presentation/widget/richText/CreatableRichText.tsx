@@ -12,7 +12,7 @@ export function CreatableRichText(props: ICreatePanelItemComponentProps) {
     const { WrapCreatePanelItemWithDragComponent } = props;
 
     return (
-        <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
+        <BubbleHoverTrigger eventsOnBubble className="s-add-kpi-bubble-trigger">
             <DraggableRichTextCreatePanelItem
                 CreatePanelItemComponent={AddRichTextWidgetButton}
                 WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}

@@ -73,7 +73,7 @@ export function UserDetailsView({ user, isAdmin, isBootstrapUser, mode, onChange
                 labelText={intl.formatMessage(messages.userId)}
                 value={user.login}
                 mode={mode}
-                disabled={true}
+                disabled
                 onChange={() => {}}
             />
         </div>

@@ -161,7 +161,7 @@ export function List<T>(props: IListProps<T>): ReactElement {
                 onScrollEnd={handleScrollEnd}
                 scrollToRow={scrollToItemRowIndex}
                 touchScrollEnabled={isTouchDevice()}
-                keyboardScrollEnabled={true}
+                keyboardScrollEnabled
             >
                 <Column
                     flexGrow={1}

@@ -25,7 +25,7 @@ export function UiAsyncTableCheckbox({
         >
             <UiCheckbox
                 checked={checked}
-                preventDefault={true}
+                preventDefault
                 indeterminate={indeterminate}
                 disabled={disabled}
                 accessibilityConfig={ariaLabel ? { ariaLabel } : undefined}

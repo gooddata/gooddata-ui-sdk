@@ -60,7 +60,7 @@ export const MultiSelectListItem = memo(function MultiSelectListItem({
     return (
         <div className={classNames} onClick={onClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
             <label className="input-checkbox-label">
-                <input type="checkbox" className="input-checkbox" readOnly={true} checked={isSelected} />
+                <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
                 <span className="input-label-text">{title}</span>
             </label>
             {renderOnly()}

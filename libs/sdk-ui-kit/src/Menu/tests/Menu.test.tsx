@@ -132,12 +132,12 @@ describe("Menu snapshot", () => {
         snapshotComponentAndPortalTarget(
             <Menu
                 toggler={<Toggler />}
-                opened={true}
+                opened
                 openAction="click"
                 spacing={16}
                 offset={-8}
                 alignment={["left", "top"]}
-                closeOnScroll={true}
+                closeOnScroll
             >
                 <MenuContent />
             </Menu>,
@@ -146,10 +146,10 @@ describe("Menu snapshot", () => {
 
     it("should match snapshot of nested menus", () => {
         snapshotComponentAndPortalTarget(
-            <Menu toggler={<Toggler />} opened={true}>
+            <Menu toggler={<Toggler />} opened>
                 <MenuItem />
                 <MenuItem />
-                <SubMenu toggler={<Toggler />} opened={true}>
+                <SubMenu toggler={<Toggler />} opened>
                     <MenuItem />
                     <MenuItem />
                 </SubMenu>
@@ -164,7 +164,7 @@ describe("Menu snapshot", () => {
         document.body.appendChild(portalTarget);
 
         snapshotComponentAndPortalTarget(
-            <Menu toggler={<Toggler />} opened={true} portalTarget={portalTarget}>
+            <Menu toggler={<Toggler />} opened portalTarget={portalTarget}>
                 <MenuContent />
             </Menu>,
             portalTarget,

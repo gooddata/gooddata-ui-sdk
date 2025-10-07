@@ -4,6 +4,7 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { ASYNC_TABLE_FILTER_LABEL_ID } from "./constants.js";
 import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
@@ -12,7 +13,6 @@ import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
-import { ASYNC_TABLE_FILTER_LABEL_ID } from "./constants.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
     const { hasContent, renderBulkActions, renderFilters, renderSearch, renderCheckbox } =
@@ -99,9 +99,9 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         return onSearch ? (
             <div className={e("toolbar-search")}>
                 <Input
-                    isSearch={true}
+                    isSearch
                     type="search"
-                    isSmall={true}
+                    isSmall
                     clearOnEsc
                     placeholder={placeholder}
                     accessibilityConfig={{

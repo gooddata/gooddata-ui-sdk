@@ -33,7 +33,7 @@ export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDe
                 labelText={intl.formatMessage(messages.userGroupId)}
                 value={userGroup.id}
                 mode={mode}
-                disabled={true}
+                disabled
                 onChange={() => {}}
             />
         </div>

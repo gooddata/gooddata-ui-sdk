@@ -197,8 +197,8 @@ export function DefaultMenuButton(props: IMenuButtonProps): ReactElement | null 
                 alignTo={`.${dropdownAnchorClassName}`}
                 alignPoints={overlayAlignPoints}
                 className="gd-header-menu-overlay"
-                closeOnMouseDrag={true}
-                closeOnOutsideClick={true}
+                closeOnMouseDrag
+                closeOnOutsideClick
                 onClose={onMenuButtonClick}
             >
                 <UiFocusManager enableAutofocus enableFocusTrap enableReturnFocusOnUnmount>
@@ -356,7 +356,7 @@ function MenuItem({
                 key={menuItem.itemId}
                 title={menuItem.itemName}
                 icon={menuItem.icon}
-                isMenu={true}
+                isMenu
                 onClick={
                     menuItem.disabled
                         ? undefined

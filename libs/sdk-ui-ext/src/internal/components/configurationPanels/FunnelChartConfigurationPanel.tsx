@@ -42,7 +42,7 @@ export default class FunnelChartConfigurationPanel extends ConfigurationPanelCon
                             isDisabled={controlsDisabled}
                             defaultValue="auto"
                             enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
-                            enablePercentLabels={true}
+                            enablePercentLabels
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

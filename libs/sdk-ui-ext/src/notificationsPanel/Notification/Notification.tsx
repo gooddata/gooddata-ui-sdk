@@ -310,7 +310,7 @@ function NotificationTime({ config }: { config: IDateConfig }) {
 
 function FileLink({ notification }: { notification: IAlertNotification | IScheduleNotification }) {
     return (
-        <BubbleHoverTrigger eventsOnBubble={true}>
+        <BubbleHoverTrigger eventsOnBubble>
             <a
                 href={notification.details.data.automation.dashboardURL}
                 onClick={(e) => e.stopPropagation()}
@@ -339,7 +339,7 @@ function FileExpiration({ fileExpiresAt, isExpired }: { fileExpiresAt: string; i
         );
     }
     return (
-        <BubbleHoverTrigger eventsOnBubble={true}>
+        <BubbleHoverTrigger eventsOnBubble>
             <span>
                 <FormattedMessage
                     id="notifications.panel.expiresOn"

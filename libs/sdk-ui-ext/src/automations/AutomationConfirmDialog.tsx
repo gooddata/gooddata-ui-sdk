@@ -136,7 +136,7 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
 
     return (
         <ConfirmDialog
-            displayCloseButton={true}
+            displayCloseButton
             isPositive={false}
             headline={getHeadline()}
             cancelButtonText={intl.formatMessage(messages.confirmDialogButtonCancel)}

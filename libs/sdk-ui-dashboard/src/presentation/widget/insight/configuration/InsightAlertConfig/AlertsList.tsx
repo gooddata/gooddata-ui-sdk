@@ -167,7 +167,7 @@ export function AlertsList({
 function LoadingSkeletonItem() {
     return (
         <div className="gd-react-loading-skeleton-wrapper">
-            <Skeleton className="gd-react-loading-skeleton" circle={true} width={27} height={27} />
+            <Skeleton className="gd-react-loading-skeleton" circle width={27} height={27} />
             <Skeleton
                 containerClassName="skeleton-flex skeleton-margin"
                 className="gd-react-loading-skeleton"

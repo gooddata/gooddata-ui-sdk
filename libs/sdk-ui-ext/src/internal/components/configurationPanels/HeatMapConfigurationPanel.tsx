@@ -40,7 +40,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         id="xaxis_section"
                         title={messages["xaxisTitle"].id}
                         valuePath="xaxis.visible"
-                        canBeToggled={true}
+                        canBeToggled
                         toggledOn={xAxisVisible}
                         toggleDisabled={xAxisDisabled}
                         showDisabledMessage={!controlsDisabled && xAxisDisabled}
@@ -68,7 +68,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         id="yaxis_section"
                         title={messages["yaxisTitle"].id}
                         valuePath="yaxis.visible"
-                        canBeToggled={true}
+                        canBeToggled
                         toggledOn={yAxisVisible}
                         toggleDisabled={yAxisDisabled}
                         showDisabledMessage={!controlsDisabled && yAxisDisabled}

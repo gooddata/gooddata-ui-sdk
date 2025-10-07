@@ -25,14 +25,14 @@ describe("ArrowButton", () => {
 
     describe("when disabled", () => {
         it("should disable the button", () => {
-            render(<ArrowButton onClick={() => {}} arrowDirection="increment" disabled={true} />);
+            render(<ArrowButton onClick={() => {}} arrowDirection="increment" disabled />);
 
             expect(screen.getByRole("button", { hidden: true })).toBeDisabled();
         });
 
         it("should not call the onClick handler when clicked", () => {
             const onClick = vi.fn();
-            render(<ArrowButton onClick={onClick} arrowDirection="increment" disabled={true} />);
+            render(<ArrowButton onClick={onClick} arrowDirection="increment" disabled />);
 
             fireEvent.click(screen.getByRole("button", { hidden: true }));
 

@@ -376,7 +376,7 @@ export function DialogComponent(props: { state: Partial<KdaState> }) {
                     }
                 >
                     <KdaStateProvider value={props.state}>
-                        <KdaDialog showCloseButton={true} onClose={action("onClose")} />
+                        <KdaDialog showCloseButton onClose={action("onClose")} />
                     </KdaStateProvider>
                 </KdaStoreProvider>
             </IntlWrapper>

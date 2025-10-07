@@ -236,7 +236,7 @@ function VisualizationContentsComponentCore({
                 status: "SUCCESSFUL",
             }),
         );
-    }, [dispatch, visualization.id, messageId]);
+    }, [dispatch, visualization?.id, messageId]);
 
     const handleSdkError = useCallback(
         (error: GoodDataSdkError) => {
@@ -282,7 +282,7 @@ function VisualizationContentsComponentCore({
                     break;
             }
         },
-        [dispatch, visualization.id, messageId],
+        [dispatch, visualization?.id, messageId],
     );
 
     const handleLoadingChanged: OnLoadingChanged = useCallback(({ isLoading }) => {
@@ -296,8 +296,8 @@ function VisualizationContentsComponentCore({
                 alignTo={`.${dropdownAnchorClassName}`}
                 alignPoints={overlayAlignPoints}
                 className="gd-gen-ai-chat__visualization__menu_overlay"
-                closeOnMouseDrag={true}
-                closeOnOutsideClick={true}
+                closeOnMouseDrag
+                closeOnOutsideClick
                 onClose={() => setMenuButtonOpen(false)}
             >
                 <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
@@ -340,36 +340,38 @@ function VisualizationContentsComponentCore({
                         },
                     )}
                 >
-                    {config.canAnalyze
+                    {config.canAnalyze && !hasVisError
                         ? (() => {
                               return (
                                   <div className={cx("gd-gen-ai-chat__visualization__buttons")}>
-                                      <div className={cx("gd-gen-ai-chat__visualization__table")}>
-                                          <UiTooltip
-                                              triggerBy={["focus", "hover"]}
-                                              arrowPlacement="bottom"
-                                              anchor={
-                                                  <UiIconButton
-                                                      dataTestId="gen-ai-visualization-toggle-button"
-                                                      onClick={() => {
-                                                          setIsTable(!isTable);
-                                                      }}
-                                                      icon={isTable ? "visualization" : "table"}
-                                                      accessibilityConfig={{
-                                                          role: "button",
-                                                          ariaLabel: isTable
-                                                              ? toggleButtonOriginalTooltipText
-                                                              : toggleButtonTableTooltipText,
-                                                      }}
-                                                  />
-                                              }
-                                              content={
-                                                  isTable
-                                                      ? toggleButtonOriginalTooltipText
-                                                      : toggleButtonTableTooltipText
-                                              }
-                                          />
-                                      </div>
+                                      {visualization.visualizationType === "TABLE" ? null : (
+                                          <div className={cx("gd-gen-ai-chat__visualization__table")}>
+                                              <UiTooltip
+                                                  triggerBy={["focus", "hover"]}
+                                                  arrowPlacement="bottom"
+                                                  anchor={
+                                                      <UiIconButton
+                                                          dataTestId="gen-ai-visualization-toggle-button"
+                                                          onClick={() => {
+                                                              setIsTable(!isTable);
+                                                          }}
+                                                          icon={isTable ? "visualization" : "table"}
+                                                          accessibilityConfig={{
+                                                              role: "button",
+                                                              ariaLabel: isTable
+                                                                  ? toggleButtonOriginalTooltipText
+                                                                  : toggleButtonTableTooltipText,
+                                                          }}
+                                                      />
+                                                  }
+                                                  content={
+                                                      isTable
+                                                          ? toggleButtonOriginalTooltipText
+                                                          : toggleButtonTableTooltipText
+                                                  }
+                                              />
+                                          </div>
+                                      )}
                                       <div
                                           id={MORE_MENU_BUTTON_ID}
                                           className={cx(
@@ -385,8 +387,8 @@ function VisualizationContentsComponentCore({
                                                   <UiIconButton
                                                       dataTestId="gen-ai-visualization-menu-button"
                                                       onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                                      icon="ellipsisVertical"
-                                                      isDisabled={hasVisError || visLoading}
+                                                      icon="ellipsis"
+                                                      isDisabled={visLoading}
                                                       accessibilityConfig={{
                                                           role: "button",
                                                           ariaLabel: moreButtonTooltipText,
@@ -414,7 +416,7 @@ function VisualizationContentsComponentCore({
                     <div
                         className={cx(
                             "gd-gen-ai-chat__visualization__wrapper",
-                            `gd-gen-ai-chat__visualization__wrapper--${visualization.visualizationType.toLowerCase()}`,
+                            `gd-gen-ai-chat__visualization__wrapper--${isTable ? "table" : visualization.visualizationType.toLowerCase()}`,
                         )}
                     >
                         <VisualizationErrorBoundary>

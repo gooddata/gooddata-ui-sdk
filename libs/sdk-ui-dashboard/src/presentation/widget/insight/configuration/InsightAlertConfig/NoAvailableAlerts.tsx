@@ -37,7 +37,7 @@ export function NoAvailableMeasures({ onClose, onBack }: INoAvailableMeasuresPro
                     <AddButton
                         title={<FormattedMessage id="insightAlert.config.addAlert" />}
                         className="gd-alerts-list__add-button"
-                        isDisabled={true}
+                        isDisabled
                     />
                 </div>
             </div>

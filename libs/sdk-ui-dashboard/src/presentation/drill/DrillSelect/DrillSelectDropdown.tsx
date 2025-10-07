@@ -172,12 +172,7 @@ export function DrillSelectDropdown({
 
     return (
         <div className="gd-drill-modal-picker-overlay-mask">
-            <Overlay
-                closeOnOutsideClick={true}
-                closeOnEscape={true}
-                alignTo={`.${dropDownAnchorClass}`}
-                onClose={onClose}
-            >
+            <Overlay closeOnOutsideClick closeOnEscape alignTo={`.${dropDownAnchorClass}`} onClose={onClose}>
                 <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
                     <div
                         onScroll={stopPropagation}

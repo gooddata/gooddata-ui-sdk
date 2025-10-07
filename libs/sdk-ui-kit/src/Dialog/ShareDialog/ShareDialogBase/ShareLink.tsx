@@ -53,7 +53,7 @@ export function ShareLink({
             <Input
                 value={shareLink}
                 type="url"
-                readonly={true}
+                readonly
                 iconButton="copy"
                 onIconButtonClick={onIconButtonClick}
                 iconButtonLabel={buttonLabel}

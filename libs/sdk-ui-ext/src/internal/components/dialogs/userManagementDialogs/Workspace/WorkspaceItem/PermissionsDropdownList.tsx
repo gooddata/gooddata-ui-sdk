@@ -100,12 +100,12 @@ export function PermissionsDropdownList({
             alignTo={alignTo}
             alignPoints={overlayAlignPoints}
             className="s-user-management-permissions-overlay"
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
+            closeOnMouseDrag
+            closeOnOutsideClick
+            closeOnParentScroll
             onClose={toggleDropdown}
         >
-            <ItemsWrapper smallItemsSpacing={true}>
+            <ItemsWrapper smallItemsSpacing>
                 {items.map((permissionItem) => {
                     return (
                         <PermissionDropdownItem

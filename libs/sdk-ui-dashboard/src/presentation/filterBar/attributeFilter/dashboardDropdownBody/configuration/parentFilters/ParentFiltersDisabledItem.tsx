@@ -55,8 +55,8 @@ export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps
                     <input
                         type="checkbox"
                         className="input-checkbox s-checkbox"
-                        readOnly={true}
-                        disabled={true}
+                        readOnly
+                        disabled
                         checked={false}
                     />
                     <span className="input-label-text">{itemTitle}</span>

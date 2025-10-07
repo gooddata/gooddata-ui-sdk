@@ -254,7 +254,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                             weekStart={weekStart}
                             availableGranularities={availableGranularities}
                             withoutApply={withoutApply}
-                            isRedesigned={true}
+                            isRedesigned
                         />
                     ) : (
                         <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>

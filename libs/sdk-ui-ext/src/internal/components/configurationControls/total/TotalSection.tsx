@@ -51,11 +51,11 @@ function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
             propertiesMeta={propertiesMeta}
             properties={properties}
             pushData={pushData}
-            canBeToggled={true}
+            canBeToggled
             toggleDisabled={isToggleDisabled}
             toggledOn={isTotalEnabled}
             valuePath="total.enabled"
-            showDisabledMessage={true}
+            showDisabledMessage
             toggleMessageId={toggleMessageId}
         >
             <InputControl

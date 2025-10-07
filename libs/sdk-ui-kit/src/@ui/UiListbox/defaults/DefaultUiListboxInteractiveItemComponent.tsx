@@ -42,7 +42,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
                     content={item.tooltip}
                     triggerBy={["hover", "focus"]}
                     arrowPlacement="left"
-                    optimalPlacement={true}
+                    optimalPlacement
                     width={200}
                 />
             ) : null}

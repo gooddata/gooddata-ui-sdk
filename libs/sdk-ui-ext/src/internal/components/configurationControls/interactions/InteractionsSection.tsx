@@ -71,7 +71,7 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
                         disabled={areControlsDisabledGetter("interactions.alerts")}
                         checked={!isAlertsDisabled}
                         pushData={pushData}
-                        isValueInverted={true}
+                        isValueInverted
                     />
                     <QuestionMarkTooltip tooltipText={messages["interactionsAlertsTooltip"].id} />
                 </div>
@@ -85,7 +85,7 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
                         disabled={areControlsDisabledGetter("interactions.scheduled_exports")}
                         checked={!isScheduledExportsDisabled}
                         pushData={pushData}
-                        isValueInverted={true}
+                        isValueInverted
                     />
                     <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id} />
                 </div>
@@ -99,7 +99,7 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
                     disabled={areControlsDisabledGetter("interactions.drill_down")}
                     checked={!isDrillDownDisabled}
                     pushData={pushData}
-                    isValueInverted={true}
+                    isValueInverted
                 />
             ) : null}
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}

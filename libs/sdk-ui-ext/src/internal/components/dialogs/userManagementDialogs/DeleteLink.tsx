@@ -34,7 +34,7 @@ export function DeleteLink(props: IDeleteLinkProps) {
             ) : (
                 <DisabledLinKWithBubble
                     {...props}
-                    showBubble={true}
+                    showBubble
                     bubbleTextId={disabledLinkTooltipTextId}
                     alignPoints={alignPoints}
                 />

@@ -32,12 +32,12 @@ export function OrganizationMemberDropdown({
                 alignTo=".gd-user-management-dialog-detail-organization-membership"
                 alignPoints={overlayAlignPoints}
                 className="s-user-management-user-permissions-overlay"
-                closeOnMouseDrag={true}
-                closeOnOutsideClick={true}
-                closeOnParentScroll={true}
+                closeOnMouseDrag
+                closeOnOutsideClick
+                closeOnParentScroll
                 onClose={closeDropdown}
             >
-                <ItemsWrapper smallItemsSpacing={true}>
+                <ItemsWrapper smallItemsSpacing>
                     <div
                         onClick={() => {
                             onChange(true);

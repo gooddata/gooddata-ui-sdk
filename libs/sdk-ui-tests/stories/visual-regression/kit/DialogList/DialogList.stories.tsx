@@ -65,7 +65,7 @@ function DialogListLoadingExample() {
             <div className="screenshot-target">
                 <h4>Dialog list loading</h4>
                 <Wrapper>
-                    <DialogList items={[]} isLoading={true} />
+                    <DialogList items={[]} isLoading />
                 </Wrapper>
             </div>
         </div>

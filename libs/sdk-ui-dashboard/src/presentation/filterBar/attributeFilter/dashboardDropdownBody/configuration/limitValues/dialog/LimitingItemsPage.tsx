@@ -89,7 +89,7 @@ export function LimitingItemsPage({
                 <DropdownList
                     width={250}
                     isMobile={false}
-                    showSearch={true}
+                    showSearch
                     onSearch={onItemSearch}
                     searchPlaceholder={intl.formatMessage(
                         messages.filterAddValuesLimitPopupSearchPlaceholder,

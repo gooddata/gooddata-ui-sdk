@@ -50,9 +50,9 @@ export function DrillOriginSelector(props: IDrillOriginSelectorProps) {
     return (
         <Dropdown
             className="gd-drill-origin-selector"
-            closeOnParentScroll={true}
+            closeOnParentScroll
             closeOnMouseDrag={false}
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignPoints={DROPDOWN_ALIGN_POINTS}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton

@@ -42,8 +42,8 @@ export function AddUserGroup({
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-add-user-group"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={addedUserGroups.length === 0 || isProcessing}
             showProgressIndicator={isProcessing}
             headline={intl.formatMessage(messages.addUserGroupDialogTitle)}

@@ -141,7 +141,7 @@ export function TitleWithPreSelectedElementsPositiveAttributefilter() {
                     ],
                 })}
                 onApply={action("on-apply")}
-                titleWithSelection={true}
+                titleWithSelection
             />
         </div>
     );
@@ -170,7 +170,7 @@ export function TitleWithPreSelectedElementsNegativeAttributefilter() {
                     ],
                 })}
                 onApply={action("on-apply")}
-                titleWithSelection={true}
+                titleWithSelection
             />
         </div>
     );
@@ -263,7 +263,7 @@ export function SingleSelectionFilter() {
                 })}
                 onApply={action("on-apply")}
                 selectionMode="single"
-                titleWithSelection={true}
+                titleWithSelection
                 fullscreenOnMobile
             />
         </div>
@@ -290,7 +290,7 @@ export const SingleSelectionFilterThemed = () =>
                 })}
                 onApply={action("on-apply")}
                 selectionMode="single"
-                titleWithSelection={true}
+                titleWithSelection
                 fullscreenOnMobile
             />
         </div>,
@@ -314,7 +314,7 @@ export function FilterWithDisplayAsLabel() {
                 filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                 onApply={action("on-apply")}
                 displayAsLabel={ReferenceMd.UserId.UserName.attribute.displayForm}
-                titleWithSelection={true}
+                titleWithSelection
             />
         </div>
     );

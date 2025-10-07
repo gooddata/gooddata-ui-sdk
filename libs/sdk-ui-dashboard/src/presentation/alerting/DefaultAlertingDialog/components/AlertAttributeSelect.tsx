@@ -237,7 +237,7 @@ export function AlertAttributeSelect({
             ) : null}
             <div className="gd-alert-attribute-select">
                 <Dropdown
-                    autofocusOnOpen={true}
+                    autofocusOnOpen
                     closeOnParentScroll={closeOnParentScroll}
                     renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                         const buttonValue = selectedAttribute
@@ -275,7 +275,7 @@ export function AlertAttributeSelect({
                             onSelect={(item) => {
                                 handleUiMenuSelect(item);
                             }}
-                            shouldCloseOnSelect={true}
+                            shouldCloseOnSelect
                             onClose={closeDropdown}
                             InteractiveItem={CustomInteractiveItem}
                             StaticItem={CustomStaticItem}

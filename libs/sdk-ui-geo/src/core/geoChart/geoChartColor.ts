@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEmpty, range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";

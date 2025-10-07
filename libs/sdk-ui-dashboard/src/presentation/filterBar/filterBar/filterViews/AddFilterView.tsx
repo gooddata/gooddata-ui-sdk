@@ -42,12 +42,12 @@ export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
                 <div className="configuration-category">
                     <Input
                         value={name}
-                        isSmall={true}
+                        isSmall
                         onChange={onInputChange}
                         label={intl.formatMessage({ id: "filters.filterViews.add.nameLabel" })}
                         placeholder={intl.formatMessage({ id: "filters.filterViews.add.namePlaceholder" })}
                         onEnterKeyPress={handleSave}
-                        autofocus={true}
+                        autofocus
                     />
                     <div className="gd-filter-view-add-checkbox-row">
                         <Checkbox

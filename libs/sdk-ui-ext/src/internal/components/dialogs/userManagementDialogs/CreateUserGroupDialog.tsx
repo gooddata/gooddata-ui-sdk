@@ -59,17 +59,12 @@ function CreateUserGroupDialogComponent({
     const onChange = (value: string | number) => setUserGroupName(String(value));
 
     return (
-        <Overlay
-            alignPoints={alignPoints}
-            isModal={true}
-            positionType="fixed"
-            className="gd-user-management-dialog"
-        >
+        <Overlay alignPoints={alignPoints} isModal positionType="fixed" className="gd-user-management-dialog">
             <ConfirmDialogBase
                 onSubmit={onSubmit}
                 isSubmitDisabled={userGroupName === "" || isProcessing}
                 onCancel={onCancel}
-                isPositive={true}
+                isPositive
                 className="s-user-management-create-group-dialog gd-user-management-create-dialog"
                 headline={intl.formatMessage(messages.createUserGroupDialogTitle)}
                 submitButtonText={intl.formatMessage(messages.createUserGroupButton)}
@@ -79,7 +74,7 @@ function CreateUserGroupDialogComponent({
                 <Input
                     value={userGroupName}
                     onChange={onChange}
-                    autofocus={true}
+                    autofocus
                     placeholder={intl.formatMessage(messages.createUserGroupInputPlaceholder)}
                     className="gd-user-management-create-user-group-input s-group-name-input"
                 />

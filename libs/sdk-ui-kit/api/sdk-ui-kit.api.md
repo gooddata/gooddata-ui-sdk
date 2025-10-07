@@ -54,6 +54,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { KeyboardEvent as KeyboardEvent_2 } from 'react';
+import { KeyboardEventHandler } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
@@ -4835,6 +4836,8 @@ export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
 // @internal (undocumented)
 export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
     // (undocumented)
+    deleteAriaDescribedBy?: string;
+    // (undocumented)
     deleteAriaLabel?: string;
 }
 
@@ -6211,7 +6214,7 @@ export interface UiCheckboxProps {
 }
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -6242,7 +6245,9 @@ export interface UiChipProps {
     // (undocumented)
     onDelete?: () => void;
     // (undocumented)
-    onDeleteKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
+    onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
+    // (undocumented)
+    onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     // (undocumented)
     renderChipContent?: (content: ReactNode) => ReactNode;
     // (undocumented)

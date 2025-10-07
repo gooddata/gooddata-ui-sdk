@@ -111,7 +111,7 @@ function renderCategoryAndSizeLegend(
     const { hasSizeLegend } = availableLegends;
     const classNames = cx(getClassnames(props, availableLegends));
     return (
-        <Measure client={true}>
+        <Measure client>
             {({ measureRef, contentRect: contentRectLegend }: MeasuredComponentProps) => {
                 if (shouldRenderCircleLegendInsidePopUp(contentRect?.client?.width, renderPopUp)) {
                     return (

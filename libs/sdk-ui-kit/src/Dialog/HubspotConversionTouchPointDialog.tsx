@@ -24,9 +24,9 @@ export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouch
 
     return (
         <Dialog
-            displayCloseButton={true}
+            displayCloseButton
             onCancel={props.onClose}
-            submitOnEnterKey={true}
+            submitOnEnterKey
             onSubmit={onDialogSubmit}
             className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
             accessibilityConfig={{ titleElementId }}

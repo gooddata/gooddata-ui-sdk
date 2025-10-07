@@ -136,7 +136,7 @@ function UiTagsExamples() {
                 <Example title="Basic Tags, one line, limited width, 13 small tags, readonly">
                     <div style={{ width: 300 }}>
                         <UiTags
-                            readOnly={true}
+                            readOnly
                             tags={smallTags}
                             onTagAdd={action("onTagAdd")}
                             onTagRemove={action("onTagRemove")}

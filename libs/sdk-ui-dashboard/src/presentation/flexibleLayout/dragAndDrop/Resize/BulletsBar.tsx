@@ -23,7 +23,7 @@ export function BulletsBar() {
         <div
             className={b({ active: isActive })}
             style={{ "--columns-num": columnsNum } as CSSProperties}
-            aria-hidden={true}
+            aria-hidden
         >
             <div className={e("grid")}>
                 {Array.from({ length: columnsNum }).map((_, index) => (

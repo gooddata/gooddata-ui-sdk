@@ -158,7 +158,7 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>(props: ISty
                 onExit(nameField, definitionField);
                 onClose();
             }}
-            displayCloseButton={true}
+            displayCloseButton
             submitOnEnterKey={false}
             accessibilityConfig={{ titleElementId }}
         >

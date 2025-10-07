@@ -23,7 +23,7 @@ function SimpleSettingWidgetTest() {
             <div className="library-component screenshot-target">
                 <SimpleSettingWidget
                     onSubmit={() => {}}
-                    isLoading={true}
+                    isLoading
                     title={"Component title"}
                     currentSettingStatus={"Status"}
                     titleTooltip={"Tooltip"}

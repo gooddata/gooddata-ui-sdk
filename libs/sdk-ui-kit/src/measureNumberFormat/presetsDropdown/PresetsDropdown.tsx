@@ -61,9 +61,9 @@ export const PresetsDropdown = memo(function PresetsDropdown(props: IMeasureNumb
 
     return (
         <Overlay
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
+            closeOnOutsideClick
+            closeOnParentScroll
+            closeOnMouseDrag
             alignTo={anchorEl}
             alignPoints={useMemo(() => positioningToAlignPoints(positioning!), [positioning])} // positioning is declared in defaultProps so it is always defined
             onClose={onClose}

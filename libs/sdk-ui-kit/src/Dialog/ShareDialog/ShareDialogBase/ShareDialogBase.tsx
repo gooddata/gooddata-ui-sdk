@@ -66,12 +66,7 @@ export function ShareDialogBase(props: IShareDialogBaseProps) {
     const previouslyFocusedRef = useRef<HTMLElement>(document.activeElement as HTMLHtmlElement);
 
     return (
-        <Overlay
-            alignPoints={alignPoints}
-            isModal={true}
-            positionType="fixed"
-            className="gd-share-dialog-overlay"
-        >
+        <Overlay alignPoints={alignPoints} isModal positionType="fixed" className="gd-share-dialog-overlay">
             <div className="s-gd-share-dialog">
                 {dialogMode === "ShareGrantee" ? (
                     <ShareGranteeBase

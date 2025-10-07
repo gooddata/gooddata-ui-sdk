@@ -92,7 +92,7 @@ export function ConfigurationBubble(props: IConfigurationBubbleProps) {
             onClose={onClose}
             closeOnEscape={closeOnEscape}
             overlayPositionType={overlayPositionType}
-            ensureVisibility={true}
+            ensureVisibility
         >
             {children}
         </Bubble>

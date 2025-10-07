@@ -95,9 +95,9 @@ export function HeaderMenu(props: IHeaderMenuProps) {
             <Dropdown
                 isOpen={isMenuOpened}
                 onToggle={handleToggle}
-                closeOnEscape={true}
-                closeOnOutsideClick={true}
-                closeOnParentScroll={true}
+                closeOnEscape
+                closeOnOutsideClick
+                closeOnParentScroll
                 overlayPositionType="sameAsTarget"
                 alignPoints={[
                     { align: "bl tl", offset: { x: -10, y: 16 } },

@@ -195,9 +195,9 @@ export function GranularPermissionsDropdownBody({
             alignTo={`.${alignTo}`}
             alignPoints={overlayAlignPoints}
             className="s-granular-permissions-overlay"
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
+            closeOnMouseDrag
+            closeOnOutsideClick
+            closeOnParentScroll
             onClose={toggleDropdown}
         >
             <div
@@ -207,7 +207,7 @@ export function GranularPermissionsDropdownBody({
                 onKeyDown={handleKeyDown}
                 role="listbox"
             >
-                <ItemsWrapper smallItemsSpacing={true}>
+                <ItemsWrapper smallItemsSpacing>
                     {granteePossibilities.assign.items.map((permissionItem) => {
                         return (
                             !permissionItem.hidden && (

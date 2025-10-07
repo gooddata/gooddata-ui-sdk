@@ -54,7 +54,7 @@ export function DeleteScheduleConfirmDialog(props: IDeleteScheduleConfirmDialogP
 
     return (
         <ConfirmDialog
-            displayCloseButton={true}
+            displayCloseButton
             isPositive={false}
             headline={intl.formatMessage({ id: "dialogs.schedule.management.delete.dialog" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}

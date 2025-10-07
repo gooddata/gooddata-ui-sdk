@@ -25,8 +25,8 @@ export function ApplyCurrentFiltersConfirmDialog(props: IApplyCurrentFiltersConf
 
     return (
         <ConfirmDialog
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             headline={intl.formatMessage(messages.title)}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage(messages.submit)}

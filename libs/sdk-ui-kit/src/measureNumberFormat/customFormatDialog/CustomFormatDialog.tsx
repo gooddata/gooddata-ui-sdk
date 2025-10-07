@@ -61,9 +61,9 @@ export const CustomFormatDialog = memo(function CustomFormatDialog({
 
     return (
         <Overlay
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnOutsideClick
             alignTo={anchorEl}
             alignPoints={positioningToAlignPoints(positioning)} // positioning is declared in defaultProps so it is always defined
             onClose={onCancel}

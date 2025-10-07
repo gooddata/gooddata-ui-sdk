@@ -65,9 +65,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         <Overlay
             alignTo={anchorEl}
             alignPoints={DROPDOWN_ALIGNMENTS}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
+            closeOnOutsideClick
+            closeOnParentScroll
+            closeOnMouseDrag
             onClose={onCancel}
         >
             <DropdownBody

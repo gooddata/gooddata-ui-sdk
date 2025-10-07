@@ -90,7 +90,7 @@ function UiListboxExamples() {
             <Example title="Listbox with Disabled Items Focusable">
                 <UiListbox
                     items={interactiveItems}
-                    isDisabledFocusable={true}
+                    isDisabledFocusable
                     onSelect={action("onSelect")}
                     ariaAttributes={defaultAriaAttributes}
                     onClose={action("onClose")}
@@ -123,7 +123,7 @@ function UiListboxExamples() {
                 <UiListbox
                     items={interactiveItemsWithIcons}
                     onSelect={action("onSelect")}
-                    isCompact={true}
+                    isCompact
                     ariaAttributes={defaultAriaAttributes}
                     onClose={action("onClose")}
                     onUnhandledKeyDown={action("onUnhandledKeyDown")}

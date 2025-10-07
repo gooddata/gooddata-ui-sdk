@@ -49,7 +49,7 @@ const ForecastSection = memo(function ForecastSection({
             title={messages["forecastTitle"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
-            canBeToggled={true}
+            canBeToggled
             toggleDisabled={toggleDisabled}
             toggledOn={forecastEnabled}
             pushData={pushData}

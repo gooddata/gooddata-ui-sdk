@@ -98,20 +98,15 @@ function ShareGranteeBaseExamples() {
                 <h4>ShareGranteeBase basic example</h4>
                 <BasicExample isDirty={false} grantees={[]} owner={owner} />
                 <h4>ShareGranteeBase isDirty</h4>
-                <BasicExample isDirty={true} grantees={grantees} owner={owner} />
+                <BasicExample isDirty grantees={grantees} owner={owner} />
                 <h4>ShareGranteeBase inactive owner</h4>
                 <BasicExample isDirty={false} grantees={[]} owner={inactiveUser} />
                 <h4>ShareGranteeBase scrollable</h4>
                 <BasicExample isDirty={false} grantees={getGrantees()} owner={owner} />
                 <h4>ShareGranteeBase locked</h4>
-                <BasicExample isDirty={false} grantees={grantees} owner={owner} isLocked={true} />
+                <BasicExample isDirty={false} grantees={grantees} owner={owner} isLocked />
                 <h4>ShareGranteeBase available for drill</h4>
-                <BasicExample
-                    isDirty={false}
-                    grantees={grantees}
-                    owner={owner}
-                    isUnderLenientControl={true}
-                />
+                <BasicExample isDirty={false} grantees={grantees} owner={owner} isUnderLenientControl />
                 <h4>ShareGranteeBase without ability to lock the object</h4>
                 <BasicExample isDirty={false} grantees={grantees} owner={owner} isLockingSupported={false} />
                 <h4>ShareGranteeBase without ability to change availability for drill</h4>

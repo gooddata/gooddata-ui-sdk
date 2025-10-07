@@ -43,7 +43,7 @@ export function ViewDialog({
     return (
         <DialogBase
             className="gd-share-dialog gd-share-dialog-add-users gd-user-management-dialog-view s-user-management-view-mode"
-            displayCloseButton={true}
+            displayCloseButton
             onClose={onClose}
             accessibilityConfig={{ titleElementId }}
         >

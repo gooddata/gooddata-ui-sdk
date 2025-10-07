@@ -40,9 +40,9 @@ export function ConnectingAttributeDropdown(props: IConnectingAttributeDropdownP
     return (
         <Dropdown
             className="connecting-attributes-dropdown s-connecting-attributes-dropdown"
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnOutsideClick
             alignPoints={ALIGN_POINTS}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton

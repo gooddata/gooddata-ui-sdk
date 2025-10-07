@@ -109,7 +109,7 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
                         <UiIcon
                             size={14}
                             type="cross"
-                            ariaHidden={true}
+                            ariaHidden
                             color={variant === "decorated" ? "complementary-0" : "complementary-6"}
                         />
                     </span>

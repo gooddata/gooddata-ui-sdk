@@ -45,9 +45,9 @@ export function AttributeDisplayFormDropdown(props: IAttributeDisplayFormDropdow
         <Dropdown
             className="gd-attribute-display-form-dropdown"
             alignPoints={alignPoints ?? ALIGN_POINTS}
-            closeOnMouseDrag={true}
-            closeOnParentScroll={true}
-            enableEventPropagation={true}
+            closeOnMouseDrag
+            closeOnParentScroll
+            enableEventPropagation
             renderButton={({ isOpen, toggleDropdown }) => (
                 <AttributeDisplayFormDropdownButton
                     text={buttonTitle}

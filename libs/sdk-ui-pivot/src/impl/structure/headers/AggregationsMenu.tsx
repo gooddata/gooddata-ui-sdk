@@ -302,7 +302,7 @@ export default function AggregationsMenu({
             opened={isMenuOpened}
             onOpenedChange={onMenuOpenedChange}
             openAction={"click"}
-            closeOnScroll={true}
+            closeOnScroll
         >
             <ItemsWrapper>
                 <div className="s-table-header-menu-content">

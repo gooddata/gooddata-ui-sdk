@@ -147,7 +147,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
                 colors={colors}
                 controlsDisabled={controlsDisabled}
                 pushData={pushData}
-                hasMeasures={true} // hasMeasures is true because Color Config is based on Attribute
+                hasMeasures // hasMeasures is true because Color Config is based on Attribute
                 isLoading={isLoading}
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={false}

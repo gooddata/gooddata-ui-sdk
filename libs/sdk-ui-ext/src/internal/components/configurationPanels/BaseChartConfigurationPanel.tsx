@@ -152,7 +152,7 @@ export default class BaseChartConfigurationPanel<
                     title={title}
                     subtitle={subtitle}
                     valuePath={`${name}.visible`}
-                    canBeToggled={true}
+                    canBeToggled
                     toggledOn={visible}
                     toggleDisabled={controlsDisabled}
                     propertiesMeta={propertiesMeta}

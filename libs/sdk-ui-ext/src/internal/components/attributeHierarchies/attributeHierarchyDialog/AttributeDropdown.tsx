@@ -38,16 +38,16 @@ function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
     return (
         <Dropdown
             className="attribute-hierarchy-attribute-dropdown s-attribute-hierarchy-attribute-dropdown"
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
-            openOnInit={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnOutsideClick
+            openOnInit
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton
                     className="attribute-heirarchy-attribute-dropdown-button s-attribute-heirarchy-attribute-dropdown-button"
                     value={chooseAttributeText}
                     isOpen={isOpen}
-                    isSmall={true}
+                    isSmall
                     onClick={toggleDropdown}
                 />
             )}

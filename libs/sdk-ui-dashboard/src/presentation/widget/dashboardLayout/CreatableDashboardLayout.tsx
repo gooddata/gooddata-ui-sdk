@@ -15,7 +15,7 @@ export function CreatableDashboardLayout(props: ICreatePanelItemComponentProps) 
     const { WrapCreatePanelItemWithDragComponent } = props;
 
     return (
-        <BubbleHoverTrigger eventsOnBubble={true} className="s-add-dashboard-layout-bubble-trigger">
+        <BubbleHoverTrigger eventsOnBubble className="s-add-dashboard-layout-bubble-trigger">
             <DraggableDashboardLayoutCreatePanelItem
                 CreatePanelItemComponent={AddDashboardLayoutWidgetButton}
                 WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}

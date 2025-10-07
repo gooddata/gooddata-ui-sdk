@@ -247,10 +247,10 @@ export function DateFilterCore({
                         return (
                             <Dropdown
                                 openOnInit={openOnInit}
-                                closeOnParentScroll={true}
-                                closeOnMouseDrag={true}
-                                closeOnOutsideClick={true}
-                                enableEventPropagation={true}
+                                closeOnParentScroll
+                                closeOnMouseDrag
+                                closeOnOutsideClick
+                                enableEventPropagation
                                 autofocusOnOpen
                                 initialFocus={initialFocus}
                                 alignPoints={[

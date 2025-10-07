@@ -65,7 +65,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                         isMultiSelect={isMultiSelect}
                                     />
                                 )}
-                                showSearch={true}
+                                showSearch
                                 searchPlaceholder={intl.formatMessage(messages["filterSearchPlaceholder"])}
                                 searchString={searchValue}
                                 onSearch={setSearchValue}

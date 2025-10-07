@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { escape, isEmpty } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
 import { IntlShape } from "react-intl";

@@ -457,7 +457,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                         <DayPicker
                             classNames={classNamesProps}
                             locale={convertLocale(intl.locale)}
-                            showOutsideDays={true}
+                            showOutsideDays
                             mode="single"
                             selected={selectedDate}
                             month={monthDate}

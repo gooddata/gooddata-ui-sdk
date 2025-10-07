@@ -93,7 +93,7 @@ function DashboardRichTextMenuRoot({ items, setSubmenu }: DashboardRichTextMenuR
 
                                 setSubmenu(item);
                             }}
-                            submenu={true}
+                            submenu
                         />
                     );
                 }

@@ -119,7 +119,7 @@ export function AddSingleWorkspaceSelect({
                     }),
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage(messages.searchWorkspacePlaceholder)}
                 onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}

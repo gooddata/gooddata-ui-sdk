@@ -63,9 +63,9 @@ function RankingFilterDropdownComponent({
 
     return (
         <Overlay
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
+            closeOnOutsideClick
+            closeOnParentScroll
+            closeOnMouseDrag
             alignTo={anchorEl}
             alignPoints={DROPDOWN_ALIGNMENTS}
             onClose={onCancel}

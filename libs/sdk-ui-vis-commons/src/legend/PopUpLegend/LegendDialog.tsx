@@ -114,7 +114,7 @@ export function LegendDialog({ name, children, isOpen, alignTo, onCloseDialog, i
                         closeOnOutsideClick={!isMobile}
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
-                        ensureVisibility={true}
+                        ensureVisibility
                         closeOnEscape
                     >
                         <LegendDialogContent title={name} onCloseDialog={onCloseDialog} id={id}>
