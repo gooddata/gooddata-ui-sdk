@@ -103,27 +103,25 @@ interface IRecipientsSelectProps {
     externalRecipientOverride?: string;
 }
 
-export function RecipientsSelect(props: IRecipientsSelectProps) {
-    const {
-        id,
-        users,
-        usersError,
-        value,
-        originalValue,
-        onChange,
-        loggedUser,
-        allowEmptySelection,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
-        maxRecipients,
-        className,
-        notificationChannels,
-        notificationChannelId,
-        showLabel = true,
-        onKeyDownSubmit,
-        externalRecipientOverride,
-    } = props;
-
+export function RecipientsSelect({
+    id,
+    users,
+    usersError,
+    value,
+    originalValue,
+    onChange,
+    loggedUser,
+    allowEmptySelection,
+    allowExternalRecipients,
+    allowOnlyLoggedUserRecipients,
+    maxRecipients,
+    className,
+    notificationChannels,
+    notificationChannelId,
+    showLabel = true,
+    onKeyDownSubmit,
+    externalRecipientOverride,
+}: IRecipientsSelectProps) {
     const [search, setSearch] = useState<string>();
 
     const notificationChannel = useMemo(() => {

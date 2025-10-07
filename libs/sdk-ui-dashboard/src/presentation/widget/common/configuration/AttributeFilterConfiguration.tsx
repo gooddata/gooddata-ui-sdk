@@ -20,8 +20,7 @@ interface IAttributeFilterConfigurationProps {
     widget: IWidget;
 }
 
-export function AttributeFilterConfiguration(props: IAttributeFilterConfigurationProps) {
-    const { widget } = props;
+export function AttributeFilterConfiguration({ widget }: IAttributeFilterConfigurationProps) {
     const attributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);

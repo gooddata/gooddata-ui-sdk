@@ -13,14 +13,18 @@ import { DashboardInsightMenuItemButton } from "../../../insightMenu/DefaultDash
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { IDashboardRichTextMenuProps, IRichTextMenuItem, IRichTextMenuSubmenu } from "../../types.js";
 
-export function DashboardRichTextMenuBody(
-    props: IDashboardRichTextMenuProps & {
-        submenu: IRichTextMenuSubmenu | null;
-        setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
-        renderMode: RenderMode;
-    },
-) {
-    const { items, widget, submenu, setSubmenu, onClose, renderMode } = props;
+export function DashboardRichTextMenuBody({
+    items,
+    widget,
+    submenu,
+    setSubmenu,
+    onClose,
+    renderMode,
+}: IDashboardRichTextMenuProps & {
+    submenu: IRichTextMenuSubmenu | null;
+    setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
+    renderMode: RenderMode;
+}) {
     const renderSubmenuComponent = submenu ? (
         <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
     ) : null;

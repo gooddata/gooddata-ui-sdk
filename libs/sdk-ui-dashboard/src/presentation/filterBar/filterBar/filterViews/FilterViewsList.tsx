@@ -201,9 +201,15 @@ export interface IFilterViewsDropdownBodyProps {
     filterViews: IDashboardFilterView[] | undefined;
     onAddNew: () => void;
     onClose: () => void;
+    titleId?: string;
 }
 
-export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilterViewsDropdownBodyProps) {
+export function FilterViewsList({
+    filterViews = [],
+    onAddNew,
+    onClose,
+    titleId: titleIdProp,
+}: IFilterViewsDropdownBodyProps) {
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
     const [filterViewToDelete, setFilterViewToDelete] = useState<IDashboardFilterView | undefined>(undefined);
@@ -212,6 +218,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
     const id = useId();
     const createViewId = `create-view-${id}`;
     const filterViewTooltipId = `filter-view-tooltip-${id}`;
+    const titleId = titleIdProp ?? `filter-views-title-${id}`;
 
     const getItemAdditionalActions = useCallback((): IAction[] => {
         if (!canCreateFilterView) {
@@ -326,7 +333,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
             <div className="configuration-panel configuration-panel__filter-view__list">
                 <div className="configuration-panel-header">
                     <div className="gd-title-with-icon">
-                        <Typography tagName="h3" className="configuration-panel-header-title">
+                        <Typography tagName="h3" className="configuration-panel-header-title" id={titleId}>
                             <FormattedMessage id="filters.filterViews.dropdown.title" />
                         </Typography>
                         <UiTooltip
@@ -398,6 +405,10 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                             size="small"
                             onClick={onAddNew}
                             disabled={!canCreateFilterView}
+                            accessibilityConfig={{
+                                ariaExpanded: false,
+                                ariaHaspopup: "dialog",
+                            }}
                         >
                             <FormattedMessage id="filters.filterViews.dropdown.newButton" />
                         </Button>

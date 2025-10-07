@@ -13,9 +13,7 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-function CustomElementsSearchBar(props: IAttributeFilterElementsSearchBarProps) {
-    const { onSearch, searchString } = props;
-
+function CustomElementsSearchBar({ onSearch, searchString }: IAttributeFilterElementsSearchBarProps) {
     return (
         <div
             style={{

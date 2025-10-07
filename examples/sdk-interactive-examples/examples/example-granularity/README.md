@@ -1,6 +1,6 @@
 # GoodData.UI SDK - Interactive Examples - Granularity
 
-This example exmplains DateFilter granularity
+This example exmplains DateFilter granularity 
 
 You can run this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx). Navigate [up](../../) for more information.
 

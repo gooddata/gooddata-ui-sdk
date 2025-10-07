@@ -32,9 +32,16 @@ const labelMessages = defineMessages({
     edit: { id: "alerting.alert.menu.edit" },
 });
 
-export function AlertDropdown(props: IAlertDropdownProps) {
-    const { isReadOnly, paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
-
+export function AlertDropdown({
+    isReadOnly,
+    paused,
+    alignTo,
+    onClose,
+    onEdit,
+    onPause,
+    onDelete,
+    onResume,
+}: IAlertDropdownProps) {
     const editItem = {
         labelIntlKey: labelMessages.edit.id,
         classNames: "s-edit-alert-button",

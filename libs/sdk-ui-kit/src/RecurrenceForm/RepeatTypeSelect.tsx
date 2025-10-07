@@ -124,17 +124,16 @@ export interface IRepeatTypeSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export function RepeatTypeSelect(props: IRepeatTypeSelectProps) {
-    const {
-        id,
-        onChange,
-        repeatType,
-        startDate = null,
-        allowHourlyRecurrence,
-        showInheritValue,
-        onRepeatDropdownOpen,
-        closeOnParentScroll,
-    } = props;
+export function RepeatTypeSelect({
+    id,
+    onChange,
+    repeatType,
+    startDate = null,
+    allowHourlyRecurrence,
+    showInheritValue,
+    onRepeatDropdownOpen,
+    closeOnParentScroll,
+}: IRepeatTypeSelectProps) {
     const intl = useIntl();
     const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence, showInheritValue);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);

@@ -116,10 +116,13 @@ function convertRelativePresets(
     );
 }
 
-function removeEmptyKeysFromDateFilterOptions(
-    dateFilterOptions: IDateFilterOptionsByType,
-): IDateFilterOptionsByType {
-    const { absoluteForm, absolutePreset, allTime, relativeForm, relativePreset } = dateFilterOptions;
+function removeEmptyKeysFromDateFilterOptions({
+    absoluteForm,
+    absolutePreset,
+    allTime,
+    relativeForm,
+    relativePreset,
+}: IDateFilterOptionsByType): IDateFilterOptionsByType {
     return {
         ...(allTime && { allTime }),
         ...(absoluteForm && { absoluteForm }),

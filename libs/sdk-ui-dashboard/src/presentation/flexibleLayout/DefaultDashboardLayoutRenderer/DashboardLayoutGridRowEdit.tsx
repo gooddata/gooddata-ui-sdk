@@ -18,22 +18,19 @@ import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());
 
-export function DashboardLayoutGridRowEdit<TWidget>(
-    props: DashboardLayoutGridRowProps<TWidget> & {
-        itemsInRowsByIndex: [number, IDashboardLayoutItemFacade<TWidget>[]][];
-    },
-): ReactElement {
-    const {
-        section,
-        itemKeyGetter = defaultItemKeyGetter,
-        gridRowRenderer,
-        itemRenderer,
-        widgetRenderer,
-        getLayoutDimensions,
-        items,
-        renderMode,
-        itemsInRowsByIndex,
-    } = props;
+export function DashboardLayoutGridRowEdit<TWidget>({
+    section,
+    itemKeyGetter = defaultItemKeyGetter,
+    gridRowRenderer,
+    itemRenderer,
+    widgetRenderer,
+    getLayoutDimensions,
+    items,
+    renderMode,
+    itemsInRowsByIndex,
+}: DashboardLayoutGridRowProps<TWidget> & {
+    itemsInRowsByIndex: [number, IDashboardLayoutItemFacade<TWidget>[]][];
+}): ReactElement {
     const screen = useScreenSize();
 
     const isDraggingWidget = useIsDraggingWidget();

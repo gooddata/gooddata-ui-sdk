@@ -27,16 +27,15 @@ export type TStylingEditorDialogFooterProps = {
 /**
  * @internal
  */
-export function StylingEditorDialogFooter(props: TStylingEditorDialogFooterProps) {
-    const {
-        link,
-        disableSubmit = false,
-        showProgressIndicator = false,
-        errorMessage,
-        onSubmit,
-        onCancel,
-        onHelpClick = () => {},
-    } = props;
+export function StylingEditorDialogFooter({
+    link,
+    disableSubmit = false,
+    showProgressIndicator = false,
+    errorMessage,
+    onSubmit,
+    onCancel,
+    onHelpClick = () => {},
+}: TStylingEditorDialogFooterProps) {
     const intl = useIntl();
 
     return (

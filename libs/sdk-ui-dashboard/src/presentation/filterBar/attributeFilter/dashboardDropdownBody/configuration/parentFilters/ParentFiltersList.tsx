@@ -30,19 +30,17 @@ interface IConfigurationParentItemsProps {
     validParents: ObjRef[];
 }
 
-export function ParentFiltersList(props: IConfigurationParentItemsProps) {
-    const {
-        parents,
-        currentFilterLocalId,
-        setParents,
-        onConnectingAttributeChanged,
-        connectingAttributes,
-        attributes,
-        disabled,
-        disabledTooltip,
-        validParents,
-    } = props;
-
+export function ParentFiltersList({
+    parents,
+    currentFilterLocalId,
+    setParents,
+    onConnectingAttributeChanged,
+    connectingAttributes,
+    attributes,
+    disabled,
+    disabledTooltip,
+    validParents,
+}: IConfigurationParentItemsProps) {
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );

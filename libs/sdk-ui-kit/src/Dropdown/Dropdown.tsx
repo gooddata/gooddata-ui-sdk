@@ -157,44 +157,43 @@ export interface IDropdownProps {
 /**
  * @internal
  */
-export function Dropdown(props: IDropdownProps) {
-    const {
-        isOpen: isOpenProp,
-        onToggle,
+export function Dropdown({
+    isOpen: isOpenProp,
+    onToggle,
 
-        className,
+    className,
 
-        openOnInit,
-        closeOnParentScroll,
-        closeOnMouseDrag,
-        closeOnOutsideClick = true,
+    openOnInit,
+    closeOnParentScroll,
+    closeOnMouseDrag,
+    closeOnOutsideClick = true,
 
-        overlayPositionType,
-        alignPoints = [
-            {
-                align: "bl tl",
-            },
-        ],
+    overlayPositionType,
+    alignPoints = [
+        {
+            align: "bl tl",
+        },
+    ],
 
-        overlayZIndex,
-        ignoreClicksOnByClass = [],
+    overlayZIndex,
+    ignoreClicksOnByClass = [],
 
-        renderBody,
-        renderButton,
+    renderBody,
+    renderButton,
 
-        onOpenStateChanged,
+    onOpenStateChanged,
 
-        fullscreenOnMobile = true,
-        enableEventPropagation = false,
-        closeOnEscape = false,
-        autofocusOnOpen = false,
-        initialFocus,
-        returnFocusTo,
+    fullscreenOnMobile = true,
+    enableEventPropagation = false,
+    closeOnEscape = false,
+    autofocusOnOpen = false,
+    initialFocus,
+    returnFocusTo,
 
-        accessibilityConfig,
+    accessibilityConfig,
 
-        shouldTrapFocus = true,
-    } = props;
+    shouldTrapFocus = true,
+}: IDropdownProps) {
     const [isOpen, setIsOpen] = usePropState(isOpenProp ?? openOnInit ?? false);
 
     const id = useId();

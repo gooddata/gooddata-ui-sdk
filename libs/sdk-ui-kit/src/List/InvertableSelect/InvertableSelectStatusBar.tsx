@@ -19,16 +19,14 @@ export interface IInvertableSelectStatusBarProps<T> {
 /**
  * @internal
  */
-export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>) {
-    const {
-        className,
-        selectedItems,
-        getItemTitle,
-        isInverted,
-        selectedItemsLimit,
-        showSelectionStatus = true,
-    } = props;
-
+export function InvertableSelectStatusBar<T>({
+    className,
+    selectedItems,
+    getItemTitle,
+    isInverted,
+    selectedItemsLimit,
+    showSelectionStatus = true,
+}: IInvertableSelectStatusBarProps<T>) {
     return (
         <>
             {showSelectionStatus ? (

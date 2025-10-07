@@ -16,9 +16,7 @@ const ALIGN_POINTS = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 /**
  * @internal
  */
-export function DateFilterConfigurationButton(props: IDateFilterConfigurationButtonProps) {
-    const { onConfiguration } = props;
-
+export function DateFilterConfigurationButton({ onConfiguration }: IDateFilterConfigurationButtonProps) {
     return (
         <div className="gd-date-filter-configuration-button s-gd-date-filter-configuration-button">
             <BubbleHoverTrigger>

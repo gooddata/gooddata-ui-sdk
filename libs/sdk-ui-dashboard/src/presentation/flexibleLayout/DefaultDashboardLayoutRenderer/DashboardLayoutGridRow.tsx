@@ -35,17 +35,16 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());
 
-export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): ReactElement {
-    const {
-        section,
-        itemKeyGetter = defaultItemKeyGetter,
-        gridRowRenderer,
-        itemRenderer,
-        widgetRenderer,
-        items,
-        renderMode,
-        rowIndex,
-    } = props;
+export function DashboardLayoutGridRow<TWidget>({
+    section,
+    itemKeyGetter = defaultItemKeyGetter,
+    gridRowRenderer,
+    itemRenderer,
+    widgetRenderer,
+    items,
+    renderMode,
+    rowIndex,
+}: DashboardLayoutGridRowProps<TWidget>): ReactElement {
     const screen = useScreenSize();
 
     const rowItems = items.map((item) => (

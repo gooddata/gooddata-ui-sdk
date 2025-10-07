@@ -8,9 +8,10 @@ import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 
-function loadPermissionsFromBackend(ctx: DashboardContext): Promise<IWorkspacePermissions> {
-    const { backend, workspace } = ctx;
-
+function loadPermissionsFromBackend({
+    backend,
+    workspace,
+}: DashboardContext): Promise<IWorkspacePermissions> {
     return backend.workspace(workspace).permissions().getPermissionsForCurrentUser();
 }
 

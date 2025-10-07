@@ -60,9 +60,7 @@ export interface PivotTableMaxMinCoreProps {
     filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
 }
 
-function PivotTableMaxMin(props: PivotTableMaxMinCoreProps) {
-    const { measures, rows, filters } = props;
-
+function PivotTableMaxMin({ measures, rows, filters }: PivotTableMaxMinCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

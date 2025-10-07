@@ -64,9 +64,13 @@ export function getElementKey(element: IAttributeElement) {
 /**
  * @internal
  */
-export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
-    const { connectToPlaceholder, filter, onApply, hiddenElements, staticElements } = props;
-
+export function validateAttributeFilterProps({
+    connectToPlaceholder,
+    filter,
+    onApply,
+    hiddenElements,
+    staticElements,
+}: IAttributeFilterBaseProps) {
     invariant(
         !(filter && connectToPlaceholder),
         "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a filter, or a placeholer.",

@@ -80,9 +80,13 @@ function PagingButton({ type, buttonsOrientation, handler, disabled }: IPagingBu
 /**
  * @internal
  */
-export function Paging(props: IPagingProps): ReactElement {
-    const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
-
+export function Paging({
+    page,
+    pagesCount,
+    buttonsOrientation = "upDown",
+    showNextPage,
+    showPrevPage,
+}: IPagingProps): ReactElement {
     return (
         <div className="paging" data-testid={"Paging"}>
             <PagingButton

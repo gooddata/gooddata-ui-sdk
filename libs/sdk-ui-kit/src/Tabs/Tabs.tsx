@@ -47,14 +47,12 @@ export interface ITabsState {
 /**
  * @internal
  */
-export function Tabs(props: ITabsProps): ReactElement {
-    const {
-        className = "",
-        onTabSelect = () => {},
-        selectedTabId: propSelectedTabId = "",
-        tabs = [] as ITab[],
-    } = props;
-
+export function Tabs({
+    className = "",
+    onTabSelect = () => {},
+    selectedTabId: propSelectedTabId = "",
+    tabs = [] as ITab[],
+}: ITabsProps): ReactElement {
     const [selectedTabId, setSelectedTabId] = useState<string>(propSelectedTabId || tabs?.[0]?.id);
 
     const selectTab = useCallback(

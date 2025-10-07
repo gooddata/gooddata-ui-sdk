@@ -41,23 +41,21 @@ export interface IRelativeRangeDynamicSelectProps {
     };
 }
 
-export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectProps) {
-    const {
-        initialIsOpen = false,
-        placeholder,
-        getItems,
-        value = null,
-        className,
-        style,
-        optionClassName,
-        visibleItemsRange = defaultVisibleItemsRange,
-        accessibilityConfig,
-        inputValue,
-        onChange = () => {},
-        onInputValueChange,
-        onBlur,
-    } = props;
-
+export function RelativeRangeDynamicSelect({
+    initialIsOpen = false,
+    placeholder,
+    getItems,
+    value = null,
+    className,
+    style,
+    optionClassName,
+    visibleItemsRange = defaultVisibleItemsRange,
+    accessibilityConfig,
+    inputValue,
+    onChange = () => {},
+    onInputValueChange,
+    onBlur,
+}: IRelativeRangeDynamicSelectProps) {
     const [searchValue, setSearchValue] = useState("");
 
     const handleChange = useCallback(

@@ -37,9 +37,9 @@ describe("UiNavigationBypass", () => {
     it("render basic structure", () => {
         renderComponent();
 
-        expect(screen.getByRole("menu")).toBeInTheDocument();
+        expect(screen.getByRole("navigation")).toBeInTheDocument();
 
-        const children = screen.getAllByRole("menuitem");
+        const children = screen.getAllByRole("link");
         expect(children.length).toBe(items.length);
 
         expect(children[0].tabIndex).toBe(items[0].tabIndex);
@@ -53,7 +53,7 @@ describe("UiNavigationBypass", () => {
     it("check focus down move", async () => {
         renderComponent();
 
-        const children = screen.getAllByRole("menuitem");
+        const children = screen.getAllByRole("link");
 
         expect(children[0]).not.toHaveFocus();
 
@@ -71,7 +71,7 @@ describe("UiNavigationBypass", () => {
     it("check focus up move", async () => {
         renderComponent();
 
-        const children = screen.getAllByRole("menuitem");
+        const children = screen.getAllByRole("link");
 
         expect(children[2]).not.toHaveFocus();
 
@@ -91,7 +91,7 @@ describe("UiNavigationBypass", () => {
 
         expect(onItemClick).not.toHaveBeenCalled();
 
-        const children = screen.getAllByRole("menuitem");
+        const children = screen.getAllByRole("link");
         children[1].focus();
 
         await userEvent.keyboard("{Enter}");
@@ -104,7 +104,7 @@ describe("UiNavigationBypass", () => {
 
         expect(onItemClick).not.toHaveBeenCalled();
 
-        const children = screen.getAllByRole("menuitem");
+        const children = screen.getAllByRole("link");
         children[1].focus();
 
         await userEvent.keyboard(" ");

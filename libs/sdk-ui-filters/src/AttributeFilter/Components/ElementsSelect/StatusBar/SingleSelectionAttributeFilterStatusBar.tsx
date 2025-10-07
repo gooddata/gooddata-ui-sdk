@@ -11,19 +11,17 @@ import type { IAttributeFilterStatusBarProps } from "./types.js";
  *
  * @beta
  */
-export function SingleSelectionAttributeFilterStatusBar(props: IAttributeFilterStatusBarProps) {
-    const {
-        enableShowingFilteredElements,
-        isFilteredByParentFilters,
-        parentFilterTitles,
-        totalElementsCountWithCurrentSettings,
-        attributeTitle,
-        onShowFilteredElements,
-        irrelevantSelection,
-        isFilteredByLimitingValidationItems,
-        isFilteredByDependentDateFilters,
-    } = props;
-
+export function SingleSelectionAttributeFilterStatusBar({
+    enableShowingFilteredElements,
+    isFilteredByParentFilters,
+    parentFilterTitles,
+    totalElementsCountWithCurrentSettings,
+    attributeTitle,
+    onShowFilteredElements,
+    irrelevantSelection,
+    isFilteredByLimitingValidationItems,
+    isFilteredByDependentDateFilters,
+}: IAttributeFilterStatusBarProps) {
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">

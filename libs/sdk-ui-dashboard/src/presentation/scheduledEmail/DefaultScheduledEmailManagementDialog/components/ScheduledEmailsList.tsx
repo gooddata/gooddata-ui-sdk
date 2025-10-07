@@ -29,9 +29,14 @@ interface IScheduledEmailsProps {
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
-export function ScheduledEmails(props: IScheduledEmailsProps) {
-    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, notificationChannels } =
-        props;
+export function ScheduledEmails({
+    isLoading,
+    scheduledEmails,
+    onDelete,
+    onEdit,
+    noSchedulesMessageId,
+    notificationChannels,
+}: IScheduledEmailsProps) {
     const theme = useTheme();
 
     const handleEdit = useCallback(

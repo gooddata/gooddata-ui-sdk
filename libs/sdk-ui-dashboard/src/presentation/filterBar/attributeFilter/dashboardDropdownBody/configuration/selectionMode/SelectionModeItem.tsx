@@ -17,9 +17,14 @@ interface ISelectionModeItemProps {
     onClick: () => void;
 }
 
-export function SelectionModeItem(props: ISelectionModeItemProps) {
-    const { item, itemTitle, selected, disabled, disabledTooltip, onClick } = props;
-
+export function SelectionModeItem({
+    item,
+    itemTitle,
+    selected,
+    disabled,
+    disabledTooltip,
+    onClick,
+}: ISelectionModeItemProps) {
     const className = cx(
         "gd-list-item",
         {

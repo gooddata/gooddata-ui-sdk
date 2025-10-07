@@ -9,8 +9,7 @@ import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-function Wrapper(props: { children?: ReactNode }) {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
 }
 

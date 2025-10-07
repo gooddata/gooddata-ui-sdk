@@ -9,7 +9,6 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { orderTotals } from "../../features/aggregations/ordering.js";
-import { sanitizeTotals } from "../../features/aggregations/sanitization.js";
 
 /**
  * Manages totals updates and communicates changes externally.
@@ -18,7 +17,7 @@ import { sanitizeTotals } from "../../features/aggregations/sanitization.js";
  * @internal
  */
 export function useUpdateTotals() {
-    const { pushData, execution } = usePivotTableProps();
+    const { pushData } = usePivotTableProps();
 
     const onUpdateTotals = useCallback(
         (currentTotals: ITotal[], totalDefinitions: ITotal[], isActive: boolean, isColumn: boolean) => {
@@ -42,18 +41,15 @@ export function useUpdateTotals() {
                     },
                 });
             } else {
-                // Sanitize totals for row totals (attribute bucket) and ensure ordering is maintained
-                const sanitizedTotals = orderTotals(sanitizeTotals(execution.definition, orderedTotals));
-
                 pushData({
                     properties: {
-                        totals: sanitizedTotals,
+                        totals: orderedTotals,
                         bucketType: BucketNames.ATTRIBUTE,
                     },
                 });
             }
         },
-        [pushData, execution.definition],
+        [pushData],
     );
 
     return {

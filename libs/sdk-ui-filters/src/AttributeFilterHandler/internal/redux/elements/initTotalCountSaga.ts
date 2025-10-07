@@ -12,11 +12,9 @@ export function* initTotalCountWorker(): SagaIterator<void> {
     yield takeLatest(actions.initTotalCount.match, initTotalCountSaga);
 }
 
-function* initTotalCountSaga(action: ReturnType<typeof actions.initTotalCount>): SagaIterator<void> {
-    const {
-        payload: { correlation },
-    } = action;
-
+function* initTotalCountSaga({
+    payload: { correlation },
+}: ReturnType<typeof actions.initTotalCount>): SagaIterator<void> {
     try {
         yield put(actions.initTotalCountStart({ correlation }));
 

@@ -19,9 +19,12 @@ interface IAttributeUrlSectionOwnProps {
 
 type AttributeUrlSectionProps = IAttributeUrlSectionOwnProps;
 
-export function AttributeUrlSection(props: AttributeUrlSectionProps) {
-    const { attributeDisplayForms, loading = false, selected, onSelect } = props;
-
+export function AttributeUrlSection({
+    attributeDisplayForms,
+    loading = false,
+    selected,
+    onSelect,
+}: AttributeUrlSectionProps) {
     const onClickHandler = useCallback(
         (target: IAttributeWithDisplayForm) => {
             onSelect(target.attributeDisplayFormRef, target.displayForm.ref);

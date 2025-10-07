@@ -16,9 +16,11 @@ export interface IDrillOriginSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-function DrillOriginSelectorBody(props: IDrillOriginSelectorBodyProps) {
-    const { onCloseDropdown, onSelect, supportedItems } = props;
-
+function DrillOriginSelectorBody({
+    onCloseDropdown,
+    onSelect,
+    supportedItems,
+}: IDrillOriginSelectorBodyProps) {
     const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
@@ -51,8 +53,11 @@ function DrillOriginSelectorBody(props: IDrillOriginSelectorBodyProps) {
     );
 }
 
-function DrillMeasureSelectorBody(props: IDrillOriginSelectorBodyProps) {
-    const { supportedItems, onSelect, onCloseDropdown } = props;
+function DrillMeasureSelectorBody({
+    supportedItems,
+    onSelect,
+    onCloseDropdown,
+}: IDrillOriginSelectorBodyProps) {
     return supportedItems.measures?.length ? (
         <>
             <div className="gd-drill-origin-selector-separator">
@@ -69,8 +74,11 @@ function DrillMeasureSelectorBody(props: IDrillOriginSelectorBodyProps) {
     ) : null;
 }
 
-function DrillAttributeSelectorBody(props: IDrillOriginSelectorBodyProps) {
-    const { supportedItems, onSelect, onCloseDropdown } = props;
+function DrillAttributeSelectorBody({
+    supportedItems,
+    onSelect,
+    onCloseDropdown,
+}: IDrillOriginSelectorBodyProps) {
     return supportedItems.attributes?.length ? (
         <>
             <div className="gd-drill-origin-selector-separator">

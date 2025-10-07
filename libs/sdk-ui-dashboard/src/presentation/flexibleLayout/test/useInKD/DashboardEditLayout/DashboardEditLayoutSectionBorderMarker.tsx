@@ -7,9 +7,10 @@ export interface IDashboardEditLayoutSectionBorderMarkerProps {
     className?: string;
 }
 
-export function DashboardEditLayoutSectionBorderMarker(props: IDashboardEditLayoutSectionBorderMarkerProps) {
-    const { active, className } = props;
-
+export function DashboardEditLayoutSectionBorderMarker({
+    active,
+    className,
+}: IDashboardEditLayoutSectionBorderMarkerProps) {
     const background = active ? `var(--gd-palette-primary-base, ${GD_COLOR_HIGHLIGHT})` : "#E6E6E6";
     const color = active ? GD_COLOR_WHITE : INFO_TEXT_COLOR;
 

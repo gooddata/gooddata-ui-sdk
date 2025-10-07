@@ -14,9 +14,7 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-function CustomDropdownButton(props: IAttributeFilterDropdownButtonProps) {
-    const { title, onClick } = props;
-
+function CustomDropdownButton({ title, onClick }: IAttributeFilterDropdownButtonProps) {
     return (
         <button style={{ border: "1px solid black" }} onClick={onClick}>
             {title}

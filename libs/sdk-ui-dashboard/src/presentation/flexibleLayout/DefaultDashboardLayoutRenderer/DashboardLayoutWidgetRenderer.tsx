@@ -12,18 +12,16 @@ import {
 } from "../../../model/index.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
-export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): ReactElement {
-    const {
-        item,
-        className,
-        contentRef,
-        isResizedByLayoutSizingStrategy,
-        minHeight,
-        height,
-        allowOverflow,
-        children,
-    } = props;
-
+export function DashboardLayoutWidgetRenderer({
+    item,
+    className,
+    contentRef,
+    isResizedByLayoutSizingStrategy,
+    minHeight,
+    height,
+    allowOverflow,
+    children,
+}: IDashboardLayoutWidgetRenderProps<any>): ReactElement {
     const isExport = useDashboardSelector(selectIsExport);
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
 

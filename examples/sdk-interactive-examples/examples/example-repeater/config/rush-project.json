@@ -11,7 +11,7 @@
             "outputFolderNames": []
         },
         {
-            "operationName": "test-once",
+            "operationName": "_phase:test",
             "outputFolderNames": []
         }
     ]

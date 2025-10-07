@@ -1542,9 +1542,7 @@ function getAxesConfiguration(
     };
 }
 
-function getTargetCursorConfigurationForBulletChart(chartOptions: IChartOptions) {
-    const { type, data } = chartOptions;
-
+function getTargetCursorConfigurationForBulletChart({ type, data }: IChartOptions) {
     if (!isBulletChart(type)) {
         return {};
     }

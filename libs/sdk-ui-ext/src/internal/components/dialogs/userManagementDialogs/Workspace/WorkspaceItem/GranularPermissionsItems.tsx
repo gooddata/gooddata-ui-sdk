@@ -13,9 +13,11 @@ interface IWorkspaceAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export function WorkspaceAccessPermissionItem(props: IWorkspaceAccessPermissionItemProps) {
-    const { item, checked, onChange } = props;
-
+export function WorkspaceAccessPermissionItem({
+    item,
+    checked,
+    onChange,
+}: IWorkspaceAccessPermissionItemProps) {
     return (
         <div>
             <label className="input-radio-label">
@@ -42,9 +44,13 @@ interface IAdditionalAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export function AdditionalAccessPermissionItem(props: IAdditionalAccessPermissionItemProps) {
-    const { item, checked, indefinite, disabled, onChange } = props;
-
+export function AdditionalAccessPermissionItem({
+    item,
+    checked,
+    indefinite,
+    disabled,
+    onChange,
+}: IAdditionalAccessPermissionItemProps) {
     return (
         <div className="gd-granular-permissions__additional-access-item">
             {item.group ? <div className="gd-granular-permissions__additional-access-item-indent" /> : null}

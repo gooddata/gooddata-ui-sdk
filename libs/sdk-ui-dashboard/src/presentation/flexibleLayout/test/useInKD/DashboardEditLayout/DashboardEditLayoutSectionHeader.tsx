@@ -10,9 +10,10 @@ export interface IDashboardEditLayoutSectionHeaderOwnProps {
 
 export type IDashboardEditLayoutSectionHeaderProps = IDashboardEditLayoutSectionHeaderOwnProps;
 
-export function RenderDashboardEditLayoutSectionHeader(props: IDashboardEditLayoutSectionHeaderProps) {
-    const { description, title } = props;
-
+export function RenderDashboardEditLayoutSectionHeader({
+    description,
+    title,
+}: IDashboardEditLayoutSectionHeaderProps) {
     const isDashboardEditing = true;
 
     return (

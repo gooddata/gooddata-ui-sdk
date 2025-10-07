@@ -53,23 +53,22 @@ interface IAttributeFilterConfigurationProps {
     showConfigModeSection: boolean;
 }
 
-export function AttributeFilterConfiguration(props: IAttributeFilterConfigurationProps) {
-    const {
-        filterRef,
-        filterByText,
-        displayValuesAsText,
-        titleText,
-        resetTitleText,
-        selectionTitleText,
-        multiSelectionOptionText,
-        singleSelectionOptionText,
-        singleSelectionDisabledTooltip,
-        parentFiltersDisabledTooltip,
-        closeHandler,
-        intl,
-        modeCategoryTitleText,
-        showConfigModeSection,
-    } = props;
+export function AttributeFilterConfiguration({
+    filterRef,
+    filterByText,
+    displayValuesAsText,
+    titleText,
+    resetTitleText,
+    selectionTitleText,
+    multiSelectionOptionText,
+    singleSelectionOptionText,
+    singleSelectionDisabledTooltip,
+    parentFiltersDisabledTooltip,
+    closeHandler,
+    intl,
+    modeCategoryTitleText,
+    showConfigModeSection,
+}: IAttributeFilterConfigurationProps) {
     const theme = useTheme();
 
     useEffect(() => {

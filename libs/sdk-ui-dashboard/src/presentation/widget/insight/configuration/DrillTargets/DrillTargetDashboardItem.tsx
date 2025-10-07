@@ -50,8 +50,7 @@ const buildDashboardItems = (
     return [forbiddenItem, ...dashboards];
 };
 
-export function DrillTargetDashboardItem(props: IDrillTargetDashboardItemProps) {
-    const { onSelect, selected } = props;
+export function DrillTargetDashboardItem({ onSelect, selected }: IDrillTargetDashboardItemProps) {
     const intl = useIntl();
     const dashboards = useDashboardSelector(selectAccessibleDashboards);
     const inaccessibleDashboards = useDashboardSelector(selectInaccessibleDashboards);

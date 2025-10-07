@@ -9,8 +9,7 @@ import { DialogList } from "@gooddata/sdk-ui-kit";
 import { itemsMock as items } from "./itemsMock.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-function Wrapper(props: { children?: ReactNode }) {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
 }
 

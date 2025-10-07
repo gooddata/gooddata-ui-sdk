@@ -15,10 +15,10 @@ const containsOnlyPlaceholders = (section: IDashboardLayoutSectionFacade<any>) =
     return section.items().every((widget) => isInitialPlaceholderWidget(widget.widget()));
 };
 
-export function DashboardLayoutEditSectionHeaderRenderer(
-    props: IDashboardLayoutSectionHeaderRenderProps<any>,
-): ReactElement | null {
-    const { section, parentLayoutItemSize } = props;
+export function DashboardLayoutEditSectionHeaderRenderer({
+    section,
+    parentLayoutItemSize,
+}: IDashboardLayoutSectionHeaderRenderProps<any>): ReactElement | null {
     const screen = useScreenSize();
     const gridWidth = determineWidthForScreen(screen, parentLayoutItemSize);
     const emptyItem = buildEmptyItemFacadeWithSetSize(gridWidth, section.index());

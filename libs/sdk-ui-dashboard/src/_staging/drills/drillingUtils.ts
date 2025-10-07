@@ -82,14 +82,9 @@ export function filterDrillsByDrillEvent(
     return getDrillsBySourceLocalIdentifiers(drillDefinitions, drillSourceLocalIdentifiers);
 }
 
-export function getDrillOriginLocalIdentifier(
-    drillDefinition:
-        | InsightDrillDefinition
-        | IDrillDownDefinition
-        | IGlobalDrillDownAttributeHierarchyDefinition,
-): string {
-    const { origin } = drillDefinition;
-
+export function getDrillOriginLocalIdentifier({
+    origin,
+}: InsightDrillDefinition | IDrillDownDefinition | IGlobalDrillDownAttributeHierarchyDefinition): string {
     if (isLocalIdRef(origin)) {
         return origin.localIdentifier;
     }

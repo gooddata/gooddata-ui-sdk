@@ -25,9 +25,12 @@ const ALIGN_POINTS = [
     },
 ];
 
-export function ConnectingAttributeDropdown(props: IConnectingAttributeDropdownProps) {
-    const { itemLocalId, selectedConnectingAttributeRef, connectingAttributes, onSelect } = props;
-
+export function ConnectingAttributeDropdown({
+    itemLocalId,
+    selectedConnectingAttributeRef,
+    connectingAttributes,
+    onSelect,
+}: IConnectingAttributeDropdownProps) {
     const selectedConnectingAttribute = connectingAttributes.find((attr) =>
         areObjRefsEqual(attr.ref, selectedConnectingAttributeRef),
     );

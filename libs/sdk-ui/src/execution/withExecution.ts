@@ -85,12 +85,15 @@ export interface IWithExecution<T> {
  *
  * @internal
  */
-export function withExecution<T>(
-    params: IWithExecution<T>,
-): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T> {
-    const { execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling } =
-        params;
-
+export function withExecution<T>({
+    execution,
+    events,
+    loadOnMount,
+    shouldRefetch,
+    window,
+    exportTitle,
+    enableExecutionCancelling,
+}: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T> {
     return (WrappedComponent: ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
             enableExecutionCancelling,

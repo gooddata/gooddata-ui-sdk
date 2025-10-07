@@ -30,8 +30,7 @@ export interface INumericInputProps {
 /**
  * @internal
  */
-export function NumericInput(props: INumericInputProps) {
-    const { value, onValueChanged } = props;
+export function NumericInput({ value, onValueChanged }: INumericInputProps) {
     const [validPressedButton, setValidPressedButton] = useState(true);
     const [anchorId] = useState<string>(`numeric-input-id-${v4()}`);
 

@@ -58,43 +58,41 @@ interface IAttributeFilterVirtualisedElementsSelect {
  *
  * @internal
  */
-export function AttributeFilterVirtualisedElementsSelect(props: IAttributeFilterVirtualisedElementsSelect) {
-    const {
-        items,
-        totalItemsCount,
-        totalItemsCountWithCurrentSettings,
+export function AttributeFilterVirtualisedElementsSelect({
+    items,
+    totalItemsCount,
+    totalItemsCountWithCurrentSettings,
 
-        isInverted,
-        selectedItems,
-        onSelect,
+    isInverted,
+    selectedItems,
+    onSelect,
 
-        searchString,
-        onSearch,
+    searchString,
+    onSearch,
 
-        isLoading,
-        isLoadingNextPage,
-        nextPageSize,
-        onLoadNextPage,
-        error,
+    isLoading,
+    isLoadingNextPage,
+    nextPageSize,
+    onLoadNextPage,
+    error,
 
-        attributeTitle,
-        isFilteredByParentFilters,
-        parentFilterTitles,
+    attributeTitle,
+    isFilteredByParentFilters,
+    parentFilterTitles,
 
-        enableShowingFilteredElements,
-        onShowFilteredElements,
+    enableShowingFilteredElements,
+    onShowFilteredElements,
 
-        irrelevantSelection,
-        onClearIrrelevantSelection,
+    irrelevantSelection,
+    onClearIrrelevantSelection,
 
-        onApplyButtonClick,
-        isApplyDisabled,
+    onApplyButtonClick,
+    isApplyDisabled,
 
-        isFilteredByDependentDateFilters,
-        isFilteredByLimitingValidationItems,
-        withoutApply,
-    } = props;
-
+    isFilteredByDependentDateFilters,
+    isFilteredByLimitingValidationItems,
+    withoutApply,
+}: IAttributeFilterVirtualisedElementsSelect) {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
     const { fullscreenOnMobile, selectionMode, attribute } = useAttributeFilterContext();

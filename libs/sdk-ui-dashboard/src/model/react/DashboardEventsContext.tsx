@@ -36,8 +36,11 @@ export interface IDashboardEventsProvider extends IDashboardEventsContext {
 /**
  * @internal
  */
-export function DashboardEventsProvider(props: IDashboardEventsProvider): ReactElement {
-    const { children, registerHandler, unregisterHandler } = props;
+export function DashboardEventsProvider({
+    children,
+    registerHandler,
+    unregisterHandler,
+}: IDashboardEventsProvider): ReactElement {
     const value = useMemo(() => {
         return {
             registerHandler,

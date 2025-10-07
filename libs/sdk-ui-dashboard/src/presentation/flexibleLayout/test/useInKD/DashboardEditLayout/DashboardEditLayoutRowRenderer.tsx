@@ -19,8 +19,7 @@ export interface IDashboardEditLayoutRowRendererOwnProps {
 
 export type IDashboardEditLayoutRowRendererProps = IDashboardEditLayoutRowRendererOwnProps;
 
-export function RenderDashboardEditLayoutRowRenderer(props: IDashboardEditLayoutRowRendererProps) {
-    const { children } = props;
+export function RenderDashboardEditLayoutRowRenderer({ children }: IDashboardEditLayoutRowRendererProps) {
     const rowId = "rowId";
     const contentRef = useRef<HTMLDivElement>(null);
     return (

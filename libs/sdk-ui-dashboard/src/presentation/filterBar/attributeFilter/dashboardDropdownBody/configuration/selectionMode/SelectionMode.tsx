@@ -30,17 +30,15 @@ interface ISelectionModeProps {
     disabled: boolean;
 }
 
-export function SelectionMode(props: ISelectionModeProps) {
-    const {
-        selectionTitleText,
-        multiSelectionOptionText,
-        singleSelectionOptionText,
-        singleSelectionDisabledTooltip,
-        selectionMode,
-        onSelectionModeChange,
-        disabled,
-    } = props;
-
+export function SelectionMode({
+    selectionTitleText,
+    multiSelectionOptionText,
+    singleSelectionOptionText,
+    singleSelectionDisabledTooltip,
+    selectionMode,
+    onSelectionModeChange,
+    disabled,
+}: ISelectionModeProps) {
     const selectionOptionTitleMap = {
         multi: multiSelectionOptionText,
         single: singleSelectionOptionText,

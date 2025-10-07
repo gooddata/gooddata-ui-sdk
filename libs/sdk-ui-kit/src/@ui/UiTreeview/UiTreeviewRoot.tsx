@@ -19,8 +19,7 @@ interface UiTreeviewRootProps {
 /**
  * @internal
  */
-export function UiTreeviewRoot(props: UiTreeviewRootProps) {
-    const { handleKeyDown, children, ariaAttributes, path } = props;
+export function UiTreeviewRoot({ handleKeyDown, children, ariaAttributes, path }: UiTreeviewRootProps) {
     const activeDescendant = path.length > 0 ? makeItemId(ariaAttributes.id, path) : undefined;
     return (
         <div

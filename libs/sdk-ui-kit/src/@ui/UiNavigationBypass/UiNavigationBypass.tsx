@@ -43,7 +43,7 @@ export interface IUiNavigationBypassProps {
 interface IUiNavigationBypassItem {
     item: IUiNavigationItem;
     onItemClick: (item: IUiNavigationItem) => void;
-    onItemFocus: (el: HTMLDivElement) => void;
+    onItemFocus: (el: HTMLAnchorElement) => void;
 }
 
 /**
@@ -53,11 +53,12 @@ export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavi
     const [isFocused, setIsFocused] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
-    const focusedRef = useRef<HTMLDivElement>(null);
+    const focusedRef = useRef<HTMLAnchorElement>(null);
 
     const handleFocus = useCallback(() => {
         setIsFocused(true);
     }, []);
+
     const handleBlur = useCallback((event: FocusEvent<HTMLDivElement>) => {
         if (containerRef.current && !containerRef.current.contains(event.relatedTarget as Node)) {
             setIsFocused(false);
@@ -98,7 +99,7 @@ export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavi
                 onItemClick(item);
                 return;
             }
-            //By default, focus the target element by id
+            // By default, focus the target element by id
             const targetElement = document.getElementById(item.targetId);
             if (targetElement) {
                 targetElement.focus();
@@ -106,7 +107,7 @@ export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavi
         },
         [onItemClick],
     );
-    const handleItemFocus = useCallback((el: HTMLDivElement) => {
+    const handleItemFocus = useCallback((el: HTMLAnchorElement) => {
         focusedRef.current = el;
     }, []);
 
@@ -117,8 +118,7 @@ export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavi
 
     return (
         <>
-            <div
-                role="menu"
+            <nav
                 className={b()}
                 style={style}
                 ref={containerRef}
@@ -137,7 +137,7 @@ export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavi
                         />
                     ))}
                 </div>
-            </div>
+            </nav>
             <span style={{ display: "none" }} id={labelId}>
                 {label}
             </span>
@@ -149,14 +149,15 @@ function UiNavigationItem({ item, onItemClick, onItemFocus }: IUiNavigationBypas
     const { id, name, tabIndex } = item;
 
     const handleClick = useCallback(
-        (event: MouseEvent<HTMLElement>) => {
+        (event: MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
             onItemClick(item);
         },
         [onItemClick, item],
     );
+
     const handleKeyDown = useCallback(
-        (event: KeyboardEvent<HTMLElement>) => {
+        (event: KeyboardEvent<HTMLAnchorElement>) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 onItemClick(item);
@@ -165,16 +166,16 @@ function UiNavigationItem({ item, onItemClick, onItemFocus }: IUiNavigationBypas
         [onItemClick, item],
     );
     const handleFocus = useCallback(
-        (e: FocusEvent<HTMLDivElement>) => {
-            onItemFocus(e.target as HTMLDivElement);
+        (e: FocusEvent<HTMLAnchorElement>) => {
+            onItemFocus(e.target);
         },
         [onItemFocus],
     );
 
     return (
-        <div
+        <a
             key={id}
-            role="menuitem"
+            role="link"
             tabIndex={tabIndex ?? 0}
             className={e("dropdown-item")}
             onFocus={handleFocus}
@@ -182,6 +183,6 @@ function UiNavigationItem({ item, onItemClick, onItemFocus }: IUiNavigationBypas
             onClick={handleClick}
         >
             {name}
-        </div>
+        </a>
     );
 }

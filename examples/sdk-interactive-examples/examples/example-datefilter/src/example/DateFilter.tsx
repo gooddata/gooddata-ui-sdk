@@ -17,8 +17,7 @@ export interface IFilterComponentProps {
     setFilter: (filter: IDateFilterComponentExampleState) => void;
 }
 
-function Filter(props: IFilterComponentProps) {
-    const { filter, setFilter } = props;
+function Filter({ filter, setFilter }: IFilterComponentProps) {
     const { excludeCurrentPeriod, selectedFilterOption } = filter;
     const onApply = (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => {
         setFilter({

@@ -81,18 +81,16 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
 /**
  * @internal
  */
-export function DefaultDeleteDialog(props: IDeleteDialogProps): ReactElement | null {
-    const {
-        isVisible,
-        isSchedulingEnabled,
-        isAlertingEnabled,
-        onDelete,
-        onCancel,
-        dashboardTitle,
-        showAlertsMessage,
-        showSchedulesMessage,
-    } = props;
-
+export function DefaultDeleteDialog({
+    isVisible,
+    isSchedulingEnabled,
+    isAlertingEnabled,
+    onDelete,
+    onCancel,
+    dashboardTitle,
+    showAlertsMessage,
+    showSchedulesMessage,
+}: IDeleteDialogProps): ReactElement | null {
     const intl = useIntl();
 
     if (!isVisible) {

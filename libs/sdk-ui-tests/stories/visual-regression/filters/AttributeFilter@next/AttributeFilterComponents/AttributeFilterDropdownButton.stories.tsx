@@ -54,11 +54,10 @@ const titleExtension = (
     </div>
 );
 
-function AttributeFilterDropdownButtonExamples(
-    props: AttributeFilterDropdownButtonExamplesProps,
-): ReactElement {
-    const { isDraggable, icon } = props;
-
+function AttributeFilterDropdownButtonExamples({
+    isDraggable,
+    icon,
+}: AttributeFilterDropdownButtonExamplesProps): ReactElement {
     return (
         <IntlWrapper>
             <div style={{ width: 500 }}>

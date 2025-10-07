@@ -15,23 +15,27 @@ import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps): JSX.Element;
+export function AnalyticsCatalogDetail({ backend, workspace, locale, ...restProps }: AnalyticsCatalogDetailProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailContentProps): JSX.Element;
+export function AnalyticsCatalogDetailContent({ backend, workspace, locale, ...restProps }: AnalyticsCatalogDetailContentProps): JSX.Element;
 
 // @internal (undocumented)
-export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContentProps {
+export interface AnalyticsCatalogDetailContentProps extends Omit<CatalogDetailContentProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
+    objectId: string;
+    objectType: ObjectType;
     onOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     workspace?: string;
 }
 
 // @internal (undocumented)
-export interface AnalyticsCatalogDetailProps extends CatalogDetailProps {
+export interface AnalyticsCatalogDetailProps extends Omit<CatalogDetailProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
+    objectId: string;
+    objectType: ObjectType;
     workspace?: string;
 }
 

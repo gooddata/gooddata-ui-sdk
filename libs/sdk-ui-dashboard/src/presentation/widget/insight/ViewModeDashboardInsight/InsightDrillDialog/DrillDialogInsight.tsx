@@ -62,24 +62,22 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement {
-    const {
-        insight,
-        widget,
-        backend,
-        workspace,
-        drillStep,
-        onError,
-        onDrill: onDrillFn,
-        isWidgetAsTable,
-        onExportReady,
-        onLoadingChanged,
-        onWidgetFiltersReady,
-        pushData,
-        ErrorComponent,
-        LoadingComponent,
-    } = props;
-
+export function DrillDialogInsight({
+    insight,
+    widget,
+    backend,
+    workspace,
+    drillStep,
+    onError,
+    onDrill: onDrillFn,
+    isWidgetAsTable,
+    onExportReady,
+    onLoadingChanged,
+    onWidgetFiltersReady,
+    pushData,
+    ErrorComponent,
+    LoadingComponent,
+}: IDashboardInsightProps): ReactElement {
     const visualizationContainerRef = useRef<HTMLDivElement>(null);
 
     // Context

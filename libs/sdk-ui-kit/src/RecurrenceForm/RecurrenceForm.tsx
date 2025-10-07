@@ -59,31 +59,30 @@ export interface IRecurrenceFormProps {
     ) => RecurrenceType;
 }
 
-function RecurrenceFormCore(props: IRecurrenceFormProps) {
-    const {
-        startDate = null,
-        cronExpression = "",
-        cronDescription = "",
-        placeholder,
-        onChange,
-        locale = DEFAULT_LOCALE,
-        dateFormat = DEFAULT_DATE_FORMAT,
-        timeFormat = DEFAULT_TIME_FORMAT,
-        weekStart = DEFAULT_WEEK_START,
-        timezone,
-        startLabel,
-        repeatLabel,
-        className,
-        allowHourlyRecurrence = true,
-        showRepeatTypeDescription,
-        showTimezoneInOccurrence,
-        showInheritValue,
-        isWhiteLabeled,
-        onRecurrenceDropdownOpen,
-        closeDropdownsOnParentScroll,
-        onKeyDownSubmit,
-        customRecurrenceTypeMappingFn,
-    } = props;
+function RecurrenceFormCore({
+    startDate = null,
+    cronExpression = "",
+    cronDescription = "",
+    placeholder,
+    onChange,
+    locale = DEFAULT_LOCALE,
+    dateFormat = DEFAULT_DATE_FORMAT,
+    timeFormat = DEFAULT_TIME_FORMAT,
+    weekStart = DEFAULT_WEEK_START,
+    timezone,
+    startLabel,
+    repeatLabel,
+    className,
+    allowHourlyRecurrence = true,
+    showRepeatTypeDescription,
+    showTimezoneInOccurrence,
+    showInheritValue,
+    isWhiteLabeled,
+    onRecurrenceDropdownOpen,
+    closeDropdownsOnParentScroll,
+    onKeyDownSubmit,
+    customRecurrenceTypeMappingFn,
+}: IRecurrenceFormProps) {
     const intl = useIntl();
     const mapRecurrenceType = customRecurrenceTypeMappingFn ?? transformCronExpressionToRecurrenceType;
 

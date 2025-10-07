@@ -22,8 +22,7 @@ interface IAlertsProps {
     noAlertsMessageId: string;
 }
 
-export function AlertsOld(props: IAlertsProps) {
-    const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
+export function AlertsOld({ isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId }: IAlertsProps) {
     const theme = useTheme();
 
     if (isLoading) {

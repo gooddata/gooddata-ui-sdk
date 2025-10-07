@@ -17,9 +17,7 @@ const ACTIVE_MODE: string = "active";
 const READONLY_MODE: string = "readonly";
 const HIDDEN_MODE: string = "hidden";
 
-export function ConfigModeSelect(props: IConfigModeSelectProps) {
-    const { selectedMode, onChanged, intl } = props;
-
+export function ConfigModeSelect({ selectedMode, onChanged, intl }: IConfigModeSelectProps) {
     const onCheck = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;

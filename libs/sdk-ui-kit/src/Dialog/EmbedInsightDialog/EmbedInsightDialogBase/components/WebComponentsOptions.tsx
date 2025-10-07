@@ -23,9 +23,8 @@ interface IWebComponentsOptionsProps {
 /**
  * @internal
  */
-export function WebComponentsOptions(props: IWebComponentsOptionsProps) {
+export function WebComponentsOptions({ option, onChange }: IWebComponentsOptionsProps) {
     const intl = useIntl();
-    const { option, onChange } = props;
 
     const onDisplayTitleChange = useCallback(() => {
         const opt = { ...option, displayTitle: !option.displayTitle };

@@ -12,9 +12,11 @@ interface IDashboardInsightMenuBubbleProps {
     children?: ReactNode;
 }
 
-export function DashboardInsightEditMenuBubble(props: IDashboardInsightMenuBubbleProps) {
-    const { children, onClose, isSubmenu } = props;
-
+export function DashboardInsightEditMenuBubble({
+    children,
+    onClose,
+    isSubmenu,
+}: IDashboardInsightMenuBubbleProps) {
     return (
         <ConfigurationBubble
             alignTo=".s-dash-item.is-selected"

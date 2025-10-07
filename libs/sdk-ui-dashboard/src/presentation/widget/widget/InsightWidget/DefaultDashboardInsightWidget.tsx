@@ -197,7 +197,13 @@ function DefaultDashboardInsightWidgetCore({
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(widget);
 
     const accessibilityTableInsight = useMemo(() => {
-        if (!isExportMode || !insight || !isAccessibilityMode) {
+        if (!isExportMode) return null;
+        if (!isAccessibilityMode) return null;
+        if (!insight) return null;
+        if (
+            !supportsShowAsTable(insightVisualizationType(insight)) &&
+            insightVisualizationType(insight) !== "table"
+        ) {
             return null;
         }
         return convertInsightToTableDefinition(insight);

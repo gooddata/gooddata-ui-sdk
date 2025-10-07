@@ -104,14 +104,17 @@ const convertToUiMenuItems = (
     });
 };
 
-export function DashboardInsightMenuBody(
-    props: IDashboardInsightMenuProps & {
-        setSubmenu?: Dispatch<SetStateAction<IInsightMenuSubmenu | null>>;
-        renderMode: RenderMode;
-    },
-) {
-    const { items, widget, insight, onClose, renderMode, setSubmenu } = props;
-
+export function DashboardInsightMenuBody({
+    items,
+    widget,
+    insight,
+    onClose,
+    renderMode,
+    setSubmenu,
+}: IDashboardInsightMenuProps & {
+    setSubmenu?: Dispatch<SetStateAction<IInsightMenuSubmenu | null>>;
+    renderMode: RenderMode;
+}) {
     const uiMenuItems = useMemo(() => convertToUiMenuItems(items, widget), [items, widget]);
 
     const widgetRefAsString = objRefToString(widgetRef(widget));

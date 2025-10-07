@@ -30,19 +30,17 @@ export interface ISimpleSettingWidgetProps {
  *
  * @internal
  */
-export function SimpleSettingWidget(props: ISimpleSettingWidgetProps) {
-    const {
-        title,
-        currentSettingStatus,
-        titleTooltip,
-        helpLinkText,
-        helpLinkUrl,
-        actionButtonText,
-        isLoading,
-        onSubmit,
-        onHelpLinkClick,
-    } = props;
-
+export function SimpleSettingWidget({
+    title,
+    currentSettingStatus,
+    titleTooltip,
+    helpLinkText,
+    helpLinkUrl,
+    actionButtonText,
+    isLoading,
+    onSubmit,
+    onHelpLinkClick,
+}: ISimpleSettingWidgetProps) {
     return (
         <SettingWidget>
             <Header>

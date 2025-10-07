@@ -9,9 +9,7 @@ export interface IGranularitySelectorProps {
     setGranularity: (granularity: IAttribute) => void;
 }
 
-export function GranularitySelector(props: IGranularitySelectorProps) {
-    const { granularity, setGranularity } = props;
-
+export function GranularitySelector({ granularity, setGranularity }: IGranularitySelectorProps) {
     return (
         <>
             <input

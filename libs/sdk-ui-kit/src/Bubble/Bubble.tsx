@@ -53,6 +53,14 @@ const ARROW_OFFSETS: ArrowOffsets = {
 /**
  * @internal
  */
+export interface IBubbleAccessibilityConfig {
+    role?: string;
+    ariaLabelledBy?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IBubbleProps {
     id?: string;
     alignPoints?: IAlignPoint[];
@@ -79,6 +87,7 @@ export interface IBubbleProps {
     children?: ReactNode;
     overlayPositionType?: OverlayPositionType;
     ensureVisibility?: boolean;
+    accessibilityConfig?: IBubbleAccessibilityConfig;
 }
 
 /**
@@ -135,7 +144,10 @@ export const Bubble = memo(
             children,
             overlayPositionType,
             ensureVisibility,
+            accessibilityConfig,
         } = { ...defaultProps, ...props };
+
+        const { role, ariaLabelledBy } = accessibilityConfig ?? {};
 
         const arrowOffsets = useMemo(
             () => ({
@@ -244,6 +256,8 @@ export const Bubble = memo(
                     onMouseLeave={onMouseLeave}
                     onKeyDown={onKeyDown}
                     className={classNames}
+                    role={role}
+                    aria-labelledby={ariaLabelledBy}
                 >
                     <div className="bubble-content">
                         <div className="helper" />

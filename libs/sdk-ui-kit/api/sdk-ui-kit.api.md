@@ -92,10 +92,10 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export function AddButton(props: IAddButtonProps): JSX.Element;
+export function AddButton({ title, isDisabled, onClick, tooltip, tooltipAlignPoints, className, }: IAddButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function AddGranteeBase(props: IAddGranteeBaseProps): JSX.Element;
+export function AddGranteeBase({ appliedGrantees, addedGrantees, currentUser, isDirty, currentUserPermissions, sharedObject, previouslyFocusedRef, onCancel, onSubmit, onBackClick, onAddUserOrGroups, onDelete, onGranularGranteeChange, isGranteeShareLoading, }: IAddGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
@@ -108,7 +108,7 @@ export type AlignConfig = {
 };
 
 // @internal (undocumented)
-export function alignConfigToAlignPoint(alignConfig: AlignConfig): IAlignPoint;
+export function alignConfigToAlignPoint({ triggerAlignPoint, overlayAlignPoint, offset, }: AlignConfig): IAlignPoint;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -258,7 +258,7 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
-export function CodeArea(props: ICodeAreaProps): JSX.Element;
+export function CodeArea({ code, onCopyCode }: ICodeAreaProps): JSX.Element;
 
 // @internal (undocumented)
 export function CodeLanguageSelect({ selectedLanguage, onLanguageChanged }: ICodeLanguageSelectProps): JSX.Element;
@@ -287,7 +287,7 @@ export function ColorPreview(props: IColorPreviewProps): JSX.Element;
 export function CommunityEditionDialog({ headerText, infoText, copyrightText, links, onClose, closeButtonText, }: ICommunityEditionDialogProps): JSX.Element;
 
 // @internal (undocumented)
-export function ComponentLabelsProvider(props: IComponentLabelsProviderProps): JSX.Element;
+export function ComponentLabelsProvider({ children, labels }: IComponentLabelsProviderProps): JSX.Element;
 
 // @internal (undocumented)
 export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): JSX.Element;
@@ -434,7 +434,7 @@ export type DialogModeType = "ShareGrantee" | "AddGrantee";
 export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): any;
 
 // @internal (undocumented)
-export function Dropdown(props: IDropdownProps): JSX.Element;
+export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus, }: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
 export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef, }: IDropdownButtonProps): JSX.Element;
@@ -443,7 +443,7 @@ export function DropdownButton({ id, className, accessibilityConfig, value, titl
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, isMobile, isLoading, items, itemsCount, itemHeight, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
@@ -452,7 +452,7 @@ export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: ID
 export const EditableLabel: ForwardRefExoticComponent<IEditableLabelProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
-export function EllipsisText(props: IEllipsisTextProps): JSX.Element;
+export function EllipsisText({ text, maxLines }: IEllipsisTextProps): JSX.Element;
 
 // @internal (undocumented)
 export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab, }: IEmbedInsightDialogBaseProps): JSX.Element;
@@ -661,7 +661,7 @@ export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMen
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
-export function GranteeItemComponent(props: IGranteeItemProps): JSX.Element;
+export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange, }: IGranteeItemProps): JSX.Element;
 
 // @internal (undocumented)
 export type GranteeStatus = "Inactive" | "Active";
@@ -746,7 +746,7 @@ export type HorizontalPosition = "left" | "center" | "right";
 export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouchPointDialogBaseProps): JSX.Element;
 
 // @internal
-export function Hyperlink(props: IHyperlinkProps): JSX.Element;
+export function Hyperlink({ text, href, onClick, className, iconClass }: IHyperlinkProps): JSX.Element;
 
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
@@ -1004,6 +1004,14 @@ export type IBreakpointsConfig = {
 };
 
 // @internal (undocumented)
+export interface IBubbleAccessibilityConfig {
+    // (undocumented)
+    ariaLabelledBy?: string;
+    // (undocumented)
+    role?: string;
+}
+
+// @internal (undocumented)
 export interface IBubbleHeaderSeparatorProps {
     // (undocumented)
     message?: string;
@@ -1025,6 +1033,8 @@ export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
 
 // @internal (undocumented)
 export interface IBubbleProps {
+    // (undocumented)
+    accessibilityConfig?: IBubbleAccessibilityConfig;
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
@@ -3703,22 +3713,22 @@ export interface INumericInputProps {
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps): JSX.Element;
+export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectItem(props: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, icon, isDisabled, }: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps): JSX.Element;
+export function InvertableSelectLimitWarning({ limit, selectedItemsCount, }: IInvertableSelectLimitWarningProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, searchPlaceholder, }: IInvertableSelectSearchBarProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>): JSX.Element;
+export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted, }: IInvertableSelectStatusProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): JSX.Element;
+export function InvertableSelectStatusBar<T>({ className, selectedItems, getItemTitle, isInverted, selectedItemsLimit, showSelectionStatus, }: IInvertableSelectStatusBarProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualisedProps<T>): JSX.Element;
@@ -4418,6 +4428,8 @@ export interface IShortenedTextProps {
     // (undocumented)
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     tagName?: ElementType;
     // (undocumented)
     tooltipAlignPoints?: IAlignPoint[];
@@ -4528,6 +4540,9 @@ export interface ISpinnerProps {
 
 // @internal
 export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
+
+// @internal
+export const isTabKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
@@ -5375,7 +5390,7 @@ export function LegacySingleSelectListItem({ source, selected, onSelect, onMouse
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
-export function List<T>(props: IListProps<T>): ReactElement;
+export function List<T>({ className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, }: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const ListWithActionsFocusStore: IContextStore<    {
@@ -5393,7 +5408,7 @@ export const LOADING_HEIGHT = 100;
 export function LoadingDots({ className }: ILoadingDotsProps): JSX.Element;
 
 // @internal (undocumented)
-export function LoadingMask(props: ILoadingMaskProps): JSX.Element;
+export function LoadingMask({ className, height, width, size }: ILoadingMaskProps): JSX.Element;
 
 // @internal (undocumented)
 export function LoadingSpinner({ className, color }: ILoadingSpinner): JSX.Element;
@@ -5508,7 +5523,7 @@ export function NonContextToastsInterop(props: {
 export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
-export function NumericInput(props: INumericInputProps): JSX.Element;
+export function NumericInput({ value, onValueChanged }: INumericInputProps): JSX.Element;
 
 // @internal (undocumented)
 export type OnLeveledSelectFn<Levels extends any[]> = (item: IUiTreeViewItem<LevelTypesUnion<Levels>>, mods: IUiTreeViewSelectionMods, event: MouseEvent_2 | KeyboardEvent_2) => void;
@@ -5612,7 +5627,7 @@ export function propCombinationsFor<TProps extends object>(baseProps: TProps): <
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal
-export function Recurrence(props: IRecurrenceProps): JSX.Element;
+export function Recurrence({ label, recurrenceType, inheritRecurrenceType, startDate, cronValue, cronPlaceholder, cronDescription, timezone, onRepeatTypeChange, onCronValueChange, allowHourlyRecurrence, showTimezoneInOccurrence, showRepeatTypeDescription, showInheritValue, isWhiteLabeled, weekStart, onRecurrenceDropdownOpen, closeOnParentScroll, }: IRecurrenceProps): JSX.Element;
 
 // @internal
 export const RECURRENCE_TYPES: {
@@ -5661,7 +5676,7 @@ export type SameAsTargetPosition = "sameAsTarget";
 export function ScreenReaderToast(): JSX.Element;
 
 // @internal (undocumented)
-export function ScrollableItem(props: IScrollableItemProps): JSX.Element;
+export function ScrollableItem({ scrollIntoView, bottomMargin, isElementInvisibleCheck, className, children, onItemScrolled, tagName: TagName, }: IScrollableItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const ScrollablePanel: ForwardRefExoticComponent<IScrollablePanelProps & RefAttributes<HTMLDivElement>>;
@@ -5708,7 +5723,7 @@ export const separatorStaticItem: {
 export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay, }: ISettingItem): JSX.Element;
 
 // @internal (undocumented)
-export function ShareDialog(props: IShareDialogProps): JSX.Element;
+export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy, }: IShareDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function ShareDialogBase(props: IShareDialogBaseProps): JSX.Element;
@@ -5727,7 +5742,7 @@ export type ShareDialogInteractionGranteeData = {
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
-export function ShareGranteeBase(props: IShareGranteeBaseProps): JSX.Element;
+export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy, }: IShareGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
@@ -5761,7 +5776,7 @@ export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
 export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
 
 // @internal
-export function SimpleSettingWidget(props: ISimpleSettingWidgetProps): JSX.Element;
+export function SimpleSettingWidget({ title, currentSettingStatus, titleTooltip, helpLinkText, helpLinkUrl, actionButtonText, isLoading, onSubmit, onHelpLinkClick, }: ISimpleSettingWidgetProps): JSX.Element;
 
 // @internal (undocumented)
 export const SingleSelectListItem: ForwardRefExoticComponent<ISingleSelectListItemProps & RefAttributes<HTMLButtonElement | HTMLDivElement>>;
@@ -5843,10 +5858,10 @@ export type StyleProps = Record<string, string | boolean>;
 export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function StylingEditorDialogFooter(props: TStylingEditorDialogFooterProps): JSX.Element;
+export function StylingEditorDialogFooter({ link, disableSubmit, showProgressIndicator, errorMessage, onSubmit, onCancel, onHelpClick, }: TStylingEditorDialogFooterProps): JSX.Element;
 
 // @internal (undocumented)
-export function StylingExample(props: IStylingExampleProps): JSX.Element;
+export function StylingExample({ name, colors, onClick }: IStylingExampleProps): JSX.Element;
 
 // @internal (undocumented)
 export type StylingPickerItemContent = ITheme | IColorPalette;
@@ -5858,10 +5873,10 @@ export function StylingSettingWidget<T extends StylingPickerItemContent>(props: 
 export function SubMenu(props: ISubMenuProps): JSX.Element;
 
 // @internal (undocumented)
-export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps): JSX.Element;
+export function SyntaxHighlightingInput({ value, label, placeholder, autocompletion, onApi, onChange, onCursor, onKeyDown, onCompletion, onFocus, onBlur, className, beforeExtensions, extensions, disabled, }: ISyntaxHighlightingInputProps): JSX.Element;
 
 // @internal (undocumented)
-export function Tabs(props: ITabsProps): ReactElement;
+export function Tabs({ className, onTabSelect, selectedTabId: propSelectedTabId, tabs, }: ITabsProps): ReactElement;
 
 // @internal (undocumented)
 export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): JSX.Element;
@@ -5918,7 +5933,7 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 export const typedUiMenuContextStore: <T extends IUiMenuItemData = object, M = object>() => IContextStore<IUiMenuContext<T, M>>;
 
 // @internal (undocumented)
-export function Typography(props: ITypographyProps): JSX.Element;
+export function Typography({ tagName: Tag, children, className, title, id, onClick }: ITypographyProps): JSX.Element;
 
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
@@ -6652,7 +6667,7 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
 // @internal
-export function UiSubmenuHeader(props: UiSubmenuHeaderProps): JSX.Element;
+export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId, }: UiSubmenuHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiSubmenuHeaderProps {
@@ -6672,6 +6687,8 @@ export interface UiSubmenuHeaderProps {
     textColor?: string;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    titleId?: string;
     // (undocumented)
     useShortenedTitle?: boolean;
 }

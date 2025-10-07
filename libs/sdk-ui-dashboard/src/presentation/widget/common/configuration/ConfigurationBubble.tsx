@@ -9,6 +9,7 @@ import {
     ArrowOffsets,
     Bubble,
     IAlignPoint,
+    IBubbleAccessibilityConfig,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
@@ -25,6 +26,7 @@ interface IConfigurationBubbleProps {
     arrowOffsets?: ArrowOffsets;
     overlayPositionType?: OverlayPositionType;
     arrowDirections?: ArrowDirections;
+    accessibilityConfig?: IBubbleAccessibilityConfig;
 }
 
 export const defaultAlignPoints: IAlignPoint[] = [
@@ -56,20 +58,19 @@ export const defaultArrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
-export function ConfigurationBubble(props: IConfigurationBubbleProps) {
-    const {
-        id,
-        children,
-        classNames,
-        onClose,
-        closeOnEscape,
-        alignTo,
-        alignPoints = defaultAlignPoints,
-        arrowOffsets,
-        overlayPositionType,
-        arrowDirections = defaultArrowDirections,
-    } = props;
-
+export function ConfigurationBubble({
+    id,
+    children,
+    classNames,
+    onClose,
+    closeOnEscape,
+    alignTo,
+    alignPoints = defaultAlignPoints,
+    arrowOffsets,
+    overlayPositionType,
+    arrowDirections = defaultArrowDirections,
+    accessibilityConfig,
+}: IConfigurationBubbleProps) {
     // do not close on click to the widget
     const ignoredClassSelector = `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`;
     const ignoreClicksOnByClass =
@@ -93,6 +94,7 @@ export function ConfigurationBubble(props: IConfigurationBubbleProps) {
             closeOnEscape={closeOnEscape}
             overlayPositionType={overlayPositionType}
             ensureVisibility
+            accessibilityConfig={accessibilityConfig}
         >
             {children}
         </Bubble>

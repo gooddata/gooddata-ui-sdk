@@ -83,11 +83,14 @@ export function ErrorOptionRenderer(errorOption: ISelectErrorOption): ReactEleme
     );
 }
 
-export function OptionRenderer(
-    props: OptionProps<IDataSourceSelectOption | ISelectErrorOption, false>,
-): ReactElement {
-    const { className, cx, isFocused, innerRef, innerProps, data } = props;
-
+export function OptionRenderer({
+    className,
+    cx,
+    isFocused,
+    innerRef,
+    innerProps,
+    data,
+}: OptionProps<IDataSourceSelectOption | ISelectErrorOption, false>): ReactElement {
     if (isSelectErrorOption(data)) {
         return ErrorOptionRenderer(data);
     }

@@ -89,11 +89,9 @@ export function dashboardFilterContextDefinition<TWidget>(
  *
  * @param dashboard - dashboard to get filter context from.
  */
-export function dashboardFilterContextIdentity<TWidget>(
-    dashboard: IDashboard<TWidget>,
-): IDashboardObjectIdentity | undefined {
-    const { filterContext } = dashboard;
-
+export function dashboardFilterContextIdentity<TWidget>({
+    filterContext,
+}: IDashboard<TWidget>): IDashboardObjectIdentity | undefined {
     if (!filterContext || isTempFilterContext(filterContext) || !filterContext.ref) {
         return undefined;
     }

@@ -5,8 +5,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { IDashboardInsightMenuTitleProps } from "../types.js";
 
-function OriginalInsightTitle(props: { title: string }) {
-    const { title } = props;
+function OriginalInsightTitle({ title }: { title: string }) {
     return (
         <Typography tagName="p" className="insight-title s-insight-title ">
             <span className="original-insight-title">{title}</span>

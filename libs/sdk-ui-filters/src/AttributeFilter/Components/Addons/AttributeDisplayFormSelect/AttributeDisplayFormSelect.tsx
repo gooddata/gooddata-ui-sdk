@@ -20,9 +20,7 @@ export interface IAttributeDisplayFormSelectProps {
  * Component that render Attribute display forms selector as dropdown.
  * @internal
  */
-export function AttributeDisplayFormSelect(props: IAttributeDisplayFormSelectProps) {
-    const { onSelect, alignPoints } = props;
-
+export function AttributeDisplayFormSelect({ onSelect, alignPoints }: IAttributeDisplayFormSelectProps) {
     const { displayForms, currentDisplayAsDisplayFormRef } = useAttributeFilterContext();
 
     return (

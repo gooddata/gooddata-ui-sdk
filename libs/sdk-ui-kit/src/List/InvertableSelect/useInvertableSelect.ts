@@ -22,21 +22,19 @@ export type SelectionStatusType = "all" | "partial" | "none";
 /**
  * @internal
  */
-export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
-    const {
-        items,
-        totalItemsCount,
-        getItemKey,
+export function useInvertableSelect<T>({
+    items,
+    totalItemsCount,
+    getItemKey,
 
-        searchString,
+    searchString,
 
-        isInverted = true,
-        selectedItems,
-        onSelect = () => {},
+    isInverted = true,
+    selectedItems,
+    onSelect = () => {},
 
-        numberOfHiddenSelectedItems = 0,
-    } = props;
-
+    numberOfHiddenSelectedItems = 0,
+}: IUseInvertableSelectProps<T>) {
     const isSearch = searchString?.length > 0;
     const isSelectionEmpty = selectedItems.length === 0;
 

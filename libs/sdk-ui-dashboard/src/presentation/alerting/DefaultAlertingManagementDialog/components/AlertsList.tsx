@@ -23,8 +23,7 @@ const getItemAdditionalActions = () => {
     return ["dropdown" as const, "item" as const];
 };
 
-export function Alerts(props: IAlertsProps) {
-    const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
+export function Alerts({ isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId }: IAlertsProps) {
     const theme = useTheme();
 
     const handleEdit = useCallback((alert: IAutomationMetadataObject) => () => onEdit(alert), [onEdit]);

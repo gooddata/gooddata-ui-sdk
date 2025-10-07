@@ -58,20 +58,19 @@ const defaultHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (p
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());
 
-export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): ReactElement {
-    const {
-        section,
-        sectionRenderer = defaultSectionRenderer,
-        sectionHeaderRenderer = defaultHeaderRenderer,
-        itemKeyGetter = defaultItemKeyGetter,
-        gridRowRenderer,
-        itemRenderer,
-        widgetRenderer,
-        getLayoutDimensions,
-        renderMode,
-        parentLayoutItemSize,
-        parentLayoutPath,
-    } = props;
+export function DashboardLayoutSection<TWidget>({
+    section,
+    sectionRenderer = defaultSectionRenderer,
+    sectionHeaderRenderer = defaultHeaderRenderer,
+    itemKeyGetter = defaultItemKeyGetter,
+    gridRowRenderer,
+    itemRenderer,
+    widgetRenderer,
+    getLayoutDimensions,
+    renderMode,
+    parentLayoutItemSize,
+    parentLayoutPath,
+}: IDashboardLayoutSectionProps<TWidget>): ReactElement {
     const showBorders = parentLayoutPath === undefined || parentLayoutPath.length === 0;
     const exportData = useSectionExportData(parentLayoutPath?.length ?? 0);
     const exportStyles = useSlideSizeStyle(renderMode, "section", parentLayoutPath);

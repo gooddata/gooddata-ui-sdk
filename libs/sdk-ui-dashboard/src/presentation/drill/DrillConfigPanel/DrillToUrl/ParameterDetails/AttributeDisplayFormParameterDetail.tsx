@@ -110,8 +110,14 @@ const useSupportsEnumeration = (displayFormRef: ObjRef) => {
     return !isDateAttribute;
 };
 
-export function AttributeDisplayFormParameterDetail(props: IAttributeDisplayFormParameterDetailProps) {
-    const { title, label, type, displayFormRef, projectId, showValues } = props;
+export function AttributeDisplayFormParameterDetail({
+    title,
+    label,
+    type,
+    displayFormRef,
+    projectId,
+    showValues,
+}: IAttributeDisplayFormParameterDetailProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
 

@@ -34,8 +34,14 @@ const getControlProperties = (
     };
 };
 
-function LabelFormatControlComponent(props: ILabelFormatControl & WrappedComponentProps) {
-    const { disabled, properties, axis, configPanelDisabled, pushData, intl } = props;
+function LabelFormatControlComponent({
+    disabled,
+    properties,
+    axis,
+    configPanelDisabled,
+    pushData,
+    intl,
+}: ILabelFormatControl & WrappedComponentProps) {
     const { axisVisible, axisLabelsEnabled, axisFormat } = getControlProperties(properties, axis);
     const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
 

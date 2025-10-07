@@ -23,17 +23,16 @@ import { IAlertingManagementDialogOldProps } from "../types.js";
 /**
  * @alpha
  */
-export function DefaultAlertingManagementDialogOld(props: IAlertingManagementDialogOldProps) {
-    const {
-        onPauseSuccess,
-        onPauseError,
-        onEdit,
-        onDeleteSuccess,
-        onDeleteError,
-        onClose,
-        isLoadingAlertingData,
-        automations,
-    } = props;
+export function DefaultAlertingManagementDialogOld({
+    onPauseSuccess,
+    onPauseError,
+    onEdit,
+    onDeleteSuccess,
+    onDeleteError,
+    onClose,
+    isLoadingAlertingData,
+    automations,
+}: IAlertingManagementDialogOldProps) {
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
     const intl = useIntl();

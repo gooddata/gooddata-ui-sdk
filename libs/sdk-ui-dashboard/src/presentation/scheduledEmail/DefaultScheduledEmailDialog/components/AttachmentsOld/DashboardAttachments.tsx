@@ -28,19 +28,17 @@ export interface IDashboardAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export function DashboardAttachments(props: IDashboardAttachmentsProps) {
-    const {
-        dashboardSelected,
-        scheduledExportToEdit,
-        areDashboardFiltersChanged,
-        dashboardFilters,
-        isCrossFiltering,
-        filtersToDisplayInfo,
-        onDashboardAttachmentsSelectionChange,
-        enableAutomationFilterContext,
-        overlayPositionType,
-    } = props;
-
+export function DashboardAttachments({
+    dashboardSelected,
+    scheduledExportToEdit,
+    areDashboardFiltersChanged,
+    dashboardFilters,
+    isCrossFiltering,
+    filtersToDisplayInfo,
+    onDashboardAttachmentsSelectionChange,
+    enableAutomationFilterContext,
+    overlayPositionType,
+}: IDashboardAttachmentsProps) {
     /**
      * When editing a schedule, we need to get the filters from the export definition and we don't care
      * about the actual filters on the dashboard.

@@ -40,7 +40,16 @@ import { getVisibilityIcon } from "../utils.js";
  *
  * @alpha
  */
-export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): ReactElement {
+export function DefaultDashboardDateFilter({
+    filter,
+    workingFilter,
+    onFilterChanged,
+    config,
+    readonly,
+    autoOpen,
+    ButtonComponent,
+    overlayPositionType,
+}: IDashboardDateFilterProps): ReactElement {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -50,16 +59,6 @@ export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): Re
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     const enableFilterAccessibility = settings?.enableFilterAccessibility;
-    const {
-        filter,
-        workingFilter,
-        onFilterChanged,
-        config,
-        readonly,
-        autoOpen,
-        ButtonComponent,
-        overlayPositionType,
-    } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;

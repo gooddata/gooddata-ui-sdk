@@ -3,8 +3,7 @@ import { IAxisNameConfig, IBucketChartProps, IChartConfig } from "@gooddata/sdk-
 
 import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
-function getConfig(nameConfig: IAxisNameConfig): IChartConfig {
-    const { visible = true, position = "middle" } = nameConfig;
+function getConfig({ visible = true, position = "middle" }: IAxisNameConfig): IChartConfig {
     return {
         xaxis: {
             name: {

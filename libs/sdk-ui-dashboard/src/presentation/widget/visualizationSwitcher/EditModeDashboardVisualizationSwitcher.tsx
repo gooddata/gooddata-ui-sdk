@@ -24,9 +24,14 @@ const { VisualizationSwitcher: VisualizationSwitcherIcon } = Icon;
 /**
  * @internal
  */
-export function EditModeDashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps) {
-    const { widget, activeVisualizationId, onError, onExportReady, onLoadingChanged, screen } = props;
-
+export function EditModeDashboardVisualizationSwitcher({
+    widget,
+    activeVisualizationId,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    screen,
+}: IDashboardVisualizationSwitcherProps) {
     const activeVisualization =
         widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??
         widget.visualizations[0];

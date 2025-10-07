@@ -4,9 +4,7 @@ export interface IHintProps {
     hint?: string;
 }
 
-function Hint(props: IHintProps) {
-    const { hint } = props;
-
+function Hint({ hint }: IHintProps) {
     return (
         <>
             <div>

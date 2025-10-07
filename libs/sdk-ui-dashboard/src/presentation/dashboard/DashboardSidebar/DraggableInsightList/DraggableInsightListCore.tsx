@@ -25,8 +25,11 @@ import {
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { IInsightListProps, InsightList } from "../../../insightList/index.js";
 
-export function DraggableInsightListCore(props: IInsightListProps) {
-    const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;
+export function DraggableInsightListCore({
+    enableDescriptions,
+    WrapInsightListItemWithDragComponent,
+    ...remainingProps
+}: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);

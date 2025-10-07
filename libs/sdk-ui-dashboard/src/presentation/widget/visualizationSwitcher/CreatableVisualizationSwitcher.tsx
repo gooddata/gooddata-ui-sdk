@@ -11,9 +11,9 @@ import {
 /**
  * @internal
  */
-export function CreatableVisualizationSwitcher(props: ICreatePanelItemComponentProps) {
-    const { WrapCreatePanelItemWithDragComponent } = props;
-
+export function CreatableVisualizationSwitcher({
+    WrapCreatePanelItemWithDragComponent,
+}: ICreatePanelItemComponentProps) {
     return (
         <BubbleHoverTrigger eventsOnBubble className="s-add-visualization-switcher-bubble-trigger">
             <DraggableVisualizationSwitcherCreatePanelItem

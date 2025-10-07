@@ -25,9 +25,11 @@ export interface IAttributeFilterAllValuesFilteredResultProps {
  * Component that display message that all elements are filtered out by parent filers.
  * @beta
  */
-export function AttributeFilterAllValuesFilteredResult(props: IAttributeFilterAllValuesFilteredResultProps) {
-    const { parentFilterTitles, searchString, enableShowingFilteredElements } = props;
-
+export function AttributeFilterAllValuesFilteredResult({
+    parentFilterTitles,
+    searchString,
+    enableShowingFilteredElements,
+}: IAttributeFilterAllValuesFilteredResultProps) {
     if (enableShowingFilteredElements && searchString.length > 0) {
         return <AttributeFilterEmptySearchResult />;
     }

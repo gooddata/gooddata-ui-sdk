@@ -89,8 +89,13 @@ const createUrlLanguage = (rules: IFormattingRule[]) => {
     });
 };
 
-export function UrlInput(props: IUrlInputProps) {
-    const { onChange, onCursor, currentUrlValue, intl, syntaxHighlightingRules } = props;
+export function UrlInput({
+    onChange,
+    onCursor,
+    currentUrlValue,
+    intl,
+    syntaxHighlightingRules,
+}: IUrlInputProps) {
     const placeholder = intl.formatMessage({
         id: "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder",
     });
@@ -247,18 +252,17 @@ const buildFormattingRules = (
     ]);
 };
 
-function UrlInputPanel(props: IUrlInputPanelProps) {
-    const {
-        currentUrlValue,
-        onChange,
-        onCursor,
-        documentationLink,
-        attributeDisplayForms,
-        intl,
-        insightFilters,
-        dashboardFilters,
-        attributeFilterConfigs,
-    } = props;
+function UrlInputPanel({
+    currentUrlValue,
+    onChange,
+    onCursor,
+    documentationLink,
+    attributeDisplayForms,
+    intl,
+    insightFilters,
+    dashboardFilters,
+    attributeFilterConfigs,
+}: IUrlInputPanelProps) {
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
     const syntaxHighlightingRules = useMemo(
@@ -335,21 +339,19 @@ export interface CustomUrlEditorProps {
     widgetRef: ObjRef;
 }
 
-function CustomUrlEditorDialog(props: CustomUrlEditorProps) {
-    const {
-        urlDrillTarget,
-        documentationLink,
-        onSelect,
-        onClose,
-        attributeDisplayForms,
-        loadingAttributeDisplayForms = false,
-        invalidAttributeDisplayFormIdentifiers,
-        enableClientIdParameter,
-        enableDataProductIdParameter,
-        enableWidgetIdParameter,
-        widgetRef,
-    } = props;
-
+function CustomUrlEditorDialog({
+    urlDrillTarget,
+    documentationLink,
+    onSelect,
+    onClose,
+    attributeDisplayForms,
+    loadingAttributeDisplayForms = false,
+    invalidAttributeDisplayFormIdentifiers,
+    enableClientIdParameter,
+    enableDataProductIdParameter,
+    enableWidgetIdParameter,
+    widgetRef,
+}: CustomUrlEditorProps) {
     const intl = useIntl();
 
     const insightFilters = useSanitizedInsightFilters(widgetRef);

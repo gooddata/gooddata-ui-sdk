@@ -12,10 +12,13 @@ import { HeightResizer } from "../Resize/HeightResizer.js";
 
 export type HeightResizerDragPreviewProps = DragResizeProps<HeightResizerDragItem>;
 
-export function HeightResizerDragPreview(props: HeightResizerDragPreviewProps) {
-    const { item, initialOffset, differenceFromInitialOffset, scrollCorrection, getDragLayerPosition } =
-        props;
-
+export function HeightResizerDragPreview({
+    item,
+    initialOffset,
+    differenceFromInitialOffset,
+    scrollCorrection,
+    getDragLayerPosition,
+}: HeightResizerDragPreviewProps) {
     const { toggleHeightLimitReached } = useResizeHandlers();
     const [hasReachedLimit, setReachedLimit] = useState<ReachedResizingLimit>("none");
     useEffect(() => {

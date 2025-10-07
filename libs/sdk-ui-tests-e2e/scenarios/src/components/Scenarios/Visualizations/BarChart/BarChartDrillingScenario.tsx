@@ -29,9 +29,7 @@ interface IBarChartDrillingProps {
 }
 const measures = [Won, Amount];
 const viewBy = [Product.Name, Region];
-function BarChartDrilling(props: IBarChartDrillingProps) {
-    const { drillableItems } = props;
-
+function BarChartDrilling({ drillableItems }: IBarChartDrillingProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);

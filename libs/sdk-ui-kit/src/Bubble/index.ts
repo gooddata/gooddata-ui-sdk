@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
+
 export type * from "./typings.js";
-export type { IBubbleProps, IBubbleState } from "./Bubble.js";
+export type { IBubbleAccessibilityConfig, IBubbleProps, IBubbleState } from "./Bubble.js";
 export { Bubble } from "./Bubble.js";
 export type { IBubbleTriggerProps, IBubbleTriggerState } from "./BubbleTrigger.js";
 export { BubbleTrigger } from "./BubbleTrigger.js";

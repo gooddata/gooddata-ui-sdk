@@ -94,9 +94,15 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
 
 type Props = IRawExecuteProps & WithLoadingResult;
 
-function CoreExecutor(props: Props) {
-    const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
-
+function CoreExecutor({
+    children,
+    error,
+    isLoading,
+    reload,
+    result,
+    LoadingComponent,
+    ErrorComponent,
+}: Props) {
     if (ErrorComponent && error) {
         return <ErrorComponent error={error} />;
     }

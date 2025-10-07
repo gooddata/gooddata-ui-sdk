@@ -13,9 +13,12 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-function CustomElementsSelectItem(props: IAttributeFilterElementsSelectItemProps) {
-    const { isSelected, item, onDeselect, onSelect } = props;
-
+function CustomElementsSelectItem({
+    isSelected,
+    item,
+    onDeselect,
+    onSelect,
+}: IAttributeFilterElementsSelectItemProps) {
     return (
         <div
             style={{

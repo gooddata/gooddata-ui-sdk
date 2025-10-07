@@ -91,26 +91,24 @@ export interface IUseEditScheduledEmailProps {
     enableNewScheduledExport: boolean;
 }
 
-export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
-    const {
-        scheduledExportToEdit,
-        notificationChannels,
-        insight,
-        widget,
-        editedAutomationFilters,
-        dashboardFilters,
-        widgetFilters,
-        maxAutomationsRecipients,
-        setEditedAutomationFilters,
-        availableFiltersAsVisibleFilters,
-        storeFilters,
-        setStoreFilters,
-        enableAutomationFilterContext,
-        filtersForNewAutomation,
-        externalRecipientOverride,
-        enableNewScheduledExport,
-    } = props;
-
+export function useEditScheduledEmail({
+    scheduledExportToEdit,
+    notificationChannels,
+    insight,
+    widget,
+    editedAutomationFilters,
+    dashboardFilters,
+    widgetFilters,
+    maxAutomationsRecipients,
+    setEditedAutomationFilters,
+    availableFiltersAsVisibleFilters,
+    storeFilters,
+    setStoreFilters,
+    enableAutomationFilterContext,
+    filtersForNewAutomation,
+    externalRecipientOverride,
+    enableNewScheduledExport,
+}: IUseEditScheduledEmailProps) {
     const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
     const [isTitleValid, setIsTitleValid] = useState(true);

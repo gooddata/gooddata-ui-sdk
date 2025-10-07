@@ -68,9 +68,7 @@ interface ILocaleDropdownItem {
 
 const localeItems: ILocaleDropdownItem[] = LOCALES.map((u) => ({ id: u as ILocale, title: u }));
 
-function LocaleSelect(props: LocaleSelectProps) {
-    const { selectedLocale, onSelectLocale } = props;
-
+function LocaleSelect({ selectedLocale, onSelectLocale }: LocaleSelectProps) {
     const renderDropdownBody = useCallback(
         ({ closeDropdown }: { closeDropdown: () => void }) => {
             return (

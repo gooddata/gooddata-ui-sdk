@@ -28,25 +28,23 @@ export interface IConfigSectionOwnProps {
 
 export type IConfigSectionProps = IConfigSectionOwnProps & WrappedComponentProps;
 
-export function ConfigSection(props: IConfigSectionProps) {
-    const {
-        id,
-        valuePath,
-        canBeToggled = false,
-        toggleDisabled = false,
-        toggledOn = true,
-        propertiesMeta,
-        properties = {},
-        title,
-        subtitle,
-        showDisabledMessage = false,
-        className = "",
-        pushData = () => {},
-        children,
-        toggleMessageId,
-        intl,
-    } = props;
-
+export function ConfigSection({
+    id,
+    valuePath,
+    canBeToggled = false,
+    toggleDisabled = false,
+    toggledOn = true,
+    propertiesMeta,
+    properties = {},
+    title,
+    subtitle,
+    showDisabledMessage = false,
+    className = "",
+    pushData = () => {},
+    children,
+    toggleMessageId,
+    intl,
+}: IConfigSectionProps) {
     const [collapsed, setCollapsed] = useState(() => propertiesMeta?.[id]?.collapsed ?? true);
 
     useEffect(() => {

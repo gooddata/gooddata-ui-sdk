@@ -15,18 +15,16 @@ import { IButtonBarProps } from "./types.js";
 /**
  * @alpha
  */
-export function DefaultButtonBar(props: IButtonBarProps): ReactElement {
-    const {
-        children,
-        cancelButtonProps,
-        saveButtonProps,
-        settingButtonProps,
-        editButtonProps,
-        saveAsNewButtonProps,
-        shareButtonProps,
-        childContentPosition = "left",
-    } = props;
-
+export function DefaultButtonBar({
+    children,
+    cancelButtonProps,
+    saveButtonProps,
+    settingButtonProps,
+    editButtonProps,
+    saveAsNewButtonProps,
+    shareButtonProps,
+    childContentPosition = "left",
+}: IButtonBarProps): ReactElement {
     // TODO INE allow customization of buttons via getter from props
     return (
         <div className="dash-control-buttons">

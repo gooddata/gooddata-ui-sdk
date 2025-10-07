@@ -48,10 +48,17 @@ export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallb
  *
  * @public
  */
-export function useInsightWidgetDataView(
-    config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks,
-): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget, onCancel, onError, onLoading, onPending, onSuccess } = config;
+export function useInsightWidgetDataView({
+    insightWidget,
+    onCancel,
+    onError,
+    onLoading,
+    onPending,
+    onSuccess,
+}: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<
+    DataViewFacade,
+    GoodDataSdkError
+> {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));

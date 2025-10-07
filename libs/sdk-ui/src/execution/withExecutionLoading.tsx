@@ -192,19 +192,17 @@ type WithLoadingState = {
  *
  * @internal
  */
-export function withExecutionLoading<TProps>(
-    params: IWithExecutionLoading<TProps>,
-): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps> {
-    const {
-        promiseFactory,
-        loadOnMount = true,
-        events = {},
-        shouldRefetch = () => false,
-        window,
-        exportTitle,
-        enableExecutionCancelling = false,
-    } = params;
-
+export function withExecutionLoading<TProps>({
+    promiseFactory,
+    loadOnMount = true,
+    events = {},
+    shouldRefetch = () => false,
+    window,
+    exportTitle,
+    enableExecutionCancelling = false,
+}: IWithExecutionLoading<TProps>): (
+    WrappedComponent: ComponentType<TProps & WithLoadingResult>,
+) => ComponentType<TProps> {
     return (WrappedComponent: ComponentType<TProps & WithLoadingResult>): ComponentType<TProps> => {
         function WithLoading(props: TProps) {
             const isWithExecutionLoadingUnmountedRef = useRef<boolean>(false);

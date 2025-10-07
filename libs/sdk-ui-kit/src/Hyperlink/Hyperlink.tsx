@@ -20,8 +20,7 @@ export interface IHyperlinkProps {
  *
  * @internal
  */
-export function Hyperlink(props: IHyperlinkProps) {
-    const { text, href, onClick = () => {}, className, iconClass } = props;
+export function Hyperlink({ text, href, onClick = () => {}, className, iconClass }: IHyperlinkProps) {
     return (
         <a
             className={cx("gd-hyperlink", className)}

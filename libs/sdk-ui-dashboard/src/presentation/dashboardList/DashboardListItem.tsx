@@ -31,9 +31,12 @@ export const getTooltip = (intl: IntlShape, accessibilityLimitation?: DashboardA
     }
 };
 
-function DropdownItem(props: DashboardsListItemProps) {
-    const { onClick, accessibilityLimitation, title, isSelected = false } = props;
-
+function DropdownItem({
+    onClick,
+    accessibilityLimitation,
+    title,
+    isSelected = false,
+}: DashboardsListItemProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     const generatedTestClass = `s-dashboard-item s-${stringUtils.simplifyText(title)}`;
     const classNames = cx("gd-list-item gd-drill-dashboard-item", generatedTestClass, {

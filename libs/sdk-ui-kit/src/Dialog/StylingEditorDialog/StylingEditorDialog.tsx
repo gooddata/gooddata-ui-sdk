@@ -59,25 +59,24 @@ export function StylingEditorDialog<T extends StylingPickerItemContent>(props: I
     );
 }
 
-function StylingEditorDialogCore<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) {
-    const {
-        title,
-        tooltip,
-        link,
-        stylingItem,
-        examples,
-        exampleToColorPreview,
-        onClose,
-        onSubmit,
-        onCancel,
-        disableSubmit,
-        showProgressIndicator,
-        showBackButton,
-        onHelpClick,
-        onExit = () => {},
-        className,
-        onInvalidDefinition = () => {},
-    } = props;
+function StylingEditorDialogCore<T extends StylingPickerItemContent>({
+    title,
+    tooltip,
+    link,
+    stylingItem,
+    examples,
+    exampleToColorPreview,
+    onClose,
+    onSubmit,
+    onCancel,
+    disableSubmit,
+    showProgressIndicator,
+    showBackButton,
+    onHelpClick,
+    onExit = () => {},
+    className,
+    onInvalidDefinition = () => {},
+}: IStylingEditorDialogProps<T>) {
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
     const initialNameField = stylingItem?.name ?? "";

@@ -9,8 +9,7 @@ import { CodeArea } from "@gooddata/sdk-ui-kit";
 import { code } from "./CodeMock.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-function AreaWrapper(props: { children?: ReactNode }) {
-    const { children } = props;
+function AreaWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
 }
 

@@ -60,20 +60,18 @@ const labelMessages = defineMessages({
 
 const { b, e } = bemFactory("gd-alerts-list-item");
 
-export function Alert(props: IAlertProps) {
+export function Alert({
+    alert,
+    onDelete,
+    onEdit,
+    onTogglePause,
+    focusedAction,
+    isDropdownOpen,
+    onToggleDropdown,
+    listId,
+    isSubtitleVisible,
+}: IAlertProps) {
     const theme = useTheme();
-
-    const {
-        alert,
-        onDelete,
-        onEdit,
-        onTogglePause,
-        focusedAction,
-        isDropdownOpen,
-        onToggleDropdown,
-        listId,
-        isSubtitleVisible,
-    } = props;
 
     const intl = useIntl();
     const { formatMessage } = intl;

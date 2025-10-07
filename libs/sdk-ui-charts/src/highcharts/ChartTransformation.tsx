@@ -74,25 +74,24 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     renderer?(arg: IHighChartsRendererProps): ReactElement;
 }
 
-function ChartTransformationImpl(props: IChartTransformationProps) {
-    const {
-        config,
-        renderer = renderHighCharts,
-        dataView,
-        height,
-        width,
-        afterRender = () => {},
-        onDrill = (): boolean => true,
-        onLegendReady = () => {},
-        locale,
-        intl,
-        theme,
-        numericSymbols,
-        drillableItems = [],
-        onDataTooLarge,
-        onNegativeValues = null,
-        pushData = () => {},
-    } = props;
+function ChartTransformationImpl({
+    config,
+    renderer = renderHighCharts,
+    dataView,
+    height,
+    width,
+    afterRender = () => {},
+    onDrill = (): boolean => true,
+    onLegendReady = () => {},
+    locale,
+    intl,
+    theme,
+    numericSymbols,
+    drillableItems = [],
+    onDataTooLarge,
+    onNegativeValues = null,
+    pushData = () => {},
+}: IChartTransformationProps) {
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
     const chartOptions: IChartOptions = getChartOptions(

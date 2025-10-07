@@ -75,6 +75,7 @@
         "@cypress/grep": "^3.1.5",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.1",
+        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/fixtures": "3.3.0",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",

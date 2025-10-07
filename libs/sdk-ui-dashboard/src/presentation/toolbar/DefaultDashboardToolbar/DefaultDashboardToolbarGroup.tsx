@@ -13,8 +13,7 @@ export interface IDefaultDashboardToolbarGroupProps {
 /**
  * @internal
  */
-export function DefaultDashboardToolbarGroup(props: IDefaultDashboardToolbarGroupProps) {
-    const { children, title } = props;
+export function DefaultDashboardToolbarGroup({ children, title }: IDefaultDashboardToolbarGroupProps) {
     return (
         <div className="gd-toolbar-group">
             <span className="gd-toolbar-group-title">{title}</span>

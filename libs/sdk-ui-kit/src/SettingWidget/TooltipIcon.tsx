@@ -19,8 +19,12 @@ export interface ITooltipIconProps {
 /**
  * @internal
  */
-export function TooltipIcon(props: ITooltipIconProps) {
-    const { text, iconClass, arrowOffsets = ARROW_OFFSETS, alignPoints = ALIGN_POINTS } = props;
+export function TooltipIcon({
+    text,
+    iconClass,
+    arrowOffsets = ARROW_OFFSETS,
+    alignPoints = ALIGN_POINTS,
+}: ITooltipIconProps) {
     return (
         <span>
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>

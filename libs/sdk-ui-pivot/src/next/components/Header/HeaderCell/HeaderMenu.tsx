@@ -43,18 +43,17 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
     );
 }
 
-export function HeaderMenu(props: IHeaderMenuProps) {
+export function HeaderMenu({
+    aggregationsItems,
+    textWrappingItems,
+    sortingItems,
+    onAggregationsItemClick,
+    onTextWrappingItemClick,
+    onSortingItemClick,
+    isMenuOpened,
+    onMenuOpenedChange,
+}: IHeaderMenuProps) {
     const intl = useIntl();
-    const {
-        aggregationsItems,
-        textWrappingItems,
-        sortingItems,
-        onAggregationsItemClick,
-        onTextWrappingItemClick,
-        onSortingItemClick,
-        isMenuOpened,
-        onMenuOpenedChange,
-    } = props;
 
     const uiMenuItems = useMemo(
         () => buildUiMenuItems(aggregationsItems, textWrappingItems, sortingItems, intl),

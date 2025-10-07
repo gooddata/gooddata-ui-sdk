@@ -171,22 +171,20 @@ function UiPagedVirtualListNotWrapped<T>(
  */
 export const UiPagedVirtualList = forwardRefWithGenerics(UiPagedVirtualListNotWrapped);
 
-function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
-    const {
-        items,
-        itemHeight,
-        itemsGap,
-        skeletonItemsCount,
-        hasNextPage,
-        loadNextPage,
-        isLoading,
-        maxHeight,
-        scrollToItem,
-        scrollToItemKeyExtractor,
-        scrollToIndex,
-        shouldLoadNextPage: shouldLoadNextPageProps,
-    } = props;
-
+function useVirtualList<T>({
+    items,
+    itemHeight,
+    itemsGap,
+    skeletonItemsCount,
+    hasNextPage,
+    loadNextPage,
+    isLoading,
+    maxHeight,
+    scrollToItem,
+    scrollToItemKeyExtractor,
+    scrollToIndex,
+    shouldLoadNextPage: shouldLoadNextPageProps,
+}: UiPagedVirtualListProps<T>) {
     const defaultShouldLoadNextPage = useCallback(
         (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) =>
             lastItemIndex >= itemsCount - 1 - skeletonItemsCount,

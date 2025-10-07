@@ -52,6 +52,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
+        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",

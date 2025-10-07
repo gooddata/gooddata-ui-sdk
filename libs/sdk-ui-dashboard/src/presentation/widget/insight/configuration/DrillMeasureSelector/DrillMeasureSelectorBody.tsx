@@ -14,9 +14,11 @@ export interface IDrillMeasureSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-function DrillMeasureSelectorBody(props: IDrillMeasureSelectorBodyProps) {
-    const { supportedItems, onSelect, onCloseDropdown } = props;
-
+function DrillMeasureSelectorBody({
+    supportedItems,
+    onSelect,
+    onCloseDropdown,
+}: IDrillMeasureSelectorBodyProps) {
     const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };

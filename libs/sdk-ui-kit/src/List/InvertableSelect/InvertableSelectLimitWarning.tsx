@@ -15,9 +15,10 @@ export interface IInvertableSelectLimitWarningProps {
 /**
  * @internal
  */
-export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps) {
-    const { limit, selectedItemsCount } = props;
-
+export function InvertableSelectLimitWarning({
+    limit,
+    selectedItemsCount,
+}: IInvertableSelectLimitWarningProps) {
     return (
         <Message type="warning" className="gd-invertable-list-limitExceeded">
             {selectedItemsCount === limit && (

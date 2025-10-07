@@ -21,8 +21,13 @@ export interface ITotalSectionProps {
 
 const MAX_BUCKET_ITEM_NAME = 50;
 
-function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
-    const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
+function TotalSection({
+    intl,
+    controlsDisabled,
+    properties,
+    propertiesMeta,
+    pushData,
+}: ITotalSectionProps & WrappedComponentProps) {
     const hasTotalMeasure = properties.controls?.["total"]?.measures?.length > 0;
     const isToggleDisabled = controlsDisabled || hasTotalMeasure;
     //always toggle to false when the control is disabled, otherwise depend on the properties config

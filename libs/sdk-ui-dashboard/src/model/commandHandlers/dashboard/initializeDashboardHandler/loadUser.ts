@@ -3,8 +3,6 @@ import { IUser } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 
-export function loadUser(ctx: DashboardContext): Promise<IUser> {
-    const { backend } = ctx;
-
+export function loadUser({ backend }: DashboardContext): Promise<IUser> {
     return backend.currentUser().getUserWithDetails();
 }

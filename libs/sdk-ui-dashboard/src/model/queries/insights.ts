@@ -132,9 +132,10 @@ export interface InsightDateDatasets {
  * @param queryResult - insight date datasets query result
  * @alpha
  */
-export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined {
-    const { mostImportantFromInsight, dateDatasetsOrdered } = queryResult;
-
+export function insightSelectDateDataset({
+    mostImportantFromInsight,
+    dateDatasetsOrdered,
+}: InsightDateDatasets): ICatalogDateDataset | undefined {
     return mostImportantFromInsight ?? dateDatasetsOrdered[0];
 }
 

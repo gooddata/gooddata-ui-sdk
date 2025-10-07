@@ -31,19 +31,17 @@ interface IDateDatasetFilterProps {
     onDateDatasetChanged?: (id: string) => void;
 }
 
-export function DateDatasetFilter(props: IDateDatasetFilterProps) {
-    const {
-        relatedDateDatasets,
-        widget,
-        dateFilterCheckboxDisabled,
-        dateFromVisualization,
-        isDatasetsLoading,
-        shouldPickDateDataset,
-        shouldOpenDateDatasetPicker,
-        onDateDatasetChanged,
-        isLoadingAdditionalData,
-    } = props;
-
+export function DateDatasetFilter({
+    relatedDateDatasets,
+    widget,
+    dateFilterCheckboxDisabled,
+    dateFromVisualization,
+    isDatasetsLoading,
+    shouldPickDateDataset,
+    shouldOpenDateDatasetPicker,
+    onDateDatasetChanged,
+    isLoadingAdditionalData,
+}: IDateDatasetFilterProps) {
     const enableUnrelatedItemsVisibility = useDashboardSelector(selectEnableUnavailableItemsVisibility);
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);

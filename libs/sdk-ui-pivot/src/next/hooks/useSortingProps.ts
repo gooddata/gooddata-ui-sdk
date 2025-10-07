@@ -5,12 +5,11 @@ import { useCallback } from "react";
 import { SortChangedEvent } from "ag-grid-enterprise";
 import { isEqual } from "lodash-es";
 
-import { BucketNames, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useSyncSort } from "./sorting/useSyncSort.js";
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { sanitizeTotalsFromExecutionDefinition } from "../features/aggregations/sanitization.js";
 import { getSortModel } from "../features/sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
 import { AgGridProps } from "../types/agGrid.js";
@@ -23,7 +22,7 @@ import { AgGridProps } from "../types/agGrid.js";
 export function useSortingProps(): (agGridReactProps: AgGridProps) => AgGridProps {
     useSyncSort();
     const { columnDefinitionByColId } = useColumnDefs();
-    const { pushData, execution, sortBy } = usePivotTableProps();
+    const { pushData, sortBy } = usePivotTableProps();
 
     const onSortChanged = useCallback(
         (event: SortChangedEvent) => {
@@ -35,20 +34,15 @@ export function useSortingProps(): (agGridReactProps: AgGridProps) => AgGridProp
             const sortModel = getSortModel(event.api);
             const sortItems = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
-            // Sanitize totals for the ATTRIBUTE bucket as some items may be invalid
-            const totals = sanitizeTotalsFromExecutionDefinition(execution.definition, sortItems);
-
             if (!isEqual(sortItems, sortBy)) {
                 pushData({
                     properties: {
                         sortItems,
-                        totals,
-                        bucketType: BucketNames.ATTRIBUTE,
                     },
                 });
             }
         },
-        [pushData, columnDefinitionByColId, execution.definition, sortBy],
+        [pushData, columnDefinitionByColId, sortBy],
     );
 
     return useCallback(

@@ -1,13 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
+
 import path from "path";
 import process from "process";
 
 import findUp from "find-up";
-import { identity, keyBy } from "lodash-es";
+import { keyBy } from "lodash-es";
 
 import { createDependencyGraph } from "./dependencyGraph.js";
 import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";
 import { readJsonSync } from "./utils.js";
+
+const identity = <T>(v: T): boolean => !!v;
 
 /*
  * Singleton sdk package descriptor. Loaded the first time it is needed by `getSdkPackages`.

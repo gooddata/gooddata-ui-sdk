@@ -4,8 +4,7 @@ import { IBucketsInfo } from "./collectBucketsInfo.js";
 /**
  * @internal
  */
-export function collectPivotingInfo(bucketsInfo: IBucketsInfo) {
-    const { columnAttributes } = bucketsInfo;
+export function collectPivotingInfo({ columnAttributes }: IBucketsInfo) {
     const hasColumnAttributes = columnAttributes.length > 0;
     const isPivoted = hasColumnAttributes;
 

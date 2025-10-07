@@ -44,16 +44,15 @@ interface IHotspotProps {
 
 const { e: dropzoneBemElement, b: dropzoneBemBlock } = bemFactory("gd-grid-layout-dropzone");
 
-export function Hotspot(props: IHotspotProps) {
-    const {
-        layoutPath,
-        dropZoneType,
-        direction,
-        isEndingHotspot = false,
-        hideDropTarget = false,
-        isInFirstRow = false,
-        isOverNestedLayout = false,
-    } = props;
+export function Hotspot({
+    layoutPath,
+    dropZoneType,
+    direction,
+    isEndingHotspot = false,
+    hideDropTarget = false,
+    isInFirstRow = false,
+    isOverNestedLayout = false,
+}: IHotspotProps) {
     const isOverLastValue = useRef(false);
 
     const currentItemIndex = getItemIndex(layoutPath);

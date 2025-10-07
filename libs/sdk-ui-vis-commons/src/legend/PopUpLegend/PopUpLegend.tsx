@@ -32,18 +32,17 @@ export interface IPopUpLegendProps {
 /**
  * @internal
  */
-export function PopUpLegend(props: IPopUpLegendProps) {
-    const {
-        name,
-        maxRows,
-        enableBorderRadius,
-        series,
-        onLegendItemClick,
-        containerId,
-        customComponent,
-        customComponentName,
-        chartFill,
-    } = props;
+export function PopUpLegend({
+    name,
+    maxRows,
+    enableBorderRadius,
+    series,
+    onLegendItemClick,
+    containerId,
+    customComponent,
+    customComponentName,
+    chartFill,
+}: IPopUpLegendProps) {
     const intl = useIntl();
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [page, setPage] = useState(1);

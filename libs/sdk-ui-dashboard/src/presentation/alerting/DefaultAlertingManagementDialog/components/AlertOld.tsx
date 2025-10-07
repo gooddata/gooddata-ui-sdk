@@ -40,10 +40,8 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export function AlertOld(props: IAlertProps) {
+export function AlertOld({ alert, onDelete, onEdit, onPause }: IAlertProps) {
     const theme = useTheme();
-
-    const { alert, onDelete, onEdit, onPause } = props;
 
     const intl = useIntl();
     const { isValid } = useAlertValidation(alert);

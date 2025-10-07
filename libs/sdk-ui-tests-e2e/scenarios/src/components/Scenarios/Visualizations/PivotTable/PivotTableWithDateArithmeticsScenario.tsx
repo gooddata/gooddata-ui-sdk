@@ -101,9 +101,7 @@ export interface PivotTableDateArithmeticsCoreProps {
     filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
 }
 
-function PivotTableDateArithmetics(props: PivotTableDateArithmeticsCoreProps) {
-    const { measures, rows, filters } = props;
-
+function PivotTableDateArithmetics({ measures, rows, filters }: PivotTableDateArithmeticsCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

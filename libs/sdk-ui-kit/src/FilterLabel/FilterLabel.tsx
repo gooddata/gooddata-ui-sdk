@@ -6,17 +6,15 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IFilterLabelProps } from "./typings.js";
 
-function WrappedFilterLabel(props: IFilterLabelProps & WrappedComponentProps): ReactNode {
-    const {
-        isAllSelected = false,
-        isDate = false,
-        selection = "",
-        noData = false,
-        selectionSize,
-        intl,
-        title,
-    } = props;
-
+function WrappedFilterLabel({
+    isAllSelected = false,
+    isDate = false,
+    selection = "",
+    noData = false,
+    selectionSize,
+    intl,
+    title,
+}: IFilterLabelProps & WrappedComponentProps): ReactNode {
     const [hasEllipsis, setHasEllipsis] = useState<boolean>(false);
     const labelRef = useRef<HTMLSpanElement>(null);
 

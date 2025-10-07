@@ -92,19 +92,18 @@ export interface IUseEditAlertProps {
     externalRecipientOverride?: string;
 }
 
-export function useEditAlert(props: IUseEditAlertProps) {
-    const {
-        alertToEdit,
-        notificationChannels,
-        insight,
-        widget,
-        editedAutomationFilters,
-        maxAutomationsRecipients,
-        setEditedAutomationFilters,
-        availableFiltersAsVisibleFilters,
-        filtersForNewAutomation,
-        externalRecipientOverride,
-    } = props;
+export function useEditAlert({
+    alertToEdit,
+    notificationChannels,
+    insight,
+    widget,
+    editedAutomationFilters,
+    maxAutomationsRecipients,
+    setEditedAutomationFilters,
+    availableFiltersAsVisibleFilters,
+    filtersForNewAutomation,
+    externalRecipientOverride,
+}: IUseEditAlertProps) {
     const intl = useIntl();
 
     // Selectors

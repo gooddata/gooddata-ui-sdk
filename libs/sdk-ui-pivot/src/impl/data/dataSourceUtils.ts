@@ -48,15 +48,11 @@ export function isSomeColumnTotal(colDef: ColDef): boolean {
     return isColumnTotal(colDef) || isColumnSubtotal(colDef);
 }
 
-export function isColumnTotal(colDef: ColDef): boolean {
-    const { type } = colDef;
-
+export function isColumnTotal({ type }: ColDef): boolean {
     return type === COLUMN_TOTAL;
 }
 
-export function isColumnSubtotal(colDef: ColDef): boolean {
-    const { type } = colDef;
-
+export function isColumnSubtotal({ type }: ColDef): boolean {
     return type === COLUMN_SUBTOTAL;
 }
 

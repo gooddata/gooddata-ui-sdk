@@ -13,8 +13,11 @@ import { IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 
-export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement | null {
-    const { widget, onClick, isWidgetAsTable } = props;
+export function ShowAsTableButton({
+    widget,
+    onClick,
+    isWidgetAsTable,
+}: IShowAsTableButtonProps): ReactElement | null {
     const intl = useIntl();
     const [announcementText, setAnnouncementText] = useState<string>("");
 

@@ -22,9 +22,7 @@ export interface ILoadingMaskProps {
 /**
  * @internal
  */
-export function LoadingMask(props: ILoadingMaskProps) {
-    const { className, height, width, size } = props;
-
+export function LoadingMask({ className, height, width, size }: ILoadingMaskProps) {
     const style = useMemo(
         (): CSSProperties => ({
             width,

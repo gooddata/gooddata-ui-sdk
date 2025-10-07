@@ -263,8 +263,11 @@ export interface IDropdownInvertableSelectActionsProps {
     isApplyDisabled?: boolean;
 }
 
-function DropdownInvertableSelectActions(props: IDropdownInvertableSelectActionsProps) {
-    const { onApply, isApplyDisabled, onCancel } = props;
+function DropdownInvertableSelectActions({
+    onApply,
+    isApplyDisabled,
+    onCancel,
+}: IDropdownInvertableSelectActionsProps) {
     const intl = useIntl();
     const cancelText = intl.formatMessage(messages.cancel);
     const applyText = intl.formatMessage(messages.apply);

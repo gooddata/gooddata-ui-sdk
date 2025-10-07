@@ -3,13 +3,7 @@
 import type { MouseEvent } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    BackendProvider,
-    IntlWrapper,
-    WorkspaceProvider,
-    useBackendStrict,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
+import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { CatalogDetail, type CatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 import {
@@ -17,6 +11,8 @@ import {
     type CatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
+import { IntlWrapper } from "./localization/IntlWrapper.js";
+import type { ObjectType } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider } from "./permission/index.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
@@ -24,7 +20,15 @@ import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 /**
  * @internal
  */
-export interface AnalyticsCatalogDetailProps extends CatalogDetailProps {
+export interface AnalyticsCatalogDetailProps extends Omit<CatalogDetailProps, "objectId" | "objectType"> {
+    /**
+     * An object id of the catalog item.
+     */
+    objectId: string;
+    /**
+     * An object type of the catalog item.
+     */
+    objectType: ObjectType;
     /**
      * An analytical backend to use within the analytics catalog. Can be omitted and taken from context.
      */
@@ -42,8 +46,12 @@ export interface AnalyticsCatalogDetailProps extends CatalogDetailProps {
 /**
  * @internal
  */
-export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps) {
-    const { backend, workspace, locale, ...restProps } = props;
+export function AnalyticsCatalogDetail({
+    backend,
+    workspace,
+    locale,
+    ...restProps
+}: AnalyticsCatalogDetailProps) {
     const b = useBackendStrict(backend);
     const w = useWorkspaceStrict(workspace);
     const permissionsState = usePermissionsQuery({ backend: b, workspace: w });
@@ -66,7 +74,16 @@ export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps) {
 /**
  * @internal
  */
-export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContentProps {
+export interface AnalyticsCatalogDetailContentProps
+    extends Omit<CatalogDetailContentProps, "objectId" | "objectType"> {
+    /**
+     * An object id of the catalog item.
+     */
+    objectId: string;
+    /**
+     * An object type of the catalog item.
+     */
+    objectType: ObjectType;
     /**
      * An analytical backend to use within the analytics catalog. Can be omitted and taken from context.
      */
@@ -88,8 +105,12 @@ export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContent
 /**
  * @internal
  */
-export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailContentProps) {
-    const { backend, workspace, locale, ...restProps } = props;
+export function AnalyticsCatalogDetailContent({
+    backend,
+    workspace,
+    locale,
+    ...restProps
+}: AnalyticsCatalogDetailContentProps) {
     const b = useBackendStrict(backend);
     const w = useWorkspaceStrict(workspace);
     const permissionsState = usePermissionsQuery({ backend: b, workspace: w });

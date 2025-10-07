@@ -13,8 +13,7 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-function CustomStatusBar(props: IAttributeFilterStatusBarProps) {
-    const { selectedItems, isInverted } = props;
+function CustomStatusBar({ selectedItems, isInverted }: IAttributeFilterStatusBarProps) {
     return (
         <div
             style={{

@@ -34,23 +34,21 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
  *
  * @alpha
  */
-export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): ReactElement {
-    const {
-        layout,
-        sectionKeyGetter = defaultSectionKeyGetter,
-        sectionRenderer,
-        sectionHeaderRenderer,
-        itemKeyGetter,
-        itemRenderer,
-        widgetRenderer,
-        gridRowRenderer,
-        className,
-        onMouseLeave,
-        exportTransformer,
-        renderMode = "view",
-        focusObject,
-    } = props;
-
+export function DashboardLayout<TWidget>({
+    layout,
+    sectionKeyGetter = defaultSectionKeyGetter,
+    sectionRenderer,
+    sectionHeaderRenderer,
+    itemKeyGetter,
+    itemRenderer,
+    widgetRenderer,
+    gridRowRenderer,
+    className,
+    onMouseLeave,
+    exportTransformer,
+    renderMode = "view",
+    focusObject,
+}: IDashboardLayoutRenderProps<TWidget>): ReactElement {
     const layoutRef = useRef<HTMLDivElement>(null);
     const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 

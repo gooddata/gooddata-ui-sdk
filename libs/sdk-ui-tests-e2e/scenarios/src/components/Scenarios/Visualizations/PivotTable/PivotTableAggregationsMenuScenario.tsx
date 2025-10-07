@@ -46,9 +46,7 @@ interface IPivotTableAggregationsMenuCoreProps {
     totals?: TotalsOrPlaceholders;
 }
 
-function PivotTableAggregationsMenuCore(props: IPivotTableAggregationsMenuCoreProps) {
-    const { totals, config } = props;
-
+function PivotTableAggregationsMenuCore({ totals, config }: IPivotTableAggregationsMenuCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

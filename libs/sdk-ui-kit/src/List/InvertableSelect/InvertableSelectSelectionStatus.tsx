@@ -66,9 +66,11 @@ export function useInvertableSelectionStatusText<T>(
 /**
  * @internal
  */
-export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>) {
-    const { selectedItems, getItemTitle, isInverted } = props;
-
+export function InvertableSelectStatus<T>({
+    selectedItems,
+    getItemTitle,
+    isInverted,
+}: IInvertableSelectStatusProps<T>) {
     const intl = useIntl();
 
     const isSelectionEmpty = selectedItems.length === 0;

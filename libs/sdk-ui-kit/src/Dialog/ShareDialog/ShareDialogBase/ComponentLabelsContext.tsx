@@ -22,8 +22,6 @@ export const useComponentLabelsContext = (): IShareDialogLabels => useContext(La
 /**
  * @internal
  */
-export function ComponentLabelsProvider(props: IComponentLabelsProviderProps) {
-    const { children, labels } = props;
-
+export function ComponentLabelsProvider({ children, labels }: IComponentLabelsProviderProps) {
     return <LabelsContext.Provider value={labels}>{children}</LabelsContext.Provider>;
 }

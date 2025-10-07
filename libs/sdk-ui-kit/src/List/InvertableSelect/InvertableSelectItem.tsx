@@ -33,9 +33,17 @@ export interface IInvertableSelectItem {
 /**
  * @internal
  */
-export function InvertableSelectItem(props: IInvertableSelectItem) {
-    const { title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, icon, isDisabled } =
-        props;
+export function InvertableSelectItem({
+    title,
+    onClick,
+    onMouseOver,
+    onMouseOut,
+    isSelected,
+    onOnly,
+    renderOnly,
+    icon,
+    isDisabled,
+}: IInvertableSelectItem) {
     const handleOnly = useCallback(
         (e: MouseEvent<HTMLSpanElement>) => {
             if (isDisabled) {

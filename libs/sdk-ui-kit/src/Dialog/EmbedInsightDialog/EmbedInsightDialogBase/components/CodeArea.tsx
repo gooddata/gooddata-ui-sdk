@@ -18,9 +18,7 @@ export interface ICodeAreaProps {
 /**
  * @internal
  */
-export function CodeArea(props: ICodeAreaProps) {
-    const { code, onCopyCode } = props;
-
+export function CodeArea({ code, onCopyCode }: ICodeAreaProps) {
     const onAreaCopyCode = useCallback(() => {
         onCopyCode(code);
     }, [code, onCopyCode]);

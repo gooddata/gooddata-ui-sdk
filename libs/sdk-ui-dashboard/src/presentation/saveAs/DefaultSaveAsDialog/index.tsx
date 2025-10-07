@@ -51,9 +51,13 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
 /**
  * @alpha
  */
-export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | null {
-    const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
-
+export function DefaultSaveAsDialog({
+    onSubmit,
+    onCancel,
+    onError,
+    isVisible,
+    onSuccess,
+}: ISaveAsDialogProps): ReactElement | null {
     const {
         locale,
         dashboardTitle,

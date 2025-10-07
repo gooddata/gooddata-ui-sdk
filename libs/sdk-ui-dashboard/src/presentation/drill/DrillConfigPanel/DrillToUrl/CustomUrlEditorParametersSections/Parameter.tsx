@@ -18,8 +18,7 @@ interface IParameterProps {
     intl: IntlShape;
 }
 
-export function Parameter(props: IParameterProps) {
-    const { name, description, detailContent, iconClassName, onAdd, intl } = props;
+export function Parameter({ name, description, detailContent, iconClassName, onAdd, intl }: IParameterProps) {
     const [displayHelp, setDisplayHelp] = useState(false);
     const theme = useTheme();
     const isDark = theme && isDarkTheme(theme);

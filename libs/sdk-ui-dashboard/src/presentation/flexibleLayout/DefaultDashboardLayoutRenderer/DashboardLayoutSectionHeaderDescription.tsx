@@ -28,10 +28,13 @@ export interface IDashboardLayoutSectionHeaderDescriptionProps {
     onError?: OnError;
 }
 
-export function DashboardLayoutSectionHeaderDescription(
-    props: IDashboardLayoutSectionHeaderDescriptionProps,
-) {
-    const { description, exportData, LoadingComponent, onLoadingChanged, onError } = props;
+export function DashboardLayoutSectionHeaderDescription({
+    description,
+    exportData,
+    LoadingComponent,
+    onLoadingChanged,
+    onError,
+}: IDashboardLayoutSectionHeaderDescriptionProps) {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { loading, filters } = useRichTextFilters(false);

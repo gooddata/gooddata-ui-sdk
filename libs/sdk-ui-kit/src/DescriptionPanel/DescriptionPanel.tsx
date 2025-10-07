@@ -142,19 +142,17 @@ function DescriptionPanelCore(props: IDescriptionPanelProps) {
     );
 }
 
-function DescriptionPanelContentCore(props: IDescriptionPanelProps) {
-    const {
-        title,
-        description,
-        useRichText = false,
-        useReferences = false,
-        LoadingComponent,
-        filters,
-        separators,
-        execConfig,
-        id,
-    } = props;
-
+function DescriptionPanelContentCore({
+    title,
+    description,
+    useRichText = false,
+    useReferences = false,
+    LoadingComponent,
+    filters,
+    separators,
+    execConfig,
+    id,
+}: IDescriptionPanelProps) {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
 
     const className = cx("gd-description-panel s-gd-description-panel", {

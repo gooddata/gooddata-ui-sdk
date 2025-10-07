@@ -611,6 +611,12 @@
             "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/eslint-plugin",
+            "projectFolder": "tools/eslint-plugin",
+            "reviewCategory": "tools",
+            "shouldPublish": false
         }
         // {
         //   /**

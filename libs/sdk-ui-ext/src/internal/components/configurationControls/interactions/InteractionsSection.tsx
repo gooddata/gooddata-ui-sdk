@@ -36,17 +36,16 @@ export function QuestionMarkTooltip(props: { tooltipText: string }) {
     );
 }
 
-function InteractionsSection(props: IInteractionsSectionProps & WrappedComponentProps) {
-    const {
-        areControlsDisabledGetter,
-        properties,
-        propertiesMeta,
-        pushData,
-        InteractionsDetailRenderer,
-        supportsAlertConfiguration,
-        supportsDrillDownConfiguration,
-        supportsScheduledExportsConfiguration,
-    } = props;
+function InteractionsSection({
+    areControlsDisabledGetter,
+    properties,
+    propertiesMeta,
+    pushData,
+    InteractionsDetailRenderer,
+    supportsAlertConfiguration,
+    supportsDrillDownConfiguration,
+    supportsScheduledExportsConfiguration,
+}: IInteractionsSectionProps & WrappedComponentProps) {
     const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
     const isAlertsDisabled = properties?.controls?.["disableAlerts"] ?? false;
     const isScheduledExportsDisabled = properties?.controls?.["disableScheduledExports"] ?? false;

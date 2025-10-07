@@ -980,10 +980,12 @@ export interface ChangeFilterContextSelectionParams {
  * TODO: next major release can remove ByParams suffix and use this implementation instead of original cmd creator + other creators can be rewriten to use params object
  * https://gooddata.atlassian.net/browse/STL-700
  */
-export function changeFilterContextSelectionByParams(
-    params: ChangeFilterContextSelectionParams,
-): ChangeFilterContextSelection {
-    const { filters, attributeFilterConfigs = [], resetOthers = false, correlationId } = params;
+export function changeFilterContextSelectionByParams({
+    filters,
+    attributeFilterConfigs = [],
+    resetOthers = false,
+    correlationId,
+}: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
         correlationId,

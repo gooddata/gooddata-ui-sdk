@@ -18,9 +18,7 @@ interface IHeadDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;
 }
 
-function HeadlineDrilling(props: IHeadDrillingProps) {
-    const { drillableItems } = props;
-
+function HeadlineDrilling({ drillableItems }: IHeadDrillingProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);

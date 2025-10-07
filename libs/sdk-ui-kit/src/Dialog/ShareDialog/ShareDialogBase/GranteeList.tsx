@@ -14,18 +14,16 @@ import { ADD_GRANTEE_ID, ADD_GRANTEE_SELECT_ID, sortGranteeList } from "./utils.
 /**
  * @internal
  */
-export function GranteeList(props: IGranteesListProps) {
-    const {
-        grantees,
-        mode,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        onDelete,
-        onChange,
-    } = props;
-
+export function GranteeList({
+    grantees,
+    mode,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    onDelete,
+    onChange,
+}: IGranteesListProps) {
     const intl = useIntl();
     const listRef = useRef(null);
 

@@ -18,13 +18,9 @@ export function* loadCustomElementsWorker(): SagaIterator<void> {
 /**
  * @internal
  */
-export function* loadCustomElementsSaga(
-    action: ReturnType<typeof actions.loadCustomElementsRequest>,
-): SagaIterator<ILoadElementsResult | void> {
-    const {
-        payload: { correlation, options },
-    } = action;
-
+export function* loadCustomElementsSaga({
+    payload: { correlation, options },
+}: ReturnType<typeof actions.loadCustomElementsRequest>): SagaIterator<ILoadElementsResult | void> {
     try {
         yield put(actions.loadCustomElementsStart({ correlation }));
 

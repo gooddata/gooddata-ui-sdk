@@ -10,9 +10,7 @@ interface ISelectionModeButtonProps {
     toggleDropdown: () => void;
 }
 
-export function SelectionModeButton(props: ISelectionModeButtonProps) {
-    const { title, isOpen, toggleDropdown } = props;
-
+export function SelectionModeButton({ title, isOpen, toggleDropdown }: ISelectionModeButtonProps) {
     const buttonClassNames = cx(
         "gd-button-primary",
         "gd-button-small",

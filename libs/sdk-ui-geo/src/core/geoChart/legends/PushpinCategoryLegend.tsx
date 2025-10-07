@@ -113,20 +113,18 @@ function renderStaticCategoryLegend(
     return <StaticLegend {...legendProps} containerHeight={usedHeight} />;
 }
 
-function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
-    const {
-        containerId,
-        categoryItems = [],
-        onItemClick = (_: IPushpinCategoryLegendItem) => {},
-        name,
-        maxRows,
-        customComponent,
-        customComponentName,
-        hasSizeLegend,
-        isSizeLegendVisible,
-        chartFill,
-    } = props;
-
+function GeoPopUpLegend({
+    containerId,
+    categoryItems = [],
+    onItemClick = (_: IPushpinCategoryLegendItem) => {},
+    name,
+    maxRows,
+    customComponent,
+    customComponentName,
+    hasSizeLegend,
+    isSizeLegendVisible,
+    chartFill,
+}: IPushpinCategoryLegendProps): ReactElement {
     return (
         <PopUpLegend
             series={categoryItems}

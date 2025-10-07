@@ -44,8 +44,10 @@ export interface IDashboardCustomizationsProviderProps extends IDashboardCustomi
 /**
  * @internal
  */
-export function DashboardCustomizationsProvider(props: IDashboardCustomizationsProviderProps): ReactElement {
-    const { children, ...components } = props;
+export function DashboardCustomizationsProvider({
+    children,
+    ...components
+}: IDashboardCustomizationsProviderProps): ReactElement {
     return (
         <DashboardCustomizationsContext.Provider value={components}>
             {children}

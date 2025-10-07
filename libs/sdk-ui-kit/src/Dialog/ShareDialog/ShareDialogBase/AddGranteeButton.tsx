@@ -13,9 +13,7 @@ import { useIdPrefixed } from "../../../utils/useId.js";
 /**
  * @internal
  */
-export function AddUserOrGroupButton(props: IAddUserOrGroupButton) {
-    const { isDisabled, onClick } = props;
-
+export function AddUserOrGroupButton({ isDisabled, onClick }: IAddUserOrGroupButton) {
     const intl = useIntl();
 
     const buttonClassNames = cx(

@@ -19,8 +19,7 @@ export interface IDashboardDropdownButtonProps {
     accessibilityLimitation?: DashboardAccessibilityLimitation;
 }
 
-function Button(props: IDashboardDropdownButtonProps) {
-    const { accessibilityLimitation, toggleDropdown, isOpen, label } = props;
+function Button({ accessibilityLimitation, toggleDropdown, isOpen, label }: IDashboardDropdownButtonProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     return (
         <DropdownButton

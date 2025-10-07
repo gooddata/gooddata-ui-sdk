@@ -37,20 +37,18 @@ const errorMessages = defineMessages({
     wrongFormat: { id: "recurrence.datetime.wrong.format.error" },
 });
 
-export function DateTime(props: IDateTimeProps) {
-    const {
-        label,
-        date,
-        dateFormat,
-        locale,
-        timezone,
-        onDateChange,
-        weekStart,
-        timeFormat,
-        closeOnParentScroll,
-        onKeyDownSubmit,
-    } = props;
-
+export function DateTime({
+    label,
+    date,
+    dateFormat,
+    locale,
+    timezone,
+    onDateChange,
+    weekStart,
+    timeFormat,
+    closeOnParentScroll,
+    onKeyDownSubmit,
+}: IDateTimeProps) {
     const { formatMessage } = useIntl();
 
     const dateFormatId = useIdPrefixed("label");

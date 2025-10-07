@@ -5,7 +5,6 @@ import { IToolbarProps } from "../types.js";
 /**
  * @internal
  */
-export function DefaultDashboardToolbar(props: IToolbarProps) {
-    const { children } = props;
+export function DefaultDashboardToolbar({ children }: IToolbarProps) {
     return <div className="gd-dashboard-toolbar s-dashboard-toolbar">{children}</div>;
 }
