@@ -53,7 +53,7 @@ export function DeleteAlertConfirmDialog(props: IDeleteAlertConfirmDialogProps) 
 
     return (
         <ConfirmDialog
-            displayCloseButton={true}
+            displayCloseButton
             isPositive={false}
             headline={intl.formatMessage({ id: "dialogs.alerting.management.delete.dialog" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}

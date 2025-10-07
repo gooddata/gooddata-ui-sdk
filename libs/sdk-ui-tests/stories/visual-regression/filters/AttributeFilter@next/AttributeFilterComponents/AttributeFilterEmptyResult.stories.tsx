@@ -33,7 +33,7 @@ function AttributeFilterEmptyResultExamples(): ReactElement {
                     <h4>AttributeFilterEmptyResult empty filtered result</h4>
                     <AttributeFilterEmptyResult
                         height={100}
-                        isFilteredByParentFilters={true}
+                        isFilteredByParentFilters
                         searchString={""}
                         totalItemsCount={100}
                         parentFilterTitles={["Location", "Department"]}
@@ -43,11 +43,11 @@ function AttributeFilterEmptyResultExamples(): ReactElement {
                     </h4>
                     <AttributeFilterEmptyResult
                         height={100}
-                        isFilteredByParentFilters={true}
+                        isFilteredByParentFilters
                         searchString={""}
                         totalItemsCount={100}
                         parentFilterTitles={["Location", "Department"]}
-                        enableShowingFilteredElements={true}
+                        enableShowingFilteredElements
                     />
                 </div>
             </IntlWrapper>

@@ -171,7 +171,7 @@ function UserGroupEditDialogComponent({
             ) : null}
             <Overlay
                 alignPoints={alignPoints}
-                isModal={true}
+                isModal
                 positionType="fixed"
                 className={dialogOverlayClassNames}
                 resizeObserverThreshold={0.2}

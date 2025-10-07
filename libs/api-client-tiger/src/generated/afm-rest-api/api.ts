@@ -492,6 +492,44 @@ export type BoundedFilterGranularityEnum =
     (typeof BoundedFilterGranularityEnum)[keyof typeof BoundedFilterGranularityEnum];
 
 /**
+ * Request for change analysis computation
+ */
+export interface ChangeAnalysisRequest {
+    metricIdentifier: ObjectIdentifier;
+    dateAttributeIdentifier: ObjectIdentifier;
+    /**
+     * The reference time period (e.g., \'2025-01\')
+     */
+    referencePeriod: string;
+    /**
+     * The analyzed time period (e.g., \'2025-02\')
+     */
+    analyzedPeriod: string;
+    /**
+     * The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
+     */
+    attributeIdentifiers: Array<ObjectIdentifier>;
+    /**
+     * The significance threshold for changes (default: 2.0 standard deviations)
+     */
+    significanceThreshold?: number;
+}
+/**
+ * Response for change analysis computation
+ */
+export interface ChangeAnalysisResponse {
+    links: ExecutionLinks;
+}
+/**
+ * Result of a change analysis execution.
+ */
+export interface ChangeAnalysisResult {
+    /**
+     * The change analysis result data containing significant changes.
+     */
+    data: { [key: string]: object };
+}
+/**
  * List of chat history interactions.
  */
 export interface ChatHistoryInteraction {
@@ -1515,6 +1553,42 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
+/**
+ * The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
+ */
+export interface ObjectIdentifier {
+    type: ObjectIdentifierTypeEnum;
+    space: string;
+    id: string;
+}
+
+export const ObjectIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    ATTRIBUTE_HIERARCHY: "attributeHierarchy",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    AGGREGATED_FACT: "aggregatedFact",
+    LABEL: "label",
+    METRIC: "metric",
+    USER_DATA_FILTER: "userDataFilter",
+    EXPORT_DEFINITION: "exportDefinition",
+    AUTOMATION: "automation",
+    AUTOMATION_RESULT: "automationResult",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+    WORKSPACE_SETTINGS: "workspaceSettings",
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting",
+    FILTER_VIEW: "filterView",
+} as const;
+
+export type ObjectIdentifierTypeEnum =
+    (typeof ObjectIdentifierTypeEnum)[keyof typeof ObjectIdentifierTypeEnum];
+
 /**
  * Current page description.
  */
@@ -2635,6 +2709,103 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
                 : afmCancelTokens || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChangeAnalysisRequest} changeAnalysisRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysis: async (
+            workspaceId: string,
+            changeAnalysisRequest: ChangeAnalysisRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("changeAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'changeAnalysisRequest' is not null or undefined
+            assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof changeAnalysisRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
+                : changeAnalysisRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("changeAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4086,6 +4257,46 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChangeAnalysisRequest} changeAnalysisRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changeAnalysis(
+            workspaceId: string,
+            changeAnalysisRequest: ChangeAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysis(
+                workspaceId,
+                changeAnalysisRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changeAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysisResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -4759,6 +4970,40 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysis(
+            requestParameters: ActionsApiChangeAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChangeAnalysisResponse> {
+            return localVarFp
+                .changeAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.changeAnalysisRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {ActionsApiChangeAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysisResult(
+            requestParameters: ActionsApiChangeAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChangeAnalysisResult> {
+            return localVarFp
+                .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
@@ -5310,6 +5555,32 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmCancelTokens>;
 
     /**
+     * Computes change analysis for the provided execution definition.
+     * @summary Compute change analysis
+     * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    changeAnalysis(
+        requestParameters: ActionsApiChangeAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChangeAnalysisResponse>;
+
+    /**
+     * Gets change analysis result.
+     * @summary Get change analysis result
+     * @param {ActionsApiChangeAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    changeAnalysisResult(
+        requestParameters: ActionsApiChangeAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChangeAnalysisResult>;
+
+    /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering
      * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
@@ -5809,6 +6080,48 @@ export interface ActionsApiCancelExecutionsRequest {
      * @memberof ActionsApiCancelExecutions
      */
     readonly afmCancelTokens: AfmCancelTokens;
+}
+
+/**
+ * Request parameters for changeAnalysis operation in ActionsApi.
+ * @export
+ * @interface ActionsApiChangeAnalysisRequest
+ */
+export interface ActionsApiChangeAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiChangeAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChangeAnalysisRequest}
+     * @memberof ActionsApiChangeAnalysis
+     */
+    readonly changeAnalysisRequest: ChangeAnalysisRequest;
+}
+
+/**
+ * Request parameters for changeAnalysisResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiChangeAnalysisResultRequest
+ */
+export interface ActionsApiChangeAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiChangeAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiChangeAnalysisResult
+     */
+    readonly resultId: string;
 }
 
 /**
@@ -6579,6 +6892,37 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Computes change analysis for the provided execution definition.
+     * @summary Compute change analysis
+     * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .changeAnalysis(requestParameters.workspaceId, requestParameters.changeAnalysisRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets change analysis result.
+     * @summary Get change analysis result
+     * @param {ActionsApiChangeAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public changeAnalysisResult(
+        requestParameters: ActionsApiChangeAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering
      * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
@@ -7044,6 +7388,103 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
  */
 export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChangeAnalysisRequest} changeAnalysisRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysis: async (
+            workspaceId: string,
+            changeAnalysisRequest: ChangeAnalysisRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("changeAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'changeAnalysisRequest' is not null or undefined
+            assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof changeAnalysisRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
+                : changeAnalysisRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("changeAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -7598,6 +8039,46 @@ export const ComputationApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
     return {
         /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChangeAnalysisRequest} changeAnalysisRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changeAnalysis(
+            workspaceId: string,
+            changeAnalysisRequest: ChangeAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysis(
+                workspaceId,
+                changeAnalysisRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changeAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysisResult(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
@@ -7842,6 +8323,40 @@ export const ComputationApiFactory = function (
     const localVarFp = ComputationApiFp(configuration);
     return {
         /**
+         * Computes change analysis for the provided execution definition.
+         * @summary Compute change analysis
+         * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysis(
+            requestParameters: ComputationApiChangeAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChangeAnalysisResponse> {
+            return localVarFp
+                .changeAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.changeAnalysisRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets change analysis result.
+         * @summary Get change analysis result
+         * @param {ComputationApiChangeAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changeAnalysisResult(
+            requestParameters: ComputationApiChangeAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChangeAnalysisResult> {
+            return localVarFp
+                .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
@@ -8031,6 +8546,32 @@ export const ComputationApiFactory = function (
  */
 export interface ComputationApiInterface {
     /**
+     * Computes change analysis for the provided execution definition.
+     * @summary Compute change analysis
+     * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    changeAnalysis(
+        requestParameters: ComputationApiChangeAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChangeAnalysisResponse>;
+
+    /**
+     * Gets change analysis result.
+     * @summary Get change analysis result
+     * @param {ComputationApiChangeAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    changeAnalysisResult(
+        requestParameters: ComputationApiChangeAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChangeAnalysisResult>;
+
+    /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
      * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
@@ -8146,6 +8687,48 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for changeAnalysis operation in ComputationApi.
+ * @export
+ * @interface ComputationApiChangeAnalysisRequest
+ */
+export interface ComputationApiChangeAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiChangeAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChangeAnalysisRequest}
+     * @memberof ComputationApiChangeAnalysis
+     */
+    readonly changeAnalysisRequest: ChangeAnalysisRequest;
+}
+
+/**
+ * Request parameters for changeAnalysisResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiChangeAnalysisResultRequest
+ */
+export interface ComputationApiChangeAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiChangeAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiChangeAnalysisResult
+     */
+    readonly resultId: string;
 }
 
 /**
@@ -8446,6 +9029,40 @@ export interface ComputationApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ComputationApi extends BaseAPI implements ComputationApiInterface {
+    /**
+     * Computes change analysis for the provided execution definition.
+     * @summary Compute change analysis
+     * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public changeAnalysis(
+        requestParameters: ComputationApiChangeAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .changeAnalysis(requestParameters.workspaceId, requestParameters.changeAnalysisRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets change analysis result.
+     * @summary Get change analysis result
+     * @param {ComputationApiChangeAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public changeAnalysisResult(
+        requestParameters: ComputationApiChangeAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.

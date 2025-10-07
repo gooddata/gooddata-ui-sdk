@@ -36,8 +36,8 @@ function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
         <Overlay
             alignTo={alignTo}
             alignPoints={ALIGN_POINTS}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
+            closeOnMouseDrag
+            closeOnOutsideClick
             onClose={onClose}
             className="attribute-hierarchy-add-action-menu s-attribute-hierarchy-add-action-menu"
         >

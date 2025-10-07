@@ -229,7 +229,7 @@ export function DateformatWithTime() {
                 filterOptions={filterOptions}
                 dateFilterMode="active"
                 dateFormat="yyyy/MM/dd"
-                isTimeForAbsoluteRangeEnabled={true}
+                isTimeForAbsoluteRangeEnabled
             />
         </div>
     );

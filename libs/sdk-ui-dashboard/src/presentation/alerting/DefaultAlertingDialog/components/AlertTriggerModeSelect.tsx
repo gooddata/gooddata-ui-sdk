@@ -54,7 +54,7 @@ export function AlertTriggerModeSelect({
             <Dropdown
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
-                autofocusOnOpen={true}
+                autofocusOnOpen
                 renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                     return (
                         <DropdownButton
@@ -81,8 +81,8 @@ export function AlertTriggerModeSelect({
 
                     return (
                         <UiListbox
-                            shouldKeyboardActionStopPropagation={true}
-                            shouldKeyboardActionPreventDefault={true}
+                            shouldKeyboardActionStopPropagation
+                            shouldKeyboardActionPreventDefault
                             dataTestId="s-alert-trigger-mode-select-list"
                             items={listboxItems}
                             selectedItemId={selectedTriggerMode}

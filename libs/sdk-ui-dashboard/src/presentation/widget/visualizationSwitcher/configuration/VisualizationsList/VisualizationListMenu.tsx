@@ -52,11 +52,11 @@ export function VisualizationListMenu({
             alignTo={alignTo}
             alignPoints={menuAlignPoints}
             className="gd-more-menu-overlay"
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
+            closeOnMouseDrag
+            closeOnOutsideClick
             onClose={onMenuButtonClick}
         >
-            <ItemsWrapper smallItemsSpacing={true} className=".s-visualization-switcher-more-menu">
+            <ItemsWrapper smallItemsSpacing className=".s-visualization-switcher-more-menu">
                 {shouldRenderActions ? (
                     <>
                         <VisualizationListMenuItem

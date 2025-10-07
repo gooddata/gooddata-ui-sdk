@@ -130,7 +130,7 @@ export function LayoutDirectionConfigurationDialog({
                         onSelect={onSelect}
                         items={items}
                         ariaAttributes={listAriaAttributes}
-                        isCompact={true}
+                        isCompact
                     />
                 </div>
             </ConfigurationBubble>

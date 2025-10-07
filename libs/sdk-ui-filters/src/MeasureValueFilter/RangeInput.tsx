@@ -33,7 +33,7 @@ function RangeInput({
                 value={from}
                 onChange={onFromChange}
                 onEnterKeyPress={onEnterKeyPress}
-                isSmall={true}
+                isSmall
                 autofocus={!disableAutofocus}
                 suffix={usePercentage ? "%" : ""}
                 separators={separators}
@@ -43,7 +43,7 @@ function RangeInput({
                 value={to}
                 onChange={onToChange}
                 onEnterKeyPress={onEnterKeyPress}
-                isSmall={true}
+                isSmall
                 suffix={usePercentage ? "%" : ""}
                 separators={separators}
             />

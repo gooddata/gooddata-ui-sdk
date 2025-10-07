@@ -12,12 +12,19 @@ import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromB
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
 
+type DashboardInclude = NonNullable<EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"]>[number];
+
+type DashboardMetaInclude = NonNullable<
+    EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["metaInclude"]
+>[number];
+
 export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;
     private page = 0;
     private filter: string | undefined = undefined;
     private sort = {};
-    private include: EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"] = undefined;
+    private include: DashboardInclude[] | undefined = undefined;
+    private metaInclude: DashboardMetaInclude[] | undefined = undefined;
     private origin: ObjectOrigin | undefined = undefined;
     private totalCount: number | undefined = undefined;
 
@@ -54,7 +61,13 @@ export class DashboardsQuery implements IDashboardsQuery {
 
     withInclude(include: string[]): IDashboardsQuery {
         // NOTE: Unsupported include values handling is delegated to the backend
-        this.include = include as EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"];
+        this.include = include as DashboardInclude[];
+        return this;
+    }
+
+    withMetaInclude(metaInclude: string[]): IDashboardsQuery {
+        // NOTE: Unsupported meta include values handling is delegated to the backend
+        this.metaInclude = metaInclude as DashboardMetaInclude[];
         return this;
     }
 
@@ -66,21 +79,20 @@ export class DashboardsQuery implements IDashboardsQuery {
     query(): Promise<IDashboardsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                /**
-                 * For backend performance reasons, we do not want to ask for paging info each time.
-                 */
-                const metaIncludeObj =
-                    this.totalCount === undefined
-                        ? { metaInclude: ["page" as const, "accessInfo" as const] }
-                        : { metaInclude: ["accessInfo" as const] };
+                const metaIncludeSet: Set<DashboardMetaInclude> = new Set([
+                    "accessInfo",
+                    // For backend performance reasons, we do not want to ask for paging info each time.
+                    ...(this.totalCount === undefined ? ["page" as const] : []),
+                    ...(this.metaInclude ?? []),
+                ]);
 
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAnalyticalDashboards({
                         ...this.requestParameters,
-                        ...metaIncludeObj,
                         ...this.sort,
                         filter: this.filter,
                         include: this.include,
+                        metaInclude: [...metaIncludeSet],
                         origin: this.origin,
                         size: limit,
                         page: offset / limit,

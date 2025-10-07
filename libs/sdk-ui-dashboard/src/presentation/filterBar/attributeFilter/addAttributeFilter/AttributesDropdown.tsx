@@ -218,7 +218,7 @@ export function AttributesDropdown({
                 />
             )}
             renderBody={({ closeDropdown }) => (
-                <>
+                <div id={id} role="dialog" aria-labelledby={accessibilityConfig?.ariaLabelledBy}>
                     {DropdownTitleComponent ? <DropdownTitleComponent /> : null}
                     <div
                         className={cx(bodyClassName, "attributes-list")}
@@ -228,8 +228,6 @@ export function AttributesDropdown({
                                 closeDropdown();
                             }
                         }}
-                        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                        id={id}
                     >
                         <DropdownList
                             width={WIDTH}
@@ -290,7 +288,7 @@ export function AttributesDropdown({
                             }}
                         />
                     </div>
-                </>
+                </div>
             )}
         />
     );

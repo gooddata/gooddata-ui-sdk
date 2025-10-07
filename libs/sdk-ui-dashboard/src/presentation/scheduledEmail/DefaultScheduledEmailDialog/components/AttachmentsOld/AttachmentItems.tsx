@@ -132,7 +132,7 @@ export function AttachmentWidgets(props: {
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
                 alignPoints={DROPDOWN_ALIGN_POINTS}
-                autofocusOnOpen={true}
+                autofocusOnOpen
                 renderButton={({ toggleDropdown, buttonRef }) => (
                     <Button
                         className="gd-attachment-item-configuration gd-icon-settings"

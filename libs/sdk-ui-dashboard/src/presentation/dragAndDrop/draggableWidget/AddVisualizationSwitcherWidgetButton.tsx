@@ -30,7 +30,7 @@ export function AddVisualizationSwitcherWidgetButton() {
             <FormattedMessage id="addPanel.visualizationSwitcher" />
             <OverlayControllerProvider overlayController={overlayController}>
                 <BubbleHoverTrigger
-                    eventsOnBubble={true}
+                    eventsOnBubble
                     className="gd-add-item-placeholder-help-trigger gd-add-visualization-switcher s-add-visualization-switcher-bubble-trigger"
                 >
                     <div

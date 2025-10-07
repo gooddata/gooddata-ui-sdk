@@ -89,7 +89,7 @@ export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<Aggregat
 
     if (item.data && item.data.type === "disabledItem" && item.data.disabledTooltip) {
         return (
-            <BubbleHoverTrigger showDelay={0} hideDelay={0} eventsOnBubble={true}>
+            <BubbleHoverTrigger showDelay={0} hideDelay={0} eventsOnBubble>
                 <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />
                 <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
                     {item.data.disabledTooltip}

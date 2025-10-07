@@ -69,7 +69,7 @@ export function AttributeItem({
 
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <Button className={className} value={title} title={title} disabled={true} />
+            <Button className={className} value={title} title={title} disabled />
             <Bubble
                 className="bubble-primary gd-rf-tooltip-bubble s-rf-disabled-attribute-bubble"
                 alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}

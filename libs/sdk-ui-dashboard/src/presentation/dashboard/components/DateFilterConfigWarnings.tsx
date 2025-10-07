@@ -43,7 +43,7 @@ export function DateFilterConfigWarnings() {
     const warnings = useDashboardSelector(selectRelevantWarnings);
 
     return isInEditMode && warnings.length > 0 ? (
-        <Message type="warning" contrast={true} className="gd-date-filter-config-warning-message">
+        <Message type="warning" contrast className="gd-date-filter-config-warning-message">
             <ul className="gd-date-filter-config-warning-message-items">
                 {warnings.map((warning) => {
                     const message = workspaceValidationMessagesMapping[warning];

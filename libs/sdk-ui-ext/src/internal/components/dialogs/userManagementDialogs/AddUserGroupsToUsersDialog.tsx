@@ -28,7 +28,7 @@ function AddUserGroupsToUsersDialogComponent({
 }: IAddUserGroupsToUsersDialogProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
-            <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
+            <Overlay alignPoints={alignPoints} isModal positionType="fixed">
                 <AddUserGroup
                     userIds={userIds}
                     grantedUserGroups={noGrantedUserGroups}

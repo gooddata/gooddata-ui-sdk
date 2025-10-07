@@ -252,9 +252,9 @@ export function AlertingDialogRenderer({
         <>
             <Overlay
                 className="gd-notifications-channels-dialog-overlay"
-                isModal={true}
+                isModal
                 positionType="fixed"
-                ensureVisibility={true}
+                ensureVisibility
             >
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
@@ -266,7 +266,7 @@ export function AlertingDialogRenderer({
                                         enableAutomationManagement,
                                 },
                             )}
-                            isPositive={true}
+                            isPositive
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={
                                 alertToEdit
@@ -337,7 +337,7 @@ export function AlertingDialogRenderer({
                                             availableFilters={availableFilters}
                                             selectedFilters={editedAutomationFilters}
                                             onFiltersChange={onFiltersChange}
-                                            storeFilters={true}
+                                            storeFilters
                                             onStoreFiltersChange={() => {}}
                                             isDashboardAutomation={false}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}

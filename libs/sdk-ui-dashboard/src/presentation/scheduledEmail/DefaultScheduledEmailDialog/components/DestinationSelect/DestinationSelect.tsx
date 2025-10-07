@@ -79,7 +79,7 @@ export function DestinationSelect({
                     closeOnParentScroll={closeOnParentScroll}
                     alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                     className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
-                    autofocusOnOpen={true}
+                    autofocusOnOpen
                     renderButton={({ toggleDropdown, dropdownId, isOpen, buttonRef }) => (
                         <DropdownButton
                             id={accessibilityValue}
@@ -110,8 +110,8 @@ export function DestinationSelect({
 
                         return (
                             <UiListbox
-                                shouldKeyboardActionStopPropagation={true}
-                                shouldKeyboardActionPreventDefault={true}
+                                shouldKeyboardActionStopPropagation
+                                shouldKeyboardActionPreventDefault
                                 dataTestId="s-gd-notifications-channels-dialog-destination-list"
                                 items={listboxItems}
                                 maxWidth={DROPDOWN_WIDTH}

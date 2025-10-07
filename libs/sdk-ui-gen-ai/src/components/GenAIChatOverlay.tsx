@@ -58,7 +58,7 @@ function GenAIChatOverlayComponent({
             returnFocusAfterClose={!!returnFocusTo}
             alignPoints={[{ align: isFullscreen ? "cc cc" : "br br" }]}
             submitOnEnterKey={false}
-            closeOnEscape={true}
+            closeOnEscape
             closeOnParentScroll={false}
             closeOnMouseDrag={false}
             onClose={onClose}

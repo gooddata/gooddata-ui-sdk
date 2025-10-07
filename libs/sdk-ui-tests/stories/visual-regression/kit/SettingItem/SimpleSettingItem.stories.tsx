@@ -22,9 +22,9 @@ function SettingItemTest() {
                     value="Current Value"
                     actionType={"Button"}
                     actionValue="Change"
-                    isDisableAction={true}
+                    isDisableAction
                     actionTooltipText="Tooltip Action text"
-                    hasDivider={true}
+                    hasDivider
                     onAction={() => {}}
                 />
                 <SettingItem
@@ -32,7 +32,7 @@ function SettingItemTest() {
                     titleTooltipText={"Title Tooltip Text"}
                     value="Current Value"
                     actionType={"Switcher"}
-                    actionValue={true}
+                    actionValue
                     onAction={() => {}}
                 />
 
@@ -41,7 +41,7 @@ function SettingItemTest() {
                     titleTooltipText={"Title Tooltip Text"}
                     value="Current Value"
                     actionType={"Switcher"}
-                    actionValue={true}
+                    actionValue
                     onAction={() => {}}
                     renderSubtitle={() => (
                         <BubbleHoverTrigger>

@@ -48,7 +48,7 @@ function DrillTargetTypeListItem({ item, icon, isSelected, onClick }: IDrillTarg
                         },
                     },
                 )}
-                eventsOnBubble={true}
+                eventsOnBubble
                 hideDelayBubble={100}
                 isSelected={isSelected}
                 onClick={handleClick}

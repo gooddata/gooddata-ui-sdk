@@ -42,8 +42,8 @@ export function AddUser({
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-add-user"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={addedUsers.length === 0 || isProcessing}
             showProgressIndicator={isProcessing}
             headline={intl.formatMessage(messages.addUserDialogTitle)}

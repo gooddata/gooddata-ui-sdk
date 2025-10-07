@@ -27,7 +27,7 @@ export function InsightPicker({ onInsightSelect, onBack }: IInsightPickerProps) 
                 <InsightList
                     height={270}
                     width={240}
-                    searchAutofocus={true}
+                    searchAutofocus
                     onSelect={(insight) => {
                         onInsightSelect(insight);
                     }}

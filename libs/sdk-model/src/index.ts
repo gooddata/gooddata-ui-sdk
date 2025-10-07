@@ -838,6 +838,7 @@ export type {
     IDashboardPluginLink,
     IAccessControlAware,
     ShareStatus,
+    SharePermission,
     IDashboardPermissions,
     IExistingDashboard,
 } from "./dashboard/dashboard.js";

@@ -18,8 +18,8 @@ export function PrimarySectionContent({ primaryItem, customStyle }: IPrimarySect
                 dataItem={primaryItem.data}
                 evaluationType={primaryItem.evaluationType}
                 elementType={primaryItem.elementType}
-                shouldHideTitle={true}
-                includeHeightCheck={true}
+                shouldHideTitle
+                includeHeightCheck
             />
         </div>
     );

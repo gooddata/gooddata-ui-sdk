@@ -152,7 +152,7 @@ function KdaAttributeFilterDropdownButtonComponent(
             anchor={
                 <UiChip
                     label={label}
-                    isDeletable={true}
+                    isDeletable
                     tag={tag}
                     isLocked={false}
                     isActive={props.isOpen}

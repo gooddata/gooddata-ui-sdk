@@ -111,7 +111,7 @@ export const Legend = memo(function Legend({
 
     const renderFluid = () => {
         return (
-            <Measure client={true} aria-label="Fluid legend">
+            <Measure client aria-label="Fluid legend">
                 {({ measureRef, contentRect }: any) => {
                     const usedWidth = contentRect.client?.width ? Math.floor(contentRect.client.width) : 0;
                     return (
@@ -148,7 +148,7 @@ export const Legend = memo(function Legend({
         };
 
         return (
-            <Measure client={true}>
+            <Measure client>
                 {({ measureRef, contentRect }: any) => {
                     const measuredHeight = contentRect.client?.height
                         ? Math.floor(contentRect.client.height)

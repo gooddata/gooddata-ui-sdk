@@ -29,7 +29,7 @@ describe("HeaderCell renderer", () => {
             render(
                 <HeaderCell
                     displayText="Header"
-                    enableSorting={true}
+                    enableSorting
                     defaultSortDirection={"asc"}
                     getTableDescriptor={getTableDescriptor}
                 />,
@@ -44,7 +44,7 @@ describe("HeaderCell renderer", () => {
             render(
                 <HeaderCell
                     displayText="Header"
-                    enableSorting={true}
+                    enableSorting
                     defaultSortDirection={"asc"}
                     onSortClick={onSortClick}
                     getTableDescriptor={getTableDescriptor}

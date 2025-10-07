@@ -67,7 +67,7 @@ export function VisualizationSwitcherNavigationHeader({
     return (
         <Dropdown
             alignPoints={alignPoints}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <UiListbox
                     items={items}

@@ -26,7 +26,7 @@ function AttributeFilterButtonsExamples(): ReactElement {
                     <AttributeFilterDropdownActions
                         onApplyButtonClick={action("onApplyButtonClicked")}
                         onCancelButtonClick={action("onCancelButtonClicked")}
-                        isApplyDisabled={true}
+                        isApplyDisabled
                     />
                 </div>
             </div>

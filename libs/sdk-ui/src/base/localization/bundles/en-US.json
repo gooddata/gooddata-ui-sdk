@@ -1403,6 +1403,10 @@
         "value": "Filter values",
         "comment": "Shown to screen readers as a label for the list of picked attribute values"
     },
+    "attributesDropdown.selectedValues": {
+        "value": "Selected values",
+        "comment": "Shown to screen readers as a label for the list of picked attribute values"
+    },
     "attributesDropdown.onlyLabel": {
         "value": "Select only {itemTitle}",
         "comment": "Shown to screen readers as a label for the 'Only' button that filters out all other attribute values"

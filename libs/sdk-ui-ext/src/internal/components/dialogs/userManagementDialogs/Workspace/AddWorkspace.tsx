@@ -77,8 +77,8 @@ export function AddWorkspace({
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-workspace s-user-management-add-workspace"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={addedWorkspaces.length === 0 || isProcessing || !isGranularPermissionsChanged}
             showProgressIndicator={isProcessing}
             headline={intl.formatMessage(

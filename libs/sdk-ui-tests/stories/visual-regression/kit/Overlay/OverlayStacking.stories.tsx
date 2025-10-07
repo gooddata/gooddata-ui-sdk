@@ -20,7 +20,7 @@ function OverlayStackingExample() {
                     <FormattedMessage id="gs.examples.overlayStacking.openOverlay" />
                 </button>
                 {state > 0 && (
-                    <Overlay isModal={true} alignPoints={[{ align: "cc cc" }]}>
+                    <Overlay isModal alignPoints={[{ align: "cc cc" }]}>
                         <div
                             className="overlay-first"
                             style={{
@@ -38,7 +38,7 @@ function OverlayStackingExample() {
                     </Overlay>
                 )}
                 {state > 1 && (
-                    <Overlay isModal={true} alignPoints={[{ align: "cc cc" }]}>
+                    <Overlay isModal alignPoints={[{ align: "cc cc" }]}>
                         <div
                             className="overlay-stacked"
                             style={{

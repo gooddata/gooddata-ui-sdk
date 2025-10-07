@@ -51,7 +51,7 @@ function ComparisonSection({
             propertiesMeta={propertiesMeta}
             properties={properties}
             pushData={pushData}
-            canBeToggled={true}
+            canBeToggled
             toggleDisabled={comparisonDisabled}
             showDisabledMessage={showDisabledMessage}
             toggledOn={toggledOn}

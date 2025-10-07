@@ -671,6 +671,7 @@ export interface IAbsoluteDateFilterValues {
 export interface IAccessControlAware {
     readonly isLocked?: boolean;
     readonly isUnderStrictControl?: boolean;
+    readonly sharePermissions?: SharePermission[];
     readonly shareStatus: ShareStatus;
 }
 
@@ -5075,6 +5076,9 @@ export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;
+
+// @alpha
+export type SharePermission = "EDIT" | "SHARE" | "VIEW";
 
 // @alpha
 export type ShareStatus = "private" | "shared" | "public";

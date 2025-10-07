@@ -72,7 +72,7 @@ export function AttributeDropdown({
 
     return isDisabled ? (
         <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <Button className={buttonClassNames} value={itemTitle} disabled={true} />
+            <Button className={buttonClassNames} value={itemTitle} disabled />
             <Bubble
                 className={`bubble-primary gd-rf-tooltip-bubble s-rf-attribute-no-options-bubble`}
                 alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}

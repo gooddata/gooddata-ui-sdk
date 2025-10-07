@@ -102,7 +102,7 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <DropdownButton
@@ -134,8 +134,8 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
 
                 return (
                     <UiListbox
-                        shouldKeyboardActionStopPropagation={true}
-                        shouldKeyboardActionPreventDefault={true}
+                        shouldKeyboardActionStopPropagation
+                        shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-comparison-select-list"
                         items={listboxItems}
                         selectedItemId={selectedComparison?.toString()}

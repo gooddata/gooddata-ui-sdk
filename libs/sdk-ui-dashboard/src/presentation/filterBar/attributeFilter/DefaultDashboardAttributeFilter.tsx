@@ -530,7 +530,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 ElementsSelectComponent={CustomElementsSelect}
                 fullscreenOnMobile
                 selectionMode={filter.attributeFilter.selectionMode}
-                selectFirst={true}
+                selectFirst
                 attributeFilterMode={
                     readonly
                         ? DashboardAttributeFilterConfigModeValues.READONLY
@@ -543,7 +543,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 }
                 enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
-                enableDashboardFiltersApplyWithoutLoading={true}
+                enableDashboardFiltersApplyWithoutLoading
             />
         </AttributeFilterParentFilteringProvider>
     );

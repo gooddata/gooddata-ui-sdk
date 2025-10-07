@@ -28,7 +28,7 @@ function ComparisonInput({
             value={value}
             onEnterKeyPress={onEnterKeyPress}
             onChange={onValueChange}
-            isSmall={true}
+            isSmall
             autofocus={!disableAutofocus}
             suffix={usePercentage ? "%" : ""}
             separators={separators}

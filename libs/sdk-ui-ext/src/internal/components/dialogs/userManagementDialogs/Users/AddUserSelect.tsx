@@ -97,7 +97,7 @@ export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSe
                 false
             >
                 autoFocus
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
                     DropdownIndicator: EmptyRenderer,
@@ -111,7 +111,7 @@ export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSe
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage(messages.searchUserPlaceholder)}
                 onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}

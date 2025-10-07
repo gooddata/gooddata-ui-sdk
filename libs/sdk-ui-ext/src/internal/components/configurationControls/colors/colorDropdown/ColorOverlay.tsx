@@ -98,9 +98,9 @@ export const ColorOverlay = memo(function ColorOverlay({
             alignTo={alignTo}
             onClose={onClose}
             alignPoints={getAlignPoints()}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
+            closeOnOutsideClick
+            closeOnParentScroll
+            closeOnMouseDrag
         >
             <div
                 onMouseOver={stopScrollingPropagation}

@@ -22,7 +22,7 @@ export const DashboardInsightMenuItemButton = (
             subMenu={submenu}
         >
             <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
-                {icon ? typeof icon === "string" ? <i aria-hidden={true} className={icon} /> : icon : null}
+                {icon ? typeof icon === "string" ? <i aria-hidden className={icon} /> : icon : null}
                 {itemName}
             </span>
         </Item>,

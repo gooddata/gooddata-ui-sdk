@@ -56,7 +56,7 @@ function ErrorOverlayCore({
 
     return (
         <Overlay
-            isModal={true}
+            isModal
             positionType="fixed"
             alignPoints={[{ align: "cc cc" }]}
             closeOnEscape={false}

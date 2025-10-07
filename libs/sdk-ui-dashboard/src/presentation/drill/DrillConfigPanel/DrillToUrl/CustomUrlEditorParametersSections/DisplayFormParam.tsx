@@ -40,7 +40,7 @@ export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: XProp
                     type={item.displayFormType as AttributeDisplayFormType}
                     projectId={projectId}
                     displayFormRef={item.ref}
-                    showValues={true} // TODO
+                    showValues // TODO
                 />
             }
             iconClassName={

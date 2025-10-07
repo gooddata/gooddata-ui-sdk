@@ -202,7 +202,7 @@ export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectPro
                     <div
                         className={cx("gd-dynamic-select", className)}
                         style={style}
-                        aria-labelledby={undefined}
+                        aria-labelledby={accessibilityConfig?.labelId}
                         aria-describedby={accessibilityConfig?.descriptionId}
                         onKeyDown={(e) => {
                             if (isOpen && e.key !== "Tab") {

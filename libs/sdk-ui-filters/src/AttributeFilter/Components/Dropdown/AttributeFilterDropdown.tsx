@@ -74,10 +74,10 @@ export function AttributeFilterDropdown() {
     return (
         <Dropdown
             className="gd-attribute-filter__next"
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
-            enableEventPropagation={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnOutsideClick
+            enableEventPropagation
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             autofocusOnOpen

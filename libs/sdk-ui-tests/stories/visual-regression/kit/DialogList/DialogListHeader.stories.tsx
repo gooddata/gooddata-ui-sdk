@@ -37,7 +37,7 @@ function DialogListHeaderExamples() {
                         <DialogListHeader
                             title="Collection"
                             buttonTitle="Add"
-                            buttonDisabled={true}
+                            buttonDisabled
                             buttonTooltipText="You cannot add new items"
                             onButtonClick={onButtonClick}
                         />

@@ -99,7 +99,7 @@ export function AddDataSourceSelect({
         <div className="gd-share-dialog-content-select s-user-management-data-source-select">
             <AsyncSelect<IDataSourceSelectOption | ISelectErrorOption>
                 ref={selectRef}
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
                     DropdownIndicator: EmptyRenderer,
@@ -113,7 +113,7 @@ export function AddDataSourceSelect({
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage(messages.searchDataSourcePlaceholder)}
                 onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}

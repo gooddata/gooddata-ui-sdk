@@ -102,46 +102,46 @@ module.exports = {
                         importNames: ["every"],
                         message: "Please use Array.prototype.every() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["concat"],
-                    //     message: "Please use Array.prototype.concat() or spread [...arr1, ...arr2] instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["concat"],
+                        message: "Please use Array.prototype.concat() or spread [...arr1, ...arr2] instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["reverse"],
                         message: "Please use Array.prototype.reverse() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["slice"],
-                    //     message: "Please use Array.prototype.slice() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["indexOf"],
-                    //     message: "Please use Array.prototype.indexOf() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["lastIndexOf"],
-                    //     message: "Please use Array.prototype.lastIndexOf() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["slice"],
+                        message: "Please use Array.prototype.slice() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["indexOf"],
+                        message: "Please use Array.prototype.indexOf() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["lastIndexOf"],
+                        message: "Please use Array.prototype.lastIndexOf() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["fill"],
                         message: "Please use Array.prototype.fill() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["startsWith"],
-                    //     message: "Please use String.prototype.startsWith() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["endsWith"],
-                    //     message: "Please use String.prototype.endsWith() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["startsWith"],
+                        message: "Please use String.prototype.startsWith() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["endsWith"],
+                        message: "Please use String.prototype.endsWith() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["repeat"],
@@ -152,31 +152,31 @@ module.exports = {
                         importNames: ["padStart"],
                         message: "Please use String.prototype.padStart() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["padEnd"],
-                    //     message: "Please use String.prototype.padEnd() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["padEnd"],
+                        message: "Please use String.prototype.padEnd() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["trim"],
                         message: "Please use String.prototype.trim() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["trimStart", "trimLeft"],
-                    //     message: "Please use String.prototype.trimStart() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["trimEnd", "trimRight"],
-                    //     message: "Please use String.prototype.trimEnd() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["toUpper"],
-                    //     message: "Please use String.prototype.toUpperCase() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["trimStart", "trimLeft"],
+                        message: "Please use String.prototype.trimStart() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["trimEnd", "trimRight"],
+                        message: "Please use String.prototype.trimEnd() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["toUpper"],
+                        message: "Please use String.prototype.toUpperCase() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["toLower"],
@@ -197,11 +197,11 @@ module.exports = {
                         importNames: ["isFinite"],
                         message: "Please use Number.isFinite() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isInteger"],
-                    //     message: "Please use Number.isInteger() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isInteger"],
+                        message: "Please use Number.isInteger() instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["isNull"],
@@ -227,11 +227,11 @@ module.exports = {
                         importNames: ["flatten"],
                         message: "Please use Array.prototype.flat() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["flattenDeep"],
-                    //     message: "Please use Array.prototype.flat(Infinity) instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["flattenDeep"],
+                        message: "Please use Array.prototype.flat(Infinity) instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["isNil"],
@@ -242,11 +242,11 @@ module.exports = {
                         importNames: ["noop"],
                         message: "Please use () => {} instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["identity"],
-                    //     message: "Please use x => x instead.",
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["identity"],
+                        message: "Please use x => x instead.",
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["first", "head"],

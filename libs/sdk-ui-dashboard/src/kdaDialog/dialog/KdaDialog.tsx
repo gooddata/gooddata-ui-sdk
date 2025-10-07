@@ -7,6 +7,7 @@ import cx from "classnames";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
+import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { KdaDialogSections } from "./KdaDialogSections.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../presentation/constants/index.js";
 import { KdaContent } from "../components/KdaContent.js";
@@ -17,9 +18,8 @@ import { KeyDriversFooter } from "../composition/KeyDriversFooter.js";
 import { KeyDriversOverview } from "../composition/KeyDriversOverview.js";
 import { KeyDriversPanel } from "../composition/KeyDriversPanel.js";
 import { MetricsBar } from "../composition/MetricsBar.js";
-import { IKdaDialogProps } from "../types.js";
-import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { IKdaDialogProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -57,7 +57,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                     content={
                         <KdaContent
                             leftContent={<KeyDriversPanel detailsId={detailsId} />}
-                            leftLoader={<KeyDriversPanel detailsId={detailsId} loading={true} />}
+                            leftLoader={<KeyDriversPanel detailsId={detailsId} loading />}
                             leftError={
                                 <ErrorComponent
                                     message="Unknown error"
@@ -65,7 +65,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                                 />
                             }
                             rightContent={<KeyDriversOverview detailsId={detailsId} />}
-                            rightLoader={<KeyDriversOverview loading={true} />}
+                            rightLoader={<KeyDriversOverview loading />}
                             rightError={
                                 <ErrorComponent
                                     message="Unknown error"

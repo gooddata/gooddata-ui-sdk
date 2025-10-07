@@ -25,7 +25,7 @@ import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/i
 //
 
 function KpiLoading() {
-    return <LoadingComponent inline={true} />;
+    return <LoadingComponent inline />;
 }
 
 function CoreKpi(props: IKpiProps & WrappedComponentProps) {

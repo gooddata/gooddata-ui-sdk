@@ -94,7 +94,7 @@ export function GenAIChatDialog({
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <OverlayControllerProvider overlayController={chatOverlayController}>
                             <ConfigProvider
-                                allowNativeLinks={true}
+                                allowNativeLinks
                                 linkHandler={onLinkClick}
                                 catalogItems={catalogItems}
                                 canManage={canManage}

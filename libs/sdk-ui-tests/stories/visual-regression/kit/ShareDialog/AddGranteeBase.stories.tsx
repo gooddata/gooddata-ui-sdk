@@ -145,7 +145,7 @@ function SelectedItemsExample(): ReactElement {
                 <WorkspaceProvider workspace={workspace}>
                     <ComponentLabelsProvider labels={LabelsMock}>
                         <AddGranteeBase
-                            isDirty={true}
+                            isDirty
                             addedGrantees={[user, current, group]}
                             appliedGrantees={[groupAll]}
                             currentUser={defaultUser}

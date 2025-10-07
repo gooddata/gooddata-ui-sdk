@@ -132,14 +132,14 @@ export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
                     layoutPath={layoutPathForEndHotspot}
                     gridWidthOverride={gridWidth}
                     gridHeightOverride={gridHeight}
-                    isLastInSection={true}
+                    isLastInSection
                 />
                 <Hotspot
                     dropZoneType="prev"
                     direction={direction}
                     layoutPath={layoutPathForEndHotspot}
-                    isEndingHotspot={true}
-                    hideDropTarget={true}
+                    isEndingHotspot
+                    hideDropTarget
                 />
             </GridLayoutElement>
         </>

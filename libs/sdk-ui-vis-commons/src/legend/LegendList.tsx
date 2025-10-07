@@ -24,7 +24,7 @@ export interface ILegendListProps {
 }
 
 export function LegendSeparator(): ReactElement {
-    return <div className="legend-separator" data-testid="legend-separator" aria-hidden={true} />;
+    return <div className="legend-separator" data-testid="legend-separator" aria-hidden />;
 }
 
 const LegendListItem = memo(function LegendListItem({

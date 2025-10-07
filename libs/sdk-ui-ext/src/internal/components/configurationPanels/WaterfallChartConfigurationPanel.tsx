@@ -145,7 +145,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                     title={title}
                     subtitle={subtitle}
                     valuePath={`${name}.visible`}
-                    canBeToggled={true}
+                    canBeToggled
                     toggledOn={visible}
                     toggleDisabled={controlsDisabled}
                     propertiesMeta={propertiesMeta}

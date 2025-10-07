@@ -20,9 +20,7 @@ export function MetricBar(props: IMetricBarProps) {
                 content={title}
                 optimalPlacement
                 triggerBy={["hover", "focus"]}
-                anchor={
-                    <UiChip label={title ?? ""} iconBefore="metric" isExpandable={false} isDisabled={true} />
-                }
+                anchor={<UiChip label={title ?? ""} iconBefore="metric" isExpandable={false} isDisabled />}
             />
         </div>
     );

@@ -28,7 +28,7 @@ export function AttributeDropdownBody({
 }: IAttributeDropdownBodyProps) {
     return (
         <Overlay
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignTo=".gd-rf-attribute-dropdown-button"
             alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
             onClose={onClose}

@@ -157,7 +157,7 @@ export function MeasureDropdown({
                         <DropdownButton
                             className="s-inner-aggregation-disabled-button s-measure-dropdown-button"
                             value={measureName}
-                            disabled={true}
+                            disabled
                             iconLeft={getMeasureIconClassNameBySelected(buttonValue.id)}
                         />
                         {disabledExplanationTooltip ? (

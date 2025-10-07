@@ -41,34 +41,16 @@ function UiTagExamples() {
                 <h3>Small tags</h3>
                 <Example title="Basic tag, deletable">
                     <div style={sx}>
-                        <UiTag variant="solid" isDeletable={true} size="small" {...defaultProps} />
-                        <UiTag variant="outlined" isDeletable={true} size="small" {...defaultProps} />
-                        <UiTag variant="decorated" isDeletable={true} size="small" {...defaultProps} />
+                        <UiTag variant="solid" isDeletable size="small" {...defaultProps} />
+                        <UiTag variant="outlined" isDeletable size="small" {...defaultProps} />
+                        <UiTag variant="decorated" isDeletable size="small" {...defaultProps} />
                     </div>
                 </Example>
                 <Example title="Basic tag, disabled">
                     <div style={sx}>
-                        <UiTag
-                            variant="solid"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="small"
-                            {...defaultProps}
-                        />
-                        <UiTag
-                            variant="outlined"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="small"
-                            {...defaultProps}
-                        />
-                        <UiTag
-                            variant="decorated"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="small"
-                            {...defaultProps}
-                        />
+                        <UiTag variant="solid" isDisabled isDeletable size="small" {...defaultProps} />
+                        <UiTag variant="outlined" isDisabled isDeletable size="small" {...defaultProps} />
+                        <UiTag variant="decorated" isDisabled isDeletable size="small" {...defaultProps} />
                     </div>
                 </Example>
                 <Example title="Basic tag">
@@ -82,34 +64,16 @@ function UiTagExamples() {
                 <h3>Large tags</h3>
                 <Example title="Basic tag, deletable">
                     <div style={sx}>
-                        <UiTag variant="solid" isDeletable={true} size="large" {...defaultProps} />
-                        <UiTag variant="outlined" isDeletable={true} size="large" {...defaultProps} />
-                        <UiTag variant="decorated" isDeletable={true} size="large" {...defaultProps} />
+                        <UiTag variant="solid" isDeletable size="large" {...defaultProps} />
+                        <UiTag variant="outlined" isDeletable size="large" {...defaultProps} />
+                        <UiTag variant="decorated" isDeletable size="large" {...defaultProps} />
                     </div>
                 </Example>
                 <Example title="Basic tag, disabled">
                     <div style={sx}>
-                        <UiTag
-                            variant="solid"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="large"
-                            {...defaultProps}
-                        />
-                        <UiTag
-                            variant="outlined"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="large"
-                            {...defaultProps}
-                        />
-                        <UiTag
-                            variant="decorated"
-                            isDisabled={true}
-                            isDeletable={true}
-                            size="large"
-                            {...defaultProps}
-                        />
+                        <UiTag variant="solid" isDisabled isDeletable size="large" {...defaultProps} />
+                        <UiTag variant="outlined" isDisabled isDeletable size="large" {...defaultProps} />
+                        <UiTag variant="decorated" isDisabled isDeletable size="large" {...defaultProps} />
                     </div>
                 </Example>
                 <Example title="Basic tag, solid">
@@ -125,25 +89,19 @@ function UiTagExamples() {
                     <div style={{ ...sx, flexWrap: "wrap" }}>
                         <UiTag
                             variant="solid"
-                            isDeletable={true}
+                            isDeletable
                             size="small"
                             {...defaultProps}
                             label="This is a long tag label that should be truncated in the UI tag component to fit the available space."
                         />
                         <UiTag
                             variant="solid"
-                            isDeletable={true}
+                            isDeletable
                             size="small"
                             {...defaultProps}
                             label="This is a long tag but not so long."
                         />
-                        <UiTag
-                            variant="solid"
-                            isDeletable={true}
-                            size="small"
-                            {...defaultProps}
-                            label="Tag"
-                        />
+                        <UiTag variant="solid" isDeletable size="small" {...defaultProps} label="Tag" />
                     </div>
                 </Example>
             </div>

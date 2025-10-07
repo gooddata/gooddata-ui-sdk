@@ -91,8 +91,8 @@ describe("AggregationsSubMenu", () => {
                 measureLocalIdentifiers={["m1"]}
                 onAggregationSelect={onAggregationSelect}
                 toggler={<div>Open submenu</div>}
-                showColumnsSubMenu={true}
-                isMenuOpened={true}
+                showColumnsSubMenu
+                isMenuOpened
                 {...customProps}
             />,
         );

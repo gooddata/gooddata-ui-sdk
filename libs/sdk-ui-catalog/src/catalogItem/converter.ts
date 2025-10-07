@@ -60,6 +60,7 @@ export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDas
         updatedBy: getDisplayName(dashboard.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: dashboard.isLocked ?? false,
+        isEditable: dashboard.sharePermissions?.includes("EDIT") ?? false,
     };
 }
 
@@ -77,6 +78,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         updatedBy: getDisplayName(insight.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: insight.isLocked ?? false,
+        isEditable: true,
     };
 }
 
@@ -93,6 +95,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         updatedBy: getDisplayName(measure.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: measure.isLocked ?? false,
+        isEditable: true,
     };
 }
 
@@ -108,6 +111,7 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
         isLocked: fact.isLocked ?? false,
+        isEditable: true,
         dataSet: fact.dataSet,
     };
 }
@@ -124,6 +128,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
         isLocked: attribute.isLocked ?? false,
+        isEditable: true,
         dataSet: attribute.dataSet,
     };
 }

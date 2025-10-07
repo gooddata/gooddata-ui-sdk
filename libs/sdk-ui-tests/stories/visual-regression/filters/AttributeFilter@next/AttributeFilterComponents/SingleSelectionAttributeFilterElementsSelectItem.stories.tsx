@@ -37,7 +37,7 @@ function SingleSelectionAttributeFilterElementsSelectItemExamples(): ReactElemen
                     <h4>SingleSelectionAttributeFilterElementsSelectItem selected</h4>
                     <SingleSelectionAttributeFilterElementsSelectItem
                         item={item}
-                        isSelected={true}
+                        isSelected
                         onSelect={action("onSelect")}
                         onDeselect={action("onDeselect")}
                         onSelectOnly={action("onSelectOnly")}

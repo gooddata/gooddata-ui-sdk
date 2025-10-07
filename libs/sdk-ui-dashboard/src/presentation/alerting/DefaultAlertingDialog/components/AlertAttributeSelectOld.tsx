@@ -184,7 +184,7 @@ export function AlertAttributeSelectOld({
                                         toggler={
                                             <Item
                                                 checked={isSelected}
-                                                subMenu={true}
+                                                subMenu
                                                 className="gd-alert-attribute-select__menu-item_wrapper"
                                             >
                                                 <div className="gd-alert-attribute-select__menu-item s-menu-alert-attribute-item">

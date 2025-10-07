@@ -174,7 +174,7 @@ export class GeoChartInner extends PureComponent<IGeoChartInnerProps, IGeoChartI
         }
 
         return (
-            <Measure client={true}>
+            <Measure client>
                 {({ measureRef, contentRect }: MeasuredComponentProps) => {
                     const { client: contentRectClient } = contentRect;
                     return this.renderVisualizationContent(

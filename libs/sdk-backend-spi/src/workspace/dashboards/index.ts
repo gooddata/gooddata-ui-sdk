@@ -794,6 +794,14 @@ export interface IDashboardsQuery {
     withInclude(include: string[]): IDashboardsQuery;
 
     /**
+     * Sets meta include for the query.
+     *
+     * @param metaInclude - meta include to apply
+     * @returns dashboards query
+     */
+    withMetaInclude(metaInclude: string[]): IDashboardsQuery;
+
+    /**
      * Sets origin for the query.
 
      * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.

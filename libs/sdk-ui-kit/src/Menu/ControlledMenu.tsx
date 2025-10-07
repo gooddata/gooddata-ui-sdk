@@ -64,7 +64,7 @@ export function ControlledMenu({
             portalTarget={portalTarget}
             toggler={toggler}
             togglerWrapperClassName={togglerWrapperClassName}
-            topLevelMenu={true}
+            topLevelMenu
         >
             {children}
         </MenuOpener>

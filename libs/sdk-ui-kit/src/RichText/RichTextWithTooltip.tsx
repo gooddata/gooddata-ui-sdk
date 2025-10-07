@@ -115,7 +115,7 @@ function RichTextWithTooltipCore({
     }
 
     return (
-        <BubbleHoverTrigger showDelay={0} hideDelay={0} openOnInit={true}>
+        <BubbleHoverTrigger showDelay={0} hideDelay={0} openOnInit>
             {Component}
             {showTooltip ? (
                 <Bubble

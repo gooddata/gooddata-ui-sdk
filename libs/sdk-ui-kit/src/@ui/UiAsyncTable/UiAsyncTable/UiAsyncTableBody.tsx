@@ -37,7 +37,7 @@ export function UiAsyncTableBody<T extends { id: string }>(props: UiAsyncTableBo
             onKeyDownSelect={onItemClick}
             loadNextPage={loadNextPage}
             SkeletonItem={SkeletonItem}
-            scrollbarHoverEffect={true}
+            scrollbarHoverEffect
             scrollToIndex={scrollToIndex}
             shouldLoadNextPage={shouldLoadNextPage}
             tabIndex={items.length ? 0 : -1}

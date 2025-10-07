@@ -166,7 +166,7 @@ export const SingleSelectListItem = forwardRef<
 
         const iconClasses = cx("gd-list-icon", typeof iconProp === "string" ? iconProp : undefined);
         return (
-            <span data-testid="icon" aria-hidden={true} className={iconClasses}>
+            <span data-testid="icon" aria-hidden className={iconClasses}>
                 {typeof iconProp === "string" ? null : iconProp}
             </span>
         );

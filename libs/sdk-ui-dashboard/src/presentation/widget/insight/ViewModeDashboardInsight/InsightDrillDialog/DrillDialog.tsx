@@ -132,12 +132,12 @@ export function DrillDialog({
                     "gd-ff-drill-description": enableDrillDescription,
                 })}
                 onClose={onCloseDialog}
-                displayCloseButton={true}
+                displayCloseButton
                 accessibilityConfig={{ ...accessibilityConfig, isModal: true, titleElementId }}
                 initialFocus={initialFocus}
                 returnFocusAfterClose
-                shouldCloseOnEscape={true}
-                autofocusOnOpen={true}
+                shouldCloseOnEscape
+                autofocusOnOpen
                 focusCheckFn={focusCheckFn}
             >
                 <div

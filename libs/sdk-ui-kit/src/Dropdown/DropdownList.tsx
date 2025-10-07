@@ -200,9 +200,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
                         onChange={onChange}
                         isSmall={searchFieldSize === "small"}
                         placeholder={searchPlaceholder}
-                        clearOnEsc={true}
+                        clearOnEsc
                         onEscKeyPress={onEscKeyPress}
-                        isSearch={true}
+                        isSearch
                         autofocus={!disableAutofocus}
                         accessibilityConfig={{
                             ariaLabel: searchLabel,

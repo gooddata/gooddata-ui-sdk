@@ -33,9 +33,9 @@ export function ChartSortingDropdownBody({ children, buttonNode, onClose }: Char
         <Overlay
             alignTo={buttonNode}
             alignPoints={dropdownAlignPoints}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
+            closeOnOutsideClick
+            closeOnParentScroll
+            closeOnMouseDrag
             ignoreClicksOnByClass={[
                 ".gd-measure-sorting-dropdown-body",
                 ".gd-attribute-sorting-dropdown-body",

@@ -17,7 +17,7 @@ export function Disabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <LabelFormatControl
-                    disabled={true}
+                    disabled
                     configPanelDisabled={false}
                     axis="xaxis"
                     properties={{}}

@@ -65,7 +65,7 @@ export function NotificationFiltersDetail({ filters }: INotificationFiltersDetai
                     alignPoints={ALIGN_POINTS}
                     closeOnEscape
                     closeOnOutsideClick
-                    closeOnParentScroll={true}
+                    closeOnParentScroll
                     closeOnMouseDrag={false}
                     onClose={closeFiltersDialog}
                 >

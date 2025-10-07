@@ -31,7 +31,7 @@ export function LegendsectionDisabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <LegendSection
-                    controlsDisabled={true}
+                    controlsDisabled
                     properties={DefaultProperties}
                     propertiesMeta={DefaultPropertiesMeta}
                     pushData={action("onLegendSectionToggle")}

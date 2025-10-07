@@ -10,7 +10,14 @@ import {
     IAttributeFilterButtonProps,
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    OverlayPositionType,
+    UiChip,
+    UiSkeleton,
+    UiTooltip,
+    isActionKey,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 
 import {
     AutomationAttributeFilterProvider,
@@ -122,14 +129,24 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
             isDeletable={!isLocked}
             onClick={props.onClick}
             onDelete={() => onDelete?.(filter!)}
+            onKeyDown={(event) => {
+                // In case the button is locked and not disabled we need to explicitly
+                // stop the event propagation to prevent dropdown from opening
+                if (isLocked && isActionKey(event)) {
+                    event.stopPropagation();
+                }
+            }}
             onDeleteKeyDown={(event) => {
                 // Do not propagate event to parent as attribute filter would always open
-                event.stopPropagation();
+                if (isActionKey(event)) {
+                    event.stopPropagation();
+                }
             }}
             accessibilityConfig={{
                 isExpanded: props.isOpen,
-                deleteAriaLabel,
                 ariaDescribedBy: attributeFilterTooltipId,
+                deleteAriaLabel,
+                deleteAriaDescribedBy: attributeFilterTooltipId,
             }}
             buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
             renderChipContent={(content: ReactNode) => (

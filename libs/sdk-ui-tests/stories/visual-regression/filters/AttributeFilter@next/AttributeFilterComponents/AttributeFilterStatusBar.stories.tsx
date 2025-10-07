@@ -33,7 +33,7 @@ function AttributeFilterStatusBarExamples() {
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={500}
                         parentFilterTitles={[]}
                         isFilteredByParentFilters={false}
@@ -43,17 +43,17 @@ function AttributeFilterStatusBarExamples() {
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={500}
                         parentFilterTitles={["Location", "Department"]}
-                        isFilteredByParentFilters={true}
+                        isFilteredByParentFilters
                     />
                     <h4>AttributeFilterStatusBar reached selection limit</h4>
                     <AttributeFilterStatusBar
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={2}
                         parentFilterTitles={[]}
                         isFilteredByParentFilters={false}
@@ -63,7 +63,7 @@ function AttributeFilterStatusBarExamples() {
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={1}
                         parentFilterTitles={[]}
                         isFilteredByParentFilters={false}
@@ -75,21 +75,21 @@ function AttributeFilterStatusBarExamples() {
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={2}
                         parentFilterTitles={["Location", "Department"]}
-                        isFilteredByParentFilters={true}
+                        isFilteredByParentFilters
                     />
                     <h4>AttributeFilterStatusBar with irrelevant selected elements and show all option</h4>
                     <AttributeFilterStatusBar
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={500}
                         parentFilterTitles={["Location", "Department"]}
-                        isFilteredByParentFilters={true}
-                        enableShowingFilteredElements={true}
+                        isFilteredByParentFilters
+                        enableShowingFilteredElements
                         attributeTitle="Product"
                         onShowFilteredElements={action("showAll")}
                         irrelevantSelection={[elements[0]]}

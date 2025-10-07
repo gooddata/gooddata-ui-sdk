@@ -60,7 +60,7 @@ export function EmbedInsightDialogBase({
 
     return (
         <ConfirmDialogBase
-            isPositive={true}
+            isPositive
             onClose={onClose}
             onCancel={onClose}
             onSubmit={onCopyButtonClick}

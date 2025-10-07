@@ -40,12 +40,12 @@ export function FullFeatured() {
             <div style={{ width: 120 }}>
                 <IntlWrapper>
                     <AttributeFilterDropdownButton
-                        isOpen={true}
+                        isOpen
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={3}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                         TooltipContentComponent={TooltipContentComponent}
@@ -64,12 +64,12 @@ export const Themed = () =>
             <div style={{ width: 120 }}>
                 <IntlWrapper>
                     <AttributeFilterDropdownButton
-                        isOpen={true}
+                        isOpen
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={3}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                         TooltipContentComponent={TooltipContentComponent}

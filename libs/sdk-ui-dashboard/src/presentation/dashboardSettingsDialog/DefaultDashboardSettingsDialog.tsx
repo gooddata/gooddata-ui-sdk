@@ -62,7 +62,7 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
         <ConfirmDialog
             onCancel={onCancel}
             onSubmit={onApplyHandler}
-            isPositive={true}
+            isPositive
             className="s-dialog s-settings_dashboard_dialog gd-dashboard-settings-dialog"
             headline={intl.formatMessage({ id: "settingsDashboardDialog.headline" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
@@ -150,7 +150,7 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
                             className="gd-dashboard-settings-filters"
                         />
                         <RecurrenceForm
-                            allowHourlyRecurrence={true}
+                            allowHourlyRecurrence
                             cronExpression={currentData.evaluationFrequency ?? ""}
                             placeholder={settings.alertDefault?.defaultCron}
                             timezone={settings.alertDefault?.defaultTimezone}
@@ -164,12 +164,12 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
                             repeatLabel={intl.formatMessage({
                                 id: "settingsDashboardDialog.section.alert.label",
                             })}
-                            showRepeatTypeDescription={true}
-                            showTimezoneInOccurrence={true}
+                            showRepeatTypeDescription
+                            showTimezoneInOccurrence
                             dateFormat={dateFormat}
                             weekStart={weekStart}
                             locale={locale}
-                            showInheritValue={true}
+                            showInheritValue
                             isWhiteLabeled={isWhiteLabeled}
                             customRecurrenceTypeMappingFn={simpleRecurrenceTypeMappingFn}
                         />
@@ -217,7 +217,7 @@ function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigura
                     <BubbleHoverTrigger
                         showDelay={0}
                         hideDelay={0}
-                        eventsOnBubble={true}
+                        eventsOnBubble
                         className="configuration-category-item-tooltip-icon"
                     >
                         <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />

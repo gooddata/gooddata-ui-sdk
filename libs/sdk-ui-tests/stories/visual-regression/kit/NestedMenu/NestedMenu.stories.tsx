@@ -33,12 +33,12 @@ function NestedMenuExamples() {
                 }
                 opened={opened}
                 openAction={"click"}
-                closeOnScroll={true}
+                closeOnScroll
                 onOpenedChange={onOpenedChange}
             >
                 <ItemsWrapper
                     className="adi-date-granularity-dropdown s-date-granularity-switch"
-                    smallItemsSpacing={true}
+                    smallItemsSpacing
                 >
                     <Header>Main</Header>
                     <Item>First item</Item>

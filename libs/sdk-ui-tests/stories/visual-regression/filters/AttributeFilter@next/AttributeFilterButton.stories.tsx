@@ -180,7 +180,7 @@ export function AttributeFilterError() {
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter("NON_EXISTING", [])}
                     onApply={action("on-apply")}
-                    ErrorComponent={() => <FiltersAttributeFilterError isDraggable={true} />}
+                    ErrorComponent={() => <FiltersAttributeFilterError isDraggable />}
                 />
             </div>
 
@@ -192,11 +192,7 @@ export function AttributeFilterError() {
                     filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
                     DropdownButtonComponent={() => (
-                        <AttributeFilterDropdownButton
-                            title="Product name"
-                            subtitle="Laptop"
-                            isError={true}
-                        />
+                        <AttributeFilterDropdownButton title="Product name" subtitle="Laptop" isError />
                     )}
                 />
             </div>
@@ -212,8 +208,8 @@ export function AttributeFilterError() {
                         <AttributeFilterDropdownButton
                             title="Product name"
                             subtitle="Laptop"
-                            isError={true}
-                            isDraggable={true}
+                            isError
+                            isDraggable
                         />
                     )}
                 />

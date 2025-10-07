@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, KeyboardEvent, MutableRefObject, ReactNode, RefObject } from "react";
+import { CSSProperties, KeyboardEventHandler, MutableRefObject, ReactNode, RefObject } from "react";
 
 import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
@@ -13,6 +13,7 @@ export interface IUiChipAccessibilityConfig
     extends IAccessibilityConfigBase,
         IDropdownButtonAccessibilityConfig {
     deleteAriaLabel?: string;
+    deleteAriaDescribedBy?: string;
 }
 
 /**
@@ -30,7 +31,8 @@ export interface UiChipProps {
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
-    onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
+    onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
+    onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     accessibilityConfig?: IUiChipAccessibilityConfig;
     dataTestId?: string;
     buttonRef?: MutableRefObject<HTMLButtonElement>;
@@ -43,6 +45,7 @@ export interface ChipContentProps {
     tag?: string;
     iconBefore?: IconType;
     onClick?: () => void;
+    onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     isActive: boolean;
     isLocked: boolean;
     isExpandable: boolean;
@@ -57,7 +60,8 @@ export interface ChipContentProps {
 
 export interface ChipDeleteButtonProps {
     onDelete?: () => void;
-    onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
+    onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     deleteAriaLabel?: string;
+    deleteAriaDescribedBy?: string;
     dataTestId?: string;
 }

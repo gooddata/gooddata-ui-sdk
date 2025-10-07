@@ -44,7 +44,7 @@ export function SearchItemDetails({ item }: Props) {
 
     return (
         <div
-            aria-hidden={true}
+            aria-hidden
             className="gd-semantic-search__results-item__details"
             onPointerEnter={() => setIsHovered(true)}
             onPointerLeave={() => setIsHovered(false)}

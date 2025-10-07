@@ -106,7 +106,7 @@ export function AddUserGroupSelect({
         <div className="gd-share-dialog-content-select s-user-management-user-group-select">
             <AsyncSelect<IUserGroupSelectOption | ISelectErrorOption>
                 ref={selectRef}
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
                     DropdownIndicator: EmptyRenderer,
@@ -120,7 +120,7 @@ export function AddUserGroupSelect({
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage(messages.searchUserGroupPlaceholder)}
                 onKeyDown={onKeyDownCallback}
                 noOptionsMessage={noOptionsMessage}

@@ -17,7 +17,7 @@ export interface IHighChartsMeasuredRendererProps {
 
 export function HighChartsMeasuredRenderer(props: IHighChartsMeasuredRendererProps): ReactElement {
     return (
-        <Measure client={true}>
+        <Measure client>
             {({ measureRef, contentRect }: MeasuredComponentProps) => {
                 return (
                     <div

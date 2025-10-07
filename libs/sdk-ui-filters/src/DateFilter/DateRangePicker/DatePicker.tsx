@@ -137,9 +137,9 @@ export const DayPicker = forwardRef<
             <Overlay
                 alignTo={alignTo}
                 alignPoints={ALIGN_POINTS}
-                closeOnOutsideClick={true}
-                closeOnMouseDrag={true}
-                closeOnParentScroll={true}
+                closeOnOutsideClick
+                closeOnMouseDrag
+                closeOnParentScroll
             >
                 {DatePicker}
             </Overlay>

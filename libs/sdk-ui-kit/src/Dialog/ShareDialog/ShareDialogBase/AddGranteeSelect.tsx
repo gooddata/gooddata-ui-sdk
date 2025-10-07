@@ -131,7 +131,7 @@ export function AddGranteeSelect(props: IAddGranteeSelectProps) {
             <AsyncSelect
                 inputId={ADD_GRANTEE_SELECT_ID}
                 ref={selectRef}
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
                     DropdownIndicator: EmptyRenderer,
@@ -145,7 +145,7 @@ export function AddGranteeSelect(props: IAddGranteeSelectProps) {
                     NoOptionsMessage: NoOptionsMessageRenderer,
                 }}
                 loadOptions={loadOptions}
-                defaultOptions={true}
+                defaultOptions
                 placeholder={intl.formatMessage({
                     id: "shareDialog.share.grantee.add.search.placeholder",
                 })}

@@ -487,10 +487,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                     </>
                 )}
                 <div
+                    role="group"
                     className="gd-invertable-select-status-bar"
-                    aria-label={formatMessage({ id: "attributesDropdown.filterValues" })}
-                    role={"status"}
-                    aria-live={"off"}
+                    aria-label={formatMessage({ id: "attributesDropdown.selectedValues" })}
                 >
                     {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
                 </div>

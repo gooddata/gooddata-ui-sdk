@@ -117,7 +117,7 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                 submitButtonText={submitButtonText || intl.formatMessage({ id: "dialogs.export.submit" })}
                 onCancel={onCancel}
                 onSubmit={handleSubmit}
-                autofocusOnOpen={true}
+                autofocusOnOpen
                 accessibilityConfig={{
                     dialogId,
                 }}

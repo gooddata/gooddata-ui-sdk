@@ -48,9 +48,9 @@ export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) 
 
     return (
         <Overlay
-            closeOnParentScroll={true}
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
+            closeOnParentScroll
+            closeOnMouseDrag
+            closeOnOutsideClick
             alignTo=".gd-advanced-section"
             alignPoints={EDITOR_ALIGN_POINTS}
             onClose={onCancel}

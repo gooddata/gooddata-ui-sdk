@@ -29,7 +29,7 @@ function DeleteAttributeHierarchyConfirmation() {
             isCancelDisabled={isLoading}
             isSubmitDisabled={isLoading}
             headline={headlineText}
-            displayCloseButton={true}
+            displayCloseButton
             onCancel={handleClose}
             onSubmit={onDeleteAttributeHierarchy}
         >

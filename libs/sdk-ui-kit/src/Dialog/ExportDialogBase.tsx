@@ -65,7 +65,7 @@ export const ExportDialogBase = memo<IExportDialogBaseProps>(function ExportDial
             submitButtonText={submitButtonText}
             onCancel={onCancel}
             onSubmit={handleSubmit}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             accessibilityConfig={{
                 dialogId,
             }}

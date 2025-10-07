@@ -157,7 +157,7 @@ function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
             const checkbox = (
                 <label className={labelClasses}>
                     <input
-                        readOnly={true}
+                        readOnly
                         type="checkbox"
                         className={checkboxClasses}
                         checked={!isEmpty()}

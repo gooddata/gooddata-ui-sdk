@@ -2,8 +2,6 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-import { identity } from "lodash-es";
-
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
@@ -12,6 +10,8 @@ import { ThemeContextProvider, ThemeStatus } from "./Context.js";
 import { isDarkTheme } from "./isDarkTheme.js";
 import { prepareTheme } from "./prepareTheme.js";
 import { clearCssProperties, setCssProperties } from "../cssProperties.js";
+
+const identity = <T,>(v: T): T => v;
 
 /**
  * @public

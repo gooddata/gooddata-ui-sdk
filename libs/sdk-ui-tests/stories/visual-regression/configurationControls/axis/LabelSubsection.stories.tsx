@@ -35,7 +35,7 @@ export function AxisDisabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <LabelSubsection
-                    disabled={true}
+                    disabled
                     configPanelDisabled={false}
                     axis="xaxis"
                     properties={defaultProps}
@@ -61,7 +61,7 @@ export function AxisEnabled() {
                 <InternalIntlWrapper>
                     <LabelSubsection
                         disabled={false}
-                        configPanelDisabled={true}
+                        configPanelDisabled
                         axis="xaxis"
                         properties={axisProperties}
                         pushData={onPushData}
@@ -88,7 +88,7 @@ export function AxisEnabledLocalized() {
                 <InternalIntlWrapper locale={german}>
                     <LabelSubsection
                         disabled={false}
-                        configPanelDisabled={true}
+                        configPanelDisabled
                         axis="yaxis"
                         properties={axisProperties}
                         pushData={onPushData}

@@ -146,7 +146,7 @@ export function RepeatTypeSelect(props: IRepeatTypeSelectProps) {
             closeOnParentScroll={closeOnParentScroll}
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             className="gd-recurrence-form-type s-recurrence-form-type"
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderButton={({ toggleDropdown, isOpen, dropdownId, buttonRef }) => (
                 <DropdownButton
                     id={id}
@@ -180,8 +180,8 @@ export function RepeatTypeSelect(props: IRepeatTypeSelectProps) {
 
                 return (
                     <UiListbox
-                        shouldKeyboardActionStopPropagation={true}
-                        shouldKeyboardActionPreventDefault={true}
+                        shouldKeyboardActionStopPropagation
+                        shouldKeyboardActionPreventDefault
                         dataTestId="s-recurrence-form-type-list"
                         items={listboxItems}
                         maxWidth={DEFAULT_DROPDOWN_WIDTH}

@@ -63,6 +63,7 @@ export const convertAnalyticalDashboard = (
         tags: attributes?.tags ?? [],
         isLocked: isInheritedObject(analyticalDashboard),
         shareStatus: getShareStatus(isPrivate),
+        sharePermissions: meta?.permissions,
         isUnderStrictControl: true,
         availability: "full",
     };

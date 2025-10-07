@@ -136,7 +136,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     return (
         <>
             <Dialog
-                displayCloseButton={true}
+                displayCloseButton
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
                 className={cx("gd-notifications-channels-management-dialog s-alerting-management-dialog", {
@@ -171,7 +171,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 scope="workspace"
                                 type="alert"
                                 maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                                isSmall={true}
+                                isSmall
                                 editAutomation={handleAlertEdit}
                                 preselectedFilters={{
                                     dashboard: dashboardId

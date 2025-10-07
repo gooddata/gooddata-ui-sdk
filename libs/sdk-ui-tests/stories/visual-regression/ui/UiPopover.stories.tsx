@@ -34,7 +34,7 @@ function UiPopoverExamples() {
                             title="Popover title"
                             content="Popover content"
                             footer="Popover footer"
-                            closeVisible={true}
+                            closeVisible
                             closeText="Close"
                         />
                     </div>

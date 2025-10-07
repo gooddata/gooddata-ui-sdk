@@ -37,7 +37,7 @@ export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProp
             <BubbleHoverTrigger
                 showDelay={0}
                 hideDelay={0}
-                eventsOnBubble={true}
+                eventsOnBubble
                 className="gd-attribute-item-tooltip-icon"
             >
                 <span

@@ -335,9 +335,9 @@ export function ScheduledMailDialogRenderer({
         <>
             <Overlay
                 className="gd-notifications-channels-dialog-overlay"
-                isModal={true}
+                isModal
                 positionType="fixed"
-                ensureVisibility={true}
+                ensureVisibility
             >
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
@@ -349,7 +349,7 @@ export function ScheduledMailDialogRenderer({
                                         enableAutomationManagement,
                                 },
                             )}
-                            isPositive={true}
+                            isPositive
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={
                                 scheduledExportToEdit

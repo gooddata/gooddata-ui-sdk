@@ -41,7 +41,7 @@ export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
                 <InputWithNumberFormat
                     className="s-custom-format-dialog-preview-input gd-measure-custom-format-dialog-preview-input"
                     value={preview}
-                    isSmall={true}
+                    isSmall
                     autofocus={false}
                     onChange={onPreviewChange}
                     separators={separators}

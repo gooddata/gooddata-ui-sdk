@@ -25,12 +25,7 @@ const OperatorDropdownBody = memo(function OperatorDropdownBody({
     const intl = useIntl();
 
     return (
-        <Overlay
-            closeOnOutsideClick={true}
-            alignTo={alignTo}
-            alignPoints={[{ align: "bl tl" }]}
-            onClose={onClose}
-        >
+        <Overlay closeOnOutsideClick alignTo={alignTo} alignPoints={[{ align: "bl tl" }]} onClose={onClose}>
             <div className="gd-dropdown overlay">
                 <div className="gd-mvf-operator-dropdown-body s-mvf-operator-dropdown-body">
                     <OperatorDropdownItem

@@ -26,7 +26,7 @@ export function EditableTitle(props: ITitleProps) {
                 maxRows={1}
                 maxLength={DASHBOARD_TITLE_MAX_LENGTH}
                 className="s-gd-dashboard-title s-dash-title dash-title editable"
-                isEditableLabelWidthBasedOnText={true}
+                isEditableLabelWidthBasedOnText
                 autofocus={!dashboardTitle}
                 placeholder={intl.formatMessage(placeholderMessage)}
             >

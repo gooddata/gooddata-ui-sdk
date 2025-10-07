@@ -58,9 +58,9 @@ export function DashboardList({ selected, dashboards, onSelect }: IDashboardList
     return (
         <Dropdown
             className="s-dashboards-dropdown"
-            closeOnParentScroll={true}
+            closeOnParentScroll
             closeOnMouseDrag={false}
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignPoints={alignPoints}
             renderBody={({ closeDropdown }) => (
                 <DropdownList
@@ -70,7 +70,7 @@ export function DashboardList({ selected, dashboards, onSelect }: IDashboardList
                     searchString={searchString}
                     searchPlaceholder={searchPlaceholder}
                     itemHeight={ITEM_HEIGHT}
-                    showSearch={true}
+                    showSearch
                     items={items}
                     scrollToItem={selectedDashboard}
                     onSearch={setSearchString}

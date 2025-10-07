@@ -310,7 +310,7 @@ export function AttributeFilterDropdownButton({
             content={intl.formatMessage({ id: "filters.locked.filter.tooltip" })}
             triggerBy={["focus"]}
             arrowPlacement="top"
-            showArrow={true}
+            showArrow
         />
     ) : (
         buttonComponent

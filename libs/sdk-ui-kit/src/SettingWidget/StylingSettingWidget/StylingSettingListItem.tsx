@@ -72,7 +72,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
                     aria-label={stringUtils.simplifyText(name)}
                     type="radio"
                     className="input-radio"
-                    readOnly={true}
+                    readOnly
                     checked={isSelected}
                     onClick={() => onClick(ref)}
                 />
@@ -97,10 +97,10 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
                     }
                     opened={opened}
                     openAction={"click"}
-                    closeOnScroll={true}
+                    closeOnScroll
                     onOpenedChange={onOpenedChange}
                 >
-                    <ItemsWrapper className="s-styling-item-menu-items" smallItemsSpacing={true}>
+                    <ItemsWrapper className="s-styling-item-menu-items" smallItemsSpacing>
                         <Item className="s-styling-item-menu-item-edit" onClick={() => onEdit?.(item)}>
                             {intl.formatMessage({ id: "stylingPicker.item.edit" })}
                         </Item>

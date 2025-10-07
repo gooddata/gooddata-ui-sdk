@@ -55,8 +55,8 @@ describe("AggregationsMenu", () => {
         return render(
             <AggregationsMenu
                 intl={intlMock}
-                isMenuOpened={true}
-                isMenuButtonVisible={true}
+                isMenuOpened
+                isMenuButtonVisible
                 showSubmenu={false}
                 showColumnsSubMenu={false}
                 availableTotalTypes={AVAILABLE_TOTALS}

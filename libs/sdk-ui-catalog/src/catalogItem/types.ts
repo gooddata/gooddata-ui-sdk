@@ -53,6 +53,7 @@ export interface ICatalogItem extends ICatalogItemRef {
     createdAt: Date | null;
     updatedAt: Date | null;
     isLocked: boolean;
+    isEditable: boolean;
     visualizationType?: VisualizationType;
     dataSet?: IDataSetMetadataObject;
 }

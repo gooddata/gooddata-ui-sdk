@@ -21,7 +21,7 @@ export function ChipDeleteButton({
             onKeyDown={onDeleteKeyDown}
         >
             <span className={e("icon-delete")}>
-                <UiIcon type="cross" color="complementary-6" size={14} ariaHidden={true} />
+                <UiIcon type="cross" color="complementary-6" size={14} ariaHidden />
             </span>
         </button>
     );

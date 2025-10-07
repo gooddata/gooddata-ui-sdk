@@ -31,10 +31,10 @@ function SingleSelectionAttributeFilterStatusBarExamples(): ReactElement {
                         getItemTitle={(element) => element.title!}
                         selectedItems={elements}
                         totalElementsCountWithCurrentSettings={100}
-                        isInverted={true}
+                        isInverted
                         selectedItemsLimit={500}
                         parentFilterTitles={["Location", "Department"]}
-                        isFilteredByParentFilters={true}
+                        isFilteredByParentFilters
                     />
                 </div>
             </IntlWrapper>

@@ -13,10 +13,10 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { KdaItem } from "../internalTypes.js";
-import { useKdaState } from "../providers/KdaState.js";
 import { driverColumn } from "./columns/driverColumn.js";
 import { driversCountColumn } from "./columns/driversCount.js";
 import { titleColumn } from "./columns/titleColumn.js";
+import { useKdaState } from "../providers/KdaState.js";
 
 export function KdaSummaryDrivers() {
     const { ref, width, height } = useElementSize();

@@ -25,7 +25,7 @@ export function MeasureDropdownBody({
 }: IMeasureDropdownBodyProps) {
     return (
         <Overlay
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignTo=".gd-rf-measure-dropdown-button"
             alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
             onClose={onClose}

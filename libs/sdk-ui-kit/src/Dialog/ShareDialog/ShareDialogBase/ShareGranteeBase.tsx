@@ -83,8 +83,8 @@ export function ShareGranteeBase(props: IShareGranteeBaseProps) {
     return (
         <ConfirmDialogBase
             className="gd-share-dialog s-gd-share-grantees"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={!isDirty}
             headline={dialogLabels.headline}
             cancelButtonText={dialogLabels.cancelButtonText}

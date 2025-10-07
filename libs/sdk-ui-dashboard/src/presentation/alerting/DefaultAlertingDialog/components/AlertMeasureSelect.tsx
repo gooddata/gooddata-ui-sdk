@@ -45,7 +45,7 @@ export function AlertMeasureSelect({
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            autofocusOnOpen={true}
+            autofocusOnOpen
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <div
@@ -81,8 +81,8 @@ export function AlertMeasureSelect({
 
                 return (
                     <UiListbox
-                        shouldKeyboardActionStopPropagation={true}
-                        shouldKeyboardActionPreventDefault={true}
+                        shouldKeyboardActionStopPropagation
+                        shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-measure-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}

@@ -156,7 +156,7 @@ export function DashboardInsightMenuBody(
                     ContentItem={CustomUiMenuContentItemComponent}
                     Content={CustomUiMenuContentComponent}
                     MenuHeader={CustomUiMenuHeaderComponent}
-                    shouldCloseOnSelect={true}
+                    shouldCloseOnSelect
                     ariaAttributes={{
                         id: menuId,
                         "aria-labelledby": menuLabelId,

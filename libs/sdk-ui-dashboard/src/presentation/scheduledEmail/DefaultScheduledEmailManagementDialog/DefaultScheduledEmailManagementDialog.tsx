@@ -123,7 +123,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
     return (
         <>
             <Dialog
-                displayCloseButton={true}
+                displayCloseButton
                 autofocusOnOpen={automations.length === 0}
                 onCancel={onClose}
                 className={cx(
@@ -134,7 +134,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                     },
                 )}
                 accessibilityConfig={{ titleElementId, isModal: true }}
-                returnFocusAfterClose={true}
+                returnFocusAfterClose
                 returnFocusTo={returnFocusTo}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
@@ -154,7 +154,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                     backend={backend}
                                     scope="workspace"
                                     maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                                    isSmall={true}
+                                    isSmall
                                     editAutomation={handleScheduleEdit}
                                     preselectedFilters={{
                                         dashboard: dashboardId
@@ -228,7 +228,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                         />
                         {enableAutomationManagement && canCreateAutomation ? (
                             <UiTooltip
-                                optimalPlacement={true}
+                                optimalPlacement
                                 anchor={
                                     <Button
                                         onClick={onAdd}

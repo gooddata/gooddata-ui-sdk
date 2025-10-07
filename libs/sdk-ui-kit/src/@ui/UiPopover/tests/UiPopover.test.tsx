@@ -16,7 +16,7 @@ describe("UiPopover", () => {
                 accessibilityConfig={defaultAriaAttributes}
                 content={() => <div>Popover content</div>}
                 footer={() => <div>Popover footer</div>}
-                closeVisible={true}
+                closeVisible
                 {...props}
             />,
         );

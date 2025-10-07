@@ -23,6 +23,7 @@ export function getDashboardsQuery({
         .withPage(0)
         .withSize(pageSize)
         .withInclude(["createdBy", "modifiedBy"])
+        .withMetaInclude(["permissions"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
         .withFilter({ search, id, tags, createdBy });

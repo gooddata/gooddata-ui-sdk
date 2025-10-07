@@ -48,12 +48,12 @@ export function PermissionsDropdownList({
             alignTo={alignTo}
             alignPoints={overlayAlignPoints}
             className="s-user-management-permissions-overlay"
-            closeOnMouseDrag={true}
-            closeOnOutsideClick={true}
-            closeOnParentScroll={true}
+            closeOnMouseDrag
+            closeOnOutsideClick
+            closeOnParentScroll
             onClose={toggleDropdown}
         >
-            <ItemsWrapper smallItemsSpacing={true}>
+            <ItemsWrapper smallItemsSpacing>
                 <HierarchicalPermissionDropdownItem
                     isHierarchicalPermission={false}
                     selectedPermission={selectedPermission}
@@ -62,7 +62,7 @@ export function PermissionsDropdownList({
                     bubbleTextId={messages.disabled.id}
                 />
                 <HierarchicalPermissionDropdownItem
-                    isHierarchicalPermission={true}
+                    isHierarchicalPermission
                     selectedPermission={selectedPermission}
                     toggleDropdown={toggleDropdown}
                     onSelect={handleOnSelect}

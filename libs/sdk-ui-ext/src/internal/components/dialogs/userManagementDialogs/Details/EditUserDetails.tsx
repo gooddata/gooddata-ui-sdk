@@ -59,8 +59,8 @@ export function EditUserDetails({
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-edit-user"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={!isDirty || isProcessing}
             showProgressIndicator={isProcessing}
             headline={extractUserName(user)}

@@ -166,7 +166,7 @@ export function SectionHeaderEditable({
                             }
                             showTooltip={isRichTextEditing}
                             tooltipAlignPoints={richTextTooltipAlignPoints}
-                            autoResize={true}
+                            autoResize
                             referencesEnabled={isRichTextReferencesEnabled}
                             filters={filters}
                             isFiltersLoading={loading}

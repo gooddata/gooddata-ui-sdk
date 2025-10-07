@@ -41,8 +41,8 @@ export function EditUserGroupDetails({
     return (
         <ConfirmDialogBase
             className="gd-share-dialog gd-share-dialog-add-users s-user-management-edit-user-group"
-            displayCloseButton={true}
-            isPositive={true}
+            displayCloseButton
+            isPositive
             isSubmitDisabled={!isDirty || isProcessing}
             showProgressIndicator={isProcessing}
             headline={extractUserGroupName(userGroup)}

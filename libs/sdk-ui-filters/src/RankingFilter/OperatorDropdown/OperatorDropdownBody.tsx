@@ -25,7 +25,7 @@ export function OperatorDropdownBody({
 
     return (
         <Overlay
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignTo=".gd-rf-operator-dropdown-button"
             alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
             onClose={onClose}

@@ -47,8 +47,8 @@ export const FormatTemplatesDropdown = memo(function FormatTemplatesDropdown({
             <DropdownToggleButton toggleDropdown={toggleDropdown} isOpened={isOpened} />
             {isOpened ? (
                 <Overlay
-                    closeOnOutsideClick={true}
-                    closeOnParentScroll={true}
+                    closeOnOutsideClick
+                    closeOnParentScroll
                     alignTo=".gd-measure-custom-format-dialog-section-title"
                     alignPoints={[{ align: "br tr" }, { align: "cr cl", offset: { x: 10 } }]}
                     onClose={closeDropdown}

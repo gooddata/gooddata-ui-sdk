@@ -48,7 +48,7 @@ export function Disabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <NamePositionControl
-                    disabled={true}
+                    disabled
                     configPanelDisabled={false}
                     axis="xaxis"
                     properties={{}}

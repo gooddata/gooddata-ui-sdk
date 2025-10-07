@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IDashboardObjectIdentity } from "./common.js";
@@ -229,6 +230,20 @@ export interface IDashboardPluginLink {
 export type ShareStatus = "private" | "shared" | "public";
 
 /**
+ * Share permission.
+ *
+ * Hierarchy (highest → lowest): EDIT ⊃ SHARE ⊃ VIEW.
+ *
+ * - VIEW: Open and read a dashboard.
+ * - SHARE: Includes VIEW; grant/revoke access for others.
+ * - EDIT: Includes SHARE; modify content (layout, widgets, filters) and save changes.
+ *
+ *
+ * @alpha
+ */
+export type SharePermission = "EDIT" | "SHARE" | "VIEW";
+
+/**
  * Common properties for objects with controlled access
  * @alpha
  */
@@ -237,6 +252,12 @@ export interface IAccessControlAware {
      * Current object share status. This prop is affecting listing of object and access to it for different users
      */
     readonly shareStatus: ShareStatus;
+
+    /**
+     * Dashboard share permissions
+     */
+    readonly sharePermissions?: SharePermission[];
+
     /**
      * For backends NOT forcing strict access this prop reflects its current setting of strict access
      * If set to true then object is not accessible via its URI for people without access rights.

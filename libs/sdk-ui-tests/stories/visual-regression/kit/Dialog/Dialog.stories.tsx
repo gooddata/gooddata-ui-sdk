@@ -46,7 +46,7 @@ class DialogExamples extends PureComponent {
                 onSubmit={() => {
                     this.setState({ dialogOpen: false });
                 }}
-                displayCloseButton={true}
+                displayCloseButton
                 accessibilityConfig={{ titleElementId: "dialog-title" }}
             >
                 <div style={{ padding: "20px" }}>
@@ -102,7 +102,7 @@ class DialogExamples extends PureComponent {
                 onSubmit={() => {
                     this.setState({ confirmDialogWithProgress: false });
                 }}
-                showProgressIndicator={true}
+                showProgressIndicator
                 headline="Progress indicator"
                 cancelButtonText="Cancel"
                 submitButtonText="Save"

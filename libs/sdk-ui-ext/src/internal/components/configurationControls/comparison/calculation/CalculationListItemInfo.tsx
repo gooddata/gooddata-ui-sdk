@@ -17,19 +17,19 @@ function CalculationListItemInfo({ title, calculationType }: ICalculationItemInf
                 calculationType={calculationType}
                 section="useIn"
                 contentClassNames="calculation-item-info-use-in-content"
-                shouldHideTitle={true}
+                shouldHideTitle
             />
             {calculationType === CalculateAs.CHANGE_DIFFERENCE ? (
                 <>
                     <CalculationListItemInfoSection
                         calculationType={CalculateAs.CHANGE}
                         section="formula"
-                        isSectionCombineCalculationType={true}
+                        isSectionCombineCalculationType
                     />
                     <CalculationListItemInfoSection
                         calculationType={CalculateAs.DIFFERENCE}
                         section="formula"
-                        isSectionCombineCalculationType={true}
+                        isSectionCombineCalculationType
                     />
                 </>
             ) : (

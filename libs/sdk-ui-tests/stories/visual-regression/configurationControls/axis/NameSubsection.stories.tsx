@@ -33,7 +33,7 @@ export function XAxisDisabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <NameSubsection
-                    disabled={true}
+                    disabled
                     configPanelDisabled={false}
                     axis="xaxis"
                     properties={defaultProps}

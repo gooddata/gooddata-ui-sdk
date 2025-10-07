@@ -102,8 +102,8 @@ const DropdownControl = memo(function DropdownControl({
                         renderButton={({ isOpen, toggleDropdown }) => {
                             return getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
                         }}
-                        closeOnParentScroll={true}
-                        closeOnMouseDrag={true}
+                        closeOnParentScroll
+                        closeOnMouseDrag
                         alignPoints={DROPDOWN_ALIGNMENTS}
                         renderBody={({ closeDropdown, isMobile }) => {
                             return (

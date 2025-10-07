@@ -11,6 +11,7 @@ export function ChipContent({
     tag,
     iconBefore,
     onClick,
+    onKeyDown,
     isActive,
     isLocked,
     isExpandable,
@@ -33,8 +34,9 @@ export function ChipContent({
             data-testid={dataTestId}
             aria-expanded={isActive}
             className={e("trigger", { isDeletable, isActive, isLocked: isLocked || isDisabled })}
-            disabled={isLocked || isDisabled}
-            onClick={onClick}
+            disabled={isDisabled}
+            onClick={isLocked ? undefined : onClick}
+            onKeyDown={onKeyDown}
             style={{ ...styleObj }}
             ref={buttonRef}
             aria-disabled={isLocked || isDisabled}
@@ -44,7 +46,7 @@ export function ChipContent({
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} color="primary" size={15} ariaHidden={true} />
+                    <UiIcon type={iconBefore} color="primary" size={15} ariaHidden />
                 </span>
             ) : null}
             <span className={e("label")}>{label}</span>
@@ -53,7 +55,7 @@ export function ChipContent({
                 <>
                     {isLocked ? (
                         <span className={e("icon-lock")}>
-                            <UiIcon type="lock" color="complementary-6" size={14} ariaHidden={true} />
+                            <UiIcon type="lock" color="complementary-6" size={14} ariaHidden />
                         </span>
                     ) : isExpandable ? (
                         <span className={e("icon-chevron", { isActive })}>
@@ -61,7 +63,7 @@ export function ChipContent({
                                 type={isActive ? "chevronUp" : "chevronDown"}
                                 color="complementary-7"
                                 size={8}
-                                ariaHidden={true}
+                                ariaHidden
                             />
                         </span>
                     ) : null}

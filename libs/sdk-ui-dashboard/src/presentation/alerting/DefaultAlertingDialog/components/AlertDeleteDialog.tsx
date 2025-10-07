@@ -19,7 +19,7 @@ export function AlertDeleteDialog({
 
     return (
         <ConfirmDialog
-            displayCloseButton={true}
+            displayCloseButton
             isPositive={false}
             headline={intl.formatMessage({ id: "insightAlert.config.delete.title" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}

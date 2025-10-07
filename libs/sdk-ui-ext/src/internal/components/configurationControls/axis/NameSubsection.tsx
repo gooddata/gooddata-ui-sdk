@@ -33,7 +33,7 @@ function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
             valuePath={`${axis}.name.visible`}
             properties={properties}
             pushData={pushData}
-            canBeToggled={true}
+            canBeToggled
             toggledOn={axisNameVisible}
             toggleDisabled={disabled || !axisVisible}
             showDisabledMessage={!configPanelDisabled && disabled}

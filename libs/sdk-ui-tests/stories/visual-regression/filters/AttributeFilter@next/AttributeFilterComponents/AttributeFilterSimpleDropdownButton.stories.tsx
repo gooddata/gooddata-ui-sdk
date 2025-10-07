@@ -26,18 +26,18 @@ function AttributeFilterButtonExamples() {
                         subtitle={"All"}
                         selectedItemsCount={10}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterSimpleDropdownButton opened</h4>
                     <AttributeFilterSimpleDropdownButton
-                        isOpen={true}
+                        isOpen
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={10}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                     />
@@ -49,7 +49,7 @@ function AttributeFilterButtonExamples() {
                         selectedItemsCount={10}
                         isFiltering={false}
                         isLoaded={false}
-                        isLoading={true}
+                        isLoading
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterSimpleDropdownButton filtering</h4>
@@ -58,8 +58,8 @@ function AttributeFilterButtonExamples() {
                         title={attributeTitle}
                         subtitle={"All"}
                         selectedItemsCount={10}
-                        isFiltering={true}
-                        isLoaded={true}
+                        isFiltering
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                     />
@@ -70,7 +70,7 @@ function AttributeFilterButtonExamples() {
                         subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
                         selectedItemsCount={3}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                     />
@@ -82,7 +82,7 @@ function AttributeFilterButtonExamples() {
                         selectedItemsCount={3}
                         showSelectionCount={false}
                         isFiltering={false}
-                        isLoaded={true}
+                        isLoaded
                         isLoading={false}
                         onClick={action("onClick")}
                     />
@@ -94,7 +94,7 @@ function AttributeFilterButtonExamples() {
                             subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
                             selectedItemsCount={3}
                             isFiltering={false}
-                            isLoaded={true}
+                            isLoaded
                             isLoading={false}
                             onClick={action("onClick")}
                         />

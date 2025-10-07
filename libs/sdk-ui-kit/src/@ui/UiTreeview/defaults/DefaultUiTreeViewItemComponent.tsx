@@ -66,7 +66,7 @@ export function DefaultUiTreeViewItemComponent<Level>({
                     content={item.tooltip}
                     triggerBy={["hover", "focus"]}
                     arrowPlacement="left"
-                    optimalPlacement={true}
+                    optimalPlacement
                     width={200}
                 />
             ) : null}

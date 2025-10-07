@@ -58,7 +58,7 @@ export function FullFeatured() {
                     onClose={action("onClose")}
                     backAriaLabel="Back"
                     closeAriaLabel="Close"
-                    useShortenedTitle={true}
+                    useShortenedTitle
                 />
             </div>
         </div>

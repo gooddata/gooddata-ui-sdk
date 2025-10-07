@@ -79,7 +79,7 @@ export function ToolbarTop({
     return (
         <div className="gd-visualization-switcher-toolbar-top bubble bubble-light">
             <div className={leftSectionClassName} onClick={toggleVisualizationsList}>
-                <BubbleHoverTrigger eventsOnBubble={true}>
+                <BubbleHoverTrigger eventsOnBubble>
                     <VisualizationSwitcherIcon color={iconColor} width={20} height={20} />
                     <Bubble alignPoints={bubbleAlignPoints}>
                         <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.tooltip" />
@@ -89,7 +89,7 @@ export function ToolbarTop({
             <div className="vertical-divider" />
             <div className="middle-section">
                 <div className={navigatePrevClassName} onClick={onNavigatePrev}>
-                    <BubbleHoverTrigger eventsOnBubble={true}>
+                    <BubbleHoverTrigger eventsOnBubble>
                         <ArrowLeftIcon color={prevColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.prev" />
@@ -100,7 +100,7 @@ export function ToolbarTop({
                     {activeWidgetIndex + 1}/{visualizations.length}
                 </div>
                 <div className={navigateNextClassName} onClick={onNavigateNext}>
-                    <BubbleHoverTrigger eventsOnBubble={true}>
+                    <BubbleHoverTrigger eventsOnBubble>
                         <ArrowRightIcon color={nextColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.next" />
@@ -117,7 +117,7 @@ export function ToolbarTop({
                         userInteraction.visualizationSwitcherInteraction("visualizationSwitcherRemoved");
                     }}
                 >
-                    <BubbleHoverTrigger eventsOnBubble={true}>
+                    <BubbleHoverTrigger eventsOnBubble>
                         <TrashIcon className="gd-trash-icon" width={20} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.remove" />

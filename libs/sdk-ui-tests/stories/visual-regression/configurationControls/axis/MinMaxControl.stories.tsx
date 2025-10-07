@@ -19,7 +19,7 @@ export function Disabled() {
         <div style={wrapperStyle} className="screenshot-target">
             <InternalIntlWrapper>
                 <MinMaxControl
-                    isDisabled={true}
+                    isDisabled
                     basePath={""}
                     pushData={action("")}
                     properties={{}}

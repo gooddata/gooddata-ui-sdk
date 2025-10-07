@@ -132,7 +132,7 @@ function UiTooltipExamples() {
             <h4>Use optimal placement to automatically adjust tooltip position if outside viewport</h4>
             <UiTooltipExample
                 arrowPlacement="right"
-                optimalPlacement={true}
+                optimalPlacement
                 label="placed on left side, optimalPlacement={true}"
             />
             <h4>Use width:auto to automatically adjust tooltip width to the anchor width</h4>
@@ -195,7 +195,7 @@ function UiTooltipWithButtonsTest() {
             </div>
             <div>
                 <h4 style={{ marginLeft: "-120px" }}>Disabled</h4>
-                <UiTooltipWithButtons isDisabled={true} />
+                <UiTooltipWithButtons isDisabled />
             </div>
         </div>
     );

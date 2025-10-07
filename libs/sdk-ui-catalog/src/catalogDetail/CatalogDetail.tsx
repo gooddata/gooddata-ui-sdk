@@ -55,7 +55,7 @@ export function CatalogDetail(props: CatalogDetailProps) {
             anchor="right"
             zIndex={zIndex}
             dataTestId={dataTestId}
-            showCloseButton={true}
+            showCloseButton
             onClickClose={onClose}
             onEscapeKey={onClose}
             onClickOutside={onClose}

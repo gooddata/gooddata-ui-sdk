@@ -50,9 +50,9 @@ export function DrillMeasureSelector(props: IDrillMeasureSelectorProps) {
     return (
         <Dropdown
             className="gd-drill-measure-selector"
-            closeOnParentScroll={true}
+            closeOnParentScroll
             closeOnMouseDrag={false}
-            closeOnOutsideClick={true}
+            closeOnOutsideClick
             alignPoints={DROPDOWN_ALIGN_POINTS}
             renderButton={({ toggleDropdown }) => (
                 <DropdownButton

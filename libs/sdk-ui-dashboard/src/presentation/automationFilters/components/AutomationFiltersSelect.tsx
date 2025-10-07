@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, ReactElement, ReactNode, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -94,10 +94,12 @@ export function AutomationFiltersSelect({
         attributeConfigs,
         dateConfigs,
         filterAnnouncement,
+        filterGroupRef,
         handleAddFilter,
         handleDeleteFilter,
         handleChangeFilter,
         handleStoreFiltersChange,
+        makeFilterGroupUnfocusable,
         setAddFilterButtonRefs,
     } = useAutomationFilters({
         availableFilters,
@@ -171,6 +173,8 @@ export function AutomationFiltersSelect({
                     className="gd-automation-filters__list"
                     role="group"
                     aria-labelledby={AUTOMATION_FILTERS_GROUP_LABEL_ID}
+                    ref={filterGroupRef}
+                    onBlur={makeFilterGroupUnfocusable}
                 >
                     {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => {
                         const isCommonDateFilter =
@@ -211,7 +215,7 @@ export function AutomationFiltersSelect({
                             getCustomItemTitle={(item) =>
                                 getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
                             }
-                            renderVirtualisedList={true}
+                            renderVirtualisedList
                             accessibilityConfig={{
                                 ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
                                 searchAriaLabel: searchAriaLabel,
@@ -222,22 +226,30 @@ export function AutomationFiltersSelect({
                                     triggerBy={["hover", "focus"]}
                                     content={tooltipText}
                                     anchor={
-                                        <UiIconButton
-                                            icon="plus"
-                                            label={tooltipText}
-                                            onClick={onClick}
-                                            variant="tertiary"
+                                        <ButtonDisabledFocusableWrapper
                                             isDisabled={isAddButtonDisabled}
-                                            ref={(element) => {
-                                                setAddFilterButtonRefs(element, buttonRef);
-                                            }}
-                                            accessibilityConfig={{
-                                                ariaLabel: tooltipText,
-                                                ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
-                                                ariaExpanded: isOpen,
-                                                ariaHaspopup: "dialog",
-                                            }}
-                                        />
+                                            ariaLabel={tooltipText}
+                                            onRefSet={(element) => setAddFilterButtonRefs(element, buttonRef)}
+                                        >
+                                            <UiIconButton
+                                                icon="plus"
+                                                label={tooltipText}
+                                                onClick={onClick}
+                                                variant="tertiary"
+                                                isDisabled={isAddButtonDisabled}
+                                                ref={(element) => {
+                                                    if (!isAddButtonDisabled) {
+                                                        setAddFilterButtonRefs(element, buttonRef);
+                                                    }
+                                                }}
+                                                accessibilityConfig={{
+                                                    ariaLabel: tooltipText,
+                                                    ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
+                                                    ariaExpanded: isOpen,
+                                                    ariaHaspopup: "dialog",
+                                                }}
+                                            />
+                                        </ButtonDisabledFocusableWrapper>
                                     }
                                 />
                             )}
@@ -378,6 +390,45 @@ function AutomationFilter({
             />
         );
     }
+}
+
+interface IButtonDisabledFocusableWrapperProps {
+    isDisabled: boolean;
+    ariaLabel: string;
+    onRefSet: (element: HTMLButtonElement | HTMLDivElement | null) => void;
+    children: ReactNode;
+}
+
+/**
+ * Conditionally wraps a disabled button to make it focusable with keyboard,
+ * since disabled buttons cannot be focused
+ */
+function ButtonDisabledFocusableWrapper({
+    isDisabled,
+    ariaLabel,
+    onRefSet,
+    children,
+}: IButtonDisabledFocusableWrapperProps): ReactElement {
+    if (!isDisabled) {
+        return <>{children}</>;
+    }
+
+    return (
+        <div
+            tabIndex={0}
+            aria-disabled
+            role="button"
+            aria-label={ariaLabel}
+            ref={(element) => onRefSet(element as HTMLDivElement | null)}
+            onKeyDown={(e) => {
+                if (isActionKey(e)) {
+                    e.stopPropagation();
+                }
+            }}
+        >
+            {children}
+        </div>
+    );
 }
 
 /**

@@ -43,7 +43,7 @@ function WorkspacePickerHomeFooterComponent({
                 width={20}
                 height={20}
                 color={theme?.palette?.complementary?.c7}
-                ariaHidden={true}
+                ariaHidden
             />
             {children}
         </a>
