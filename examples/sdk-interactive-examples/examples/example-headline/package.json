@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-headline",
-    "version": "11.3.0-alpha.2",
+    "version": "11.3.0-alpha.3",
     "private": false,
     "description": "This example shows how to use the Headline component.",
     "license": "LicenseRef-LICENSE",
