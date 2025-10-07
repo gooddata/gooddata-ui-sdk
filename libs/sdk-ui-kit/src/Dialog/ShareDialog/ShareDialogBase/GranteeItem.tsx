@@ -69,8 +69,7 @@ const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): React
     return <> {userName} </>;
 };
 
-function GranteeUserItem(props: IGranteeUserItemProps) {
-    const { grantee, mode, onDelete } = props;
+function GranteeUserItem({ grantee, mode, onDelete }: IGranteeUserItemProps) {
     const intl = useIntl();
 
     const onClick = useCallback(() => {
@@ -100,8 +99,7 @@ function GranteeUserItem(props: IGranteeUserItemProps) {
     );
 }
 
-function GranteeUserInactiveItem(props: IGranteeInactiveItemProps) {
-    const { grantee } = props;
+function GranteeUserInactiveItem({ grantee }: IGranteeInactiveItemProps) {
     const intl = useIntl();
 
     const granteeLabel = useMemo(() => {
@@ -128,9 +126,7 @@ function GranteeUserInactiveItem(props: IGranteeInactiveItemProps) {
     );
 }
 
-function GranteeGroupItem(props: IGranteeGroupItemProps) {
-    const { grantee, onDelete, mode } = props;
-
+function GranteeGroupItem({ grantee, onDelete, mode }: IGranteeGroupItemProps) {
     const intl = useIntl();
 
     const onClick = useCallback(() => {
@@ -175,17 +171,15 @@ function GranteeGroupItem(props: IGranteeGroupItemProps) {
 /**
  * @internal
  */
-export function GranteeItemComponent(props: IGranteeItemProps) {
-    const {
-        grantee,
-        mode,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        onDelete,
-        onChange,
-    } = props;
-
+export function GranteeItemComponent({
+    grantee,
+    mode,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    onDelete,
+    onChange,
+}: IGranteeItemProps) {
     const granularGranteeItemId = useIdPrefixed("grantee-item");
 
     if (isGranularGranteeUser(grantee)) {

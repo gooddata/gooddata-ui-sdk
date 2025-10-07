@@ -20,8 +20,12 @@ export interface ICustomVisualization {
     measure: IMeasure<IMeasureDefinition>;
 }
 
-export function CustomVisualization(props: ICustomVisualization & WithLoadingResult) {
-    const { error, isLoading, result, measure } = props;
+export function CustomVisualization({
+    error,
+    isLoading,
+    result,
+    measure,
+}: ICustomVisualization & WithLoadingResult) {
     if (isLoading) {
         return <span>Loading…</span>;
     }

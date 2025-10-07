@@ -44,10 +44,14 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export function ScheduledEmail(props: IScheduledEmailProps) {
+export function ScheduledEmail({
+    scheduledEmail,
+    onDelete,
+    onEdit,
+    notificationChannels,
+    focusedAction,
+}: IScheduledEmailProps) {
     const theme = useTheme();
-
-    const { scheduledEmail, onDelete, onEdit, notificationChannels, focusedAction } = props;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);

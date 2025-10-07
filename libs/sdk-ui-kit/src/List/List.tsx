@@ -61,29 +61,27 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 /**
  * @internal
  */
-export function List<T>(props: IListProps<T>): ReactElement {
-    const {
-        className = "",
-        compensateBorder = true,
+export function List<T>({
+    className = "",
+    compensateBorder = true,
 
-        width = 200,
-        height,
-        maxHeight,
+    width = 200,
+    height,
+    maxHeight,
 
-        items = [],
-        itemsCount = items.length,
-        itemHeight = DEFAULT_ITEM_HEIGHT,
-        itemHeightGetter = null,
-        maxVisibleItemsCount = MAX_VISIBLE_ITEMS_COUNT,
-        renderItem,
+    items = [],
+    itemsCount = items.length,
+    itemHeight = DEFAULT_ITEM_HEIGHT,
+    itemHeightGetter = null,
+    maxVisibleItemsCount = MAX_VISIBLE_ITEMS_COUNT,
+    renderItem,
 
-        onScrollStart,
-        onScrollEnd,
+    onScrollStart,
+    onScrollEnd,
 
-        scrollToItem,
-        scrollDirection,
-    } = props;
-
+    scrollToItem,
+    scrollDirection,
+}: IListProps<T>): ReactElement {
     const currentItemsCount =
         itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
 

@@ -39,8 +39,13 @@ export interface IAttributeFilterSelectionStatusProps {
  * A component that displays status of current selection, like number of selected elements, if Attribute Filter is inverted and list of selected elements.
  * @beta
  */
-export function AttributeFilterSelectionStatus(props: IAttributeFilterSelectionStatusProps) {
-    const { isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus } = props;
+export function AttributeFilterSelectionStatus({
+    isInverted,
+    selectedItems,
+    getItemTitle,
+    selectedItemsLimit,
+    showSelectionStatus,
+}: IAttributeFilterSelectionStatusProps) {
     return (
         <InvertableSelectStatusBar
             className="gd-attribute-filter-selection-status__next"

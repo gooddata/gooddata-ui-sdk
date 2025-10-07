@@ -21,9 +21,12 @@ interface IDeleteAlertConfirmDialogProps {
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export function DeleteAlertConfirmDialog(props: IDeleteAlertConfirmDialogProps) {
-    const { alert, onCancel, onSuccess, onError } = props;
-
+export function DeleteAlertConfirmDialog({
+    alert,
+    onCancel,
+    onSuccess,
+    onError,
+}: IDeleteAlertConfirmDialogProps) {
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();

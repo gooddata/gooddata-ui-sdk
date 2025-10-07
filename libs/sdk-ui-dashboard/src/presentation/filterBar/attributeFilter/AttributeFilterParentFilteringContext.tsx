@@ -76,9 +76,12 @@ export type IAttributeFilterParentFilteringProviderProps = {
 /**
  * @internal
  */
-export function AttributeFilterParentFilteringProvider(props: IAttributeFilterParentFilteringProviderProps) {
-    const { children, filter: currentFilter, attributes, displayAsLabel } = props;
-
+export function AttributeFilterParentFilteringProvider({
+    children,
+    filter: currentFilter,
+    attributes,
+    displayAsLabel,
+}: IAttributeFilterParentFilteringProviderProps) {
     const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
         () => [
             {

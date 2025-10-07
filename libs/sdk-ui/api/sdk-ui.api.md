@@ -2113,7 +2113,7 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
 
 // @public
-export function PlaceholdersProvider(props: IPlaceholdersProviderProps): ReactElement;
+export function PlaceholdersProvider({ children, initialValues }: IPlaceholdersProviderProps): ReactElement;
 
 // @public
 export type PlaceholdersResolvedValues<Tuple extends any[]> = {
@@ -2462,10 +2462,10 @@ export function withContexts<T extends {
 export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: ComponentType<T & ILoadingInjectedProps>): ComponentType<T>;
 
 // @internal
-export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
+export function withExecution<T>({ execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling, }: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
+export function withExecutionLoading<TProps>({ promiseFactory, loadOnMount, events, shouldRefetch, window, exportTitle, enableExecutionCancelling, }: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
 
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: FC<P> | ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): ComponentType<P>;

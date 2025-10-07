@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { KeyboardEvent } from "react";
 
 /**
@@ -71,4 +72,16 @@ export const isEscapeKey = (event: KeyboardEvent): boolean => {
  */
 export const isCopyKey = (event: KeyboardEvent): boolean => {
     return event.key === "c" && (event.ctrlKey || event.metaKey);
+};
+
+/**
+ * Checks if the given keyboard event is triggered by an Tab key.
+ *
+ * @param event - The keyboard event to check.
+ * @returns `true` if the event has been triggered by an Tab key, `false` otherwise.
+ *
+ * @internal
+ */
+export const isTabKey = (event: KeyboardEvent): boolean => {
+    return event.key === "Tab";
 };

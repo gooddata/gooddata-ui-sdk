@@ -125,6 +125,9 @@ export function FilterViews() {
         filterViews.length,
     );
 
+    const listDialogTitleId = useIdPrefixed("FilterViewsListTitle");
+    const addDialogTitleId = useIdPrefixed("AddFilterViewTitle");
+
     useFilterViewsToastMessages();
 
     // filter views dropdown should be visible when user looses the permission but had some views created
@@ -191,14 +194,23 @@ export function FilterViews() {
                         closeOnEscape
                         alignTo={`.${dropdownAnchorClassName}`}
                         alignPoints={BUBBLE_ALIGN_POINTS}
+                        accessibilityConfig={{
+                            role: "dialog",
+                            ariaLabelledBy: dialogMode === "add" ? addDialogTitleId : listDialogTitleId,
+                        }}
                     >
                         {dialogMode === "add" ? (
-                            <AddFilterView onClose={openListDialog} onSave={onSaveDialog} />
+                            <AddFilterView
+                                onClose={openListDialog}
+                                onSave={onSaveDialog}
+                                titleId={addDialogTitleId}
+                            />
                         ) : (
                             <FilterViewsList
                                 filterViews={filterViews}
                                 onAddNew={openAddDialog}
                                 onClose={closeDialog}
+                                titleId={listDialogTitleId}
                             />
                         )}
                     </ConfigurationBubble>

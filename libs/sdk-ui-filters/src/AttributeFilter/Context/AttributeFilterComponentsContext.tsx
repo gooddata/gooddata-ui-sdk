@@ -63,11 +63,10 @@ export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomCom
 /**
  * @internal
  */
-export function AttributeFilterComponentsProvider(
-    props: IAttributeFilterCustomComponentProps & { children: ReactNode },
-) {
-    const { children, ...components } = props;
-
+export function AttributeFilterComponentsProvider({
+    children,
+    ...components
+}: IAttributeFilterCustomComponentProps & { children: ReactNode }) {
     return (
         <AttributeFilterComponentsContext.Provider value={components}>
             {children}

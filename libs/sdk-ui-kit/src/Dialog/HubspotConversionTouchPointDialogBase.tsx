@@ -119,22 +119,20 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 /**
  * @internal
  */
-export function HubspotConversionTouchPointDialogBase(props: IHubspotConversionTouchPointDialogBaseProps) {
-    const {
-        targetId,
-        hubspotPortalId,
-        hubspotFormId,
-        selectedValue,
-        cancelButtonText,
-        dialogTitle,
-        showCancelButton,
-        submitButtonClass,
-        accessibilityConfig,
-        values = {},
-        onClose,
-        onFormSubmitted,
-    } = props;
-
+export function HubspotConversionTouchPointDialogBase({
+    targetId,
+    hubspotPortalId,
+    hubspotFormId,
+    selectedValue,
+    cancelButtonText,
+    dialogTitle,
+    showCancelButton,
+    submitButtonClass,
+    accessibilityConfig,
+    values = {},
+    onClose,
+    onFormSubmitted,
+}: IHubspotConversionTouchPointDialogBaseProps) {
     const intl = useIntl();
     const [isFormReady, setIsFormReady] = useState(false);
     const hubspotFormTargetId = targetId || "conversion-touch-point-hubspot";

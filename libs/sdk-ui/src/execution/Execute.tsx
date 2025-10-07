@@ -161,9 +161,15 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 
 type Props = IExecuteProps & WithLoadingResult;
 
-function CoreExecute(props: Props) {
-    const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
-
+function CoreExecute({
+    children,
+    error,
+    isLoading,
+    reload,
+    result,
+    LoadingComponent,
+    ErrorComponent,
+}: Props) {
     if (ErrorComponent && error) {
         return <ErrorComponent error={error} />;
     }

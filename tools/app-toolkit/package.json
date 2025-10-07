@@ -74,6 +74,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
+        "@gooddata/eslint-plugin": "workspace:*",
         "@types/columnify": "^1.5.1",
         "@types/cross-spawn": "^6.0.2",
         "@types/fs-extra": "^9.0.13",

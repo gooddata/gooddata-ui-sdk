@@ -26,16 +26,14 @@ export interface IAddButtonProps {
 /**
  * @internal
  */
-export function AddButton(props: IAddButtonProps) {
-    const {
-        title,
-        isDisabled,
-        onClick,
-        tooltip,
-        tooltipAlignPoints = defaultTooltipAlignPoints,
-        className,
-    } = props;
-
+export function AddButton({
+    title,
+    isDisabled,
+    onClick,
+    tooltip,
+    tooltipAlignPoints = defaultTooltipAlignPoints,
+    className,
+}: IAddButtonProps) {
     const buttonClassNames = cx(
         {
             disabled: isDisabled,

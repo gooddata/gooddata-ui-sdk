@@ -44,8 +44,7 @@ function formatAttribute(item: IGeoTooltipItem): IGeoTooltipItem {
 }
 
 // Tooltips are now switched off in edit/export mode
-function isTooltipDisabled(config: IGeoConfig): boolean {
-    const { viewport = {} } = config;
+function isTooltipDisabled({ viewport = {} }: IGeoConfig): boolean {
     return Boolean(viewport.frozen);
 }
 

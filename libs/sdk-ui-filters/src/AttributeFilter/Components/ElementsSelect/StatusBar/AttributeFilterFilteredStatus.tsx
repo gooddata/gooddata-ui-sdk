@@ -21,9 +21,7 @@ export interface IAttributeFilterFilteredStatusProps {
  * It displays list of parent filters
  * @beta
  */
-export function AttributeFilterFilteredStatus(props: IAttributeFilterFilteredStatusProps) {
-    const { parentFilterTitles } = props;
-
+export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttributeFilterFilteredStatusProps) {
     const tooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);

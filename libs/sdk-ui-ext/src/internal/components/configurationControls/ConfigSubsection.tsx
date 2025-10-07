@@ -28,21 +28,19 @@ export interface IConfigSubsectionState {
 
 export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
 
-function ConfigSubsection(props: IConfigSubsectionProps) {
-    const {
-        title,
-        intl,
-        canBeToggled = false,
-        toggleDisabled = false,
-        toggledOn = true,
-        pushData = () => {},
-        showDisabledMessage = false,
-        valuePath,
-        properties,
-        axisType,
-        children,
-    } = props;
-
+function ConfigSubsection({
+    title,
+    intl,
+    canBeToggled = false,
+    toggleDisabled = false,
+    toggledOn = true,
+    pushData = () => {},
+    showDisabledMessage = false,
+    valuePath,
+    properties,
+    axisType,
+    children,
+}: IConfigSubsectionProps) {
     const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = cloneDeep(properties);

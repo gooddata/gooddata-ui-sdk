@@ -25,8 +25,7 @@ const renderEnhancedComponent = (
     hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    function CoreComponent(props: IDummyComponentProps & WithLoadingResult) {
-        const { result, error, reload, isLoading } = props;
+    function CoreComponent({ result, error, reload, isLoading }: IDummyComponentProps & WithLoadingResult) {
         return (
             <div>
                 <button className="Refetch" onClick={reload}>

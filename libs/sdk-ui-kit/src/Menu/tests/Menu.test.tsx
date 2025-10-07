@@ -13,8 +13,7 @@ function Toggler() {
     return <button>toggler</button>;
 }
 
-function MenuContent(props: HTMLAttributes<HTMLElement>) {
-    const { role = "content", ...restProps } = props;
+function MenuContent({ role = "content", ...restProps }: HTMLAttributes<HTMLElement>) {
     return (
         <ul role={role} {...restProps}>
             <li>1</li>

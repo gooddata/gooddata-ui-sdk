@@ -43,8 +43,7 @@ interface ILegendBoxesProps {
     labels: IColorLegendLabel[];
 }
 
-export function ColorLabels(colorLabelProps: IColorLabelsProps): ReactElement {
-    const { labels } = colorLabelProps;
+export function ColorLabels({ labels }: IColorLabelsProps): ReactElement {
     return (
         <div className="labels" data-testid="color-legend-labels">
             {labels.map((item: IColorLegendLabel): ReactElement => {
@@ -59,8 +58,7 @@ export function ColorLabels(colorLabelProps: IColorLabelsProps): ReactElement {
     );
 }
 
-export function ColorBoxes(colorBoxProps: IColorBoxesProps): ReactElement {
-    const { boxes } = colorBoxProps;
+export function ColorBoxes({ boxes }: IColorBoxesProps): ReactElement {
     return (
         <div className="boxes" data-testid="color-legend-boxes">
             {boxes.map((box: IColorLegendBox): ReactElement => {
@@ -82,8 +80,15 @@ function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): R
     );
 }
 
-function LegendWithTitle(props: { title: string; position: string; children: ReactNode }): ReactElement {
-    const { title, position, children } = props;
+function LegendWithTitle({
+    title,
+    position,
+    children,
+}: {
+    title: string;
+    position: string;
+    children: ReactNode;
+}): ReactElement {
     const isHorizontal = position === TOP || position === BOTTOM;
     const classes = cx("heatmap-legend-with-title", { horizontal: isHorizontal });
     return (

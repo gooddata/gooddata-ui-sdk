@@ -3,8 +3,6 @@ import { IWorkspaceUser } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes.js";
 
-export function loadWorkspaceUsers(ctx: DashboardContext): Promise<IWorkspaceUser[]> {
-    const { backend, workspace } = ctx;
-
+export function loadWorkspaceUsers({ backend, workspace }: DashboardContext): Promise<IWorkspaceUser[]> {
     return backend.workspace(workspace).users().queryAll();
 }

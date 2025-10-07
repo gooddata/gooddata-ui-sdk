@@ -36,17 +36,15 @@ import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSw
 /**
  * @internal
  */
-export function ViewModeDashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps) {
-    const {
-        widget,
-        activeVisualizationId: initialActiveVisualizationId,
-        onError,
-        onExportReady,
-        onLoadingChanged,
-        screen,
-        exportData,
-    } = props;
-
+export function ViewModeDashboardVisualizationSwitcher({
+    widget,
+    activeVisualizationId: initialActiveVisualizationId,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    screen,
+    exportData,
+}: IDashboardVisualizationSwitcherProps) {
     const [activeVisualizationId, setActiveVisualizationId] = useState(initialActiveVisualizationId);
 
     const activeVisualization =

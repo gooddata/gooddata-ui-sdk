@@ -12,8 +12,14 @@ const { HistoryBack: HistoryBackIcon } = Icon;
 /**
  * @internal
  */
-export function HistorySearchTreeViewItem(props: IUiTreeviewItemProps<string>) {
-    const { item, isFocused, level, onSelect, onHover, ariaAttributes } = props;
+export function HistorySearchTreeViewItem({
+    item,
+    isFocused,
+    level,
+    onSelect,
+    onHover,
+    ariaAttributes,
+}: IUiTreeviewItemProps<string>) {
     const theme = useTheme();
     const intl = useIntl();
     const ariaLabel = intl.formatMessage(

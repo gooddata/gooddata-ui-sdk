@@ -43,28 +43,26 @@ export interface IRecurrenceProps {
  * Recurrence component is used to select recurrence type and set cron expression.
  * @param props - IRecurrenceProps
  */
-export function Recurrence(props: IRecurrenceProps) {
-    const {
-        label,
-        recurrenceType,
-        inheritRecurrenceType,
-        startDate,
-        cronValue,
-        cronPlaceholder,
-        cronDescription,
-        timezone,
-        onRepeatTypeChange,
-        onCronValueChange,
-        allowHourlyRecurrence,
-        showTimezoneInOccurrence,
-        showRepeatTypeDescription,
-        showInheritValue,
-        isWhiteLabeled,
-        weekStart = "Sunday",
-        onRecurrenceDropdownOpen,
-        closeOnParentScroll,
-    } = props;
-
+export function Recurrence({
+    label,
+    recurrenceType,
+    inheritRecurrenceType,
+    startDate,
+    cronValue,
+    cronPlaceholder,
+    cronDescription,
+    timezone,
+    onRepeatTypeChange,
+    onCronValueChange,
+    allowHourlyRecurrence,
+    showTimezoneInOccurrence,
+    showRepeatTypeDescription,
+    showInheritValue,
+    isWhiteLabeled,
+    weekStart = "Sunday",
+    onRecurrenceDropdownOpen,
+    closeOnParentScroll,
+}: IRecurrenceProps) {
     const { cronError, handleChange, handleOnBlur } = useCronValidation({
         allowHourlyRecurrence,
         onCronValueChange,

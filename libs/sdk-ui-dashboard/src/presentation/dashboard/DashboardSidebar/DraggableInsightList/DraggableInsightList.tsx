@@ -14,14 +14,12 @@ interface IDraggableInsightListProps {
     enableDescriptions?: boolean;
 }
 
-export function DraggableInsightList(props: IDraggableInsightListProps) {
-    const {
-        recalculateSizeReference,
-        searchAutofocus,
-        enableDescriptions,
-        WrapInsightListItemWithDragComponent,
-    } = props;
-
+export function DraggableInsightList({
+    recalculateSizeReference,
+    searchAutofocus,
+    enableDescriptions,
+    WrapInsightListItemWithDragComponent,
+}: IDraggableInsightListProps) {
     const flexRef = useRef<FlexDimensions>(null);
 
     useEffect(() => {

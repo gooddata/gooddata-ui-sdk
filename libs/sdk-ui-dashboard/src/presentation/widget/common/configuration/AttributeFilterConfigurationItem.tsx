@@ -29,9 +29,12 @@ interface IAttributeFilterConfigurationItemProps {
     title: string;
 }
 
-export function AttributeFilterConfigurationItem(props: IAttributeFilterConfigurationItemProps) {
-    const { widget, displayFormRef, displayAsLabel, title } = props;
-
+export function AttributeFilterConfigurationItem({
+    widget,
+    displayFormRef,
+    displayAsLabel,
+    title,
+}: IAttributeFilterConfigurationItemProps) {
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
     const [isApplied, setIsApplied] = useState(

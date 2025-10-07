@@ -41,8 +41,11 @@ export type AlignConfig = {
 /**
  * @internal
  */
-export function alignConfigToAlignPoint(alignConfig: AlignConfig): IAlignPoint {
-    const { triggerAlignPoint, overlayAlignPoint, offset } = alignConfig;
+export function alignConfigToAlignPoint({
+    triggerAlignPoint,
+    overlayAlignPoint,
+    offset,
+}: AlignConfig): IAlignPoint {
     return {
         align: `${positionPointToAlignPoint(triggerAlignPoint)} ${positionPointToAlignPoint(
             overlayAlignPoint,

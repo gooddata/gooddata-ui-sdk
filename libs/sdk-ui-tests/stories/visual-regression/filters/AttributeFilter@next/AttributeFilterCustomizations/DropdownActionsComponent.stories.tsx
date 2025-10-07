@@ -13,9 +13,10 @@ import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.j
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-function CustomDropdownActions(props: IAttributeFilterDropdownActionsProps) {
-    const { onApplyButtonClick, onCancelButtonClick } = props;
-
+function CustomDropdownActions({
+    onApplyButtonClick,
+    onCancelButtonClick,
+}: IAttributeFilterDropdownActionsProps) {
     return (
         <div
             style={{

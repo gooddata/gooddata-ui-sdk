@@ -3,7 +3,7 @@
 import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { DropdownTabs } from "./DropdownTabs.js";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
@@ -81,15 +81,17 @@ export const DEFAULT_ITEM_HEIGHT = 28;
  */
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
-const defaultNoData = injectIntl(
-    ({ hasNoMatchingData, intl }: { hasNoMatchingData: boolean } & WrappedComponentProps) => (
+function DefaultNoData({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
+    const intl = useIntl();
+
+    return (
         <NoData
             hasNoMatchingData={hasNoMatchingData}
             notFoundLabel={intl.formatMessage({ id: "gs.noData.noMatchingData" })}
             noDataLabel={intl.formatMessage({ id: "gs.noData.noDataAvailable" })}
         />
-    ),
-);
+    );
+}
 
 /**
  * @internal
@@ -104,49 +106,47 @@ const defaultNoData = injectIntl(
  *
  * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
-export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
-    const {
-        title,
-        className = "",
-        tabsClassName = "",
+export function DropdownList<T>({
+    title,
+    className = "",
+    tabsClassName = "",
 
-        width,
-        height,
-        maxHeight,
+    width,
+    height,
+    maxHeight,
 
-        renderVirtualisedList = false,
-        onKeyDownSelect,
+    renderVirtualisedList = false,
+    onKeyDownSelect,
 
-        isMobile,
-        isLoading,
+    isMobile,
+    isLoading,
 
-        items = [],
-        itemsCount = items.length,
-        itemHeight = DEFAULT_ITEM_HEIGHT,
-        mobileItemHeight = DEFAULT_MOBILE_ITEM_HEIGHT,
+    items = [],
+    itemsCount = items.length,
+    itemHeight = DEFAULT_ITEM_HEIGHT,
+    mobileItemHeight = DEFAULT_MOBILE_ITEM_HEIGHT,
 
-        showSearch,
-        disableAutofocus,
-        searchString,
-        searchLabel,
-        searchPlaceholder,
-        searchFieldSize,
-        onSearch,
+    showSearch,
+    disableAutofocus,
+    searchString,
+    searchLabel,
+    searchPlaceholder,
+    searchFieldSize,
+    onSearch,
 
-        showTabs,
-        tabs,
-        selectedTabId,
-        onTabSelect,
+    showTabs,
+    tabs,
+    selectedTabId,
+    onTabSelect,
 
-        renderNoData = defaultNoData,
-        footer,
-        closeDropdown,
+    renderNoData = DefaultNoData,
+    footer,
+    closeDropdown,
 
-        scrollToItem,
-        scrollDirection,
-        ...listProps
-    } = props;
-
+    scrollToItem,
+    scrollDirection,
+    ...listProps
+}: IDropdownListProps<T>): ReactElement {
     const [currentSearchString, setCurrentSearchString] = useState(searchString);
     const hasNoData = !isLoading && itemsCount === 0;
     const hasNoMatchingData = hasNoData && !!currentSearchString;

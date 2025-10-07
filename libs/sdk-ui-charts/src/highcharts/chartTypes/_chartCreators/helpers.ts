@@ -113,8 +113,7 @@ export const getPointPositions = (
     };
 };
 
-export function getShapeAttributes(point: any): IRectBySize {
-    const { series, shapeArgs } = point;
+export function getShapeAttributes({ series, shapeArgs }: any): IRectBySize {
     const { plotSizeX, plotSizeY, options } = series.chart;
 
     if (options.chart.type === VisualizationTypes.BAR) {

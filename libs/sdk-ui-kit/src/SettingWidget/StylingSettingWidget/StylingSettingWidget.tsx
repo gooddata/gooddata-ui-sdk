@@ -53,35 +53,32 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     isSavingActionInProgress?: boolean;
 }
 
-function StylingSettingWidgetCore<T extends StylingPickerItemContent>(
-    props: IStylingSettingWidgetProps<T>,
-): ReactElement {
-    const {
-        title,
-        defaultItem,
-        customItems,
-        itemToColorPreview,
-        emptyMessage,
-        selectedItemRef,
-        isLoading,
-        titleTooltip,
-        footerHelpLink,
-        footerHelpTitle,
-        footerMobileMessage,
-        shouldDisableCancelButton,
-        shouldDisableApplyButton,
-        onApply,
-        onCancel,
-        onListActionClick,
-        onItemEdit,
-        onItemDelete,
-        className,
-        onHelpClick,
-        onItemSelect = () => {},
-        onItemMenuToggle,
-        isEditingSupported = true,
-        isSavingActionInProgress = false,
-    } = props;
+function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
+    title,
+    defaultItem,
+    customItems,
+    itemToColorPreview,
+    emptyMessage,
+    selectedItemRef,
+    isLoading,
+    titleTooltip,
+    footerHelpLink,
+    footerHelpTitle,
+    footerMobileMessage,
+    shouldDisableCancelButton,
+    shouldDisableApplyButton,
+    onApply,
+    onCancel,
+    onListActionClick,
+    onItemEdit,
+    onItemDelete,
+    className,
+    onHelpClick,
+    onItemSelect = () => {},
+    onItemMenuToggle,
+    isEditingSupported = true,
+    isSavingActionInProgress = false,
+}: IStylingSettingWidgetProps<T>): ReactElement {
     const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
 

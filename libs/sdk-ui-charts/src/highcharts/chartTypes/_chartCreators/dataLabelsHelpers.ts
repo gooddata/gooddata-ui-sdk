@@ -23,8 +23,7 @@ import { StackingType } from "../../constants/stacking.js";
 import { DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
 
-export function isLabelOverlappingItsShape(point: any): boolean {
-    const { dataLabel, shapeArgs } = point;
+export function isLabelOverlappingItsShape({ dataLabel, shapeArgs }: any): boolean {
     if (dataLabel && shapeArgs) {
         // shapeArgs for point hidden by legend is undefined
         if (shapeArgs.width === undefined) {

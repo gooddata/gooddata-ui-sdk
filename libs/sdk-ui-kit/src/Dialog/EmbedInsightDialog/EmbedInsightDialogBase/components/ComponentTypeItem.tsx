@@ -25,9 +25,14 @@ export interface IComponentTypeSelectProps {
 /**
  * @internal
  */
-export function ComponentTypeItem(props: IComponentTypeSelectProps) {
-    const { checked, onChange, questionMarkMessage, itemValue, itemText, className } = props;
-
+export function ComponentTypeItem({
+    checked,
+    onChange,
+    questionMarkMessage,
+    itemValue,
+    itemText,
+    className,
+}: IComponentTypeSelectProps) {
     return (
         <label className={cx("input-radio-label bottom-space", className)}>
             <input

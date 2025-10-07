@@ -11,9 +11,9 @@ import {
 /**
  * @internal
  */
-export function CreatableDashboardLayout(props: ICreatePanelItemComponentProps) {
-    const { WrapCreatePanelItemWithDragComponent } = props;
-
+export function CreatableDashboardLayout({
+    WrapCreatePanelItemWithDragComponent,
+}: ICreatePanelItemComponentProps) {
     return (
         <BubbleHoverTrigger eventsOnBubble className="s-add-dashboard-layout-bubble-trigger">
             <DraggableDashboardLayoutCreatePanelItem

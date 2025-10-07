@@ -14,8 +14,7 @@ import {
 } from "../Visualizations/PivotTable/PivotTableTransposeScenario";
 const style = { height: 300 };
 
-function InsightViewTransposeCore(props: IPivotTableTransposeCoreProps) {
-    const { config } = props;
+function InsightViewTransposeCore({ config }: IPivotTableTransposeCoreProps) {
     const insight = idRef(Insights.TableWithMC);
 
     return (

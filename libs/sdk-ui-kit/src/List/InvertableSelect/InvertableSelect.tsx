@@ -286,18 +286,19 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
     );
 }
 
-function defaultError(props: IInvertableSelectRenderErrorProps): ReactElement {
-    const { error } = props;
+function defaultError({ error }: IInvertableSelectRenderErrorProps): ReactElement {
     return <ErrorComponent message={error?.message} />;
 }
 
-function defaultLoading(props: IInvertableSelectRenderLoadingProps): ReactElement {
-    const { height } = props;
+function defaultLoading({ height }: IInvertableSelectRenderLoadingProps): ReactElement {
     return <LoadingMask height={height} />;
 }
 
-function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): ReactElement {
-    const { onSearch, searchPlaceholder, searchString } = props;
+function defaultSearchBar({
+    onSearch,
+    searchPlaceholder,
+    searchString,
+}: IInvertableSelectRenderSearchBarProps): ReactElement {
     return (
         <InvertableSelectSearchBar
             searchPlaceholder={searchPlaceholder}
@@ -323,8 +324,12 @@ function defaultItem<T>(props: IInvertableSelectRenderItemProps<T>): ReactElemen
     );
 }
 
-function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): ReactElement {
-    const { isInverted, selectedItems, getItemTitle, selectedItemsLimit } = props;
+function defaultStatusBar<T>({
+    isInverted,
+    selectedItems,
+    getItemTitle,
+    selectedItemsLimit,
+}: IInvertableSelectRenderStatusBarProps<T>): ReactElement {
     return (
         <InvertableSelectStatusBar
             isInverted={isInverted}
@@ -335,8 +340,15 @@ function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): R
     );
 }
 
-function defaultActions(props: IInvertableSelectRenderActionsProps): ReactElement {
-    const { checked, onToggle, onChange, isFiltered, totalItemsCount, isPartialSelection, isVisible } = props;
+function defaultActions({
+    checked,
+    onToggle,
+    onChange,
+    isFiltered,
+    totalItemsCount,
+    isPartialSelection,
+    isVisible,
+}: IInvertableSelectRenderActionsProps): ReactElement {
     return (
         <InvertableSelectAllCheckbox
             isVisible={isVisible}

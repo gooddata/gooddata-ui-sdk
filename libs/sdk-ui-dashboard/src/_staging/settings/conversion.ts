@@ -8,14 +8,12 @@ import { ISettings } from "@gooddata/sdk-model";
  *
  * @param userWorkspaceSettings - full object to strip of extra user and workspace data
  */
-export function stripUserAndWorkspaceProps(userWorkspaceSettings: IUserWorkspaceSettings): ISettings {
-    const {
-        userId: _userId,
-        locale: _locale,
-        separators: _separators,
-        workspace: _workspace,
-        ...rest
-    } = userWorkspaceSettings;
-
+export function stripUserAndWorkspaceProps({
+    userId: _userId,
+    locale: _locale,
+    separators: _separators,
+    workspace: _workspace,
+    ...rest
+}: IUserWorkspaceSettings): ISettings {
     return rest;
 }

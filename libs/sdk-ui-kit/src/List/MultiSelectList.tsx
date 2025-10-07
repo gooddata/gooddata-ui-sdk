@@ -48,29 +48,27 @@ export interface IMultiSelectListProps<T> {
     listClassNames?: string;
 }
 
-function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
-    const {
-        isMobile,
-        width,
-        height,
-        items,
-        itemHeight,
-        itemsCount,
-        onScrollEnd,
-        renderItem,
-        selectedItems,
-        listClassNames,
-        onSelectAll,
-        onSelectNone,
-        isInverted,
-        isSearching,
-        isSelected,
-        filteredItemsCount,
-        selectAllCheckbox,
-        intl,
-        tagName,
-    } = props;
-
+function MultiSelectListCore<T>({
+    isMobile,
+    width,
+    height,
+    items,
+    itemHeight,
+    itemsCount,
+    onScrollEnd,
+    renderItem,
+    selectedItems,
+    listClassNames,
+    onSelectAll,
+    onSelectNone,
+    isInverted,
+    isSearching,
+    isSelected,
+    filteredItemsCount,
+    selectAllCheckbox,
+    intl,
+    tagName,
+}: IMultiSelectListProps<T>) {
     const getSelectionString = useCallback(
         (selection: T[]) => {
             if (!selection.length) {

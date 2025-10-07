@@ -11,6 +11,11 @@ export {
     AnalyticsCatalogDetailContent,
     type AnalyticsCatalogDetailContentProps,
 } from "./AnalyticsCatalogDetail.js";
+
+/*
+ * Supplementary API.
+ */
+
 export { type CatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 export {
     type CatalogDetailContentProps,

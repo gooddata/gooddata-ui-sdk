@@ -26,18 +26,16 @@ export interface IInvertableSelectAllCheckboxProps {
 /**
  * @internal
  */
-export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps) {
-    const {
-        isVisible,
-        checked,
-        onToggle,
-        onApplyButtonClick,
-        isApplyDisabled,
-        isFiltered,
-        totalItemsCount,
-        isPartialSelection,
-    } = props;
-
+export function InvertableSelectAllCheckbox({
+    isVisible,
+    checked,
+    onToggle,
+    onApplyButtonClick,
+    isApplyDisabled,
+    isFiltered,
+    totalItemsCount,
+    isPartialSelection,
+}: IInvertableSelectAllCheckboxProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
 

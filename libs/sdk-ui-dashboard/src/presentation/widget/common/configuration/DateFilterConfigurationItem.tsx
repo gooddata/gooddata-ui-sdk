@@ -27,9 +27,7 @@ interface IDateFilterConfigurationItemProps {
     dataSetRef: ObjRef;
 }
 
-export function DateFilterConfigurationItem(props: IDateFilterConfigurationItemProps) {
-    const { widget, dataSetRef } = props;
-
+export function DateFilterConfigurationItem({ widget, dataSetRef }: IDateFilterConfigurationItemProps) {
     const [isApplied, setIsApplied] = useState(
         () =>
             !widget.ignoreDashboardFilters.some((reference) => {

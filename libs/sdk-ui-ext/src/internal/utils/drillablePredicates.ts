@@ -12,11 +12,11 @@ import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
  * @param postMessageData - input received via post message
  * @internal
  */
-export async function convertPostMessageToDrillablePredicates(
-    postMessageData: IDrillableItemsCommandBody,
-): Promise<IHeaderPredicate[]> {
-    const { uris, identifiers, composedFrom } = postMessageData;
-
+export async function convertPostMessageToDrillablePredicates({
+    uris,
+    identifiers,
+    composedFrom,
+}: IDrillableItemsCommandBody): Promise<IHeaderPredicate[]> {
     const simpleUris = Array.isArray(uris) ? uniq(uris) : [];
     const simpleIdentifiers = Array.isArray(identifiers) ? uniq(identifiers) : [];
 

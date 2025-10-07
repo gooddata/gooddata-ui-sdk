@@ -45,9 +45,7 @@ export interface IPivotTableTransposeCoreProps {
     config: IPivotTableConfig;
 }
 
-function PivotTableTranspose(props: IPivotTableTransposeCoreProps) {
-    const { measure, row, column, config } = props;
-
+function PivotTableTranspose({ measure, row, column, config }: IPivotTableTransposeCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

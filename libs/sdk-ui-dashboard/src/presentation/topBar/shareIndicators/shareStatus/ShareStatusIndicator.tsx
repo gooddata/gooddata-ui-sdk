@@ -11,9 +11,10 @@ import { IShareStatusProps } from "./types.js";
 /**
  * @alpha
  */
-export function ShareStatusIndicator(props: IShareStatusProps): ReactElement | null {
-    const { shareStatus, isUnderStrictControl } = props;
-
+export function ShareStatusIndicator({
+    shareStatus,
+    isUnderStrictControl,
+}: IShareStatusProps): ReactElement | null {
     if (shareStatus !== "private") {
         return null;
     }

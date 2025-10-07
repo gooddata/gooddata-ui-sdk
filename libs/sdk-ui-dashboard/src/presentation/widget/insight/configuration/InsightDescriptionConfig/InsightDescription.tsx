@@ -29,15 +29,14 @@ interface IInsightDescriptionProps {
     separators?: ISeparators;
 }
 
-export function InsightDescription(props: IInsightDescriptionProps) {
-    const {
-        description,
-        setDescription,
-        readOnly = false,
-        LoadingComponent,
-        insightFilters,
-        separators,
-    } = props;
+export function InsightDescription({
+    description,
+    setDescription,
+    readOnly = false,
+    LoadingComponent,
+    insightFilters,
+    separators,
+}: IInsightDescriptionProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
 
     const intl = useIntl();

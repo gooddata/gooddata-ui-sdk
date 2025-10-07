@@ -54,21 +54,19 @@ const enrichGranteeWithDefaultPermission = (
 /**
  * @internal
  */
-export function AddGranteeContent(props: IAddGranteeContentProps) {
-    const {
-        appliedGrantees,
-        currentUser,
-        addedGrantees,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        sharedObjectRef,
-        isGranteeShareLoading,
-        onDelete,
-        onAddUserOrGroups,
-        onGranularGranteeChange,
-    } = props;
-
+export function AddGranteeContent({
+    appliedGrantees,
+    currentUser,
+    addedGrantees,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    sharedObjectRef,
+    isGranteeShareLoading,
+    onDelete,
+    onAddUserOrGroups,
+    onGranularGranteeChange,
+}: IAddGranteeContentProps) {
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
             if (!appliedGrantees.some((g) => areObjRefsEqual(g.id, grantee.id))) {

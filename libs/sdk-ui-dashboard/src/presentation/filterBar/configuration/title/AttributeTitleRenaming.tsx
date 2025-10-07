@@ -13,9 +13,14 @@ interface IAttributeTitleRenamingProps {
     onChange: (value: string) => void;
 }
 
-export function AttributeTitleRenaming(props: IAttributeTitleRenamingProps) {
-    const { categoryTitle, resetTitleText, showResetTitle, attributeTitle, onClick, onChange } = props;
-
+export function AttributeTitleRenaming({
+    categoryTitle,
+    resetTitleText,
+    showResetTitle,
+    attributeTitle,
+    onClick,
+    onChange,
+}: IAttributeTitleRenamingProps) {
     const buttonClassNames =
         "gd-button gd-button-link attribute-filter-renaming-title-reset s-attribute-filter-renaming-title-reset";
 

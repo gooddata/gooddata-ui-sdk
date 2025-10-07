@@ -22,9 +22,13 @@ interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     defaultDateFilterName: string;
 }
 
-export function DateFilterConfigurationBody(props: IDateFilterConfigurationProps) {
-    const { onCancelButtonClick, onSaveButtonClick, intl, dateDataSet, defaultDateFilterName } = props;
-
+export function DateFilterConfigurationBody({
+    onCancelButtonClick,
+    onSaveButtonClick,
+    intl,
+    dateDataSet,
+    defaultDateFilterName,
+}: IDateFilterConfigurationProps) {
     const {
         mode,
         changeConfigMode,

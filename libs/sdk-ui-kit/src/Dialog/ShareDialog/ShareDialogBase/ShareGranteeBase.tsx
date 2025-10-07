@@ -18,30 +18,29 @@ import { ContentDivider } from "../../ContentDivider.js";
 /**
  * @internal
  */
-export function ShareGranteeBase(props: IShareGranteeBaseProps) {
-    const {
-        isLoading,
-        isLockedNow,
-        isUnderLenientControlNow,
-        grantees,
-        sharedObject,
-        isDirty,
-        currentUserPermissions,
-        dashboardFilters,
-        isShareGrantHidden,
-        applyShareGrantOnSelect,
-        showDashboardShareLink,
-        isGranteeShareLoading,
-        onCancel,
-        onSubmit,
-        onGranteeDelete,
-        onGranularGranteeChange,
-        onAddGranteeButtonClick,
-        onLockChange,
-        onUnderLenientControlChange,
-        isCurrentUserWorkspaceManager,
-        onShareLinkCopy,
-    } = props;
+export function ShareGranteeBase({
+    isLoading,
+    isLockedNow,
+    isUnderLenientControlNow,
+    grantees,
+    sharedObject,
+    isDirty,
+    currentUserPermissions,
+    dashboardFilters,
+    isShareGrantHidden,
+    applyShareGrantOnSelect,
+    showDashboardShareLink,
+    isGranteeShareLoading,
+    onCancel,
+    onSubmit,
+    onGranteeDelete,
+    onGranularGranteeChange,
+    onAddGranteeButtonClick,
+    onLockChange,
+    onUnderLenientControlChange,
+    isCurrentUserWorkspaceManager,
+    onShareLinkCopy,
+}: IShareGranteeBaseProps) {
     const {
         owner,
         isLeniencyControlSupported,

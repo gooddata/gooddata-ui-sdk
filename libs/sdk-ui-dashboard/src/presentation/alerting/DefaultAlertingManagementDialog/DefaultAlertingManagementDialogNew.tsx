@@ -43,18 +43,17 @@ import { IAlertingManagementDialogProps } from "../types.js";
 /**
  * @alpha
  */
-export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps) {
-    const {
-        onPauseSuccess,
-        onPauseError,
-        onEdit,
-        onAdd,
-        onDeleteSuccess,
-        onDeleteError,
-        onClose,
-        isLoadingAlertingData,
-        automations,
-    } = props;
+export function DefaultAlertingManagementDialogNew({
+    onPauseSuccess,
+    onPauseError,
+    onEdit,
+    onAdd,
+    onDeleteSuccess,
+    onDeleteError,
+    onClose,
+    isLoadingAlertingData,
+    automations,
+}: IAlertingManagementDialogProps) {
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
     const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);

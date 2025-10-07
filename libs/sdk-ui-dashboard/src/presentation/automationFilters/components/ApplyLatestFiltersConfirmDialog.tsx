@@ -19,8 +19,11 @@ const messages = defineMessages({
     scheduleText: { id: "dialogs.automation.applyCurrentFilters.schedule.confirm" },
 });
 
-export function ApplyCurrentFiltersConfirmDialog(props: IApplyCurrentFiltersConfirmDialogProps) {
-    const { automationType, onCancel, onEdit } = props;
+export function ApplyCurrentFiltersConfirmDialog({
+    automationType,
+    onCancel,
+    onEdit,
+}: IApplyCurrentFiltersConfirmDialogProps) {
     const intl = useIntl();
 
     return (

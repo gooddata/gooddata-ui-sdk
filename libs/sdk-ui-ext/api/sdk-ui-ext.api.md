@@ -88,7 +88,7 @@ export const ARITHMETIC_OPERATORS: {
 };
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps): JSX.Element;
+export function AttributeHierarchyDetailBubble({ children, className, }: IAttributeHierarchyDetailBubbleProps): JSX.Element;
 
 // @internal (undocumented)
 export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit, }: IAttributeHierarchyDetailPanelProps): JSX.Element;

@@ -25,11 +25,7 @@ export function* initWorker(): SagaIterator<void> {
     yield takeLatest(actions.init.match, initSaga);
 }
 
-function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> {
-    const {
-        payload: { correlation },
-    } = action;
-
+function* initSaga({ payload: { correlation } }: ReturnType<typeof actions.init>): SagaIterator<void> {
     try {
         yield put(actions.initStart({ correlation }));
 

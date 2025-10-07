@@ -27,17 +27,15 @@ export interface IConfigurationParentItemProps {
     disabled: boolean;
 }
 
-export function ParentFiltersListItem(props: IConfigurationParentItemProps) {
-    const {
-        item: { isSelected, localIdentifier, selectedConnectingAttribute },
-        onClick,
-        currentFilterLocalId,
-        connectingAttributes,
-        onConnectingAttributeSelect,
-        title,
-        disabled,
-    } = props;
-
+export function ParentFiltersListItem({
+    item: { isSelected, localIdentifier, selectedConnectingAttribute },
+    onClick,
+    currentFilterLocalId,
+    connectingAttributes,
+    onConnectingAttributeSelect,
+    title,
+    disabled,
+}: IConfigurationParentItemProps) {
     const isCircularDependency = useDashboardSelector(
         selectIsCircularDependency(currentFilterLocalId, localIdentifier),
     );

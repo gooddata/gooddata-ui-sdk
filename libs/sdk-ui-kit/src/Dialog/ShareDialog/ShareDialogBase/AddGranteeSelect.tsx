@@ -30,8 +30,12 @@ const SEARCH_INTERVAL = 400;
 /**
  * @internal
  */
-export function AddGranteeSelect(props: IAddGranteeSelectProps) {
-    const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
+export function AddGranteeSelect({
+    appliedGrantees,
+    currentUser,
+    sharedObjectRef,
+    onSelectGrantee,
+}: IAddGranteeSelectProps) {
     const [inputValue, setInputValue] = useState<string>("");
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();

@@ -308,8 +308,7 @@ function createDataSlicesDigest(
     };
 }
 
-function createExecutionDefinitionDigest(dataView: IDataView): ExecutionDefinitionDigest {
-    const { definition } = dataView;
+function createExecutionDefinitionDigest({ definition }: IDataView): ExecutionDefinitionDigest {
     const attributesIndex: AttributeIndex = keyBy(definition.attributes, attributeLocalId);
     const measuresIndex: MeasureIndex = keyBy(definition.measures, measureLocalId);
 

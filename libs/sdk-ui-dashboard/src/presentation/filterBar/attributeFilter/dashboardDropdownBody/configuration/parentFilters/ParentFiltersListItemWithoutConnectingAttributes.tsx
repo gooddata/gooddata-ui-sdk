@@ -19,16 +19,14 @@ interface IConfigurationParentItemProps {
     isValid: boolean;
 }
 
-export function ParentFiltersListItemWithoutConnectingAttributes(props: IConfigurationParentItemProps) {
-    const {
-        item: { isSelected, localIdentifier },
-        onClick,
-        currentFilterLocalId,
-        title,
-        disabled,
-        isValid,
-    } = props;
-
+export function ParentFiltersListItemWithoutConnectingAttributes({
+    item: { isSelected, localIdentifier },
+    onClick,
+    currentFilterLocalId,
+    title,
+    disabled,
+    isValid,
+}: IConfigurationParentItemProps) {
     const activeItemClasses = useMemo(() => {
         return cx(
             "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",

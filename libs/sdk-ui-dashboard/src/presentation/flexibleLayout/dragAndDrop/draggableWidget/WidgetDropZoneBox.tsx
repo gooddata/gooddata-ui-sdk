@@ -24,9 +24,7 @@ const messages = defineMessages({
     },
 });
 
-export function WidgetDropZoneBox(props: IWidgetDropZoneBoxProps) {
-    const { isLast, isInContainer } = props;
-
+export function WidgetDropZoneBox({ isLast, isInContainer }: IWidgetDropZoneBoxProps) {
     const message = isLast ? (isInContainer ? messages.lastInContainer : messages.last) : messages.default;
     return (
         <div

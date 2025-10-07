@@ -163,11 +163,14 @@ function walkProps<TProps>(
  * @param specification - specification of the code generator
  * @returns function that can be used to obtain React embedding code
  */
-export function getReactEmbeddingCodeGenerator<TProps extends object>(
-    specification: IEmbeddingCodeGeneratorSpecification<TProps>,
-): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
-    const { component, insightToProps, additionalFactories } = specification;
-
+export function getReactEmbeddingCodeGenerator<TProps extends object>({
+    component,
+    insightToProps,
+    additionalFactories,
+}: IEmbeddingCodeGeneratorSpecification<TProps>): (
+    insight: IInsightDefinition,
+    config?: IEmbeddingCodeConfig,
+) => string {
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
 

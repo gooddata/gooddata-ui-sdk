@@ -4,8 +4,7 @@ export interface ILegendLabel {
     label?: string;
 }
 
-export function LegendLabelItem(props: ILegendLabel) {
-    const { label } = props;
+export function LegendLabelItem({ label }: ILegendLabel) {
     if (!label) {
         return null;
     }

@@ -33,9 +33,13 @@ const defaultArrowOffsets: ArrowOffsets = {
 /**
  * @alpha
  */
-export function DefaultAlertingDialogOld(props: IAlertingDialogOldProps) {
-    const { editAlert, editWidget, anchorEl, onCancel = () => () => {}, onUpdate = () => () => {} } = props;
-
+export function DefaultAlertingDialogOld({
+    editAlert,
+    editWidget,
+    anchorEl,
+    onCancel = () => () => {},
+    onUpdate = () => () => {},
+}: IAlertingDialogOldProps) {
     const {
         execResult,
         hasAlerts,

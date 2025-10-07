@@ -32,8 +32,7 @@ type Props = {
     onSelect: (selectedTypes: ObjectType[]) => void;
 };
 
-export function ObjectTypeSelect(props: Props) {
-    const { selectedTypes, onSelect, counter } = props;
+export function ObjectTypeSelect({ selectedTypes, onSelect, counter }: Props) {
     const intl = useIntl();
 
     const handleSelect = (type: ObjectType) => {

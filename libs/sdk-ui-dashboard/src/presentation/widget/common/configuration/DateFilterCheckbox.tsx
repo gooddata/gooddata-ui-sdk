@@ -26,20 +26,18 @@ interface IDateFilterCheckboxProps {
     enableUnrelatedItemsVisibility?: boolean;
 }
 
-export function DateFilterCheckbox(props: IDateFilterCheckboxProps) {
-    const {
-        isDropdownLoading,
-        isFilterLoading,
-        dateFilterEnabled,
-        selectedDateDataset,
-        selectedDateDatasetHidden,
-        dateFilterCheckboxDisabled,
-        relatedDateDatasets,
-        widget,
-        onDateDatasetFilterEnabled,
-        enableUnrelatedItemsVisibility,
-    } = props;
-
+export function DateFilterCheckbox({
+    isDropdownLoading,
+    isFilterLoading,
+    dateFilterEnabled,
+    selectedDateDataset,
+    selectedDateDatasetHidden,
+    dateFilterCheckboxDisabled,
+    relatedDateDatasets,
+    widget,
+    onDateDatasetFilterEnabled,
+    enableUnrelatedItemsVisibility,
+}: IDateFilterCheckboxProps) {
     const unrelatedDateDataset =
         relatedDateDatasets &&
         getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);

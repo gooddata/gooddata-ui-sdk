@@ -100,9 +100,13 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
 /**
  * @alpha
  */
-export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): ReactElement {
-    const { layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses } = props;
-
+export function DefaultFlexibleDashboardLayout({
+    layout: providedLayout,
+    onFiltersChange,
+    onDrill,
+    onError,
+    dashboardItemClasses,
+}: IDashboardLayoutProps): ReactElement {
     const selectedLayout = useDashboardSelector(selectLayout);
 
     const insights = useDashboardSelector(selectInsightsMap);

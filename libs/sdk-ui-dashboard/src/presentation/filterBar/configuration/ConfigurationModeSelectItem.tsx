@@ -23,9 +23,14 @@ export interface IModeSelectItemProps {
 /**
  * @internal
  */
-export function ModeSelectItem(props: IModeSelectItemProps) {
-    const { checked, onChange, itemValue, itemText, itemTooltip, className } = props;
-
+export function ModeSelectItem({
+    checked,
+    onChange,
+    itemValue,
+    itemText,
+    itemTooltip,
+    className,
+}: IModeSelectItemProps) {
     return (
         <BubbleHoverTrigger>
             <label className="input-radio-label bottom-space">

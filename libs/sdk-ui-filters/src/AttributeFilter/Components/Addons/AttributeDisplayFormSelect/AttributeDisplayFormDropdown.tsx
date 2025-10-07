@@ -33,9 +33,12 @@ export interface IAttributeDisplayFormDropdownProps {
 /**
  * @internal
  */
-export function AttributeDisplayFormDropdown(props: IAttributeDisplayFormDropdownProps) {
-    const { displayForms, selectedDisplayForm, onSelect, alignPoints } = props;
-
+export function AttributeDisplayFormDropdown({
+    displayForms,
+    selectedDisplayForm,
+    onSelect,
+    alignPoints,
+}: IAttributeDisplayFormDropdownProps) {
     const buttonTitle = useMemo(() => {
         return displayForms.find((displayForm) => areObjRefsEqual(displayForm.ref, selectedDisplayForm))
             ?.title;

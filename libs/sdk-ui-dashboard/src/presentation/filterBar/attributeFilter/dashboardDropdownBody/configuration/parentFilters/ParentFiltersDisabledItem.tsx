@@ -28,9 +28,11 @@ const ARROW_OFFSET = {
     "tc bl": [-100, -10],
 };
 
-export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps) {
-    const { itemLocalId, itemTitle, hasConnectingAttributes } = props;
-
+export function ParentFiltersDisabledItem({
+    itemLocalId,
+    itemTitle,
+    hasConnectingAttributes,
+}: IParentFiltersDisabledItemProps) {
     const itemDisplayForm = useDashboardSelector(
         selectAttributeFilterDisplayFormByLocalId(itemLocalId || ""),
     );

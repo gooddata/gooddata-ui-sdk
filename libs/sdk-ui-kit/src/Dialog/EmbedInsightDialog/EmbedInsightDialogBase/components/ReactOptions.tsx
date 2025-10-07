@@ -11,9 +11,7 @@ interface IReactOptionsProps {
     option: IReactOptions;
     onChange: (option: IReactOptions) => void;
 }
-export function ReactOptions(props: IReactOptionsProps) {
-    const { option, onChange } = props;
-
+export function ReactOptions({ option, onChange }: IReactOptionsProps) {
     const onComponentTypeChanged = useCallback(
         (componentType: InsightCodeType) => {
             const opt: IReactOptions = { ...option, componentType };

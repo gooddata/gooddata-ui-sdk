@@ -27,9 +27,10 @@ import {
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
-function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
-    const { backend, workspace } = ctx;
-
+function loadDateFilterConfig({
+    backend,
+    workspace,
+}: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     return backend
         .workspace(workspace)
         .dateFilterConfigs()
@@ -46,16 +47,18 @@ function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigs
         });
 }
 
-function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IUserWorkspaceSettings> {
-    const { backend, workspace } = ctx;
-
+function loadSettingsForCurrentUser({
+    backend,
+    workspace,
+}: DashboardContext): Promise<IUserWorkspaceSettings> {
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
 }
 
 ///
-async function loadCustomDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfig | undefined> {
-    const { backend, workspace } = ctx;
-
+async function loadCustomDateFilterConfig({
+    backend,
+    workspace,
+}: DashboardContext): Promise<IDateFilterConfig | undefined> {
     const customDateFilterConfig = await backend
         .workspace(workspace)
         .dateFilterConfigs()
@@ -73,9 +76,7 @@ async function loadCustomDateFilterConfig(ctx: DashboardContext): Promise<IDateF
     return validConfig ? customDateFilterConfig.items[0] : undefined;
 }
 
-function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
-    const { backend, workspace } = ctx;
-
+function loadColorPalette({ backend, workspace }: DashboardContext): Promise<IColorPalette> {
     return backend.workspace(workspace).styling().getColorPalette();
 }
 

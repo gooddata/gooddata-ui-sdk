@@ -14,9 +14,7 @@ const tooltipAlignPoints = [
     { align: "cl cr", offset: { x: 0, y: -2 } },
 ];
 
-export function IncludeMetrics(props: IIncludeMetricsProps) {
-    const { value, onChange } = props;
-
+export function IncludeMetrics({ value, onChange }: IIncludeMetricsProps) {
     const intl = useIntl();
 
     return (

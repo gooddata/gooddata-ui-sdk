@@ -11,9 +11,10 @@ import { saveFilterView, useDashboardDispatch } from "../../../../model/index.js
 export interface IAddFilterViewProps {
     onClose: () => void;
     onSave: () => void;
+    titleId?: string;
 }
 
-export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
+export function AddFilterView({ onClose, onSave, titleId }: IAddFilterViewProps) {
     const intl = useIntl();
     const [name, setName] = useState("");
     const [isDefault, setDefault] = useState(false);
@@ -38,6 +39,7 @@ export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
                     backAriaLabel={intl.formatMessage({ id: "menu.back" })}
                     useShortenedTitle={false}
                     height="medium"
+                    titleId={titleId}
                 />
                 <div className="configuration-category">
                     <Input

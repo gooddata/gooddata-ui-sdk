@@ -50,17 +50,15 @@ interface IComponentInteractionProps {
 /**
  * @internal
  */
-export function ComponentInteractionProvider(props: IComponentInteractionProps) {
-    const {
-        children,
-        onInteraction,
-        currentUser,
-        currentUserPermissions,
-        isCurrentUserWorkspaceManager,
-        isSharedObjectLocked,
-        sharedObjectStatus,
-    } = props;
-
+export function ComponentInteractionProvider({
+    children,
+    onInteraction,
+    currentUser,
+    currentUserPermissions,
+    isCurrentUserWorkspaceManager,
+    isSharedObjectLocked,
+    sharedObjectStatus,
+}: IComponentInteractionProps) {
     const flowId = useMemo(() => uuidv4(), []);
     const currentUserPermission = useMemo(
         () => getGranularPermissionFromUserPermissions(currentUserPermissions),

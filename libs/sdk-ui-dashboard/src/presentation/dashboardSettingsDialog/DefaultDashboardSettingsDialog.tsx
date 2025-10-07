@@ -31,9 +31,11 @@ import {
 /**
  * @alpha
  */
-export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogProps): ReactElement | null {
-    const { isVisible, onApply, onCancel /*, onError*/ } = props;
-
+export function DefaultDashboardSettingsDialog({
+    isVisible,
+    onApply,
+    onCancel /*, onError*/,
+}: IDashboardSettingsDialogProps): ReactElement | null {
     const intl = useIntl();
 
     const [cronValid, setCronValid] = useState(true);

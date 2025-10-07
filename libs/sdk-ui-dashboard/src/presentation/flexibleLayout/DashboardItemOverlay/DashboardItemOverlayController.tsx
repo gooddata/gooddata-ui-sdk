@@ -15,10 +15,9 @@ interface IDashboardLayoutSectionOverlayControllerProps {
     section: IDashboardLayoutSectionFacade<unknown>;
 }
 
-export function DashboardLayoutSectionOverlayController(
-    props: IDashboardLayoutSectionOverlayControllerProps,
-) {
-    const { section } = props;
+export function DashboardLayoutSectionOverlayController({
+    section,
+}: IDashboardLayoutSectionOverlayControllerProps) {
     const dispatch = useDashboardDispatch();
 
     const refs = getRefsForSection(section);

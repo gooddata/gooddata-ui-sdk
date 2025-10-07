@@ -31,9 +31,11 @@ export type IDashboardEditLayoutProps = IDashboardEditLayoutStateProps & IDashbo
 
 const screen = "xl"; // Todo: figure out what this was supposed to be?
 
-export function RenderDashboardEditLayout(props: IDashboardEditLayoutProps) {
-    const { layout, rowIdsByRowOrder, shouldUseRowRenderer } = props;
-
+export function RenderDashboardEditLayout({
+    layout,
+    rowIdsByRowOrder,
+    shouldUseRowRenderer,
+}: IDashboardEditLayoutProps) {
     return (
         layout && (
             // @ts-expect-error Unknown

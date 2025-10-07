@@ -11,9 +11,7 @@ export type ITranspositionInfo = {
 /**
  * @internal
  */
-export function collectTranspositionInfo(measureDimensionInfo: IMeasureDimensionInfo) {
-    const { hasMeasures, measureDimension } = measureDimensionInfo;
-
+export function collectTranspositionInfo({ hasMeasures, measureDimension }: IMeasureDimensionInfo) {
     const isTransposed = hasMeasures && measureDimension === "rows";
 
     return {

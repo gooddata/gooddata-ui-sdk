@@ -19,10 +19,14 @@ interface IEmbedInsightContentProps {
 /**
  * @internal
  */
-export function EmbedInsightContent(props: IEmbedInsightContentProps) {
-    const { integrationDocLink, embedTypeOptions, code, openSaveInsightDialog, onCopyCode, onOptionsChange } =
-        props;
-
+export function EmbedInsightContent({
+    integrationDocLink,
+    embedTypeOptions,
+    code,
+    openSaveInsightDialog,
+    onCopyCode,
+    onOptionsChange,
+}: IEmbedInsightContentProps) {
     const renderEmbedOptions = useMemo(() => {
         return embedTypeOptions.type === "react" ? (
             <ReactOptions option={embedTypeOptions as IReactOptions} onChange={onOptionsChange} />

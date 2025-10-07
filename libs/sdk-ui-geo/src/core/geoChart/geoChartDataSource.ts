@@ -21,8 +21,11 @@ export interface IGeoDataSourceProps {
 type IGeoDataSourceFeature = GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>;
 export type IGeoDataSourceFeatures = IGeoDataSourceFeature[];
 
-function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoDataSourceFeatures {
-    const { config, geoData, colorStrategy } = dataSourceProps;
+function transformPushpinDataSource({
+    config,
+    geoData,
+    colorStrategy,
+}: IGeoDataSourceProps): IGeoDataSourceFeatures {
     const { color, location, segment, size, tooltipText } = geoData;
 
     if (!location) {

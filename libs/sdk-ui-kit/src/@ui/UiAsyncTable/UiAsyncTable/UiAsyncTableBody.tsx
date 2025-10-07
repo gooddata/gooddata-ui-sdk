@@ -4,24 +4,22 @@ import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiAsyncTableBodyProps } from "../types.js";
 
-export function UiAsyncTableBody<T extends { id: string }>(props: UiAsyncTableBodyProps<T>) {
-    const {
-        items,
-        maxHeight,
-        itemHeight,
-        skeletonItemsCount,
-        hasNextPage,
-        isLoading,
-        onItemClick,
-        loadNextPage,
-        columns,
-        bulkActions,
-        scrollToIndex,
-        isLargeRow,
-        shouldLoadNextPage,
-        renderItem,
-    } = props;
-
+export function UiAsyncTableBody<T extends { id: string }>({
+    items,
+    maxHeight,
+    itemHeight,
+    skeletonItemsCount,
+    hasNextPage,
+    isLoading,
+    onItemClick,
+    loadNextPage,
+    columns,
+    bulkActions,
+    scrollToIndex,
+    isLargeRow,
+    shouldLoadNextPage,
+    renderItem,
+}: UiAsyncTableBodyProps<T>) {
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow);
 
     return (

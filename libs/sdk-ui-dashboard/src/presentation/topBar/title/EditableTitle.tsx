@@ -14,8 +14,7 @@ const placeholderMessage = defineMessage({ id: "untitled" });
 /**
  * @alpha
  */
-export function EditableTitle(props: ITitleProps) {
-    const { title, onTitleChanged } = props;
+export function EditableTitle({ title, onTitleChanged }: ITitleProps) {
     const intl = useIntl();
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     return (

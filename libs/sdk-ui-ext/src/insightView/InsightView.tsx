@@ -281,9 +281,7 @@ export function InsightView(props: IInsightViewProps) {
     );
 }
 
-function useBackendWithVisualizationCorrelation(props: IInsightViewProps) {
-    const { backend, insight } = props;
-
+function useBackendWithVisualizationCorrelation({ backend, insight }: IInsightViewProps) {
     let visualizationId;
     if (typeof insight === "string") {
         visualizationId = insight;

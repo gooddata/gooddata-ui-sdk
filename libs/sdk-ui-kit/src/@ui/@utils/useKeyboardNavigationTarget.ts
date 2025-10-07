@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback, useRef } from "react";
 
 /**
@@ -18,7 +19,7 @@ export interface IUseKeyboardNavigationTargetProps {
 export const useKeyboardNavigationTarget = ({
     navigationId,
     label,
-    tabIndex = 0,
+    tabIndex = -1,
     onFocus,
 }: IUseKeyboardNavigationTargetProps) => {
     const elementRef = useRef<HTMLElement>(null);

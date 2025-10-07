@@ -35,25 +35,23 @@ export interface ISyntaxHighlightingInputProps {
 /**
  * @internal
  */
-export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps) {
-    const {
-        value,
-        label,
-        placeholder,
-        autocompletion,
-        onApi,
-        onChange,
-        onCursor,
-        onKeyDown,
-        onCompletion,
-        onFocus,
-        onBlur,
-        className,
-        beforeExtensions = [],
-        extensions = [],
-        disabled,
-    } = props;
-
+export function SyntaxHighlightingInput({
+    value,
+    label,
+    placeholder,
+    autocompletion,
+    onApi,
+    onChange,
+    onCursor,
+    onKeyDown,
+    onCompletion,
+    onFocus,
+    onBlur,
+    className,
+    beforeExtensions = [],
+    extensions = [],
+    disabled,
+}: ISyntaxHighlightingInputProps) {
     const { editorRef } = useCodemirror({
         placeholderText: placeholder,
         autocompletion,

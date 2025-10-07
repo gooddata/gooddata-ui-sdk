@@ -29,8 +29,7 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 /**
  * @alpha
  */
-export function DefaultMenuButton(props: IMenuButtonProps): ReactElement | null {
-    const { menuItems } = props;
+export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement | null {
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);
     const intl = useIntl();

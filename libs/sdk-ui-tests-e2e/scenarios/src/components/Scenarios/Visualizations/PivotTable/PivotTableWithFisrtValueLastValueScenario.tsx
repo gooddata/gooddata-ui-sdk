@@ -100,9 +100,7 @@ export interface PivotTableFirstValueLastValueCoreProps {
     config: IPivotTableConfig;
 }
 
-function PivotTableFirstValueLastValue(props: PivotTableFirstValueLastValueCoreProps) {
-    const { measures, rows, filters } = props;
-
+function PivotTableFirstValueLastValue({ measures, rows, filters }: PivotTableFirstValueLastValueCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

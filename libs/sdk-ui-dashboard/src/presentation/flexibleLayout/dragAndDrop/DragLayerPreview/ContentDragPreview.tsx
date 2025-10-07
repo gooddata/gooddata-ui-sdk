@@ -25,9 +25,12 @@ function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | nu
     };
 }
 
-export function ContentDragPreview(props: DragPreviewProps<DraggableContentItem>) {
-    const { itemType, item, initialOffset, clientOffset } = props;
-
+export function ContentDragPreview({
+    itemType,
+    item,
+    initialOffset,
+    clientOffset,
+}: DragPreviewProps<DraggableContentItem>) {
     const {
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,

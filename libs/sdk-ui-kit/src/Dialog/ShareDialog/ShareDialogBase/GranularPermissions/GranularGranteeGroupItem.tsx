@@ -25,17 +25,16 @@ interface IGranularGranteeGroupItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-export function GranularGranteeGroupItem(props: IGranularGranteeGroupItemProps) {
-    const {
-        grantee,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        onChange,
-        onDelete,
-        mode,
-        id,
-        isGranteeShareLoading,
-    } = props;
+export function GranularGranteeGroupItem({
+    grantee,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    onChange,
+    onDelete,
+    mode,
+    id,
+    isGranteeShareLoading,
+}: IGranularGranteeGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
     const intl = useIntl();

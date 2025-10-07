@@ -18,9 +18,15 @@ interface IParameterDetailProps {
     additionalValues?: number;
 }
 
-export function ParameterDetail(props: IParameterDetailProps) {
-    const { title, typeName, label, isLoading, useEllipsis, values, additionalValues } = props;
-
+export function ParameterDetail({
+    title,
+    typeName,
+    label,
+    isLoading,
+    useEllipsis,
+    values,
+    additionalValues,
+}: IParameterDetailProps) {
     return (
         <div className="gd-drill-to-url-editor-parameter-detail s-parameter-detail">
             <div className="gd-parameter-detail-title">{title}</div>

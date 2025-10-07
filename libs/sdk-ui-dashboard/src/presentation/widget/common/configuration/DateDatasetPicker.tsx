@@ -32,21 +32,19 @@ export interface IDateDatasetPickerProps {
     unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
-export function DateDatasetPicker(props: IDateDatasetPickerProps) {
-    const {
-        relatedDateDatasets,
-        selectedDateDataset,
-        selectedDateDatasetHidden,
-        widget,
-        dateFromVisualization,
-        autoOpen,
-        isLoading,
-        enableUnrelatedItemsVisibility,
-        unrelatedDateDatasets,
+export function DateDatasetPicker({
+    relatedDateDatasets,
+    selectedDateDataset,
+    selectedDateDatasetHidden,
+    widget,
+    dateFromVisualization,
+    autoOpen,
+    isLoading,
+    enableUnrelatedItemsVisibility,
+    unrelatedDateDatasets,
 
-        onDateDatasetChange,
-    } = props;
-
+    onDateDatasetChange,
+}: IDateDatasetPickerProps) {
     const unrelatedDateDataset =
         relatedDateDatasets &&
         getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);

@@ -457,11 +457,13 @@ const isTransposedColumnDefinition = (columnDefinition: ITableColumnDefinition):
  * @param params - ag-grid cell style parameters
  * @returns Cell style object with colors applied
  */
-export function getMeasureCellStyle(params: {
+export function getMeasureCellStyle({
+    data,
+    colDef,
+}: {
     data?: AgGridRowData;
     colDef?: { colId?: string };
 }): CellStyle | null {
-    const { data, colDef } = params;
     const colId = colDef?.colId;
 
     if (!data || !colId) {

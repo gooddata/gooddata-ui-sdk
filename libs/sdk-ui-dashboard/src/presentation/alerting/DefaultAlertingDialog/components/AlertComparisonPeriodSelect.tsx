@@ -29,17 +29,16 @@ export interface IAlertComparisonPeriodSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectProps) {
-    const {
-        alert,
-        measure,
-        overlayPositionType,
-        selectedComparison,
-        canManageComparison,
-        onComparisonChange,
-        id,
-        closeOnParentScroll,
-    } = props;
+export function AlertComparisonPeriodSelect({
+    alert,
+    measure,
+    overlayPositionType,
+    selectedComparison,
+    canManageComparison,
+    onComparisonChange,
+    id,
+    closeOnParentScroll,
+}: IAlertComparisonPeriodSelectProps) {
     const intl = useIntl();
 
     const selectedOperator = useMemo(() => {

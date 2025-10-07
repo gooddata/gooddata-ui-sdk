@@ -50,8 +50,7 @@ export interface IPlaceholdersProviderProps {
  *
  * @public
  */
-export function PlaceholdersProvider(props: IPlaceholdersProviderProps): ReactElement {
-    const { children, initialValues } = props;
+export function PlaceholdersProvider({ children, initialValues }: IPlaceholdersProviderProps): ReactElement {
     const accumulator: Record<string, IPlaceholder<any>> = {};
     const initialPlaceholdersState =
         initialValues?.reduce((acc, [placeholder, value]) => {

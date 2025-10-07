@@ -63,15 +63,13 @@ const getStateFromConfig = (
     };
 };
 
-export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) {
-    const {
-        descriptionConfig,
-        widget,
-        setDescriptionConfiguration,
-        isWidgetDescriptionEnabled,
-        setWidgetDescription,
-    } = props;
-
+export function InsightDescriptionConfig({
+    descriptionConfig,
+    widget,
+    setDescriptionConfiguration,
+    isWidgetDescriptionEnabled,
+    setWidgetDescription,
+}: IInsightDescriptionConfigProps) {
     const intl = useIntl();
 
     const dropdownItems: Array<{

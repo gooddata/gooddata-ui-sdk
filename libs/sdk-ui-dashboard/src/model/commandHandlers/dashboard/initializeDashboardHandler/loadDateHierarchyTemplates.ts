@@ -4,9 +4,10 @@ import { IDateHierarchyTemplate } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 
-export function loadDateHierarchyTemplates(ctx: DashboardContext): Promise<IDateHierarchyTemplate[]> {
-    const { backend, workspace } = ctx;
-
+export function loadDateHierarchyTemplates({
+    backend,
+    workspace,
+}: DashboardContext): Promise<IDateHierarchyTemplate[]> {
     if (!backend.capabilities.supportsAttributeHierarchies) {
         return Promise.resolve([]);
     }

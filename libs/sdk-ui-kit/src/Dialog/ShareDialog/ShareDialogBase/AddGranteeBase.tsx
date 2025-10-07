@@ -13,23 +13,22 @@ import { ContentDivider } from "../../ContentDivider.js";
 /**
  * @internal
  */
-export function AddGranteeBase(props: IAddGranteeBaseProps) {
-    const {
-        appliedGrantees,
-        addedGrantees,
-        currentUser,
-        isDirty,
-        currentUserPermissions,
-        sharedObject,
-        previouslyFocusedRef,
-        onCancel,
-        onSubmit,
-        onBackClick,
-        onAddUserOrGroups,
-        onDelete,
-        onGranularGranteeChange,
-        isGranteeShareLoading,
-    } = props;
+export function AddGranteeBase({
+    appliedGrantees,
+    addedGrantees,
+    currentUser,
+    isDirty,
+    currentUserPermissions,
+    sharedObject,
+    previouslyFocusedRef,
+    onCancel,
+    onSubmit,
+    onBackClick,
+    onAddUserOrGroups,
+    onDelete,
+    onGranularGranteeChange,
+    isGranteeShareLoading,
+}: IAddGranteeBaseProps) {
     const intl = useIntl();
     const {
         isLocked: isSharedObjectLocked,

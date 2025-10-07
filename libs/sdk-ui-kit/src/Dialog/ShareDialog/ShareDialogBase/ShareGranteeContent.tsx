@@ -9,21 +9,19 @@ import { Typography } from "../../../Typography/index.js";
 /**
  * @internal
  */
-export function ShareGranteeContent(props: IShareGranteeContentProps) {
-    const {
-        isLoading,
-        grantees,
-        areGranularPermissionsSupported,
-        currentUserPermissions,
-        isSharedObjectLocked,
-        isGranteeShareLoading,
-        applyShareGrantOnSelect,
-        headline,
-        onAddGrantee,
-        onChange,
-        onDelete,
-    } = props;
-
+export function ShareGranteeContent({
+    isLoading,
+    grantees,
+    areGranularPermissionsSupported,
+    currentUserPermissions,
+    isSharedObjectLocked,
+    isGranteeShareLoading,
+    applyShareGrantOnSelect,
+    headline,
+    onAddGrantee,
+    onChange,
+    onDelete,
+}: IShareGranteeContentProps) {
     return (
         <>
             <div className="gd-share-dialog-grantee-content-header">

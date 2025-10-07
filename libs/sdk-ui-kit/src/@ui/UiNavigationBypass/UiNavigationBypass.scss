@@ -48,5 +48,20 @@ $navigation-bypass-item-line-height: 18px;
         font-size: $navigation-bypass-item-font-size;
         line-height: $navigation-bypass-item-line-height;
         color: variables.$gd-color-text;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        background: none;
+        text-align: left;
+        width: 100%;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:focus {
+            outline: 2px solid var(--gd-palette-primary-base, #14b2e2);
+            outline-offset: -2px;
+        }
     }
 }

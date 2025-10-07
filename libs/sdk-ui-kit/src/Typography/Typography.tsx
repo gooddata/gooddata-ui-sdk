@@ -24,9 +24,7 @@ export interface ITypographyProps {
 /**
  * @internal
  */
-export function Typography(props: ITypographyProps) {
-    const { tagName: Tag, children, className, title, id, onClick } = props;
-
+export function Typography({ tagName: Tag, children, className, title, id, onClick }: ITypographyProps) {
     return (
         <Tag
             className={cx("gd-typography", `gd-typography--${Tag}`, className)}

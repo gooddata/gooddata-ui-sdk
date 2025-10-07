@@ -13,11 +13,15 @@ import { WidthResizer } from "../Resize/WidthResizer.js";
 
 export type WidthResizerDragPreviewProps = DragResizeProps<WidthResizerDragItem>;
 
-export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
+export function WidthResizerDragPreview({
+    item,
+    differenceFromInitialOffset,
+    initialOffset,
+    scrollCorrection,
+    getDragLayerPosition,
+}: WidthResizerDragPreviewProps) {
     const { setWidthState } = useResizeHandlers();
 
-    const { item, differenceFromInitialOffset, initialOffset, scrollCorrection, getDragLayerPosition } =
-        props;
     const { gridColumnHeightInPx, rowIndex } = item;
 
     const sizeAndCoords = getSizeAndXCoords(

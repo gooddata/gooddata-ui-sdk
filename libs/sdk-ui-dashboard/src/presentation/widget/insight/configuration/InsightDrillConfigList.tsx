@@ -18,8 +18,13 @@ export interface IDrillConfigListProps {
     disableDrillDown?: boolean;
 }
 
-export function InsightDrillConfigList(props: IDrillConfigListProps) {
-    const { drillConfigItems = [], disableDrillDown, onDelete, onSetup, onIncompleteChange } = props;
+export function InsightDrillConfigList({
+    drillConfigItems = [],
+    disableDrillDown,
+    onDelete,
+    onSetup,
+    onIncompleteChange,
+}: IDrillConfigListProps) {
     const enabledDrillTargetTypeItems = useDrillTargetTypeItems(disableDrillDown);
 
     const shouldScrollToContainer = (item: IDrillConfigItem, isLast: boolean): boolean => {

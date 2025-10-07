@@ -25,7 +25,6 @@ export const useDashboardConfigContext = (): IDashboardConfigContext => {
 /**
  * @internal
  */
-export function DashboardConfigProvider(props: IDashboardConfigContext) {
-    const { children, ...components } = props;
+export function DashboardConfigProvider({ children, ...components }: IDashboardConfigContext) {
     return <DashboardConfigContext.Provider value={components}>{children}</DashboardConfigContext.Provider>;
 }

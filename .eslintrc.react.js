@@ -1,6 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+
 module.exports = {
     extends: ["./.eslintrc.js"],
+    plugins: ["@gooddata"],
     settings: {
         react: {
             version: "detect",
@@ -26,6 +28,8 @@ module.exports = {
 
         // no longer needed with new react transform
         "react/react-in-jsx-scope": "off",
+
+        "@gooddata/prefer-destructure-props-in-signature": "error",
 
         // better tree-shaking and cleanliness
         "no-restricted-imports": [
@@ -340,5 +344,5 @@ module.exports = {
                 ]
             }
         }
-    ]
+    ],
 };

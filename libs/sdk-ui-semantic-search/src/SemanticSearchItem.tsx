@@ -14,8 +14,7 @@ type Props = IUiTreeviewItemProps<ISemanticSearchResultItem>;
  * A single result item in the search results.
  * @internal
  */
-export function SemanticSearchItem(props: Props) {
-    const { item, level, isFocused, onSelect, onHover, ariaAttributes } = props;
+export function SemanticSearchItem({ item, level, isFocused, onSelect, onHover, ariaAttributes }: Props) {
     return (
         <SearchItem
             ariaAttributes={{

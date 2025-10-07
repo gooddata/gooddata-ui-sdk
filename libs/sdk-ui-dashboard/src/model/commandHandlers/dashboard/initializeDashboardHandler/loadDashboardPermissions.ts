@@ -3,8 +3,10 @@ import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 
-export function loadDashboardPermissions(ctx: DashboardContext): Promise<IDashboardPermissions> {
-    const { backend, workspace, dashboardRef } = ctx;
-
+export function loadDashboardPermissions({
+    backend,
+    workspace,
+    dashboardRef,
+}: DashboardContext): Promise<IDashboardPermissions> {
     return backend.workspace(workspace).dashboards().getDashboardPermissions(dashboardRef!);
 }

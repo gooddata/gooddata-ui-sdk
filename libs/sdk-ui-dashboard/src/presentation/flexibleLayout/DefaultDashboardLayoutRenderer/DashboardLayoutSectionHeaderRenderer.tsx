@@ -9,10 +9,10 @@ import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
-export function DashboardLayoutSectionHeaderRenderer(
-    props: IDashboardLayoutSectionHeaderRenderProps<unknown>,
-): ReactElement | null {
-    const { section, parentLayoutItemSize } = props;
+export function DashboardLayoutSectionHeaderRenderer({
+    section,
+    parentLayoutItemSize,
+}: IDashboardLayoutSectionHeaderRenderProps<unknown>): ReactElement | null {
     const sectionHeader = section.header();
     const screen = useScreenSize();
     const gridWidth = determineWidthForScreen(screen, parentLayoutItemSize);

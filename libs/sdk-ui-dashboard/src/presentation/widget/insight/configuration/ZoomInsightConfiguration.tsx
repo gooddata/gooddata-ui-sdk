@@ -19,8 +19,7 @@ interface ZoomInsightConfigurationProps {
     widget: IInsightWidget;
 }
 
-export function ZoomInsightConfiguration(props: ZoomInsightConfigurationProps) {
-    const { widget } = props;
+export function ZoomInsightConfiguration({ widget }: ZoomInsightConfigurationProps) {
     const intl = useIntl();
     // useState helps the status of checkbox change faster than using the zoomable value
     const [zoomInsightState, setZoomInsightStatus] = useState(widget.properties?.["controls"]?.zoomInsight);

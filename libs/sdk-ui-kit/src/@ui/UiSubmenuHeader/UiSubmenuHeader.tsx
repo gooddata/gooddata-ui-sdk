@@ -22,6 +22,7 @@ export interface UiSubmenuHeaderProps {
     textColor?: string;
     backgroundColor?: string;
     height?: SizeMedium | SizeLarge;
+    titleId?: string;
 }
 
 /**
@@ -29,19 +30,18 @@ export interface UiSubmenuHeaderProps {
  * Title can render as Typography h3 or ShortenedText h3.
  * @internal
  */
-export function UiSubmenuHeader(props: UiSubmenuHeaderProps) {
-    const {
-        title = "",
-        onBack,
-        onClose,
-        backAriaLabel,
-        closeAriaLabel,
-        useShortenedTitle,
-        textColor,
-        backgroundColor,
-        height = "medium",
-    } = props;
-
+export function UiSubmenuHeader({
+    title = "",
+    onBack,
+    onClose,
+    backAriaLabel,
+    closeAriaLabel,
+    useShortenedTitle,
+    textColor,
+    backgroundColor,
+    height = "medium",
+    titleId,
+}: UiSubmenuHeaderProps) {
     const heightClass = cx({
         "gd-ui-kit-submenu-header--large": height === "large",
         "gd-ui-kit-submenu-header--medium": height === "medium",
@@ -69,11 +69,19 @@ export function UiSubmenuHeader(props: UiSubmenuHeaderProps) {
 
             <div className={cx("gd-ui-kit-submenu-header__title")}>
                 {useShortenedTitle ? (
-                    <ShortenedText tagName={"h3"} className={cx("gd-ui-kit-submenu-header__title-text")}>
+                    <ShortenedText
+                        tagName={"h3"}
+                        className={cx("gd-ui-kit-submenu-header__title-text")}
+                        id={titleId}
+                    >
                         {title}
                     </ShortenedText>
                 ) : (
-                    <Typography tagName="h3" className={cx("gd-ui-kit-submenu-header__title-text")}>
+                    <Typography
+                        tagName="h3"
+                        className={cx("gd-ui-kit-submenu-header__title-text")}
+                        id={titleId}
+                    >
                         {title}
                     </Typography>
                 )}

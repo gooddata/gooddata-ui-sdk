@@ -76,19 +76,29 @@ function AttachmentItem({
     );
 }
 
-export function AttachmentDashboard(props: {
+export function AttachmentDashboard({
+    pdfSelected,
+    disabled,
+    onSelectionChange,
+}: {
     pdfSelected: boolean;
     disabled?: boolean;
     onSelectionChange: () => void;
 }) {
-    const { pdfSelected, disabled, onSelectionChange } = props;
-
     return (
         <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
     );
 }
 
-export function AttachmentWidgets(props: {
+export function AttachmentWidgets({
+    csvSelected,
+    xlsxSelected,
+    settings,
+    onSelectionChange,
+    onSettingsChange,
+    closeOnParentScroll,
+    overlayPositionType,
+}: {
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
@@ -97,15 +107,6 @@ export function AttachmentWidgets(props: {
     closeOnParentScroll?: boolean;
     overlayPositionType?: OverlayPositionType;
 }) {
-    const {
-        csvSelected,
-        xlsxSelected,
-        settings,
-        onSelectionChange,
-        onSettingsChange,
-        closeOnParentScroll,
-        overlayPositionType,
-    } = props;
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 

@@ -17,9 +17,7 @@ interface IPauseAlertRunnerProps {
     onError?: (error: GoodDataSdkError, pause: boolean) => void;
 }
 
-export function PauseAlertRunner(props: IPauseAlertRunnerProps) {
-    const { alert, pause, onSuccess, onError } = props;
-
+export function PauseAlertRunner({ alert, pause, onSuccess, onError }: IPauseAlertRunnerProps) {
     const { handlePauseAlert, handleResumeAlert } = useSaveAlertToBackend({
         onPauseSuccess: () => {
             if (alert) {

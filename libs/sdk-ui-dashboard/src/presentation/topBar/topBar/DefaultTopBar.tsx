@@ -81,8 +81,13 @@ export const useTopBarProps = (): ITopBarProps => {
     };
 };
 
-function TopBarCore(props: ITopBarProps): ReactElement {
-    const { menuButtonProps, titleProps, buttonBarProps, shareStatusProps, lockedStatusProps } = props;
+function TopBarCore({
+    menuButtonProps,
+    titleProps,
+    buttonBarProps,
+    shareStatusProps,
+    lockedStatusProps,
+}: ITopBarProps): ReactElement {
     const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const isExport = useDashboardSelector(selectIsExport);
 

@@ -19,8 +19,13 @@ export interface IInvertableSelectSearchBarProps {
 /**
  * @internal
  */
-export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps) {
-    const { className, isSmall, searchString, onSearch, searchPlaceholder } = props;
+export function InvertableSelectSearchBar({
+    className,
+    isSmall,
+    searchString,
+    onSearch,
+    searchPlaceholder,
+}: IInvertableSelectSearchBarProps) {
     const intl = useIntl();
 
     return (

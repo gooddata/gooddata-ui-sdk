@@ -14,9 +14,12 @@ interface IVisualizationTitleConfigProps {
     setVisualPropsConfigurationTitle: (widget: IInsightWidget, hideTitle: boolean) => void;
 }
 
-export function InsightTitleConfig(props: IVisualizationTitleConfigProps) {
-    const { hideTitle, widget, setVisualPropsConfigurationTitle, isHidingOfWidgetTitleEnabled } = props;
-
+export function InsightTitleConfig({
+    hideTitle,
+    widget,
+    setVisualPropsConfigurationTitle,
+    isHidingOfWidgetTitleEnabled,
+}: IVisualizationTitleConfigProps) {
     const intl = useIntl();
 
     const [widgetTitleState, setWidgetTitleState] = useState(hideTitle);

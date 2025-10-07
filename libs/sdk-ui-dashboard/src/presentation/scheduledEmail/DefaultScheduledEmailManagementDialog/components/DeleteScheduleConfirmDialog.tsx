@@ -22,9 +22,13 @@ interface IDeleteScheduleConfirmDialogProps {
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export function DeleteScheduleConfirmDialog(props: IDeleteScheduleConfirmDialogProps) {
-    const { scheduledEmail, returnFocusTo, onCancel, onSuccess, onError } = props;
-
+export function DeleteScheduleConfirmDialog({
+    scheduledEmail,
+    returnFocusTo,
+    onCancel,
+    onSuccess,
+    onError,
+}: IDeleteScheduleConfirmDialogProps) {
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();

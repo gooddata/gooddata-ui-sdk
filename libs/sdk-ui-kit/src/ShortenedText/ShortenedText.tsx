@@ -59,6 +59,7 @@ export interface IShortenedTextProps {
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
     displayTooltip?: boolean;
     ellipsisPosition?: "middle" | "end";
+    id?: string;
 }
 
 /**
@@ -181,6 +182,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
                     "is-shortened": this.state.customTitle,
                     "is-whole": !this.state.customTitle,
                 })}
+                id={this.props.id}
             >
                 {this.state.title}
             </TagName>

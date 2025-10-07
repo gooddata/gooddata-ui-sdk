@@ -48,17 +48,16 @@ import { isMobileView } from "../utils/responsive.js";
 /**
  * @alpha
  */
-export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps) {
-    const {
-        onAdd,
-        onEdit,
-        onDeleteSuccess: onDelete,
-        onClose,
-        onDeleteError,
-        isLoadingScheduleData,
-        automations,
-        notificationChannels,
-    } = props;
+export function ScheduledEmailManagementDialog({
+    onAdd,
+    onEdit,
+    onDeleteSuccess: onDelete,
+    onClose,
+    onDeleteError,
+    isLoadingScheduleData,
+    automations,
+    notificationChannels,
+}: IScheduledEmailManagementDialogProps) {
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
         null,
     );

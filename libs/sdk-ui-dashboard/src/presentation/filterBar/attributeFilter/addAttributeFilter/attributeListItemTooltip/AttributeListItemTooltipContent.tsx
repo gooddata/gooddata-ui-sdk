@@ -6,9 +6,9 @@ import { ICatalogAttribute, IDataSetMetadataObject } from "@gooddata/sdk-model";
 
 import { IUseAttributeElements } from "../../../../../model/index.js";
 
-function AttrTooltipElements(props: IUseAttributeElements) {
+function AttrTooltipElements({ elements, totalCount }: IUseAttributeElements) {
     const intl = useIntl();
-    const { elements, totalCount } = props;
+
     const remainingElementsCount = totalCount - elements.length;
 
     return (

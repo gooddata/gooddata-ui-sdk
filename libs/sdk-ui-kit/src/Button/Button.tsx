@@ -58,6 +58,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
         ariaLabelledBy,
         ariaDescribedBy: ariaDescribedByFromConfig,
         popupType,
+        ariaHaspopup,
         role = "button",
         ariaControls,
         ariaExpanded,
@@ -65,6 +66,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
 
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
+        ...(ariaHaspopup ? { "aria-haspopup": ariaHaspopup } : {}),
         ...(popupId ? { "aria-haspopup": popupType ?? !!popupId } : {}),
         ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
     };

@@ -65,8 +65,12 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): React
     );
 }
 
-function renderMiddleCircle(props: IPushpinSizeLegendProps) {
-    const { sizes = [], format, numericSymbols = [], measureName } = props;
+function renderMiddleCircle({
+    sizes = [],
+    format,
+    numericSymbols = [],
+    measureName,
+}: IPushpinSizeLegendProps) {
     const sizeData = getSizeData(sizes);
     const diff = getMax(sizeData) - getMin(sizeData);
 

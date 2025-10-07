@@ -38,8 +38,12 @@ interface IDashboardInsightMenuBubbleProps {
     children?: ReactNode;
 }
 
-export function DashboardInsightMenuBubble(props: IDashboardInsightMenuBubbleProps) {
-    const { onClose, isSubmenu, widget, children } = props;
+export function DashboardInsightMenuBubble({
+    onClose,
+    isSubmenu,
+    widget,
+    children,
+}: IDashboardInsightMenuBubbleProps) {
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
     return (

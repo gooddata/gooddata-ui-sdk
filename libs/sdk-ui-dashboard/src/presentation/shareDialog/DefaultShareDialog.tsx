@@ -12,28 +12,26 @@ import { selectLocale, useDashboardSelector } from "../../model/index.js";
 /**
  * @alpha
  */
-export function DefaultShareDialog(props: IShareDialogProps): ReactElement | null {
-    const {
-        workspace,
-        backend,
-        isVisible,
-        sharedObject,
-        currentUser,
-        isLockingSupported,
-        isCurrentUserWorkspaceManager,
-        currentUserPermissions,
-        dashboardFilters,
-        isShareGrantHidden,
-        applyShareGrantOnSelect,
-        showDashboardShareLink,
-        isGranteeShareLoading,
-        onApply,
-        onCancel,
-        onError,
-        onInteraction,
-        onShareLinkCopy,
-    } = props;
-
+export function DefaultShareDialog({
+    workspace,
+    backend,
+    isVisible,
+    sharedObject,
+    currentUser,
+    isLockingSupported,
+    isCurrentUserWorkspaceManager,
+    currentUserPermissions,
+    dashboardFilters,
+    isShareGrantHidden,
+    applyShareGrantOnSelect,
+    showDashboardShareLink,
+    isGranteeShareLoading,
+    onApply,
+    onCancel,
+    onError,
+    onInteraction,
+    onShareLinkCopy,
+}: IShareDialogProps): ReactElement | null {
     const locale = useDashboardSelector(selectLocale);
     const intl = useIntl();
     const labels: IShareDialogLabels = useMemo(

@@ -12,8 +12,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 const { QuestionMark: QuestionMarkIcon } = Icon;
 
-function Wrapper(props: { children?: ReactNode }) {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
 }
 

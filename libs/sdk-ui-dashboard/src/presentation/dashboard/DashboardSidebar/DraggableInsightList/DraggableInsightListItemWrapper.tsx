@@ -24,24 +24,23 @@ export function DraggableInsightListItemBody(props: CustomDashboardInsightListIt
     );
 }
 
-export function DraggableInsightListItemWrapper(props: IDraggableInsightListItemWrapperProps) {
-    const {
-        WrapInsightListItemWithDragComponent,
-        className,
-        isLocked,
-        title,
-        description,
-        showDescriptionPanel,
-        type,
-        updated,
-        insight,
-        onDescriptionPanelOpen,
-        metadataTimeZone,
-        useRichText,
-        useReferences,
-        LoadingComponent,
-        filters,
-    } = props;
+export function DraggableInsightListItemWrapper({
+    WrapInsightListItemWithDragComponent,
+    className,
+    isLocked,
+    title,
+    description,
+    showDescriptionPanel,
+    type,
+    updated,
+    insight,
+    onDescriptionPanelOpen,
+    metadataTimeZone,
+    useRichText,
+    useReferences,
+    LoadingComponent,
+    filters,
+}: IDraggableInsightListItemWrapperProps) {
     return (
         <DraggableInsightListItem
             WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}

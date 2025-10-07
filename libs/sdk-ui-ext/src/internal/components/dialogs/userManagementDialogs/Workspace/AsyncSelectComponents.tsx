@@ -108,9 +108,14 @@ export function SingleValueRenderer(props: any): ReactElement {
     return <ReactSelectComponents.SingleValue {...props}>{data.label}</ReactSelectComponents.SingleValue>;
 }
 
-export function OptionRenderer(props: OptionProps<ISelectOption | ISelectErrorOption, false>): ReactElement {
-    const { className, cx, isFocused, innerRef, innerProps, data } = props;
-
+export function OptionRenderer({
+    className,
+    cx,
+    isFocused,
+    innerRef,
+    innerProps,
+    data,
+}: OptionProps<ISelectOption | ISelectErrorOption, false>): ReactElement {
     if (isSelectErrorOption(data)) {
         return ErrorOptionRenderer(data);
     }

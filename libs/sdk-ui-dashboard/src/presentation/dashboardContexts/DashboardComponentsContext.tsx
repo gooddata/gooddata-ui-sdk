@@ -195,8 +195,10 @@ export interface IDashboardComponentsProviderProps extends IDashboardComponentsC
 /**
  * @internal
  */
-export function DashboardComponentsProvider(props: IDashboardComponentsProviderProps): ReactElement {
-    const { children, ...components } = props;
+export function DashboardComponentsProvider({
+    children,
+    ...components
+}: IDashboardComponentsProviderProps): ReactElement {
     return (
         <DashboardComponentsContext.Provider value={components}>
             {children}

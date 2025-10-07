@@ -25,9 +25,7 @@ interface IErrorComponentProps {
  *
  * @alpha
  */
-export function ErrorComponent(props: IErrorComponentProps) {
-    const { error } = props;
-
+export function ErrorComponent({ error }: IErrorComponentProps) {
     const intl = useIntl();
     const errorMap = newErrorMapping(intl);
 

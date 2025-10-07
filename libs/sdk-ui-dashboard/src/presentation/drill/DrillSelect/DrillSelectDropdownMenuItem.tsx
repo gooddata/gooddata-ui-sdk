@@ -18,15 +18,11 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
     [DrillType.CROSS_FILTERING]: "filter",
 };
 
-export function DrillSelectDropdownMenuItem(
-    props: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>,
-) {
-    const {
-        item: {
-            data: { type, name, attributeValue, onSelect },
-        },
-    } = props;
-
+export function DrillSelectDropdownMenuItem({
+    item: {
+        data: { type, name, attributeValue, onSelect },
+    },
+}: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>) {
     const renderLoading = () => {
         return (
             <div className="gd-drill-to-url-modal-picker s-drill-to-url-modal-picker">

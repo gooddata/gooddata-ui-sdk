@@ -17,20 +17,18 @@ export interface IStaticFilterProps<T> {
     initialValue?: T[];
 }
 
-export function StaticFilter<T>(props: IStaticFilterProps<T>) {
-    const {
-        options,
-        onChange,
-        getItemKey,
-        getItemTitle,
-        dataTestId,
-        header,
-        noDataMessage,
-        statusBar,
-        actions,
-        initialValue = [],
-    } = props;
-
+export function StaticFilter<T>({
+    options,
+    onChange,
+    getItemKey,
+    getItemTitle,
+    dataTestId,
+    header,
+    noDataMessage,
+    statusBar,
+    actions,
+    initialValue = [],
+}: IStaticFilterProps<T>) {
     // Always use inverted mode for simplicity. Empty external value means "All".
     const initialIsInverted = true;
     const initialSelection =

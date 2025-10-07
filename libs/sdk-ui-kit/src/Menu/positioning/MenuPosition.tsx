@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Fragment, ReactElement, ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import { Fragment, ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
@@ -10,7 +10,7 @@ export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;
     topLevelMenu: boolean;
     portalTarget: Element;
-    contentWrapper?: (props: { children: ReactNode }) => ReactElement;
+    contentWrapper?: (props: { children: ReactNode }) => ReactNode;
     toggler: ReactNode;
     togglerWrapperClassName?: string;
     children: ReactNode;
@@ -41,20 +41,18 @@ function PortalIfTopLevelMenu({
     );
 }
 
-export function MenuPosition(props: IMenuPositionProps) {
-    const {
-        portalTarget,
-        topLevelMenu,
-        contentWrapper: ContentWrapper = Fragment,
-        toggler,
-        opened,
-        alignment,
-        spacing,
-        offset,
-        togglerWrapperClassName,
-        children,
-    } = props;
-
+export function MenuPosition({
+    portalTarget,
+    topLevelMenu,
+    contentWrapper: ContentWrapper = Fragment,
+    toggler,
+    opened,
+    alignment,
+    spacing,
+    offset,
+    togglerWrapperClassName,
+    children,
+}: IMenuPositionProps) {
     const [togglerElInitialized, setTogglerElInitialized] = useState(false);
     const togglerEl = useRef<HTMLElement | null>(null);
 

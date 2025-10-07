@@ -18,8 +18,7 @@ const renderEnhancedComponent = <T, E>(
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
-    function CoreComponent(props: WithLoadingResult) {
-        const { result, error, reload, isLoading } = props;
+    function CoreComponent({ result, error, reload, isLoading }: WithLoadingResult) {
         return (
             <div>
                 <button onClick={reload}>Refetch</button>

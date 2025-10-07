@@ -20,18 +20,17 @@ export interface IScrollableItemProps {
 /**
  * @internal
  */
-export function ScrollableItem(props: IScrollableItemProps) {
+export function ScrollableItem({
+    scrollIntoView,
+    bottomMargin,
+    isElementInvisibleCheck,
+    className,
+    children,
+    onItemScrolled,
+    tagName: TagName = "div",
+}: IScrollableItemProps) {
     const item = useRef<HTMLDivElement>(null);
     const scroll = useScrollContext();
-    const {
-        scrollIntoView,
-        bottomMargin,
-        isElementInvisibleCheck,
-        className,
-        children,
-        onItemScrolled,
-        tagName: TagName = "div",
-    } = props;
 
     useEffect(() => {
         if (scrollIntoView) {

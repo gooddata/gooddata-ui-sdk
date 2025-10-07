@@ -49,36 +49,32 @@ export interface ILegacyMultiSelectListProps<T> {
  * @deprecated  This component is deprecated use MultiSelectList
  * @internal
  */
-function LegacyMultiSelectList<T>(
-    props: ILegacyMultiSelectListProps<T> & WrappedComponentProps,
-): ReactElement {
-    const {
-        isInverted = false,
-        isSearching = false,
-        selection = [] as T[],
-        getItemKey = guidFor,
-        isMobile = false,
-        isSelected = (): boolean => false,
-        listItemClass = LegacyMultiSelectListItem, // TODO add tests
-        filteredItemsCount = 0,
-        onItemMouseOut = () => {},
-        onItemMouseOver = () => {},
-        onRangeChange = () => {},
-        onSelect = () => {},
-        onSelectAll = () => {},
-        onSelectNone = () => {},
-        onSelectOnly = () => {},
-        rowItem: rowItemProp = null as ReactElement,
-        selectAllCheckbox = false,
-        tagName = "",
-        intl,
-        items,
-        itemsCount,
-        height,
-        itemHeight,
-        width,
-    } = props;
-
+function LegacyMultiSelectList<T>({
+    isInverted = false,
+    isSearching = false,
+    selection = [] as T[],
+    getItemKey = guidFor,
+    isMobile = false,
+    isSelected = (): boolean => false,
+    listItemClass = LegacyMultiSelectListItem, // TODO add tests
+    filteredItemsCount = 0,
+    onItemMouseOut = () => {},
+    onItemMouseOver = () => {},
+    onRangeChange = () => {},
+    onSelect = () => {},
+    onSelectAll = () => {},
+    onSelectNone = () => {},
+    onSelectOnly = () => {},
+    rowItem: rowItemProp = null as ReactElement,
+    selectAllCheckbox = false,
+    tagName = "",
+    intl,
+    items,
+    itemsCount,
+    height,
+    itemHeight,
+    width,
+}: ILegacyMultiSelectListProps<T> & WrappedComponentProps): ReactElement {
     const isEmpty = useCallback((): boolean => {
         if (selection.length === 0) {
             return !isInverted;

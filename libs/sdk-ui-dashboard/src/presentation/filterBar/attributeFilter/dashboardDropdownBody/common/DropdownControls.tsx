@@ -10,8 +10,11 @@ interface IConfigurationPanelControlsProps {
     isSaveButtonEnabled: boolean;
 }
 
-export function DropdownControls(props: IConfigurationPanelControlsProps) {
-    const { closeHandler, isSaveButtonEnabled, onSave } = props;
+export function DropdownControls({
+    closeHandler,
+    isSaveButtonEnabled,
+    onSave,
+}: IConfigurationPanelControlsProps) {
     const intl = useIntl();
 
     const onSaveHandler = () => {

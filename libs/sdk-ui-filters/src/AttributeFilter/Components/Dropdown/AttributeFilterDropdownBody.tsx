@@ -19,9 +19,11 @@ import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.
  *
  * @beta
  */
-export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyProps) {
-    const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
-
+export function AttributeFilterDropdownBody({
+    onApplyButtonClick,
+    onCancelButtonClick,
+    width = DEFAULT_DROPDOWN_BODY_WIDTH,
+}: IAttributeFilterDropdownBodyProps) {
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
     const { withoutApply } = useAttributeFilterContext();
     const isMobile = useMediaQuery("mobileDevice");

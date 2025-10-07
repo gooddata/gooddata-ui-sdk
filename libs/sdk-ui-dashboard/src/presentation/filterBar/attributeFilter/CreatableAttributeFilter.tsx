@@ -19,8 +19,9 @@ import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index
 /**
  * @internal
  */
-export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) {
-    const { WrapCreatePanelItemWithDragComponent } = props;
+export function CreatableAttributeFilter({
+    WrapCreatePanelItemWithDragComponent,
+}: ICreatePanelItemComponentProps) {
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
     const hasDateDataSets = useDashboardSelector(selectHasCatalogDateDatasets);
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);

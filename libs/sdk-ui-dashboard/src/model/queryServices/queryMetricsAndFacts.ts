@@ -18,8 +18,7 @@ export const QueryMetricsAndFactsService = createCachedQueryService(
     (_query: QueryMetricsAndFacts) => "metrics_and_facts",
 );
 
-async function loadMetricsAndFacts(ctx: DashboardContext) {
-    const { backend, workspace, config } = ctx;
+async function loadMetricsAndFacts({ backend, workspace, config }: DashboardContext) {
     const availability = config?.objectAvailability;
 
     const options: IWorkspaceCatalogFactoryOptions = {

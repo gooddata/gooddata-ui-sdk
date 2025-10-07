@@ -106,19 +106,18 @@ export interface IRowLegendProps {
     chartFill?: ChartFillType;
 }
 
-export function RowLegend(props: IRowLegendProps) {
-    const {
-        series,
-        maxRowsCount = 1,
-        legendLabel,
-        enableBorderRadius,
-        onDialogIconClick,
-        onLegendItemClick,
-        dialogId,
-        triggerId,
-        isActive = false,
-        chartFill,
-    } = props;
+export function RowLegend({
+    series,
+    maxRowsCount = 1,
+    legendLabel,
+    enableBorderRadius,
+    onDialogIconClick,
+    onLegendItemClick,
+    dialogId,
+    triggerId,
+    isActive = false,
+    chartFill,
+}: IRowLegendProps) {
     const [isOverflow, numOfUsedRow, checkOverFlow] = useCheckOverflow();
 
     const LEGEND_HEIGHT = maxRowsCount * LEGEND_ROW_HEIGHT + LEGEND_TOP_BOTTOM_PADDING;

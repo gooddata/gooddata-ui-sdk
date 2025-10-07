@@ -80,8 +80,7 @@ export function sanitizeDefTotals(
  *
  * @param definition - an execution definition from which totals should be extracted
  */
-export function getTotalsForColumnsBucket(definition: IExecutionDefinition): ITotal[] {
-    const { buckets } = definition;
+export function getTotalsForColumnsBucket({ buckets }: IExecutionDefinition): ITotal[] {
     const attributeBucket = bucketsFind(buckets, BucketNames.COLUMNS);
     return attributeBucket ? bucketTotals(attributeBucket) : [];
 }

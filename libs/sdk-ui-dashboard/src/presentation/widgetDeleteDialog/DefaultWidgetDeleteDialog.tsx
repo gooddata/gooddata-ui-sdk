@@ -84,8 +84,14 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
 /**
  * @internal
  */
-export function DefaultWidgetDeleteDialog(props: IWidgetDeleteDialogProps): ReactElement | null {
-    const { isVisible, showAlertsMessage, showSchedulesMessage, onDelete, onCancel, widget } = props;
+export function DefaultWidgetDeleteDialog({
+    isVisible,
+    showAlertsMessage,
+    showSchedulesMessage,
+    onDelete,
+    onCancel,
+    widget,
+}: IWidgetDeleteDialogProps): ReactElement | null {
     const intl = useIntl();
 
     if (!isVisible || !widget) {

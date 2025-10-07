@@ -8,9 +8,7 @@ import { IDashboardInsightProps } from "./types.js";
 /**
  * @internal
  */
-export function useBackendWithInsightWidgetCorrelation(props: IDashboardInsightProps) {
-    const { insight, widget, backend } = props;
-
+export function useBackendWithInsightWidgetCorrelation({ insight, widget, backend }: IDashboardInsightProps) {
     // Create correlation headers for telemetry
     let correlationData: IRequestCorrelationMetadata = {};
 

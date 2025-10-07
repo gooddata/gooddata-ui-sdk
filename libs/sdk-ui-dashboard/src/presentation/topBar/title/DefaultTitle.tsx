@@ -8,9 +8,7 @@ import { ITitleProps } from "./types.js";
 /**
  * @alpha
  */
-export function DefaultTitle(props: ITitleProps) {
-    const { title } = props;
-
+export function DefaultTitle({ title }: ITitleProps) {
     return (
         <TitleWrapper>
             <Typography tagName="h1" className={"s-gd-dashboard-title s-dash-title dash-title static"}>

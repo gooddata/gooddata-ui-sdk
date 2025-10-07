@@ -34,22 +34,20 @@ export interface IWidgetAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export function WidgetAttachments(props: IWidgetAttachmentsProps) {
-    const {
-        widgetFilters,
-        areDashboardFiltersChanged,
-        isCrossFiltering,
-        csvSelected,
-        xlsxSelected,
-        settings,
-        scheduledExportToEdit,
-        onWidgetAttachmentsSelectionChange,
-        onAttachmentsSettingsChange,
-        enableAutomationFilterContext,
-        closeOnParentScroll,
-        overlayPositionType,
-    } = props;
-
+export function WidgetAttachments({
+    widgetFilters,
+    areDashboardFiltersChanged,
+    isCrossFiltering,
+    csvSelected,
+    xlsxSelected,
+    settings,
+    scheduledExportToEdit,
+    onWidgetAttachmentsSelectionChange,
+    onAttachmentsSettingsChange,
+    enableAutomationFilterContext,
+    closeOnParentScroll,
+    overlayPositionType,
+}: IWidgetAttachmentsProps) {
     const renderFiltersMessage = !enableAutomationFilterContext;
     const isEditing = !!scheduledExportToEdit;
 

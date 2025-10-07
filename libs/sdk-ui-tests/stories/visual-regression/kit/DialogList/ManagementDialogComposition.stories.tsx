@@ -11,8 +11,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
 
-function Wrapper(props: { children?: ReactNode }) {
-    const { children } = props;
+function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ margin: "30 0" }}>{children}</div>;
 }
 

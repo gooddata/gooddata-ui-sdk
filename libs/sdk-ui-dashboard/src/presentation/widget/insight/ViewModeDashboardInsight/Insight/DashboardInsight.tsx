@@ -99,26 +99,24 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
-    const {
-        insight,
-        widget,
-        clientHeight,
-        clientWidth,
-        backend,
-        workspace,
-        onError,
-        onDrill: onDrillFn,
-        onLoadingChanged,
-        afterRender,
-        onExportReady,
-        ErrorComponent: CustomErrorComponent,
-        LoadingComponent: CustomLoadingComponent,
-        exportData,
-        minimalWidth,
-        minimalHeight,
-    } = props;
-
+export function DashboardInsight({
+    insight,
+    widget,
+    clientHeight,
+    clientWidth,
+    backend,
+    workspace,
+    onError,
+    onDrill: onDrillFn,
+    onLoadingChanged,
+    afterRender,
+    onExportReady,
+    ErrorComponent: CustomErrorComponent,
+    LoadingComponent: CustomLoadingComponent,
+    exportData,
+    minimalWidth,
+    minimalHeight,
+}: IDashboardInsightProps): ReactElement {
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const isExportMode = useDashboardSelector(selectIsExport);
     const ariaHidden = isSnapshotAccessibilityEnabled && isExportMode ? true : undefined;
@@ -224,6 +222,14 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
         onDrill: onDrillFn,
     });
 
+    const fullChartConfig = useMemo(
+        () => ({
+            ...chartConfig,
+            selectedPoints: crossFilteringSelectedPoints,
+        }),
+        [chartConfig, crossFilteringSelectedPoints],
+    );
+
     const handlePropertiesPushData = useHandlePropertiesPushData(widget, insight);
 
     const handlePushData = useCallback(
@@ -325,10 +331,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
                                 workspace={effectiveWorkspace}
                                 drillableItems={drillableItems}
                                 onDrill={onDrill}
-                                config={{
-                                    ...chartConfig,
-                                    selectedPoints: crossFilteringSelectedPoints,
-                                }}
+                                config={fullChartConfig}
                                 onLoadingChanged={handleLoadingChanged}
                                 locale={locale}
                                 settings={settings as IUserWorkspaceSettings}

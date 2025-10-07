@@ -51,6 +51,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
+        "@gooddata/eslint-plugin": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
         "@types/lodash-es": "^4.17.12",

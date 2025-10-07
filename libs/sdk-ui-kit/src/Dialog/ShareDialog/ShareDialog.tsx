@@ -27,28 +27,27 @@ import { IShareDialogProps } from "./types.js";
 /**
  * @internal
  */
-export function ShareDialog(props: IShareDialogProps) {
-    const {
-        backend,
-        workspace,
-        locale,
-        sharedObject,
-        currentUser,
-        onApply,
-        onCancel,
-        onError,
-        onInteraction = () => {},
-        isLockingSupported,
-        isCurrentUserWorkspaceManager,
-        isGranteeShareLoading,
-        labels,
-        currentUserPermissions,
-        dashboardFilters,
-        isShareGrantHidden,
-        applyShareGrantOnSelect,
-        showDashboardShareLink,
-        onShareLinkCopy,
-    } = props;
+export function ShareDialog({
+    backend,
+    workspace,
+    locale,
+    sharedObject,
+    currentUser,
+    onApply,
+    onCancel,
+    onError,
+    onInteraction = () => {},
+    isLockingSupported,
+    isCurrentUserWorkspaceManager,
+    isGranteeShareLoading,
+    labels,
+    currentUserPermissions,
+    dashboardFilters,
+    isShareGrantHidden,
+    applyShareGrantOnSelect,
+    showDashboardShareLink,
+    onShareLinkCopy,
+}: IShareDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;

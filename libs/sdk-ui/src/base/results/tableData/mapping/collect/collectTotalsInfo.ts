@@ -16,9 +16,7 @@ export type ITotalsInfo = {
 /**
  * @internal
  */
-export function collectTotalsInfo(bucketsInfo: IBucketsInfo) {
-    const { columnBucket, rowBucket } = bucketsInfo;
-
+export function collectTotalsInfo({ columnBucket, rowBucket }: IBucketsInfo) {
     const columnGrandTotals: ITotal[] = [];
     const columnSubtotals: ITotal[] = [];
     const rowGrandTotals: ITotal[] = [];

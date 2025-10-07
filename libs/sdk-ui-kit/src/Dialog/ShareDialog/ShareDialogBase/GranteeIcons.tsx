@@ -37,8 +37,7 @@ export function GranteeGroupIcon() {
     );
 }
 
-export function GranteeRemoveIcon(props: IGranteeRemoveIconProps) {
-    const { onClick, mode } = props;
+export function GranteeRemoveIcon({ onClick, mode }: IGranteeRemoveIconProps) {
     const labels = useComponentLabelsContext();
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0} className="gd-grantee-item-delete">
