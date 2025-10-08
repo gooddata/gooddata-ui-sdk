@@ -2,6 +2,114 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.3.0",
+            "tag": "@gooddata/sdk-ui-all_v11.3.0",
+            "date": "Wed, 08 Oct 2025 11:02:53 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: Introduced optional `autoFocus` behavior to `UiTreeview` component so nothing is focused by default when `autoFocus` is disabled."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: Disable initial `autoFocus` for history items."
+                    },
+                    {
+                        "comment": "sdk-model: Introduced `SharePermission` and adds optional `sharePermissions` to `IAccessControlAware`."
+                    },
+                    {
+                        "comment": "sdk-ui-spi: Add `withMetaInclude` to `IDashboardsQuery`."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add support for `metaInclude` in dashboards query"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce `isEditable` property to `ICatalogItem`."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Disallow editing of dashboards without proper permissions."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add missing `IGetMeasureOptions` interface with `loadUserData` option."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Enhance `getMeasure` to accept `IGetMeasureOptions` with `loadUserData` option."
+                    },
+                    {
+                        "comment": "sdk-backend-catalog: Load user data for measures in the detail view."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Fix incorrect import of the Intl provider in catalog detail."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Make the `objectId` and `objectType` props required in the public API of catalog detail components."
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[ui-sdk-gen-ai] Missing button tooltips on focus"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit] Support badge on button"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai] Switch to table on every visualisation"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: Save button incorrectly available in AI chatbot when insight fails to render"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
+                    },
+                    {
+                        "comment": "[sdk-ui-backend-tiger]: feature flag for enableChangeAnalysis"
+                    },
+                    {
+                        "comment": "Fix: Add proper a11y attributes to saved views"
+                    },
+                    {
+                        "comment": "Return default feature flags on FeatureHub request failure."
+                    },
+                    {
+                        "comment": "Added validation to ensure plugin names use snake_case instead of kebab-case"
+                    },
+                    {
+                        "comment": "Improve accessibility of single select AF"
+                    },
+                    {
+                        "comment": "New iconButton variant. New submenu header component."
+                    },
+                    {
+                        "comment": "Fix date filter accessibility issue"
+                    },
+                    {
+                        "comment": "Improve semantics of InvertableSelectAllCheckbox"
+                    },
+                    {
+                        "comment": "Improve bypass navigation"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableEditInsightsFromKD"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAnalyticalDashboards"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableAdDescriptionEdit"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableDuplicatedLabelValuesInAttributeFilter"
+                    },
+                    {
+                        "comment": "Remove unused feature flag: enableNewNavigationForResponsiveUi"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.2.0",
             "tag": "@gooddata/sdk-ui-all_v11.2.0",
             "date": "Thu, 02 Oct 2025 09:04:26 GMT",

@@ -1,6 +1,46 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Oct 2025 09:04:26 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Oct 2025 11:02:53 GMT and should not be manually modified.
+
+## 11.3.0
+
+Wed, 08 Oct 2025 11:02:53 GMT
+
+### Updates
+
+- sdk-ui-kit: Introduced optional `autoFocus` behavior to `UiTreeview` component so nothing is focused by default when `autoFocus` is disabled.
+- sdk-ui-semantic-search: Disable initial `autoFocus` for history items.
+- sdk-model: Introduced `SharePermission` and adds optional `sharePermissions` to `IAccessControlAware`.
+- sdk-ui-spi: Add `withMetaInclude` to `IDashboardsQuery`.
+- sdk-backend-tiger: Add support for `metaInclude` in dashboards query
+- sdk-ui-catalog: Introduce `isEditable` property to `ICatalogItem`.
+- sdk-ui-catalog: Disallow editing of dashboards without proper permissions.
+- sdk-backend-spi: Add missing `IGetMeasureOptions` interface with `loadUserData` option.
+- sdk-backend-tiger: Enhance `getMeasure` to accept `IGetMeasureOptions` with `loadUserData` option.
+- sdk-backend-catalog: Load user data for measures in the detail view.
+- sdk-ui-catalog: Fix incorrect import of the Intl provider in catalog detail.
+- sdk-ui-catalog: Make the `objectId` and `objectType` props required in the public API of catalog detail components.
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [ui-sdk-gen-ai] Missing button tooltips on focus
+- [sdk-ui-kit] Support badge on button
+- [sdk-ui-gen-ai] Switch to table on every visualisation
+- [sdk-ui-gen-ai]: Save button incorrectly available in AI chatbot when insight fails to render
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-backend-tiger]: feature flag for enableChangeAnalysis
+- Fix: Add proper a11y attributes to saved views
+- Return default feature flags on FeatureHub request failure.
+- Added validation to ensure plugin names use snake_case instead of kebab-case
+- Improve accessibility of single select AF
+- New iconButton variant. New submenu header component.
+- Fix date filter accessibility issue
+- Improve semantics of InvertableSelectAllCheckbox
+- Improve bypass navigation
+- Remove unused feature flag: enableEditInsightsFromKD
+- Remove unused feature flag: enableAnalyticalDashboards
+- Remove unused feature flag: enableAdDescriptionEdit
+- Remove unused feature flag: enableDuplicatedLabelValuesInAttributeFilter
+- Remove unused feature flag: enableNewNavigationForResponsiveUi
 
 ## 11.2.0
 
