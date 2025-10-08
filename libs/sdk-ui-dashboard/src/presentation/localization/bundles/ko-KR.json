@@ -846,5 +846,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "전년도 동일 기간",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "이전 기간",
     "kdaDialog.dialog.keyDrives.empty_up": "증가 요인 없음",
-    "kdaDialog.dialog.keyDrives.empty_down": "감소 요인 없음"
+    "kdaDialog.dialog.keyDrives.empty_down": "감소 요인 없음",
+    "dialogs.automation.attachments.add": "첨부 파일 추가",
+    "menu.back": "상위 메뉴로 돌아가기"
 }

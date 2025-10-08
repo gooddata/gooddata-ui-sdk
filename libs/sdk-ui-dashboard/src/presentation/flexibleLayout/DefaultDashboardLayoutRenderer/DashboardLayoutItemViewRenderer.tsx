@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -24,9 +24,12 @@ export function DashboardLayoutItemViewRenderer({
     const { ratio, height } = getSizeForItem(item, screen);
 
     const style = useMemo(() => {
-        let computedStyle = {
-            minHeight,
-        };
+        let computedStyle: CSSProperties = {};
+
+        // Only set minHeight if not zero
+        if (minHeight && minHeight > 0) {
+            computedStyle.minHeight = minHeight;
+        }
 
         if (isHidden) {
             computedStyle = {

@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Zelfde periode vorig jaar",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Vorige periode",
     "kdaDialog.dialog.keyDrives.empty_up": "Geen toenemende bestuurders",
-    "kdaDialog.dialog.keyDrives.empty_down": "Geen afnemende bestuurders"
+    "kdaDialog.dialog.keyDrives.empty_down": "Geen afnemende bestuurders",
+    "dialogs.automation.attachments.add": "Bijlagen toevoegen",
+    "menu.back": "Terug naar het hoofdmenu"
 }

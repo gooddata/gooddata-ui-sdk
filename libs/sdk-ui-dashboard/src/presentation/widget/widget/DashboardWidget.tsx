@@ -73,6 +73,7 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
 
         console.warn(`Unable to render widget ${extendedWidgetDebugStr(widget)}`);
         return BadWidgetType;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [widget]);
 
     return (

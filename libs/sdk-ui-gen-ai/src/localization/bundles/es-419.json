@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Saltar a la entrada del asistente de IA",
     "gd.gen-ai.skip-navigation": "Omitir navegación",
     "gd.gen-ai.messages.label": "Mensajes de chat",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Se le pedirá que guarde la visualización antes de poder abrirla."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Se le pedirá que guarde la visualización antes de poder abrirla.",
+    "gd.gen-ai.visualisation.toggle.table": "Mostrar tabla",
+    "gd.gen-ai.visualisation.toggle.original": "Mostrar original"
 }

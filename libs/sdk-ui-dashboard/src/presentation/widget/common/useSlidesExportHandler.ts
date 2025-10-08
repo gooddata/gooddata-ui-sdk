@@ -42,5 +42,6 @@ export const useSlidesExportHandler = (): ExportSlidesHandler => {
                 addError(messages.messagesExportResultError);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

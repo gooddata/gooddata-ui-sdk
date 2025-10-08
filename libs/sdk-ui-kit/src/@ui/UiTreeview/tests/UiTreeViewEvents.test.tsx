@@ -144,6 +144,7 @@ describe("UiTreeViewEvents", () => {
         }).not.toThrow();
     });
 
+    // eslint-disable-next-line @vitest/no-identical-title
     it("should not throw when used outside of provider", () => {
         const onEvent = vi.fn();
 

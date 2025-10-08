@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Stesso periodo dell'anno precedente",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Periodo precedente",
     "kdaDialog.dialog.keyDrives.empty_up": "Nessun aumento dei conducenti",
-    "kdaDialog.dialog.keyDrives.empty_down": "Nessun conducente in calo"
+    "kdaDialog.dialog.keyDrives.empty_down": "Nessun conducente in calo",
+    "dialogs.automation.attachments.add": "Aggiungi allegati",
+    "menu.back": "Torna al menu principale"
 }

@@ -18,7 +18,6 @@ const widget = new Widget(0);
 const dashboard = new Dashboard();
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("Delete attribute filter", () => {
         it("Display trash when performing filter drag", () => {

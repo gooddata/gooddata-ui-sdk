@@ -53,12 +53,12 @@
                     {
                         "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "min"
+                        "type": "max"
                     },
                     {
                         "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "max"
+                        "type": "min"
                     }
                 ]
             }

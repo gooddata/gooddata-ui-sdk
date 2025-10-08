@@ -613,6 +613,12 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/eslint-config",
+            "projectFolder": "tools/eslint-config",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/eslint-plugin",
             "projectFolder": "tools/eslint-plugin",
             "reviewCategory": "tools",

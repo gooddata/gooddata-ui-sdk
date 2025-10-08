@@ -1,13 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { AttributeMeasureOrPlaceholder } from "src/base/index.js";
 import { Mock, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+
+import { AttributeMeasureOrPlaceholder } from "src/base/index.js";
 
 import { LoadingComponent } from "../../base/react/LoadingComponent.js";
 import { DataViewFacade } from "../../base/results/facade.js";

@@ -106,7 +106,6 @@ const checkWidthWithTolerance = (width: Cypress.Chainable<JQuery<number>>, expec
 // first attribute column
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");

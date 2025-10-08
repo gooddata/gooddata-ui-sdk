@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "上年同期",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "上一期",
     "kdaDialog.dialog.keyDrives.empty_up": "沒有增加的驅動力",
-    "kdaDialog.dialog.keyDrives.empty_down": "沒有減少的驅動力"
+    "kdaDialog.dialog.keyDrives.empty_down": "沒有減少的驅動力",
+    "dialogs.automation.attachments.add": "加附件",
+    "menu.back": "返回父選單"
 }

@@ -18,7 +18,6 @@ const account = new AttributeFilter("Account");
 const isWon = new AttributeFilter("Is Won?");
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Apply dependence filter on Edit Mode", () => {
         Navigation.visit("dashboard/stage-name");

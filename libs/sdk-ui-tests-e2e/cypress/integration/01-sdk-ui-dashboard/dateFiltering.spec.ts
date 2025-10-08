@@ -77,7 +77,6 @@ describe("Date filtering", () => {
         },
     );
 
-    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("should select date filter by preset", { tags: "checklist_integrated_bear" }, () => {
         Navigation.visit("dashboard/for-date-filter");
 

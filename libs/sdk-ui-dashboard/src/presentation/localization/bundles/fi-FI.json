@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Sama jakso edellisenä vuonna",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Edellinen jakso",
     "kdaDialog.dialog.keyDrives.empty_up": "Ei lisää kuljettajia",
-    "kdaDialog.dialog.keyDrives.empty_down": "Ei laskevia kuljettajia"
+    "kdaDialog.dialog.keyDrives.empty_down": "Ei laskevia kuljettajia",
+    "dialogs.automation.attachments.add": "Lisää liitteitä",
+    "menu.back": "Takaisin päävalikkoon"
 }

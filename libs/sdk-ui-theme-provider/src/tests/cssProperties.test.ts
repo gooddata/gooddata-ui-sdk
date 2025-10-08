@@ -134,6 +134,7 @@ describe("cssProperties", () => {
                 },
             },
         };
+        // eslint-disable-next-line @vitest/valid-title
         it("it should return '--gd-shadow-color' css property with black color if theme is dark", () => {
             expect(generateShadowColor(theme.palette!, true)).toEqual([
                 {
@@ -142,7 +143,8 @@ describe("cssProperties", () => {
                 },
             ]);
         });
-        it("it should return '--gd-shadow-color' css property with 8th color from complementary palette if theme is light", () => {
+
+        it("should return '--gd-shadow-color' css property with 8th color from complementary palette if theme is light", () => {
             expect(generateShadowColor(theme.palette!, false)).toEqual([
                 {
                     key: "--gd-shadow-color",
@@ -150,7 +152,7 @@ describe("cssProperties", () => {
                 },
             ]);
         });
-        it("it should return nothing if complementary palette is not provided", () => {
+        it("should return nothing if complementary palette is not provided", () => {
             expect(generateShadowColor({}, true)).toEqual([]);
         });
     });

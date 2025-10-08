@@ -105,8 +105,11 @@ export function useDateFilterConfigurationHandling(
                 disable(ref);
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             isInsightWidget(widget),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(ref),
             enableInsightDateFilter,
             disableInsightDateFilter,
@@ -162,6 +165,7 @@ export function useDateFilterConfigurationHandling(
                 enableKpiDateFilter(ref, idRef(id, "dataSet"));
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [isInsightWidget(widget), safeSerializeObjRef(ref)],
     );
 

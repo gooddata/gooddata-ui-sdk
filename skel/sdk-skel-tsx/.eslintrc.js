@@ -1,21 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+
+const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
+
 module.exports = {
-    plugins: ["react-hooks", "sonarjs", "eslint-plugin-tsdoc"],
-    extends: [
-        "@gooddata",
-        "plugin:react/recommended",
-        "plugin:import/errors",
-        "plugin:import/typescript",
-        "plugin:sonarjs/recommended",
-        "plugin:regexp/recommended",
-        "plugin:react-hooks/recommended",
-        "../../.eslintrc.react.js",
-    ],
-    overrides: [
-        {
-            files: ["*.ts", "*.tsx"],
-            parser: "@typescript-eslint/parser",
-            parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
-        },
-    ],
+    extends: ["@gooddata/eslint-config/react"],
+    overrides: [tsOverride(__dirname)],
 };

@@ -240,6 +240,7 @@ export function withExecutionLoading<TProps>({
                     onLoadingStart,
                     onExportReady,
                 };
+                // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [events]);
 
             const startLoading = useCallback(() => {
@@ -295,6 +296,7 @@ export function withExecutionLoading<TProps>({
                         result,
                     }));
                 },
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 [getEvents, exportTitle],
             );
 
@@ -340,6 +342,7 @@ export function withExecutionLoading<TProps>({
                         setError(sdkError);
                     }
                 }
+                // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [window, enableExecutionCancelling, promiseFactory]);
 
             const isStaleResult = useCallback((): boolean => {
@@ -349,6 +352,7 @@ export function withExecutionLoading<TProps>({
                     effectivePropsRef.current !== undefined &&
                     shouldRefetch(effectivePropsRef.current, latestPropsRef.current)
                 );
+                // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [shouldRefetch]);
 
             // ComponentDidMount equivalent

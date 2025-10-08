@@ -226,11 +226,17 @@ module.exports = (_env, argv) => {
                             import: "react", // the "react" package will be used a provided and fallback module
                             shareKey: "react", // under this name the shared module will be placed in the share scope
                             singleton: true, // only a single version of the shared module is allowed
-                            requiredVersion: deps.react,
+                            requiredVersion: false,
                         },
                         "react-dom": {
                             singleton: true,
-                            requiredVersion: deps["react-dom"],
+                            requiredVersion: false,
+                        },
+                        "react/jsx-runtime": {
+                            singleton: true,
+                            import: false,
+                            strictVersion: false,
+                            requiredVersion: false
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
                         ...generateGooddataSharePackagesEntries(),

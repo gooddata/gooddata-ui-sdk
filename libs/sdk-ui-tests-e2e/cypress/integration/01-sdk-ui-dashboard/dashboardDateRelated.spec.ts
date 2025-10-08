@@ -13,7 +13,6 @@ const editMode = new EditMode();
 const dashboardMenu = new DashboardMenu();
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
     it("Make no change on unrelated date insight", () => {
         Navigation.visit("dashboard/date-filtering");

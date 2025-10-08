@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { Headline } from "../../tools/headline";
 import * as Navigation from "../../tools/navigation";
 
@@ -20,7 +21,6 @@ const scenarios = [
 ];
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Headline drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/headline/headline-drilling");

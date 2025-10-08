@@ -79,5 +79,6 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
 
         onBeforeRun?.(command);
         dispatch(command);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

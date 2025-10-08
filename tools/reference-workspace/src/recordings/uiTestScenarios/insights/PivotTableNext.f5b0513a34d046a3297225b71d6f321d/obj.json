@@ -58,9 +58,9 @@
                         "type": "sum"
                     },
                     {
-                        "attributeIdentifier": "a_label.f_product.product.name",
+                        "attributeIdentifier": "a_f_owner.department_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "min"
+                        "type": "sum"
                     },
                     {
                         "attributeIdentifier": "a_label.f_product.product.name",
@@ -68,9 +68,9 @@
                         "type": "max"
                     },
                     {
-                        "attributeIdentifier": "a_f_owner.department_id",
+                        "attributeIdentifier": "a_label.f_product.product.name",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "sum"
+                        "type": "min"
                     },
                     {
                         "attributeIdentifier": "a_f_owner.department_id",
@@ -110,9 +110,9 @@
                         "type": "sum"
                     },
                     {
-                        "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                        "attributeIdentifier": "a_f_owner.region_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "min"
+                        "type": "sum"
                     },
                     {
                         "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
@@ -120,9 +120,9 @@
                         "type": "max"
                     },
                     {
-                        "attributeIdentifier": "a_f_owner.region_id",
+                        "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "sum"
+                        "type": "min"
                     },
                     {
                         "attributeIdentifier": "a_f_owner.region_id",

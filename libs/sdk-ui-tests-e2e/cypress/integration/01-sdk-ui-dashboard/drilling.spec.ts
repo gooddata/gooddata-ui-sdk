@@ -93,7 +93,6 @@ describe("Interaction", () => {
 });
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");

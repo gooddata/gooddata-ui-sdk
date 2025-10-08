@@ -68,10 +68,12 @@ export function usePagedResource<TParams, TItem>(
         return () => {
             reset();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, resetDeps);
 
     useEffect(() => {
         results.forEach(mergeResult);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [results]);
 
     const { items, totalItemsCount } = state;

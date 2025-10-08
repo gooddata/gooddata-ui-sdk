@@ -850,5 +850,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "За тот же период предыдущего года",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Предыдущий период",
     "kdaDialog.dialog.keyDrives.empty_up": "Нет факторов увеличения",
-    "kdaDialog.dialog.keyDrives.empty_down": "Нет факторов снижения"
+    "kdaDialog.dialog.keyDrives.empty_down": "Нет факторов снижения",
+    "dialogs.automation.attachments.add": "Добавить вложения",
+    "menu.back": "Вернуться в родительское меню"
 }

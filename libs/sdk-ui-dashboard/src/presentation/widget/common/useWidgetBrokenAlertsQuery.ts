@@ -41,6 +41,7 @@ export const useWidgetBrokenAlertsQuery = (
 
         // queryWidgetBrokenAlerts as a parameter it needs just widget.ref but internally result depends on alert, widget, dashboardFilters
         // we have to call query every time when this dependency changed to get fresh results
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [alert, widget, dashboardFilters]);
 
     return {

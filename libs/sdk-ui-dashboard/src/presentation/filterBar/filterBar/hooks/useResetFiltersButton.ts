@@ -190,6 +190,7 @@ export const useResetFiltersButton = (): {
         dispatchEvent(filterContextSelectionReseted());
         // Report the reset as user interaction
         filterContextStateReset();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         canReset,
         originalFilters,

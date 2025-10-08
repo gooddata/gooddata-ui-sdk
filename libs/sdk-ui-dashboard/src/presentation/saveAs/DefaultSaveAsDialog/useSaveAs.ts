@@ -87,6 +87,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         (title?: string, switchToDashboard = false, useOriginalFilterContext = true) => {
             saveAsCommandProcessing.run(title, switchToDashboard, useOriginalFilterContext);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
     );
 

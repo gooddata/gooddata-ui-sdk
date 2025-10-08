@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
@@ -6,7 +7,6 @@ import * as Navigation from "../../tools/navigation";
 import { clickOutside } from "../../tools/utils";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/date-filter");

@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "AIアシスタント入力へスキップ",
     "gd.gen-ai.skip-navigation": "ナビゲーションをスキップする",
     "gd.gen-ai.messages.label": "チャットメッセージ",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "ビジュアライゼーションを開く前に保存するよう求められます。"
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "ビジュアライゼーションを開く前に保存するよう求められます。",
+    "gd.gen-ai.visualisation.toggle.table": "表を表示",
+    "gd.gen-ai.visualisation.toggle.original": "オリジナルを表示"
 }

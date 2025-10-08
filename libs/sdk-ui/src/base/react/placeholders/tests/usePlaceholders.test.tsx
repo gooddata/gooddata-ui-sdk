@@ -35,6 +35,7 @@ function ComponentWithUsePlaceholderHook(props: IComponentWithUsePlaceholderHook
         if (onSetPlaceholders) {
             setPlaceholders(onSetPlaceholders);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onSetPlaceholders]);
 
     return (

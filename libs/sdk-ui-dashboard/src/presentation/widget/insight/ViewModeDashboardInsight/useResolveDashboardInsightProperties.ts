@@ -62,5 +62,6 @@ export const useResolveDashboardInsightProperties = (
         );
 
         return insightSetProperties(insight, merged);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insight, widget.properties, settings]);
 };

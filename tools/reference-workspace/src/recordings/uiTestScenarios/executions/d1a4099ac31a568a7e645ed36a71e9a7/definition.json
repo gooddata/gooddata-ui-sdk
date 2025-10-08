@@ -39,8 +39,7 @@
                 }
             ],
             "localIdentifier": "view"
-        },
-        { "items": [], "localIdentifier": "stack" }
+        }
     ],
     "dimensions": [
         { "itemIdentifiers": ["measureGroup"] },

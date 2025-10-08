@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
@@ -17,7 +18,6 @@ const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-or
 
 describe("Attribute filter", () => {
     // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bear"] }, () => {
         beforeEach(() => {
             Navigation.visit("filters/attribute-filter-config");

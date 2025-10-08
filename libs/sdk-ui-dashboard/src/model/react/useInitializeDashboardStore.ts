@@ -109,6 +109,7 @@ export const useInitializeDashboardStore = (
 
     useNotifyDeinitializedOnUnmount(dashboardStore, currentInitProps);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!objectUtils.shallowEqualObjects(previousInitProps, currentInitProps) || !dashboardStore) {
             if (dashboardStore) {

@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { cloneDeep, compact, omit } from "lodash-es";
-import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -28,6 +27,8 @@ import {
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
+
+import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
 
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";

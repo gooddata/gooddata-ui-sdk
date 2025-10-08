@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Przejdź do wprowadzania asystenta AI",
     "gd.gen-ai.skip-navigation": "Pomiń nawigację",
     "gd.gen-ai.messages.label": "Wiadomości czatu",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Zostaniesz poproszony o zapisanie wizualizacji przed jej otwarciem."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Zostaniesz poproszony o zapisanie wizualizacji przed jej otwarciem.",
+    "gd.gen-ai.visualisation.toggle.table": "Pokaż tabelę",
+    "gd.gen-ai.visualisation.toggle.original": "Pokaż oryginał"
 }

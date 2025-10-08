@@ -8282,6 +8282,52 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for BarChart - data labels - data labels with backplate style 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from "@gooddata/sdk-model";
+import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const stackBy: IAttribute = newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort("a_f_owner.region_id", "desc", "sum")
+];
+const config: IChartConfig = {
+    dataLabels: {
+        style: "backplate",
+        totalsVisible: true,
+        visible: true
+    },
+    enableSeparateTotalLabels: true,
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "right"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <BarChart
+                measures={measures}
+                viewBy={viewBy}
+                stackBy={stackBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for BarChart - data labels - default 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from "@gooddata/sdk-model";
@@ -19007,6 +19053,48 @@ const viewBy: IAttribute[] = [
 const stackBy: IAttribute = newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"));
 const config: IChartConfig = {
     dataLabels: {visible: true},
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "right"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ColumnChart
+                measures={measures}
+                viewBy={viewBy}
+                stackBy={stackBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ColumnChart - data labels - data labels with backplate style 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"))
+];
+const stackBy: IAttribute = newAttribute(idRef("label.f_product.product.name", "displayForm"), a => a.localId("a_label.f_product.product.name"));
+const config: IChartConfig = {
+    dataLabels: {
+        style: "backplate",
+        totalsVisible: true,
+        visible: true
+    },
     separators: {decimal: ".", thousand: ","},
     enableChartSorting: true,
     enableSeparateTotalLabels: true,
@@ -48720,8 +48808,8 @@ const rows: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
-    newTotal("min", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("min", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
 ];
@@ -49507,8 +49595,8 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
+    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
@@ -49616,8 +49704,8 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
+    newTotal("max", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
@@ -50430,9 +50518,9 @@ const filters: IFilter[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
 ];
@@ -50556,15 +50644,15 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.region_id")
 ];
@@ -50623,9 +50711,9 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
 ];
@@ -50682,8 +50770,8 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
@@ -50799,11 +50887,11 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
     newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_attr.f_owner.salesrep"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_attr.f_owner.salesrep"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id"),
-    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id")
+    newTotal("max", "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa", "a_f_opportunitysnapshot.forecastcategory_id"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_opportunitysnapshot.forecastcategory_id")
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
@@ -50921,8 +51009,8 @@ const columns: IAttribute[] = [
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
-    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("sum", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.region_id"),
@@ -50984,8 +51072,8 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name")
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name")
 ];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: "autoresizeAll"},
@@ -52612,9 +52700,9 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
 ];
@@ -52664,9 +52752,9 @@ const columns: IAttribute[] = [
 ];
 const totals: ITotal[] = [
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
-    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
     newTotal("sum", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
+    newTotal("max", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_label.f_product.product.name"),
+    newTotal("min", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_label.f_product.product.name"),
     newTotal("med", "m_87a053b0_3947_49f3_b0c5_de53fd01f050", "a_f_owner.department_id"),
     newTotal("med", "m_e519fa2a_86c3_4e32_8313_0c03062348j3", "a_f_owner.department_id")
 ];
@@ -63824,6 +63912,44 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const config: IChartConfig = {
     dataLabels: {visible: true},
+    separators: {decimal: ".", thousand: ","},
+    enableChartSorting: true,
+    enableSeparateTotalLabels: true,
+    enableJoinedAttributeAxisName: true,
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <WaterfallChart
+                measures={measures}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for WaterfallChart - data labels - data labels with backplate style 1`] = `
+"import React from "react";
+import { IAttributeOrMeasure, idRef, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, WaterfallChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("f_stagehistory.f_velocity", "fact"), m => m.alias("Sum Velocity").format("$#,##0").localId("m_f_stagehistory.f_velocity_sum").aggregation("sum")),
+    newMeasure(idRef("f_stagehistory.f_duration", "fact"), m => m.alias("Sum Duration").format("$#,##0").localId("m_f_stagehistory.f_duration_sum").aggregation("sum")),
+    newMeasure(idRef("f_density", "fact"), m => m.alias("Sum Density").format("$#,##0").localId("m_f_density_sum").aggregation("sum"))
+];
+const config: IChartConfig = {
+    dataLabels: {
+        style: "backplate",
+        totalsVisible: true,
+        visible: true
+    },
     separators: {decimal: ".", thousand: ","},
     enableChartSorting: true,
     enableSeparateTotalLabels: true,

@@ -40,6 +40,7 @@ export function DashboardLayoutWidgetRenderer({
         }
 
         return computedStyle;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [minHeight, height, allowOverflow, heightAsRatio, isResizedByLayoutSizingStrategy]);
 
     return (

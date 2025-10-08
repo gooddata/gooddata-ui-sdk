@@ -51,7 +51,6 @@ describe("Dashboard", () => {
             dashboard.topBarExist();
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render title", () => {
             topBar.dashboardTitleExist().dashboardTitleHasValue("KPIs");
         });
@@ -65,7 +64,6 @@ describe("Dashboard", () => {
             topBar.menuButtonIsVisible();
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should open menu button and contain items", () => {
             topBar
                 .menuButtonIsVisible()
@@ -101,7 +99,6 @@ describe("Dashboard", () => {
                 ]);
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should change the filter", () => {
             const filterBar = new FilterBar();
 
@@ -120,7 +117,6 @@ describe("Dashboard", () => {
             Navigation.visit("dashboard/kpis");
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render single insight", () => {
             dashboard.dashboardBodyExist();
         });

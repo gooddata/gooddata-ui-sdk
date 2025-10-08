@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { camelCase } from "lodash-es";
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
@@ -10,7 +11,6 @@ const INVALID_SEARCH_QUERY = "does not exist";
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter.s-opportunity";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/attribute-filter-button");

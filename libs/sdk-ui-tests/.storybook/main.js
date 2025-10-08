@@ -67,26 +67,46 @@ export default {
         options: { fastRefresh: true },
     },
     async viteFinal(config) {
+        const isDevelopment = process.env.NODE_ENV === "development";
+
+        // In development mode, use source files for hot-reload
+        // In production mode, use built ESM files
+        const aliases = isDevelopment
+            ? [
+                  // This is required to make fonts work
+                  {
+                      find: "@gooddata/sdk-ui-kit/src/@ui",
+                      replacement: resolve(__dirname, "./../../sdk-ui-kit/src/@ui"),
+                  },
+                  // fixes internal exports from sdk-ui-ext
+                  {
+                      find: "@gooddata/sdk-ui-ext/internal",
+                      replacement: resolve(__dirname, "./../../sdk-ui-ext/src/internal"),
+                  },
+                  ...packagesWithoutStyles.map(makePackageSourceAlias),
+                  ...packagesWithStyles.flatMap((pkg) => [
+                      makePackageEsmAlias(pkg),
+                      makePackageStylesAlias(pkg),
+                      makePackageSourceAlias(pkg),
+                  ]),
+              ]
+            : [
+                  // fixes internal exports from sdk-ui-ext in production
+                  {
+                      find: "@gooddata/sdk-ui-ext/internal",
+                      replacement: resolve("./node_modules/@gooddata/sdk-ui-ext/esm/internal"),
+                  },
+              ];
+
+        // In development mode, exclude workspace packages from optimization
+        // In production mode, only exclude "module"
+        const optimizeDepsExclude = isDevelopment
+            ? ["module", ...packagesWithoutStyles, ...packagesWithStyles]
+            : ["module"];
+
         return mergeConfig(config, {
             resolve: {
-                alias: [
-                    // This is required to make fonts work
-                    {
-                        find: "@gooddata/sdk-ui-kit/src/@ui",
-                        replacement: resolve(__dirname, "./../../sdk-ui-kit/src/@ui"),
-                    },
-                    // fixes internal exports from sdk-ui-ext
-                    {
-                        find: "@gooddata/sdk-ui-ext/internal",
-                        replacement: resolve(__dirname, "./../../sdk-ui-ext/src/internal"),
-                    },
-                    ...packagesWithoutStyles.map(makePackageSourceAlias),
-                    ...packagesWithStyles.flatMap((pkg) => [
-                        makePackageEsmAlias(pkg),
-                        makePackageStylesAlias(pkg),
-                        makePackageSourceAlias(pkg),
-                    ]),
-                ],
+                alias: aliases,
             },
             server: {
                 fs: {
@@ -105,7 +125,7 @@ export default {
                 }),
             ],
             optimizeDeps: {
-                exclude: ["module", ...packagesWithoutStyles, ...packagesWithStyles],
+                exclude: optimizeDepsExclude,
             },
             build: {
                 sourcemap: true,

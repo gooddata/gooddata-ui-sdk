@@ -37,6 +37,7 @@ export function useTitleConfiguration(
         }
         const updatedTitle = title === defaultAttributeFilterTitle ? undefined : title?.trim();
         changeTitle(currentFilter.attributeFilter.localIdentifier!, updatedTitle);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [title, currentFilter, defaultAttributeFilterTitle, changeTitle]);
 
     const onTitleReset = useCallback(() => {

@@ -666,7 +666,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Dikkat:</b> Bu işlem, gereksiz kombinasyonları kaldıracaktır.",
     "userManagement.workspace.permission.and": "ve",
     "gs.header.notifications": "Bildirimler",
-    "gs.header.logo.title.accessibility": "Uygulama logosu",
+    "gs.header.logo.title.accessibility": "{organizationName} logosu",
     "gs.header.href.accessibility": "Ana sayfaya git",
     "gs.list.acessibility.search.label": "Öznitelik değerlerini ara",
     "message.accessibility.dismiss.notification": "Bildirimi kapat",
@@ -794,5 +794,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Sayfa dışa aktarma bilgilerini dahil et",
     "dialogs.export.pdf.pageOrientation": "Yönlendirme",
     "dialogs.export.pdf.pageSize": "Sayfa boyutu",
-    "dialogs.export.submit": "Dışa Aktar"
+    "dialogs.export.submit": "Dışa Aktar",
+    "gs.list.allAndCount": "Tümü ({count})",
+    "gs.list.allSearchResultsAndCount": "Tüm arama sonuçları ({count})",
+    "attributesDropdown.selectedValues": "Seçilen değerler",
+    "attributesDropdown.selected": "seçildi",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Mektup",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Dikey Görünüm",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Yatay Görünüm"
 }

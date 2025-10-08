@@ -1194,6 +1194,7 @@ describe("alert transforms", () => {
             expect(data).toEqual(["INCREASES_BY", "CHANGE"]);
         });
 
+        // eslint-disable-next-line @vitest/no-identical-title
         it("getAlertRelativeOperator - comparison", () => {
             const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getValueSuffix(update.alert);
@@ -1322,6 +1323,7 @@ describe("alert transforms", () => {
             expect(res).toEqual(true);
         });
 
+        // eslint-disable-next-line @vitest/no-identical-title
         it("isChangeOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
@@ -1354,6 +1356,7 @@ describe("alert transforms", () => {
             expect(res).toEqual(false);
         });
 
+        // eslint-disable-next-line @vitest/no-identical-title
         it("isDifferenceOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
@@ -1386,6 +1389,7 @@ describe("alert transforms", () => {
             expect(res).toEqual(true);
         });
 
+        // eslint-disable-next-line @vitest/no-identical-title
         it("isChangeOrDifferenceOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(

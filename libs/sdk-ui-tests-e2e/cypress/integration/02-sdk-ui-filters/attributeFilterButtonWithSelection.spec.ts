@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { camelCase } from "lodash-es";
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import * as Navigation from "../../tools/navigation";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AttributeFilterButton with initial selection", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/attribute-filter-button-with-selection");

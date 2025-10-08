@@ -6,11 +6,11 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 
+import { clearCssProperties, setCssProperties } from "../cssProperties.js";
 import { ThemeContextProvider, ThemeStatus } from "./Context.js";
 import { isDarkTheme } from "./isDarkTheme.js";
 import { prepareTheme } from "./prepareTheme.js";
 import { ThemeModifier } from "./ThemeProvider.js";
-import { clearCssProperties, setCssProperties } from "../cssProperties.js";
 
 /**
  * @internal
@@ -71,6 +71,9 @@ export interface IScopedThemeProviderProps {
     children?: ReactNode;
 }
 
+// Default modifier function - defined outside component to make it stable
+const defaultModifier: ThemeModifier = (v) => v;
+
 /**
  * ScopedThemeProvider is an experimental component that is not yet ready for production use.
  *
@@ -85,7 +88,7 @@ export function ScopedThemeProvider({
     theme: themeParam,
     backend: backendParam,
     workspace: workspaceParam,
-    modifier = (v) => v,
+    modifier = defaultModifier,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
 }: IScopedThemeProviderProps) {

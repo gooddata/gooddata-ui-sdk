@@ -55,14 +55,14 @@
                         "type": "sum"
                     },
                     {
-                        "attributeIdentifier": "a_f_owner.department_id",
-                        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-                        "type": "min"
-                    },
-                    {
                         "attributeIdentifier": "a_f_owner.region_id",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
                         "type": "sum"
+                    },
+                    {
+                        "attributeIdentifier": "a_f_owner.department_id",
+                        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                        "type": "min"
                     },
                     {
                         "attributeIdentifier": "a_f_owner.region_id",

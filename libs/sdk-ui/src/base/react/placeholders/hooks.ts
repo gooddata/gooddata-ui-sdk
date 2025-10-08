@@ -65,6 +65,7 @@ export function usePlaceholder<T extends IPlaceholder<any>>(
                 return setPlaceholder(placeholder, updatedValue, s);
             });
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
     );
 
@@ -107,6 +108,7 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(
                 }, s);
             });
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
     );
 
@@ -181,6 +183,7 @@ export function useResolveValuesWithPlaceholders<T extends any[], C>(
 export function useMemoStringify<T>(value: T): T {
     return useMemo(() => {
         return value;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stableStringify(value)]);
 }
 
@@ -213,5 +216,6 @@ export function useMultiValueMemoStringify<T extends any[]>(values: T): T {
 
             return val;
         }) as T;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stableStringify(values)]);
 }

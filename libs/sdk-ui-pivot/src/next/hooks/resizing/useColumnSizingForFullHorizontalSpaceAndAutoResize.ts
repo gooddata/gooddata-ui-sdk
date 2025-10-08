@@ -34,7 +34,7 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
 
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            if (params.source !== "autosizeColumns" || autoSizeInitialized) {
+            if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source) || autoSizeInitialized) {
                 return;
             }
 

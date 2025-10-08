@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { getTestClassByTitle } from "../../support/commands/tools/classes";
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
@@ -10,7 +11,6 @@ const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activit
 const CONFIGURATION_SELECTOR = ".s-configuration-button";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/attribute-filter-button-renaming");

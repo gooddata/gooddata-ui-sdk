@@ -666,7 +666,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Ostrożność:</b> Ta czynność spowoduje usunięcie wszystkich zbędnych kombinacji.",
     "userManagement.workspace.permission.and": "i",
     "gs.header.notifications": "Powiadomienia",
-    "gs.header.logo.title.accessibility": "Logo aplikacji",
+    "gs.header.logo.title.accessibility": "{organizationName}Logo ",
     "gs.header.href.accessibility": "Przejdź do strony głównej",
     "gs.list.acessibility.search.label": "Wyszukaj wartości atrybutów",
     "message.accessibility.dismiss.notification": "Usuń powiadomienie",
@@ -794,5 +794,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Uwzględnij informacje o eksporcie strony",
     "dialogs.export.pdf.pageOrientation": "Orientacja",
     "dialogs.export.pdf.pageSize": "Rozmiar strony",
-    "dialogs.export.submit": "Eksportuj"
+    "dialogs.export.submit": "Eksportuj",
+    "gs.list.allAndCount": "Wszystkie ({count})",
+    "gs.list.allSearchResultsAndCount": "Wyniki wszystkich wyszukiwań ({count})",
+    "attributesDropdown.selectedValues": "Wybrane wartości",
+    "attributesDropdown.selected": "wybrano",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "List",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Portret",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Krajobraz"
 }

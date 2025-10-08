@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Même période année précédente",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Période précédente",
     "kdaDialog.dialog.keyDrives.empty_up": "Pas d'augmentation du nombre de conducteurs",
-    "kdaDialog.dialog.keyDrives.empty_down": "Pas de diminution du nombre de conducteurs"
+    "kdaDialog.dialog.keyDrives.empty_down": "Pas de diminution du nombre de conducteurs",
+    "dialogs.automation.attachments.add": "Ajouter des pièces jointes",
+    "menu.back": "Retour au menu parent"
 }

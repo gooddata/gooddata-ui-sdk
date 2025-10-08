@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Voorzichtig:</b> Deze actie verwijdert overbodige combinaties.",
     "userManagement.workspace.permission.and": "en",
     "gs.header.notifications": "Meldingen",
-    "gs.header.logo.title.accessibility": "Toepassingslogo",
+    "gs.header.logo.title.accessibility": "{organizationName} logo",
     "gs.header.href.accessibility": "Ga naar de startpagina",
     "gs.list.acessibility.search.label": "Waarden van eigenschappen zoeken",
     "message.accessibility.dismiss.notification": "Kennisgeving verwijderen",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Pagina-exportinformatie opnemen",
     "dialogs.export.pdf.pageOrientation": "Oriëntatie",
     "dialogs.export.pdf.pageSize": "Paginaformaat",
-    "dialogs.export.submit": "Exporteren"
+    "dialogs.export.submit": "Exporteren",
+    "gs.list.allAndCount": "Alle ({count})",
+    "gs.list.allSearchResultsAndCount": "Alle zoekresultaten ({count})",
+    "attributesDropdown.selectedValues": "Geselecteerde waarden",
+    "attributesDropdown.selected": "geselecteerd",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Brief",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Portret",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Landschap"
 }

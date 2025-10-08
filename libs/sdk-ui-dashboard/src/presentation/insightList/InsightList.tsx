@@ -146,6 +146,7 @@ export function InsightList({
         }
     }, [initialLoadCompleted, totalInsightsCount]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((searchString: string) => {
             setPagesToLoad([0]);
@@ -172,6 +173,7 @@ export function InsightList({
         e.stopPropagation();
 
         eventDispatch(createInsightRequested());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const TABS_AND_SEARCHFIELD_HEIGHT = 70;

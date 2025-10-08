@@ -80,7 +80,6 @@ export const getMixedValuesColumnWidthItemByLocator = (data: any, measureIdentif
 };
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip(
     "Transposed Pivot Table Sizing and Reset by double click",
     { tags: ["pre-merge_isolated_bear"] },
@@ -264,7 +263,6 @@ describe.skip(
 );
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Transposed Pivot Table resizing", { tags: ["checklist_integrated_bear"] }, () => {
     const SIZE_AFTER_GROW_FIT = TOTAL_SIZE / 3;
     const SIZE_AFTER_CHANGE_1_COL = (TOTAL_SIZE - SECOND_CELL_MANUAL_WIDTH) / 2;

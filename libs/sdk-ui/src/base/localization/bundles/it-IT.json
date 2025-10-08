@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Attenzione:</b> Questa azione rimuove tutte le combinazioni ridondanti.",
     "userManagement.workspace.permission.and": "e",
     "gs.header.notifications": "Notifiche",
-    "gs.header.logo.title.accessibility": "Logo dell'applicazione",
+    "gs.header.logo.title.accessibility": "{organizationName} logo",
     "gs.header.href.accessibility": "Vai alla homepage",
     "gs.list.acessibility.search.label": "Valori degli attributi di ricerca",
     "message.accessibility.dismiss.notification": "Ignora notifica",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Includere informazioni sull'esportazione della pagina",
     "dialogs.export.pdf.pageOrientation": "Orientamento",
     "dialogs.export.pdf.pageSize": "Dimensione della pagina",
-    "dialogs.export.submit": "Esporta"
+    "dialogs.export.submit": "Esporta",
+    "gs.list.allAndCount": "Tutti ({count})",
+    "gs.list.allSearchResultsAndCount": "Tutti i risultati della ricerca ({count})",
+    "attributesDropdown.selectedValues": "Valori selezionati",
+    "attributesDropdown.selected": "selezionati",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Lettera",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Ritratto",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Paesaggio"
 }

@@ -9,6 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
+import { AvoidResizeFlickering } from "./components/AvoidResizeFlickering.js";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
@@ -100,14 +101,6 @@ function RenderPivotTableNextAgGrid() {
         ]);
     }, []);
 
-    const isAutoHeight = agGridReactProps.domLayout === "autoHeight";
-
-    const containerStyle: CSSProperties = {
-        height: config.maxHeight ?? "100%",
-        overflowX: "hidden",
-        overflowY: isAutoHeight ? "auto" : "hidden",
-    };
-
     const stopEventWhenResizeHeader = (e: MouseEvent): void => {
         // Prevents triggering drag and drop in dashboard edit mode
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
@@ -117,18 +110,31 @@ function RenderPivotTableNextAgGrid() {
     };
 
     return (
-        <div
-            ref={(element) => {
-                if (element) setContainerWidth(element.clientWidth);
+        <AvoidResizeFlickering>
+            {({ isReadyForInitialPaint }) => {
+                const isAutoHeight = agGridReactProps.domLayout === "autoHeight";
+                const containerStyle: CSSProperties = {
+                    height: config.maxHeight ?? "100%",
+                    overflowX: "hidden",
+                    overflowY: isAutoHeight ? "auto" : "hidden",
+                    visibility: isReadyForInitialPaint ? "visible" : "hidden",
+                };
+                return (
+                    <div
+                        ref={(element) => {
+                            if (element) setContainerWidth(element.clientWidth);
+                        }}
+                        className={b()}
+                        style={containerStyle}
+                        onMouseDown={stopEventWhenResizeHeader}
+                        onDragStart={stopEventWhenResizeHeader}
+                        onClick={stopEventWhenResizeHeader}
+                        data-testid={isReadyForInitialPaint ? "pivot-table-next" : undefined}
+                    >
+                        <AgGridReact {...agGridReactProps} />
+                    </div>
+                );
             }}
-            className={b()}
-            style={containerStyle}
-            onMouseDown={stopEventWhenResizeHeader}
-            onDragStart={stopEventWhenResizeHeader}
-            onClick={stopEventWhenResizeHeader}
-            data-testid="pivot-table-next"
-        >
-            <AgGridReact {...agGridReactProps} />
-        </div>
+        </AvoidResizeFlickering>
     );
 }

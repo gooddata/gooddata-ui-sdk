@@ -127,6 +127,7 @@ export function DashboardInsight({
     const afterRenderCalled = useRef(false);
     useEffect(() => {
         onRequestAsyncRender();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Custom components
@@ -180,6 +181,7 @@ export function DashboardInsight({
             setIsVisualizationLoading(isLoading);
             onLoadingChanged?.({ isLoading });
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [onLoadingChanged, executionsHandler.onLoadingChanged, initialRegistered],
     );
 
@@ -189,6 +191,7 @@ export function DashboardInsight({
             onResolveAsyncRender();
             setIsVisualizationInitializing(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [afterRender, onResolveAsyncRender]);
 
     // Filtering
@@ -208,6 +211,7 @@ export function DashboardInsight({
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [insight, filtersForInsightHash],
     );
 
@@ -238,6 +242,7 @@ export function DashboardInsight({
             executionsHandler.onPushData(data);
             handlePropertiesPushData(data);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [onPushData, executionsHandler.onPushData, handlePropertiesPushData],
     );
 
@@ -251,6 +256,7 @@ export function DashboardInsight({
             onResolveAsyncRender();
             setIsVisualizationInitializing(false);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [onError, executionsHandler.onError, onResolveAsyncRender],
     );
 

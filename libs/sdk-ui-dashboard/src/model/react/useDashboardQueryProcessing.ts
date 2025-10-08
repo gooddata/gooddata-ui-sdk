@@ -168,6 +168,7 @@ export const useDashboardQueryProcessing = <
                     }
                 });
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [queryCreator, onSuccess, onError, onRejected, onBeforeRun],
     );
 

@@ -659,7 +659,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Precaución:</b> Esta acción eliminará cualquier combinación redundante.",
     "userManagement.workspace.permission.and": "y",
     "gs.header.notifications": "Notificaciones",
-    "gs.header.logo.title.accessibility": "Logotipo de la aplicación",
+    "gs.header.logo.title.accessibility": "{organizationName} logotipo",
     "gs.header.href.accessibility": "Ir a la página de inicio",
     "gs.list.acessibility.search.label": "Buscar valores de atributos",
     "message.accessibility.dismiss.notification": "Notificación de despido",
@@ -787,5 +787,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Incluir información de exportación de páginas",
     "dialogs.export.pdf.pageOrientation": "Orientación",
     "dialogs.export.pdf.pageSize": "Tamaño de página",
-    "dialogs.export.submit": "Exportar"
+    "dialogs.export.submit": "Exportar",
+    "gs.list.allAndCount": "Todos ({count})",
+    "gs.list.allSearchResultsAndCount": "Todos los resultados de búsqueda ({count})",
+    "attributesDropdown.selectedValues": "Valores seleccionados",
+    "attributesDropdown.selected": "seleccionado",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Publicar",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Retrato",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Paisaje"
 }
