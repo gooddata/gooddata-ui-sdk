@@ -31,7 +31,11 @@ import { useInsightExport } from "../../common/index.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 import { DashboardInsight } from "../../insight/index.js";
-import { convertInsightToTableDefinition, supportsShowAsTable } from "../../insight/insightToTable.js";
+import {
+    canConvertToTable,
+    convertInsightToTableDefinition,
+    supportsShowAsTable,
+} from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 
@@ -200,10 +204,9 @@ function DefaultDashboardInsightWidgetCore({
         if (!isExportMode) return null;
         if (!isAccessibilityMode) return null;
         if (!insight) return null;
-        if (
-            !supportsShowAsTable(insightVisualizationType(insight)) &&
-            insightVisualizationType(insight) !== "table"
-        ) {
+
+        const visType = insightVisualizationType(insight);
+        if (!canConvertToTable(visType) && visType !== "table" && visType !== "repeater") {
             return null;
         }
         return convertInsightToTableDefinition(insight);
