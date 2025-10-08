@@ -1,9 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+
+import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";

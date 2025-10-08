@@ -82,9 +82,13 @@ export function useAttributeFilterConfigurationHandling(
                 ignore(ref, displayFormRef);
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             isInsightWidget(widget),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(displayFormRef),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(ref),
             ignoreInsightFilter,
             ignoreKpiFilter,

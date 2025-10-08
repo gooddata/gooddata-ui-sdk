@@ -65,13 +65,13 @@
                     },
                     {
                         "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
-                        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "min"
+                        "measureIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+                        "type": "max"
                     },
                     {
                         "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
-                        "measureIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
-                        "type": "max"
+                        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                        "type": "min"
                     }
                 ]
             }

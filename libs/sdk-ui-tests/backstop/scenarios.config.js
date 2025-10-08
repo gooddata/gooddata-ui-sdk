@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
+/* eslint-disable */
 const stories = require("./stories");
 
 /*
@@ -59,7 +60,8 @@ const ScenarioConfig = [
          */
         idRegex: /(01|02).*PivotTableNext.*/g,
         config: {
-            delay: 500, // wait for column resizing to complete
+            delay: 4000, // wait for column resizing to complete
+            misMatchThreshold: 0.01,
         },
     },
     {
@@ -87,8 +89,8 @@ const ScenarioConfig = [
          */
         idRegex: /04.*PivotTableNext.*/g,
         config: {
-            delay: 1000, // wait for column resizing to complete
-            misMatchThreshold: 1.5, // larger threshold allowed for column sizing anomalies
+            delay: 4000, // wait for column resizing to complete
+            misMatchThreshold: 0.01,
         },
     },
     {

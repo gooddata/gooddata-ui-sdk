@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Siirry tekoälyavustajan syöttöön",
     "gd.gen-ai.skip-navigation": "Ohita navigointi",
     "gd.gen-ai.messages.label": "Chat-viestit",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Tämä pyytää sinua tallentamaan visualisoinnin ennen kuin voit avata sen."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Tämä pyytää sinua tallentamaan visualisoinnin ennen kuin voit avata sen.",
+    "gd.gen-ai.visualisation.toggle.table": "Näytä taulukko",
+    "gd.gen-ai.visualisation.toggle.original": "Näytä alkuperäinen"
 }

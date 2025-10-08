@@ -846,5 +846,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Geçen yılın aynı dönemi",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Önceki dönem",
     "kdaDialog.dialog.keyDrives.empty_up": "Artan sürücüler yok",
-    "kdaDialog.dialog.keyDrives.empty_down": "Azalan etken yok"
+    "kdaDialog.dialog.keyDrives.empty_down": "Azalan etken yok",
+    "dialogs.automation.attachments.add": "Ekleri ekle",
+    "menu.back": "Ana menüye geri dön"
 }

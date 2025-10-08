@@ -40,6 +40,7 @@ export function DragLayerComponent() {
 
     const getDragLayerPosition = useCallback(() => {
         return dragLayerRef.current?.getBoundingClientRect() ?? (emptyDOMRect as DOMRect);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dragLayerRef.current]);
 
     const isResizing = itemType === "internal-height-resizer" || itemType === "internal-width-resizer";

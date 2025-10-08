@@ -47,12 +47,12 @@
                     {
                         "attributeIdentifier": "a_label.f_product.product.name",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "min"
+                        "type": "max"
                     },
                     {
                         "attributeIdentifier": "a_label.f_product.product.name",
                         "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                        "type": "max"
+                        "type": "min"
                     }
                 ]
             },

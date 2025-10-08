@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Yapay zeka asistanı girdisine atla",
     "gd.gen-ai.skip-navigation": "Gezintiyi atla",
     "gd.gen-ai.messages.label": "Sohbet mesajları",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Bunu açmadan önce görselleştirmeyi kaydetmenizi isteyecektir."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Bunu açmadan önce görselleştirmeyi kaydetmenizi isteyecektir.",
+    "gd.gen-ai.visualisation.toggle.table": "Tabloyu göster",
+    "gd.gen-ai.visualisation.toggle.original": "Orijinali Göster"
 }

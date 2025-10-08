@@ -846,5 +846,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Ten sam okres w poprzednim roku",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Poprzedni okres",
     "kdaDialog.dialog.keyDrives.empty_up": "Brak rosnących czynników",
-    "kdaDialog.dialog.keyDrives.empty_down": "Brak malejących czynników"
+    "kdaDialog.dialog.keyDrives.empty_down": "Brak malejących czynników",
+    "dialogs.automation.attachments.add": "Dodaj załączniki",
+    "menu.back": "Powrót do menu nadrzędnego"
 }

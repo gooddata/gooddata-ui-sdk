@@ -206,6 +206,7 @@ export function AlertAttributeSelect({
             // Attribute items
             ...attributeItems,
         ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         availableAttributes,
         catalogAttributes,

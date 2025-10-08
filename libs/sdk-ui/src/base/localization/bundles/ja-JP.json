@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>注意:</b> このアクションにより、冗長な組み合わせが削除されます。",
     "userManagement.workspace.permission.and": "および",
     "gs.header.notifications": "お知らせ",
-    "gs.header.logo.title.accessibility": "アプリケーションロゴ",
+    "gs.header.logo.title.accessibility": "{organizationName} ロゴ",
     "gs.header.href.accessibility": "ホームページへ",
     "gs.list.acessibility.search.label": "検索属性値",
     "message.accessibility.dismiss.notification": "解雇通知",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "ページのエクスポート情報を含む",
     "dialogs.export.pdf.pageOrientation": "向き",
     "dialogs.export.pdf.pageSize": "ページサイズ",
-    "dialogs.export.submit": "エクスポート"
+    "dialogs.export.submit": "エクスポート",
+    "gs.list.allAndCount": "すべて ({count})",
+    "gs.list.allSearchResultsAndCount": "すべての検索結果 ({count})",
+    "attributesDropdown.selectedValues": "選択された値",
+    "attributesDropdown.selected": "選択された",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "文字",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "ポートレート",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "風景"
 }

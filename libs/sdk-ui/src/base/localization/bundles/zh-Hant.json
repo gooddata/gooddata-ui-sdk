@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>注意：</b>此操作將刪除所有多餘的組合。",
     "userManagement.workspace.permission.and": "和",
     "gs.header.notifications": "通知",
-    "gs.header.logo.title.accessibility": "應用程式標誌",
+    "gs.header.logo.title.accessibility": "{organizationName} 標識",
     "gs.header.href.accessibility": "前往首頁",
     "gs.list.acessibility.search.label": "搜尋屬性值",
     "message.accessibility.dismiss.notification": "解除通知",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "包含頁面匯出訊息",
     "dialogs.export.pdf.pageOrientation": "方向",
     "dialogs.export.pdf.pageSize": "頁面大小",
-    "dialogs.export.submit": "出口"
+    "dialogs.export.submit": "出口",
+    "gs.list.allAndCount": "全部 （{count} ）",
+    "gs.list.allSearchResultsAndCount": "所有搜尋結果 ({count} ）",
+    "attributesDropdown.selectedValues": "選定值",
+    "attributesDropdown.selected": "已選擇",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "郵政",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "肖像",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "景觀"
 }

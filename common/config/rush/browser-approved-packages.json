@@ -535,6 +535,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@vitest/eslint-plugin",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "@welldone-software/why-did-you-render",
       "allowedCategories": [ "examples" ]
     },
@@ -712,7 +716,11 @@
     },
     {
       "name": "eslint-import-resolver-typescript",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-cypress",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "eslint-plugin-eslint-comments",
@@ -1260,7 +1268,7 @@
     },
     {
       "name": "vite-node",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "vite-plugin-css-injected-by-js",

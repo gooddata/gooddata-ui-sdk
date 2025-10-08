@@ -56,6 +56,7 @@ function DateAttributeListItem({
                 "is-disabled": isDisabled,
             },
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item]);
 
     const dataSet = isDashboardDependentDateFilter(item) ? item.dataSet : undefined;

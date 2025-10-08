@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-/* eslint-disable jest/no-identical-title */
+
 import { Dashboard, TopBar } from "../../tools/dashboards";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { InsightsCatalog } from "../../tools/insightsCatalog";

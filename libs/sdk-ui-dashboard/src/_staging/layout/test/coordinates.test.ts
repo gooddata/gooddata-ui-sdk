@@ -1,9 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ExtendedDashboardWidget } from "src/model/index.js";
 import { describe, expect, it } from "vitest";
 
 import { IDashboardLayout } from "@gooddata/sdk-model";
+
+import { ExtendedDashboardWidget } from "src/model/index.js";
 
 import { NESTED_LAYOUT } from "./coordinates.mock.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";

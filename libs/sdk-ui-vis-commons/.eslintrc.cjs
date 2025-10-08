@@ -1,24 +1,22 @@
 // (C) 2020 GoodData Corporation
+
+const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
+
 module.exports = {
-    plugins: ["react-hooks", "sonarjs", "eslint-plugin-tsdoc"],
-    extends: [
-        "@gooddata",
-        "plugin:react/recommended",
-        "plugin:import-esm/recommended",
-        "plugin:sonarjs/recommended",
-        "plugin:regexp/recommended",
-        "plugin:react-hooks/recommended",
-        "../../.eslintrc.react.js",
-    ],
-    rules: {
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "error",
-    },
+    extends: ["@gooddata/eslint-config/esm-react-vitest"],
     overrides: [
-        {
-            files: ["*.ts", "*.tsx"],
-            parser: "@typescript-eslint/parser",
-            parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
-        },
+        tsOverride(__dirname, {
+            "@typescript-eslint/no-unsafe-member-access": "off",
+            "@typescript-eslint/no-unsafe-argument": "off",
+            "@typescript-eslint/no-unsafe-enum-comparison": "off",
+            "@typescript-eslint/no-unsafe-return": "off",
+            "@typescript-eslint/no-unsafe-assignment": "off",
+            "@typescript-eslint/require-await": "off",
+            "@typescript-eslint/unbound-method": "off",
+            "@typescript-eslint/restrict-template-expressions": "off",
+            "@typescript-eslint/no-base-to-string": "off",
+            "@typescript-eslint/naming-convention": "off",
+            "@typescript-eslint/only-throw-error": "off",
+        }),
     ],
 };

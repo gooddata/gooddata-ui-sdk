@@ -666,7 +666,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>주의:</b> 이 작업을 수행하면 중복된 조합이 제거됩니다.",
     "userManagement.workspace.permission.and": "및",
     "gs.header.notifications": "알림",
-    "gs.header.logo.title.accessibility": "애플리케이션 로고",
+    "gs.header.logo.title.accessibility": "{organizationName} 로고",
     "gs.header.href.accessibility": "홈페이지로 이동",
     "gs.list.acessibility.search.label": "속성 값 검색",
     "message.accessibility.dismiss.notification": "알림 해제",
@@ -794,5 +794,14 @@
     "dialogs.export.pdf.includePageExportInfo": "페이지 내보내기 정보 포함",
     "dialogs.export.pdf.pageOrientation": "오리엔테이션",
     "dialogs.export.pdf.pageSize": "페이지 크기",
-    "dialogs.export.submit": "내보내기"
+    "dialogs.export.submit": "내보내기",
+    "gs.list.allAndCount": "모두 ({count})",
+    "gs.list.allSearchResultsAndCount": "모든 검색 결과 ({count})",
+    "attributesDropdown.selectedValues": "선택된 값",
+    "attributesDropdown.selected": "선택됨",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "편지",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "세로형",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "랜드스케이프"
 }

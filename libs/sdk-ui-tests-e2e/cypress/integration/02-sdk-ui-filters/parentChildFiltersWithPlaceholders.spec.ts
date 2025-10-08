@@ -1,4 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
 import * as Navigation from "../../tools/navigation";
 
@@ -6,7 +7,6 @@ const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip(
     "Parent-child filtering on AttributeFilterButton",
     { tags: ["post-merge_integrated_bear"] },

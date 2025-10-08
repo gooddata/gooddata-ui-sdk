@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
@@ -89,6 +90,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 plugin.onPluginUnload?.(ctx);
             });
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const dashboardLoader = useMemo(() => {
@@ -129,6 +131,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     }, [
         backend,
         workspace,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         dashboard && stringify(dashboard),
         filterContextRef,
         config,

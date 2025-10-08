@@ -52,6 +52,7 @@ export function useIsSelectedDatasetHidden(selectedDateDatasetRef: ObjRef | unde
         }
 
         return !visibleDateDatasets.some((ds) => areObjRefsEqual(selectedDateDatasetRef, ds.dataSet.ref));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [safeSerializeObjRef(selectedDateDatasetRef), visibleDateDatasets]);
 
     return {

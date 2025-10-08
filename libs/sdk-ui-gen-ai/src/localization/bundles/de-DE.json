@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Zur Eingabe des KI-Assistenten springen",
     "gd.gen-ai.skip-navigation": "Navigation überspringen",
     "gd.gen-ai.messages.label": "Chat-Nachrichten",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Dadurch werden Sie aufgefordert, die Visualisierung zu speichern, bevor Sie sie öffnen können."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Dadurch werden Sie aufgefordert, die Visualisierung zu speichern, bevor Sie sie öffnen können.",
+    "gd.gen-ai.visualisation.toggle.table": "Tabelle anzeigen",
+    "gd.gen-ai.visualisation.toggle.original": "Original anzeigen"
 }

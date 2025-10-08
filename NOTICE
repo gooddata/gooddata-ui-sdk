@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-10-7
+Date generated: 2025-10-8
 
-Revision ID: 61b7166ad27d6df9b4fe097919a5127fca158623
+Revision ID: 0854c4b0e7ac5c317115a2e722b418c6de183b3e
 
 ================================================================================
 ================================================================================
@@ -121,13 +121,14 @@ Revision ID: 61b7166ad27d6df9b4fe097919a5127fca158623
 - @babel/traverse (7.28.4) [MIT]
 - @babel/types (7.28.4) [MIT]
 - @braintree/sanitize-url (6.0.4) [MIT]
+- @codemirror/autocomplete (6.19.0) [MIT]
 - @codemirror/autocomplete (6.18.7) [MIT]
-- @codemirror/commands (6.8.1) [MIT]
+- @codemirror/commands (6.9.0) [MIT]
 - @codemirror/lang-yaml (6.1.2) [MIT]
 - @codemirror/language (6.11.3) [MIT]
-- @codemirror/lint (6.8.5) [MIT]
+- @codemirror/lint (6.9.0) [MIT]
 - @codemirror/state (6.5.2) [MIT]
-- @codemirror/view (6.36.8) [MIT]
+- @codemirror/view (6.38.5) [MIT]
 - @date-fns/tz (1.4.1) [MIT]
 - @discoveryjs/json-ext (0.5.7) [MIT]
 - @discoveryjs/json-ext (0.6.3) [MIT]
@@ -301,10 +302,10 @@ Revision ID: 61b7166ad27d6df9b4fe097919a5127fca158623
 - acorn (8.15.0) [MIT]
 - acorn-import-attributes (1.9.5) [MIT]
 - acorn-walk (8.3.4) [MIT]
-- ag-charts-types (12.1.0) [MIT]
-- ag-grid-community (34.1.0) [MIT]
-- ag-grid-enterprise (34.1.0) [Commercial]
-- ag-grid-react (34.1.0) [MIT]
+- ag-charts-types (12.2.0) [MIT]
+- ag-grid-community (34.2.0) [MIT]
+- ag-grid-enterprise (34.2.0) [Commercial]
+- ag-grid-react (34.2.0) [MIT]
 - aggregate-error (3.1.0) [MIT]
 - ajv (6.12.6) [MIT, BSD-2-Clause]
 - ajv (8.17.1) [MIT, BSD-2-Clause]
@@ -5167,11 +5168,53 @@ Authors: sdk-package-registries@paypal.com
 Package Download URL: https://registry.npmjs.org/@braintree/sanitize-url/-/sanitize-url-6.0.4.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @codemirror/autocomplete (6.19.0)
+
+Package Locator: npm+@codemirror/autocomplete$6.19.0
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (C) 2018-2021 by Marijn Haverbeke <marijn@haverbeke.berlin> and others
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: mail@adrianheine.de, marijn@haverbeke.berlin
+
+Package Download URL: https://registry.npmjs.org/@codemirror/autocomplete/-/autocomplete-6.19.0.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @codemirror/autocomplete (6.18.7)
 
 Package Locator: npm+@codemirror/autocomplete$6.18.7
 
-Package Depth: Direct
+Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -5209,9 +5252,9 @@ Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 Package Download URL: https://registry.npmjs.org/@codemirror/autocomplete/-/autocomplete-6.18.7.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/commands (6.8.1)
+Package Title: @codemirror/commands (6.9.0)
 
-Package Locator: npm+@codemirror/commands$6.8.1
+Package Locator: npm+@codemirror/commands$6.9.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -5248,7 +5291,7 @@ THE SOFTWARE.
 
 Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 
-Package Download URL: https://registry.npmjs.org/@codemirror/commands/-/commands-6.8.1.tgz
+Package Download URL: https://registry.npmjs.org/@codemirror/commands/-/commands-6.9.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @codemirror/lang-yaml (6.1.2)
@@ -5335,9 +5378,9 @@ Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 Package Download URL: https://registry.npmjs.org/@codemirror/language/-/language-6.11.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/lint (6.8.5)
+Package Title: @codemirror/lint (6.9.0)
 
-Package Locator: npm+@codemirror/lint$6.8.5
+Package Locator: npm+@codemirror/lint$6.9.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -5374,7 +5417,7 @@ THE SOFTWARE.
 
 Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 
-Package Download URL: https://registry.npmjs.org/@codemirror/lint/-/lint-6.8.5.tgz
+Package Download URL: https://registry.npmjs.org/@codemirror/lint/-/lint-6.9.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @codemirror/state (6.5.2)
@@ -5419,9 +5462,9 @@ Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 Package Download URL: https://registry.npmjs.org/@codemirror/state/-/state-6.5.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/view (6.36.8)
+Package Title: @codemirror/view (6.38.5)
 
-Package Locator: npm+@codemirror/view$6.36.8
+Package Locator: npm+@codemirror/view$6.38.5
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -5458,7 +5501,7 @@ THE SOFTWARE.
 
 Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 
-Package Download URL: https://registry.npmjs.org/@codemirror/view/-/view-6.36.8.tgz
+Package Download URL: https://registry.npmjs.org/@codemirror/view/-/view-6.38.5.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @date-fns/tz (1.4.1)
@@ -14993,9 +15036,9 @@ Authors: marijn@haverbeke.berlin, mail@adrianheine.de, me@rreverser.com
 Package Download URL: https://registry.npmjs.org/acorn-walk/-/acorn-walk-8.3.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: ag-charts-types (12.1.0)
+Package Title: ag-charts-types (12.2.0)
 
-Package Locator: npm+ag-charts-types$12.1.0
+Package Locator: npm+ag-charts-types$12.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -15032,12 +15075,12 @@ SOFTWARE.
 
 Authors: sean@thelandsmans.com
 
-Package Download URL: https://registry.npmjs.org/ag-charts-types/-/ag-charts-types-12.1.0.tgz
+Package Download URL: https://registry.npmjs.org/ag-charts-types/-/ag-charts-types-12.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: ag-grid-community (34.1.0)
+Package Title: ag-grid-community (34.2.0)
 
-Package Locator: npm+ag-grid-community$34.1.0
+Package Locator: npm+ag-grid-community$34.2.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -15098,12 +15141,12 @@ SOFTWARE.
 
 Authors: niall.crosby@gmail.com, sean@thelandsmans.com, alberto.gutierrez.campo@gmail.com, rmc.software.consultancy@gmail.com
 
-Package Download URL: https://registry.npmjs.org/ag-grid-community/-/ag-grid-community-34.1.0.tgz
+Package Download URL: https://registry.npmjs.org/ag-grid-community/-/ag-grid-community-34.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: ag-grid-enterprise (34.1.0)
+Package Title: ag-grid-enterprise (34.2.0)
 
-Package Locator: npm+ag-grid-enterprise$34.1.0
+Package Locator: npm+ag-grid-enterprise$34.2.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -15119,12 +15162,12 @@ Commercial License
 
 Authors: niall.crosby@gmail.com, sean@thelandsmans.com, alberto.gutierrez.campo@gmail.com, rmc.software.consultancy@gmail.com
 
-Package Download URL: https://registry.npmjs.org/ag-grid-enterprise/-/ag-grid-enterprise-34.1.0.tgz
+Package Download URL: https://registry.npmjs.org/ag-grid-enterprise/-/ag-grid-enterprise-34.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: ag-grid-react (34.1.0)
+Package Title: ag-grid-react (34.2.0)
 
-Package Locator: npm+ag-grid-react$34.1.0
+Package Locator: npm+ag-grid-react$34.2.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -15161,7 +15204,7 @@ SOFTWARE.
 
 Authors: niall.crosby@gmail.com, sean@thelandsmans.com, alberto.gutierrez.campo@gmail.com, rmc.software.consultancy@gmail.com
 
-Package Download URL: https://registry.npmjs.org/ag-grid-react/-/ag-grid-react-34.1.0.tgz
+Package Download URL: https://registry.npmjs.org/ag-grid-react/-/ag-grid-react-34.2.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: aggregate-error (3.1.0)
@@ -30026,7 +30069,7 @@ THE SOFTWARE.
 
 * Package Info *
 
-Authors: tobias.koppers@googlemail.com, mail@johannesewald.de
+Authors: tobias.koppers@googlemail.com, mail@johannesewald.de, sheo13666q@gmail.com
 
 Package Download URL: https://registry.npmjs.org/loader-runner/-/loader-runner-4.3.0.tgz
 
@@ -82343,4 +82386,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-10-7
+Report Generated by FOSSA on 2025-10-8

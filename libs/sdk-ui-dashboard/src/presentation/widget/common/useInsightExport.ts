@@ -89,6 +89,7 @@ export const useInsightExport = (config: {
                     uuid(),
                 ),
             ).then((result) => result.payload.result),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
     );
 
@@ -98,6 +99,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
             ).then((result) => result.payload.result),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef, widget, insight],
     );
 
@@ -107,6 +109,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
             ).then((result) => result.payload.result),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
     );
 
@@ -116,6 +119,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportImageInsightWidget(widgetRef!, title, uuid()),
             ).then((result) => result.payload.result),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
     );
     const settings = useDashboardSelector(selectSettings);
@@ -141,6 +145,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         exportHandler(exportFunction, { format: "csv", title }).finally(() => setIsExporting(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportFunction, setIsExporting, title]);
 
     const onExportRawCSV = useCallback(() => {
@@ -148,6 +153,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
         exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportRawFunction, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
@@ -155,6 +161,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
         exportSlidesHandler(exportSlidesFunction, title, "pptx").finally(() => setIsExporting(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportSlidesFunction, title]);
 
     const onExportPdfPresentation = useCallback(() => {
@@ -162,6 +169,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
         exportSlidesHandler(exportSlidesFunction, title, "pdf").finally(() => setIsExporting(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportSlidesFunction, title]);
 
     const onExportPngImage = useCallback(() => {
@@ -169,6 +177,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportImageFunction);
         exportImageHandler(exportImageFunction, title).finally(() => setIsExporting(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportImageFunction, title]);
 
     const { exportToTabular } = useExportToTabular(() => setIsExporting(false));
@@ -207,6 +216,7 @@ export const useInsightExport = (config: {
                 isShowInfoPageVisible: false,
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         setIsExporting,
         title,
@@ -272,11 +282,14 @@ export const useInsightExport = (config: {
                 filterContextVisible: false,
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         dashboardTabularExportEnabled,
         openXlsxDialog,
         intl,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         settings?.["cellMergedByDefault"],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         settings?.["activeFiltersByDefault"],
         closeXlsxDialog,
         exportToTabular,

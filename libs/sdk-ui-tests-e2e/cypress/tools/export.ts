@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { join } from "path";
 
 import { ExportDialog } from "./exportDialog";
@@ -65,7 +66,6 @@ export class Export {
             cy.readFile(join(downloadsFolder, filename)).then(($el) => {
                 // remove " character on csv file then comparing the result
                 const updatedContents = $el.toString().replace(/"/g, "");
-                // eslint-disable-next-line jest/valid-expect
                 expect(updatedContents).to.include(contents);
             });
         }
@@ -81,7 +81,6 @@ export class Export {
             cy.parseXlsx(join(downloadsFolder, filename)).then((jsonData: any) => {
                 // data[1] is the ROW that contains the data to be matched using the const above
                 const updatedContents = jsonData[0].data[row];
-                // eslint-disable-next-line jest/valid-expect
                 expect(updatedContents.toString()).to.include(contents);
             });
         }

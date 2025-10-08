@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Skip to AI assistant input",
     "gd.gen-ai.skip-navigation": "Skip to navigation",
     "gd.gen-ai.messages.label": "Chat messages",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "You will be prompted to save the visualisation before it can be opened."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "You will be prompted to save the visualisation before it can be opened.",
+    "gd.gen-ai.visualisation.toggle.table": "Show as table",
+    "gd.gen-ai.visualisation.toggle.original": "Show original visualization"
 }

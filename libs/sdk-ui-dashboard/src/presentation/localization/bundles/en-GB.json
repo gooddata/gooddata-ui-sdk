@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "Same period previous year",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "Previous period",
     "kdaDialog.dialog.keyDrives.empty_up": "No increasing factors",
-    "kdaDialog.dialog.keyDrives.empty_down": "No declining drivers"
+    "kdaDialog.dialog.keyDrives.empty_down": "No declining drivers",
+    "dialogs.automation.attachments.add": "Add attachments",
+    "menu.back": "Return to the parent menu"
 }

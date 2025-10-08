@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Achtung:</b> Mit dieser Aktion werden alle redundanten Kombinationen entfernt.",
     "userManagement.workspace.permission.and": "und",
     "gs.header.notifications": "Benachrichtigungen",
-    "gs.header.logo.title.accessibility": "Logo der Anwendung",
+    "gs.header.logo.title.accessibility": "{organizationName} logo",
     "gs.header.href.accessibility": "Zur Startseite",
     "gs.list.acessibility.search.label": "Attributwerte suchen",
     "message.accessibility.dismiss.notification": "Benachrichtigung schließen",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Seiten-Exportinformationen einschließen",
     "dialogs.export.pdf.pageOrientation": "Ausrichtung",
     "dialogs.export.pdf.pageSize": "Seitengröße",
-    "dialogs.export.submit": "Exportieren"
+    "dialogs.export.submit": "Exportieren",
+    "gs.list.allAndCount": "Alle ({count})",
+    "gs.list.allSearchResultsAndCount": "Alle Suchergebnisse ({count})",
+    "attributesDropdown.selectedValues": "Ausgewählte Werte",
+    "attributesDropdown.selected": "ausgewählt",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Brief",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Hochformat",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Querformat"
 }

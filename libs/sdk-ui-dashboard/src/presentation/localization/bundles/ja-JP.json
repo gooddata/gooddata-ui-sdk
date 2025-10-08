@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "前年同時期",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "前期",
     "kdaDialog.dialog.keyDrives.empty_up": "ドライバーは増えない",
-    "kdaDialog.dialog.keyDrives.empty_down": "ドライバーの減少なし"
+    "kdaDialog.dialog.keyDrives.empty_down": "ドライバーの減少なし",
+    "dialogs.automation.attachments.add": "添付ファイルの追加",
+    "menu.back": "親メニューに戻る"
 }

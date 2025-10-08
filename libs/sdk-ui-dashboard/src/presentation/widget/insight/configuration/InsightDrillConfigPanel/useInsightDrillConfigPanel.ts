@@ -160,12 +160,14 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                   widgetRef,
               )
             : [];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [availableDrillTargets, widgetDrills, invalidCustomUrlDrillLocalIds]);
 
     const globalDrillDownItems = useMemo(() => {
         return availableDrillTargets
             ? getGlobalDrillDownMappedConfigForWidget(widgetGlobalDrillDowns, availableDrillTargets, widget)
             : [];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [widgetGlobalDrillDowns, availableDrillTargets]);
 
     const mergedItems = useMemo(

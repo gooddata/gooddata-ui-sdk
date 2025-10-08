@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter } from "../../tools/filterBar";
 import * as Navigation from "../../tools/navigation";
@@ -15,7 +16,6 @@ const getTable = () => new Widget(1).waitTableLoaded().getTable();
 const getChart = () => new Widget(2).waitChartLoaded().getChart();
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Single selection filters", () => {
     beforeEach(() => {
         Navigation.visit("dashboard/single-select-filter-integration");

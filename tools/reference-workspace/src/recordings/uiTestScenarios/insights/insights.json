@@ -459,6 +459,9 @@
     "BarChart.75cceba7d94dd88d8f815023115d9634": {
         "comment": "Auto-generated insight for test scenario BarChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
     },
+    "BarChart.77d13a68598dc03c58fab23013be6bd1": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels with backplate style."
+    },
     "BarChart.78224df82139412e23fe13b4cc5d79bf": {
         "comment": "Auto-generated insight for test scenario BarChart - 610x154 - Force position RIGHT - legend on right."
     },
@@ -1221,6 +1224,9 @@
     },
     "ColumnChart.3688ccbd7f0fe1539b1d401d538dbe89": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "ColumnChart.3781ee2ee18379c4aeb7bff3a66e2219": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels with backplate style."
     },
     "ColumnChart.38e8b1a5d6d78bee3c0de043a53b7b69": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top."
@@ -5300,6 +5306,9 @@
     },
     "WaterfallChart.da84d1d15324cc733e1e62592436610e": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
+    },
+    "WaterfallChart.dc506a9690304d9a536c386718a5c6d0": {
+        "comment": "Auto-generated insight for test scenario WaterfallChart - data labels - data labels with backplate style."
     },
     "WaterfallChart.e265dad62a3587264d85179b5e4adc4d": {
         "comment": "Auto-generated insight for test scenario WaterfallChart - legend position - legend on left."

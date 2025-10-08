@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Перейти к вводу AI-ассистента",
     "gd.gen-ai.skip-navigation": "Пропустить навигацию",
     "gd.gen-ai.messages.label": "Чат-сообщения",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Это потребует от вас сохранить визуализацию перед тем, как вы сможете её открыть."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Это потребует от вас сохранить визуализацию перед тем, как вы сможете её открыть.",
+    "gd.gen-ai.visualisation.toggle.table": "Показать таблицу",
+    "gd.gen-ai.visualisation.toggle.original": "Показать оригинал"
 }

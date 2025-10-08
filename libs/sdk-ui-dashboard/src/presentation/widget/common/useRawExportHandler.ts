@@ -37,5 +37,6 @@ export const useRawExportHandler = (): ExportHandler => {
                 addError(messages.messagesExportResultError);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

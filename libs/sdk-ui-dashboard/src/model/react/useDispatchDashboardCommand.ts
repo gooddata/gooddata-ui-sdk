@@ -35,6 +35,7 @@ export const useDispatchDashboardCommand = <TCommand extends DashboardCommands, 
             const command = commandCreator(...args);
             dispatch(command);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [commandCreator],
     );
 };

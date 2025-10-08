@@ -4,12 +4,11 @@ import { MouseEvent } from "react";
 
 import cx from "classnames";
 
+import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Button } from "../Button/index.js";
-import { Icon } from "../Icon/index.js";
 
 type HeaderChatButtonProps = {
     title?: string;
-    color?: string;
     onClick: (e: MouseEvent) => void;
 };
 
@@ -18,9 +17,8 @@ type HeaderChatButtonProps = {
  */
 export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
 
-export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProps) {
+export function HeaderChatButton({ title, onClick }: HeaderChatButtonProps) {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
-    const GenAIIcon = Icon["GenAI"];
     // The text is not l18n-ed because it is not final
     return (
         <Button
@@ -32,7 +30,7 @@ export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProp
                 ariaLabel: title,
             }}
         >
-            <GenAIIcon color={color} width={32} height={32} ariaHidden />
+            <UiIcon type="genai" size={16} ariaHidden />
         </Button>
     );
 }

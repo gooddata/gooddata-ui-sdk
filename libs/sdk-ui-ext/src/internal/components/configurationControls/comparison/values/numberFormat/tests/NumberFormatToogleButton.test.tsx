@@ -55,6 +55,7 @@ describe("NumberFormatToggleButton", () => {
             expect(container.querySelector("button")).toHaveClass("disabled");
         });
 
+        // eslint-disable-next-line @vitest/no-identical-title
         it("Should disabled dropdown button", () => {
             const { container } = renderNumberFormatToggleButton();
             expect(container.querySelector("button")).not.toHaveClass("disabled");

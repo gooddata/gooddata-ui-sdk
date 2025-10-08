@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "跳至AI助手输入",
     "gd.gen-ai.skip-navigation": "跳过导航",
     "gd.gen-ai.messages.label": "聊天消息",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "这将要求您先保存可视化内容，然后才能打开它。"
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "这将要求您先保存可视化内容，然后才能打开它。",
+    "gd.gen-ai.visualisation.toggle.table": "显示表",
+    "gd.gen-ai.visualisation.toggle.original": "显示原文"
 }

@@ -105,6 +105,7 @@ export type IconType =
     | "header"
     | "genai"
     | "genai2"
+    | "explainai"
     | "box"
     | "ellipsisVertical"
     | "list"

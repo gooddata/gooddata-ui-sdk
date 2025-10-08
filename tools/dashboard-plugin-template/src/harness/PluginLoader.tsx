@@ -43,6 +43,7 @@ export const PluginLoader = () => {
             setIsHideOverlaysEnabled(false);
             hidePluginOverlays();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, setExtraPlugins]);
 
     const { status, error, result } = loaderStatus;
@@ -59,6 +60,7 @@ export const PluginLoader = () => {
                 />
             );
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, reloadPlugins, togglePlugin]);
 
     if (status === "loading") {

@@ -4,10 +4,11 @@ import { CSSProperties } from "react";
 
 import { CellStyle, ColDef } from "ag-grid-community";
 import cx from "classnames";
-import { ColumnHeadersPosition } from "src/publicTypes.js";
 
 import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
 import { DataValue, ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
+
+import { ColumnHeadersPosition } from "src/publicTypes.js";
 
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
 import { IGridRow } from "../data/resultTypes.js";

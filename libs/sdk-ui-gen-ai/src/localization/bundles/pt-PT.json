@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Pular para a entrada do assistente de IA",
     "gd.gen-ai.skip-navigation": "Pular navegação",
     "gd.gen-ai.messages.label": "Mensagens de bate-papo",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Isso solicitará que você salve a visualização antes de abri-la."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Isso solicitará que você salve a visualização antes de abri-la.",
+    "gd.gen-ai.visualisation.toggle.table": "Mostrar tabela",
+    "gd.gen-ai.visualisation.toggle.original": "Mostrar original"
 }

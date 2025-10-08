@@ -99,6 +99,7 @@ export function TranslationsCustomizationProvider({
         };
 
         fetchSettings();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [backend, workspace, translationsParam]);
 
     return (

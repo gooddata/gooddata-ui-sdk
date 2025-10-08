@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>警告：</b>此操作将删除任何冗余组合。",
     "userManagement.workspace.permission.and": "和",
     "gs.header.notifications": "通知",
-    "gs.header.logo.title.accessibility": "应用程序徽标",
+    "gs.header.logo.title.accessibility": "{organizationName} 标识",
     "gs.header.href.accessibility": "转至主页",
     "gs.list.acessibility.search.label": "搜索属性值",
     "message.accessibility.dismiss.notification": "关闭通知",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "包含页面导出信息",
     "dialogs.export.pdf.pageOrientation": "方向",
     "dialogs.export.pdf.pageSize": "页面大小",
-    "dialogs.export.submit": "出口"
+    "dialogs.export.submit": "出口",
+    "gs.list.allAndCount": "全部 （{count} ）",
+    "gs.list.allSearchResultsAndCount": "所有搜索结果 ({count} ）",
+    "attributesDropdown.selectedValues": "选定值",
+    "attributesDropdown.selected": "已选",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "信件",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "肖像",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "景观"
 }

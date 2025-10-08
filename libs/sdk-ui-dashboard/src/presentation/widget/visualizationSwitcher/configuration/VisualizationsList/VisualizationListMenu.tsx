@@ -43,6 +43,7 @@ export function VisualizationListMenu({
             onVisualizationPositionChange(visualization.identifier, direction);
             onMenuButtonClick();
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [visualization.identifier],
     );
 

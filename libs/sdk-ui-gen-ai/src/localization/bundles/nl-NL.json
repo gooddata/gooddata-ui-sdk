@@ -61,5 +61,7 @@
     "gd.gen-ai.skip-messages-history": "Doorgaan naar invoer AI-assistent",
     "gd.gen-ai.skip-navigation": "Navigatie overslaan",
     "gd.gen-ai.messages.label": "Chatberichten",
-    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen."
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen.",
+    "gd.gen-ai.visualisation.toggle.table": "Tabel weergeven",
+    "gd.gen-ai.visualisation.toggle.original": "Origineel weergeven"
 }

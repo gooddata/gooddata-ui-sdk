@@ -657,7 +657,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Varoitus:</b> Tämä toiminto poistaa kaikki tarpeettomat yhdistelmät.",
     "userManagement.workspace.permission.and": "ja",
     "gs.header.notifications": "Ilmoitukset",
-    "gs.header.logo.title.accessibility": "Sovelluksen logo",
+    "gs.header.logo.title.accessibility": "{organizationName} logo",
     "gs.header.href.accessibility": "Siirry kotisivulle",
     "gs.list.acessibility.search.label": "Hae määritteiden arvoja",
     "message.accessibility.dismiss.notification": "Hylkää ilmoitus",
@@ -785,5 +785,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Sisällytä sivun vientitiedot",
     "dialogs.export.pdf.pageOrientation": "Suunta",
     "dialogs.export.pdf.pageSize": "Sivun koko",
-    "dialogs.export.submit": "Vie"
+    "dialogs.export.submit": "Vie",
+    "gs.list.allAndCount": "Kaikki ({count})",
+    "gs.list.allSearchResultsAndCount": "Kaikki hakutulokset ({count})",
+    "attributesDropdown.selectedValues": "Valitut arvot",
+    "attributesDropdown.selected": "valittu",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Julkaise",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Pystysuuntainen",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Maisema"
 }

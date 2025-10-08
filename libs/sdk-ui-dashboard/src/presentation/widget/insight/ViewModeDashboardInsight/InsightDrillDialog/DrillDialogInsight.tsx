@@ -95,6 +95,7 @@ export function DrillDialogInsight({
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
         setIsVisualizationLoading(isLoading);
         onLoadingChanged?.({ isLoading });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Filtering

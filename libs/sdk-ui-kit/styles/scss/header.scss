@@ -518,8 +518,13 @@ a.gd-list-help-menu-item.gd-list-item {
 }
 
 .gd-header-chat {
+    --gd-icon-fill-color: #fff;
     height: 100%;
     margin: 0;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     line-height: 42px;
     opacity: 0.8;
     cursor: pointer;

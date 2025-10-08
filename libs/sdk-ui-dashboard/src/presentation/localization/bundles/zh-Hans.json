@@ -845,5 +845,7 @@
     "kdaDialog.dialog.bars.date.period.samePeriodPreviousYear": "上年同期",
     "kdaDialog.dialog.bars.date.period.previousPeriod": "上一时间段",
     "kdaDialog.dialog.keyDrives.empty_up": "没有增加司机",
-    "kdaDialog.dialog.keyDrives.empty_down": "没有减少的驱动因素"
+    "kdaDialog.dialog.keyDrives.empty_down": "没有减少的驱动因素",
+    "dialogs.automation.attachments.add": "添加附件",
+    "menu.back": "返回父菜单"
 }

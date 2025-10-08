@@ -666,7 +666,7 @@
     "userManagement.workspace.granularPermission.warning": "<b>Осторожность:</b> Это действие удалит все лишние комбинации.",
     "userManagement.workspace.permission.and": "и",
     "gs.header.notifications": "Уведомления",
-    "gs.header.logo.title.accessibility": "Логотип приложения",
+    "gs.header.logo.title.accessibility": "{organizationName}Логотип ",
     "gs.header.href.accessibility": "Перейти на главную страницу",
     "gs.list.acessibility.search.label": "Поиск значений атрибута",
     "message.accessibility.dismiss.notification": "Отклонить уведомление",
@@ -794,5 +794,14 @@
     "dialogs.export.pdf.includePageExportInfo": "Включить информацию об экспорте страницы",
     "dialogs.export.pdf.pageOrientation": "Ориентация",
     "dialogs.export.pdf.pageSize": "Размер страницы",
-    "dialogs.export.submit": "Экспортировать"
+    "dialogs.export.submit": "Экспортировать",
+    "gs.list.allAndCount": "Все ({count})",
+    "gs.list.allSearchResultsAndCount": "Все результаты поиска ({count})",
+    "attributesDropdown.selectedValues": "Выбранные значения",
+    "attributesDropdown.selected": "выбрано",
+    "dialogs.export.pdf.pageSize.option.a3": "A3",
+    "dialogs.export.pdf.pageSize.option.a4": "A4",
+    "dialogs.export.pdf.pageSize.option.letter": "Письмо",
+    "dialogs.export.pdf.pageOrientation.option.portrait": "Портрет",
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Ландшафт"
 }

@@ -568,7 +568,6 @@ function AppHeaderCore({
                 {showChatItem ? (
                     <HeaderChatButton
                         title={intl.formatMessage({ id: "gs.header.ai" })}
-                        color={theme?.palette?.primary?.base}
                         onClick={onChatItemClick}
                     />
                 ) : null}
@@ -615,7 +614,6 @@ function AppHeaderCore({
         renderTrialItems,
         showChatItem,
         intl,
-        theme?.palette?.primary?.base,
         onChatItemClick,
         notificationsPanel,
         closeNotificationsMenu,

@@ -83,6 +83,7 @@ export function ScheduledEmail({
 
     const handleClick = useCallback(() => {
         onEdit(scheduledEmail);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scheduledEmail]);
 
     return (

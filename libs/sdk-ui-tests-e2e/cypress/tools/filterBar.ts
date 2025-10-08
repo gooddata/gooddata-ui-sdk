@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { camelCase } from "lodash-es";
 
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
@@ -514,10 +515,8 @@ export class AttributeFilter {
         this.openAddLimitDashboardFilter();
         cy.get(".s-dashboard-filter-" + parentFilterName).should(($element) => {
             if (visible) {
-                // eslint-disable-next-line jest/valid-expect
                 expect($element).not.to.have.class("is-disabled");
             } else {
-                // eslint-disable-next-line jest/valid-expect
                 expect($element).to.have.class("is-disabled");
             }
         });
@@ -536,10 +535,8 @@ export class AttributeFilter {
         cy.get(getTestClassByTitle("Date range", "dashboard-filter-")).click();
         cy.get(".date-filter__limit__popup__item.s-" + parentFilterName).should(($element) => {
             if (visible) {
-                // eslint-disable-next-line jest/valid-expect
                 expect($element).not.to.have.class("is-disabled");
             } else {
-                // eslint-disable-next-line jest/valid-expect
                 expect($element).to.have.class("is-disabled");
             }
         });

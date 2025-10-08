@@ -143,6 +143,7 @@ export const DefaultDashboardWidget = memo(function DefaultDashboardWidget({
                 onError(error, executionId);
             },
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
     if (isWidget(widget)) {

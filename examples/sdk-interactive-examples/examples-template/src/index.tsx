@@ -18,6 +18,6 @@ import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 import "./index.css";
 
 const rootDOMNode = document.getElementById("root");
-const root = createRoot(rootDOMNode!);
+const root = createRoot(rootDOMNode);
 
 root.render(<App />);

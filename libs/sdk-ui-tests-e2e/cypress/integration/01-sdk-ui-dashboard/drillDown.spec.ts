@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DrillToModal } from "../../tools/drillToModal";
@@ -88,7 +89,6 @@ describe("Drilling", () => {
     });
 
     // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip("Basic drill down", { tags: ["checklist_integrated_bear"] }, () => {
         it("Should drill down on table with one drillable", () => {
             Navigation.visit("dashboard/dashboard-table-drill-down");
@@ -482,13 +482,11 @@ describe("Drilling", () => {
     });
 
     // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip("implicit drill to attribute url", { tags: ["post-merge_integrated_bear"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/implicit-drill-to-attribute-url");
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should drill to correct url after clicking on attribute", () => {
             const table = new Table(".s-dash-item");
 
@@ -500,7 +498,6 @@ describe("Drilling", () => {
             );
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should drill to correct url after clicking on attribute in drill modal", () => {
             const table = new Table(".s-dash-item");
 
@@ -518,7 +515,6 @@ describe("Drilling", () => {
     });
 
     // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
-    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip("Advanced drill down", { tags: ["post-merge_integrated_bear"] }, () => {
         it("Drill down on column with one drillable on drill to insight", () => {
             Navigation.visit("dashboard/drill-to-insight");
