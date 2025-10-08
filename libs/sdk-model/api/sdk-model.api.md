@@ -3519,6 +3519,7 @@ export interface ISettings {
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
+    enableChangeAnalysis?: boolean;
     enableChartAccessibilityFeatures?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;

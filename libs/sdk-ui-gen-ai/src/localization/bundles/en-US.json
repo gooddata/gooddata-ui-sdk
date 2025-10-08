@@ -188,11 +188,11 @@
         "comment": "Accessibility label for the visualization actions menu"
     },
     "gd.gen-ai.visualisation.toggle.table": {
-        "value": "Show table",
+        "value": "Show as table",
         "comment": "Accessibility label for the visualization switch to table button"
     },
     "gd.gen-ai.visualisation.toggle.original": {
-        "value": "Show original",
+        "value": "Show original visualization",
         "comment": "Accessibility label for the visualization switch to original button"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {

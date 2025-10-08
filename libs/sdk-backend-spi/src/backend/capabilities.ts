@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities

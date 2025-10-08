@@ -137,6 +137,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableChangeAnalysis,
+            "enableChangeAnalysis",
+            "BOOLEAN",
+            FeatureFlagsValues.enableChangeAnalysis,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableMultipleDateFilters,
             "enableMultipleDateFilters",
             "BOOLEAN",
