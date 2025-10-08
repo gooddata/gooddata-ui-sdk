@@ -8,6 +8,14 @@ import {
     insightVisualizationType,
 } from "@gooddata/sdk-model";
 
+/**
+ * Determines if a visualization type supports the "Show as Table" UI button.
+ * This controls whether users can manually toggle table view in the UI.
+ *
+ * @param insightType - The visualization type to check
+ * @returns true if the visualization supports the Show as Table UI feature
+ * @public
+ */
 export function supportsShowAsTable(insightType?: string): boolean {
     return (
         insightType !== "table" &&
@@ -18,16 +26,28 @@ export function supportsShowAsTable(insightType?: string): boolean {
 }
 
 /**
- * Converts any insight (except of type "table", "repeater", or "headline") to a table insight definition.
- * For table, repeater, or headline insights, returns the original insight.
+ * Determines if a visualization type can be converted to table format.
+ * This is used for accessibility and export purposes, separate from UI controls.
+ *
+ * @param insightType - The visualization type to check
+ * @returns true if the visualization can be converted to table format
+ * @public
+ */
+export function canConvertToTable(insightType?: string): boolean {
+    return insightType !== "table" && insightType !== "repeater" && insightType !== "xirr";
+}
+
+/**
+ * Converts any insight (except of type "table", "repeater", or "xirr") to a table insight definition.
+ * For table, repeater, or xirr insights, returns the original insight.
  *
  * @param insight - The input insight to convert.
- * @returns IInsight with table visualization or the original insight if already table/repeater/headline.
+ * @returns IInsight with table visualization or the original insight if conversion is not supported.
  * @public
  */
 export function convertInsightToTableDefinition(insight: IInsight): IInsight {
     const type = insightVisualizationType(insight);
-    if (!supportsShowAsTable(type)) {
+    if (!canConvertToTable(type)) {
         return insight;
     }
 

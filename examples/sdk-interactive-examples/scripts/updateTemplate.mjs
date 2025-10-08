@@ -68,7 +68,7 @@ fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
             }
         }
 
-        fs.writeFileSync(EXAMPLE_PACKAGE_JSON_PATH, JSON.stringify(updatedPackageJson, null, 2)+'\n');
+        fs.writeFileSync(EXAMPLE_PACKAGE_JSON_PATH, JSON.stringify(updatedPackageJson, null, 4)+'\n');
 
         // Update ./.codesandbox/template.json
         const templateJsonPath = path.join(EXAMPLE_PATH, '.codesandbox', 'template.json');
