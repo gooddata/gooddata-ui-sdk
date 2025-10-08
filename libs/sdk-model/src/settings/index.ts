@@ -184,6 +184,11 @@ export interface ISettings {
     enableKDCrossFiltering?: boolean;
 
     /**
+     * Enable change analysis
+     */
+    enableChangeAnalysis?: boolean;
+
+    /**
      * Enable multiple date filters.
      */
     enableMultipleDateFilters?: boolean;

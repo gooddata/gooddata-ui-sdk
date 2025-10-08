@@ -29,6 +29,7 @@ export enum TigerFeaturesNames {
     EnableKDSavedFilters = "enableKDSavedFilters",
     EnableClickHouseDataSource = "enableClickHouseDataSource",
     EnableKDCrossFiltering = "enableKDCrossFiltering",
+    EnableChangeAnalysis = "enableChangeAnalysis",
     EnableMultipleDateFilters = "enableMultipleDateFilters",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
@@ -138,6 +139,7 @@ export type ITigerFeatureFlags = {
     enableKDSavedFilters: (typeof FeatureFlagsValues)["enableKDSavedFilters"][number];
     enableClickHouseDataSource: (typeof FeatureFlagsValues)["enableClickHouseDataSource"][number];
     enableKDCrossFiltering: (typeof FeatureFlagsValues)["enableKDCrossFiltering"][number];
+    enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
@@ -249,6 +251,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDSavedFilters: true,
     enableClickHouseDataSource: false,
     enableKDCrossFiltering: true,
+    enableChangeAnalysis: false,
     enableMultipleDateFilters: true,
     enableKDRichText: true,
     enableMySqlDataSource: false,
@@ -360,6 +363,7 @@ export const FeatureFlagsValues = {
     enableKDSavedFilters: [true, false] as const,
     enableClickHouseDataSource: [true, false] as const,
     enableKDCrossFiltering: [true, false] as const,
+    enableChangeAnalysis: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
