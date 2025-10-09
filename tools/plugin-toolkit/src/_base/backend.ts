@@ -17,9 +17,7 @@ export type BackendConfig = {
  * set. It is responsibility of the caller to ensure that & properly communicate to the user via CLI
  * messages.
  */
-export function createBackend(backendConfig: BackendConfig): IAnalyticalBackend {
-    const { hostname, credentials } = backendConfig;
-
+export function createBackend({ hostname, credentials }: BackendConfig): IAnalyticalBackend {
     const { token } = credentials;
 
     return tigerFactory({

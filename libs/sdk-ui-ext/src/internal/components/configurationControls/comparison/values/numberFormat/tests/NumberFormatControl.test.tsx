@@ -81,7 +81,7 @@ describe("NumberFormatControl", () => {
         );
     });
 
-    it("Should select provided format ", () => {
+    it("Should select provided format", () => {
         const { container } = renderNumberFormatControl({
             format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
         });

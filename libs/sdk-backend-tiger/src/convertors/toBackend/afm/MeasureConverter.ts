@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
@@ -107,9 +108,7 @@ function convertAggregation(
     return SimpleMeasureDefinitionMeasureAggregationEnum.RUNSUM;
 }
 
-function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleMeasureDefinition {
-    const { measureDefinition } = definition;
-
+function convertSimpleMeasureDefinition({ measureDefinition }: IMeasureDefinition): SimpleMeasureDefinition {
     const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
         ? (compact(
               measureDefinition.filters.map((filter) => convertFilter(filter)),
@@ -135,8 +134,9 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleM
     };
 }
 
-function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): PopDateMeasureDefinition {
-    const { popMeasureDefinition } = definition;
+function convertPopMeasureDefinition({
+    popMeasureDefinition,
+}: IPoPMeasureDefinition): PopDateMeasureDefinition {
     const attributeRef = popMeasureDefinition.popAttribute;
 
     return {
@@ -152,11 +152,9 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): PopDate
     };
 }
 
-function convertPreviousPeriodMeasureDefinition(
-    definition: IPreviousPeriodMeasureDefinition,
-): PopDatasetMeasureDefinition {
-    const { previousPeriodMeasure } = definition;
-
+function convertPreviousPeriodMeasureDefinition({
+    previousPeriodMeasure,
+}: IPreviousPeriodMeasureDefinition): PopDatasetMeasureDefinition {
     return {
         previousPeriodMeasure: {
             measureIdentifier: toLocalIdentifier(previousPeriodMeasure.measureIdentifier),
@@ -191,10 +189,9 @@ function convertArithmeticMeasureOperator(
     }
 }
 
-function convertArithmeticMeasureDefinition(
-    definition: IArithmeticMeasureDefinition,
-): ArithmeticMeasureDefinition {
-    const { arithmeticMeasure } = definition;
+function convertArithmeticMeasureDefinition({
+    arithmeticMeasure,
+}: IArithmeticMeasureDefinition): ArithmeticMeasureDefinition {
     return {
         arithmeticMeasure: {
             measureIdentifiers: arithmeticMeasure.measureIdentifiers.map(toLocalIdentifier),
@@ -203,9 +200,9 @@ function convertArithmeticMeasureDefinition(
     };
 }
 
-function convertInlineMeasureDefinition(definition: IInlineMeasureDefinition): InlineMeasureDefinition {
-    const { inlineDefinition } = definition;
-
+function convertInlineMeasureDefinition({
+    inlineDefinition,
+}: IInlineMeasureDefinition): InlineMeasureDefinition {
     return {
         inline: {
             maql: inlineDefinition.maql,
@@ -228,8 +225,7 @@ function getFormat(measure: IMeasure): string | undefined {
     return predefinedFormat || measureFormat;
 }
 
-function getPredefinedFormat(definition: IMeasureDefinition): string | null {
-    const { measureDefinition } = definition;
+function getPredefinedFormat({ measureDefinition }: IMeasureDefinition): string | null {
     // should we prefer format defined on measure? If so, fix computeRatio format in AD
     return measureDefinition.computeRatio
         ? "#,##0.00%"

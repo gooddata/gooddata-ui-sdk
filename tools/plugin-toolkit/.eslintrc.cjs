@@ -6,7 +6,6 @@ module.exports = {
     extends: ["plugin:import-esm/recommended", "@gooddata/eslint-config/esm"],
     overrides: [
         tsOverride(__dirname, {
-            "@gooddata/prefer-destructure-props-in-signature": "off",
             "@typescript-eslint/no-unsafe-assignment": "off",
             "@typescript-eslint/require-await": "off",
             "@typescript-eslint/no-unsafe-argument": "off",

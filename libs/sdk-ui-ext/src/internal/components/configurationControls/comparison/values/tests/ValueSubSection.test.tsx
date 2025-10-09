@@ -96,7 +96,7 @@ describe("ValueSubSection", () => {
         );
     });
 
-    it("Should select default format while format is empty ", () => {
+    it("Should select default format while format is empty", () => {
         const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
         renderValueSubSection({
             properties: createTestProperties<IComparisonControlProperties>({

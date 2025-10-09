@@ -17,7 +17,7 @@ import {
 
 describe("utils", () => {
     describe("getGranteeItemTestId", () => {
-        it("should return default test id ", () => {
+        it("should return default test id", () => {
             expect(getGranteeItemTestId(user)).toEqual("s-gd-grantee-item-id-userid1");
         });
 
@@ -27,7 +27,7 @@ describe("utils", () => {
     });
 
     describe("notInArrayFilter", () => {
-        it("should return grantees that are not in array ", () => {
+        it("should return grantees that are not in array", () => {
             const array = [user, owner, current];
             const notInArray = [current];
             const result = [user, owner];

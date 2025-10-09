@@ -147,7 +147,7 @@ describe("geoChartTooltip", () => {
             expect(shouldShowTooltip({})).toBe(false);
         });
 
-        it("should show tooltip with location text ", () => {
+        it("should show tooltip with location text", () => {
             const geoProperties: GeoJSON.GeoJsonProperties = {
                 locationName: {
                     title: "State",

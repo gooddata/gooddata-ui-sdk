@@ -20,7 +20,7 @@ describe("isShowInPercentAllowed", () => {
         ).toBeTruthy();
     });
 
-    it("should return false if buckets rules doesn't met ", () => {
+    it("should return false if buckets rules doesn't met", () => {
         expect(
             bucketRules.isShowInPercentAllowed(
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets,

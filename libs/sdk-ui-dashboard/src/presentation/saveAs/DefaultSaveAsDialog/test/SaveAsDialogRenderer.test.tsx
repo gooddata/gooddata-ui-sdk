@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ISaveAsDialogRendererOwnProps, SaveAsDialogRenderer } from "../SaveAsDialogRenderer.js";
 
-describe("Test SaveAsNewDashboardDialog: ", () => {
+describe("Test SaveAsNewDashboardDialog:", () => {
     const defaultProps: ISaveAsDialogRendererOwnProps = {
         dashboardTitle: "ABC Title",
         isDashboardLoaded: true,

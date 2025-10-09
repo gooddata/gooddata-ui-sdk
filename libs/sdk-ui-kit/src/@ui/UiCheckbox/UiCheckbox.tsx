@@ -11,12 +11,13 @@ import { bem } from "../@utils/bem.js";
  */
 export interface UiCheckboxProps {
     checked: boolean;
-    onChange?: (e: ChangeEvent) => void;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     preventDefault?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
     accessibilityConfig?: IAccessibilityConfigBase;
     tabIndex?: number;
+    label?: string;
 }
 
 const { b, e } = bem("gd-ui-kit-checkbox");
@@ -32,6 +33,7 @@ export function UiCheckbox({
     disabled = false,
     accessibilityConfig,
     tabIndex,
+    label,
 }: UiCheckboxProps) {
     return (
         <label className={b()} {...accessibilityConfigToAttributes(accessibilityConfig)}>
@@ -46,6 +48,7 @@ export function UiCheckbox({
                 tabIndex={tabIndex}
             />
             <span className={e("box", { checked, indeterminate, disabled })} />
+            {label ? <span className={e("label")}>{label}</span> : null}
         </label>
     );
 }

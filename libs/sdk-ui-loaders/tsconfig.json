@@ -5,7 +5,6 @@
     "compilerOptions": {
         "rootDir": "./",
         "noEmit": true,
-        "types": ["./vitest-matchers.d.ts"],
         "skipLibCheck": true
     }
 }

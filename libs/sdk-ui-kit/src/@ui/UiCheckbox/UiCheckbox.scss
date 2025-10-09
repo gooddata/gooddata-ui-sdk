@@ -76,4 +76,9 @@
     &__input:focus-visible + &__box {
         box-shadow: 0 0 0 2px var(--gd-palette-primary-focus);
     }
+
+    &__label {
+        margin-left: 8px;
+        user-select: none;
+    }
 }

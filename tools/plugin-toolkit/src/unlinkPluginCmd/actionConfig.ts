@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import ora from "ora";
 
@@ -67,9 +68,13 @@ function createLinkedPluginValidator(
     };
 }
 
-async function doAsyncValidations(config: UnlinkCmdActionConfig) {
-    const { backendInstance, workspace, dashboard, identifier, pluginIdentifier } = config;
-
+async function doAsyncValidations({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier,
+    pluginIdentifier,
+}: UnlinkCmdActionConfig) {
     const asyncValidationProgress = ora({
         text: "Performing server-side validations.",
     });

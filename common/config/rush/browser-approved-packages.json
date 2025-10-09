@@ -719,6 +719,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-chai-friendly",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "eslint-plugin-cypress",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -736,10 +740,6 @@
     },
     {
       "name": "eslint-plugin-import-esm",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "eslint-plugin-jest",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -765,6 +765,10 @@
     {
       "name": "eslint-plugin-sonarjs",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-storybook",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "eslint-plugin-tsdoc",
@@ -1180,7 +1184,7 @@
     },
     {
       "name": "storybook",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "stringify-object",

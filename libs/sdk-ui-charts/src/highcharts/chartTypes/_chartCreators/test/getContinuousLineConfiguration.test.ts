@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { IChartOptions } from "../../../typings/unsafe.js";
 import { getContinuousLineConfiguration } from "../getContinuousLineConfiguration.js";
 
-describe("getContinuousLineConfiguration: ", () => {
+describe("getContinuousLineConfiguration:", () => {
     const chartOptions: Partial<IChartOptions> = { stacking: "normal", type: "area" };
     const seriesItem: any = {
         color: "rgb(191,64,66)",

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import ora from "ora";
 
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
@@ -9,9 +10,7 @@ import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printUnlinkConfigSummary(config: UnlinkCmdActionConfig) {
-    const { hostname, workspace, dashboard, identifier } = config;
-
+function printUnlinkConfigSummary({ hostname, workspace, dashboard, identifier }: UnlinkCmdActionConfig) {
     logInfo("Everything looks valid. Going to unlink plugin from dashboard.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
@@ -20,8 +19,12 @@ function printUnlinkConfigSummary(config: UnlinkCmdActionConfig) {
     logInfo(`  Plugin obj  : ${identifier}`);
 }
 
-async function removeDashboardPluginLink(config: UnlinkCmdActionConfig): Promise<boolean> {
-    const { backendInstance, workspace, dashboard, identifier: validIdentifier } = config;
+async function removeDashboardPluginLink({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier: validIdentifier,
+}: UnlinkCmdActionConfig): Promise<boolean> {
     const dashboardRef = idRef(dashboard);
 
     const dashboardWithReferences: IDashboardWithReferences = await backendInstance

@@ -4,7 +4,7 @@ exports[`Attribute Filter customizer > should fallback to rendering default comp
 
 exports[`Attribute Filter customizer > withCustomDecorator > should decorate custom component registered for an attribute filter 1`] = `"<div id="decorator1"><div id="fromCustomProvider"></div></div>"`;
 
-exports[`Attribute Filter customizer > withCustomDecorator > should decorate default component if attribute filter does not match custom component criteria  1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+exports[`Attribute Filter customizer > withCustomDecorator > should decorate default component if attribute filter does not match custom component criteria 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
 
 exports[`Attribute Filter customizer > withCustomDecorator > should decorate default component if no other providers are registered 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
 

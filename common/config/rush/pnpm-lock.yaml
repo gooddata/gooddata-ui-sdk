@@ -112,9 +112,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -260,9 +257,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -387,9 +381,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -514,9 +505,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -641,9 +629,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -768,9 +753,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -895,9 +877,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1022,9 +1001,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1149,9 +1125,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1285,9 +1258,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1412,9 +1382,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1539,9 +1506,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1666,9 +1630,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1793,9 +1754,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1920,9 +1878,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2032,9 +1987,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2150,9 +2102,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2250,9 +2199,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2335,9 +2281,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2474,9 +2417,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2559,9 +2499,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2656,9 +2593,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2816,9 +2750,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2949,9 +2880,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3076,9 +3004,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3299,9 +3224,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3564,9 +3486,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3844,9 +3763,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4052,9 +3968,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4281,9 +4194,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4468,9 +4378,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4754,9 +4661,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4911,9 +4815,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5080,9 +4981,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5243,9 +5141,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5465,9 +5360,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5486,6 +5378,9 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 0.16.0
         version: 0.16.0(eslint@8.57.1)
+      eslint-plugin-storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3)
       eslint-plugin-tsdoc:
         specifier: 0.2.14
         version: 0.2.14
@@ -5708,6 +5603,9 @@ importers:
       eslint-import-resolver-typescript:
         specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-chai-friendly:
+        specifier: 1.1.0
+        version: 1.1.0(eslint@8.57.1)
       eslint-plugin-cypress:
         specifier: 2.15.2
         version: 2.15.2(eslint@8.57.1)
@@ -5720,9 +5618,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5910,9 +5805,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6067,9 +5959,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6239,9 +6128,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6348,9 +6234,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6424,9 +6307,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6518,9 +6398,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6690,9 +6567,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6783,9 +6657,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6925,9 +6796,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7082,9 +6950,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7157,6 +7022,9 @@ importers:
       '@gooddata/eslint-plugin':
         specifier: workspace:*
         version: link:../eslint-plugin
+      '@testing-library/dom':
+        specifier: 10.4.0
+        version: 10.4.0
       '@types/node':
         specifier: ^22.13.0
         version: 22.18.5
@@ -7178,6 +7046,9 @@ importers:
       eslint-import-resolver-typescript:
         specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-chai-friendly:
+        specifier: 1.1.0
+        version: 1.1.0(eslint@8.57.1)
       eslint-plugin-cypress:
         specifier: 2.15.2
         version: 2.15.2(eslint@8.57.1)
@@ -7211,12 +7082,18 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 0.16.0
         version: 0.16.0(eslint@8.57.1)
+      eslint-plugin-storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3)
       eslint-plugin-tsdoc:
         specifier: 0.2.14
         version: 0.2.14
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(@testing-library/dom@10.4.0)(prettier@3.6.2)(vite@6.3.6)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -7308,9 +7185,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7423,9 +7297,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7571,9 +7442,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7710,9 +7578,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7822,9 +7687,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7904,9 +7766,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -14684,6 +14543,15 @@ packages:
       eslint: 8.57.1
     dev: true
 
+  /eslint-plugin-chai-friendly@1.1.0(eslint@8.57.1):
+    resolution: {integrity: sha512-+T1rClpDdXkgBAhC16vRQMI5umiWojVqkj9oUTdpma50+uByCZM/oBfxitZiOkjMRlm725mwFfz/RVgyDRvCKA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      eslint: '>=3.0.0'
+    dependencies:
+      eslint: 8.57.1
+    dev: true
+
   /eslint-plugin-cypress@2.15.2(eslint@8.57.1):
     resolution: {integrity: sha512-CtcFEQTDKyftpI22FVGpx8bkpKyYXBlNge6zSo0pl5/qJvBAnzaD76Vu2AsP16d6mTj478Ldn2mhgrWV+Xr0vQ==}
     peerDependencies:
@@ -14747,27 +14615,6 @@ packages:
       semver: 6.3.1
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
-    dev: true
-
-  /eslint-plugin-jest@29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3):
-    resolution: {integrity: sha512-EE44T0OSMCeXhDrrdsbKAhprobKkPtJTbQz5yEktysNpHeDZTAL1SfDTNKmcFfJkY6yrQLtTKZALrD3j/Gpmiw==}
-    engines: {node: ^20.12.0 || ^22.0.0 || >=24.0.0}
-    peerDependencies:
-      '@typescript-eslint/eslint-plugin': ^8.0.0
-      eslint: ^8.57.0 || ^9.0.0
-      jest: '*'
-    peerDependenciesMeta:
-      '@typescript-eslint/eslint-plugin':
-        optional: true
-      jest:
-        optional: true
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 8.46.0(@typescript-eslint/parser@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.46.0(eslint@8.57.1)(typescript@5.8.3)
-      eslint: 8.57.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /eslint-plugin-no-only-tests@2.6.0:
@@ -14856,6 +14703,21 @@ packages:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       eslint: 8.57.1
+    dev: true
+
+  /eslint-plugin-storybook@9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3):
+    resolution: {integrity: sha512-4NLf8lOT7Nl+m9aipVHJczyt/Dp6BzHzyNq4nhaEUjoZFGKMhPa52vSbuLyQYX7IrcrYPlM37X8dFGo/EIE9JA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      eslint: '>=8'
+      storybook: ^9.1.6
+    dependencies:
+      '@typescript-eslint/utils': 8.46.0(eslint@8.57.1)(typescript@5.8.3)
+      eslint: 8.57.1
+      storybook: 9.1.6(@testing-library/dom@10.4.0)(prettier@3.6.2)(vite@6.3.6)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-tsdoc@0.2.14:

@@ -13,7 +13,6 @@ module.exports = {
             "@typescript-eslint/no-unsafe-assignment": "off",
             "@typescript-eslint/require-await": "off",
             "@typescript-eslint/prefer-promise-reject-errors": "off",
-            "@gooddata/prefer-destructure-props-in-signature": "off",
             "@typescript-eslint/restrict-template-expressions": "off",
             "@typescript-eslint/no-unnecessary-type-assertion": "off",
             "@typescript-eslint/naming-convention": "off",

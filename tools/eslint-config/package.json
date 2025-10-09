@@ -23,6 +23,7 @@
         "./esm-react": "./dist/esm-react.json",
         "./esm-react-cypress": "./dist/esm-react-cypress.json",
         "./esm-react-vitest": "./dist/esm-react-vitest.json",
+        "./esm-react-vitest-storybook": "./dist/esm-react-vitest-storybook.json",
         "./tsOverride": "./dist/tsOverride.cjs"
     },
     "files": [
@@ -40,6 +41,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-plugin": "workspace:*",
+        "@testing-library/dom": "10.4.0",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.46.0",
         "@typescript-eslint/parser": "8.46.0",
@@ -47,6 +49,7 @@
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",
         "eslint-import-resolver-typescript": "4.4.4",
+        "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-cypress": "2.15.2",
         "eslint-plugin-eslint-comments": "3.2.0",
         "eslint-plugin-header": "3.1.1",
@@ -58,8 +61,10 @@
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-plugin-regexp": "1.15.0",
         "eslint-plugin-sonarjs": "0.16.0",
+        "eslint-plugin-storybook": "^9.0.17",
         "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2",
+        "storybook": "^9.0.17",
         "typescript": "5.8.3",
         "vite-node": "^3.2.4"
     },

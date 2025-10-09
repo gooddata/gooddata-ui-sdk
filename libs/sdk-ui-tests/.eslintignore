@@ -3,3 +3,4 @@ backstop/stories.json
 backstop/output/**
 report*.json
 *.generated.stories.tsx
+!.storybook

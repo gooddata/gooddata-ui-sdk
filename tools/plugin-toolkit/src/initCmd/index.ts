@@ -36,7 +36,6 @@ function unpackProject(target: string, language: TargetAppLanguage) {
 const unnecessaryDevPkg = [
     "eslint-plugin-header",
     "eslint-plugin-import",
-    "eslint-plugin-jest",
     "eslint-plugin-no-only-tests",
     "eslint-plugin-regexp",
     "eslint-plugin-sonarjs",

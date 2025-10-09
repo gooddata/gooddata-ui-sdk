@@ -121,7 +121,7 @@ describe("ComparisonSection", () => {
         );
     });
 
-    it("Should call push-data to update comparison-enabled to unchecked while clicking on toggle ", () => {
+    it("Should call push-data to update comparison-enabled to unchecked while clicking on toggle", () => {
         const enabled: boolean = true;
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: { enabled },
@@ -138,7 +138,7 @@ describe("ComparisonSection", () => {
         );
     });
 
-    it("Should call push-data to update comparison-enabled to checked while clicking on toggle ", () => {
+    it("Should call push-data to update comparison-enabled to checked while clicking on toggle", () => {
         const enabled: boolean = false;
         const properties = createTestProperties<IComparisonControlProperties>({ comparison: { enabled } });
         const { container } = renderComparisonSection({ properties });

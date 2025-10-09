@@ -11,7 +11,7 @@ import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { buildSankeyChartSeries } from "../sankeyChartOptions.js";
 
 describe("SankeyChart buildSankeyChartSeries", () => {
-    it.each(RECORDS)("should return series correctly in cases %s ", (_title, record) => {
+    it.each(RECORDS)("should return series correctly in cases %s", (_title, record) => {
         const dv = recordedDataFacade(record);
         const { viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
         const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
@@ -33,7 +33,7 @@ describe("SankeyChart buildSankeyChartSeries", () => {
     });
 
     it.each(RECORDS)(
-        "should return series correctly with custom color mappings in cases %s ",
+        "should return series correctly with custom color mappings in cases %s",
         (_title, record) => {
             const dv = recordedDataFacade(record);
             const { viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);

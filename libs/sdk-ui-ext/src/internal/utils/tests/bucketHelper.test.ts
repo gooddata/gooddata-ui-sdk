@@ -277,7 +277,7 @@ describe("getAllAttributeItemsWithPreference", () => {
 });
 
 describe("getAttributeItems", () => {
-    it("should return all attributes ", () => {
+    it("should return all attributes", () => {
         const buckets = cloneDeep(referencePointMocks.bucketsJustStackReferencePoint).buckets;
         expect(getAttributeItems(buckets)).toEqual([
             {

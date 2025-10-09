@@ -214,7 +214,7 @@ describe("Attribute Filter customizer", () => {
             });
         });
 
-        it("should decorate default component if attribute filter does not match custom component criteria ", () => {
+        it("should decorate default component if attribute filter does not match custom component criteria", () => {
             const factory = createTestDecoratorFactory("decorator1", () => true);
             Customizer.withCustomDecorator(factory);
             const provider = createTestComponentProvider(
