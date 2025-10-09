@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import columnify from "columnify";
 
 import { ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
@@ -7,9 +8,7 @@ import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printListConfigSummary(config: ListCmdActionConfig) {
-    const { hostname, workspace } = config;
-
+function printListConfigSummary({ hostname, workspace }: ListCmdActionConfig) {
     logInfo("Everything looks valid. Going to list objects.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"}`);
 

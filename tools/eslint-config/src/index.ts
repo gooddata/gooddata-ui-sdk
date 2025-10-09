@@ -2,6 +2,7 @@
 
 import {
     browserEnv,
+    chaiFriendly,
     cypress,
     env,
     eslint,
@@ -19,6 +20,7 @@ import {
     regexp,
     security,
     sonarjs,
+    storybook,
     tsdoc,
     typescript,
     vitest,
@@ -50,8 +52,9 @@ export const variants = {
     "esm-vitest": [esm, importEsm, vitest], // for @gooddata/util
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest], // for gdc-ui libs
-    "react-cypress": [browserEnv, esm, react, reactHooks, cypress], // for sdk-ui-tests, and probably gdc-ui
+    "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly], // for sdk-ui-tests, and probably gdc-ui
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress], // probably unused
+    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly], // probably unused
     "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest], // for most sdk react libs with vitest
+    "esm-react-vitest-storybook": [browserEnv, esm, react, reactHooks, importEsm, vitest, storybook], // for sdk-ui-tests
 };

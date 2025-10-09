@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import ora from "ora";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -30,9 +31,12 @@ export type AddCmdActionConfig = WorkspaceTargetConfig & {
  * -  workspace exists
  * -  plugin is valid and entry point exists at the provided location
  */
-async function doAsyncValidations(config: AddCmdActionConfig) {
-    const { backendInstance, workspace, pluginUrl, pluginIdentifier } = config;
-
+async function doAsyncValidations({
+    backendInstance,
+    workspace,
+    pluginUrl,
+    pluginIdentifier,
+}: AddCmdActionConfig) {
     const asyncValidationProgress = ora({
         text: "Performing server-side validations.",
     });

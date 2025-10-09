@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
 
 module.exports = {
-    extends: ["@gooddata/eslint-config/esm-react-vitest"],
+    extends: ["@gooddata/eslint-config/esm-react-vitest-storybook"],
     globals: {
         fixture: true,
     },

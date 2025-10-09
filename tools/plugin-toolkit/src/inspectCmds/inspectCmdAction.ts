@@ -1,13 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { InspectCmdActionConfig, getInspectCmdActionConfig } from "./actionConfig.js";
 import { InspectObjectFn } from "./types.js";
 import { logInfo } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printInspectConfigSummary(config: InspectCmdActionConfig) {
-    const { identifier, hostname, workspace } = config;
-
+function printInspectConfigSummary({ identifier, hostname, workspace }: InspectCmdActionConfig) {
     logInfo("Everything looks valid. Going to inspect object.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 

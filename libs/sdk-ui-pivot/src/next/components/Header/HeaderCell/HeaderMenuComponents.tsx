@@ -217,6 +217,7 @@ function buildUiTextWrappingMenuItems(
                 stringTitle: wrapItem.title,
                 isSelected: wrapItem.isActive,
                 data: wrapItem,
+                iconRight: wrapItem.isActive ? <i className="gd-icon-checkmark" /> : null,
             });
         });
     }

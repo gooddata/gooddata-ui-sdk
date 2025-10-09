@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  ../../examples/playground:
+  ../../../sdk/examples/playground:
     devDependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -112,9 +112,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -167,13 +164,13 @@ importers:
         specifier: ^6.3.6
         version: 6.3.6(@types/node@22.18.5)(sass@1.66.1)
 
-  ../../examples/sdk-interactive-examples:
+  ../../../sdk/examples/sdk-interactive-examples:
     devDependencies:
       validate-npm-package-name:
         specifier: ^5.0.0
         version: 5.0.1
 
-  ../../examples/sdk-interactive-examples/examples-template:
+  ../../../sdk/examples/sdk-interactive-examples/examples-template:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -260,9 +257,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -300,7 +294,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -387,9 +381,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -427,7 +418,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -514,9 +505,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -554,7 +542,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-columnchart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -641,9 +629,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -681,7 +666,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-combochart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -768,9 +753,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -808,7 +790,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-dashboard:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -895,9 +877,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -935,7 +914,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-datefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1022,9 +1001,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1062,7 +1038,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1149,9 +1125,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1189,7 +1162,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-execute:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1285,9 +1258,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1325,7 +1295,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-granularity:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1412,9 +1382,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1452,7 +1419,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-headline:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1539,9 +1506,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1579,7 +1543,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-pivottable:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1666,9 +1630,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1706,7 +1667,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1793,9 +1754,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1833,7 +1791,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../examples/sdk-interactive-examples/examples/example-repeater:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1920,9 +1878,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1960,7 +1915,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.2(vite@6.3.6)
 
-  ../../libs/api-client-tiger:
+  ../../../sdk/libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2032,9 +1987,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2066,7 +2018,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-backend-base:
+  ../../../sdk/libs/sdk-backend-base:
     dependencies:
       '@braintree/sanitize-url':
         specifier: ^6.0.0
@@ -2150,9 +2102,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2178,7 +2127,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-backend-mockingbird:
+  ../../../sdk/libs/sdk-backend-mockingbird:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2250,9 +2199,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2278,7 +2224,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-backend-spi:
+  ../../../sdk/libs/sdk-backend-spi:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2335,9 +2281,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2363,7 +2306,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-backend-tiger:
+  ../../../sdk/libs/sdk-backend-tiger:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2474,9 +2417,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2502,7 +2442,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-embedding:
+  ../../../sdk/libs/sdk-embedding:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2559,9 +2499,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2587,7 +2524,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-model:
+  ../../../sdk/libs/sdk-model:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -2656,9 +2593,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2684,7 +2618,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../libs/sdk-ui:
+  ../../../sdk/libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -2816,9 +2750,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2880,7 +2811,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-all:
+  ../../../sdk/libs/sdk-ui-all:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -2949,9 +2880,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2974,7 +2902,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../libs/sdk-ui-catalog:
+  ../../../sdk/libs/sdk-ui-catalog:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3076,9 +3004,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3137,7 +3062,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-charts:
+  ../../../sdk/libs/sdk-ui-charts:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3299,9 +3224,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3363,7 +3285,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-dashboard:
+  ../../../sdk/libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
         specifier: ~6.11.3
@@ -3564,9 +3486,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3628,7 +3547,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-ext:
+  ../../../sdk/libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
         specifier: ~6.9.0
@@ -3844,9 +3763,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3911,7 +3827,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-filters:
+  ../../../sdk/libs/sdk-ui-filters:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4052,9 +3968,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4116,7 +4029,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-gen-ai:
+  ../../../sdk/libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
         specifier: ^6.19.0
@@ -4281,9 +4194,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4345,7 +4255,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-geo:
+  ../../../sdk/libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -4468,9 +4378,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4526,7 +4433,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-kit:
+  ../../../sdk/libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: ^2.1.2
@@ -4754,9 +4661,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4821,7 +4725,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-loaders:
+  ../../../sdk/libs/sdk-ui-loaders:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4911,9 +4815,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4951,7 +4852,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../libs/sdk-ui-pivot:
+  ../../../sdk/libs/sdk-ui-pivot:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -5080,9 +4981,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5144,7 +5042,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-semantic-search:
+  ../../../sdk/libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5243,9 +5141,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5304,7 +5199,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-tests:
+  ../../../sdk/libs/sdk-ui-tests:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -5465,9 +5360,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5486,6 +5378,9 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 0.16.0
         version: 0.16.0(eslint@8.57.1)
+      eslint-plugin-storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3)
       eslint-plugin-tsdoc:
         specifier: 0.2.14
         version: 0.2.14
@@ -5580,7 +5475,7 @@ importers:
         specifier: 5.93.0
         version: 5.93.0(webpack-cli@6.0.1)
 
-  ../../libs/sdk-ui-tests-e2e:
+  ../../../sdk/libs/sdk-ui-tests-e2e:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -5708,6 +5603,9 @@ importers:
       eslint-import-resolver-typescript:
         specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-chai-friendly:
+        specifier: 1.1.0
+        version: 1.1.0(eslint@8.57.1)
       eslint-plugin-cypress:
         specifier: 2.15.2
         version: 2.15.2(eslint@8.57.1)
@@ -5720,9 +5618,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5802,7 +5697,7 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
 
-  ../../libs/sdk-ui-theme-provider:
+  ../../../sdk/libs/sdk-ui-theme-provider:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5910,9 +5805,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5956,7 +5848,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../libs/sdk-ui-vis-commons:
+  ../../../sdk/libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -6067,9 +5959,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6128,7 +6017,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-web-components:
+  ../../../sdk/libs/sdk-ui-web-components:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -6239,9 +6128,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6294,7 +6180,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../libs/util:
+  ../../../sdk/libs/util:
     dependencies:
       lodash-es:
         specifier: ^4.17.21
@@ -6348,9 +6234,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6376,7 +6259,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../skel/sdk-skel-ts:
+  ../../../sdk/skel/sdk-skel-ts:
     dependencies:
       lodash-es:
         specifier: ^4.17.21
@@ -6424,9 +6307,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6452,7 +6332,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../skel/sdk-skel-tsx:
+  ../../../sdk/skel/sdk-skel-tsx:
     dependencies:
       lodash-es:
         specifier: ^4.17.21
@@ -6518,9 +6398,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6561,7 +6438,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.66.1)
 
-  ../../tools/app-toolkit:
+  ../../../sdk/tools/app-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -6690,9 +6567,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6721,7 +6595,7 @@ importers:
         specifier: 5.93.0
         version: 5.93.0(webpack-cli@6.0.1)
 
-  ../../tools/applink:
+  ../../../sdk/tools/applink:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: workspace:*
@@ -6783,9 +6657,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6826,7 +6697,7 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
 
-  ../../tools/catalog-export:
+  ../../../sdk/tools/catalog-export:
     dependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -6925,9 +6796,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6953,7 +6821,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../tools/dashboard-plugin-template:
+  ../../../sdk/tools/dashboard-plugin-template:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -7082,9 +6950,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7152,11 +7017,14 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.93.0)
 
-  ../../tools/eslint-config:
+  ../../../sdk/tools/eslint-config:
     devDependencies:
       '@gooddata/eslint-plugin':
         specifier: workspace:*
         version: link:../eslint-plugin
+      '@testing-library/dom':
+        specifier: 10.4.0
+        version: 10.4.0
       '@types/node':
         specifier: ^22.13.0
         version: 22.18.5
@@ -7178,6 +7046,9 @@ importers:
       eslint-import-resolver-typescript:
         specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-chai-friendly:
+        specifier: 1.1.0
+        version: 1.1.0(eslint@8.57.1)
       eslint-plugin-cypress:
         specifier: 2.15.2
         version: 2.15.2(eslint@8.57.1)
@@ -7211,12 +7082,18 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 0.16.0
         version: 0.16.0(eslint@8.57.1)
+      eslint-plugin-storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3)
       eslint-plugin-tsdoc:
         specifier: 0.2.14
         version: 0.2.14
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      storybook:
+        specifier: ^9.0.17
+        version: 9.1.6(@testing-library/dom@10.4.0)(prettier@3.6.2)(vite@6.3.6)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -7224,13 +7101,13 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@22.18.5)(sass@1.66.1)
 
-  ../../tools/eslint-plugin:
+  ../../../sdk/tools/eslint-plugin:
     devDependencies:
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
 
-  ../../tools/i18n-toolkit:
+  ../../../sdk/tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
         specifier: ^6.1.1
@@ -7308,9 +7185,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7339,7 +7213,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../tools/mock-handling:
+  ../../../sdk/tools/mock-handling:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7423,9 +7297,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7448,7 +7319,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../tools/plugin-toolkit:
+  ../../../sdk/tools/plugin-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -7571,9 +7442,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7599,7 +7467,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
 
-  ../../tools/react-app-template:
+  ../../../sdk/tools/react-app-template:
     dependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -7710,9 +7578,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7768,7 +7633,7 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.93.0)
 
-  ../../tools/reference-workspace:
+  ../../../sdk/tools/reference-workspace:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7822,9 +7687,6 @@ importers:
       eslint-plugin-import-esm:
         specifier: 1.2.1
         version: 1.2.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7847,7 +7709,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../tools/reference-workspace-mgmt:
+  ../../../sdk/tools/reference-workspace-mgmt:
     dependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -7904,9 +7766,6 @@ importers:
       eslint-plugin-import:
         specifier: 2.32.0
         version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^29.0.1
-        version: 29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -9137,6 +8996,15 @@ packages:
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
     dev: false
 
+  /@codemirror/autocomplete@6.18.7:
+    resolution: {integrity: sha512-8EzdeIoWPJDsMBwz3zdzwXnUpCzMiCyz5/A3FIPpriaclFCGDkAzK13sMcnsu5rowqiyeQN2Vs2TsOcoDPZirQ==}
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.5
+      '@lezer/common': 1.2.3
+    dev: false
+
   /@codemirror/autocomplete@6.19.0:
     resolution: {integrity: sha512-61Hfv3cF07XvUxNeC3E7jhG8XNi1Yom1G0lRC936oLnlF+jrbrv8rc/J98XlYzcsAoTVupfsf5fLej1aI8kyIg==}
     dependencies:
@@ -9158,7 +9026,7 @@ packages:
   /@codemirror/lang-yaml@6.1.2:
     resolution: {integrity: sha512-dxrfG8w5Ce/QbT7YID7mWZFKhdhsaTNOYjOkSIMt1qmC4VQnXSDSYVHHHn8k6kJUfIhtLo8t1JJgltlxWdsITw==}
     dependencies:
-      '@codemirror/autocomplete': 6.19.0
+      '@codemirror/autocomplete': 6.18.7
       '@codemirror/language': 6.11.3
       '@codemirror/state': 6.5.2
       '@lezer/common': 1.2.3
@@ -10309,7 +10177,7 @@ packages:
   /@nestjs/axios@4.0.1(@nestjs/common@11.1.6)(axios@1.12.2)(rxjs@7.8.2):
     resolution: {integrity: sha512-68pFJgu+/AZbWkGu65Z3r55bTsCPlgyKaV4BSG8yUAD72q1PPuyVRgUwFv6BxdnibTUHlyxm06FmYWNC+bjN7A==}
     peerDependencies:
-      '@nestjs/common': ^10.0.0 || ^11.0.0 || 9.3.11
+      '@nestjs/common': ^10.0.0 || ^11.0.0
       axios: ^1.3.1
       rxjs: ^7.0.0
     dependencies:
@@ -10347,7 +10215,7 @@ packages:
     engines: {node: '>= 20'}
     requiresBuild: true
     peerDependencies:
-      '@nestjs/common': ^11.0.0 || 9.3.11
+      '@nestjs/common': ^11.0.0
       '@nestjs/microservices': ^11.0.0
       '@nestjs/platform-express': ^11.0.0
       '@nestjs/websockets': ^11.0.0
@@ -12265,9 +12133,6 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.93.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.93.0)
@@ -12278,9 +12143,6 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.93.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.93.0)
@@ -12293,8 +12155,6 @@ packages:
       webpack-cli: 6.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-dev-server:
         optional: true
     dependencies:
@@ -12346,7 +12206,7 @@ packages:
     resolution: {integrity: sha512-75lAs9H19ldmW+fAbyqHdjgdCrz0pWGXKmnqFoh8PyVd1L2RIb4RzYrSjmopeqv3E1G3/Pimu6GgLlrGbrkF7w==}
     engines: {node: '>=0.4.0'}
     dependencies:
-      acorn: 8.15.0
+      acorn: 8.10.0
     dev: true
 
   /acorn-walk@8.2.0:
@@ -12858,9 +12718,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
       webpack: '>=2'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       '@babel/core': 7.28.4
       find-cache-dir: 3.3.2
@@ -14211,9 +14068,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       webpack: ^4 || ^5
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       dotenv-defaults: 2.0.2
       webpack: 5.93.0(webpack-cli@6.0.1)
@@ -14514,9 +14368,6 @@ packages:
     resolution: {integrity: sha512-D7HeJNdkDKKMarPQO/3dlJT6RwN2YJO7ENU6RPlpOz5YxSHnUNi2yvW41Bckvi1EVwctIaLzlb0ni5ag2GINYA==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       esbuild: 0.25.9
       get-tsconfig: 4.10.1
@@ -14684,6 +14535,15 @@ packages:
       eslint: 8.57.1
     dev: true
 
+  /eslint-plugin-chai-friendly@1.1.0(eslint@8.57.1):
+    resolution: {integrity: sha512-+T1rClpDdXkgBAhC16vRQMI5umiWojVqkj9oUTdpma50+uByCZM/oBfxitZiOkjMRlm725mwFfz/RVgyDRvCKA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      eslint: '>=3.0.0'
+    dependencies:
+      eslint: 8.57.1
+    dev: true
+
   /eslint-plugin-cypress@2.15.2(eslint@8.57.1):
     resolution: {integrity: sha512-CtcFEQTDKyftpI22FVGpx8bkpKyYXBlNge6zSo0pl5/qJvBAnzaD76Vu2AsP16d6mTj478Ldn2mhgrWV+Xr0vQ==}
     peerDependencies:
@@ -14747,27 +14607,6 @@ packages:
       semver: 6.3.1
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
-    dev: true
-
-  /eslint-plugin-jest@29.0.1(@typescript-eslint/eslint-plugin@8.46.0)(eslint@8.57.1)(typescript@5.8.3):
-    resolution: {integrity: sha512-EE44T0OSMCeXhDrrdsbKAhprobKkPtJTbQz5yEktysNpHeDZTAL1SfDTNKmcFfJkY6yrQLtTKZALrD3j/Gpmiw==}
-    engines: {node: ^20.12.0 || ^22.0.0 || >=24.0.0}
-    peerDependencies:
-      '@typescript-eslint/eslint-plugin': ^8.0.0
-      eslint: ^8.57.0 || ^9.0.0
-      jest: '*'
-    peerDependenciesMeta:
-      '@typescript-eslint/eslint-plugin':
-        optional: true
-      jest:
-        optional: true
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 8.46.0(@typescript-eslint/parser@8.46.0)(eslint@8.57.1)(typescript@5.8.3)
-      '@typescript-eslint/utils': 8.46.0(eslint@8.57.1)(typescript@5.8.3)
-      eslint: 8.57.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /eslint-plugin-no-only-tests@2.6.0:
@@ -14856,6 +14695,21 @@ packages:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       eslint: 8.57.1
+    dev: true
+
+  /eslint-plugin-storybook@9.1.6(eslint@8.57.1)(storybook@9.1.6)(typescript@5.8.3):
+    resolution: {integrity: sha512-4NLf8lOT7Nl+m9aipVHJczyt/Dp6BzHzyNq4nhaEUjoZFGKMhPa52vSbuLyQYX7IrcrYPlM37X8dFGo/EIE9JA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      eslint: '>=8'
+      storybook: ^9.1.6
+    dependencies:
+      '@typescript-eslint/utils': 8.46.0(eslint@8.57.1)(typescript@5.8.3)
+      eslint: 8.57.1
+      storybook: 9.1.6(@testing-library/dom@10.4.0)(prettier@3.6.2)(vite@6.3.6)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-tsdoc@0.2.14:
@@ -19265,9 +19119,6 @@ packages:
     resolution: {integrity: sha512-6orZWyCnIQXMGY4DUGM0oj0L7oYnwTACsfsru/J7r94RM3P9eS7SORGpr3LCeRCMoIMQcpfKZ7X4NdyFHBS8Eg==}
     peerDependencies:
       redux: '>=1.0.0'
-    peerDependenciesMeta:
-      redux:
-        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -19282,9 +19133,6 @@ packages:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
       redux: ^5.0.0
-    peerDependenciesMeta:
-      redux:
-        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -19682,8 +19530,6 @@ packages:
         optional: true
       sass:
         optional: true
-      webpack:
-        optional: true
     dependencies:
       klona: 2.0.6
       loader-utils: 2.0.4
@@ -20047,9 +19893,6 @@ packages:
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       webpack: ^5.72.1
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       iconv-lite: 0.6.3
       source-map-js: 1.2.1
@@ -20382,9 +20225,6 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.93.0(webpack-cli@6.0.1)
     dev: true
@@ -20690,8 +20530,6 @@ packages:
         optional: true
       uglify-js:
         optional: true
-      webpack:
-        optional: true
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -20911,9 +20749,6 @@ packages:
     peerDependencies:
       typescript: '*'
       webpack: '*'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 4.5.0
@@ -20936,7 +20771,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       chalk: 4.1.2
-      enhanced-resolve: 5.18.3
+      enhanced-resolve: 5.15.0
       tsconfig-paths: 4.2.0
     dev: true
 
@@ -21872,8 +21707,6 @@ packages:
       webpack-bundle-analyzer: '*'
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-bundle-analyzer:
         optional: true
       webpack-dev-server:

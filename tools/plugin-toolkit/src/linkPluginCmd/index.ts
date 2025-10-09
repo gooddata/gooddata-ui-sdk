@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import ora from "ora";
 
 import { IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
@@ -8,9 +9,14 @@ import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printUseConfigSummary(config: LinkCmdActionConfig) {
-    const { hostname, workspace, dashboard, identifier, parameters, withParameters } = config;
-
+function printUseConfigSummary({
+    hostname,
+    workspace,
+    dashboard,
+    identifier,
+    parameters,
+    withParameters,
+}: LinkCmdActionConfig) {
     logInfo("Everything looks valid. Going to link plugin on the dashboard.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
@@ -23,8 +29,13 @@ function printUseConfigSummary(config: LinkCmdActionConfig) {
     }
 }
 
-async function updateDashboardWithPluginLink(config: LinkCmdActionConfig) {
-    const { backendInstance, workspace, dashboard, identifier: validIdentifier, parameters } = config;
+async function updateDashboardWithPluginLink({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier: validIdentifier,
+    parameters,
+}: LinkCmdActionConfig) {
     const dashboardRef = idRef(dashboard);
 
     const dashboardObj: IDashboard = await backendInstance

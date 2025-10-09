@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
@@ -215,8 +216,7 @@ export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): Cata
     });
 }
 
-function isAfmValidObjectsQueryEmpty(afmValidObjectsQuery: AfmValidObjectsQuery) {
-    const { afm } = afmValidObjectsQuery;
+function isAfmValidObjectsQueryEmpty({ afm }: AfmValidObjectsQuery) {
     const { attributes, measures, filters, auxMeasures } = afm;
 
     return (

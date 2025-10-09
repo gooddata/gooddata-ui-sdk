@@ -36,11 +36,9 @@ type CredentialsValidationError = "TOKEN_MISSING";
  * @param backend - backend being targeted by the CLI
  * @param credentials - gathered credentials
  */
-export function validateCredentialsComplete(
-    credentials: BackendCredentials,
-): CredentialsValidationError | undefined {
-    const { token } = credentials;
-
+export function validateCredentialsComplete({
+    token,
+}: BackendCredentials): CredentialsValidationError | undefined {
     if (isEmpty(token)) {
         return "TOKEN_MISSING";
     }

@@ -29,7 +29,7 @@ describe("ResizeOverlay", () => {
         expect(screen.queryByRole("resize-overlay")).not.toBeInTheDocument();
     });
 
-    it("should render overlay when isResizingColumn ", () => {
+    it("should render overlay when isResizingColumn", () => {
         createComponent({ isResizingColumnOrRow: true });
 
         expect(screen.getByRole("resize-overlay")).toBeInTheDocument();

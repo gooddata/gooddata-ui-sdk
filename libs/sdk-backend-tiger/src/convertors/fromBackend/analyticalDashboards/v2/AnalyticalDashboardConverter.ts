@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { updateWith } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
@@ -228,8 +229,11 @@ export function convertFilterContextFilters(
     return sanitizeSelectionMode(cloneWithSanitizedIds(content.filters));
 }
 
-export function convertDashboardPlugin(plugin: JsonApiDashboardPluginOutDocument): IDashboardPlugin {
-    const { data, links, included } = plugin;
+export function convertDashboardPlugin({
+    data,
+    links,
+    included,
+}: JsonApiDashboardPluginOutDocument): IDashboardPlugin {
     const { id, type, attributes, relationships = {} } = data;
     const { createdBy, modifiedBy } = relationships;
     const { title = "", description = "", content, tags, createdAt = "", modifiedAt = "" } = attributes!;

@@ -10,9 +10,12 @@ import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printUsedUpdatePluginParamsSummary(config: RemovePluginParamsCmdConfig) {
-    const { hostname, workspace, dashboard, identifier } = config;
-
+function printUsedUpdatePluginParamsSummary({
+    hostname,
+    workspace,
+    dashboard,
+    identifier,
+}: RemovePluginParamsCmdConfig) {
     logInfo("Everything looks valid. Going to update plugin parameters on the dashboard.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
@@ -21,8 +24,12 @@ function printUsedUpdatePluginParamsSummary(config: RemovePluginParamsCmdConfig)
     logInfo(`  Plugin obj  : ${identifier}`);
 }
 
-async function updateDashboardWithRemovedParams(config: RemovePluginParamsCmdConfig) {
-    const { backendInstance, workspace, dashboard, identifier: validIdentifier } = config;
+async function updateDashboardWithRemovedParams({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier: validIdentifier,
+}: RemovePluginParamsCmdConfig) {
     const dashboardRef = idRef(dashboard);
 
     const dashboardObj: IDashboard = await backendInstance

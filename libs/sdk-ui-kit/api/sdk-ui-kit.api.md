@@ -6208,7 +6208,7 @@ export interface UiCardProps {
 }
 
 // @internal (undocumented)
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, }: UiCheckboxProps): JSX.Element;
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, }: UiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiCheckboxProps {
@@ -6221,7 +6221,9 @@ export interface UiCheckboxProps {
     // (undocumented)
     indeterminate?: boolean;
     // (undocumented)
-    onChange?: (e: ChangeEvent) => void;
+    label?: string;
+    // (undocumented)
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
     preventDefault?: boolean;
     // (undocumented)

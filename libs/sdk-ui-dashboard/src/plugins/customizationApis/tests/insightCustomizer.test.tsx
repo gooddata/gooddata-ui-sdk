@@ -288,7 +288,7 @@ describe("insight customizer", () => {
             expect(renderToHtml(Customizer, TestInsightWithTag1)).toMatchSnapshot();
         });
 
-        it("should decorate default component if insight does not match custom component criteria ", () => {
+        it("should decorate default component if insight does not match custom component criteria", () => {
             const factory = createTestDecoratorFactory("decorator1", () => true);
             Customizer.withCustomDecorator(factory);
             Customizer.withTag("tag1", createTestComponent("forTag1"));

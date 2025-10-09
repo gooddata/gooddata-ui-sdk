@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 /* eslint-disable no-console */
 import { isEmpty } from "lodash-es";
 
@@ -12,9 +13,15 @@ export type ObjectSummary = {
     updated: string;
 };
 
-export function printObjectSummary(summary: ObjectSummary): void {
-    const { type, title, description, tags, identifier, updated, created } = summary;
-
+export function printObjectSummary({
+    type,
+    title,
+    description,
+    tags,
+    identifier,
+    updated,
+    created,
+}: ObjectSummary): void {
     console.log("--");
     console.log(`-- ${type}: ${identifier}`);
     console.log("--");

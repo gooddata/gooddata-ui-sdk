@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 export { default as browserEnv } from "./browser-env.js";
+export { default as chaiFriendly } from "./chai-friendly.js";
 export { default as cypress } from "./cypress.js";
 export { default as env } from "./env.js";
 export { default as eslint } from "./eslint.js";
@@ -18,6 +19,7 @@ export { default as reactHooks } from "./react-hooks.js";
 export { default as regexp } from "./regexp.js";
 export { default as security } from "./security.js";
 export { default as sonarjs } from "./sonarjs.js";
+export { default as storybook } from "./storybook.js";
 export { default as tsdoc } from "./tsdoc.js";
 export { default as typescript } from "./typescript.js";
 export { default as vitest } from "./vitest.js";

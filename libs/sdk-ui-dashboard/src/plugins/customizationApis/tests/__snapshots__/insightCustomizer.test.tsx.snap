@@ -4,7 +4,7 @@ exports[`insight customizer > should fallback to rendering default component 1`]
 
 exports[`insight customizer > withCustomDecorator > should decorate custom component registered for an insight 1`] = `"<div id="decorator1"><div id="forTag1"></div></div>"`;
 
-exports[`insight customizer > withCustomDecorator > should decorate default component if insight does not match custom component criteria  1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
+exports[`insight customizer > withCustomDecorator > should decorate default component if insight does not match custom component criteria 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
 
 exports[`insight customizer > withCustomDecorator > should decorate default component if no other providers are registered 1`] = `"<div id="decorator1"><div id="default"></div></div>"`;
 

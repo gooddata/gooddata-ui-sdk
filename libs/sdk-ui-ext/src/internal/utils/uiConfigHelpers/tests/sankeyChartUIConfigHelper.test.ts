@@ -33,7 +33,7 @@ describe("SankeyChartUIHelper", () => {
             expect(config).toMatchSnapshot();
         });
 
-        it("sets the correct values when pass multi metrics/attributes from/to ", () => {
+        it("sets the correct values when pass multi metrics/attributes from/to", () => {
             const referencePoint: IExtendedReferencePoint = {
                 buckets: [
                     {

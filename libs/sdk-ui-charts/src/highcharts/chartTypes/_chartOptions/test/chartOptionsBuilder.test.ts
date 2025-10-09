@@ -1857,7 +1857,7 @@ describe("chartOptionsBuilder", () => {
                             );
                         });
 
-                        it("should return new series array with isDrillable true for the first and last measure ", () => {
+                        it("should return new series array with isDrillable true for the first and last measure", () => {
                             expect(
                                 twoDrillableMeasuresSeriesData.map(
                                     (seriesItem: any) => seriesItem.isDrillable,
@@ -2841,7 +2841,7 @@ describe("chartOptionsBuilder", () => {
                         expect(chartOptions.data.series.length).toBe(2);
                     });
 
-                    it("should assign categories ", () => {
+                    it("should assign categories", () => {
                         expect(chartOptions.data.categories).toEqual([
                             "2008",
                             "2009",
@@ -3497,14 +3497,14 @@ describe("chartOptionsBuilder", () => {
                     expect(yAxisValues).toEqual(expectedYAxisValues);
                 });
 
-                it("should generate % format for both Y axes ", () => {
+                it("should generate % format for both Y axes", () => {
                     const dv = fixtures.barChartWith3MetricsAndViewByAttributeFunformat;
                     const chartOptions = generateChartOptions(dv, config);
                     const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
                     expect(formatValues).toEqual(["#,##0.00%", "#,##0.00%"]);
                 });
 
-                it("should generate % format for right Y axis ", () => {
+                it("should generate % format for right Y axis", () => {
                     const dv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
                     const chartOptions = generateChartOptions(dv, config);
                     const formatValues = chartOptions.yAxes.map(({ format }: any) => format);

@@ -42,7 +42,7 @@ describe("ReactButton", () => {
     });
 
     describe("render as link", () => {
-        it("it should be possible to render as anchor", () => {
+        it("should be possible to render as anchor", () => {
             renderButton({
                 type: "link" as "button" | "submit" | "reset",
                 tagName: "a",
@@ -52,7 +52,7 @@ describe("ReactButton", () => {
             expect(document.querySelector("a")).toBeInTheDocument();
         });
 
-        it("it should be rendered as HTML button by default", () => {
+        it("should be rendered as HTML button by default", () => {
             renderButton({
                 type: "link" as "button" | "submit" | "reset",
                 value: "My link",

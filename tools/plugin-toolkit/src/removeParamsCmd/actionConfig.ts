@@ -44,9 +44,12 @@ function createPluginExistsValidator(identifier: string): InputValidator<IDashbo
     };
 }
 
-async function getOriginalParameters(config: RemovePluginParamsCmdConfig) {
-    const { backendInstance, workspace, dashboard, identifier } = config;
-
+async function getOriginalParameters({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier,
+}: RemovePluginParamsCmdConfig) {
     const fetchOriginalParametersProgress = ora({
         text: "Fetching original parameters.",
     });
@@ -75,9 +78,12 @@ async function getOriginalParameters(config: RemovePluginParamsCmdConfig) {
     }
 }
 
-async function doAsyncValidations(config: RemovePluginParamsCmdConfig) {
-    const { backendInstance, workspace, dashboard, identifier } = config;
-
+async function doAsyncValidations({
+    backendInstance,
+    workspace,
+    dashboard,
+    identifier,
+}: RemovePluginParamsCmdConfig) {
     const asyncValidationProgress = ora({
         text: "Performing server-side validations.",
     });

@@ -72,7 +72,7 @@ function getGrantee(name: string) {
 }
 
 describe("AddGranteeSelect", () => {
-    it("it should render open menu", async () => {
+    it("should render open menu", async () => {
         createComponent();
 
         await waitFor(() => {
@@ -80,7 +80,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should render one all group option when is not specified in appliedGrantees", async () => {
+    it("should render one all group option when is not specified in appliedGrantees", async () => {
         createComponent();
 
         await waitFor(() => {
@@ -88,7 +88,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should render one all group option when is not specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
+    it("should render one all group option when is not specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
         createComponent({}, [], { supportsGranularAccessControl: true });
 
         await waitFor(() => {
@@ -96,7 +96,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should not render all group option when is specified in appliedGrantees", async () => {
+    it("should not render all group option when is specified in appliedGrantees", async () => {
         createComponent({ appliedGrantees: [groupAll] });
 
         await waitFor(() => {
@@ -104,7 +104,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should not render all group option when is specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
+    it("should not render all group option when is specified in appliedGrantees and the supportsGranularAccessControl is enabled", async () => {
         createComponent({ appliedGrantees: [groupAll] }, [], { supportsGranularAccessControl: true });
 
         await waitFor(() => {
@@ -112,7 +112,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should render no matching message when backend return empty array", async () => {
+    it("should render no matching message when backend return empty array", async () => {
         createComponent({ appliedGrantees: [groupAll] });
 
         await waitFor(() => {
@@ -120,7 +120,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should render error message when backend return error or invalid data", async () => {
+    it("should render error message when backend return error or invalid data", async () => {
         //error is simulated by mocking not valid IWorkspaceUser ({})
         //and it filed and component should show error message
         createComponent({ appliedGrantees: [groupAll] }, {} as IAvailableAccessGrantee[]);
@@ -130,7 +130,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should render one user and group as option", async () => {
+    it("should render one user and group as option", async () => {
         createComponent({ appliedGrantees: [groupAll] }, [
             availableUserAccessGrantee,
             availableUserGroupAccessGrantee,
@@ -142,7 +142,7 @@ describe("AddGranteeSelect", () => {
         });
     });
 
-    it("it should close options and call onSelectGrantee when option is selected", async () => {
+    it("should close options and call onSelectGrantee when option is selected", async () => {
         const onSelectGrantee = vi.fn();
 
         createComponent({ appliedGrantees: [groupAll], onSelectGrantee }, [

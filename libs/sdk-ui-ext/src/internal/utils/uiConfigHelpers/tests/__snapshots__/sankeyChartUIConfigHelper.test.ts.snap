@@ -216,7 +216,7 @@ exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass
 }
 `;
 
-exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass multi metrics/attributes from/to  1`] = `
+exports[`SankeyChartUIHelper > configBuckets > sets the correct values when pass multi metrics/attributes from/to 1`] = `
 {
   "buckets": [
     {

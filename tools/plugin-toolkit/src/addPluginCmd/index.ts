@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IDashboardPlugin } from "@gooddata/sdk-model";
@@ -8,9 +9,13 @@ import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
-function printAddConfigSummary(config: AddCmdActionConfig) {
-    const { hostname, workspace, pluginUrl, pluginName, pluginDescription } = config;
-
+function printAddConfigSummary({
+    hostname,
+    workspace,
+    pluginUrl,
+    pluginName,
+    pluginDescription,
+}: AddCmdActionConfig) {
     logInfo("Everything looks valid. Going to add new plugin object to workspace metadata.");
     logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
@@ -22,9 +27,13 @@ function printAddConfigSummary(config: AddCmdActionConfig) {
     logInfo(`  Plugin desc : ${description}   (see package.json)`);
 }
 
-function createPluginObject(config: AddCmdActionConfig): Promise<IDashboardPlugin> {
-    const { backendInstance, workspace, pluginUrl: validUrl, pluginName, pluginDescription } = config;
-
+function createPluginObject({
+    backendInstance,
+    workspace,
+    pluginUrl: validUrl,
+    pluginName,
+    pluginDescription,
+}: AddCmdActionConfig): Promise<IDashboardPlugin> {
     return backendInstance.workspace(workspace).dashboards().createDashboardPlugin({
         type: "IDashboardPlugin",
         url: validUrl,

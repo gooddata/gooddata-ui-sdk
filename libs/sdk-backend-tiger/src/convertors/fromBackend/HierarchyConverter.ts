@@ -10,17 +10,20 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ICatalogAttributeHierarchy, ObjectType, idRef } from "@gooddata/sdk-model";
 
-export function convertAttributeHierarchy(
-    hierarchyOut: JsonApiAttributeHierarchyOutWithLinks,
-): ICatalogAttributeHierarchy {
-    const { id, type, attributes, links } = hierarchyOut;
+export function convertAttributeHierarchy({
+    id,
+    type,
+    attributes,
+    links,
+}: JsonApiAttributeHierarchyOutWithLinks): ICatalogAttributeHierarchy {
     return convertToCatalogAttributeHierarchy(id, type, attributes, links);
 }
 
-export function convertAttributeHierarchyWithoutLinks(
-    hierarchyOut: JsonApiAttributeHierarchyOut,
-): ICatalogAttributeHierarchy {
-    const { id, type, attributes } = hierarchyOut;
+export function convertAttributeHierarchyWithoutLinks({
+    id,
+    type,
+    attributes,
+}: JsonApiAttributeHierarchyOut): ICatalogAttributeHierarchy {
     return convertToCatalogAttributeHierarchy(id, type, attributes);
 }
 

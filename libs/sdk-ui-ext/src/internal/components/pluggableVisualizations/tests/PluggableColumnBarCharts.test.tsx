@@ -156,7 +156,7 @@ describe("PluggableColumnBarCharts", () => {
             expect(isOpenAsReportSupported).toBe(false);
         });
 
-        it("should disable open as report for insight have properties stackMeasures ", () => {
+        it("should disable open as report for insight have properties stackMeasures", () => {
             const visualization = createComponent(defaultProps);
 
             // stackMeasures property

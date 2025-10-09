@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import ora from "ora";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -12,9 +13,7 @@ export type ListCmdActionConfig = WorkspaceTargetConfig & {
     backendInstance: IAnalyticalBackend;
 };
 
-async function doAsyncValidations(config: ListCmdActionConfig) {
-    const { backendInstance, workspace } = config;
-
+async function doAsyncValidations({ backendInstance, workspace }: ListCmdActionConfig) {
     const asyncValidationProgress = ora({
         text: "Authenticating and checking workspace.",
     });

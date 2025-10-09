@@ -68,7 +68,7 @@ describe("ColorOverlay", () => {
         );
     });
 
-    it("ColorOverlay should be aligned to center left or bottom left ", () => {
+    it("ColorOverlay should be aligned to center left or bottom left", () => {
         createComponent({ dropdownVersion: DropdownVersionType.ColorPicker });
 
         const expectAlignPoints = [
