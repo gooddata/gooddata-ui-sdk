@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-datefilter",
-    "version": "11.4.0-alpha.4",
+    "version": "11.4.0-beta.0",
     "private": false,
     "description": "Example demonstrates usage of Date Filter component.",
     "license": "LicenseRef-LICENSE",
