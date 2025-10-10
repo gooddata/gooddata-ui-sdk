@@ -72,3 +72,52 @@ export interface ITableDataMeasureGroupScope {
     type: "measureGroupScope";
     descriptor: IMeasureGroupDescriptor;
 }
+
+/**
+ * @alpha
+ */
+export function isAttributeScope(scope: unknown): scope is ITableDataAttributeScope {
+    return (
+        scope !== undefined && scope !== null && (scope as ITableDataAttributeScope).type === "attributeScope"
+    );
+}
+
+/**
+ * @alpha
+ */
+export function isAttributeTotalScope(scope: unknown): scope is ITableDataAttributeTotalScope {
+    return (
+        scope !== undefined &&
+        scope !== null &&
+        (scope as ITableDataAttributeTotalScope).type === "attributeTotalScope"
+    );
+}
+
+/**
+ * @alpha
+ */
+export function isMeasureScope(scope: unknown): scope is ITableDataMeasureScope {
+    return scope !== undefined && scope !== null && (scope as ITableDataMeasureScope).type === "measureScope";
+}
+
+/**
+ * @alpha
+ */
+export function isMeasureTotalScope(scope: unknown): scope is ITableDataMeasureTotalScope {
+    return (
+        scope !== undefined &&
+        scope !== null &&
+        (scope as ITableDataMeasureTotalScope).type === "measureTotalScope"
+    );
+}
+
+/**
+ * @alpha
+ */
+export function isMeasureGroupScope(scope: unknown): scope is ITableDataMeasureGroupScope {
+    return (
+        scope !== undefined &&
+        scope !== null &&
+        (scope as ITableDataMeasureGroupScope).type === "measureGroupScope"
+    );
+}

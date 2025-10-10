@@ -4,13 +4,15 @@ import { assertNever } from "@gooddata/sdk-model";
 import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import {
+    newAttributeColumnLocator,
+    newMeasureColumnLocator,
+    newTotalColumnLocator,
+} from "../../types/locators.js";
+import {
     ColumnWidthItem,
     IMixedValuesColumnWidthItem,
     ISliceMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItem,
-    newAttributeColumnLocator,
-    newMeasureColumnLocator,
-    newTotalColumnLocator,
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "../../types/resizing.js";

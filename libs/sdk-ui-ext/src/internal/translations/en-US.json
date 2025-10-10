@@ -1187,6 +1187,18 @@
         "value": "left",
         "comment": "Option to position column headers on left side"
     },
+    "properties.column.headers.wrapText": {
+        "value": "Wrap text",
+        "comment": "Title for column headers wrap text configuration section"
+    },
+    "properties.cells.title": {
+        "value": "Cells",
+        "comment": "Label for cells configuration section"
+    },
+    "properties.cells.wrapText": {
+        "value": "Wrap text",
+        "comment": "Title for cells wrap text configuration section"
+    },
     "dashboard.bucket.table.subtitle.columns": {
         "value": "in columns",
         "comment": "Subtitle indicating table data is arranged in columns"

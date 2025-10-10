@@ -15,7 +15,7 @@ import {
     UnexpectedSdkError,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
+import { isEnterKey, isEscapeKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
@@ -145,26 +145,30 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
 
     const onCellKeyDown = useCallback(
         (event: CellKeyDownEvent<AgGridRowData, string | null>) => {
-            if (!onDrill || drillableItems.length === 0) {
-                return;
-            }
-
-            // Check if it's a keyboard event and if Enter or Space was pressed
+            // Check if it's a keyboard event
             if (!event.event || !(event.event instanceof KeyboardEvent)) {
                 return;
             }
 
-            // Drill via keyboard: ENTER or SPACE pressed on a drillable cell
             // Cast to ReactKeyboardEvent for helpers that expect React's typing shape
-            if (
-                !isEnterKey(event.event as unknown as ReactKeyboardEvent) &&
-                !isSpaceKey(event.event as unknown as ReactKeyboardEvent)
-            ) {
+            const keyboardEvent = event.event as unknown as ReactKeyboardEvent;
+
+            // Blur focused element when Escape is pressed, which will trigger onBlur and clear selection
+            if (isEscapeKey(keyboardEvent)) {
+                const activeElement = document.activeElement as HTMLElement;
+                activeElement?.blur();
                 return;
             }
 
-            // Trigger same drill logic
-            drillFromCellEvent(event);
+            // Handle drilling only if there are drillable items
+            if (!onDrill || drillableItems.length === 0) {
+                return;
+            }
+
+            // Drill via keyboard: ENTER or SPACE pressed on a drillable cell
+            if (isEnterKey(keyboardEvent) || isSpaceKey(keyboardEvent)) {
+                drillFromCellEvent(event);
+            }
         },
         [drillFromCellEvent, onDrill, drillableItems],
     );

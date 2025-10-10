@@ -6,29 +6,40 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../../../locales.js";
 import { getSortModel } from "../../features/sorting/agGridSortingApi.js";
-import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
+import {
+    AgGridColumnDef,
+    AgGridHeaderGroupParams,
+    AgGridHeaderParams,
+    isAgGridHeaderParams,
+} from "../../types/agGrid.js";
 import { ISortingMenuItem } from "../../types/menu.js";
 
 /**
  * Renderer for attribute header.
  */
-export function useHeaderMenuSorting(params: AgGridHeaderParams | null) {
+export function useHeaderMenuSorting(params: AgGridHeaderParams | AgGridHeaderGroupParams | null) {
     const intl = useIntl();
-    const colDef = params?.column.getColDef() as AgGridColumnDef | null;
+
+    // Only regular header params support sorting (not group headers)
+    const isRegularHeader = isAgGridHeaderParams(params);
+
+    const colDef = isRegularHeader ? (params.column.getColDef() as AgGridColumnDef) : undefined;
     const allowSorting = !!colDef?.sortable;
 
     // Get current sort state for styling
-    const sortDirection = params?.column.getSort();
-    const sortModel = params ? getSortModel(params.api) : [];
-    const sortIndex = params?.column.getSortIndex() ?? undefined;
+    const sortDirection = isRegularHeader ? params.column.getSort() : undefined;
+    const sortModel = isRegularHeader ? getSortModel(params.api) : [];
+    const sortIndex = isRegularHeader ? (params.column.getSortIndex() ?? undefined) : undefined;
     const sanitizedSortIndex = sortModel.length > 1 ? sortIndex : undefined; // Show sort index only in case there is multi-sort
 
     // Direct sort setter for menu interactions
     const handleSetSort = useCallback(
         (direction: "asc" | "desc" | null) => {
-            params?.setSort(direction, true);
+            if (isRegularHeader) {
+                params.setSort(direction, true);
+            }
         },
-        [params],
+        [params, isRegularHeader],
     );
 
     const sortingItems: ISortingMenuItem[] = allowSorting
@@ -50,36 +61,33 @@ export function useHeaderMenuSorting(params: AgGridHeaderParams | null) {
           ]
         : [];
 
-    const handleSortingItemClick = (item: ISortingMenuItem) => {
-        if (!allowSorting) {
-            return;
-        }
+    const handleSortingItemClick = useCallback(
+        (item: ISortingMenuItem) => {
+            if (!allowSorting) {
+                return;
+            }
 
-        if (item.direction === sortDirection) {
-            handleSetSort(null);
-            return;
-        }
+            if (item.direction === sortDirection) {
+                handleSetSort(null);
+                return;
+            }
 
-        handleSetSort(item.direction);
-    };
+            handleSetSort(item.direction);
+        },
+        [allowSorting, sortDirection, handleSetSort],
+    );
 
     const handleProgressSort = useCallback(() => {
-        params?.progressSort(true);
-    }, [params]);
+        if (isRegularHeader) {
+            params.progressSort(true);
+        }
+    }, [params, isRegularHeader]);
 
-    return params
-        ? {
-              sortDirection,
-              sortIndex: sanitizedSortIndex,
-              sortingItems,
-              handleSortingItemClick,
-              handleProgressSort,
-          }
-        : {
-              sortDirection: undefined,
-              sortIndex: undefined,
-              sortingItems: [],
-              handleSortingItemClick: () => {},
-              handleProgressSort: () => {},
-          };
+    return {
+        sortDirection,
+        sortIndex: sanitizedSortIndex,
+        sortingItems,
+        handleSortingItemClick,
+        handleProgressSort,
+    };
 }

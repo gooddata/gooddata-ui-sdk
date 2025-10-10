@@ -6,6 +6,7 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
 
 import ConfigSubsection from "./ConfigSubsection.js";
 import DropdownControl from "./DropdownControl.js";
+import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
 import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -19,6 +20,8 @@ export interface IColumnHeadersPositionControlProps {
     insight: IInsightDefinition;
     showDisabledMessage?: boolean;
     defaultValue?: string;
+    isLoading?: boolean;
+    enableNewPivotTable?: boolean;
 }
 
 function ColumnHeadersPositionControl({
@@ -28,6 +31,8 @@ function ColumnHeadersPositionControl({
     isDisabled,
     defaultValue = "top",
     insight,
+    isLoading,
+    enableNewPivotTable = false,
 }: IColumnHeadersPositionControlProps & WrappedComponentProps) {
     const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
         ? (properties?.controls?.["columnHeadersPosition"] ?? defaultValue)
@@ -45,6 +50,13 @@ function ColumnHeadersPositionControl({
                 items={getTranslatedDropdownItems(columnHeadersPositionDropdownItems, intl)}
                 showDisabledMessage={isDisabled}
             />
+            {enableNewPivotTable ? (
+                <ColumnHeaderTextWrappingControl
+                    properties={properties}
+                    pushData={pushData}
+                    disabled={isLoading}
+                />
+            ) : null}
         </ConfigSubsection>
     );
 }

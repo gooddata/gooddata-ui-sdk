@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IExecutionConfig } from "@gooddata/sdk-model";
 import {
@@ -12,6 +13,7 @@ import {
     TotalsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 
+import { PivotTableNextCellSelectionConfig } from "./cellSelection.js";
 import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
 import { PivotTableNextFormattingConfig } from "./formatting.js";
 import { PivotTableNextLayoutConfig } from "./layout.js";
@@ -28,6 +30,7 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextFormattingConfig &
     PivotTableNextExecutionCancellingConfig &
     PivotTableNextLayoutConfig &
+    PivotTableNextCellSelectionConfig &
     PivotTableNextAgGridLicenseConfig;
 
 /**

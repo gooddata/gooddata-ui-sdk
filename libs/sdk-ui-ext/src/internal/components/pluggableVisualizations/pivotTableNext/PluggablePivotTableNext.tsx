@@ -376,6 +376,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             ? getColumnHeadersPositionFromProperties(insightProperties(insight))
             : "top";
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
+        const { isInEditMode } = config;
         const tableConfig: PivotTableNextConfig = {
             ...createPivotTableNextConfig(config, this.environment, this.settings),
             ...customVisualizationConfig,
@@ -387,6 +388,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 growToFit,
             },
             textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
+            enableCellSelection: !isInEditMode,
         };
 
         const pivotTableProps: ICorePivotTableNextProps = {

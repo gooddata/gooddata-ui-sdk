@@ -14,7 +14,12 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { createCustomDrillEvent } from "../../features/drilling/events.js";
 import { createHeaderDrillIntersection } from "../../features/drilling/intersection.js";
 import { isHeaderCellDrillable } from "../../features/drilling/isDrillable.js";
-import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
+import {
+    AgGridColumnDef,
+    AgGridHeaderGroupParams,
+    AgGridHeaderParams,
+    isAgGridHeaderParams,
+} from "../../types/agGrid.js";
 
 /**
  * Custom hook that provides header drilling functionality.
@@ -24,21 +29,24 @@ import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
  * @returns Object with header drilling functions
  * @internal
  */
-export function useHeaderDrilling(params: AgGridHeaderParams | null) {
+export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroupParams | null) {
     const { drillableItems, onDrill, config } = usePivotTableProps();
     const { currentDataView } = useCurrentDataView();
+
+    // Only regular header params support drilling (not group headers)
+    const isRegularHeader = isAgGridHeaderParams(params);
 
     /**
      * Check if the header cell is drillable (memoized)
      */
     const isDrillable = useMemo(() => {
-        if (!drillableItems.length || !currentDataView || !params) {
+        if (!isRegularHeader || !drillableItems.length || !currentDataView) {
             return false;
         }
 
         const colDef = params.column.getColDef() as AgGridColumnDef;
         return isHeaderCellDrillable(colDef, drillableItems, currentDataView, config.columnHeadersPosition);
-    }, [drillableItems, currentDataView, params, config.columnHeadersPosition]);
+    }, [isRegularHeader, drillableItems, currentDataView, params, config.columnHeadersPosition]);
 
     /**
      * Handle header click for drilling
@@ -46,7 +54,7 @@ export function useHeaderDrilling(params: AgGridHeaderParams | null) {
      */
     const handleHeaderDrill = useCallback(
         (event: MouseEvent) => {
-            if (!onDrill || !isDrillable || !currentDataView || !params) {
+            if (!isRegularHeader || !onDrill || !isDrillable || !currentDataView) {
                 return false;
             }
 
@@ -80,16 +88,11 @@ export function useHeaderDrilling(params: AgGridHeaderParams | null) {
 
             return false;
         },
-        [onDrill, isDrillable, params, currentDataView],
+        [isRegularHeader, onDrill, isDrillable, params, currentDataView],
     );
 
-    return params
-        ? {
-              handleHeaderDrill,
-              isDrillable,
-          }
-        : {
-              handleHeaderDrill: () => {},
-              isDrillable: false,
-          };
+    return {
+        handleHeaderDrill,
+        isDrillable,
+    };
 }

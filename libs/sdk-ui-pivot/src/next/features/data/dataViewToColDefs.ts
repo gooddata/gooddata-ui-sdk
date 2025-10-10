@@ -13,6 +13,7 @@ import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
 import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
+import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
 
 /**
  * Creates ag-grid col defs from the provided data view, applying all features to the col defs.
@@ -61,9 +62,30 @@ export function dataViewToColDefs({
 
     const columnDefsWithPivotGroups = columnDefsToPivotGroups(colDefs, columnHeadersPosition, intl);
 
+    // Apply text wrapping to group definitions recursively
+    const applyTextWrappingToTree = (
+        defs: (AgGridColumnDef | AgGridColumnGroupDef)[],
+    ): (AgGridColumnDef | AgGridColumnGroupDef)[] => {
+        return defs.map((def) => {
+            if ("children" in def && def.children) {
+                // This is a group definition
+                const updatedGroupDef = applyTextWrappingToGroupDef(def, textWrapping);
+                return {
+                    ...updatedGroupDef,
+                    children: applyTextWrappingToTree(
+                        def.children as (AgGridColumnDef | AgGridColumnGroupDef)[],
+                    ),
+                };
+            }
+            return def;
+        });
+    };
+
+    const columnDefsWithWrapping = applyTextWrappingToTree(columnDefsWithPivotGroups);
+
     return {
         columnDefinitionByColId,
-        columnDefs: columnDefsWithPivotGroups,
+        columnDefs: columnDefsWithWrapping,
         columnDefsFlat: colDefs,
         isPivoted: tableData.isPivoted,
     };

@@ -30,7 +30,7 @@ export const createMeasureGroupValueColDef = (
         cellStyle: getMeasureCellStyle,
         cellRenderer: metricCellRenderer,
         headerClass: getHeaderCellClassName,
-        headerComponent: "EmptyMeasureGroupHeader",
+        headerComponent: "EmptyMeasureGroupValueHeader",
         sortable: false,
     };
 };

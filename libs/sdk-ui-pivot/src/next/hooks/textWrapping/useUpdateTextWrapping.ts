@@ -4,6 +4,7 @@ import { useCallback } from "react";
 
 import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { allowCellWrappingByColumnDefinition } from "../../features/textWrapping/allowCellWrappingByColumnDefinition.js";
 import { AgGridApi, AgGridColumnDef } from "../../types/agGrid.js";
 import { ITextWrapping } from "../../types/textWrapping.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
@@ -44,13 +45,19 @@ export function useUpdateTextWrapping() {
                 const updatedColDefs = allColumns?.map((column) => {
                     const colDef = column.getColDef();
                     const currentWidth = column.getActualWidth();
+                    const columnDefinition = colDef.context?.columnDefinition;
+
+                    // Skip wrapText for some columns (performance optimization)
+                    const allowCellWrapping =
+                        columnDefinition && allowCellWrappingByColumnDefinition(columnDefinition);
+                    const shouldWrapText = wrapText && allowCellWrapping;
 
                     return {
                         ...colDef,
-                        wrapText,
+                        wrapText: shouldWrapText,
                         wrapHeaderText,
                         // enable/disable auto sizing only together with wrapping to avoid perf issues
-                        autoHeight: wrapText,
+                        autoHeight: shouldWrapText,
                         autoHeaderHeight: wrapHeaderText,
                         // preserve current width, otherwise ag-grid will recalculate it and use the stale one
                         width: currentWidth,

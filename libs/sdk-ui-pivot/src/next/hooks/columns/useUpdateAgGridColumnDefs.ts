@@ -8,7 +8,8 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { agGridSetColumnDefs } from "../../features/columns/agGridColDefsApi.js";
 import { agGridSetPivotResultColumns } from "../../features/pivoting/agGridPivotingApi.js";
 import { columnDefsToPivotGroups } from "../../features/pivoting/columnDefsToPivotGroups.js";
-import { AgGridApi, AgGridColumnDef } from "../../types/agGrid.js";
+import { applyTextWrappingToGroupDef } from "../../features/textWrapping/applyTextWrappingToGroupDef.js";
+import { AgGridApi, AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
 
 /**
  * Updates column defs in ag-grid, by updated column defs (use this only if you are working with flat column defs).
@@ -29,9 +30,34 @@ export function useUpdateAgGridColumnDefs() {
                     columnHeadersPosition,
                     intl,
                 );
+
+                // Apply text wrapping to group definitions recursively
+                const applyTextWrappingToTree = (
+                    defs: (AgGridColumnDef | AgGridColumnGroupDef)[],
+                ): (AgGridColumnDef | AgGridColumnGroupDef)[] => {
+                    return defs.map((def) => {
+                        if ("children" in def && def.children) {
+                            // This is a group definition
+                            const updatedGroupDef = applyTextWrappingToGroupDef(
+                                def,
+                                config.textWrapping ?? {},
+                            );
+                            return {
+                                ...updatedGroupDef,
+                                children: applyTextWrappingToTree(
+                                    def.children as (AgGridColumnDef | AgGridColumnGroupDef)[],
+                                ),
+                            };
+                        }
+                        return def;
+                    });
+                };
+
+                const groupedColumnDefsWithWrapping = applyTextWrappingToTree(groupedColumnDefs);
+
                 agGridSetPivotResultColumns(
                     {
-                        colDefs: groupedColumnDefs,
+                        colDefs: groupedColumnDefsWithWrapping,
                     },
                     gridApi,
                 );
@@ -39,6 +65,6 @@ export function useUpdateAgGridColumnDefs() {
                 agGridSetColumnDefs({ colDefs: updatedColDefs }, gridApi);
             }
         },
-        [isPivoted, columnHeadersPosition, intl],
+        [isPivoted, columnHeadersPosition, intl, config.textWrapping],
     );
 }

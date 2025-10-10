@@ -13,9 +13,16 @@ import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
  */
 export function AttributeHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const allowAggregations = false;
-    const allowTextWrapping = true;
     const colDef = params.column.getColDef() as AgGridColumnDef;
+    const columnDefinition = colDef.context?.columnDefinition;
+
+    // Checks if this is a transposed value column under a pivot group
+    const isTransposedPivotedValue = columnDefinition?.type === "value" && columnDefinition?.isTransposed;
+
+    const allowAggregations = false;
+    const allowTextWrapping = !isTransposedPivotedValue; // No wrapping for transposed values in pivoting
+    const includeHeaderWrapping = true;
+    const includeCellWrapping = true;
     const allowSorting = !!colDef.sortable;
     const allowDrilling = true;
 
@@ -32,7 +39,14 @@ export function AttributeHeader(params: AgGridHeaderParams) {
         isDrillable,
         handleHeaderClick,
     } = useHeaderMenu(
-        { allowAggregations, allowTextWrapping, allowSorting, allowDrilling },
+        {
+            allowAggregations,
+            allowTextWrapping,
+            allowSorting,
+            allowDrilling,
+            includeHeaderWrapping,
+            includeCellWrapping,
+        },
         { measureIdentifiers: [], pivotAttributeDescriptors: [] },
         params,
     );

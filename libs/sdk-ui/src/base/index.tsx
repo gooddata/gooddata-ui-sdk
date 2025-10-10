@@ -463,6 +463,13 @@ export {
     isSubtotalRowDefinition,
     isGrandTotalRowDefinition,
 } from "./results/tableData/interfaces/rows.js";
+export {
+    isAttributeScope,
+    isAttributeTotalScope,
+    isMeasureScope,
+    isMeasureTotalScope,
+    isMeasureGroupScope,
+} from "./results/tableData/interfaces/scope.js";
 export type {
     ITableDataMeasureGroupScope,
     ITableDataAttributeScope,

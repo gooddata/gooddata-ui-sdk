@@ -1,0 +1,26 @@
+// (C) 2019-2025 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import tigerFactory, {
+    ContextDeferredAuthProvider,
+    TigerTokenAuthProvider,
+} from "@gooddata/sdk-backend-tiger";
+
+export function hasCredentialsSetup(): boolean {
+    return !!process.env.TIGER_API_TOKEN;
+}
+
+export function needsAuthentication(): boolean {
+    return true;
+}
+
+function getBackend(): IAnalyticalBackend {
+    const newBackend = tigerFactory();
+
+    if (hasCredentialsSetup()) {
+        return newBackend.withAuthentication(new TigerTokenAuthProvider(process.env.TIGER_API_TOKEN!));
+    }
+
+    return newBackend.withAuthentication(new ContextDeferredAuthProvider());
+}
+
+export const backend = getBackend();
