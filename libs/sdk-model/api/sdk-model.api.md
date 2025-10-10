@@ -485,7 +485,7 @@ export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 // @public
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "keyDriveAnalysis" | "crossFiltering";
 
 // @beta (undocumented)
 export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
@@ -2284,6 +2284,11 @@ export interface IInsightWidgetDescriptionConfiguration {
 }
 
 // @public
+export interface IKeyDriveAnalysis extends IDrill {
+    type: "keyDriveAnalysis";
+}
+
+// @public
 export type IKpi = IKpiWithComparison | IKpiWithoutComparison;
 
 // @public
@@ -2723,7 +2728,7 @@ export type InsightDisplayFormUsage = {
 export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage;
 
 // @public
-export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | ICrossFiltering;
+export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | ICrossFiltering | IKeyDriveAnalysis;
 
 // @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
@@ -3689,6 +3694,9 @@ export function isIOrganizationUser(obj: unknown): obj is IOrganizationUser;
 
 // @alpha
 export function isIOrganizationUserGroup(obj: unknown): obj is IOrganizationUserGroup;
+
+// @alpha
+export function isKeyDriveAnalysis(obj: unknown): obj is IKeyDriveAnalysis;
 
 // @alpha
 export function isKpi(obj: unknown): obj is IKpi;

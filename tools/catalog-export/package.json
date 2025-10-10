@@ -61,7 +61,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@types/babel__core": "^7.20.1",
         "@types/inquirer": "^8.2.6",
         "@types/lodash-es": "^4.17.12",

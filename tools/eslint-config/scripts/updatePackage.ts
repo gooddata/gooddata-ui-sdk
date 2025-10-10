@@ -10,9 +10,14 @@ const packageJson = JSON.parse(readFileSync("./package.json").toString()) as {
     peerDependencies: Record<string, string>;
 };
 
-const eslint = packageJson.devDependencies["eslint"];
-const devDeps = packageJson.devDependencies;
-const peers: Record<string, string> = { eslint };
+// explicitly grab packages which are required, but not linked to any configurations
+const devDeps: Record<string, string> = {
+    eslint: packageJson.devDependencies["eslint"],
+    "@types/node": packageJson.devDependencies["@types/node"],
+    typescript: packageJson.devDependencies["typescript"],
+    "vite-node": packageJson.devDependencies["vite-node"],
+};
+const peers: Record<string, string> = { eslint: devDeps.eslint };
 
 for (const configuration of common) {
     for (const pkg of configuration.packages ?? []) {

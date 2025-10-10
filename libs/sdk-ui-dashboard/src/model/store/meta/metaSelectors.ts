@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -331,6 +332,19 @@ export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean> = 
     selectDashboardDescriptor,
     (state) => {
         return state.disableCrossFiltering ?? false;
+    },
+);
+
+/**
+ * Selects whether dashboard kda is disabled.
+ *
+ * @public
+ */
+export const selectDisableDashboardKda: DashboardSelector<boolean> = createSelector(
+    selectDashboardDescriptor,
+    () => {
+        //TODO: SHA Connect to dashboard config
+        return false;
     },
 );
 

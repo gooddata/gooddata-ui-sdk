@@ -387,6 +387,10 @@
         "value": "Cross-filter",
         "comment": "Label for the cross-filter interaction in the drill configuration modal"
     },
+    "drill_modal_picker.key-driver-analysis": {
+        "value": "Explain",
+        "comment": "Label for the key driver analysis interaction in the drill configuration modal"
+    },
     "drill_modal_picker.more.details": {
         "value": "More details",
         "comment": "Label for viewing more details about drill interactions"
@@ -2814,5 +2818,29 @@
     "menu.back": {
         "value": "Back to the parent menu",
         "comment": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."
+    },
+    "drill.kda.from": {
+        "value": "from",
+        "comment": "Key driver analysis drill from label, must be lowercase"
+    },
+    "drill.kda.in": {
+        "value": "in",
+        "comment": "Key driver analysis drill in label, must be lowercase"
+    },
+    "drill.kda.drop": {
+        "value": "Drop {where} {title}",
+        "comment": "Key driver analysis drill drop label"
+    },
+    "drill.kda.increase": {
+        "value": "Increase {where} {title}",
+        "comment": "Key driver analysis drill increase label"
+    },
+    "drill.kda.no_change": {
+        "value": "Stale {where} {title}",
+        "comment": "Key driver analysis drill increase label"
+    },
+    "drill.kda.year_to_year": {
+        "value": "Year over year change",
+        "comment": "Key driver analysis drill year to year label"
     }
 }

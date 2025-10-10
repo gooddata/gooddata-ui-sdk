@@ -2786,6 +2786,8 @@ export interface IInvertableSelectVirtualisedProps<T> {
     // (undocumented)
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
     // (undocumented)
+    representAs?: "grid" | "listbox";
+    // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
     searchString?: string;
@@ -6549,6 +6551,12 @@ export interface UiPagedVirtualListProps<T> {
     // (undocumented)
     customKeyboardNavigationHandler?: (event: KeyboardEvent_2<Element>) => void;
     // (undocumented)
+    focusedAction?: string;
+    // (undocumented)
+    focusedItem?: T;
+    // (undocumented)
+    getIsItemSelected?: (item: T) => boolean;
+    // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -6561,11 +6569,15 @@ export interface UiPagedVirtualListProps<T> {
     // (undocumented)
     itemsGap: number;
     // (undocumented)
+    listboxProps?: Record<string, any>;
+    // (undocumented)
     loadNextPage?: () => void;
     // (undocumented)
     maxHeight: number;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
+    // (undocumented)
+    representAs?: "grid" | "listbox";
     // (undocumented)
     scrollbarHoverEffect?: boolean;
     // (undocumented)

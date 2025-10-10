@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IAvailableDrillTargetAttribute, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 import { DashboardDrillContext, DashboardDrillDefinition, IDashboardDrillEvent } from "../../../types.js";
@@ -12,6 +13,7 @@ export enum DrillType {
     DRILL_TO_URL = "drill-to-url",
     DRILL_DOWN = "drill-down",
     CROSS_FILTERING = "cross-filtering",
+    KEY_DRIVER_ANALYSIS = "key-driver-analysis",
 }
 
 export interface DrillSelectItem {
@@ -20,6 +22,7 @@ export interface DrillSelectItem {
     name: string;
     drillDefinition: DashboardDrillDefinition;
     attributeValue?: string | null;
+    context?: unknown;
 }
 
 export interface DrillSelectContext {

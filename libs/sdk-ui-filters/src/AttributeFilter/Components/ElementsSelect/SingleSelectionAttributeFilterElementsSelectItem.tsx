@@ -6,12 +6,7 @@ import cx from "classnames";
 import { camelCase } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import {
-    CustomizableCheckmark,
-    ListWithActionsFocusStore,
-    SELECT_ITEM_ACTION,
-    useMediaQuery,
-} from "@gooddata/sdk-ui-kit";
+import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
@@ -29,8 +24,6 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     focusedAction,
     fullscreenOnMobile = false,
     primaryLabelTitle,
-    itemsCount,
-    index,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
 
@@ -65,29 +58,9 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
         },
     );
 
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
-
     return (
-        <div
-            className={classes}
-            onClick={onItemClick}
-            role="row"
-            aria-selected={isSelected}
-            aria-setsize={itemsCount}
-            aria-posinset={index}
-        >
-            <div
-                className="gd-attribute-filter-list-item-label "
-                role={"gridcell"}
-                tabIndex={focusedAction === "selectItem" ? 0 : -1}
-                id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
-                {...(isSelected
-                    ? {
-                          "aria-label": intl.formatMessage({ id: "attributesDropdown.selected" }),
-                      }
-                    : {})}
-                aria-selected={isSelected}
-            >
+        <div className={classes} onClick={onItemClick}>
+            <div className="gd-attribute-filter-list-item-label ">
                 <span>{itemTitle}</span>
                 {isSelected && isMobile && fullscreenOnMobile ? (
                     <span className="gd-customizable-checkmark-mobile-navigation-wrapper">
@@ -98,8 +71,11 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
             <AttributeFilterElementsSelectItemTooltip
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
-                isFocused={focusedAction === "questionMark"}
-                id={makeId?.({ item, action: "questionMark" })}
+                renderAsCell={false}
+                ariaLabel={intl.formatMessage(
+                    { id: "attributesDropdown.alternativeValueTooltipShort" },
+                    { label: primaryLabelTitle, value: itemPrimaryTitle },
+                )}
             />
         </div>
     );

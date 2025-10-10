@@ -82,7 +82,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",

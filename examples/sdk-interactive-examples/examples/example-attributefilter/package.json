@@ -43,7 +43,6 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.46.0",

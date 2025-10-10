@@ -14,6 +14,8 @@ export interface IAttributeFilterElementsSelectItemTooltipProps {
     itemPrimaryTitle?: string;
     isFocused?: boolean;
     id?: string;
+    renderAsCell?: boolean;
+    ariaLabel?: string;
 }
 
 export function AttributeFilterElementsSelectItemTooltip({
@@ -21,6 +23,8 @@ export function AttributeFilterElementsSelectItemTooltip({
     itemPrimaryTitle,
     id,
     isFocused = false,
+    renderAsCell = true,
+    ariaLabel,
 }: IAttributeFilterElementsSelectItemTooltipProps) {
     const { formatMessage } = useIntl();
 
@@ -29,7 +33,7 @@ export function AttributeFilterElementsSelectItemTooltip({
     }
 
     return (
-        <div role={"gridcell"}>
+        <div role={renderAsCell ? "gridcell" : "div"}>
             <UiTooltip
                 hoverOpenDelay={0}
                 hoverCloseDelay={0}
@@ -46,10 +50,13 @@ export function AttributeFilterElementsSelectItemTooltip({
                         id={id}
                         tabIndex={isFocused ? 0 : -1}
                         role={"button"}
-                        aria-label={formatMessage(
-                            { id: "attributesDropdown.alternativeValueTooltip" },
-                            { label: primaryLabelTitle, value: itemPrimaryTitle },
-                        )}
+                        aria-label={
+                            ariaLabel ??
+                            formatMessage(
+                                { id: "attributesDropdown.alternativeValueTooltip" },
+                                { label: primaryLabelTitle, value: itemPrimaryTitle },
+                            )
+                        }
                     >
                         <UiIcon
                             color="currentColor"

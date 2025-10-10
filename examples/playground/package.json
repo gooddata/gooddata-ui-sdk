@@ -34,7 +34,6 @@
         "@codemirror/view": "~6.38.5",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",

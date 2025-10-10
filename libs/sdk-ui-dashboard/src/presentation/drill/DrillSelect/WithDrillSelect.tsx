@@ -13,6 +13,7 @@ import {
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
+    isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
@@ -97,9 +98,10 @@ export function WithDrillSelect({
                 ? drillDefinitions
                 : filterDrillFromAttributeByPriority(drillDefinitions, configuredDrills);
 
-            if (validDrillDefinitions.length === 1) {
-                onSelect(validDrillDefinitions[0], drillEvent, s.correlationId, context);
-            } else if (validDrillDefinitions.length > 1) {
+            const type = getDrillDefinitionType(validDrillDefinitions);
+            if (type === "single") {
+                onSelect(validDrillDefinitions[0], undefined, drillEvent, s.correlationId, context);
+            } else if (type === "multiple") {
                 setDropdownProps({
                     drillDefinitions: validDrillDefinitions,
                     drillEvent: drillEvent,
@@ -126,6 +128,7 @@ export function WithDrillSelect({
     const onSelect = useCallback(
         (
             drillDefinition: DashboardDrillDefinition,
+            _context: unknown,
             drillEvent?: IDashboardDrillEvent,
             correlationId?: string,
             drillContext?: DashboardDrillContext,
@@ -163,6 +166,8 @@ export function WithDrillSelect({
                         effectiveDrillEvent,
                         effectiveCorrelationId,
                     );
+                } else if (isKeyDriveAnalysis(drillDefinition)) {
+                    //TODO: Run kda analysis dialog
                 }
 
                 if (closeBehavior === "closeOnSelect") {
@@ -200,4 +205,19 @@ export function WithDrillSelect({
             {drillDownDropdown}
         </div>
     );
+}
+
+function getDrillDefinitionType(validDrillDefinitions: DashboardDrillDefinition[]) {
+    if (validDrillDefinitions.length === 1) {
+        const firstDrillDefinition = validDrillDefinitions[0];
+        //NOTE: Key drive analysis has always items to choose
+        if (firstDrillDefinition.type === "keyDriveAnalysis") {
+            return "multiple";
+        }
+        return "single";
+    } else if (validDrillDefinitions.length > 1) {
+        return "multiple";
+    } else {
+        return "none";
+    }
 }

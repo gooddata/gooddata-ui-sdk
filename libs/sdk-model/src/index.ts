@@ -614,6 +614,7 @@ export type {
     InsightDrillDefinition,
     KpiDrillDefinition,
     ICrossFiltering,
+    IKeyDriveAnalysis,
 } from "./dashboard/drill.js";
 export {
     isDrillFromAttribute,
@@ -626,6 +627,7 @@ export {
     isAttributeHierarchyReference,
     isDateHierarchyReference,
     isCrossFiltering,
+    isKeyDriveAnalysis,
     drillDownReferenceHierarchyRef,
     drillDownReferenceAttributeRef,
 } from "./dashboard/drill.js";

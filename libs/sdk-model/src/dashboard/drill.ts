@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { ObjRef, ObjRefInScope } from "../objRef/index.js";
@@ -12,7 +13,8 @@ export type InsightDrillDefinition =
     | IDrillToDashboard
     | IDrillToCustomUrl
     | IDrillToAttributeUrl
-    | ICrossFiltering;
+    | ICrossFiltering
+    | IKeyDriveAnalysis;
 
 /**
  * Kpi widget drill definition
@@ -54,6 +56,7 @@ export type DrillType =
     | "drillToLegacyDashboard"
     | "drillToCustomUrl"
     | "drillToAttributeUrl"
+    | "keyDriveAnalysis"
     | "crossFiltering";
 
 /**
@@ -420,4 +423,23 @@ export interface ICrossFiltering extends IDrill {
  */
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering {
     return !isEmpty(obj) && (obj as ICrossFiltering).type === "crossFiltering";
+}
+
+/**
+ * Key drive analysis
+ * @public
+ */
+export interface IKeyDriveAnalysis extends IDrill {
+    /**
+     * Drill type
+     */
+    type: "keyDriveAnalysis";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IKeyDriveAnalysis}.
+ * @alpha
+ */
+export function isKeyDriveAnalysis(obj: unknown): obj is IKeyDriveAnalysis {
+    return !isEmpty(obj) && (obj as IKeyDriveAnalysis).type === "keyDriveAnalysis";
 }

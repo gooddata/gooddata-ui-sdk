@@ -75,7 +75,6 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/fixtures": "3.3.0",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",

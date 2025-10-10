@@ -192,12 +192,12 @@ export const useAutomationFilters = ({
                     { id: "automationFilters.announcement.filterAdded" },
                     { title: filterTitle },
                 );
-                announceFiltersChanged(message);
 
                 const updatedFilters = [...selectedFilters, filter];
                 onFiltersChange(updatedFilters);
 
-                focusAddFilterButton();
+                announceFiltersChanged(message);
+                setTimeout(focusAddFilterButton);
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -76,7 +76,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/i18n-toolkit": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
