@@ -1330,7 +1330,7 @@ export function RankingFilterDropdown(props: IRankingFilterDropdownProps): JSX.E
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 // @beta
-export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle, itemsCount, index, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
+export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
 export function SingleSelectionAttributeFilterStatusBar({ enableShowingFilteredElements, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, attributeTitle, onShowFilteredElements, irrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, }: IAttributeFilterStatusBarProps): JSX.Element;

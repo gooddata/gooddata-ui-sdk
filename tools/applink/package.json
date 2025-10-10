@@ -45,7 +45,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@types/blessed": "^0.1.17",
         "@types/cross-spawn": "^6.0.2",
         "@types/json5": "^0.0.30",

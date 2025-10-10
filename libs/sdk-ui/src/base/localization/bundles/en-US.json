@@ -1399,6 +1399,10 @@
         "value": "Alternative value from primary label {label}: {value}",
         "comment": "Shown to screen readers when there is an alternative value to an attribute."
     },
+    "attributesDropdown.alternativeValueTooltipShort": {
+        "value": "({label}: {value})",
+        "comment": "Shown to screen readers when there is an alternative value to an attribute."
+    },
     "attributesDropdown.filterValues": {
         "value": "Filter values",
         "comment": "Shown to screen readers as a label for the list of picked attribute values"
@@ -1490,10 +1494,6 @@
     "attributesDropdown.irrelevantValues": {
         "value": "Irrelevant value selected.{nbsp}",
         "comment": "Message with non-breaking space for proper formatting. The {nbsp} represents a non-breaking space character."
-    },
-    "attributesDropdown.selected": {
-        "value": "selected",
-        "comment": "Message for screen readers when an item is selected in the attribute filter dropdown."
     },
     "attributesDropdown.irrelevantValues.tooltip": {
         "value": "Selected value is no longer relevant due to changes in <strong>{parents}</strong>.",

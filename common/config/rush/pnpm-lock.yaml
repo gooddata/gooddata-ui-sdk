@@ -22,9 +22,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
@@ -224,9 +221,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -348,9 +342,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -472,9 +463,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -596,9 +584,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -720,9 +705,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -844,9 +826,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -968,9 +947,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1092,9 +1068,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1225,9 +1198,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1349,9 +1319,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1473,9 +1440,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1597,9 +1561,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1721,9 +1682,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1845,9 +1803,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../../../tools/eslint-plugin
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -1936,9 +1891,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2057,9 +2009,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2157,9 +2106,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2242,9 +2188,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -2366,9 +2309,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/fixtures':
         specifier: 3.3.0
         version: 3.3.0
@@ -2460,9 +2400,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -2548,9 +2485,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -2672,9 +2606,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -2844,9 +2775,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -2941,9 +2869,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -3146,9 +3071,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -3405,9 +3327,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -3676,9 +3595,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -3896,9 +3812,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -4122,9 +4035,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -4309,9 +4219,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -4574,9 +4481,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -4761,9 +4665,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -4909,9 +4810,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -5078,9 +4976,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -5222,9 +5117,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/mock-handling':
         specifier: workspace:*
         version: link:../../tools/mock-handling
@@ -5489,9 +5381,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/fixtures':
         specifier: 3.3.0
         version: 3.3.0
@@ -5739,9 +5628,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -5890,9 +5776,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -6071,9 +5954,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -6195,9 +6075,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -6271,9 +6148,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -6347,9 +6221,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../../tools/eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../../tools/eslint-plugin
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -6516,9 +6387,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/columnify':
         specifier: ^1.5.1
         version: 1.5.4
@@ -6600,9 +6468,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/blessed':
         specifier: ^0.1.17
         version: 0.1.25
@@ -6751,9 +6616,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/babel__core':
         specifier: ^7.20.1
         version: 7.20.5
@@ -6848,9 +6710,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@gooddata/plugin-toolkit':
         specifier: workspace:*
         version: link:../plugin-toolkit
@@ -7019,9 +6878,6 @@ importers:
 
   ../../tools/eslint-config:
     devDependencies:
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@testing-library/dom':
         specifier: 10.4.0
         version: 10.4.0
@@ -7101,12 +6957,6 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@22.18.5)(sass@1.66.1)
 
-  ../../tools/eslint-plugin:
-    devDependencies:
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-
   ../../tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
@@ -7146,9 +6996,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -7255,9 +7102,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/inquirer':
         specifier: ^8.2.6
         version: 8.2.12
@@ -7391,9 +7235,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/columnify':
         specifier: ^1.5.1
         version: 1.5.4
@@ -7527,9 +7368,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-kit
@@ -7651,9 +7489,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -7727,9 +7562,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@gooddata/eslint-plugin':
-        specifier: workspace:*
-        version: link:../eslint-plugin
       '@gooddata/fixtures':
         specifier: 3.3.0
         version: 3.3.0

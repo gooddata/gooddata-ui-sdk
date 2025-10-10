@@ -131,10 +131,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/eslint-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/fixtures",
       "allowedCategories": [ "production", "tools" ]
     },

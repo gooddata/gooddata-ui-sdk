@@ -406,6 +406,16 @@ export const selectIsDisabledCrossFiltering: DashboardSelector<boolean> = create
 );
 
 /**
+ * Returns whether kda is disabled by config
+ *
+ * @internal
+ */
+export const selectIsDisabledKda: DashboardSelector<boolean> = createSelector(selectConfig, () => {
+    //TODO: SHA Connect to dashboard config
+    return false;
+});
+
+/**
  * Returns whether user filter reset is disabled by config
  *
  * @internal
@@ -461,6 +471,15 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSe
         return state.settings?.enableKDCrossFiltering ?? false;
     },
 );
+
+/**
+ * Returns whether kda is enabled
+ *
+ * @internal
+ */
+export const selectEnableKda: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableChangeAnalysis ?? false;
+});
 
 /**
  * Returns whether KD attribute filter by dates validation/filtering is enabled.

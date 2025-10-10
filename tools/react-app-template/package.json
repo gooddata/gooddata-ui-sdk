@@ -61,7 +61,6 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",

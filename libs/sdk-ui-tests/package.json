@@ -62,7 +62,6 @@
         "@babel/preset-typescript": "^7.23.3",
         "@babel/runtime": "^7.23.5",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/mock-handling": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",

@@ -60,7 +60,9 @@ import {
 import {
     selectDisableDefaultDrills,
     selectEnableKDCrossFiltering,
+    selectEnableKda,
     selectIsDisabledCrossFiltering,
+    selectIsDisabledKda,
     selectIsEmbedded,
 } from "../config/configSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
@@ -70,7 +72,7 @@ import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectWidgetDrills,
 } from "../layout/layoutSelectors.js";
-import { selectDisableDashboardCrossFiltering } from "../meta/metaSelectors.js";
+import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
 import { DashboardSelector } from "../types.js";
 
 /**
@@ -421,6 +423,66 @@ const selectCrossFilteringByWidgetRef: (
     ),
 );
 
+const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates | undefined> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectEnableKda,
+            selectDrillTargetsByWidgetRef(ref),
+            selectDisableDashboardKda,
+            selectIsDisabledKda,
+            selectDrillableItems,
+            (isKdaEnabled, availableDrillTargets, disableKda, disableKdaByConfig, drillableItems) => {
+                if (
+                    !isKdaEnabled ||
+                    disableKda ||
+                    disableKdaByConfig ||
+                    // When some drillable items are present, we need to disable
+                    // kda so that drill events are still possible to do.
+                    drillableItems.length > 0
+                ) {
+                    return undefined;
+                }
+
+                const availableDrillAttributes =
+                    availableDrillTargets?.availableDrillTargets?.attributes ?? [];
+                const availableDrillAttributesWithDates = availableDrillAttributes.filter(
+                    (drill) => drill.attribute.attributeHeader.granularity,
+                );
+
+                if (availableDrillAttributesWithDates.length !== 1) {
+                    return undefined;
+                }
+
+                const date = availableDrillAttributesWithDates[0];
+                // construct predicates for all available attributes and measures
+                const attributePredicates = availableDrillAttributesWithDates.map((drillAttribute) =>
+                    HeaderPredicates.localIdentifierMatch(
+                        drillAttribute.attribute.attributeHeader.localIdentifier,
+                    ),
+                );
+                const measurePredicates = compact(
+                    availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) =>
+                        HeaderPredicates.localIdentifierMatch(
+                            drillMeasure.measure.measureHeaderItem.localIdentifier,
+                        ),
+                    ),
+                );
+
+                return {
+                    drillDefinition: {
+                        type: "keyDriveAnalysis",
+                        transition: "in-place",
+                        origin: {
+                            type: "drillFromAttribute",
+                            attribute: localIdRef(date.attribute.attributeHeader.localIdentifier),
+                        },
+                    },
+                    predicates: [...attributePredicates, ...measurePredicates],
+                };
+            },
+        ),
+    );
+
 /**
  * @internal
  */
@@ -486,6 +548,9 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
+        selectEnableKda,
+        selectDisableDashboardKda,
+        selectIsDisabledKda,
         (
             drills = [],
             disableDefaultDrills,
@@ -493,6 +558,9 @@ export const selectConfiguredDrillsByWidgetRef: (
             isEmbedded,
             disableCrossFiltering,
             disableCrossFilteringByConfig,
+            enableKda,
+            disableKda,
+            disableKdaByConfig,
         ) => {
             if (disableDefaultDrills) {
                 return [];
@@ -511,6 +579,8 @@ export const selectConfiguredDrillsByWidgetRef: (
                     return !isEmbedded;
                 } else if (drillType === "crossFiltering") {
                     return enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig;
+                } else if (drillType === "keyDriveAnalysis") {
+                    return enableKda && !disableKda && !disableKdaByConfig;
                 } else {
                     const unhandledType: never = drillType;
                     throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
@@ -561,6 +631,9 @@ export const selectValidConfiguredDrillsByWidgetRef: (
                     case "crossFiltering": {
                         return true;
                     }
+                    case "keyDriveAnalysis": {
+                        return true;
+                    }
                     default: {
                         const unhandledType: never = drill.drillDefinition;
                         throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);
@@ -608,6 +681,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
+        selectKdaByWidgetRef(ref),
         (
             catalogIsLoaded,
             accessibleDashboardsLoaded,
@@ -615,6 +689,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             implicitDrillDownDrills,
             implicitDrillToUrlDrills,
             crossFiltering,
+            kda,
         ) => {
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
@@ -624,6 +699,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
                       ...implicitDrillDownDrills,
                       ...implicitDrillToUrlDrills,
                       crossFiltering,
+                      kda,
                   ])
                 : [];
         },

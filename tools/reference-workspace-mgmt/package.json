@@ -48,7 +48,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/eslint-plugin": "workspace:*",
         "@gooddata/fixtures": "3.3.0",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",

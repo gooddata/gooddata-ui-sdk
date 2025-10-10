@@ -20,8 +20,9 @@ import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 
 import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { ListWithActionsFocusStore } from "../hooks/useListWithActionsFocus.js";
+import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
-
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 
 /**
@@ -47,7 +48,6 @@ export interface UiPagedVirtualListProps<T> {
     onKeyDownSelect?: (item: T) => void;
     closeDropdown?: () => void;
     isLoading?: boolean;
-    tabIndex?: number;
     /**
      * An item in the list that should be scrolled into view when the component renders.
      * By default, items are compared by object identity (i.e., `===`).
@@ -65,6 +65,13 @@ export interface UiPagedVirtualListProps<T> {
     children: (item: T) => ReactNode;
     scrollbarHoverEffect?: boolean;
     SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    representAs?: "grid" | "listbox";
+    listboxProps?: Record<string, any>;
+    // keyboard and focus management
+    tabIndex?: number; // tabindex=-1 means that keyboard navigation and focus are handled by the parent
+    focusedItem?: T;
+    focusedAction?: string;
+    getIsItemSelected?: (item: T) => boolean;
 }
 
 /**
@@ -90,6 +97,11 @@ function UiPagedVirtualListNotWrapped<T>(
         customKeyboardNavigationHandler,
         children,
         scrollbarHoverEffect,
+        representAs = "grid",
+        focusedItem,
+        focusedAction,
+        listboxProps,
+        getIsItemSelected,
     } = props;
 
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
@@ -107,31 +119,40 @@ function UiPagedVirtualListNotWrapped<T>(
         },
     }));
 
+    // when tabindex is -1 this keyboard navigation and focusIndex is not used at all
     const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
         items,
         onKeyDownSelect,
         closeDropdown,
     );
+    const ListElement = representAs === "grid" ? "div" : "ul";
+    const ItemElement = representAs === "grid" ? "div" : "li";
+    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const focusedItemIndex = focusedItem ? items?.indexOf(focusedItem) : 0;
+    const finalFocusedIndex = focusedItem ? focusedItemIndex : focusedIndex;
 
     return (
         <div
             className={b({
                 hasScroll,
             })}
-            tabIndex={tabIndex}
-            onKeyDown={tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)}
         >
             <div
                 ref={scrollContainerRef}
                 className={e("scroll-container", { hover: scrollbarHoverEffect })}
                 style={{ height, paddingTop: itemsGap }}
             >
-                <div
+                <ListElement
                     style={{
                         height: `${rowVirtualizer.getTotalSize()}px`,
                         width: "100%",
                         position: "relative",
                     }}
+                    tabIndex={tabIndex}
+                    onKeyDown={
+                        tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
+                    }
+                    {...listboxProps}
                 >
                     {virtualItems.map((virtualRow) => {
                         const item = items?.[virtualRow.index];
@@ -145,22 +166,40 @@ function UiPagedVirtualListNotWrapped<T>(
                             paddingLeft: itemPadding,
                         };
 
+                        const itemProps =
+                            representAs === "listbox"
+                                ? {
+                                      role: "option",
+                                      "aria-selected": getIsItemSelected
+                                          ? getIsItemSelected(item!)
+                                          : undefined,
+                                      "aria-posinset": virtualRow.index + 1,
+                                      "aria-setsize": items?.length ?? 0,
+                                      tabIndex:
+                                          focusedItem === item && focusedAction === SELECT_ITEM_ACTION
+                                              ? 0
+                                              : -1,
+                                      id: makeId?.({ item: item!, action: SELECT_ITEM_ACTION }),
+                                  }
+                                : {};
+
                         return (
-                            <div
+                            <ItemElement
                                 key={virtualRow.index}
-                                className={e("item", { isFocused: focusedIndex === virtualRow.index })}
+                                className={e("item", { isFocused: finalFocusedIndex === virtualRow.index })}
                                 style={style}
+                                {...itemProps}
                             >
                                 {isSkeletonItem ? (
                                     <SkeletonItem key={virtualRow.index} itemHeight={itemHeight} />
                                 ) : (
                                     children(item!)
                                 )}
-                                <div className={e("gap")} style={{ height: itemsGap }} />
-                            </div>
+                                {itemsGap !== 0 && <div className={e("gap")} style={{ height: itemsGap }} />}
+                            </ItemElement>
                         );
                     })}
-                </div>
+                </ListElement>
             </div>
         </div>
     );

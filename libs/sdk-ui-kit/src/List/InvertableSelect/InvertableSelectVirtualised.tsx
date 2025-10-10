@@ -161,6 +161,7 @@ export interface IInvertableSelectVirtualisedProps<T> {
     isLoading?: boolean;
     nextPageItemPlaceholdersCount?: number;
     isLoadingNextPage?: boolean;
+    representAs?: "grid" | "listbox";
     onLoadNextPage?: () => void;
 
     onApplyButtonClick?: () => void;
@@ -218,6 +219,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         renderStatusBar = defaultStatusBar,
         renderActions = defaultActions,
     } = props;
+
+    const representAs = (props.representAs ?? isSingleSelect) ? "listbox" : "grid";
 
     const { formatMessage } = useIntl();
 
@@ -410,6 +413,34 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [containerRef, setFocusedAction],
     );
 
+    const selectProps =
+        representAs === "grid"
+            ? {
+                  role: "grid",
+                  tabIndex: 0,
+                  "aria-rowcount": items.length,
+                  "aria-multiselectable": !isSingleSelect,
+                  "aria-label": formatMessage({ id: "attributesDropdown.filterValues" }),
+              }
+            : {};
+
+    const listProps =
+        representAs === "listbox"
+            ? {
+                  role: "listbox",
+                  tabIndex: -1,
+                  "aria-activedescendant":
+                      focusedItem && focusedAction
+                          ? focusStoreValue.makeId({
+                                item: focusedItem,
+                                action: focusedAction,
+                            })
+                          : undefined,
+                  "aria-multiselectable": !isSingleSelect,
+                  "aria-label": formatMessage({ id: "attributesDropdown.filterValues" }),
+              }
+            : {};
+
     return (
         <ListWithActionsFocusStore value={focusStoreValue}>
             <div className="gd-invertable-select">
@@ -443,19 +474,13 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                     ) : (
                                         <div className="gd-invertable-select-list" ref={measureRef}>
                                             <div
-                                                tabIndex={0}
                                                 onKeyDown={onKeyboardNavigation}
                                                 onFocus={handleFocus}
                                                 onBlur={handleBlur}
                                                 className={cx("gd-async-list", className || "")}
                                                 ref={containerRef as RefObject<HTMLDivElement>}
-                                                role={"grid"}
-                                                aria-rowcount={items.length}
-                                                aria-label={formatMessage({
-                                                    id: "attributesDropdown.filterValues",
-                                                })}
-                                                aria-multiselectable={!isSingleSelect}
                                                 id={focusStoreValue.containerId}
+                                                {...selectProps}
                                             >
                                                 <UiPagedVirtualList<T>
                                                     items={items}
@@ -470,8 +495,13 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                     scrollToItem={firstSelectedItem}
                                                     scrollToItemKeyExtractor={getItemKey}
                                                     tabIndex={-1}
+                                                    focusedItem={focusedItem}
+                                                    focusedAction={focusedAction}
                                                     shouldLoadNextPage={shouldLoadNextPage}
                                                     ref={listRef}
+                                                    representAs={representAs}
+                                                    listboxProps={listProps}
+                                                    getIsItemSelected={getIsItemSelected}
                                                 >
                                                     {itemRenderer}
                                                 </UiPagedVirtualList>
@@ -486,13 +516,15 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                         )}
                     </>
                 )}
-                <div
-                    role="group"
-                    className="gd-invertable-select-status-bar"
-                    aria-label={formatMessage({ id: "attributesDropdown.selectedValues" })}
-                >
-                    {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
-                </div>
+                {isSingleSelect ? null : (
+                    <div
+                        role="group"
+                        className="gd-invertable-select-status-bar"
+                        aria-label={formatMessage({ id: "attributesDropdown.selectedValues" })}
+                    >
+                        {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
+                    </div>
+                )}
                 <UiSearchResultsAnnouncement
                     totalResults={searchString && !isLoading ? totalItemsCount : undefined}
                     resultValues={

@@ -3,7 +3,7 @@
 import { KeyboardEvent, UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
-import { compact, partition } from "lodash-es";
+import { compact, groupBy } from "lodash-es";
 import { IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -21,6 +21,7 @@ import {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isIdentifierRef,
+    isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
@@ -46,12 +47,13 @@ import {
     getDrillOriginAttributeElementTitle,
     getTotalDrillToUrlCount,
 } from "../utils/drillDownUtils.js";
+import { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "../utils/kdaUtils.js";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
     isOpen: boolean;
     onClose: () => void;
-    onSelect: (item: DashboardDrillDefinition) => void;
+    onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
 }
 
 export function DrillSelectDropdown({
@@ -148,21 +150,24 @@ export function DrillSelectDropdown({
         ],
     );
 
-    const [drillDownAndCrossFilteringItems, drillItems] = partition(
-        drillSelectItems,
-        (item: DrillSelectItem) =>
-            isDrillDownDefinition(item.drillDefinition) || isCrossFiltering(item.drillDefinition),
-    );
-
-    const [drillDownItems, crossFilteringItems] = partition(
-        drillDownAndCrossFilteringItems,
-        (item: DrillSelectItem) => isDrillDownDefinition(item.drillDefinition),
-    );
+    const grouped = groupBy(drillSelectItems, (item) => {
+        if (isDrillDownDefinition(item.drillDefinition)) {
+            return "drillDown";
+        }
+        if (isCrossFiltering(item.drillDefinition)) {
+            return "crossFiltering";
+        }
+        if (isKeyDriveAnalysis(item.drillDefinition)) {
+            return "keyDriverAnalysis";
+        }
+        return "drill";
+    });
 
     const menuItems = useDrillSelectDropdownMenuItems({
-        drillDownItems,
-        drillItems,
-        crossFilteringItems,
+        drillDownItems: grouped["drillDown"] ?? [],
+        crossFilteringItems: grouped["crossFiltering"] ?? [],
+        keyDriverAnalysisItems: grouped["keyDriverAnalysis"] ?? [],
+        drillItems: grouped["drill"] ?? [],
         onSelect,
     });
 
@@ -180,7 +185,7 @@ export function DrillSelectDropdown({
                     >
                         <UiMenu
                             items={menuItems}
-                            onSelect={(item) => onSelect(item.data.drillDefinition!)}
+                            onSelect={(item) => onSelect(item.data.drillDefinition!, item.data.context!)}
                             shouldCloseOnSelect={false}
                             onClose={onClose}
                             onUnhandledKeyDown={handleKeyDown}
@@ -227,7 +232,7 @@ export const createDrillSelectItems = ({
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
-    return drillDefinitions.map((drillDefinition): DrillSelectItem => {
+    return drillDefinitions.flatMap((drillDefinition): DrillSelectItem | DrillSelectItem[] => {
         invariant(
             !isDrillToLegacyDashboard(drillDefinition),
             "Drill to pixel perfect dashboards from insight is not supported.",
@@ -309,6 +314,19 @@ export const createDrillSelectItems = ({
                 drillDefinition,
                 id: stringify(drillDefinition) || "undefined",
             };
+        }
+
+        if (isKeyDriveAnalysis(drillDefinition)) {
+            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent);
+            return items.map((item) => {
+                return {
+                    name: getKeyDriverCombinationItemTitle(intl, item),
+                    type: DrillType.KEY_DRIVER_ANALYSIS,
+                    drillDefinition,
+                    id: stringify(drillDefinition) || "undefined",
+                    context: item,
+                } as DrillSelectItem;
+            });
         }
 
         const unhandledDefinition: never = drillDefinition;

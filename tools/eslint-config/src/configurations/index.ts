@@ -7,7 +7,6 @@ export { default as env } from "./env.js";
 export { default as eslint } from "./eslint.js";
 export { default as eslintComments } from "./eslint-comments.js";
 export { default as esm } from "./esm.js";
-export { default as gooddata } from "./gooddata.js";
 export { default as header } from "./header.js";
 export { default as ignore } from "./ignore.js";
 export { default as import_ } from "./import.js";

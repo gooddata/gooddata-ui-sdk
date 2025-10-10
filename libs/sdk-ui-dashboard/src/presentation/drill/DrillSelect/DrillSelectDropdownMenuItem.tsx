@@ -16,6 +16,7 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
     [DrillType.DRILL_TO_URL]: "link",
     [DrillType.DRILL_DOWN]: "trendDown",
     [DrillType.CROSS_FILTERING]: "filter",
+    [DrillType.KEY_DRIVER_ANALYSIS]: "explainai",
 };
 
 export function DrillSelectDropdownMenuItem({

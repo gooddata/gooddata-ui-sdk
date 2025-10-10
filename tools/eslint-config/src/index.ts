@@ -8,7 +8,6 @@ import {
     eslint,
     eslintComments,
     esm,
-    gooddata,
     header,
     ignore,
     importEsm,
@@ -38,7 +37,6 @@ export const common = [
     sonarjs,
     tsdoc,
     eslintComments,
-    gooddata,
     security,
     ignore,
 ];

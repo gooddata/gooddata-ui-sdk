@@ -13,6 +13,7 @@ const groupMenuItemMessages = defineMessages({
     drillDown: { id: "drill_modal_picker.drill-down" },
     drillInto: { id: "drill_modal_picker.drill-into" },
     crossFilter: { id: "drill_modal_picker.cross-filter" },
+    keyDriverAnalysis: { id: "drill_modal_picker.key-driver-analysis" },
 });
 
 export interface IDrillSelectDropdownMenuItemData {
@@ -20,6 +21,7 @@ export interface IDrillSelectDropdownMenuItemData {
         type: DrillType;
         name: string;
         drillDefinition: DashboardDrillDefinition;
+        context?: unknown;
         attributeValue?: string | null;
         onSelect: () => void;
     };
@@ -31,12 +33,14 @@ export const useDrillSelectDropdownMenuItems = ({
     drillDownItems,
     drillItems,
     crossFilteringItems,
+    keyDriverAnalysisItems,
     onSelect,
 }: {
     drillDownItems: DrillSelectItem[];
     drillItems: DrillSelectItem[];
     crossFilteringItems: DrillSelectItem[];
-    onSelect: (item: DashboardDrillDefinition) => void;
+    keyDriverAnalysisItems: DrillSelectItem[];
+    onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
 
@@ -59,7 +63,7 @@ export const useDrillSelectDropdownMenuItems = ({
                     name: item.name,
                     attributeValue: item.attributeValue,
                     drillDefinition: item.drillDefinition,
-                    onSelect: () => onSelect(item.drillDefinition),
+                    onSelect: () => onSelect(item.drillDefinition, item.context),
                 },
             })),
         });
@@ -79,6 +83,22 @@ export const useDrillSelectDropdownMenuItems = ({
                 ? [createMenuGroup(crossFilteringItems, "cross-filter", groupMenuItemMessages.crossFilter.id)]
                 : [];
 
-        return [...drillDownMenuItems, ...drillMenuItems, ...crossFilteringMenuItems];
-    }, [drillDownItems, drillItems, crossFilteringItems, formatMessage, onSelect]);
+        const keyDriverAnalysisMenu =
+            keyDriverAnalysisItems.length > 0
+                ? [
+                      createMenuGroup(
+                          keyDriverAnalysisItems,
+                          "key-driver-analysis",
+                          groupMenuItemMessages.keyDriverAnalysis.id,
+                      ),
+                  ]
+                : [];
+
+        return [
+            ...drillDownMenuItems,
+            ...drillMenuItems,
+            ...crossFilteringMenuItems,
+            ...keyDriverAnalysisMenu,
+        ];
+    }, [drillDownItems, drillItems, crossFilteringItems, keyDriverAnalysisItems, formatMessage, onSelect]);
 };
