@@ -85,3 +85,29 @@ export type AgGridHeaderGroupParams = IHeaderGroupParams<AgGridRowData, string |
 export const isAgGridColumnGroupDef = (colDef: unknown): colDef is AgGridColumnGroupDef => {
     return colDef !== undefined && colDef !== null && (colDef as AgGridColumnGroupDef).children !== undefined;
 };
+
+/**
+ * @internal
+ * Checks if the header params are header params (not regular header group params)
+ *
+ * @param params - The header params to check
+ * @returns true if params are header params, false otherwise
+ */
+export const isAgGridHeaderParams = (params: unknown): params is AgGridHeaderParams => {
+    return params !== undefined && params !== null && (params as AgGridHeaderParams).column !== undefined;
+};
+
+/**
+ * @internal
+ * Checks if the header params are header group params (not regular header params)
+ *
+ * @param params - The header group params to check
+ * @returns true if params are header group params, false otherwise
+ */
+export const isAgGridHeaderGroupParams = (params: unknown): params is AgGridHeaderGroupParams => {
+    return (
+        params !== undefined &&
+        params !== null &&
+        (params as AgGridHeaderGroupParams).columnGroup !== undefined
+    );
+};

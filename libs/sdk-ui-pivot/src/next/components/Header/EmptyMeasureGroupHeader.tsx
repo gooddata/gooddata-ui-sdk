@@ -5,18 +5,21 @@ import { useState } from "react";
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
+import { AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for empty measure group header.
  *
  * This is a special case when measures are in row (transposition) and there is no measure group header value.
  */
-export function EmptyMeasureGroupHeader() {
+export function EmptyMeasureGroupHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const allowAggregations = false;
     const allowTextWrapping = true;
     const allowSorting = false;
     const allowDrilling = false;
+    const includeHeaderWrapping = false;
+    const includeCellWrapping = true;
 
     const {
         aggregationsItems,
@@ -31,9 +34,11 @@ export function EmptyMeasureGroupHeader() {
             allowTextWrapping,
             allowSorting,
             allowDrilling,
+            includeHeaderWrapping,
+            includeCellWrapping,
         },
         { measureIdentifiers: [], pivotAttributeDescriptors: [] },
-        null,
+        params,
     );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;

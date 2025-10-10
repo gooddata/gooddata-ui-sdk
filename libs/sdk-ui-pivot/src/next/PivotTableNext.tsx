@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, MouseEvent, useMemo } from "react";
+import { CSSProperties, FocusEvent, MouseEvent, useCallback, useMemo } from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
@@ -22,6 +22,7 @@ import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
 import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
+import { useClearCellSelection } from "./hooks/useClearCellSelection.js";
 import { useResolvedProps } from "./hooks/useResolvedProps.js";
 import { ICorePivotTableNextProps } from "./types/internal.js";
 import { IPivotTableNextProps } from "./types/public.js";
@@ -87,6 +88,7 @@ function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
     const { setContainerWidth } = useAgGridApi();
+    const clearCellSelection = useClearCellSelection();
 
     useMemo(() => {
         if (config.agGridToken) {
@@ -109,6 +111,16 @@ function RenderPivotTableNextAgGrid() {
         }
     };
 
+    const handleBlur = useCallback(
+        (e: FocusEvent<HTMLDivElement>) => {
+            // Only clear selection if focus is moving outside the table container
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+                clearCellSelection();
+            }
+        },
+        [clearCellSelection],
+    );
+
     return (
         <AvoidResizeFlickering>
             {({ isReadyForInitialPaint }) => {
@@ -129,6 +141,7 @@ function RenderPivotTableNextAgGrid() {
                         onMouseDown={stopEventWhenResizeHeader}
                         onDragStart={stopEventWhenResizeHeader}
                         onClick={stopEventWhenResizeHeader}
+                        onBlur={handleBlur}
                         data-testid={isReadyForInitialPaint ? "pivot-table-next" : undefined}
                     >
                         <AgGridReact {...agGridReactProps} />

@@ -33,6 +33,7 @@ const SIZING_PROPS: AgGridProps = {
 
 const CELL_SELECTION_PROPS: AgGridProps = {
     cellSelection: true,
+    suppressCellFocus: false,
 };
 
 const AGGREGATION_PROPS: AgGridProps = {

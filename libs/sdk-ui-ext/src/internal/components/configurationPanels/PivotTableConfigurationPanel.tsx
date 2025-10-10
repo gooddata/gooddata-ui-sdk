@@ -18,6 +18,7 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
+import CellsControl from "../configurationControls/CellsControl.js";
 import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 import ConfigSection from "../configurationControls/ConfigSection.js";
@@ -84,9 +85,11 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
     }
 
     private renderCanvasSection() {
-        const { properties, insight, pushData, isLoading, propertiesMeta, panelConfig } = this.props;
+        const { properties, insight, pushData, isLoading, propertiesMeta, panelConfig, featureFlags } =
+            this.props;
         const metricPositionControlsDisabled = this.isPositionControlDisabled();
         const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
+        const enableNewPivotTable = !!featureFlags?.enableNewPivotTable;
         const canvasSection = (
             <ConfigDummySection id="metric_col_header_position_section">
                 <MetricsPositionControl
@@ -102,7 +105,13 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
                     properties={properties}
                     pushData={pushData}
                     insight={insight}
+                    isLoading={isLoading}
+                    enableNewPivotTable={enableNewPivotTable}
                 />
+
+                {enableNewPivotTable ? (
+                    <CellsControl properties={properties} pushData={pushData} isDisabled={isLoading} />
+                ) : null}
             </ConfigDummySection>
         );
 

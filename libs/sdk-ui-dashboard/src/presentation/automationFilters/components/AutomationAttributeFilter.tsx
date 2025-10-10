@@ -145,7 +145,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
             accessibilityConfig={{
                 isExpanded: props.isOpen,
                 ariaDescribedBy: attributeFilterTooltipId,
-                deleteAriaLabel,
+                deleteAriaLabel: props.title ? `${deleteAriaLabel} ${props.title}` : deleteAriaLabel,
                 deleteAriaDescribedBy: attributeFilterTooltipId,
             }}
             buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}

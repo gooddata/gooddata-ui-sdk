@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import {
@@ -109,7 +110,7 @@ export function columnDefsToPivotGroups(
                     const siblingIndex = currentLevel.length;
                     const colGroupDef: AgGridColumnGroupDef = {
                         groupId,
-                        headerName: headerName,
+                        headerName,
                         children: [],
                         suppressHeaderContextMenu: true,
                         headerClass: getHeaderCellClassName,

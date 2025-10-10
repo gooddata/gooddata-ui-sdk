@@ -32,7 +32,11 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         params.pivotGroupDepth !== 0 && // Not description level of the pivoting group
         isValueColDef &&
         !isTransposed;
-    const allowTextWrapping = isValueColDef;
+    // PivotGroup cells have header wrapping option but only the ones in depth 0.
+    // All other pivotGroup cells underneath and measures underneath do not have wrapping menu option
+    const allowTextWrapping = isValueColDef && params.pivotGroupDepth === 0;
+    const includeHeaderWrapping = true;
+    const includeCellWrapping = false;
     const allowSorting = false;
     const allowDrilling = false;
 
@@ -49,12 +53,14 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
             allowTextWrapping,
             allowSorting,
             allowDrilling,
+            includeHeaderWrapping,
+            includeCellWrapping,
         },
         {
             measureIdentifiers: params.measureIdentifiers,
             pivotAttributeDescriptors,
         },
-        null,
+        params,
     );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;

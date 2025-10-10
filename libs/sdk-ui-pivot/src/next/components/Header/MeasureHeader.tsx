@@ -10,6 +10,7 @@ import {
     getPivotAttributeDescriptors,
     isValueColumnDef,
 } from "./utils/common.js";
+import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
@@ -21,6 +22,8 @@ import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 export function MeasureHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const isTransposed = useIsTransposed();
+    const { isPivoted } = useColumnDefs();
+
     const colDef = params.column.getColDef() as AgGridColumnDef;
     const columnDefinition = colDef.context.columnDefinition;
     const isValueColDef = isValueColumnDef(columnDefinition);
@@ -29,7 +32,12 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     const measureIdentifier = getColumnMeasureIdentifier(columnScope);
 
     const allowAggregations = isValueColDef && !isTransposed;
-    const allowTextWrapping = isValueColDef;
+    // Measure columns:
+    // - No wrapping options if table has pivoting
+    // - Only header wrapping (no cell) if table has no pivoting (measures are top-most header cells)
+    const allowTextWrapping = isValueColDef && !isPivoted;
+    const includeHeaderWrapping = true;
+    const includeCellWrapping = false;
     const allowSorting = !!colDef.sortable;
     const allowDrilling = false;
 
@@ -50,6 +58,8 @@ export function MeasureHeader(params: AgGridHeaderParams) {
             allowTextWrapping,
             allowSorting,
             allowDrilling,
+            includeHeaderWrapping,
+            includeCellWrapping,
         },
         { measureIdentifiers: measureIdentifier ? [measureIdentifier] : [], pivotAttributeDescriptors },
         params,

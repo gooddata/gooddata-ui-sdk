@@ -13,24 +13,35 @@ export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
 export type { ICorePivotTableNextProps } from "./types/internal.js";
-
+export type {
+    ColumnLocator,
+    IAttributeColumnLocator,
+    IAttributeColumnLocatorBody,
+    IMeasureColumnLocator,
+    IMeasureColumnLocatorBody,
+    ITotalColumnLocator,
+    ITotalColumnLocatorBody,
+} from "./types/locators.js";
+export {
+    isAttributeColumnLocator,
+    isMeasureColumnLocator,
+    isTotalColumnLocator,
+    newAttributeColumnLocator,
+    newMeasureColumnLocator,
+    newTotalColumnLocator,
+} from "./types/locators.js";
 export type {
     IColumnSizing,
-    ColumnLocator,
     ColumnWidth,
     ColumnWidthItem,
     DefaultColumnWidth,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAllMeasureColumnWidthItemBody,
-    IAttributeColumnLocator,
-    IAttributeColumnLocatorBody,
     IAttributeColumnWidthItem,
     IAttributeColumnWidthItemBody,
     IAutoColumnWidth,
     IManuallyResizedColumnsItem,
-    IMeasureColumnLocator,
-    IMeasureColumnLocatorBody,
     IMeasureColumnWidthItem,
     IMeasureColumnWidthItemBody,
     IMixedValuesColumnWidthItem,
@@ -38,25 +49,17 @@ export type {
     IResizedColumns,
     ISliceMeasureColumnWidthItem,
     ISliceMeasureColumnWidthItemBody,
-    ITotalColumnLocator,
-    ITotalColumnLocatorBody,
     IWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItemBody,
 } from "./types/resizing.js";
 export {
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
-    isAttributeColumnLocator,
     isAttributeColumnWidthItem,
-    isMeasureColumnLocator,
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,
-    isTotalColumnLocator,
     isWeakMeasureColumnWidthItem,
     isSliceMeasureColumnWidthItem,
-    newAttributeColumnLocator,
-    newMeasureColumnLocator,
-    newTotalColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
     newWidthForAttributeColumn,

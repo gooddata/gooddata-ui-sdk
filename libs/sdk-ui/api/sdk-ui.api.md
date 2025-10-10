@@ -1346,6 +1346,12 @@ export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T>;
 // @alpha
 export function isAttributeColumnDefinition(columnDefinition: unknown): columnDefinition is ITableAttributeColumnDefinition;
 
+// @alpha (undocumented)
+export function isAttributeScope(scope: unknown): scope is ITableDataAttributeScope;
+
+// @alpha (undocumented)
+export function isAttributeTotalScope(scope: unknown): scope is ITableDataAttributeTotalScope;
+
 // @public
 export function isBadRequest(obj: unknown): obj is BadRequestSdkError;
 
@@ -1422,8 +1428,17 @@ export const isLocale: (locale: unknown) => locale is ILocale;
 // @alpha
 export function isMeasureGroupHeaderColumnDefinition(columnDefinition: unknown): columnDefinition is ITableMeasureGroupHeaderColumnDefinition;
 
+// @alpha (undocumented)
+export function isMeasureGroupScope(scope: unknown): scope is ITableDataMeasureGroupScope;
+
 // @alpha
 export function isMeasureGroupValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableMeasureGroupValueColumnDefinition;
+
+// @alpha (undocumented)
+export function isMeasureScope(scope: unknown): scope is ITableDataMeasureScope;
+
+// @alpha (undocumented)
+export function isMeasureTotalScope(scope: unknown): scope is ITableDataMeasureTotalScope;
 
 // @public
 export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError;

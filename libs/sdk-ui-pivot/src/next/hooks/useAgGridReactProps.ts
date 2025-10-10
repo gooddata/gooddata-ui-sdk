@@ -7,6 +7,8 @@ import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResiz
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
 import { useAgGridApiProps } from "./useAgGridApiProps.js";
 import { useAutoHeight } from "./useAutoHeight.js";
+import { useCellSelectionProps } from "./useCellSelectionProps.js";
+import { useClipboardProps } from "./useClipboardProps.js";
 import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { useDataLoadingProps } from "./useDataLoadingProps.js";
 import { useHeaderComponents } from "./useHeaderComponents.js";
@@ -31,6 +33,8 @@ export function useAgGridReactProps() {
     const enhanceWithColumnSizing = useColumnSizingProps();
     const enhanceWithSorting = useSortingProps();
     const enhanceWithInteractions = useInteractionProps();
+    const enhanceWithCellSelection = useCellSelectionProps();
+    const enhanceWithClipboard = useClipboardProps();
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithAutoHeight = useAutoHeight();
     const enhanceWithTheme = useThemeProps();
@@ -47,6 +51,8 @@ export function useAgGridReactProps() {
             enhanceWithColumnSizing,
             enhanceWithSorting,
             enhanceWithInteractions,
+            enhanceWithCellSelection,
+            enhanceWithClipboard,
             enhanceWithTextWrapping,
             enhanceWithAutoHeight,
             enhanceWithTheme,
@@ -62,6 +68,8 @@ export function useAgGridReactProps() {
         enhanceWithColumnSizing,
         enhanceWithSorting,
         enhanceWithInteractions,
+        enhanceWithCellSelection,
+        enhanceWithClipboard,
         enhanceWithTextWrapping,
         enhanceWithAutoHeight,
         enhanceWithTheme,

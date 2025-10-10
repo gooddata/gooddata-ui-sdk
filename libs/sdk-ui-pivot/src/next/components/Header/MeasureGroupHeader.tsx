@@ -11,6 +11,8 @@ import {
     getRowScope,
     isValueRowDef,
 } from "./utils/common.js";
+import { useColumnDefs } from "../../context/ColumnDefsContext.js";
+import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
@@ -24,6 +26,9 @@ import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from ".
  */
 export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isPivoted } = useColumnDefs();
+    const { config } = usePivotTableProps();
+    const { columnHeadersPosition } = config;
     const isHeader = isHeaderParams(params);
     const colDef = (isHeader ? params.column.getColDef() : params.colDef) as AgGridColumnDef;
     const cellData = isHeader ? undefined : params.data?.cellDataByColId[colDef.colId!];
@@ -36,7 +41,13 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
     const measureIdentifier = getColumnMeasureIdentifier(rowScope);
 
     const allowAggregations = isValueRowDef(rowDefinition);
-    const allowTextWrapping = isHeader; // we disable text wrapping for value cells
+    // Measure group header: allow text wrapping for header cells when:
+    // - there's no pivoting OR
+    // - header position is "left" (where measure group header is used as column header)
+    const allowTextWrapping = isHeader && (!isPivoted || columnHeadersPosition === "left");
+    const includeHeaderWrapping = true;
+    // Include cell wrapping options when header position is left
+    const includeCellWrapping = columnHeadersPosition === "left";
     const allowSorting = false;
     const allowDrilling = false;
 
@@ -48,9 +59,16 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
         handleTextWrappingItemClick,
         handleSortingItemClick,
     } = useHeaderMenu(
-        { allowAggregations, allowTextWrapping, allowSorting, allowDrilling },
+        {
+            allowAggregations,
+            allowTextWrapping,
+            allowSorting,
+            allowDrilling,
+            includeHeaderWrapping,
+            includeCellWrapping,
+        },
         { measureIdentifiers: measureIdentifier ? [measureIdentifier] : [], pivotAttributeDescriptors },
-        null,
+        isHeader ? params : null, // Pass header params for column identification
     );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
@@ -82,6 +100,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
     );
 }
 
+// Distinguish between header params and cell params here
 function isHeaderParams(p: unknown): p is AgGridHeaderParams {
     return !isEmpty(p) && (p as AgGridHeaderParams).displayName !== undefined;
 }

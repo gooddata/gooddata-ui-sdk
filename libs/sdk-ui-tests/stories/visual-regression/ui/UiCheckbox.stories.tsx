@@ -12,12 +12,13 @@ const propCombination = propCombinationsFor({} as UiCheckboxProps);
 
 const checked = propCombination("checked", [false, true]);
 const indeterminate = propCombination("indeterminate", [true, false], { checked: true });
+const labeled = propCombination("label", ["Checkbox with label"], { checked: true });
 
 function UiCheckboxExample({ showCode }: { showCode?: boolean }) {
     return (
         <div className="screenshot-target">
             <ComponentTable
-                rowsBy={[checked, indeterminate]}
+                rowsBy={[checked, indeterminate, labeled]}
                 Component={UiCheckbox}
                 codeSnippet={showCode ? "UiCheckbox" : undefined}
             />

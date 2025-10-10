@@ -8,13 +8,17 @@ import { useHeaderDrilling } from "./useHeaderDrilling.js";
 import { useHeaderMenuAggregations } from "./useHeaderMenuAggregations.js";
 import { useHeaderMenuSorting } from "./useHeaderMenuSorting.js";
 import { useHeaderMenuTextWrapping } from "./useHeaderMenuTextWrapping.js";
-import { AgGridHeaderParams } from "../../types/agGrid.js";
+import { AgGridHeaderGroupParams, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Hook for header cell components that handles menu item filtering.
  *
  * @param allowAggregations - Whether aggregation menu items should be included
  * @param allowTextWrapping - Whether text wrapping menu items should be included
+ * @param allowSorting - Whether sorting menu items should be included
+ * @param allowDrilling - Whether drilling menu items should be included
+ * @param includeHeaderWrapping - Whether header wrapping menu items should be included
+ * @param includeCellWrapping - Whether cell wrapping menu items should be included
  * @param measureIdentifiers - Array of measure identifiers for the cell
  * @param pivotAttributeDescriptors - Array of pivot attribute descriptors
  * @param gridApi - Optional ag-grid API for checking current state
@@ -26,14 +30,23 @@ export function useHeaderMenu(
         allowTextWrapping: boolean;
         allowSorting: boolean;
         allowDrilling: boolean;
+        includeHeaderWrapping: boolean;
+        includeCellWrapping: boolean;
     },
     additionalContext: {
         measureIdentifiers: string[];
         pivotAttributeDescriptors: IAttributeDescriptor[];
     },
-    agGridHeaderParams: AgGridHeaderParams | null,
+    agGridHeaderParams: AgGridHeaderParams | AgGridHeaderGroupParams | null,
 ) {
-    const { allowAggregations, allowTextWrapping, allowSorting, allowDrilling } = options;
+    const {
+        allowAggregations,
+        allowTextWrapping,
+        allowSorting,
+        allowDrilling,
+        includeHeaderWrapping,
+        includeCellWrapping,
+    } = options;
     const { measureIdentifiers, pivotAttributeDescriptors } = additionalContext;
 
     // Aggregations
@@ -47,7 +60,10 @@ export function useHeaderMenu(
         : { aggregationsItems: [], handleAggregationsItemClick: () => {} };
 
     // Text wrapping
-    const { textWrappingItems, handleTextWrappingItemClick } = useHeaderMenuTextWrapping();
+    const { textWrappingItems, handleTextWrappingItemClick } = useHeaderMenuTextWrapping(agGridHeaderParams, {
+        includeHeaderWrapping,
+        includeCellWrapping,
+    });
 
     const sanitizedTextWrappingProps = allowTextWrapping
         ? { textWrappingItems, handleTextWrappingItemClick }
