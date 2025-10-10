@@ -1,6 +1,21 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 08 Oct 2025 11:02:53 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Oct 2025 08:42:12 GMT and should not be manually modified.
+
+## 11.4.0
+
+Fri, 10 Oct 2025 08:42:12 GMT
+
+### Updates
+
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-kit]: Chatbot icon does not have enough contrast against the background
+- [sdk-ui-kit]: Upgrade codemirror
+- [sdk-ui-dashboard]: support KDA drill menu in graph with date attribute
+- Improve single select attribute filter
+- Fix issue with latest Safari not rendering dashboards visualizations.
 
 ## 11.3.0
 
