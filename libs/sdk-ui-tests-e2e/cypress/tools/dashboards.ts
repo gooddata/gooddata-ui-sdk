@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { WidgetDropZone } from "./enum/DropZone";
 import { LayoutRow } from "./layoutRow";
 import { Widget } from "./widget";
@@ -12,14 +13,6 @@ export class Dashboard {
     hasError(): this {
         cy.get(".s-error").should("exist");
         return this;
-    }
-
-    getTopBarElement(): Cypress.Chainable {
-        return cy.get(".s-top-bar");
-    }
-
-    getFilterBarElement(): Cypress.Chainable {
-        return cy.get(".s-gd-dashboard-filter-bar");
     }
 
     getDashboardBodyElement(): Cypress.Chainable {
@@ -123,10 +116,6 @@ export class TopBar {
         return this.getElement(".s-header-options-button");
     }
 
-    getDeleteButtonElement(): Cypress.Chainable {
-        return this.getElement(".s-delete_dashboard");
-    }
-
     enterEditMode() {
         cy.get(".s-top-bar .s-edit:not(.disabled)").click();
         return this;
@@ -140,10 +129,6 @@ export class TopBar {
     discardChanges() {
         cy.get(".s-discard_changes").click();
         return this;
-    }
-
-    getFilterBarElement(): Cypress.Chainable {
-        return this.getElement("");
     }
 
     dashboardTitleExist(exist = true): this {
@@ -171,11 +156,6 @@ export class TopBar {
         return this;
     }
 
-    hasDeleteButton(expect = true): this {
-        this.getDeleteButtonElement().should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
     menuButtonIsVisible(visible = true): this {
         this.getMenuButtonElement().should(visible ? "exist" : "not.exist");
         return this;
@@ -188,16 +168,6 @@ export class TopBar {
 
     clickMenuButton(): this {
         this.getMenuButtonElement().click({ force: true });
-        return this;
-    }
-
-    getDashboardTitleElement(): this {
-        cy.get(".s-gd-dashboard-title");
-        return this;
-    }
-
-    getMenuButtonItemElement(itemClass: string): this {
-        cy.get(`.${itemClass}`);
         return this;
     }
 
@@ -251,5 +221,3 @@ export class FilterBar {
         return this;
     }
 }
-
-export class DashboardBody {}

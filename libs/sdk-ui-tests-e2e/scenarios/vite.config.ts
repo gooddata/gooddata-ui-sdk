@@ -98,6 +98,7 @@ export default defineConfig(({ mode }) => {
         process.exit(1);
     }
 
+    // eslint-disable-next-line no-console
     console.log("Backend URI:", backendUrl, ", ", "Workspace to use:", workspace);
 
     return {

@@ -2,6 +2,8 @@
 
 import { ReactElement } from "react";
 
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import { DashboardInsight } from "./DashboardInsight.js";
 import { WithDrillSelect } from "../../../../drill/index.js";
 import { IDashboardInsightProps } from "../../types.js";
@@ -20,6 +22,8 @@ export function DashboardInsightWithDrillSelect(props: IDashboardInsightProps): 
         onDrillToDashboard,
     } = props;
 
+    const visualizationId = useIdPrefixed("visualization");
+
     return (
         <WithDrillSelect
             widgetRef={widget.ref}
@@ -31,9 +35,10 @@ export function DashboardInsightWithDrillSelect(props: IDashboardInsightProps): 
             onDrillToAttributeUrlSuccess={onDrillToAttributeUrl}
             onDrillToCustomUrlSuccess={onDrillToCustomUrl}
             onDrillToDashboardSuccess={onDrillToDashboard}
+            visualizationId={visualizationId}
         >
             {({ onDrill }) => {
-                return <DashboardInsight {...props} onDrill={onDrill} />;
+                return <DashboardInsight {...props} onDrill={onDrill} visualizationId={visualizationId} />;
             }}
         </WithDrillSelect>
     );

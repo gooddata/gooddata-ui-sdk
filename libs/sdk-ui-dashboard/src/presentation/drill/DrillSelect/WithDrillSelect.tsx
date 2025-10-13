@@ -53,6 +53,7 @@ export interface WithDrillSelectProps {
     widgetRef: ObjRef;
     insight: IInsight;
     closeBehavior?: IDrillSelectCloseBehavior;
+    visualizationId?: string;
     onDrillDownSuccess?: OnDrillDownSuccess;
     onDrillToInsightSuccess?: OnDrillToInsightSuccess;
     onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
@@ -70,6 +71,7 @@ export function WithDrillSelect({
     children,
     insight,
     closeBehavior,
+    visualizationId,
     onDrillDownSuccess,
     onDrillToInsightSuccess,
     onDrillToDashboardSuccess,
@@ -195,6 +197,7 @@ export function WithDrillSelect({
                 isOpen={isOpen}
                 onClose={handleClose}
                 onSelect={onSelect}
+                visualizationId={visualizationId}
             />
         </IntlWrapper>
     ) : null;

@@ -1,8 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-export const YAXIS_LABELS_SELECTOR =
-    ".highcharts-yaxis-labels text[text-anchor = 'middle'], .highcharts-yaxis-labels text[text-anchor = 'end']";
-export const XAXIS_LABELS_SELECTOR =
-    ".highcharts-xaxis-labels text[text-anchor = 'middle'], .highcharts-xaxis-labels text[text-anchor = 'end']";
+// (C) 2021-2025 GoodData Corporation
+
 const LEGEND_ICON_SELECTOR = ".viz-legend .series-icon";
 const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 
@@ -56,11 +53,6 @@ export class Chart {
             .should("have.class", className);
     }
 
-    hasCountOfDrillPoints(count: number) {
-        cy.get(".highcharts-drilldown-point").should("have.length", count);
-        return this;
-    }
-
     hasNoDataForFilter() {
         this.getContentElement().contains("No data for your filter selection").should("exist");
     }
@@ -78,38 +70,6 @@ export class Chart {
     hasDataLabelValues(labels: string[]) {
         this.getDataLabelValues().should("deep.equal", labels);
         return this;
-    }
-
-    clickAxisDrilldownLabel(axis: "x" | "y", index: number) {
-        this.getHighchartsContainer()
-            .find(`.highcharts-${axis}axis-labels .highcharts-drilldown-axis-label`)
-            .eq(index)
-            .click();
-        return this;
-    }
-
-    getYAxisLabelsElements() {
-        return cy.get(YAXIS_LABELS_SELECTOR);
-    }
-
-    getXAxisLabelElements() {
-        return cy.get(XAXIS_LABELS_SELECTOR);
-    }
-
-    getYAxisLabels() {
-        const result: string[] = [];
-        this.getYAxisLabelsElements().each(($li) => {
-            return result.push($li.text());
-        });
-        return cy.wrap(result);
-    }
-
-    getXAxisLabels() {
-        const result: string[] = [];
-        this.getXAxisLabelElements().each(($li) => {
-            return result.push($li.text());
-        });
-        return cy.wrap(result);
     }
 
     isHighchartsChart(isHighchartsChart: boolean = true) {

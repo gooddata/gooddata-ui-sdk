@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useMemo, useRef } from "react";
+
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
@@ -9,7 +11,7 @@ import { resolveRef } from "./utils.js";
  * @internal
  */
 export interface IUiReturnFocusOnUnmountOptions {
-    returnFocusTo?: string | RefObject<HTMLElement>;
+    returnFocusTo?: string | RefObject<HTMLElement> | (() => HTMLElement | null);
 }
 
 /**
@@ -34,28 +36,29 @@ export function UiReturnFocusOnUnmount({
 export const useUiReturnFocusOnUnmountConnectors = <T extends HTMLElement = HTMLElement>({
     returnFocusTo,
 }: IUiReturnFocusOnUnmountOptions = {}): IUiFocusHelperConnectors<T> => {
-    const returnFocusRef = useRef<HTMLElement | null>(null);
-    useEffect(() => {
-        returnFocusRef.current = resolveRef(returnFocusTo) ?? (document.activeElement as HTMLElement);
-    }, [returnFocusTo]);
+    const originalFocusRef = useRef<HTMLElement | null>(document.activeElement as HTMLElement);
+    const returnFocusToRef = useAutoupdateRef(returnFocusTo);
 
     const hasMountedRef = useRef(false);
 
-    const ref = useCallback((element: HTMLElement | null) => {
-        if (element) {
-            hasMountedRef.current = true;
-            return;
-        }
+    const ref = useCallback(
+        (element: HTMLElement | null) => {
+            if (element) {
+                hasMountedRef.current = true;
+                return;
+            }
 
-        const elementToFocus = resolveRef(returnFocusRef);
+            const elementToFocus = resolveRef(returnFocusToRef.current) ?? originalFocusRef.current;
 
-        if (!hasMountedRef.current || !elementToFocus) {
-            return;
-        }
+            if (!hasMountedRef.current || !elementToFocus) {
+                return;
+            }
 
-        elementToFocus.focus();
-        hasMountedRef.current = false;
-    }, []);
+            elementToFocus.focus();
+            hasMountedRef.current = false;
+        },
+        [returnFocusToRef],
+    );
 
     return useMemo(() => ({ ref }), [ref]);
 };

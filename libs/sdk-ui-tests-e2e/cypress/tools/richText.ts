@@ -3,10 +3,6 @@
 export class RichText {
     constructor(private parentSelector: string) {}
 
-    getParentElement() {
-        return cy.get(this.parentSelector);
-    }
-
     getContentElement() {
         return cy.get(`${this.parentSelector} .s-rich-text`);
     }
@@ -37,10 +33,6 @@ export class RichText {
 
     getConfirmButtonElement() {
         return cy.get(".s-screen-size-container").first();
-    }
-
-    getConfirmRemoveDialogElement() {
-        return cy.get(".s-delete_widget_dialog");
     }
 
     clickContent() {

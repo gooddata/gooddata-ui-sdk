@@ -154,3 +154,16 @@ export const makeHorizontalKeyboardNavigation = makeKeyboardNavigation({
     onFocusFirst: [{ code: "Home" }],
     onFocusLast: [{ code: "End" }],
 });
+
+/**
+ * @internal
+ */
+export const makeLinearKeyboardNavigationWithConfirm = makeKeyboardNavigation({
+    onFocusPrevious: [{ code: ["ArrowUp", "ArrowLeft"] }],
+    onFocusNext: [{ code: ["ArrowDown", "ArrowRight"] }],
+    onFocusFirst: [{ code: "Home" }],
+    onFocusLast: [{ code: "End" }],
+    onSelect: [{ code: "Space" }],
+    onConfirm: [{ code: "Enter" }],
+    onClose: [{ code: "Escape" }],
+});

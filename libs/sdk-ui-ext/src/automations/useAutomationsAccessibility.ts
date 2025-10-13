@@ -30,6 +30,9 @@ export function useAutomationsAccessibility(type: AutomationsType) {
                     { title },
                 );
             },
+            gridAriaLabel: intl.formatMessage(
+                isAlert ? messages.accessibilityGridLabelAlerts : messages.accessibilityGridLabelSchedules,
+            ),
         };
     }, [type, intl]);
 

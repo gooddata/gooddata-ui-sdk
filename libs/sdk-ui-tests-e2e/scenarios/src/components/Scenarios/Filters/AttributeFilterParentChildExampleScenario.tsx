@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import {
-    IAttributeElements,
     IAttributeFilter,
     attributeDisplayFormRef,
     idRef,
@@ -52,7 +51,7 @@ export function AttributeFilterParentChildExampleScenario() {
 
 function getCount(filter: IAttributeFilter) {
     if (isPositiveAttributeFilter(filter)) {
-        const filterIn = filter.positiveAttributeFilter.in as IAttributeElements;
+        const filterIn = filter.positiveAttributeFilter.in;
         if (isAttributeElementsByRef(filterIn)) {
             return filterIn.uris.length;
         }
@@ -61,7 +60,7 @@ function getCount(filter: IAttributeFilter) {
         }
     }
     if (isNegativeAttributeFilter(filter)) {
-        const filterIn = filter.negativeAttributeFilter.notIn as IAttributeElements;
+        const filterIn = filter.negativeAttributeFilter.notIn;
         if (isAttributeElementsByRef(filterIn)) {
             return filterIn.uris.length;
         }

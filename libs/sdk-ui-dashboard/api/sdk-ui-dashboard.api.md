@@ -4837,6 +4837,8 @@ export interface IDashboardInsightProps {
     onWidgetFiltersReady?: (filters?: IFilter[]) => void;
     // @internal (undocumented)
     pushData?: (data: IPushData) => void;
+    // @internal
+    visualizationId?: string;
     widget: IInsightWidget;
     // @alpha
     workspace?: string;
@@ -5311,6 +5313,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     LoadingComponent: ComponentType<ILoadingProps>;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
+    visualizationId?: string;
     widget: IInsightWidget;
     workspace: string;
 }
@@ -8711,6 +8714,9 @@ export const selectEffectiveDateFiltersModeMap: DashboardSelector<Map<string, Da
 // @alpha
 export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined>;
 
+// @internal
+export const selectEnableAccessibilityMode: DashboardSelector<boolean>;
+
 // @alpha (undocumented)
 export const selectEnableAlertAttributes: DashboardSelector<boolean>;
 
@@ -10178,12 +10184,6 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
 
 // @alpha
-export const useAutomationsInitialFocus: () => {
-    addButtonRef: RefObject<HTMLButtonElement | null>;
-    onAutomationsLoad: (items: Array<IAutomationMetadataObject>, isInitialState: boolean) => void;
-};
-
-// @alpha
 export const useAutomationsInvalidateRef: () => RefObject<() => void>;
 
 // @internal (undocumented)
@@ -10762,7 +10762,7 @@ export interface WidthResizerDragItem {
 }
 
 // @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, closeBehavior, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onError, }: WithDrillSelectProps): ReactElement;
+export function WithDrillSelect({ widgetRef, children, insight, closeBehavior, visualizationId, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onError, }: WithDrillSelectProps): ReactElement;
 
 // @internal (undocumented)
 export interface WithDrillSelectProps {
@@ -10786,6 +10786,8 @@ export interface WithDrillSelectProps {
     onDrillToInsightSuccess?: OnDrillToInsightSuccess;
     // (undocumented)
     onError?: (error: any) => void;
+    // (undocumented)
+    visualizationId?: string;
     // (undocumented)
     widgetRef: ObjRef;
 }

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { Ref, useCallback, useMemo } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -55,6 +55,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
 
             <div
                 role="grid"
+                aria-label={accessibilityConfig?.gridAriaLabel}
                 aria-rowcount={totalItemsCount}
                 aria-colcount={bulkActions ? columns.length + 1 : columns.length}
             >
@@ -144,7 +145,7 @@ const useAsyncTable = <T extends { id: string }>({
     }, [columns, bulkActions, widthProp, isLargeRow]);
 
     const renderItem = useCallback(
-        (item: T) => {
+        (item: T, focusedItemRef: Ref<HTMLElement>, isFocused: boolean, focusedColumnIndex?: number) => {
             return renderItemProp ? (
                 renderItemProp(item)
             ) : (
@@ -156,6 +157,9 @@ const useAsyncTable = <T extends { id: string }>({
                     hasCheckbox={!!bulkActions}
                     isLarge={isLargeRow}
                     onClick={onItemClick}
+                    isFocused={isFocused}
+                    focusedColumnIndex={focusedColumnIndex}
+                    focusedElementRef={focusedItemRef}
                     accessibilityConfig={accessibilityConfig}
                 />
             );
@@ -185,7 +189,6 @@ const useAsyncTable = <T extends { id: string }>({
                 width={width}
                 small={isSmall}
                 largeRow={isLargeRow}
-                accessibilityConfig={accessibilityConfig}
             />
         );
     }, [
@@ -198,7 +201,6 @@ const useAsyncTable = <T extends { id: string }>({
         sortDirection,
         isLargeRow,
         isSmall,
-        accessibilityConfig,
     ]);
 
     const renderEmptyState = useCallback(() => {

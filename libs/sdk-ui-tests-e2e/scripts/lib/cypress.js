@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // (C) 2021-2025 GoodData Corporation
+
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import { execSync, spawn } from "child_process";
@@ -122,6 +123,7 @@ export function runCypress(configParams = {}) {
         cypressProps["CYPRESS_TIGER_API_TOKEN"] = tigerApiToken;
     }
 
+    // eslint-disable-next-line no-console
     console.log("Going to run cypress with args: ", args);
     const cypressProcess = spawn(cypressCommand, args, {
         env: {

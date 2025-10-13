@@ -35,12 +35,14 @@ export const useDrillSelectDropdownMenuItems = ({
     crossFilteringItems,
     keyDriverAnalysisItems,
     onSelect,
+    onClose,
 }: {
     drillDownItems: DrillSelectItem[];
     drillItems: DrillSelectItem[];
     crossFilteringItems: DrillSelectItem[];
     keyDriverAnalysisItems: DrillSelectItem[];
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
+    onClose: () => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
 
@@ -49,6 +51,7 @@ export const useDrillSelectDropdownMenuItems = ({
             items: DrillSelectItem[],
             groupId: string,
             groupTitle: string,
+            closeOnSelect: boolean = false,
         ): IMenuInteractiveItem => ({
             type: "group" as const,
             id: groupId,
@@ -63,7 +66,12 @@ export const useDrillSelectDropdownMenuItems = ({
                     name: item.name,
                     attributeValue: item.attributeValue,
                     drillDefinition: item.drillDefinition,
-                    onSelect: () => onSelect(item.drillDefinition, item.context),
+                    onSelect: () => {
+                        onSelect(item.drillDefinition, item.context);
+                        if (closeOnSelect) {
+                            onClose();
+                        }
+                    },
                 },
             })),
         });
@@ -80,7 +88,14 @@ export const useDrillSelectDropdownMenuItems = ({
 
         const crossFilteringMenuItems =
             crossFilteringItems.length > 0
-                ? [createMenuGroup(crossFilteringItems, "cross-filter", groupMenuItemMessages.crossFilter.id)]
+                ? [
+                      createMenuGroup(
+                          crossFilteringItems,
+                          "cross-filter",
+                          groupMenuItemMessages.crossFilter.id,
+                          true,
+                      ),
+                  ]
                 : [];
 
         const keyDriverAnalysisMenu =
@@ -100,5 +115,13 @@ export const useDrillSelectDropdownMenuItems = ({
             ...crossFilteringMenuItems,
             ...keyDriverAnalysisMenu,
         ];
-    }, [drillDownItems, drillItems, crossFilteringItems, keyDriverAnalysisItems, formatMessage, onSelect]);
+    }, [
+        drillDownItems,
+        drillItems,
+        crossFilteringItems,
+        keyDriverAnalysisItems,
+        formatMessage,
+        onSelect,
+        onClose,
+    ]);
 };

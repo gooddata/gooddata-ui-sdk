@@ -1,6 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { DashboardsList } from "./dashboardsList";
 import { InsightsCatalog } from "./insightsCatalog";
 
 const EDIT_BUTTON_SELECTOR = ".s-edit_button";
@@ -49,11 +48,6 @@ export class EditMode {
         if (!expect) {
             cy.get(SAVING_EDIT_BUTTON_SELECTOR).should(expect ? "exist" : "not.exist");
         }
-        return this;
-    }
-
-    editNew() {
-        new DashboardsList().clickAddDashboard();
         return this;
     }
 

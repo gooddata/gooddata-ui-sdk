@@ -913,3 +913,15 @@ export const selectEnableSnapshotExport: DashboardSelector<boolean> = createSele
         return state.settings?.enableSnapshotExport ?? true;
     },
 );
+
+/**
+ * Selector for the accessible mode feature flag
+ *
+ * @internal
+ */
+export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableAccessibilityMode) ?? false;
+    },
+);

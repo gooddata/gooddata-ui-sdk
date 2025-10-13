@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { KeyboardEvent, MouseEvent } from "react";
 
 import {
     ASYNC_TABLE_ID_PREFIX,
@@ -32,7 +32,7 @@ export const getColumnHeaderId = (key: string) => {
 };
 
 export const stopPropagationCallback = <T extends HTMLElement>(
-    event: MouseEvent<T>,
+    event: MouseEvent<T> | KeyboardEvent<T>,
     callback?: () => void,
 ): void => {
     event.stopPropagation();

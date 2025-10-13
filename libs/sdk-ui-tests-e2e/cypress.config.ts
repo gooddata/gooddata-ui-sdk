@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
@@ -30,6 +31,7 @@ export default defineConfig({
                     }
                 },
                 log(message: string) {
+                    // eslint-disable-next-line no-console
                     console.log(message);
                     return null;
                 },

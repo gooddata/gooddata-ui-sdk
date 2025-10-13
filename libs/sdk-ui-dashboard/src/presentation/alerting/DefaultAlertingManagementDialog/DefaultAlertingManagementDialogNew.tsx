@@ -8,15 +8,7 @@ import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations, AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
-import {
-    Button,
-    ContentDivider,
-    Dialog,
-    Hyperlink,
-    Typography,
-    UiAutofocus,
-    useId,
-} from "@gooddata/sdk-ui-kit";
+import { Button, ContentDivider, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 
 import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
@@ -26,13 +18,12 @@ import {
     selectCanCreateAutomation,
     selectDashboardId,
     selectDashboardTitle,
+    selectEnableAccessibilityMode,
     selectEnableAutomationManagement,
     selectExternalRecipient,
-    selectIsAlertingDialogOpen,
     selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
     selectTimezone,
-    useAutomationsInitialFocus,
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -56,7 +47,6 @@ export function DefaultAlertingManagementDialogNew({
 }: IAlertingManagementDialogProps) {
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
-    const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     const intl = useIntl();
@@ -65,13 +55,13 @@ export function DefaultAlertingManagementDialogNew({
     const timezone = useDashboardSelector(selectTimezone);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const enableBulkActions = !useDashboardSelector(selectEnableAccessibilityMode);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
-    const { addButtonRef, onAutomationsLoad } = useAutomationsInitialFocus();
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -130,14 +120,13 @@ export function DefaultAlertingManagementDialogNew({
 
     const titleElementId = useId();
 
-    const autofocusKey = `${alertToDelete},${isEditingOpen},${isLoadingAlertingData}`;
-
     return (
         <>
             <Dialog
                 displayCloseButton
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
+                autofocusOnOpen
                 className={cx("gd-notifications-channels-management-dialog s-alerting-management-dialog", {
                     "gd-dialog--wide gd-notifications-channels-management-dialog--wide":
                         enableAutomationManagement,
@@ -161,42 +150,40 @@ export function DefaultAlertingManagementDialogNew({
                             </Typography>
                         </div>
                     )}
-                    <UiAutofocus refocusKey={autofocusKey}>
-                        {enableAutomationManagement ? (
-                            <Automations
-                                workspace={workspace}
-                                timezone={timezone}
-                                backend={backend}
-                                scope="workspace"
-                                type="alert"
-                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                                isSmall
-                                editAutomation={handleAlertEdit}
-                                preselectedFilters={{
-                                    dashboard: dashboardId
-                                        ? [{ value: dashboardId, label: dashboardTitle }]
-                                        : undefined,
-                                    externalRecipients: externalRecipientOverride
-                                        ? [{ value: externalRecipientOverride }]
-                                        : undefined,
-                                }}
-                                onLoad={onAutomationsLoad}
-                                availableFilters={availableFilters}
-                                locale={intl.locale}
-                                invalidateItemsRef={invalidateItemsRef}
-                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
-                            />
-                        ) : (
-                            <Alerts
-                                onDelete={handleAlertDeleteOpen}
-                                onEdit={handleAlertEdit}
-                                onPause={handleAlertPause}
-                                isLoading={isLoadingAlertingData}
-                                alerts={automations}
-                                noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
-                            />
-                        )}
-                    </UiAutofocus>
+                    {enableAutomationManagement ? (
+                        <Automations
+                            workspace={workspace}
+                            timezone={timezone}
+                            backend={backend}
+                            scope="workspace"
+                            type="alert"
+                            maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                            isSmall
+                            editAutomation={handleAlertEdit}
+                            preselectedFilters={{
+                                dashboard: dashboardId
+                                    ? [{ value: dashboardId, label: dashboardTitle }]
+                                    : undefined,
+                                externalRecipients: externalRecipientOverride
+                                    ? [{ value: externalRecipientOverride }]
+                                    : undefined,
+                            }}
+                            enableBulkActions={enableBulkActions}
+                            availableFilters={availableFilters}
+                            locale={intl.locale}
+                            invalidateItemsRef={invalidateItemsRef}
+                            selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                        />
+                    ) : (
+                        <Alerts
+                            onDelete={handleAlertDeleteOpen}
+                            onEdit={handleAlertEdit}
+                            onPause={handleAlertPause}
+                            isLoading={isLoadingAlertingData}
+                            alerts={automations}
+                            noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                        />
+                    )}
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className={`gd-buttons${isWhiteLabeled ? " gd-buttons--end" : ""}`}>
@@ -218,7 +205,6 @@ export function DefaultAlertingManagementDialogNew({
                         canCreateAutomation ? (
                             <Button
                                 onClick={handleAddAlert}
-                                ref={addButtonRef}
                                 className="gd-button-action s-add-alert-button"
                                 value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
                             />

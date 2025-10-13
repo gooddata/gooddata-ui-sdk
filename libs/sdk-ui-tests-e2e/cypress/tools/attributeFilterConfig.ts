@@ -5,12 +5,6 @@ import { Button } from "./Button";
 const ATTR_DISPLAY_FORM_BUTTON = ".s-attribute-display-form-button";
 
 export class AttributeFilterConfiguration {
-    constructor(private parentSelector: string) {}
-
-    getElementSelector() {
-        return this.parentSelector;
-    }
-
     clickElement(elementSelector: string): this {
         cy.get(elementSelector).click();
         return this;

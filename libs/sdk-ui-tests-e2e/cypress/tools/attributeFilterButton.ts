@@ -44,11 +44,6 @@ export class AttributeFilterButton {
         return this;
     }
 
-    statusHasAll(): this {
-        cy.get(".s-list-status-bar b").should("have.text", "All");
-        return this;
-    }
-
     statusHasNone(): this {
         cy.get(".s-list-status-bar b").should("have.text", "None");
         return this;
@@ -83,12 +78,6 @@ export class AttributeFilterButton {
         cy.get(".s-cancel").click();
         return this;
     }
-
-    scrollDown(): this {
-        cy.get(".ScrollbarLayout_main").trigger("wheel", {});
-        return this;
-    }
-
     waitElementsLoaded(): this {
         cy.get(".s-isLoading").should("not.exist");
         return this;

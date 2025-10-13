@@ -6,10 +6,6 @@ import { MDObjects } from "../support/getMDObjects";
 export type InsightTitle = keyof typeof MDObjects.Insights;
 export type DashboardName = keyof typeof MDObjects.Dashboards;
 
-export const isDashboardName = (name: string) => name in MDObjects.Dashboards;
-
-export const dashboardIdentifiers = MDObjects.Dashboards;
-
 export function splitCamelCaseToWords(str: string) {
     return str.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/\s./g, (match) => match.toLowerCase());
 }
@@ -75,12 +71,6 @@ export class InsightsCatalog {
             .parents(".gd-tab")
             .should(expect ? "have.class" : "not.have.class", "is-active");
         return this;
-    }
-
-    nothingFound(expect = true) {
-        cy.get(this.getElementSelector(".s-visualization-list-no-data-message")).should(
-            expect ? "be.visible" : "not.exist",
-        );
     }
 
     hasNoDataMessage() {

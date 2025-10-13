@@ -1,17 +1,30 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Item, ItemsWrapper, Separator, useToastMessage } from "@gooddata/sdk-ui-kit";
+import {
+    ItemsWrapper,
+    SingleSelectListItem,
+    UiFocusManager,
+    makeMenuKeyboardNavigation,
+    useToastMessage,
+} from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { messages } from "../messages.js";
 import { AutomationAction, AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
+
+interface IAutomationMenuItem {
+    id: string;
+    label: string;
+    onClick: () => void;
+    withSeparator?: boolean;
+}
 
 export function AutomationMenu({
     item,
@@ -46,6 +59,19 @@ export function AutomationMenu({
 }) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
+    const menuWrapperRef = useRef<HTMLDivElement>(null);
+    const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
+
+    const setMenuItemRef = useCallback(
+        (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => {
+            if (element) {
+                menuItemRefs.current.set(itemId, element);
+            } else {
+                menuItemRefs.current.delete(itemId);
+            }
+        },
+        [],
+    );
 
     const onEdit = useCallback(() => {
         closeDropdown();
@@ -98,43 +124,153 @@ export function AutomationMenu({
         addSuccess(messages.messageCopyIdSuccess);
     }, [item.id, addSuccess, closeDropdown]);
 
+    // Build menu items array
+    const menuItems = useMemo<IAutomationMenuItem[]>(() => {
+        const items: IAutomationMenuItem[] = [];
+
+        if (canManage) {
+            items.push({
+                id: "edit",
+                label: intl.formatMessage(messages.menuEdit),
+                onClick: onEdit,
+            });
+        }
+
+        if (isSubscribed) {
+            items.push({
+                id: "unsubscribe",
+                label: intl.formatMessage(messages.menuUnsubscribe),
+                onClick: onUnsubscribe,
+            });
+        }
+
+        if (canResume) {
+            items.push({
+                id: "resume",
+                label: intl.formatMessage(messages.menuResume),
+                onClick: onResume,
+            });
+        }
+
+        if (canPause) {
+            items.push({
+                id: "pause",
+                label: intl.formatMessage(messages.menuPause),
+                onClick: onPause,
+            });
+        }
+
+        items.push({
+            id: "copyId",
+            label: intl.formatMessage(messages.menuCopyId),
+            onClick: onCopyId,
+        });
+
+        if (canManage) {
+            items.push({
+                id: "delete",
+                label: intl.formatMessage(messages.menuDelete),
+                onClick: onDelete,
+                withSeparator: true,
+            });
+        }
+
+        return items;
+    }, [
+        canManage,
+        isSubscribed,
+        canResume,
+        canPause,
+        intl,
+        onEdit,
+        onUnsubscribe,
+        onResume,
+        onPause,
+        onCopyId,
+        onDelete,
+    ]);
+
+    // Keyboard navigation handler
+    const menuKeyboardNavigationHandler = useMemo(
+        () =>
+            makeMenuKeyboardNavigation({
+                onFocusFirst: () => {
+                    const elements = Array.from(menuItemRefs.current.values());
+                    if (elements.length > 0) {
+                        elements[0]?.focus();
+                    }
+                },
+                onFocusNext: () => {
+                    const elements = Array.from(menuItemRefs.current.values());
+                    const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
+                    const nextElement =
+                        currentIndex === elements.length - 1 ? elements[0] : elements[currentIndex + 1];
+                    nextElement?.focus();
+                },
+                onFocusPrevious: () => {
+                    const elements = Array.from(menuItemRefs.current.values());
+                    const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
+                    const previousElement =
+                        currentIndex <= 0 ? elements[elements.length - 1] : elements[currentIndex - 1];
+                    previousElement?.focus();
+                },
+                onClose: closeDropdown,
+                onSelect: () => {
+                    // Trigger click on the currently focused element
+                    const focusedElement = document.activeElement as HTMLElement;
+                    focusedElement?.click();
+                },
+            }),
+        [closeDropdown],
+    );
+
     return (
-        <ItemsWrapper smallItemsSpacing>
-            {canManage ? (
-                <AutomationMenuItem onClick={onEdit} label={intl.formatMessage(messages.menuEdit)} />
-            ) : null}
-            {isSubscribed ? (
-                <AutomationMenuItem
-                    onClick={onUnsubscribe}
-                    label={intl.formatMessage(messages.menuUnsubscribe)}
-                />
-            ) : null}
-            {canResume ? (
-                <AutomationMenuItem onClick={onResume} label={intl.formatMessage(messages.menuResume)} />
-            ) : null}
-            {canPause ? (
-                <AutomationMenuItem onClick={onPause} label={intl.formatMessage(messages.menuPause)} />
-            ) : null}
-            <Item onClick={onCopyId}>{intl.formatMessage(messages.menuCopyId)}</Item>
-            {canManage ? (
-                <>
-                    <Separator />
-                    <AutomationMenuItem onClick={onDelete} label={intl.formatMessage(messages.menuDelete)} />
-                </>
-            ) : null}
-        </ItemsWrapper>
+        <UiFocusManager enableAutofocus enableFocusTrap enableReturnFocusOnUnmount>
+            <div onKeyDown={menuKeyboardNavigationHandler}>
+                <ItemsWrapper smallItemsSpacing wrapperRef={menuWrapperRef}>
+                    <div role="menu">
+                        {menuItems.map((menuItem) => (
+                            <AutomationMenuItem
+                                key={menuItem.id}
+                                menuItem={menuItem}
+                                setMenuItemRef={setMenuItemRef}
+                            />
+                        ))}
+                    </div>
+                </ItemsWrapper>
+            </div>
+        </UiFocusManager>
     );
 }
 
 interface AutomationMenuItemProps {
-    onClick: () => void;
-    label: string;
+    menuItem: IAutomationMenuItem;
+    setMenuItemRef: (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => void;
 }
 
-function AutomationMenuItem({ onClick, label }: AutomationMenuItemProps) {
+function AutomationMenuItem({ menuItem, setMenuItemRef }: AutomationMenuItemProps) {
     return (
-        <Item className={b()} onClick={onClick}>
-            {label}
-        </Item>
+        <>
+            {menuItem.withSeparator ? (
+                <SingleSelectListItem
+                    type="separator"
+                    accessibilityConfig={{
+                        role: "separator",
+                    }}
+                />
+            ) : null}
+            <SingleSelectListItem
+                ref={setMenuItemRef(menuItem.id)}
+                className={b()}
+                title={menuItem.label}
+                onClick={menuItem.onClick}
+                elementType="button"
+                accessibilityConfig={{
+                    role: "menuitem",
+                    ariaDisabled: false,
+                    ariaHasPopup: "dialog",
+                }}
+            />
+        </>
     );
 }

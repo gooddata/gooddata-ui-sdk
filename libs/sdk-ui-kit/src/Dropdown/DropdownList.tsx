@@ -39,6 +39,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
 
     renderVirtualisedList?: boolean;
     onKeyDownSelect?: (item: T) => void;
+    onKeyDownConfirm?: (item: T) => void;
 
     isLoading?: boolean;
 
@@ -117,6 +118,7 @@ export function DropdownList<T>({
 
     renderVirtualisedList = false,
     onKeyDownSelect,
+    onKeyDownConfirm,
 
     isMobile,
     isLoading,
@@ -252,6 +254,7 @@ export function DropdownList<T>({
                                     itemPadding={0}
                                     skeletonItemsCount={0}
                                     onKeyDownSelect={onKeyDownSelect}
+                                    onKeyDownConfirm={onKeyDownConfirm}
                                     closeDropdown={closeDropdown}
                                 >
                                     {(item) => {

@@ -45,6 +45,7 @@ export interface IAutomationsProps {
     pageSize?: number;
     type?: AutomationsType;
     isSmall?: boolean;
+    enableBulkActions?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
@@ -174,6 +175,7 @@ export interface IAutomationsCoreProps {
     maxHeight: number;
     pageSize: number;
     isSmall: boolean;
+    enableBulkActions: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     locale: string;
     dashboardUrlBuilder: IDashboardUrlBuilder;
@@ -254,6 +256,7 @@ export interface IUseLoadAutomationsProps {
 export interface IUseAutomationBulkActionsProps {
     selected: IAutomationMetadataObject[];
     automationsType: AutomationsType;
+    enabled: boolean;
     bulkDeleteAutomations: AutomationBulkAction;
     bulkUnsubscribeFromAutomations: AutomationBulkAction;
     bulkPauseAutomations: AutomationBulkAction;

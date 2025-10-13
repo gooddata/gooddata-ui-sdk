@@ -221,7 +221,7 @@
         column-gap: var(--gd-spacing-5px);
         row-gap: var(--gd-spacing-5px);
         flex-shrink: 2;
-        overflow: hidden;
+        line-height: normal;
     }
 
     &__toolbar-selected-count {
@@ -355,5 +355,15 @@
         font-size: 14px;
         color: var(--gd-palette-complementary-5);
         line-height: 20px;
+    }
+
+    .gd-ui-kit-paged-virtual-list__list:focus-visible {
+        #{$root}__row--focused,
+        #{$root}__cell--focused {
+            @include mixins.focus-ring;
+            @supports (-webkit-hyphens: none) {
+                outline-offset: -5px;
+            }
+        }
     }
 }

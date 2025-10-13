@@ -108,31 +108,12 @@ export class Table {
             .find(`.s-cell-${row}-${column}`);
     }
 
-    existPivotTableColumnTotalCell(row: number, column: number, exist: boolean) {
-        this.getElement()
-            .find(".ag-body-viewport")
-            .find(`.gd-total-column.s-cell-${row}-${column}`)
-            .should(exist ? "exist" : "not.exist");
-
-        return this;
-    }
-
     existPivotTableFooterRow(row: number, exist: boolean) {
         return this.getElement()
             .find(".ag-floating-bottom")
             .find(".ag-floating-bottom-viewport")
             .find(`[row-index="b-${row}"]`)
             .should(exist ? "exist" : "not.exist");
-    }
-
-    existPivotTableColumnTotal(headerPosition: number, exist: boolean) {
-        this.getElement()
-            .find(".ag-header")
-            .find(".ag-header-viewport")
-            .find(`.gd-column-total.gd-column-group-header-${headerPosition}`)
-            .should(exist ? "exist" : "not.exist");
-
-        return this;
     }
 
     clickAggregationMenu(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
@@ -144,12 +125,6 @@ export class Table {
     addOrRemoveRowTotal(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
         this.clickAggregationMenu(element, aggregationItem);
         cy.get(".s-menu-aggregation-inner").contains("of all rows").click();
-        return this;
-    }
-
-    addOrRemoveColumnTotal(element: Cypress.Chainable<JQuery<HTMLElement>>, aggregationItem: TotalTypes) {
-        this.clickAggregationMenu(element, aggregationItem);
-        cy.get(".s-menu-aggregation-inner").contains("of all columns").click();
         return this;
     }
 
@@ -180,17 +155,6 @@ export class Table {
         const result = [] as string[];
         this.getElement()
             .find(`.gd-column-index-${columnIndex} .s-value`)
-            .each(($li) => {
-                result.push($li.text());
-            });
-        return cy.wrap(result);
-    }
-
-    getRowValues(rowIndex: number) {
-        this.waitLoaded();
-        const result = [] as string[];
-        this.getElement()
-            .find(`[row-index="${rowIndex}"] .s-value`)
             .each(($li) => {
                 result.push($li.text());
             });

@@ -40,7 +40,7 @@ export interface CatalogDetailProps extends CatalogDetailContentProps {
  */
 export function CatalogDetail({ open, onClose, dataTestId, zIndex, node, ...restProps }: CatalogDetailProps) {
     const intl = useIntl();
-    const focusRef = useRef<HTMLElement>(null);
+    const focusRef = useRef<HTMLButtonElement>(null);
 
     return (
         <UiDrawer

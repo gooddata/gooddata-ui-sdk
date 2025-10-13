@@ -11,15 +11,17 @@
     height: 100%;
     width: 100%;
 
-    &:focus-visible {
-        outline: none;
+    &__list {
+        &:focus-visible {
+            outline: none;
 
-        #{$root}__item--isFocused {
-            @include mixins.focus-ring;
+            #{$root}__item--isFocused {
+                @include mixins.focus-ring;
 
-            // Safari-specific: use -5px offset to prevent clipping
-            @supports (-webkit-hyphens: none) {
-                outline-offset: -5px;
+                // Safari-specific: use -5px offset to prevent clipping
+                @supports (-webkit-hyphens: none) {
+                    outline-offset: -5px;
+                }
             }
         }
     }

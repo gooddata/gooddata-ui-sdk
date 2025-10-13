@@ -41,6 +41,7 @@ export function Automations({
     pageSize = DEFAULT_PAGE_SIZE,
     type = "schedule",
     isSmall = false,
+    enableBulkActions = true,
     invalidateItemsRef,
     dashboardUrlBuilder = buildDashboardUrl,
     widgetUrlBuilder = buildWidgetUrl,
@@ -65,6 +66,7 @@ export function Automations({
                                         maxHeight={maxHeight}
                                         pageSize={pageSize}
                                         isSmall={isSmall}
+                                        enableBulkActions={enableBulkActions}
                                         dashboardUrlBuilder={dashboardUrlBuilder}
                                         widgetUrlBuilder={widgetUrlBuilder}
                                         editAutomation={editAutomation}

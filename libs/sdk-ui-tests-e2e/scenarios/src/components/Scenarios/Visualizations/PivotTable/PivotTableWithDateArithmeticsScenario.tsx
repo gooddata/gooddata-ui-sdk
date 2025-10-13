@@ -94,14 +94,14 @@ const measuresOfDatetimeDiffWithYear = [
     ReferenceMd.DiffOfYearPreviousAndNext,
 ];
 
-export interface PivotTableDateArithmeticsCoreProps {
+export interface IPivotTableDateArithmeticsCoreProps {
     measures?: IMeasure<IMeasureDefinition>[] | undefined;
     rows?: IAttribute[] | undefined;
     columns?: IAttribute[] | undefined;
     filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
 }
 
-function PivotTableDateArithmetics({ measures, rows, filters }: PivotTableDateArithmeticsCoreProps) {
+function PivotTableDateArithmetics({ measures, rows, filters }: IPivotTableDateArithmeticsCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

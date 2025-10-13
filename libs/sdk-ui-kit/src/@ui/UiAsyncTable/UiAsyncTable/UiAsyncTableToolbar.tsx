@@ -80,7 +80,11 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 <div className={e("toolbar-label")} id={ASYNC_TABLE_FILTER_LABEL_ID}>
                     {intl.formatMessage(messages["filterLabel"])}
                 </div>
-                <div className={e("toolbar-filters")} aria-labelledby={ASYNC_TABLE_FILTER_LABEL_ID}>
+                <div
+                    className={e("toolbar-filters")}
+                    role="group"
+                    aria-labelledby={ASYNC_TABLE_FILTER_LABEL_ID}
+                >
                     {filters.map((filter) => (
                         <UiAsyncTableFilter
                             isFiltersTooLarge={isFiltersTooLarge}
@@ -136,6 +140,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 indeterminate={isCheckboxIndeterminate}
                 disabled={isCheckboxDisabled}
                 ariaLabel={checkboxAriaLabel}
+                header
             />
         ) : null;
     }, [

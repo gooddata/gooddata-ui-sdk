@@ -15,7 +15,6 @@ import {
     Dialog,
     Hyperlink,
     Typography,
-    UiAutofocus,
     UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
@@ -29,6 +28,7 @@ import {
     selectCurrentUser,
     selectDashboardId,
     selectDashboardTitle,
+    selectEnableAccessibilityMode,
     selectEnableAutomationManagement,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
@@ -36,7 +36,6 @@ import {
     selectExternalRecipient,
     selectIsWhiteLabeled,
     selectTimezone,
-    useAutomationsInitialFocus,
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -71,6 +70,7 @@ export function ScheduledEmailManagementDialog({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const enableBulkActions = !useDashboardSelector(selectEnableAccessibilityMode);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -80,7 +80,6 @@ export function ScheduledEmailManagementDialog({
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
-    const { addButtonRef, onAutomationsLoad } = useAutomationsInitialFocus();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -123,7 +122,7 @@ export function ScheduledEmailManagementDialog({
         <>
             <Dialog
                 displayCloseButton
-                autofocusOnOpen={automations.length === 0}
+                autofocusOnOpen
                 onCancel={onClose}
                 className={cx(
                     "gd-notifications-channels-management-dialog s-scheduled-email-management-dialog",
@@ -145,31 +144,29 @@ export function ScheduledEmailManagementDialog({
                     {enableAutomationManagement ? (
                         <>
                             <ContentDivider />
-                            <UiAutofocus>
-                                <Automations
-                                    workspace={workspace}
-                                    timezone={timezone}
-                                    type="schedule"
-                                    backend={backend}
-                                    scope="workspace"
-                                    maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                                    isSmall
-                                    editAutomation={handleScheduleEdit}
-                                    preselectedFilters={{
-                                        dashboard: dashboardId
-                                            ? [{ value: dashboardId, label: dashboardTitle }]
-                                            : undefined,
-                                        externalRecipients: externalRecipientOverride
-                                            ? [{ value: externalRecipientOverride }]
-                                            : undefined,
-                                    }}
-                                    onLoad={onAutomationsLoad}
-                                    availableFilters={availableFilters}
-                                    locale={intl.locale}
-                                    invalidateItemsRef={invalidateItemsRef}
-                                    selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
-                                />
-                            </UiAutofocus>
+                            <Automations
+                                workspace={workspace}
+                                timezone={timezone}
+                                type="schedule"
+                                backend={backend}
+                                scope="workspace"
+                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                                isSmall
+                                editAutomation={handleScheduleEdit}
+                                preselectedFilters={{
+                                    dashboard: dashboardId
+                                        ? [{ value: dashboardId, label: dashboardTitle }]
+                                        : undefined,
+                                    externalRecipients: externalRecipientOverride
+                                        ? [{ value: externalRecipientOverride }]
+                                        : undefined,
+                                }}
+                                enableBulkActions={enableBulkActions}
+                                availableFilters={availableFilters}
+                                locale={intl.locale}
+                                invalidateItemsRef={invalidateItemsRef}
+                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                            />
                         </>
                     ) : (
                         <>
@@ -232,7 +229,6 @@ export function ScheduledEmailManagementDialog({
                                     <Button
                                         onClick={onAdd}
                                         disabled={isAddButtonDisabled}
-                                        ref={addButtonRef}
                                         value={intl.formatMessage({
                                             id: messages.scheduleManagementCreate.id!,
                                         })}

@@ -1851,6 +1851,10 @@
         "value": "Resume",
         "comment": "Menu item for resuming an automation"
     },
+    "automations.menu.ariaLabel": {
+        "value": "Automation menu for {title}",
+        "comment": "Accessibility label for the automation menu button that opens actions menu. {title} is the name of the automation. Example output: 'Automation menu for Weekly Sales Report'."
+    },
     "automations.icon.tooltip.header.schedule": {
         "value": "Export failed",
         "comment": "Header for schedule icon tooltip"
@@ -2186,5 +2190,13 @@
     "automations.accessibility.search.schedules": {
         "value": "Search scheduled exports",
         "comment": "Accessibility label for the search input field when searching through scheduled exports"
+    },
+    "automations.accessibility.gridLabel.alerts": {
+        "value": "List of alerts",
+        "comment": "Accessibility label for the alerts table grid, describing the content to screen readers"
+    },
+    "automations.accessibility.gridLabel.schedules": {
+        "value": "List of scheduled exports",
+        "comment": "Accessibility label for the scheduled exports table grid, describing the content to screen readers"
     }
 }

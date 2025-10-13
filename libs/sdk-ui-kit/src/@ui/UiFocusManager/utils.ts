@@ -7,8 +7,20 @@ import { NavigationDirection } from "./types.js";
 /**
  * @internal
  */
-export const resolveRef = (ref: string | RefObject<HTMLElement> | undefined | null) => {
-    return typeof ref === "string" ? document.getElementById(ref) : ref?.current;
+export const resolveRef = (ref: string | RefObject<HTMLElement> | (() => HTMLElement) | undefined | null) => {
+    if (!ref) {
+        return null;
+    }
+
+    if (typeof ref === "string") {
+        return document.getElementById(ref);
+    }
+
+    if ("current" in ref) {
+        return ref.current;
+    }
+
+    return ref() ?? null;
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 const TOOLTIP = ".s-attribute-filter-details-bubble";
 const TOOLTIP_HEADER = ".s-attribute-filter-tooltip-header";
@@ -21,11 +21,6 @@ export class AttributeFilterTooltip {
 
     hasDataSet(name: string) {
         this.getElement().find(`${TOOLTIP_ITEM}-dataset`).should("contain.text", name);
-        return this;
-    }
-
-    hasLabel(name: string) {
-        this.getElement().find(`${TOOLTIP_ITEM}-label`).should("contain.text", name);
         return this;
     }
 

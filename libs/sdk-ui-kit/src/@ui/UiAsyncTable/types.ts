@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 
 import { SortDirection } from "@gooddata/sdk-model";
 
@@ -13,6 +13,14 @@ export interface UiAsyncTableAccessibilityConfig<T> {
     getCheckboxItemAriaLabel?: (item: T) => string;
     checkboxAllAriaLabel?: string;
     searchAriaLabel?: string;
+    gridAriaLabel?: string;
+}
+
+/**
+ * @internal
+ */
+export interface UiAsyncTableColumnAccessibilityConfig {
+    ariaLabel?: string;
 }
 
 /**
@@ -94,6 +102,7 @@ export interface UiAsyncTableColumn<T> {
     bold?: boolean;
     sortable?: boolean;
     align?: "left" | "center" | "right";
+    getAccessibilityConfig?: (item: T) => UiAsyncTableColumnAccessibilityConfig;
 }
 
 /**
@@ -153,7 +162,6 @@ export interface UiAsyncTableHeaderProps<T> {
     width?: number;
     small?: boolean;
     largeRow?: boolean;
-    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
 export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
@@ -169,6 +177,9 @@ export interface UiAsyncTableRowProps<T extends { id: string }> {
     hasCheckbox?: boolean;
     isLarge?: boolean;
     isSelected?: boolean;
+    isFocused?: boolean;
+    focusedColumnIndex?: number;
+    focusedElementRef?: Ref<HTMLElement>;
     accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 
@@ -179,6 +190,8 @@ export type UiAsyncTableCheckboxProps = {
     disabled?: boolean;
     ariaLabel?: string;
     header?: boolean;
+    isCellFocused?: boolean;
+    cellRef?: Ref<HTMLElement>;
 };
 
 export interface UiAsyncTableToolbarProps<T extends { id: string }> {
@@ -226,7 +239,12 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
     scrollToIndex?: number;
     isLargeRow?: boolean;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
-    renderItem: (item: T) => ReactNode;
+    renderItem: (
+        item: T,
+        focusedItemRef: Ref<HTMLElement>,
+        isFocused: boolean,
+        focusedColumnIndex?: number,
+    ) => ReactNode;
 }
 
 /**

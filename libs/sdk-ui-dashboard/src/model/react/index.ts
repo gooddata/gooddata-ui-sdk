@@ -46,7 +46,6 @@ export { useWidgetScheduledExportFilters } from "./filtering/useWidgetScheduledE
 export type { IUseWidgetScheduledExportFiltersProps } from "./filtering/useWidgetScheduledExportFilters.js";
 export { useAutomationAvailableDashboardFilters } from "./filtering/useAutomationAvailableDashboardFilters.js";
 export { useAutomationsInvalidateRef } from "./useAutomationsInvalidateRef.js";
-export { useAutomationsInitialFocus } from "./useAutomationsInitialFocus.js";
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,

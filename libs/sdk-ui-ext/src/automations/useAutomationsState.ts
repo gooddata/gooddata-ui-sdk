@@ -25,6 +25,7 @@ export const useAutomationsState = ({
     preselectedFilters,
     invalidateItemsRef,
     isSmall,
+    enableBulkActions,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
@@ -62,6 +63,7 @@ export const useAutomationsState = ({
     const availableBulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
+        enabled: enableBulkActions,
         bulkDeleteAutomations,
         bulkUnsubscribeFromAutomations,
         bulkPauseAutomations,

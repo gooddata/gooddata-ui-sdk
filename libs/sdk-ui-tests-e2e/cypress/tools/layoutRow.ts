@@ -25,16 +25,6 @@ export class LayoutRow {
         return this;
     }
 
-    hasTitles(titles: string[]) {
-        this.hasWidgets(titles.length);
-
-        titles.forEach((title, itemIndex) => {
-            this.getItems().eq(itemIndex).find(".s-headline").should("have.text", title);
-        });
-
-        return this;
-    }
-
     getHeader() {
         return new SectionHeader(this.rowIndex);
     }
@@ -50,16 +40,6 @@ export class LayoutRow {
         catalog.searchExistingInsight(name);
         this.dragAndDropItems(catalog.getInsightSelector(name), `.s-last-drop-position`);
         catalog.clearSearch();
-        return this;
-    }
-
-    addInsightPlaceholder() {
-        this.dragAndDropItems(".s-add-insight", ".s-drag-info-placeholder-drop-target");
-        return this;
-    }
-
-    addKpiPlaceholder() {
-        this.dragAndDropItems(".s-add-kpi:not(.disabled)", ".s-drag-info-placeholder-drop-target");
         return this;
     }
 
