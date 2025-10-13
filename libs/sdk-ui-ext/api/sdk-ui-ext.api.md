@@ -106,7 +106,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, enableBulkActions, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -380,6 +380,8 @@ export interface IAutomationsProps {
     // (undocumented)
     editAutomation?: (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string) => void;
     // (undocumented)
+    enableBulkActions?: boolean;
+    // (undocumented)
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     // (undocumented)
     isSmall?: boolean;
@@ -557,6 +559,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     settings: IUserWorkspaceSettings | undefined;
     // (undocumented)
     theme?: ITheme;
+    visualizationId?: string;
     widget?: IInsightWidget;
 }
 

@@ -13,6 +13,7 @@ import { useUser } from "../UserContext.js";
 export const useAutomationBulkActions = ({
     selected,
     automationsType,
+    enabled,
     bulkDeleteAutomations,
     bulkUnsubscribeFromAutomations,
     bulkPauseAutomations,
@@ -141,5 +142,7 @@ export const useAutomationBulkActions = ({
         bulkResumeAutomations,
     ]);
 
-    return [...bulkDeleteAction, ...bulkUnsubscribeAction, ...bulkPauseAction, ...bulkResumeAction];
+    return enabled
+        ? [...bulkDeleteAction, ...bulkUnsubscribeAction, ...bulkPauseAction, ...bulkResumeAction]
+        : undefined;
 };

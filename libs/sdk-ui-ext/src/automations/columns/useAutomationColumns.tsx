@@ -185,6 +185,9 @@ export const useAutomationColumns = ({
                         />
                     );
                 },
+                getAccessibilityConfig: (item) => ({
+                    ariaLabel: intl.formatMessage(messages.menuLabel, { title: item.title }),
+                }),
             },
         }),
         [

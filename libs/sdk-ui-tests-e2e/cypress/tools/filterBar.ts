@@ -15,7 +15,6 @@ export const ATTRIBUTE_FILTER_SELECT_SELECTOR = ".s-attribute_select";
 export const ATTRIBUTE_FILTER_BODY_SELECTOR = ".attributes-list";
 export const ATTRIBUTE_FILTERS_SELECTOR = ".dash-filters-attribute:not(.dash-filters-date)";
 export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
-export const FILTER_BAR_SHOW_ALL_BUTTON = ".button-filter-bar-show-all";
 export const NO_RELEVANT_VALUES_SELECTOR = ".gd-attribute-filter-empty-filtered-result__next";
 export const DATE_FILTERS_SELECTOR = ".dash-filters-date";
 export const FILTER_BAR_RESET_FILTER = ".dash-filters-reset";
@@ -27,10 +26,6 @@ export class AttributeFilter {
     getElement() {
         const testClass = getTestClassByTitle(this.name);
         return cy.get(`.dash-filters-attribute ${testClass}`);
-    }
-
-    getDeleteButton() {
-        return cy.get(".s-delete-button");
     }
 
     select(name?: string): AttributeFilter {
@@ -215,16 +210,6 @@ export class AttributeFilter {
         return this;
     }
 
-    checkFilter(name: string) {
-        const testClass = getTestClassByTitle(name ?? this.name);
-        cy.get(`.is-selected${testClass}`);
-        return this;
-    }
-
-    addAttribute(name: string): AttributeFilter {
-        return new FilterBar().addAttribute(name);
-    }
-
     removeFilter() {
         const dataTransfer = new DataTransfer();
         this.getElement().trigger("dragstart", { dataTransfer });
@@ -299,14 +284,6 @@ export class AttributeFilter {
 
     closeConfiguration() {
         this.getDropdownElement().find(".s-cancel").click();
-        return this;
-    }
-
-    changeAttributeLabel(label: string) {
-        this.selectConfiguration();
-        cy.get(".s-attribute-display-form-button").click();
-        cy.get("div:not(.is-selected).gd-list-item span").contains(label).click();
-
         return this;
     }
 
@@ -410,11 +387,6 @@ export class AttributeFilter {
 
     isLockedIconVisible(expected = true) {
         this.getLockedIcon().should(expected ? "be.visible" : "not.exist");
-        return this;
-    }
-
-    hoverOnLockedIcon() {
-        this.getLockedIcon().trigger("mouseover");
         return this;
     }
 
@@ -586,20 +558,6 @@ export class AttributeFilter {
 export class FilterBar {
     getElement() {
         return cy.get(FILTER_BAR_SELECTOR);
-    }
-
-    allVisible(expect: boolean): FilterBar {
-        this.getElement().should(expect ? "have.class" : "not.have.class", "s-dash-filters-visible-all");
-        return this;
-    }
-
-    getShowAllButton() {
-        return cy.get(FILTER_BAR_SHOW_ALL_BUTTON);
-    }
-
-    toggleShowAll(): FilterBar {
-        this.getShowAllButton().click();
-        return this;
     }
 
     addAttribute(name: string): AttributeFilter {

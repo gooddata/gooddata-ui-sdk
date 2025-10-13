@@ -443,7 +443,7 @@ export function DropdownButton({ id, className, accessibilityConfig, value, titl
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, isMobile, isLoading, items, itemsCount, itemHeight, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
@@ -1782,6 +1782,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     maxHeight?: number;
     // (undocumented)
     mobileItemHeight?: number;
+    // (undocumented)
+    onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
     // (undocumented)
@@ -5159,7 +5161,7 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 // @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
-    returnFocusTo?: string | RefObject<HTMLElement>;
+    returnFocusTo?: string | RefObject<HTMLElement> | (() => HTMLElement | null);
 }
 
 // @internal (undocumented)
@@ -5654,7 +5656,7 @@ export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 export const relatedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
-export const resolveRef: (ref: string | RefObject<HTMLElement> | undefined | null) => HTMLElement;
+export const resolveRef: (ref: string | RefObject<HTMLElement> | (() => HTMLElement) | undefined | null) => HTMLElement;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
@@ -5952,6 +5954,8 @@ export interface UiAsyncTableAccessibilityConfig<T> {
     // (undocumented)
     getCheckboxItemAriaLabel?: (item: T) => string;
     // (undocumented)
+    gridAriaLabel?: string;
+    // (undocumented)
     searchAriaLabel?: string;
 }
 
@@ -5972,6 +5976,8 @@ export interface UiAsyncTableColumn<T> {
     align?: "left" | "center" | "right";
     // (undocumented)
     bold?: boolean;
+    // (undocumented)
+    getAccessibilityConfig?: (item: T) => UiAsyncTableColumnAccessibilityConfig;
     // (undocumented)
     getMultiLineTextContent?: (item: T) => Array<string>;
     // (undocumented)
@@ -6000,6 +6006,12 @@ export interface UiAsyncTableColumn<T> {
     sortable?: boolean;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface UiAsyncTableColumnAccessibilityConfig {
+    // (undocumented)
+    ariaLabel?: string;
 }
 
 // @internal (undocumented)
@@ -6545,7 +6557,7 @@ export const UiPagedVirtualList: <T>(props: UiPagedVirtualListProps<T> & RefAttr
 // @internal (undocumented)
 export interface UiPagedVirtualListProps<T> {
     // (undocumented)
-    children: (item: T) => ReactNode;
+    children: (item: T, focusedIndex?: number) => ReactNode;
     // (undocumented)
     closeDropdown?: () => void;
     // (undocumented)
@@ -6574,6 +6586,8 @@ export interface UiPagedVirtualListProps<T> {
     loadNextPage?: () => void;
     // (undocumented)
     maxHeight: number;
+    // (undocumented)
+    onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
     // (undocumented)

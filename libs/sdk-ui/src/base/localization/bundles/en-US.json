@@ -3015,10 +3015,6 @@
         "value": "Back to the parent menu",
         "comment": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."
     },
-    "table.moreActions": {
-        "value": "More",
-        "comment": "Accessibility label for the ellipsis menu button in table rows"
-    },
     "table.title.searchPlaceholder": {
         "value": "Search...",
         "comment": "Placeholder text for the search input field in the table title"
@@ -3046,6 +3042,18 @@
     "table.filter.error.tooLarge": {
         "value": "<strong>Error:</strong> Selection across filters too large — deselect some values and try again.",
         "comment": "Error message shown when the selection across filters is too large"
+    },
+    "table.header.ariaLabel": {
+        "value": "Header",
+        "comment": "ARIA label for the table header row, used by screen readers to identify the header section of the table"
+    },
+    "table.header.checkbox.ariaLabel": {
+        "value": "Select action",
+        "comment": "ARIA label for the checkbox column header in tables with bulk actions, used by screen readers"
+    },
+    "table.header.menu.ariaLabel": {
+        "value": "Actions",
+        "comment": "ARIA label for the menu/actions column header in tables, used by screen readers"
     },
     "table.bulkActions.chooseAction": {
         "value": "Choose an action...",

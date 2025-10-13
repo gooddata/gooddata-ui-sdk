@@ -13,7 +13,6 @@ const STAGE_NAME_FILTER_SELECTOR = ".s-attribute-filter.s-stage_name";
 
 const SAVE_CONFIGURATION_BUTTON_SELECTOR = ".s-attribute-filter-dropdown-configuration-save-button";
 const ITEM_SALES_REP_SELECTOR = ".s-attribute-filter-dropdown-configuration-item.s-sales_rep";
-const CONFIGURATION_SELECTOR = ".s-attribute-filter-dropdown-configuration";
 const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-order";
 
 describe("Attribute filter", () => {
@@ -31,7 +30,7 @@ describe("Attribute filter", () => {
 
             parentAttributeFilters.getParentFilter().open().openConfiguration();
 
-            const configuration = new AttributeFilterConfiguration(CONFIGURATION_SELECTOR);
+            const configuration = new AttributeFilterConfiguration();
             configuration
                 .isSaveButtonDisabled()
                 .clickElement(ITEM_SALES_REP_SELECTOR)
@@ -52,7 +51,7 @@ describe("Attribute filter", () => {
 
             parentAttributeFilters.getParentFilter().open().openConfiguration();
 
-            const configuration = new AttributeFilterConfiguration(CONFIGURATION_SELECTOR);
+            const configuration = new AttributeFilterConfiguration();
 
             configuration.clickElement(ITEM_SALES_REP_SELECTOR).isConnectingAttributeDropdown();
             configuration.clickElement(".gd-button.s-opp__snapshot").isConnectingDropdownOpen();
@@ -70,7 +69,7 @@ describe("Attribute filter", () => {
 
             attributeFilter.open().openConfiguration();
 
-            const configuration = new AttributeFilterConfiguration(CONFIGURATION_SELECTOR);
+            const configuration = new AttributeFilterConfiguration();
             configuration
                 .clickElement(".s-attribute-display-form-button")
                 .selectDisplayForm(".gd-list-item.s-attribute-display-form-name-subject")
@@ -93,7 +92,7 @@ describe("Attribute filter", () => {
 
                 attributeFilter.open().openConfiguration();
 
-                const configuration = new AttributeFilterConfiguration(CONFIGURATION_SELECTOR);
+                const configuration = new AttributeFilterConfiguration();
                 configuration
                     .toggleDisplayFormButton()
                     .selectDisplayForm(ORDER_DISPLAY_FORM_VALUE)

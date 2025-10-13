@@ -1,10 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 const SAVE_AS_NEW_SELECTOR = ".s-save_as_new";
 const SAVE_AS_NEW_DIALOG = ".save-as-new-dialog";
 const CONFIRM_BUTTON = ".s-create_dashboard";
 const INPUT_DASHBOARD_TITLE = ".dashboard-title";
-const LOCK_STATUS = ".s-locked-status";
 
 export class DashboardHeader {
     getEditButtonElement(): Cypress.Chainable {
@@ -22,20 +21,6 @@ export class DashboardHeader {
 
     shareButtonExists(exist = true): this {
         this.getShareButtonElement().should(exist ? "exist" : "not.exist");
-        return this;
-    }
-
-    hasTitle(title: string) {
-        cy.get(".s-dash-title").should("contain.text", title);
-        return this;
-    }
-
-    getEditableTitleElement() {
-        return cy.get(".s-dash-title-editable-label");
-    }
-
-    hasEditableTitle(title: string) {
-        this.getEditableTitleElement().should("contain.text", title);
         return this;
     }
 
@@ -59,21 +44,6 @@ export class DashboardHeader {
 
     isTitleFocused() {
         this.getDashboardTitleElement().find("textarea").should("be.focused");
-        return this;
-    }
-
-    setTitle(newTitle: string) {
-        this.getEditableTitleElement().click().type(`${newTitle}{enter}`);
-        return this;
-    }
-
-    hasPrivateShareStatus(expect = true) {
-        cy.get(".s-share-status").should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
-    hasLockedStatusVisible(expect = true) {
-        cy.get(LOCK_STATUS).should(expect ? "be.visible" : "not.exist");
         return this;
     }
 

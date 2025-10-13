@@ -1,6 +1,9 @@
 // (C) 2025 GoodData Corporation
 
+import { Ref } from "react";
+
 import { getColumnHeaderId, stopPropagationCallback } from "./utils.js";
+import { isActionKey } from "../../../utils/events.js";
 import { UiCheckbox } from "../../UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableCheckboxProps } from "../types.js";
@@ -11,17 +14,24 @@ export function UiAsyncTableCheckbox({
     indeterminate,
     disabled,
     ariaLabel,
+    isCellFocused,
     header,
+    cellRef,
 }: UiAsyncTableCheckboxProps) {
     return (
         <div
-            className={e("cell", { checkbox: true })}
-            role={header ? "columnheader" : "gridcell"}
-            id={header ? getColumnHeaderId("checkbox") : undefined}
+            className={e("cell", { checkbox: true, focused: isCellFocused })}
+            role={"gridcell"}
             aria-labelledby={header ? undefined : getColumnHeaderId("checkbox")}
             onClick={(e) => {
                 stopPropagationCallback(e, onChange);
             }}
+            onKeyDown={(e) => {
+                if (isActionKey(e)) {
+                    stopPropagationCallback(e, onChange);
+                }
+            }}
+            ref={cellRef as Ref<HTMLDivElement>}
         >
             <UiCheckbox
                 checked={checked}
@@ -29,6 +39,7 @@ export function UiAsyncTableCheckbox({
                 indeterminate={indeterminate}
                 disabled={disabled}
                 accessibilityConfig={ariaLabel ? { ariaLabel } : undefined}
+                tabIndex={header ? 0 : -1}
             />
         </div>
     );

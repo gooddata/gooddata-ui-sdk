@@ -14,14 +14,6 @@ export class AttributeFilterLimit {
         return this.getElement().find(".attribute-filter__limit__popup__list--searchable");
     }
 
-    getListFilterDependency() {
-        return this.getElement().find(".attribute-filter__limit__popup__list");
-    }
-
-    getListFilterDependencyName() {
-        return this.getListFilterDependency().find(".attribute-filter__limit__item__name");
-    }
-
     selectMetricItem(item: string) {
         this.getListFilterByMetric()
             .find(".attribute-filter__limit__popup__item[title='" + item + "']")

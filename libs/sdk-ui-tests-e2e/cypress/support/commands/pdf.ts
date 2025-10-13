@@ -3,7 +3,7 @@
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/naming-convention
         interface Chainable<Subject> {
             /**
              * # Read PDF

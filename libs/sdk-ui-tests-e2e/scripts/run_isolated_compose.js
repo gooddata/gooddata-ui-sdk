@@ -29,6 +29,7 @@ async function main() {
             COMMIT_INFO_MESSAGE,
         } = process.env;
 
+        // eslint-disable-next-line no-console
         console.log("ZUUL_PIPELINE:", ZUUL_PIPELINE, "COMMIT_INFO_MESSAGE:", COMMIT_INFO_MESSAGE);
 
         const specFilesFilter = FILTER

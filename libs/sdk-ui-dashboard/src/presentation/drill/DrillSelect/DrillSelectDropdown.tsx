@@ -54,6 +54,7 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
     isOpen: boolean;
     onClose: () => void;
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
+    visualizationId?: string;
 }
 
 export function DrillSelectDropdown({
@@ -63,6 +64,7 @@ export function DrillSelectDropdown({
     onSelect,
     drillDefinitions,
     drillEvent,
+    visualizationId,
 }: DrillSelectDropdownProps) {
     const intl = useIntl();
 
@@ -169,6 +171,7 @@ export function DrillSelectDropdown({
         keyDriverAnalysisItems: grouped["keyDriverAnalysis"] ?? [],
         drillItems: grouped["drill"] ?? [],
         onSelect,
+        onClose,
     });
 
     if (!isOpen) {
@@ -178,14 +181,41 @@ export function DrillSelectDropdown({
     return (
         <div className="gd-drill-modal-picker-overlay-mask">
             <Overlay closeOnOutsideClick closeOnEscape alignTo={`.${dropDownAnchorClass}`} onClose={onClose}>
-                <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
+                <UiFocusManager
+                    enableFocusTrap
+                    enableAutofocus
+                    enableReturnFocusOnUnmount={
+                        visualizationId
+                            ? {
+                                  returnFocusTo: () => {
+                                      // Charts are rebuilt when the filter changes, which makes them lose focus.
+                                      // We need to refocus after a bit of delay.
+
+                                      window.setTimeout(() => {
+                                          if (document.activeElement !== document.body) {
+                                              // Ugly hack. If the chart is not rebuilt, we don't want to mess with the focus.
+                                              return;
+                                          }
+
+                                          const element = document.getElementById(visualizationId);
+                                          const viz = element?.querySelector("[tabindex='0']");
+                                          (viz as HTMLElement)?.focus();
+                                      }, 150);
+                                      return null;
+                                  },
+                              }
+                            : undefined
+                    }
+                >
                     <div
                         onScroll={stopPropagation}
                         className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"
                     >
                         <UiMenu
                             items={menuItems}
-                            onSelect={(item) => onSelect(item.data.drillDefinition!, item.data.context!)}
+                            onSelect={(item) => {
+                                item.data.onSelect();
+                            }}
                             shouldCloseOnSelect={false}
                             onClose={onClose}
                             onUnhandledKeyDown={handleKeyDown}

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { spawn } from "child_process";
 
 async function main() {
+    // eslint-disable-next-line no-console
     console.log("Process environment PWD", process.env.PWD);
 
     const editorNginxProcess = spawn("docker", [

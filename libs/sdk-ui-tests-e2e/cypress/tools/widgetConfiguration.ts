@@ -1,12 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import {
-    DashboardName,
-    InsightTitle,
-    getInsightSelectorFromInsightTitle,
-    isDashboardName,
-    splitCamelCaseToWords,
-} from "./insightsCatalog";
 import { Widget } from "./widget";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 
@@ -23,12 +16,6 @@ export class WidgetConfiguration {
 
     open() {
         new Widget(this.widgetIndex, this.section).getElement().click();
-        this.getElement().should("be.visible");
-        return this;
-    }
-
-    openOnKPI() {
-        new Widget(this.widgetIndex).getElement().click("top");
         this.getElement().should("be.visible");
         return this;
     }
@@ -79,17 +66,6 @@ export class WidgetConfiguration {
     openConfiguration() {
         this.getElement().contains("Configuration").click();
         this.getElement().find(".s-viz-filters-headline").should("be.visible");
-        return this;
-    }
-
-    editInsight() {
-        this.getElement().contains("Edit").click();
-        return this;
-    }
-
-    closeConfiguration() {
-        this.getElement().contains("Configuration").click();
-        this.getElement().find(".s-viz-filters-headline").should("not.exist");
         return this;
     }
 
@@ -148,11 +124,6 @@ export class WidgetConfiguration {
         return this;
     }
 
-    toggleHideTitle() {
-        this.getElement().find(".s-hide-title-configuration .input-checkbox").click();
-        return this;
-    }
-
     clickLoadedDateDatasetButton() {
         this.getElement()
             .find(".s-date-dataset-button")
@@ -178,49 +149,12 @@ export class WidgetConfiguration {
         return this;
     }
 
-    hasDateFilterOptionDisabled(expect = true) {
-        this.getElement()
-            .find(".s-date-filter-checkbox")
-            .should(expect ? "be.disabled" : "not.be.disabled");
-        return this;
-    }
-
-    hasInteractionsCount(count: number) {
-        cy.get(".s-drill-config-item").should("have.length", count);
-    }
-
     getDrillConfigItem(itemName: string) {
         return new DrillConfigItem(itemName);
     }
 
-    checkEdit() {
-        cy.contains("Edit").click();
-        cy.getIframeBody("#adOverlay").find(".gd-table-component").should("be.visible");
-        cy.getIframeBody("#adOverlay")
-            .find(".s-cancel-edit-from-kd")
-            .should("not.have.class", "disabled")
-            .click();
-        return this;
-    }
-
     removeFromDashboard() {
         cy.get(".s-delete-insight-item").click();
-        return this;
-    }
-
-    switchWidgetDescriptionMode(mode: string) {
-        this.getElement().find(".s-description-config-dropdown-button").click();
-        cy.get(`.s-${mode}`).click();
-        return this;
-    }
-
-    hasDescriptionField(text: string) {
-        this.getElement().find(".gd-input-field").should("have.text", text);
-        return this;
-    }
-
-    setDescriptionField(text: string) {
-        this.getElement().find(".gd-input-field").clear().type(text);
         return this;
     }
 
@@ -254,33 +188,6 @@ class DrillConfigItem {
         return this;
     }
 
-    chooseTargetInsight(insightName: InsightTitle) {
-        this.getElement().find(".s-visualization-button-target-insight").click();
-
-        cy.get(".s-open-visualizations input").type(splitCamelCaseToWords(insightName));
-        cy.get(".s-open-visualizations .s-isLoading").should("exist");
-        cy.get(".s-open-visualizations .s-isLoading").should("not.exist");
-
-        cy.get(
-            `.s-open-visualizations .gd-visualizations-list-item${getInsightSelectorFromInsightTitle(
-                insightName,
-            )}`,
-        )
-            .should("exist")
-            .click();
-
-        return this;
-    }
-
-    chooseTargetDashboard(dashboardName: string) {
-        this.getElement().find(".s-dashboards-dropdown-button").click();
-
-        cy.get(".dropdown-body .gd-input").type(dashboardName);
-        cy.get(".s-dashboards-dropdown-body .gd-list-item").contains(dashboardName).click();
-
-        return this;
-    }
-
     remove() {
         this.getElement().find(".s-drill-config-item-delete").click();
         return this;
@@ -297,63 +204,9 @@ class DrillConfigItem {
         return this;
     }
 
-    hasDateFilterTransferWarning(expected = true) {
-        this.getElement()
-            .find(".s-drill-config-date-filter-warning")
-            .should(expected ? "exist" : "not.exist");
-        return this;
-    }
-
-    hasDashboardTarget(target: DashboardName | string) {
-        this.getElement()
-            .find(".s-drill-config-panel-target-button")
-            .should("contain.text", "Drill into dashboard");
-        this.getElement()
-            .find(".s-dashboards-dropdown-button")
-            .should("contain.text", isDashboardName(target) ? splitCamelCaseToWords(target) : target);
-        return this;
-    }
-
-    hasInsightTarget(target: InsightTitle) {
-        this.getElement()
-            .find(".s-drill-config-panel-target-button")
-            .should("contain.text", "Drill into insight");
-        this.getElement()
-            .find(".s-visualization-button-target-insight")
-            .should("contain.text", splitCamelCaseToWords(target));
-        return this;
-    }
-
     hasWarning(warning: string) {
         this.getElement().find(".s-drill-config-target-warning").should("contain.text", warning);
         return this;
-    }
-}
-
-export class DrillConfigItemDrillToUrlDropdown {
-    getElement() {
-        return cy.get(".s-gd-drill-to-url-body");
-    }
-
-    getDrillToAttributeItemElement(attributeName: string) {
-        return this.getElement()
-            .find(".s-drill-to-attribute-url-option")
-            .contains(attributeName)
-            .parent(".s-drill-to-attribute-url-option");
-    }
-
-    selectDrillToAttributeUrl(attributeName: string) {
-        this.getDrillToAttributeItemElement(attributeName).click();
-        return this;
-    }
-
-    drillToAttributeSelected(attributeName: string) {
-        this.getDrillToAttributeItemElement(attributeName).should("have.class", "is-selected");
-        return this;
-    }
-
-    hasDrillToCustomUrlOption(url: string) {
-        this.getElement().find(".s-drill-to-custom-url-option").contains(url.slice(0, 50)).should("exist");
     }
 }
 

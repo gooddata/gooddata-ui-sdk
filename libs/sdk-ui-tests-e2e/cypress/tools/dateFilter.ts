@@ -31,12 +31,6 @@ export type RelativePreset =
     | "this-week"
     | "this-year";
 
-export type AbsolutePreset =
-    | "christmas-2011"
-    | "christmas-2012"
-    | "hidden-absolute-preset"
-    | "hidden-absolute-preset-2";
-
 export class DateFilter {
     constructor(private title = "Date range") {
         this.title = title;
@@ -54,11 +48,6 @@ export class DateFilter {
 
     selectAbsoluteForm(): this {
         this.getElement(".s-absolute-form").click();
-        return this;
-    }
-
-    selectAbsolutePreset(preset: AbsolutePreset) {
-        this.getOption(`.s-absolute-preset-${preset}`).click();
         return this;
     }
 
@@ -116,33 +105,12 @@ export class DateFilter {
         cy.get(".time-switcher").click();
     }
 
-    timeSwitcherHasValue(value: string): Cypress.Chainable {
-        return cy.get(".time-switcher").should("have.text", value);
-    }
-
-    hasRelativePreset(preset: RelativePreset, expect = true) {
-        this.getOption(`.s-relative-preset-${preset}`).should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
-    hasAbsolutePreset(preset: AbsolutePreset, expect = true) {
-        this.getOption(`.s-absolute-preset-${preset}`).should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
     private getOption(selector: string) {
         return this.getDropdownElement().find(selector);
     }
 
     apply() {
         this.getDropdownElement().find(".s-date-filter-apply").click();
-        return this;
-    }
-
-    applyEnabled(expect = true) {
-        this.getDropdownElement()
-            .find(".s-date-filter-apply")
-            .should(expect ? "not.have.class" : "have.class", "disabled");
         return this;
     }
 

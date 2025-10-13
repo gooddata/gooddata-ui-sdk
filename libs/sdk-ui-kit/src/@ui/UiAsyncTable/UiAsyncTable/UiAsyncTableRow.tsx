@@ -1,8 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useCallback } from "react";
-
-import { useIntl } from "react-intl";
+import { ReactNode, Ref, useCallback } from "react";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
@@ -11,8 +9,12 @@ import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { e } from "../asyncTableBem.js";
-import { messages } from "../locales.js";
-import { UiAsyncTableColumn, UiAsyncTableMenuRenderer, UiAsyncTableRowProps } from "../types.js";
+import {
+    UiAsyncTableColumn,
+    UiAsyncTableColumnAccessibilityConfig,
+    UiAsyncTableMenuRenderer,
+    UiAsyncTableRowProps,
+} from "../types.js";
 
 export function UiAsyncTableRow<T extends { id: string }>({
     item,
@@ -22,32 +24,43 @@ export function UiAsyncTableRow<T extends { id: string }>({
     isSelected,
     hasCheckbox,
     isLarge,
+    isFocused,
+    focusedColumnIndex,
+    focusedElementRef,
     accessibilityConfig,
 }: UiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge });
-
+    const isRowFocused = isFocused && focusedColumnIndex === undefined;
     return (
-        <div onClick={() => onClick?.(item)} className={e("row", { large: isLarge })} role="row">
+        <div
+            onClick={() => onClick?.(item)}
+            className={e("row", { large: isLarge, focused: isRowFocused })}
+            ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
+            role="row"
+        >
             {hasCheckbox ? (
                 <UiAsyncTableCheckbox
                     checked={isSelected}
                     onChange={() => onSelect(item)}
                     ariaLabel={accessibilityConfig?.getCheckboxItemAriaLabel?.(item)}
+                    isCellFocused={isFocused ? focusedColumnIndex === 0 : null}
+                    cellRef={isFocused && focusedColumnIndex === 0 ? focusedElementRef : undefined}
                 />
             ) : null}
             {columns.map((column, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
                 const width = getColumnWidth(!!renderMenu, isLarge, widthProp);
-                const key = index;
+                const totalColumnIndex = index + (hasCheckbox ? 1 : 0);
+                const isCellFocused = isFocused && focusedColumnIndex === totalColumnIndex;
                 return (
                     <div
                         style={{ width }}
-                        key={key}
-                        className={e("cell", { bold, align: column.align })}
+                        key={index}
+                        className={e("cell", { bold, align: column.align, focused: isCellFocused })}
                         role="gridcell"
                         aria-labelledby={getColumnHeaderId(String(column.key ?? index))}
                     >
-                        {renderCellContent(column, item)}
+                        {renderCellContent(column, item, focusedElementRef, isCellFocused)}
                     </div>
                 );
             })}
@@ -56,8 +69,6 @@ export function UiAsyncTableRow<T extends { id: string }>({
 }
 
 const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: boolean }) => {
-    const intl = useIntl();
-
     const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => ReactNode, item: T) => {
         return (
             <UiAsyncTableIconRenderer renderIcon={renderRoleIcon} className={e("role-icon")} item={item} />
@@ -89,8 +100,14 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
     }, []);
 
     const renderMenuIcon = useCallback(
-        (renderMenu: UiAsyncTableMenuRenderer<T>, item: T) => {
-            const label = intl.formatMessage(messages["moreActions"]);
+        (
+            renderMenu: UiAsyncTableMenuRenderer<T>,
+            accessibilityConfig: UiAsyncTableColumnAccessibilityConfig,
+            item: T,
+            focusedElementRef: Ref<HTMLElement>,
+            isCellFocused: boolean,
+        ) => {
+            const label = accessibilityConfig?.ariaLabel;
             return (
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen }) => {
@@ -104,11 +121,18 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                                 onClick={(e) => {
                                     stopPropagationCallback(e, toggleDropdown);
                                 }}
+                                dataTestId="more"
                                 isActive={isOpen}
                                 isDisabled={isDisabled}
+                                tabIndex={-1}
                                 accessibilityConfig={{
+                                    ariaHaspopup: true,
+                                    ariaExpanded: isOpen,
                                     ariaLabel: label,
                                 }}
+                                ref={
+                                    isCellFocused ? (focusedElementRef as Ref<HTMLButtonElement>) : undefined
+                                }
                             />
                         );
                     }}
@@ -117,7 +141,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 />
             );
         },
-        [intl, isLarge],
+        [isLarge],
     );
 
     const renderTextContent = useCallback(
@@ -160,6 +184,8 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
+            focusedElementRef: Ref<HTMLElement>,
+            isCellFocused: boolean,
         ) => {
             const textContent = renderTextContent(
                 item,
@@ -174,9 +200,17 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 : typeof textContent === "string"
                   ? textContent
                   : "";
+
+            const isActive = !!getTextHref;
             return (
                 <WithConditionalAnchor href={getTextHref?.(item)}>
-                    <div title={title} className={e("text", { "multi-line": !!getMultiLineTextContent })}>
+                    <div
+                        title={title}
+                        ref={
+                            isActive && isCellFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined
+                        }
+                        className={e("text", { "multi-line": !!getMultiLineTextContent })}
+                    >
                         {textContent}
                     </div>
                 </WithConditionalAnchor>
@@ -198,16 +232,27 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 getMultiLineTextContent,
                 getTextTitle,
                 getTextHref,
+                getAccessibilityConfig,
                 key,
             }: UiAsyncTableColumn<T>,
             item: T,
+            focusedElementRef: Ref<HTMLElement>,
+            isCellFocused: boolean,
         ) => {
+            const accessibilityConfig = getAccessibilityConfig?.(item);
+
             if (renderButton) {
                 return renderButton(item);
             }
 
             if (renderMenu) {
-                return renderMenuIcon(renderMenu, item);
+                return renderMenuIcon(
+                    renderMenu,
+                    accessibilityConfig,
+                    item,
+                    focusedElementRef,
+                    isCellFocused,
+                );
             }
 
             return (
@@ -222,6 +267,8 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                         getTextTitle,
                         getTextHref,
                         renderSuffixIcon,
+                        focusedElementRef,
+                        isCellFocused,
                     )}
                     {renderBadgeWithWrapper(renderBadge, item)}
                     {getMultiLineTextContent ? null : renderSuffixIconWithWrapper(renderSuffixIcon, item)}

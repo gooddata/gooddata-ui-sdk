@@ -71,6 +71,8 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                 onSearch={setSearchValue}
                                 renderVirtualisedList
                                 onKeyDownSelect={(item) => onItemClick(item, closeDropdown)}
+                                onKeyDownConfirm={onApplyFactory(closeDropdown)}
+                                closeDropdown={closeDropdown}
                             />
                             {isMultiSelect ? (
                                 <div className={e("filter-bottom")}>

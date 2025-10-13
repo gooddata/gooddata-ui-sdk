@@ -291,6 +291,7 @@ export type {
     UiAsyncTableTitleAction,
     UiAsyncTableEmptyStateProps,
     UiAsyncTableAccessibilityConfig,
+    UiAsyncTableColumnAccessibilityConfig,
 } from "./@ui/UiAsyncTable/types.js";
 
 export {

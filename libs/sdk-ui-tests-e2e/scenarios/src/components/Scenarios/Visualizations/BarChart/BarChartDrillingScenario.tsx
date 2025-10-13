@@ -56,13 +56,13 @@ function BarChartDrilling({ drillableItems }: IBarChartDrillingProps) {
     );
 }
 
-interface DrillItems {
+interface IDrillItems {
     id: string;
     label: string;
     drillableItems: ExplicitDrill[] | undefined;
 }
 
-const drillExamples: DrillItems[] = [
+const drillExamples: IDrillItems[] = [
     {
         id: "localId-measure-drilling",
         label: "localId measure drilling",
@@ -86,7 +86,7 @@ const drillExamples: DrillItems[] = [
 ];
 
 export function BarChartDrillingScenario() {
-    const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
+    const [currentDrillExample, setCurrentDrillExample] = useState<IDrillItems>(drillExamples[0]);
 
     return (
         <div>

@@ -93,14 +93,14 @@ const filtersOfCreatedYearAndSaleRep2Values = [
     newPositiveAttributeFilter("attr.f_owner.salesrep", ["Adam Bradley", "Alejandro Vabiano"]),
 ];
 
-export interface PivotTableFirstValueLastValueCoreProps {
+export interface IPivotTableFirstValueLastValueCoreProps {
     measure?: IMeasure<IMeasureDefinition>[] | undefined;
     row?: IAttribute[] | undefined;
     column?: IAttribute[] | undefined;
     config: IPivotTableConfig;
 }
 
-function PivotTableFirstValueLastValue({ measures, rows, filters }: PivotTableFirstValueLastValueCoreProps) {
+function PivotTableFirstValueLastValue({ measures, rows, filters }: IPivotTableFirstValueLastValueCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

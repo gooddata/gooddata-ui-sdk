@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 export const enum TotalTypes {
     SUM = "Sum",
@@ -7,13 +7,4 @@ export const enum TotalTypes {
     AVG = "Avg",
     MEDIAN = "Median",
     ROLLUP = "Rollup (Total)",
-}
-
-export const enum TotalTypeClasses {
-    SUM = "sum",
-    MAX = "max",
-    MIN = "min",
-    AVG = "avg",
-    MEDIAN = "med",
-    ROLLUP = "nat",
 }

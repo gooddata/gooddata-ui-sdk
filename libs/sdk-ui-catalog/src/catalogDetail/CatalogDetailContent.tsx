@@ -2,21 +2,22 @@
 
 import { type MouseEvent, type RefObject, useMemo, useState } from "react";
 
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { ErrorComponent, LoadingComponent, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { EditableLabel, UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } from "@gooddata/sdk-ui-kit";
+import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { UiButton, type UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
+import { CatalogDetailHeader } from "./CatalogDetailHeader.js";
+import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
+import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
-import {
-    CatalogItemLockMemo,
-    type ICatalogItem,
-    type ICatalogItemRef,
-    canEditCatalogItem,
-} from "../catalogItem/index.js";
-import { type ObjectType, ObjectTypeIconMemo } from "../objectType/index.js";
+import { type ICatalogItem, type ICatalogItemRef, canEditCatalogItem } from "../catalogItem/index.js";
+import { type ObjectType } from "../objectType/index.js";
 import { usePermissionsState } from "../permission/index.js";
+
+const Tabs = {
+    METADATA: "metadata",
+} as const;
 
 /**
  * @internal
@@ -74,6 +75,10 @@ export interface CatalogDetailContentProps {
     onCatalogItemUpdateError?: (error: Error) => void;
 }
 
+type Props = CatalogDetailContentProps & {
+    focusRef?: RefObject<HTMLButtonElement | null>;
+};
+
 /**
  * @internal
  */
@@ -86,9 +91,7 @@ export function CatalogDetailContent({
     onTagClick,
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
-}: CatalogDetailContentProps & {
-    focusRef?: RefObject<HTMLElement | null>;
-}) {
+}: Props) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
 
@@ -107,224 +110,67 @@ export function CatalogDetailContent({
 
     const canEdit = canEditCatalogItem(permissionsState.result?.permissions, item);
 
-    const tabs = useMemo(
-        () =>
-            [
-                {
-                    id: "details",
-                    label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.details" }),
-                },
-            ] as UiTab[],
+    const tabs: UiTab[] = useMemo(
+        () => [
+            {
+                id: Tabs.METADATA,
+                label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.details" }),
+            },
+        ],
         [intl],
     );
-    const [selectedTab, setSelectedTab] = useState(tabs[0]);
+    const [selectedTabId, setSelectedTabId] = useState<UiTab["id"]>(Tabs.METADATA);
 
     return (
         <div className="gd-analytics-catalog-detail">
-            {status === "loading" || status === "pending" ? (
-                <div className="gd-analytics-catalog-detail__loading">
-                    <LoadingComponent />
-                </div>
-            ) : null}
-            {status === "error" && error ? (
-                <div className="gd-analytics-catalog-detail__error">
-                    <ErrorComponent
-                        message={intl.formatMessage({ id: "analyticsCatalog.error.unknown.message" })}
-                        description={error.message}
-                    />
-                </div>
-            ) : null}
-            {status === "success" && item ? (
-                <div className="gd-analytics-catalog-detail__content">
-                    <UiCard elevation="1">
-                        <div className="gd-analytics-catalog-detail__card">
-                            <div className="gd-analytics-catalog-detail__card__header">
-                                <div className="gd-analytics-catalog-detail__card__header__title">
-                                    <ObjectTypeIconMemo
-                                        type={item.type ?? "analyticalDashboard"}
-                                        visualizationType={item.visualizationType}
-                                        size={32}
-                                    />
-                                    {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
-                                    <div className="gd-analytics-catalog-detail__card__header__title__name">
-                                        {canEdit ? (
-                                            <EditableLabel
-                                                isEditableLabelWidthBasedOnText
-                                                placeholder={intl.formatMessage({
-                                                    id: "analyticsCatalog.catalogItem.title.add",
-                                                })}
-                                                onSubmit={updateItemTitle}
-                                                value={item.title}
-                                                maxRows={9999}
-                                            >
-                                                {item.title ||
-                                                    intl.formatMessage({
-                                                        id: "analyticsCatalog.catalogItem.title.add",
-                                                    })}
-                                                <i className="gd-icon-pencil" />
-                                            </EditableLabel>
-                                        ) : (
-                                            <>{item.title}</>
-                                        )}
-                                    </div>
-                                </div>
-                                {canEdit ? (
-                                    <div className="gd-analytics-catalog-detail__card__header__row">
-                                        <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
-                                            <FormattedMessage id="analyticsCatalog.catalogItem.description" />
-                                        </div>
-                                        <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                            <EditableLabel
-                                                maxRows={9999}
-                                                placeholder={intl.formatMessage({
-                                                    id: "analyticsCatalog.catalogItem.description.add",
-                                                })}
-                                                isEditableLabelWidthBasedOnText
-                                                onSubmit={updateItemDescription}
-                                                value={item.description}
-                                            >
-                                                {item.description ||
-                                                    intl.formatMessage({
-                                                        id: "analyticsCatalog.catalogItem.description.add",
-                                                    })}
-                                                <i className="gd-icon-pencil" />
-                                            </EditableLabel>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {item.description ? (
-                                            <div className="gd-analytics-catalog-detail__card__header__row">
-                                                <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
-                                                    <FormattedMessage id="analyticsCatalog.catalogItem.description" />
-                                                </div>
-                                                <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                                    {item.description}
-                                                </div>
-                                            </div>
-                                        ) : null}
-                                    </>
-                                )}
-                                <div>
-                                    <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
-                                        <FormattedMessage id="analyticsCatalog.catalogItem.id" />
-                                    </div>
-                                    <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                        {item.identifier}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="gd-analytics-catalog-detail__card__actions">
+            <CatalogDetailStatus status={status} error={error}>
+                {item ? (
+                    <div className="gd-analytics-catalog-detail__content">
+                        <CatalogDetailHeader
+                            item={item}
+                            canEdit={canEdit}
+                            updateItemTitle={updateItemTitle}
+                            updateItemDescription={updateItemDescription}
+                            actions={
                                 <UiButton
                                     label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
                                     variant="primary"
-                                    ref={focusRef as RefObject<HTMLButtonElement>}
-                                    onClick={(e) => {
-                                        onOpenClick?.(e, {
+                                    ref={focusRef}
+                                    onClick={(event) => {
+                                        onOpenClick?.(event, {
                                             item,
                                             workspaceId,
-                                            newTab: e.metaKey || e.ctrlKey,
-                                            preventDefault: e.preventDefault.bind(e),
+                                            newTab: event.metaKey || event.ctrlKey,
+                                            preventDefault: event.preventDefault.bind(event),
                                         });
                                     }}
                                 />
-                            </div>
-                        </div>
-                    </UiCard>
-                    <UiTabs
-                        size="large"
-                        tabs={tabs}
-                        onTabSelect={setSelectedTab}
-                        selectedTabId={selectedTab?.id ?? ""}
-                    />
-                    <div className="gd-analytics-catalog-detail__tab-content">
-                        {item.dataSet ? (
-                            <CatalogDetailContentRow
-                                title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
-                                content={item.dataSet.title}
-                            />
-                        ) : null}
-                        <CatalogDetailContentRow
-                            title={<FormattedMessage id="analyticsCatalog.column.title.createdBy" />}
-                            content={item.createdBy ?? undefined}
-                        />
-                        <CatalogDetailContentRow
-                            title={<FormattedMessage id="analyticsCatalog.column.title.createdAt" />}
-                            content={
-                                item.createdAt ? (
-                                    <UiDate date={item.createdAt} locale={intl.locale} />
-                                ) : undefined
                             }
                         />
-                        {item.createdBy === item.updatedBy && !item.updatedBy ? null : (
-                            <CatalogDetailContentRow
-                                title={<FormattedMessage id="analyticsCatalog.column.title.updatedBy" />}
-                                content={item.updatedBy ?? undefined}
-                            />
-                        )}
-                        {item.createdAt?.getTime() === item.updatedAt?.getTime() ? null : (
-                            <CatalogDetailContentRow
-                                title={<FormattedMessage id="analyticsCatalog.column.title.updatedAt" />}
-                                content={
-                                    item.updatedAt ? (
-                                        <UiDate date={item.updatedAt} locale={intl.locale} />
-                                    ) : undefined
-                                }
-                            />
-                        )}
-                        <CatalogDetailContentRow
-                            title={<FormattedMessage id="analyticsCatalog.column.title.tags" />}
-                            content={
-                                <>
-                                    <UiTags
-                                        tags={item.tags.map((tag) => ({
-                                            id: tag,
-                                            label: tag,
-                                            isDeletable: canEdit,
-                                        }))}
-                                        canCreateTag={canEdit}
-                                        canDeleteTags={canEdit}
-                                        mode="multi-line"
-                                        onTagClick={(tag) => {
-                                            onTagClick?.(tag.label);
-                                        }}
-                                        onTagAdd={(tag) => {
-                                            updateItemTags([...item.tags, tag.label]);
-                                        }}
-                                        onTagRemove={(tag) => {
-                                            updateItemTags(item.tags.filter((t) => t !== tag.label));
-                                        }}
-                                        addLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.addLabel",
-                                        })}
-                                        nameLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.nameLabel",
-                                        })}
-                                        cancelLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.cancelLabel",
-                                        })}
-                                        saveLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.saveLabel",
-                                        })}
-                                        removeLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.removeLabel",
-                                        })}
-                                        moreLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.more",
-                                        })}
-                                        noTagsLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.noTags",
-                                        })}
-                                        closeLabel={intl.formatMessage({
-                                            id: "analyticsCatalog.tags.manager.label.close",
-                                        })}
-                                    />
-                                </>
-                            }
+                        <UiTabs
+                            size="large"
+                            tabs={tabs}
+                            onTabSelect={(tab) => setSelectedTabId(tab.id)}
+                            selectedTabId={selectedTabId}
                         />
+                        {selectedTabId === Tabs.METADATA && (
+                            <CatalogDetailTabMetadata
+                                item={item}
+                                canEdit={canEdit}
+                                onTagClick={(tag) => {
+                                    onTagClick?.(tag.label);
+                                }}
+                                onTagAdd={(tag) => {
+                                    updateItemTags([...item.tags, tag.label]);
+                                }}
+                                onTagRemove={(tag) => {
+                                    updateItemTags(item.tags.filter((t) => t !== tag.label));
+                                }}
+                            />
+                        )}
                     </div>
-                </div>
-            ) : null}
+                ) : null}
+            </CatalogDetailStatus>
         </div>
     );
 }

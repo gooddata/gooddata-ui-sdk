@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 type Granularity = "day" | "month" | "quarter" | "year";
 
@@ -15,11 +15,6 @@ export class DateFilterRelativeForm {
 
     openFromRangePicker(): this {
         this.getElement(".s-relative-range-picker-from").click();
-        return this;
-    }
-
-    openToRangePicker(): this {
-        this.getElement(".s-relative-range-picker-to").click();
         return this;
     }
 

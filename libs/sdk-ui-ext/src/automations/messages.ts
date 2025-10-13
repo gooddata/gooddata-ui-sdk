@@ -137,6 +137,9 @@ export const messages = defineMessages({
     menuResume: {
         id: "automations.menu.resume",
     },
+    menuLabel: {
+        id: "automations.menu.ariaLabel",
+    },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",
     },
@@ -400,6 +403,12 @@ export const messages = defineMessages({
     },
     accessibilitySearchSchedules: {
         id: "automations.accessibility.search.schedules",
+    },
+    accessibilityGridLabelAlerts: {
+        id: "automations.accessibility.gridLabel.alerts",
+    },
+    accessibilityGridLabelSchedules: {
+        id: "automations.accessibility.gridLabel.schedules",
     },
 });
 

@@ -3,7 +3,6 @@
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
-    moreActions: { id: "table.moreActions" },
     titleSearchPlaceholder: { id: "table.title.searchPlaceholder" },
     filterLabel: { id: "table.filter.label" },
     filterSearchPlaceholder: { id: "table.filter.searchPlaceholder" },
@@ -17,4 +16,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     tryAdjustingFilters: { id: "table.emptyState.tryAdjustingFilters" },
     selectedFiltersCount: { id: "table.bulkActions.selectedFiltersCount" },
     filterTooLarge: { id: "table.filter.error.tooLarge" },
+    headerAriaLabel: { id: "table.header.ariaLabel" },
+    checkboxHeaderAriaLabel: { id: "table.header.checkbox.ariaLabel" },
+    menuHeaderAriaLabel: { id: "table.header.menu.ariaLabel" },
 });

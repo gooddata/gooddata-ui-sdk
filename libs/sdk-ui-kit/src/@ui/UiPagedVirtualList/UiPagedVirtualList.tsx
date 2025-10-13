@@ -19,7 +19,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 
 import { bem } from "../@utils/bem.js";
-import { makeLinearKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { makeLinearKeyboardNavigationWithConfirm } from "../@utils/keyboardNavigation.js";
 import { ListWithActionsFocusStore } from "../hooks/useListWithActionsFocus.js";
 import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
@@ -46,6 +46,7 @@ export interface UiPagedVirtualListProps<T> {
     loadNextPage?: () => void;
     customKeyboardNavigationHandler?: (event: KeyboardEvent<Element>) => void;
     onKeyDownSelect?: (item: T) => void;
+    onKeyDownConfirm?: (item: T) => void;
     closeDropdown?: () => void;
     isLoading?: boolean;
     /**
@@ -62,7 +63,7 @@ export interface UiPagedVirtualListProps<T> {
     scrollToItemKeyExtractor?: (item: T) => string | number;
     scrollToIndex?: number;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
-    children: (item: T) => ReactNode;
+    children: (item: T, focusedIndex?: number) => ReactNode;
     scrollbarHoverEffect?: boolean;
     SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
     representAs?: "grid" | "listbox";
@@ -93,6 +94,7 @@ function UiPagedVirtualListNotWrapped<T>(
         itemPadding,
         tabIndex = 0,
         onKeyDownSelect,
+        onKeyDownConfirm,
         closeDropdown,
         customKeyboardNavigationHandler,
         children,
@@ -123,6 +125,7 @@ function UiPagedVirtualListNotWrapped<T>(
     const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
         items,
         onKeyDownSelect,
+        onKeyDownConfirm,
         closeDropdown,
     );
     const ListElement = representAs === "grid" ? "div" : "ul";
@@ -143,6 +146,7 @@ function UiPagedVirtualListNotWrapped<T>(
                 style={{ height, paddingTop: itemsGap }}
             >
                 <ListElement
+                    className={e("list")}
                     style={{
                         height: `${rowVirtualizer.getTotalSize()}px`,
                         width: "100%",
@@ -186,14 +190,18 @@ function UiPagedVirtualListNotWrapped<T>(
                         return (
                             <ItemElement
                                 key={virtualRow.index}
-                                className={e("item", { isFocused: finalFocusedIndex === virtualRow.index })}
+                                className={e("item", {
+                                    isFocused:
+                                        !customKeyboardNavigationHandler &&
+                                        finalFocusedIndex === virtualRow.index,
+                                })}
                                 style={style}
                                 {...itemProps}
                             >
                                 {isSkeletonItem ? (
                                     <SkeletonItem key={virtualRow.index} itemHeight={itemHeight} />
                                 ) : (
-                                    children(item!)
+                                    children(item!, virtualRow.index)
                                 )}
                                 {itemsGap !== 0 && <div className={e("gap")} style={{ height: itemsGap }} />}
                             </ItemElement>
@@ -336,6 +344,7 @@ function useVirtualList<T>({
 function useVirtualListKeyboardNavigation<T>(
     items: T[],
     onKeyDownSelect?: (item: T) => void,
+    onKeyDownConfirm?: (item: T) => void,
     closeDropdown?: () => void,
 ) {
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
@@ -346,7 +355,7 @@ function useVirtualListKeyboardNavigation<T>(
 
     const virtualListKeyboardNavigationHandler = useMemo(
         () =>
-            makeLinearKeyboardNavigation({
+            makeLinearKeyboardNavigationWithConfirm({
                 onFocusNext: () => {
                     setFocusedIndex((prevIndex) => {
                         const nextIndex = prevIndex + 1;
@@ -373,14 +382,22 @@ function useVirtualListKeyboardNavigation<T>(
                 },
                 onSelect: () => {
                     onKeyDownSelect?.(items[focusedIndex]);
-                    closeDropdown?.();
+                },
+                onConfirm: () => {
+                    if (onKeyDownConfirm) {
+                        onKeyDownConfirm(items[focusedIndex]);
+                    } else {
+                        // If onKeyDownConfirm is not provided, call onKeyDownSelect on Enter
+                        onKeyDownSelect?.(items[focusedIndex]);
+                    }
                 },
                 onClose: (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     closeDropdown?.();
                 },
             }),
-        [items, focusedIndex, onKeyDownSelect, closeDropdown],
+        [items, focusedIndex, onKeyDownSelect, onKeyDownConfirm, closeDropdown],
     );
 
     return {

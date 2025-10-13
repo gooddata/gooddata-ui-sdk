@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Chart } from "./chart";
-import { Headline } from "./headline";
 import { InsightTitle, InsightsCatalog } from "./insightsCatalog";
 import { Kpi } from "./kpi";
 import { RichText } from "./richText";
@@ -58,10 +57,6 @@ export class Widget {
         return new Chart(this.getElementSelector());
     }
 
-    getHeadline() {
-        return new Headline(this.getElementSelector());
-    }
-
     getTable() {
         return new Table(this.getElementSelector());
     }
@@ -86,32 +81,6 @@ export class Widget {
 
     removeVizWidget() {
         this.getElement().click().get(".s-delete-insight-item").click();
-        return this;
-    }
-
-    exists(expect = true) {
-        this.getElement().should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
-    isTitleVisible(expect = true) {
-        this.getElement()
-            .find(".s-headline")
-            .should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
-    hasAlert(expect = true) {
-        this.getElement()
-            .find(".dash-item-content")
-            .should(expect ? "have.class" : "not.have.class", "has-set-alert");
-        return this;
-    }
-
-    hasTriggeredAlert(expect = true) {
-        this.getElement()
-            .find(".dash-item-content")
-            .should(expect ? "have.class" : "not.have.class", "is-alert-triggered");
         return this;
     }
 
@@ -159,27 +128,6 @@ export class Widget {
     focus() {
         this.getElement().find(".is-selectable").click({ force: true });
         return this;
-    }
-
-    openTooltip() {
-        this.getElement().find(".s-description-trigger").click();
-        return this;
-    }
-
-    tooltipHoverExist(expect = true) {
-        this.getElement()
-            .find(".s-description-trigger")
-            .should(expect ? "exist" : "not.exist");
-        return this;
-    }
-
-    tooltipHasText(text: string) {
-        cy.get(".s-gd-description-panel").should("have.text", text);
-        return this;
-    }
-
-    getEditableLabelElement() {
-        return this.getElement().find(".s-editable-label");
     }
 
     hasTitle(title: string) {

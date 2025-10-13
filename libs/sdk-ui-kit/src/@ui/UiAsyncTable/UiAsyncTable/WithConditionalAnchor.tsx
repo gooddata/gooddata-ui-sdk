@@ -14,6 +14,7 @@ export function WithConditionalAnchor({ href, children }: { href?: string; child
             onClick={(e) => {
                 stopPropagationCallback(e);
             }}
+            tabIndex={-1}
         >
             {children}
         </UiLink>

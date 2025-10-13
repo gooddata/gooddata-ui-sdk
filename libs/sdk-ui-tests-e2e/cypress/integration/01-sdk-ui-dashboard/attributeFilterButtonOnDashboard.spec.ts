@@ -8,7 +8,6 @@ import { InsightsCatalog } from "../../tools/insightsCatalog";
 import * as Navigation from "../../tools/navigation";
 
 const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activity_type";
-const CONFIGURATION_SELECTOR = ".s-configuration-button";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
@@ -46,7 +45,7 @@ describe.skip("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear
 
         attributeFilter.open().openConfiguration();
 
-        const configuration = new AttributeFilterConfiguration(CONFIGURATION_SELECTOR);
+        const configuration = new AttributeFilterConfiguration();
 
         configuration.changeAttributeTitle(customTitle).getSaveButton().isEnabled(true).click();
 

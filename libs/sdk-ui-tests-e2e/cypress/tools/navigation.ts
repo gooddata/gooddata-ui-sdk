@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ISettings } from "@gooddata/sdk-model";
 
 import { DashboardMenu } from "./dashboardMenu";
@@ -7,6 +8,7 @@ import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Window {
         customWorkspaceSettings: any;
         useSafeWidgetLocalIdentifiersForE2e: boolean;

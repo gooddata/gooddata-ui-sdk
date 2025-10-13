@@ -2,14 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { useIntl } from "react-intl";
+
 import { getColumnHeaderId, getColumnWidth } from "./utils.js";
 import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
+import { messages } from "../locales.js";
 import { UiAsyncTableColumn, UiAsyncTableHeaderProps } from "../types.js";
 
-const arrowIcon = <UiIcon type="dropDown" size={11} color="complementary-6" />;
+const arrowIcon = <UiIcon aria-hidden type="dropDown" size={11} color="complementary-6" />;
 
 export function UiAsyncTableHeader<T>({
     columns,
@@ -20,26 +22,34 @@ export function UiAsyncTableHeader<T>({
     width,
     small,
     largeRow,
-    accessibilityConfig,
 }: UiAsyncTableHeaderProps<T>) {
     const { handleKeyDown, isFocused } = useHeaderKeyboardNavigation(columns, handleColumnClick);
+    const intl = useIntl();
 
     return (
         <div
             tabIndex={0}
             className={e("header", { small })}
             role="row"
+            aria-label={intl.formatMessage(messages["headerAriaLabel"])}
             onKeyDown={handleKeyDown}
             style={{ width }}
         >
             {hasCheckbox ? (
-                <UiAsyncTableCheckbox ariaLabel={accessibilityConfig?.checkboxAllAriaLabel} />
+                <div
+                    className={e("cell", { checkbox: true })}
+                    role="columnheader"
+                    id={getColumnHeaderId("checkbox")}
+                    aria-label={intl.formatMessage(messages["checkboxHeaderAriaLabel"])}
+                    aria-sort="none"
+                />
             ) : null}
+
             {columns.map((column, index) => {
                 const width = getColumnWidth(!!column.renderMenu, largeRow, column.width);
                 const sorted = sortBy && sortBy === column.key;
                 const desc = sorted && sortDirection === "desc";
-                const { sortable } = column;
+                const { sortable, renderMenu } = column;
                 return (
                     <div
                         key={index}
@@ -55,6 +65,9 @@ export function UiAsyncTableHeader<T>({
                         role="columnheader"
                         id={getColumnHeaderId(String(column.key ?? index))}
                         aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}
+                        aria-label={
+                            renderMenu ? intl.formatMessage(messages["menuHeaderAriaLabel"]) : column.label
+                        }
                     >
                         <span className={e("text")}>{column.label}</span>
                         {sortable ? <div className={e("sort")}>{arrowIcon}</div> : null}

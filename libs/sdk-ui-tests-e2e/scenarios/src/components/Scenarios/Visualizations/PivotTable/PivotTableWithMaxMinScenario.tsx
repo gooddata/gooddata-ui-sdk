@@ -53,14 +53,14 @@ const filtersOfCountyAndCreatedDate = [
     newPositiveAttributeFilter("county_name", ["Clark", "Dutchess"]),
 ];
 
-export interface PivotTableMaxMinCoreProps {
+export interface IPivotTableMaxMinCoreProps {
     measures?: IMeasure<IMeasureDefinition>[] | undefined;
     rows?: IAttribute[] | undefined;
     column?: IAttribute[] | undefined;
     filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
 }
 
-function PivotTableMaxMin({ measures, rows, filters }: PivotTableMaxMinCoreProps) {
+function PivotTableMaxMin({ measures, rows, filters }: IPivotTableMaxMinCoreProps) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

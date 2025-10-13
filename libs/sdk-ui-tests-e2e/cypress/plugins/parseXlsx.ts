@@ -1,9 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
 import * as fs from "fs";
 
 import * as xlsx from "node-xlsx";
 
-export default ((on, _config) => {
+export default (on: Cypress.PluginEvents, _config: Cypress.PluginConfigOptions) => {
     // `on` is used to hook into various events Cypress emits
     on("task", {
         parseXlsx({ filePath }) {
@@ -17,4 +18,4 @@ export default ((on, _config) => {
             });
         },
     });
-}) as Cypress.PluginConfig;
+};
