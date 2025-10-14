@@ -3154,5 +3154,9 @@
     "dialogs.export.submit": {
         "value": "Export",
         "comment": "Start to export data to file"
+    },
+    "gs.header.mainMenu.ariaLabel": {
+        "value": "Main menu",
+        "comment": "Accessibility label for the main menu button in the header, used by screen readers"
     }
 }

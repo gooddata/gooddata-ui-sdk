@@ -532,7 +532,13 @@ function AppHeaderCore({
 
         return (
             <>
-                <div className="hamburger-wrapper" key="hamburger-wrapper">
+                <div
+                    aria-label={intl.formatMessage({ id: "gs.header.mainMenu.ariaLabel" })}
+                    role="button"
+                    tabIndex={0}
+                    className="hamburger-wrapper"
+                    key="hamburger-wrapper"
+                >
                     <div
                         className={iconClasses}
                         key="hamburger-icon"
@@ -552,6 +558,7 @@ function AppHeaderCore({
         state.isNotificationsMenuOpen,
         setOverlayMenu,
         renderOverlayMenu,
+        intl,
     ]);
 
     const renderStandardNav = useCallback(() => {

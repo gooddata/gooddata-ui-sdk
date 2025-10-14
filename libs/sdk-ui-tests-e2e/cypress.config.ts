@@ -15,9 +15,9 @@ export default defineConfig({
     e2e: {
         excludeSpecPattern: "*.js",
         supportFile: "cypress/support/index.ts",
-        setupNodeEvents(on, _config) {
-            removePassingTestVideosPlugin(on, _config);
-            cypressGrepPlugin(_config);
+        setupNodeEvents(on, config) {
+            removePassingTestVideosPlugin(on);
+            cypressGrepPlugin(config);
             on("task", {
                 async resetRecordingsScenarios(mockServerUrl: string) {
                     try {
@@ -36,8 +36,8 @@ export default defineConfig({
                     return null;
                 },
             });
-            readPdf(on, _config);
-            parseXlsx(on, _config);
+            readPdf(on);
+            parseXlsx(on);
             installLogsPrinter(on, {
                 outputRoot: "cypress/results/",
                 specRoot: "cypress/integration",
@@ -45,7 +45,7 @@ export default defineConfig({
                     "logs|txt": "txt",
                 },
             });
-            return _config;
+            return config;
         },
         viewportWidth: 1400,
         viewportHeight: 800,

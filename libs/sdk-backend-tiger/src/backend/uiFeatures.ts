@@ -339,7 +339,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
     enableAutomationManagement: true,
-    enableNewPdfTabularExport: false,
+    enableNewPdfTabularExport: true,
     enableFilterAccessibility: false,
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
