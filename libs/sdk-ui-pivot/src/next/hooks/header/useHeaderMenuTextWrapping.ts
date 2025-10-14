@@ -371,10 +371,8 @@ function calculateEffectiveWrappingForPivotGroup(
     );
 
     return {
-        effectiveWrapText: exactDepthOverride ? exactDepthOverride.wrapText : textWrapping?.wrapText,
-        effectiveWrapHeaderText: exactDepthOverride
-            ? exactDepthOverride.wrapHeaderText
-            : textWrapping?.wrapHeaderText,
+        effectiveWrapText: exactDepthOverride?.wrapText ?? textWrapping?.wrapText,
+        effectiveWrapHeaderText: exactDepthOverride?.wrapHeaderText ?? textWrapping?.wrapHeaderText,
     };
 }
 

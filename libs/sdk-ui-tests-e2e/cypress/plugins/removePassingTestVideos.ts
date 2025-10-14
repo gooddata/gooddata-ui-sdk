@@ -5,7 +5,7 @@ import { promisify } from "util";
 
 const rm = promisify(unlink);
 
-export default (on: Cypress.PluginEvents, _config: Cypress.PluginConfigOptions) => {
+export default (on: Cypress.PluginEvents) => {
     const filesToDelete: string[] = [];
     on("after:spec", (_spec, results) => {
         if (results.stats.failures === 0 && results.video) {

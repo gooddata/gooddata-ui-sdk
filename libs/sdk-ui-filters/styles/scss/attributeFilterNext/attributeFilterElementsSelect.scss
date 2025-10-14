@@ -132,7 +132,7 @@
         }
 
         // Expand when the item is focused via keyboard
-        &.gd-attribute-filter-list-item--isFocused,
+        &.gd-single-selection-attribute-filter-elements-select-item.gd-attribute-filter-list-item--isFocused,
         &.is-focused,
         &:focus-within {
             .gd-list-item-only {

@@ -252,7 +252,7 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
                     "has-error": !isValid,
                 })}
             >
-                <span className="gd-icon-calendar" />
+                <span className="gd-icon-calendar" aria-hidden="true" />
                 <input
                     ref={ref}
                     placeholder={dateFormat}

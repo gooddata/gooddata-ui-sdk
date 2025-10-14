@@ -97,7 +97,7 @@ export function TimeInput({
                     },
                 )}
             >
-                <span className="gd-icon-clock" />
+                <span className="gd-icon-clock" aria-hidden="true" />
                 <input
                     type="time"
                     className="input-text"

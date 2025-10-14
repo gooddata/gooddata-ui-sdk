@@ -82,9 +82,9 @@ describe("Date filtering", () => {
 
         const dateFilterValues = [
             DateFilterValue.ALL_TIME,
-            DateFilterValue.LASt_7_DAYS,
-            DateFilterValue.LASt_30_DAYS,
-            DateFilterValue.LASt_90_DAYS,
+            DateFilterValue.LAST_7_DAYS,
+            DateFilterValue.LAST_30_DAYS,
+            DateFilterValue.LAST_90_DAYS,
             DateFilterValue.THIS_MONTH,
             DateFilterValue.LAST_MONTH,
             DateFilterValue.LAST_12_MONTHS,

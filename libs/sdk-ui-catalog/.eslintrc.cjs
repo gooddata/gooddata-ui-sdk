@@ -4,11 +4,9 @@ const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
 
 module.exports = {
     extends: ["@gooddata/eslint-config/esm-react-vitest"],
-    rules: {
-        "@typescript-eslint/no-explicit-any": ["error", { fixToUnknown: true }],
-    },
     overrides: [
         tsOverride(__dirname, {
+            "@typescript-eslint/no-explicit-any": ["error", { fixToUnknown: true }],
             "@typescript-eslint/no-unsafe-member-access": "off",
             "@typescript-eslint/no-misused-promises": "off",
             "@typescript-eslint/naming-convention": "off",

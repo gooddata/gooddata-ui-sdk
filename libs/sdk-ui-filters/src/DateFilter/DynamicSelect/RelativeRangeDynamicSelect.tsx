@@ -200,8 +200,10 @@ export function RelativeRangeDynamicSelect({
                     <div
                         className={cx("gd-dynamic-select", className)}
                         style={style}
-                        aria-labelledby={accessibilityConfig?.labelId}
-                        aria-describedby={accessibilityConfig?.descriptionId}
+                        role={undefined}
+                        aria-expanded={undefined}
+                        aria-haspopup={undefined}
+                        aria-labelledby={undefined}
                         onKeyDown={(e) => {
                             if (isOpen && e.key !== "Tab") {
                                 e.stopPropagation();
@@ -218,6 +220,9 @@ export function RelativeRangeDynamicSelect({
                                 aria-describedby={accessibilityConfig?.descriptionId}
                                 aria-activedescendant={undefined}
                                 {...getInputProps({
+                                    role: "combobox",
+                                    "aria-expanded": isOpen,
+                                    "aria-haspopup": "listbox",
                                     "aria-autocomplete": "list",
                                     "aria-labelledby": accessibilityConfig?.labelId,
                                     placeholder,
