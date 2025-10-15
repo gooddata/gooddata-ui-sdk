@@ -74,7 +74,8 @@ export function useRichTextFilters(widget: IRichTextWidget | IInsightWidget | fa
 
         return {
             filters,
-            loading: status === "running",
+            // without pending, the query would report false before it starts, causing errors downstream
+            loading: status === "pending" || status === "running",
         };
     }, [dashboardFilters, result, widget, status]);
 }

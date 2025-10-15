@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -6,6 +7,7 @@ import {
     IDrillToCustomUrl,
     IDrillToInsight,
     IInsight,
+    IKeyDriveAnalysis,
     IListedDashboard,
     ObjRef,
     isDrillToAttributeUrl,
@@ -13,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
+import { IKdaDefinition } from "../../kdaDialog/index.js";
 import {
     CrossFiltering,
     DashboardCommandFailed,
@@ -25,6 +28,7 @@ import {
     DashboardDrillToDashboardResolved,
     DashboardDrillToInsightResolved,
     DashboardDrillToLegacyDashboardResolved,
+    DashboardKeyDriverAnalysisResolved,
     Drill,
     DrillDown,
     DrillToAttributeUrl,
@@ -32,6 +36,7 @@ import {
     DrillToDashboard,
     DrillToInsight,
     DrillToLegacyDashboard,
+    KeyDriverAnalysis,
 } from "../../model/index.js";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
 
@@ -138,6 +143,30 @@ export type OnCrossFilteringSuccess = (event: DashboardCrossFilteringResolved) =
  * @internal
  */
 export type OnCrossFilteringError = OnDashboardDrillError;
+
+/**
+ * @internal
+ */
+export interface KeyDriveInfo {
+    readonly keyDriveDefinition: IKdaDefinition;
+    drillEvent: IDashboardDrillEvent;
+    drillDefinition: IKeyDriveAnalysis;
+}
+
+/**
+ * @internal
+ */
+export type OnKeyDriverAnalysis = (cmd: KeyDriverAnalysis) => void;
+
+/**
+ * @internal
+ */
+export type OnKeyDriverAnalysisSuccess = (event: DashboardKeyDriverAnalysisResolved) => void;
+
+/**
+ * @internal
+ */
+export type OnKeyDriverAnalysisError = OnDashboardDrillError;
 
 /////
 

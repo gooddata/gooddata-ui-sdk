@@ -4,9 +4,11 @@ import { isEqualWith } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
+    IAttributeDescriptor,
+    IAttributeDescriptorBody,
     IKeyDriveAnalysis,
     IMeasureDescriptor,
-    IResultAttributeHeaderItem,
+    IResultAttributeHeader,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
@@ -18,18 +20,15 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
+import { DashboardKeyDriverCombinationItem } from "../../../model/index.js";
 
-export interface KeyDriverCombinationItem {
-    where: "before" | "after" | "none";
-    type: "comparative" | "year-to-year";
-    difference: number;
-    date: IResultAttributeHeaderItem;
-}
-
+/**
+ * @internal
+ */
 export function getKdaKeyDriverCombinations(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
-): KeyDriverCombinationItem[] {
+): DashboardKeyDriverCombinationItem[] {
     const dv = DataViewFacade.for(drillEvent.dataView);
     const { attributeHeader, metricHeader } = findHeadersCombinations(drillDefinition, drillEvent);
 
@@ -41,50 +40,104 @@ export function getKdaKeyDriverCombinations(
     const dateAttribute = findDateValues(dv, attributeHeader);
     const metricValue = findMetricValues(dv, metricHeader, dateAttribute.dims);
 
-    const res: KeyDriverCombinationItem[] = [];
-    if (dateAttribute.previousValue && metricValue.previousValue) {
-        res.push({
-            where: "before",
-            difference:
-                (metricValue.currentValue.rawValue as number) -
-                (metricValue.previousValue.rawValue as number),
-            type: "comparative",
-            date: dateAttribute.previousValue,
-        });
-    }
-    if (dateAttribute.nextValue && metricValue.nextValue) {
-        res.push({
-            where: "after",
-            difference:
-                (metricValue.nextValue.rawValue as number) - (metricValue.currentValue.rawValue as number),
-            type: "comparative",
-            date: dateAttribute.nextValue,
-        });
-    }
-    res.push({
-        where: "none",
-        difference: 0,
-        type: "year-to-year",
-        date: dateAttribute.currentValue,
-    });
+    const res: DashboardKeyDriverCombinationItem[] = [];
+
+    // There is a previous value in graph
+    const before = createBefore(dateAttribute, metricValue);
+    res.push(...(before ? [before] : []));
+
+    // There is a next value in graph
+    const after = createAfter(dateAttribute, metricValue);
+    res.push(...(after ? [after] : []));
+
+    // There is a previous year value in graph
+    const year = createYearToYear(dv, metricHeader, dateAttribute, metricValue);
+    res.push(...(year ? [year] : []));
 
     return res;
 }
 
-export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: KeyDriverCombinationItem) {
+function createBefore(
+    dateAttribute: ReturnType<typeof findDateValues>,
+    metricValue: ReturnType<typeof findMetricValues>,
+): DashboardKeyDriverCombinationItem | undefined {
+    if (dateAttribute.previousValue && metricValue.previousValue) {
+        const currentValue = metricValue.currentValue.rawValue as number;
+        const previousValue = metricValue.previousValue.rawValue as number;
+
+        return {
+            where: "before",
+            difference: currentValue - previousValue,
+            type: "comparative",
+            values: [previousValue, currentValue],
+            range: [dateAttribute.previousValue, dateAttribute.currentValue],
+        };
+    }
+    return undefined;
+}
+
+function createAfter(
+    dateAttribute: ReturnType<typeof findDateValues>,
+    metricValue: ReturnType<typeof findMetricValues>,
+): DashboardKeyDriverCombinationItem | undefined {
+    if (dateAttribute.nextValue && metricValue.nextValue) {
+        const currentValue = metricValue.currentValue.rawValue as number;
+        const nextValue = metricValue.nextValue.rawValue as number;
+
+        return {
+            where: "after",
+            difference: nextValue - currentValue,
+            type: "comparative",
+            values: [currentValue, nextValue],
+            range: [dateAttribute.currentValue, dateAttribute.nextValue],
+        };
+    }
+    return undefined;
+}
+
+function createYearToYear(
+    dv: DataViewFacade,
+    metric: IMeasureDescriptor,
+    dateAttribute: ReturnType<typeof findDateValues>,
+    metricValue: ReturnType<typeof findMetricValues>,
+): DashboardKeyDriverCombinationItem | undefined {
+    const values = dateAttribute.values;
+    const previousYear = findValuePreviousYear(dateAttribute.currentValue);
+    const previousYearMetricValue = findMetricPreviousYearValue(dv, metric, values, previousYear);
+
+    if (previousYear && previousYearMetricValue && metricValue) {
+        const previousValue = previousYearMetricValue.rawValue as number;
+        const currentValue = metricValue.currentValue.rawValue as number;
+
+        return {
+            where: "none",
+            difference: previousValue - currentValue,
+            type: "year-to-year",
+            values: [previousValue, currentValue],
+            range: [previousYear, dateAttribute.currentValue],
+        };
+    }
+    return undefined;
+}
+
+/**
+ * @internal
+ */
+export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: DashboardKeyDriverCombinationItem) {
     switch (item.type) {
         case "comparative": {
             const where =
                 item.where === "before"
                     ? intl.formatMessage({ id: "drill.kda.from" })
                     : intl.formatMessage({ id: "drill.kda.in" });
+            const date = item.where === "before" ? item.range[0] : item.range[1];
 
             if (item.difference < 0) {
                 return intl.formatMessage(
                     { id: "drill.kda.drop" },
                     {
                         where,
-                        title: item.date.formattedName,
+                        title: date.attributeHeaderItem.formattedName,
                     },
                 );
             }
@@ -93,7 +146,7 @@ export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: KeyDrive
                     { id: "drill.kda.increase" },
                     {
                         where,
-                        title: item.date.formattedName,
+                        title: date.attributeHeaderItem.formattedName,
                     },
                 );
             }
@@ -101,7 +154,7 @@ export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: KeyDrive
                 { id: "drill.kda.no_change" },
                 {
                     where,
-                    title: item.date.formattedName,
+                    title: date.attributeHeaderItem.formattedName,
                 },
             );
         }
@@ -129,13 +182,16 @@ function findHeadersCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent:
     };
 }
 
+type AttributeHeader = IResultAttributeHeader & IAttributeDescriptor;
+
 function findDateValues(
     dv: DataViewFacade,
     attributeHeader: IDrillIntersectionAttributeItem,
 ): {
-    previousValue: IResultAttributeHeaderItem | undefined;
-    currentValue: IResultAttributeHeaderItem;
-    nextValue: IResultAttributeHeaderItem | undefined;
+    values: IResultAttributeHeader[];
+    previousValue: AttributeHeader | undefined;
+    currentValue: AttributeHeader;
+    nextValue: AttributeHeader | undefined;
     dims: [number, number, number];
 } {
     const headers = dv.meta().attributeHeaders();
@@ -161,16 +217,31 @@ function findDateValues(
         [-1, -1, -1],
     ) as [number, number, number];
 
-    const previousValue = headers[dims[0]][dims[1]][dims[2] - 1]?.attributeHeaderItem ?? undefined;
-    const currentValue = attributeHeader.attributeHeaderItem;
-    const nextValue = headers[dims[0]][dims[1]][dims[2] + 1]?.attributeHeaderItem ?? undefined;
+    const values = headers[dims[0]][dims[1]];
+
+    const previousValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] - 1]);
+    const currentValue = attributeHeader;
+    const nextValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] + 1]);
 
     return {
+        values,
         previousValue,
         currentValue,
         nextValue,
         dims,
     };
+}
+
+function getAttributeHeader(
+    attributeHeader: IAttributeDescriptorBody,
+    header: IResultAttributeHeader | undefined,
+) {
+    return header
+        ? {
+              ...header,
+              attributeHeader,
+          }
+        : undefined;
 }
 
 function findMetricValues(
@@ -193,5 +264,42 @@ function findMetricValues(
         previousValue,
         currentValue,
         nextValue,
+    };
+}
+
+function findMetricPreviousYearValue(
+    dv: DataViewFacade,
+    metricHeader: IMeasureDescriptor,
+    values: IResultAttributeHeader[],
+    previousYear: IResultAttributeHeader | null,
+): DataPoint | null {
+    if (!previousYear) {
+        return null;
+    }
+
+    const localId = metricHeader.measureHeaderItem.localIdentifier;
+    const data = Array.from(dv.data().series().allForMeasure(localId))[0].dataPoints();
+    const prevYearIndex = values.findIndex(
+        (v) => v.attributeHeaderItem.normalizedValue === previousYear.attributeHeaderItem.normalizedValue,
+    );
+
+    return data[prevYearIndex] ?? null;
+}
+
+function findValuePreviousYear(current: AttributeHeader): AttributeHeader | null {
+    const value = current.attributeHeaderItem.normalizedValue;
+
+    if (!value) {
+        return null;
+    }
+
+    const date = new Date(value);
+    date.setFullYear(date.getFullYear() - 1);
+    return {
+        ...current,
+        attributeHeaderItem: {
+            ...current.attributeHeaderItem,
+            normalizedValue: date.toISOString(),
+        },
     };
 }

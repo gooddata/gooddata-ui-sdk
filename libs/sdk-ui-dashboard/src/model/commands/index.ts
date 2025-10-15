@@ -31,6 +31,7 @@ import {
     DrillToDashboard,
     DrillToInsight,
     DrillToLegacyDashboard,
+    KeyDriverAnalysis,
 } from "./drill.js";
 import { AddDrillTargets } from "./drillTargets.js";
 import { TriggerEvent } from "./events.js";
@@ -372,6 +373,8 @@ export type {
     DashboardDrillCommand,
     CrossFiltering,
     CrossFilteringPayload,
+    KeyDriverAnalysis,
+    KeyDriverAnalysisPayload,
 } from "./drill.js";
 export {
     drill,
@@ -383,6 +386,7 @@ export {
     drillToLegacyDashboard,
     changeDrillableItems,
     crossFiltering,
+    keyDriverAnalysis,
 } from "./drill.js";
 
 export type { UpsertExecutionResult } from "./executionResults.js";
@@ -634,6 +638,7 @@ export type DashboardCommands =
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget
     | CrossFiltering
+    | KeyDriverAnalysis
     | AttributeHierarchyModified
     | AddDateFilter
     | RemoveDateFilters

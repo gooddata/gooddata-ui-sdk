@@ -115,6 +115,7 @@ import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
 import { commandRejected } from "../events/general.js";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher.js";
 import { DashboardContext } from "../types/commonTypes.js";
+import { keyDriverAnalysisHandler } from "./drill/keyDriverAnalysisHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -222,6 +223,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL": drillToCustomUrlHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD": drillToLegacyDashboardHandler,
     "GDC.DASH/CMD.DRILL.CROSS_FILTERING": crossFilteringHandler,
+    "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS": keyDriverAnalysisHandler,
     "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE": changeDrillableItemsHandler,
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,

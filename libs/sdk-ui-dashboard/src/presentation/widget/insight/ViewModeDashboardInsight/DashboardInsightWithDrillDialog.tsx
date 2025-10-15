@@ -6,17 +6,21 @@ import { isIdentifierRef } from "@gooddata/sdk-model";
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
+import { KdaDialog as KdaDialogComponent, KdaProvider } from "../../../../kdaDialog/internal.js";
 import {
     selectCatalogAttributeDisplayFormsById,
     selectEnableDrilledTooltip,
     selectLocale,
+    selectSeparators,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import {
     DrillStep,
+    KeyDriveInfo,
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
+    OnKeyDriverAnalysisSuccess,
     getDrillDownTitle,
 } from "../../../drill/index.js";
 import { IDashboardInsightProps } from "../types.js";
@@ -29,6 +33,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     const activeDrillStep = drillSteps.at(-1);
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
+    const separators = useDashboardSelector(selectSeparators);
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
     const enableDrillDescription = useDashboardSelector(selectEnableDrilledTooltip);
 
@@ -69,12 +74,21 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
         [setNextDrillStep],
     );
 
+    const [keyDriveInfo, setKeyDriveInfo] = useState<KeyDriveInfo | undefined>(undefined);
+    const onKeyDriverAnalysisSuccess = useCallback<OnKeyDriverAnalysisSuccess>((evt) => {
+        setKeyDriveInfo(evt.payload);
+    }, []);
+    const onCloseKeyDriverAnalysis = useCallback(() => {
+        setKeyDriveInfo(undefined);
+    }, []);
+
     return (
         <>
             <DashboardInsightWithDrillSelect
                 {...props}
                 onDrillDown={onDrillDown}
                 onDrillToInsight={onDrillToInsight}
+                onKeyDriverAnalysisSuccess={onKeyDriverAnalysisSuccess}
                 drillStep={activeDrillStep}
             />
             {activeDrillStep ? (
@@ -89,6 +103,11 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                     enableDrillDescription={enableDrillDescription}
                     drillStep={activeDrillStep}
                 />
+            ) : null}
+            {keyDriveInfo ? (
+                <KdaProvider definition={keyDriveInfo.keyDriveDefinition} separators={separators}>
+                    <KdaDialogComponent onClose={onCloseKeyDriverAnalysis} showCloseButton />
+                </KdaProvider>
             ) : null}
         </>
     );

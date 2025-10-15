@@ -3115,6 +3115,7 @@ export interface IResultAttributeHeader {
 export interface IResultAttributeHeaderItem {
     formattedName?: string;
     name: string | null;
+    normalizedValue?: string;
     uri: string;
 }
 

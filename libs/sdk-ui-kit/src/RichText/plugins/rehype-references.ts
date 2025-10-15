@@ -109,7 +109,8 @@ function iterateReferenceRawTextMatch(
     const items = value.split(REFERENCE_REGEX_SPLIT);
     return items
         .map((item) => {
-            const match = REFERENCE_REGEX_MATCH.exec(item);
+            const regex = new RegExp(REFERENCE_REGEX_MATCH.source, REFERENCE_REGEX_MATCH.flags);
+            const match = regex.exec(item);
             if (match) {
                 const { ref } = createReference(match);
                 if (ref) {
@@ -123,14 +124,14 @@ function iterateReferenceRawTextMatch(
 
 function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, id: string) => T[]): T[] {
     const items: T[] = [];
-    REFERENCE_REGEX_MATCH.lastIndex = -1;
-    let match = REFERENCE_REGEX_MATCH.exec(value);
+    const regex = new RegExp(REFERENCE_REGEX_MATCH.source, REFERENCE_REGEX_MATCH.flags);
+    let match = regex.exec(value);
     while (match) {
         const { ref } = createReference(match);
         if (ref) {
             items.push(...onMatch(ref, match[2]));
         }
-        match = REFERENCE_REGEX_MATCH.exec(value);
+        match = regex.exec(value);
     }
     return items;
 }

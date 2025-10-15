@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { IExecutionConfig, IFilter } from "@gooddata/sdk-model";
@@ -18,7 +19,12 @@ export function useEvaluatedReferences(
         loading,
         result: metrics,
         error: metricsError,
-    } = useEvaluatedMetricsAndAttributes(references, filters, config);
+    } = useEvaluatedMetricsAndAttributes(references, filters, {
+        ...config,
+        // Mark filters as loaded when there are no references to resolve to speed up loading.
+        // The query that sets this value runs no matter if there are references or not.
+        isFiltersLoading: Object.keys(references).length > 0 && !!config.isFiltersLoading,
+    });
 
     return {
         isEmptyValue,

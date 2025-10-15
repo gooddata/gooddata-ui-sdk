@@ -244,7 +244,7 @@ export const DateFilterHelpers: {
     defaultDateFilterOptions: IDateFilterOptionsByType;
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
-    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string) => string;
+    formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
     formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };

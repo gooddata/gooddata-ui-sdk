@@ -10,6 +10,8 @@ $subtitle-font-line-height: 16px;
 $content-font-size: 14px;
 
 .gd-analytics-catalog-detail {
+    font-family: kit-variables.$gd-font-primary;
+    font-size: $content-font-size;
     min-width: $width;
     max-width: $width;
     height: 100%;

@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
 options = {
@@ -110,6 +112,7 @@ options = {
             "src/presentation/constants",
             "src/presentation/types.ts",
             "src/presentation/localization",
+            "src/kdaDialog/index.ts",
             "src/types.ts",
             "src/converters",
             "src/presentation/widget/common/useWidgetFilters.ts",
@@ -158,6 +161,7 @@ options = {
             "src/types.ts",
             "src/presentation/dragAndDrop/types.ts",
             "src/presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
+            "src/kdaDialog/types.ts",
         ]),
         depCruiser.moduleWithDependencies("presentation", "src/presentation", [
             "src/_staging/*",
@@ -169,6 +173,8 @@ options = {
             "src/types.ts",
             "src/widgets",
             "src/model/store/meta/index.ts",
+            "src/kdaDialog/internal.ts",
+            "src/kdaDialog/index.ts",
         ]),
         depCruiser.moduleWithDependencies("automationFilters", "src/presentation/automationFilters", [
             "src/_staging/*",
@@ -223,6 +229,7 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
+            "src/kdaDialog/internal.ts",
             "src/model/events/widget.ts",
             "src/presentation/componentDefinition",
             "src/presentation/constants/*",

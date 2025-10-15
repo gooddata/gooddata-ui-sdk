@@ -6,7 +6,11 @@
 
 @use "./detail.scss";
 
+$content-font-size: 14px;
+
 .gd-analytics-catalog {
+    font-family: kit-variables.$gd-font-primary;
+    font-size: $content-font-size;
     height: 100%;
     display: flex;
     flex-direction: column;

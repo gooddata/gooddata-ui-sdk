@@ -28,7 +28,8 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  */
 export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
     const { state } = useKdaState();
-    const accessibilityConfig = useKdaDialogAccessibility(state.metric?.title ?? "");
+    const metric = state.definition?.metric.measure;
+    const accessibilityConfig = useKdaDialogAccessibility(metric?.title ?? "");
     const detailsId = useId();
 
     return (

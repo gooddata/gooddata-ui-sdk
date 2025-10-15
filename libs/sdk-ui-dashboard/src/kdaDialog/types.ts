@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { IAttributeDescriptorBody, IMeasure, ObjRef } from "@gooddata/sdk-model";
+
 /**
  * @internal
  */
@@ -23,3 +25,48 @@ export interface IKdaDialogProps {
      */
     onClose?: () => void;
 }
+
+/**
+ * @internal
+ */
+export interface IKdaDataPoint {
+    /**
+     * Date string in ISO format related to granularity
+     */
+    date: string;
+    /**
+     * Valuer of metric for given range
+     */
+    value: number;
+    /**
+     * Format of date attribute
+     */
+    format?: IAttributeDescriptorBody["format"];
+}
+
+/**
+ * @internal
+ */
+export interface IKdaDefinition {
+    /**
+     * Metric to analyze
+     */
+    metric: IMeasure;
+    /**
+     * Date attribute
+     */
+    dateAttribute: ObjRef;
+    /**
+     * Type of period
+     */
+    type: KdaPeriodType;
+    /**
+     * Ranges
+     */
+    range: [IKdaDataPoint, IKdaDataPoint];
+}
+
+/**
+ * @internal
+ */
+export type KdaPeriodType = "same_period_previous_year" | "previous_period";

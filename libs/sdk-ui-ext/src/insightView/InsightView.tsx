@@ -224,6 +224,14 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
     const isLoadingShown = isDataLoading || state.isVisualizationLoading;
     const error = state.visualizationError || insightError || colorPaletteError || workspaceSettingsError;
 
+    const resolvedConfig = useMemo(() => {
+        return {
+            ...config,
+            mapboxToken: config?.mapboxToken ?? workspaceSettingsResult?.["mapboxToken"],
+            agGridToken: config?.agGridToken ?? workspaceSettingsResult?.["agGridToken"],
+        };
+    }, [config, workspaceSettingsResult]);
+
     return (
         <div className="insight-view-container">
             {resolvedTitle ? <TitleComponent title={resolvedTitle} /> : null}
@@ -242,7 +250,7 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
                         workspace={workspace}
                         backend={backendWithTelemetry}
                         colorPalette={colorPalette ?? colorPaletteResult}
-                        config={config}
+                        config={resolvedConfig}
                         execConfig={execConfig}
                         drillableItems={drillableItems}
                         executeByReference={executeByReference}

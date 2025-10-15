@@ -28,7 +28,7 @@ import {
     totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import { MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT } from "../constants.js";
+import { MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT } from "../constants.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -61,7 +61,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
 
     protected override getMinHeight(_settings: ISettings): number {
         // Flexible layout is always enabled now
-        return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
+        return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
     }
 
     public override applyDrillDown(

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -43,6 +44,7 @@ import { getRelativeDateFilterShiftedValues } from "./date.js";
 import { mapDashboardDateFilterToDependentDateFilter } from "./dependentDateFilters.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
+import { createDateValueNormalizer } from "../../../../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
@@ -245,23 +247,34 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 const pattern = format?.pattern as string;
                 const shouldFormatTitle = sdkGranularity && format;
                 const dateValueFormatter = createDateValueFormatter(this.dateFormatter);
+                const dateValueNormalizer = createDateValueNormalizer();
 
                 return {
                     items: elements.map((element): IAttributeElement => {
-                        const objWithFormattedTitle = shouldFormatTitle
-                            ? {
-                                  formattedTitle: dateValueFormatter(
-                                      element.title,
-                                      sdkGranularity,
-                                      locale,
-                                      pattern,
-                                  ),
-                              }
-                            : {};
+                        let objWithFormatted = {};
+
+                        if (shouldFormatTitle) {
+                            const formattedTitle = dateValueFormatter(
+                                element.title,
+                                sdkGranularity,
+                                locale,
+                                pattern,
+                            );
+                            const normalizedValue = dateValueNormalizer(
+                                element.title,
+                                sdkGranularity,
+                                locale,
+                            );
+                            objWithFormatted = {
+                                formattedTitle,
+                                normalizedValue,
+                            };
+                        }
+
                         return {
                             title: element.title,
                             uri: element.primaryTitle ?? element.title,
-                            ...objWithFormattedTitle,
+                            ...objWithFormatted,
                         };
                     }),
                     totalCount: paging.total,

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { EnhancedStore, Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import { keyBy, merge } from "lodash-es";
@@ -96,6 +97,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "GDC.DASH/CMD.DRILL.CROSS_FILTERING",
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
+    "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS",
+    "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED",
+    "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
     "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
     "meta/setDrillableItems",

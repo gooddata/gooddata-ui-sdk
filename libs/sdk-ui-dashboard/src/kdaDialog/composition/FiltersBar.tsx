@@ -1,21 +1,27 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { selectAttributeFilterConfigsOverrides, useDashboardSelector } from "../../model/index.js";
+import {
+    selectAttributeFilterConfigsOverrides,
+    selectCatalogDateAttributes,
+    useDashboardSelector,
+} from "../../model/index.js";
 import { AttributeBar } from "../components/bars/AttributeBar.js";
 import { DateBar } from "../components/bars/DateBar.js";
 import { KdaBar } from "../components/KdaBar.js";
-import { KdaDateFilter } from "../internalTypes.js";
+import { KdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { KdaPeriodType } from "../types.js";
 
 export function FiltersBar() {
     const intl = useIntl();
 
+    const dateAttributes = useDashboardSelector(selectCatalogDateAttributes);
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
 
     const { state, setState } = useKdaState();
@@ -33,22 +39,35 @@ export function FiltersBar() {
     }, []);
 
     const onPeriodChange = useCallback(
-        (item: KdaDateFilter, period: KdaDateFilter["selectedPeriod"]) => {
+        (type: KdaPeriodType) => {
             // eslint-disable-next-line
-            console.log("on Period Change", period);
+            console.log("on Period Change", type);
             //TODO: onPeriodChange
-            const i = state.dateFilters.indexOf(item);
-            const newDateFilters = [...state.dateFilters];
-            newDateFilters[i] = {
-                ...item,
-                selectedPeriod: period,
-            };
-            setState({
-                dateFilters: newDateFilters,
-            });
+            if (state.definition) {
+                setState({
+                    definition: {
+                        ...state.definition,
+                        type,
+                    },
+                });
+            }
         },
-        [setState, state.dateFilters],
+        [setState, state.definition],
     );
+
+    const def = state.definition;
+    const options = useMemo((): KdaDateOptions => {
+        const dateAttribute = dateAttributes.find(
+            (a) =>
+                areObjRefsEqual(def?.dateAttribute, a.attribute.ref) ||
+                a.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, def?.dateAttribute)),
+        );
+        return {
+            dateAttribute,
+            period: def?.type ?? "previous_period",
+            range: def?.range,
+        };
+    }, [def?.dateAttribute, def?.range, def?.type, dateAttributes]);
 
     //TODO: AttributesDropdown will be used to add new filter
 
@@ -57,9 +76,7 @@ export function FiltersBar() {
             title={intl.formatMessage({ id: "kdaDialog.dialog.bars.filters.title" })}
             content={
                 <>
-                    {state.dateFilters.map((dateFilter, i) => (
-                        <DateBar key={i} date={dateFilter} onPeriodChange={onPeriodChange} />
-                    ))}
+                    <DateBar options={options} onPeriodChange={onPeriodChange} />
                     {state.attributeFilters.map((attributeFilter, i) => (
                         <AttributeBar
                             key={i}

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { useCrossFiltering } from "./useCrossFiltering.js";
 import { useDrill } from "./useDrill.js";
 import { useDrillDown } from "./useDrillDown.js";
@@ -26,7 +27,11 @@ import {
     OnDrillToInsightSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
+    OnKeyDriverAnalysis,
+    OnKeyDriverAnalysisError,
+    OnKeyDriverAnalysisSuccess,
 } from "../types.js";
+import { useKeyDriverAnalysis } from "./useKeyDriverAnalysis.js";
 
 /**
  * @internal
@@ -63,6 +68,10 @@ export interface UseDrillsProps {
     onCrossFiltering?: OnCrossFiltering;
     onCrossFilteringSuccess?: OnCrossFilteringSuccess;
     onCrossFilteringError?: OnCrossFilteringError;
+    //
+    onKeyDriverAnalysis?: OnKeyDriverAnalysis;
+    onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
+    onKeyDriverAnalysisError?: OnKeyDriverAnalysisError;
     // Common error handler
     onError?: OnDashboardDrillError;
 }
@@ -102,6 +111,10 @@ export function useDrills({
     onCrossFiltering,
     onCrossFilteringSuccess,
     onCrossFilteringError,
+    //
+    onKeyDriverAnalysis,
+    onKeyDriverAnalysisSuccess,
+    onKeyDriverAnalysisError,
     //
     onError,
 }: UseDrillsProps) {
@@ -153,6 +166,12 @@ export function useDrills({
         onError: onCrossFilteringError ?? onError,
     });
 
+    const keyDriverAnalysis = useKeyDriverAnalysis({
+        onBeforeRun: onKeyDriverAnalysis,
+        onSuccess: onKeyDriverAnalysisSuccess,
+        onError: onKeyDriverAnalysisError ?? onError,
+    });
+
     return {
         drill,
         drillDown,
@@ -162,5 +181,6 @@ export function useDrills({
         drillToCustomUrl,
         drillToLegacyDashboard,
         crossFiltering,
+        keyDriverAnalysis,
     };
 }

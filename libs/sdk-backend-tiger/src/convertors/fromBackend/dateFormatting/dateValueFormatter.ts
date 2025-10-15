@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { parseDateValue } from "./dateValueParser.js";
 import { DateFormatter, DateParseFormatter } from "./types.js";
 

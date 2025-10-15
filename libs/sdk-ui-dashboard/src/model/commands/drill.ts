@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     ICrossFiltering,
     IDrillToAttributeUrl,
@@ -7,11 +8,13 @@ import {
     IDrillToInsight,
     IDrillToLegacyDashboard,
     IInsight,
+    IKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { IDashboardCommand } from "./base.js";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
+import { DashboardKeyDriverCombinationItem } from "../events/drill.js";
 
 /**
  * Payload of the {@link Drill} command.
@@ -527,6 +530,66 @@ export function crossFiltering(
 //
 
 /**
+ * Payload of the {@link KeyDriverAnalysis} command.
+ * @beta
+ */
+export interface KeyDriverAnalysisPayload {
+    /**
+     * Key driver item to analyze.
+     */
+    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
+    /**
+     * Key driver analysis definition to apply.
+     */
+    readonly drillDefinition: IKeyDriveAnalysis;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
+ * @beta
+ */
+export interface KeyDriverAnalysis extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS";
+    readonly payload: KeyDriverAnalysisPayload;
+}
+
+/**
+ * Creates the {@link KeyDriverAnalysis} command.
+ * Dispatching this command will result into applying intersection attribute filters to the dashboard and insight will ignore these filters further
+ * Eventually a {@link DashboardKeyDriverAnalysisResolved} event will be dispatched at the end.
+ *
+ * @beta
+ * @param drillDefinition - drill definition to apply.
+ * @param drillEvent - original drill event, that triggered this particular drill interaction.
+ * @param keyDriveItem - key driver item to analyze.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns cross filtering command
+ */
+export function keyDriverAnalysis(
+    drillDefinition: IKeyDriveAnalysis,
+    drillEvent: IDashboardDrillEvent,
+    keyDriveItem: DashboardKeyDriverCombinationItem,
+    correlationId?: string,
+): KeyDriverAnalysis {
+    return {
+        type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS",
+        correlationId,
+        payload: {
+            drillDefinition,
+            drillEvent,
+            keyDriveItem,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
  * @alpha
  */
 export type DashboardDrillCommand =
@@ -537,4 +600,5 @@ export type DashboardDrillCommand =
     | DrillToDashboard
     | DrillToInsight
     | DrillToLegacyDashboard
-    | CrossFiltering;
+    | CrossFiltering
+    | KeyDriverAnalysis;

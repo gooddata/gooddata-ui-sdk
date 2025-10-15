@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 export type { UseDrillProps } from "./hooks/useDrill.js";
 export { useDrill } from "./hooks/useDrill.js";
 export type { UseDrillDownProps } from "./hooks/useDrillDown.js";
@@ -34,6 +35,10 @@ export type {
     OnDrillToInsightSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
+    OnKeyDriverAnalysis,
+    OnKeyDriverAnalysisError,
+    OnKeyDriverAnalysisSuccess,
+    KeyDriveInfo,
     IDrillToUrl,
 } from "./types.js";
 export { getDrillDownTitle } from "./utils/drillDownUtils.js";

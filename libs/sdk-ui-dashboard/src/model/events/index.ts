@@ -44,6 +44,8 @@ import {
     DashboardDrillToLegacyDashboardRequested,
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillableItemsChanged,
+    DashboardKeyDriverAnalysisRequested,
+    DashboardKeyDriverAnalysisResolved,
 } from "./drill.js";
 import {
     DashboardAttributeFilterAdded,
@@ -499,6 +501,11 @@ export type {
     DashboardCrossFilteringRequestedPayload,
     DashboardCrossFilteringResolved,
     DashboardCrossFilteringResolvedPayload,
+    DashboardKeyDriverAnalysisResolved,
+    DashboardKeyDriverAnalysisResolvedPayload,
+    DashboardKeyDriverAnalysisRequested,
+    DashboardKeyDriverAnalysisRequestedPayload,
+    DashboardKeyDriverCombinationItem,
 } from "./drill.js";
 export {
     isDashboardDrillDownRequested,
@@ -518,6 +525,8 @@ export {
     isDashboardDrillableItemsChanged,
     isDashboardCrossFilteringRequested,
     isDashboardCrossFilteringResolved,
+    isDashboardKeyDriverAnalysisResolved,
+    isDashboardKeyDriverAnalysisRequested,
 } from "./drill.js";
 
 export type { DrillTargetsAdded, DrillTargetsAddedPayload } from "./drillTargets.js";
@@ -664,6 +673,8 @@ export type DashboardEvents =
     | DashboardDrillToDashboardResolved
     | DashboardDrillToInsightResolved
     | DashboardDrillToLegacyDashboardResolved
+    | DashboardKeyDriverAnalysisResolved
+    | DashboardKeyDriverAnalysisRequested
     | DashboardDrillResolved
     | DashboardDrillDownRequested
     | DashboardDrillToAttributeUrlRequested

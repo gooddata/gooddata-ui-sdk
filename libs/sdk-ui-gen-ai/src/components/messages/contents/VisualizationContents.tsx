@@ -75,6 +75,7 @@ export type VisualizationContentsProps = {
     showSuggestions?: boolean;
     colorPalette?: IColorPalette;
     enableNewPivotTable?: boolean;
+    enableAccessibleChartTooltip?: boolean;
     onCopyToClipboard?: (data: { content: string }) => void;
 };
 
@@ -84,6 +85,7 @@ function VisualizationContentsComponentCore({
     useMarkdown,
     colorPalette,
     enableNewPivotTable = false,
+    enableAccessibleChartTooltip = false,
     showSuggestions = false,
     onCopyToClipboard,
 }: VisualizationContentsProps) {
@@ -428,10 +430,13 @@ function VisualizationContentsComponentCore({
                                         dimensions,
                                         filters,
                                         sorts,
-                                        enableNewPivotTable,
                                         handleSdkError,
                                         handleLoadingChanged,
                                         handleSuccess,
+                                        {
+                                            enableNewPivotTable,
+                                            enableAccessibleChartTooltip,
+                                        },
                                     );
                                 }
 
@@ -447,6 +452,9 @@ function VisualizationContentsComponentCore({
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
+                                            {
+                                                enableAccessibleChartTooltip,
+                                            },
                                         );
                                     case "COLUMN":
                                         return renderColumnChart(
@@ -459,6 +467,9 @@ function VisualizationContentsComponentCore({
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
+                                            {
+                                                enableAccessibleChartTooltip,
+                                            },
                                         );
                                     case "LINE":
                                         return renderLineChart(
@@ -471,6 +482,9 @@ function VisualizationContentsComponentCore({
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
+                                            {
+                                                enableAccessibleChartTooltip,
+                                            },
                                         );
                                     case "PIE":
                                         return renderPieChart(
@@ -483,6 +497,9 @@ function VisualizationContentsComponentCore({
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
+                                            {
+                                                enableAccessibleChartTooltip,
+                                            },
                                         );
                                     case "TABLE":
                                         return renderTable(
@@ -491,10 +508,13 @@ function VisualizationContentsComponentCore({
                                             dimensions,
                                             filters,
                                             sorts,
-                                            enableNewPivotTable,
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
+                                            {
+                                                enableNewPivotTable,
+                                                enableAccessibleChartTooltip,
+                                            },
                                         );
                                     case "HEADLINE":
                                         return renderHeadline(
@@ -572,6 +592,9 @@ const renderBarChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    props: {
+        enableAccessibleChartTooltip?: boolean;
+    },
 ) => (
     <BarChart
         locale={locale}
@@ -586,6 +609,7 @@ const renderBarChart = (
             colorPalette,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
+            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
         filters={filters}
         onError={onError}
@@ -604,6 +628,9 @@ const renderColumnChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    props: {
+        enableAccessibleChartTooltip?: boolean;
+    },
 ) => (
     <ColumnChart
         locale={locale}
@@ -618,6 +645,7 @@ const renderColumnChart = (
             colorPalette,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
+            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
         filters={filters}
         onError={onError}
@@ -636,6 +664,9 @@ const renderLineChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    props: {
+        enableAccessibleChartTooltip?: boolean;
+    },
 ) => (
     <LineChart
         locale={locale}
@@ -649,6 +680,7 @@ const renderLineChart = (
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
             colorPalette,
+            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -666,6 +698,9 @@ const renderPieChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    props: {
+        enableAccessibleChartTooltip?: boolean;
+    },
 ) => (
     <PieChart
         locale={locale}
@@ -677,6 +712,7 @@ const renderPieChart = (
         config={{
             ...visualizationTooltipOptions,
             colorPalette,
+            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -690,12 +726,15 @@ const renderTable = (
     dimensions: IAttribute[],
     filters: IFilter[],
     sortBy: ISortItem[],
-    enableNewPivotTable: boolean,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    props: {
+        enableAccessibleChartTooltip?: boolean;
+        enableNewPivotTable?: boolean;
+    },
 ) => {
-    const TableComponent = enableNewPivotTable ? PivotTableNext : PivotTable;
+    const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
     return (
         <TableComponent
             locale={locale}
@@ -742,11 +781,15 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (
     state: RootState,
-): Pick<VisualizationContentsProps, "colorPalette" | "enableNewPivotTable"> => {
+): Pick<
+    VisualizationContentsProps,
+    "colorPalette" | "enableNewPivotTable" | "enableAccessibleChartTooltip"
+> => {
     const settings = settingsSelector(state);
     return {
         colorPalette: colorPaletteSelector(state),
         enableNewPivotTable: settings?.enableNewPivotTable,
+        enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
     };
 };
 

@@ -814,7 +814,7 @@ export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = crea
 export const selectEnableExportToPdfTabular: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableNewPdfTabularExport) ?? true;
+        return Boolean(state.settings?.enableNewPdfTabularExport) ?? false;
     },
 );
 

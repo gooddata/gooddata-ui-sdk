@@ -17,11 +17,15 @@ const alignPoints: IAlignPoint[] = [
     { align: "bl br" },
     { align: "tr tr" },
     { align: "br br" },
+    { align: "bc tc" }, // align arrow to middle, above the widget button (mobile view)
+    { align: "tc bc" }, // align arrow to middle, below the widget button (mobile view)
 ];
 
 const arrowDirections: ArrowDirections = {
     "tr tr": "right",
     "br br": "right",
+    "bc tc": "top",
+    "tc bc": "bottom",
 };
 
 const flexibleArrowOffsets: ArrowOffsets = {
@@ -29,6 +33,8 @@ const flexibleArrowOffsets: ArrowOffsets = {
     "br bl": [16, 27],
     "tl tr": [-16, -2],
     "bl br": [-16, 27],
+    "bc tc": [0, 12],
+    "tc bc": [0, -12],
 };
 
 interface IDashboardInsightMenuBubbleProps {
