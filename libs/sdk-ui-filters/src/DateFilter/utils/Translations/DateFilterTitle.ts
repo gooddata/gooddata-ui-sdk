@@ -36,11 +36,11 @@ import {
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
 
-export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
+export const getTimeRange = (dateFrom: Date, dateTo: Date, splitter = "\u2013"): string => {
     const fromTime = format(dateFrom, TIME_FORMAT);
     const toTime = format(dateTo, TIME_FORMAT);
 
-    return fromTime === toTime ? fromTime : `${fromTime} \u2013 ${toTime}`;
+    return fromTime === toTime ? fromTime : `${fromTime} ${splitter} ${toTime}`;
 };
 
 const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
@@ -65,6 +65,7 @@ export const formatAbsoluteDateRange = (
     from: Date | string,
     to: Date | string,
     dateFormat: string,
+    splitter = "\u2013",
 ): string => {
     const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
     const dateFormatWithoutTime = dateFormat.replace(TIME_FORMAT_WITH_SEPARATOR, "");
@@ -79,7 +80,7 @@ export const formatAbsoluteDateRange = (
 
     if (moment(fromDate).isSame(toDate, "day")) {
         if (isTimeEnabled && !coversWholeDay) {
-            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate)}`;
+            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter)}`;
         } else {
             return format(fromDate, dateFormatWithoutTime);
         }
@@ -91,7 +92,7 @@ export const formatAbsoluteDateRange = (
     const fromTitle = format(fromDate, displayDateFormat);
     const toTitle = format(toDate, displayDateFormat);
 
-    return `${fromTitle} \u2013 ${toTitle}`;
+    return `${fromTitle} ${splitter} ${toTitle}`;
 };
 
 const relativeDateRangeFormatters: Array<{

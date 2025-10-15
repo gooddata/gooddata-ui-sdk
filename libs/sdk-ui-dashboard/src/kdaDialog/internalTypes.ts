@@ -1,16 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardAttributeFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
+import { ICatalogDateAttribute, IDashboardAttributeFilter, ISeparators, ObjRef } from "@gooddata/sdk-model";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-export interface KdaMetric {
-    title: string;
-    metric?: IMeasure;
-}
+import { IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
 
-export interface KdaDateFilter {
-    title: string;
-    selectedPeriod: "same_period_previous_year" | "previous_period";
+export interface KdaDateOptions {
+    period: KdaPeriodType;
+    dateAttribute?: ICatalogDateAttribute;
+    range?: [IKdaDataPoint, IKdaDataPoint];
 }
 
 export interface KdaAttributeFilter {
@@ -32,16 +30,18 @@ export interface KdaItem {
 }
 
 export interface KdaState {
-    rootItem: KdaItem | null;
-    rootStatus: "loading" | "success" | "error" | "pending";
+    //definition
+    definition: IKdaDefinition | null;
+    definitionStatus: "loading" | "success" | "error" | "pending";
+    //settings
+    separators?: ISeparators;
+    //rest
     selectedTrend: "up" | "down";
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
     selectedStatus: "loading" | "success" | "error" | "pending";
-    metric: KdaMetric | null;
-    dateFilters: KdaDateFilter[];
     attributeFilters: KdaAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: "loading" | "success" | "error" | "pending";
     combinations: number;
-    attributes: ObjRef[];
+    selectedAttributes: ObjRef[];
 }

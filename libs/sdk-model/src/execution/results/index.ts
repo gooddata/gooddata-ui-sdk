@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
@@ -349,6 +350,16 @@ export interface IResultAttributeHeaderItem {
      * inconsistencies.
      */
     formattedName?: string;
+
+    /**
+     * Normalized value of attribute element.
+     *
+     * @remarks
+     * This property holds the normalized form of value property in case of attributes if its differ from
+     * name property. Its used by date attributes for example when normalized value can hold ISO string of date.
+     * Its related to type of attribute and can differ for different implementations.
+     */
+    normalizedValue?: string;
 }
 
 /**

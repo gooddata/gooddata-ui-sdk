@@ -30,7 +30,7 @@ export class DateRangePickerInputFieldBody extends Component<InputHTMLAttributes
         const { className } = this.props;
         return (
             <span className={cx(className)}>
-                <span className="gd-icon-calendar" />
+                <span className="gd-icon-calendar" aria-hidden="true" />
                 <input
                     {...this.props}
                     ref={this.inputRef}

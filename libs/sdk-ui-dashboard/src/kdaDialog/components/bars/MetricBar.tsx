@@ -4,14 +4,14 @@ import cx from "classnames";
 
 import { UiChip, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { KdaMetric } from "../../internalTypes.js";
+import { IKdaDefinition } from "../../types.js";
 
 interface IMetricBarProps {
-    metric: KdaMetric;
+    definition: IKdaDefinition;
 }
 
 export function MetricBar(props: IMetricBarProps) {
-    const { title } = props.metric;
+    const { title } = props.definition.metric.measure;
 
     return (
         <div className={cx("gd-kda-dialog-bar__metric")}>

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { DateAttributeGranularity } from "@gooddata/sdk-model";

@@ -210,8 +210,9 @@ export function* resolveDashboardConfig(
             ? settings.settings
             : sanitizeUnfinishedFeatureSettings(settings.settings),
         colorPalette,
-        mapboxToken: config.mapboxToken,
-        agGridToken: config.agGridToken,
+        // Prefer explicit config tokens, otherwise fall back to tokens available in backend settings
+        mapboxToken: config.mapboxToken ?? (settings.settings?.["mapboxToken"] as string | undefined),
+        agGridToken: config.agGridToken ?? (settings.settings?.["agGridToken"] as string | undefined),
     };
 }
 

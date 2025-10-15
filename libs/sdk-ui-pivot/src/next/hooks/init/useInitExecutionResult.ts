@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 
+import { isNoDataError, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import {
+    DataViewFacade,
     GoodDataSdkError,
     ILoadingState,
     IPushData,
@@ -41,8 +43,11 @@ export const useInitExecutionResult = () => {
     return useCancelablePromise<IInitialExecutionData, GoodDataSdkError>(
         {
             promise: async (signal) => {
+                // Execute the query - if this fails, error propagates (no drill targets available)
+                const initialExecutionResult = await execution.withSignal(signal).execute();
+
+                // Load data - if this fails, we may still extract drill targets from the execution result
                 try {
-                    const initialExecutionResult = await execution.withSignal(signal).execute();
                     const initialDataView = await loadDataView({
                         executionResult: initialExecutionResult,
                         startRow: 0,
@@ -50,7 +55,35 @@ export const useInitExecutionResult = () => {
                     });
                     return { initialExecutionResult, initialDataView };
                 } catch (e) {
-                    // Ensure consumers always receive GoodDataSdkError
+                    /*
+                     * When execution succeeds but data loading fails, push drill targets
+                     * for the Interactions menu before propagating the error.
+                     */
+                    if (!pushData) {
+                        throw e;
+                    }
+
+                    // Check error types on the original error before conversion (matches old table behavior)
+                    if (isUnexpectedResponseError(e)) {
+                        pushData({
+                            availableDrillTargets: getAvailableDrillTargets(
+                                DataViewFacade.forResult(initialExecutionResult),
+                                measureGroupDimension,
+                                columnHeadersPosition,
+                            ),
+                        });
+                    }
+
+                    if (isNoDataError(e) && e.dataView) {
+                        pushData({
+                            availableDrillTargets: getAvailableDrillTargets(
+                                DataViewFacade.for(e.dataView),
+                                measureGroupDimension,
+                                columnHeadersPosition,
+                            ),
+                        });
+                    }
+
                     throw convertError(e);
                 }
             },
@@ -71,7 +104,7 @@ export const useInitExecutionResult = () => {
                 if (onLoadingChanged) {
                     onLoadingChanged({ isLoading: false });
                 }
-                onError?.(err);
+                onError?.(convertError(err));
             },
         },
         [sanitizeSortInExecution(execution).fingerprint()],

@@ -292,56 +292,55 @@ const oneItem = [
     },
 ] as IUiListboxInteractiveItem<KdaItem>[];
 
-export const dialogFullLoadingState: Partial<KdaState> = {};
+export const dialogFullLoadingState: Partial<KdaState> = {
+    separators: {
+        thousand: ",",
+        decimal: ".",
+    },
+};
 export const dialogContentLoadingState: Partial<KdaState> = {
     ...dialogFullLoadingState,
-    metric: {
-        title: "Revenue",
-    },
-    dateFilters: [{ title: "July vs June", selectedPeriod: "same_period_previous_year" }],
-    attributeFilters: [
-        {
-            attributeFilter: {
-                attributeFilter: {
-                    displayForm: ReferenceMd.Activity.Subject.attribute.displayForm,
-                    negativeSelection: false,
-                    attributeElements: {
-                        values: [],
+    definition: {
+        metric: {
+            measure: {
+                localIdentifier: "metric-1",
+                definition: {
+                    inlineDefinition: {
+                        maql: "SELECT 1",
                     },
-                    localIdentifier: "localIdentifier-attributeFilter-region",
-                    title: "Region",
-                    selectionMode: "multi",
-                    //filterElementsBy?: IDashboardAttributeFilterParent[];
-                    //filterElementsByDate?: IDashboardAttributeFilterByDate[];
-                    //validateElementsBy?: ObjRef[];
                 },
+                title: "Revenue",
             },
         },
-    ],
-    rootItem: {
-        id: "1",
-        title: "Country",
-        description: "There are some count drivers that rise the revenue in really interesting way.",
-        category: "Germany",
-        from: {
-            value: 200,
-            date: "June",
-        },
-        to: {
-            value: 250,
-            date: "July",
-        },
-        formatValue,
-        drivers: 7,
+        dateAttribute: ReferenceMd.DateDatasets.Created.CreatedMonthYear,
+        type: "previous_period",
+        range: [
+            {
+                date: "2024-02",
+                value: 100,
+                format: {
+                    locale: "en-US",
+                    pattern: "MM/yyyy",
+                },
+            },
+            {
+                date: "2024-03",
+                value: 300,
+                format: {
+                    locale: "en-US",
+                    pattern: "MM/yyyy",
+                },
+            },
+        ],
     },
-    rootStatus: "success",
+    definitionStatus: "success",
 };
 export const dialogDetailsLoadingState: Partial<KdaState> = {
     ...dialogContentLoadingState,
     items: fewItems,
     itemsStatus: "success",
     combinations: 1256,
-    attributes: [
+    selectedAttributes: [
         ReferenceMd.Activity.Default.attribute.displayForm,
         ReferenceMd.Account.Default.attribute.displayForm,
     ],

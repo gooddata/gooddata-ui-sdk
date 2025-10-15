@@ -20,6 +20,7 @@ export function DashboardInsightWithDrillSelect(props: IDashboardInsightProps): 
         onDrillToAttributeUrl,
         onDrillToCustomUrl,
         onDrillToDashboard,
+        onKeyDriverAnalysisSuccess,
     } = props;
 
     const visualizationId = useIdPrefixed("visualization");
@@ -35,6 +36,7 @@ export function DashboardInsightWithDrillSelect(props: IDashboardInsightProps): 
             onDrillToAttributeUrlSuccess={onDrillToAttributeUrl}
             onDrillToCustomUrlSuccess={onDrillToCustomUrl}
             onDrillToDashboardSuccess={onDrillToDashboard}
+            onKeyDriverAnalysisSuccess={onKeyDriverAnalysisSuccess}
             visualizationId={visualizationId}
         >
             {({ onDrill }) => {

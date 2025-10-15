@@ -31,6 +31,7 @@ import {
     OnDrillToCustomUrlSuccess,
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
+    OnKeyDriverAnalysisSuccess,
     OnWidgetDrill,
 } from "../../drill/types.js";
 import { WidgetExportDataAttributes } from "../../export/index.js";
@@ -146,6 +147,11 @@ export interface IDashboardInsightProps {
      * @alpha
      */
     onDrillToCustomUrl?: OnDrillToCustomUrlSuccess;
+
+    /**
+     * @alpha
+     */
+    onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
 
     /**
      * @internal

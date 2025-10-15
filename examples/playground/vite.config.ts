@@ -26,6 +26,7 @@ const packagesWithStyles = [
     "@gooddata/sdk-ui-semantic-search",
     "@gooddata/sdk-ui-kit",
     "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-catalog",
 ];
 
 function makePackageEsmAlias(packageName: string) {

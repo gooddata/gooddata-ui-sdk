@@ -7,22 +7,24 @@ import { useIntl } from "react-intl";
 
 import { UiChip, UiListbox, UiPopover, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { KdaDateFilter } from "../../internalTypes.js";
+import { KdaDateOptions } from "../../internalTypes.js";
+import { KdaPeriodType } from "../../types.js";
+import { formatTitle } from "../../utils.js";
 
 interface IDateBarProps {
-    date: KdaDateFilter;
-    onPeriodChange: (filter: KdaDateFilter, period: "same_period_previous_year" | "previous_period") => void;
+    options: KdaDateOptions;
+    onPeriodChange: (period: KdaPeriodType) => void;
 }
 
 export function DateBar(props: IDateBarProps) {
     const intl = useIntl();
     const ref = useRef<HTMLUListElement>(null);
 
-    const { title } = props.date;
+    const splitter = intl.formatMessage({ id: "kdaDialog.dialog.bars.date.splitter" });
     const label = intl.formatMessage(
         { id: "kdaDialog.dialog.bars.date.title" },
         {
-            title,
+            title: formatTitle(props.options, splitter),
         },
     );
 
@@ -61,14 +63,14 @@ export function DateBar(props: IDateBarProps) {
                             <div className={cx("gd-kda-dialog-bar__date-select")}>
                                 <UiListbox
                                     reference={ref}
-                                    selectedItemId={props.date.selectedPeriod}
+                                    selectedItemId={props.options.period}
                                     items={items}
                                     ariaAttributes={{
                                         id: "kda-dialog-date-bar",
                                     }}
                                     onClose={onClose}
                                     onSelect={(item) => {
-                                        props.onPeriodChange(props.date, item.data);
+                                        props.onPeriodChange(item.data);
                                     }}
                                 />
                             </div>

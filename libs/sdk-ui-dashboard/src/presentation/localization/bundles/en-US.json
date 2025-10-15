@@ -2743,6 +2743,10 @@
         "value": "Date range: {title}",
         "comment": "Date range title in key driver analysis dialog"
     },
+    "kdaDialog.dialog.bars.date.splitter": {
+        "value": "vs",
+        "comment": "Date range splitter in key driver analysis dialog"
+    },
     "kdaDialog.dialog.keyDrives.title": {
         "value": "Key drivers",
         "comment": "Key drivers title in key driver analysis dialog"

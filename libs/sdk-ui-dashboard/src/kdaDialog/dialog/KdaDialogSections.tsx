@@ -21,8 +21,9 @@ interface IKdaDialogSectionsProps {
 export function KdaDialogSections({ footer, content, header }: IKdaDialogSectionsProps) {
     const { state } = useKdaState();
     const isDashboardLoading = useDashboardSelector(selectIsDashboardLoading);
-    const isLoading = state.rootStatus === "pending" || state.rootStatus === "loading" || isDashboardLoading;
-    const isError = state.rootStatus === "error";
+    const isLoading =
+        state.definitionStatus === "pending" || state.definitionStatus === "loading" || isDashboardLoading;
+    const isError = state.definitionStatus === "error";
 
     return (
         <div className={cx("gd-kda-dialog-sections")}>

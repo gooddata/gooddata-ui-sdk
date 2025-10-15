@@ -1,6 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     FilterContextItem,
+    IAttributeDescriptor,
     ICrossFiltering,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
@@ -10,11 +12,14 @@ import {
     IDrillToInsight,
     IDrillToLegacyDashboard,
     IInsight,
+    IKeyDriveAnalysis,
+    IResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
+import { IKdaDefinition } from "../../kdaDialog/types.js";
 import {
     DashboardDrillContext,
     IDashboardDrillEvent,
@@ -22,6 +27,22 @@ import {
     IDrillDownDefinition,
 } from "../../types.js";
 import { DashboardContext, FiltersInfo } from "../types/commonTypes.js";
+
+/**
+ * @internal
+ */
+export type DashboardKeyDriverCombinationRangeItem = { normalizedValue: string } & IAttributeDescriptor;
+
+/**
+ * @internal
+ */
+export interface DashboardKeyDriverCombinationItem {
+    where: "before" | "after" | "none";
+    type: "comparative" | "year-to-year";
+    difference: number;
+    values: [number, number];
+    range: [IResultAttributeHeader & IAttributeDescriptor, IResultAttributeHeader & IAttributeDescriptor];
+}
 
 /**
  * Payload of the {@link DashboardDrillRequested} event.
@@ -1084,4 +1105,130 @@ export function crossFilteringResolved(
  */
 export const isDashboardCrossFilteringResolved = eventGuard<DashboardCrossFilteringResolved>(
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardKeyDriverAnalysisRequested} event.
+ * @beta
+ */
+export interface DashboardKeyDriverAnalysisRequestedPayload {
+    /**
+     * Key driver item to analyze.
+     */
+    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+    /**
+     *  Drill definition.
+     */
+    readonly drillDefinition: IKeyDriveAnalysis;
+}
+
+/**
+ * This event is emitted on start of the resolution of the {@link KeyDriverAnalysis} command.
+ *
+ * @beta
+ */
+export interface DashboardKeyDriverAnalysisRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED";
+    readonly payload: DashboardKeyDriverAnalysisRequestedPayload;
+}
+
+/**
+ * @beta
+ */
+export function keyDriverAnalysisRequested(
+    ctx: DashboardContext,
+    drillDefinition: IKeyDriveAnalysis,
+    drillEvent: IDashboardDrillEvent,
+    keyDriveItem: DashboardKeyDriverCombinationItem,
+    correlationId?: string,
+): DashboardKeyDriverAnalysisRequested {
+    return {
+        type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED",
+        ctx,
+        correlationId,
+        payload: {
+            drillDefinition,
+            drillEvent,
+            keyDriveItem,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKeyDriverAnalysisRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardKeyDriverAnalysisRequested = eventGuard<DashboardKeyDriverAnalysisRequested>(
+    "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED",
+);
+
+/**
+ * This event is emitted as a result of the {@link KeyDriverAnalysis} command.
+ *
+ * @beta
+ */
+export interface DashboardKeyDriverAnalysisResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED";
+    readonly payload: DashboardKeyDriverAnalysisResolvedPayload;
+}
+
+/**
+ * Payload of the {@link DashboardKeyDriverAnalysisResolved} event.
+ * @beta
+ */
+export interface DashboardKeyDriverAnalysisResolvedPayload {
+    /**
+     * Key driver item to analyze.
+     */
+    readonly keyDriveDefinition: IKdaDefinition;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+    /**
+     * Drill definition with key driver analysis
+     */
+    readonly drillDefinition: IKeyDriveAnalysis;
+}
+
+/**
+ * @beta
+ */
+export function keyDriverAnalysisResolved(
+    ctx: DashboardContext,
+    drillDefinition: IKeyDriveAnalysis,
+    drillEvent: IDashboardDrillEvent,
+    keyDriveDefinition: IKdaDefinition,
+    correlationId?: string,
+): DashboardKeyDriverAnalysisResolved {
+    return {
+        type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            drillDefinition,
+            drillEvent,
+            keyDriveDefinition,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKeyDriverAnalysisResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardKeyDriverAnalysisResolved = eventGuard<DashboardKeyDriverAnalysisResolved>(
+    "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
 );

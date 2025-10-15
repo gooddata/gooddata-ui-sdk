@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
     AttributeExecutionResultHeader,
     DimensionHeader,
@@ -30,8 +31,9 @@ import {
     createDateValueFormatter,
     createForecastDateValueFormatter,
 } from "../dateFormatting/dateValueFormatter.js";
+import { createDateValueNormalizer } from "../dateFormatting/dateValueNormalizer.js";
 import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
-import { DateFormatter, DateParseFormatter } from "../dateFormatting/types.js";
+import { DateFormatter, DateNormalizer, DateParseFormatter } from "../dateFormatting/types.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 
 type DateAttributeFormatProps = {
@@ -142,10 +144,11 @@ function getTransformedBaseHeader(
     measureDescriptors: IMeasureDescriptor[],
     dateFormatProps: DateAttributeFormatProps | undefined,
     dateValueFormatter: DateParseFormatter,
+    dateValueNormalizer: DateNormalizer,
     baseHeadersTotalsMap: { [key: number]: TotalExecutionResultHeader },
 ) {
     if (isResultAttributeHeader(header)) {
-        return attributeHeaderItem(header, dateFormatProps, dateValueFormatter);
+        return attributeHeaderItem(header, dateFormatProps, dateValueFormatter, dateValueNormalizer);
     }
 
     if (isResultMeasureHeader(header)) {
@@ -173,6 +176,7 @@ export function getTransformDimensionHeaders(
 ): (dimensionHeaders: DimensionHeader[]) => IResultHeader[][][] {
     const measureDescriptors = getMeasuresFromDimensions(dimensions);
     const dateValueFormatter = createDateValueFormatter(dateFormatter);
+    const dateValueNormalizer = createDateValueNormalizer();
 
     const columnGrandTotals = grandTotals.find((total) => total.totalDimensions.includes("dim_0"));
     return (dimensionHeaders: DimensionHeader[]) =>
@@ -203,6 +207,7 @@ export function getTransformDimensionHeaders(
                         measureDescriptors,
                         dateFormatProps,
                         dateValueFormatter,
+                        dateValueNormalizer,
                         baseHeadersTotalsMap,
                     );
                 });
@@ -225,6 +230,7 @@ export function getTransformForecastHeaders(
     }
 
     const dateValueFormatter = createForecastDateValueFormatter(dateFormatter);
+    const dateValueNormalizer = createDateValueNormalizer();
 
     return (dimensionHeaders: DimensionHeader[], forecastResults: IForecastResult | undefined) => {
         let used = false;
@@ -253,6 +259,7 @@ export function getTransformForecastHeaders(
                             },
                             dateFormatProps,
                             dateValueFormatter,
+                            dateValueNormalizer,
                         );
                     });
                 }
@@ -267,18 +274,29 @@ function attributeHeaderItem(
     header: AttributeExecutionResultHeader,
     dateFormatProps: DateAttributeFormatProps | undefined,
     dateValueFormatter: DateParseFormatter,
+    dateValueNormalizer: DateNormalizer,
 ): IResultAttributeHeader {
-    const formattedNameObj = dateFormatProps
-        ? {
-              formattedName: dateValueFormatter(
-                  header.attributeHeader.labelValue,
-                  dateFormatProps.granularity,
-                  dateFormatProps.format.locale,
-                  dateFormatProps.format.pattern,
-                  dateFormatProps.format.timezone,
-              ),
-          }
-        : {};
+    let formattedNameObj = {};
+
+    if (dateFormatProps) {
+        const formattedName = dateValueFormatter(
+            header.attributeHeader.labelValue,
+            dateFormatProps.granularity,
+            dateFormatProps.format.locale,
+            dateFormatProps.format.pattern,
+            dateFormatProps.format.timezone,
+        );
+        const normalizedValue = dateValueNormalizer(
+            header.attributeHeader.labelValue,
+            dateFormatProps.granularity,
+            dateFormatProps.format.locale,
+            dateFormatProps.format.timezone,
+        );
+        formattedNameObj = {
+            formattedName,
+            normalizedValue,
+        };
+    }
 
     return {
         attributeHeaderItem: {

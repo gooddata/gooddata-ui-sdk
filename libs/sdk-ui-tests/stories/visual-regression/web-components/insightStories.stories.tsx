@@ -6,6 +6,12 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import { setWebComponentsContext } from "../../_infra/webComponents.js";
 
+/**
+ * WARNING: Web-components stories are designed for screen test,
+ * to view them properly you have to select story and hit reload button in browser.
+ * After that it loads all styles and this could poison css of other stories.
+ */
+
 const insightIds = [
     ReferenceRecordings.Insights.PivotTable.TwoMeasuresAndGrandTotalsAndMultipleSubtotals,
     ReferenceRecordings.Insights.AreaChart.SingleMeasureWithViewBy,

@@ -16,7 +16,7 @@ export function KeyDriversFooter() {
     const isLoading = state.itemsStatus === "pending" || state.itemsStatus === "loading" || !isCatalogLoaded;
 
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
-    const initialAttributes = state.attributes
+    const initialAttributes = state.selectedAttributes
         .map((attr) => {
             return allAttributes.find((a) => a.displayForms.some((df) => areObjRefsEqual(df.ref, attr)));
         })
@@ -31,7 +31,7 @@ export function KeyDriversFooter() {
                     id="kdaDialog.dialog.keyDrives.overview.summary.drivers.description"
                     values={{
                         combinations: state.combinations,
-                        attributes: state.attributes.length,
+                        attributes: state.selectedAttributes.length,
                         button: (chunks) => {
                             return (
                                 <DropdownInvertableSelect
@@ -48,7 +48,9 @@ export function KeyDriversFooter() {
                                             : selectedItems;
 
                                         setState({
-                                            attributes: selected.map((item) => item.defaultDisplayForm.ref),
+                                            selectedAttributes: selected.map(
+                                                (item) => item.defaultDisplayForm.ref,
+                                            ),
                                         });
                                     }}
                                     header={

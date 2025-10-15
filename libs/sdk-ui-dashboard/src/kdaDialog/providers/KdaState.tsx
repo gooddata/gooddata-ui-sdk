@@ -6,8 +6,8 @@ import { KdaState } from "../internalTypes.js";
 
 const defaultState: KdaState = {
     //main items
-    rootItem: null,
-    rootStatus: "pending",
+    definition: null,
+    definitionStatus: "pending",
     items: [],
     itemsStatus: "pending",
     //selected
@@ -15,12 +15,10 @@ const defaultState: KdaState = {
     selectedItem: "summary",
     selectedStatus: "pending",
     //root data
-    metric: null,
-    dateFilters: [],
     attributeFilters: [],
     //summary data
     combinations: 0,
-    attributes: [],
+    selectedAttributes: [],
 };
 
 const KdaStateContext = createContext<{

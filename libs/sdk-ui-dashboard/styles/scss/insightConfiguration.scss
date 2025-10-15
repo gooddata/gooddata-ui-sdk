@@ -209,12 +209,28 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     border-right-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
 }
 
+.bubble-light.arrow-top-direction.edit-insight-config-arrow-color .arrow {
+    border-bottom-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
+}
+
+.bubble-light.arrow-bottom-direction.edit-insight-config-arrow-color .arrow {
+    border-top-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
+}
+
 .bubble-light.arrow-right-direction.edit-insight-config-arrow-color .arrow {
     border-left-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
 }
 
 .bubble-light.arrow-left-direction.edit-insight-config-arrow-submenu-color .arrow {
     border-right-color: kit-variables.$is-focused-background;
+}
+
+.bubble-light.arrow-top-direction.edit-insight-config-arrow-submenu-color .arrow {
+    border-bottom-color: kit-variables.$is-focused-background;
+}
+
+.bubble-light.arrow-bottom-direction.edit-insight-config-arrow-submenu-color .arrow {
+    border-top-color: kit-variables.$is-focused-background;
 }
 
 .bubble-light.arrow-right-direction.edit-insight-config-arrow-submenu-color .arrow {
@@ -234,15 +250,30 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
         }
     }
 
-    .edit-insight-config-title-1-line {
+    .edit-insight-config-title-1-line.arrow-left-direction,
+    .edit-insight-config-title-1-line.arrow-right-direction {
         .bubble-content .arrow-position {
             top: 9px;
         }
     }
 
-    .edit-insight-config-title-2-lines {
+    .edit-insight-config-title-2-lines.arrow-left-direction,
+    .edit-insight-config-title-2-lines.arrow-right-direction {
         .bubble-content .arrow-position {
             top: 18px;
+        }
+    }
+
+    .edit-insight-config-title-1-line.arrow-top-direction {
+        .bubble-content .arrow-position {
+            top: -16px;
+        }
+    }
+
+    .edit-insight-config-title-1-line.arrow-bottom-direction {
+        .bubble-content .arrow-position {
+            top: unset;
+            bottom: -1px;
         }
     }
 }

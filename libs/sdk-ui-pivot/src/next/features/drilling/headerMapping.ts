@@ -18,7 +18,7 @@ export function extractMappingHeadersUpToPosition(
         }
 
         if (scope.type === "measureGroupScope") {
-            throw new Error("measureGroupScope header is not supported");
+            return [];
         }
 
         if (scope.type !== "measureScope") {
@@ -39,7 +39,7 @@ function extractMappingHeadersAtPosition(
         }
 
         if (scope.type === "measureGroupScope") {
-            throw new Error("measureGroupScope header is not supported");
+            return [];
         }
 
         if (scope.type !== "measureScope") {
@@ -53,7 +53,7 @@ function extractMappingHeadersAtPosition(
 function extractAllMappingHeaders(scopes: ITableDataHeaderScope[]): IMappingHeader[] {
     return scopes.flatMap((scope: ITableDataHeaderScope) => {
         if (scope.type === "measureGroupScope") {
-            throw new Error("measureGroupScope header is not supported");
+            return [];
         }
 
         if (scope.type !== "measureScope") {

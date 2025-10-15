@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useRef, useState } from "react";
+import { ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -16,12 +16,14 @@ import {
     isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
 import { DrillSelectContext, IDrillSelectCloseBehavior } from "./types.js";
 import {
     DashboardCommandFailed,
     DashboardDrillCommand,
+    DashboardKeyDriverCombinationItem,
     selectBackendCapabilities,
     selectDisableDefaultDrills,
     selectLocale,
@@ -34,6 +36,10 @@ import {
     IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
+import {
+    DASHBOARD_DRILL_MENU_BOTTOM_LAYER_Z_INDEX,
+    DASHBOARD_DRILL_MENU_TOP_LAYER_Z_INDEX,
+} from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { useDrills } from "../hooks/useDrills.js";
 import {
@@ -42,6 +48,7 @@ import {
     OnDrillToCustomUrlSuccess,
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
+    OnKeyDriverAnalysisSuccess,
     OnWidgetDrill,
 } from "../types.js";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
@@ -59,6 +66,7 @@ export interface WithDrillSelectProps {
     onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
     onDrillToAttributeUrlSuccess?: OnDrillToAttributeUrlSuccess;
     onDrillToCustomUrlSuccess?: OnDrillToCustomUrlSuccess;
+    onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
     onError?: (error: any) => void;
     children: (props: { onDrill: OnWidgetDrill }) => ReactElement;
 }
@@ -77,6 +85,7 @@ export function WithDrillSelect({
     onDrillToDashboardSuccess,
     onDrillToAttributeUrlSuccess,
     onDrillToCustomUrlSuccess,
+    onKeyDriverAnalysisSuccess,
     onError,
 }: WithDrillSelectProps): ReactElement {
     const { current: drillPickerId } = useRef(uuid());
@@ -115,6 +124,7 @@ export function WithDrillSelect({
         },
         onDrillDownSuccess,
         onDrillToInsightSuccess,
+        onKeyDriverAnalysisSuccess,
         onDrillToDashboardSuccess,
         onDrillToAttributeUrlSuccess,
         onDrillToCustomUrlSuccess,
@@ -130,7 +140,7 @@ export function WithDrillSelect({
     const onSelect = useCallback(
         (
             drillDefinition: DashboardDrillDefinition,
-            _context: unknown,
+            context: unknown,
             drillEvent?: IDashboardDrillEvent,
             correlationId?: string,
             drillContext?: DashboardDrillContext,
@@ -169,7 +179,12 @@ export function WithDrillSelect({
                         effectiveCorrelationId,
                     );
                 } else if (isKeyDriveAnalysis(drillDefinition)) {
-                    //TODO: Run kda analysis dialog
+                    drills.keyDriverAnalysis.run(
+                        drillDefinition,
+                        effectiveDrillEvent,
+                        context as DashboardKeyDriverCombinationItem,
+                        effectiveCorrelationId,
+                    );
                 }
 
                 if (closeBehavior === "closeOnSelect") {
@@ -189,16 +204,24 @@ export function WithDrillSelect({
 
     const dropDownAnchorClass = `s-drill-picker-${drillPickerId}`;
 
+    const overlayController = useMemo(() => {
+        return closeBehavior === "preventClose"
+            ? OverlayController.getInstance(DASHBOARD_DRILL_MENU_BOTTOM_LAYER_Z_INDEX)
+            : OverlayController.getInstance(DASHBOARD_DRILL_MENU_TOP_LAYER_Z_INDEX);
+    }, [closeBehavior]);
+
     const drillDownDropdown = dropdownProps ? (
         <IntlWrapper locale={locale}>
-            <DrillSelectDropdown
-                {...dropdownProps}
-                dropDownAnchorClass={dropDownAnchorClass}
-                isOpen={isOpen}
-                onClose={handleClose}
-                onSelect={onSelect}
-                visualizationId={visualizationId}
-            />
+            <OverlayControllerProvider overlayController={overlayController}>
+                <DrillSelectDropdown
+                    {...dropdownProps}
+                    dropDownAnchorClass={dropDownAnchorClass}
+                    isOpen={isOpen}
+                    onClose={handleClose}
+                    onSelect={onSelect}
+                    visualizationId={visualizationId}
+                />
+            </OverlayControllerProvider>
         </IntlWrapper>
     ) : null;
 

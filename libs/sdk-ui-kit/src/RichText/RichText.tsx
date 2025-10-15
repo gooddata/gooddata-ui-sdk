@@ -225,8 +225,10 @@ interface IRichTextViewProps {
     LoadingComponent?: ComponentType;
 }
 
+const imageStyle = { maxWidth: "100%" };
+
 function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
-    return <img style={{ maxWidth: "100%" }} {...props} />;
+    return <img style={imageStyle} {...props} />;
 }
 
 function AnchorComponent(props: AnchorHTMLAttributes<HTMLAnchorElement>) {

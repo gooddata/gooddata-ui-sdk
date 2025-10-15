@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { DefaultDashboardAttributeFilter } from "../../../presentation/index.js";
+import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 import { KdaAttributeFilter } from "../../internalTypes.js";
 
 interface IAttributeBarProps {

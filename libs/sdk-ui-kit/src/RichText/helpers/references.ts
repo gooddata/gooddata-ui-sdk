@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IdentifierRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX_MATCH } from "../plugins/types.js";
@@ -14,8 +15,8 @@ export type ReferenceMap = Record<
 export function collectReferences(content: string) {
     const map: ReferenceMap = {};
 
-    REFERENCE_REGEX_MATCH.lastIndex = -1;
-    let parts = REFERENCE_REGEX_MATCH.exec(content);
+    const regex = new RegExp(REFERENCE_REGEX_MATCH.source, REFERENCE_REGEX_MATCH.flags);
+    let parts = regex.exec(content);
 
     while (parts) {
         const { id, ref } = createReference(parts);
@@ -25,7 +26,7 @@ export function collectReferences(content: string) {
                 type: ref.type,
             };
         }
-        parts = REFERENCE_REGEX_MATCH.exec(content);
+        parts = regex.exec(content);
     }
 
     return map;
