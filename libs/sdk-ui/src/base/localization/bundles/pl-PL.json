@@ -803,5 +803,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "List",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Portret",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Krajobraz"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Krajobraz",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Nagłówek",
+    "table.header.checkbox.ariaLabel": "Wybierz akcję",
+    "table.header.menu.ariaLabel": "Akcje",
+    "gs.header.mainMenu.ariaLabel": "Główne menu"
 }

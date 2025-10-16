@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "Julkaise",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Pystysuuntainen",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Maisema"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Maisema",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Ylätunniste",
+    "table.header.checkbox.ariaLabel": "Valitse toiminto",
+    "table.header.menu.ariaLabel": "Toiminnot",
+    "gs.header.mainMenu.ariaLabel": "Päävalikko"
 }

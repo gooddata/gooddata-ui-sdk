@@ -41,8 +41,9 @@ import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
+import { createDateValueStringifier } from "../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
-import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types.js";
+import { DateFormatter, DateStringifier } from "../convertors/fromBackend/dateFormatting/types.js";
 import { convertApiError } from "../utils/errorHandling.js";
 
 const CAPABILITIES: IBackendCapabilities = {
@@ -121,6 +122,12 @@ export type TigerBackendConfig = {
      * If not specified, a default date formatted will be used.
      */
     dateFormatter?: DateFormatter;
+
+    /**
+     * Function used to stringify date values for a given granularity. It is given a parsed Date value and an appropriate granularity.
+     * If not specified, a default date stringifier will be used.
+     */
+    dateStringifier?: DateStringifier;
 };
 
 /**
@@ -143,6 +150,7 @@ export class TigerBackend implements IAnalyticalBackend {
     private readonly client: ITigerClient;
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
+    private readonly dateStringifier: DateStringifier;
 
     constructor(
         config: IAnalyticalBackendConfig = {},
@@ -155,6 +163,7 @@ export class TigerBackend implements IAnalyticalBackend {
         this.telemetry = telemetry;
         this.authProvider = authProvider || new AnonymousAuthProvider();
         this.dateFormatter = implConfig.dateFormatter ?? defaultDateFormatter;
+        this.dateStringifier = implConfig.dateStringifier ?? createDateValueStringifier();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
@@ -229,11 +238,11 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         invariant(typeof id === "string", `Invalid workspaceId, expected a string, got: ${id}`);
-        return new TigerWorkspace(this.authApiCall, id, this.dateFormatter);
+        return new TigerWorkspace(this.authApiCall, id, this.dateFormatter, this.dateStringifier);
     }
 
     public workspaces(): IWorkspacesQueryFactory {
-        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter);
+        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter, this.dateStringifier);
     }
 
     public isAuthenticated = async (): Promise<IAuthenticatedPrincipal | null> => {

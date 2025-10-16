@@ -72,25 +72,36 @@ $content-font-size: 14px;
         }
     }
 
-    &__object-type {
-        [data-object-type="analyticalDashboard"] {
-            --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
+    &__filter {
+        &__search-bar {
+            margin-top: 10px;
         }
 
-        [data-object-type="insight"] {
-            --catalog-object-type-icon-color: #14b2e2;
+        &__header {
+            min-width: 240px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+    }
+
+    &__filter__group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        &__title {
+            font-size: 11px;
+            line-height: 21px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--gd-palette-complementary-6);
         }
 
-        [data-object-type="measure"],
-        [data-object-type="fact"] {
-            --catalog-object-type-icon-color: #00c18d;
+        .gd-ui-kit-button {
+            max-width: 240px;
         }
 
-        [data-object-type="attribute"] {
-            --catalog-object-type-icon-color: #f18600;
-        }
-
-        .gd-ui-kit-icon-button {
+        &__object-type .gd-ui-kit-icon-button {
             --gd-icon-fill-color: var(--gd-palette-complementary-7);
             background-color: var(--gd-palette-complementary-1);
             padding: 0 15px;
@@ -113,36 +124,6 @@ $content-font-size: 14px;
                     background-color: var(--gd-palette-complementary-3);
                 }
             }
-        }
-    }
-
-    &__filter {
-        &__group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-
-            &__title {
-                font-size: 11px;
-                line-height: 21px;
-                font-weight: 700;
-                text-transform: uppercase;
-                color: var(--gd-palette-complementary-6);
-            }
-
-            .gd-ui-kit-button {
-                max-width: 240px;
-            }
-        }
-
-        &__search-bar {
-            margin-top: 10px;
-        }
-
-        &__header {
-            min-width: 240px;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
         }
     }
 

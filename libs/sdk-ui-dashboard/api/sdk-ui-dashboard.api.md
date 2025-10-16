@@ -132,6 +132,7 @@ import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
@@ -2436,6 +2437,8 @@ export interface DashboardKeyDriverAnalysisResolvedPayload {
 export interface DashboardKeyDriverCombinationItem {
     // (undocumented)
     difference: number;
+    // (undocumented)
+    measure: IMeasureDescriptor;
     // (undocumented)
     range: [IResultAttributeHeader & IAttributeDescriptor, IResultAttributeHeader & IAttributeDescriptor];
     // (undocumented)

@@ -2568,21 +2568,43 @@
                 },
                 "description": "Object identifier."
             },
+            "AttributeEqualityFilter": {
+                "required": ["labelIdentifier", "values"],
+                "type": "object",
+                "properties": {
+                    "labelIdentifier": {
+                        "type": "string",
+                        "description": "The attribute label identifier to filter on"
+                    },
+                    "values": {
+                        "type": "array",
+                        "description": "List of values to match (IN operation)",
+                        "items": {
+                            "type": "string",
+                            "description": "List of values to match (IN operation)"
+                        }
+                    }
+                },
+                "description": "Attribute equality filter"
+            },
             "ChangeAnalysisRequest": {
                 "required": [
                     "analyzedPeriod",
-                    "attributeIdentifiers",
+                    "attributeLabelIdentifiers",
                     "dateAttributeIdentifier",
+                    "filters",
                     "metricIdentifier",
                     "referencePeriod"
                 ],
                 "type": "object",
                 "properties": {
                     "metricIdentifier": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "type": "string",
+                        "description": "The metric identifier to analyze for changes"
                     },
                     "dateAttributeIdentifier": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "type": "string",
+                        "description": "The date attribute identifier to use for time period comparison"
                     },
                     "referencePeriod": {
                         "type": "string",
@@ -2592,59 +2614,23 @@
                         "type": "string",
                         "description": "The analyzed time period (e.g., '2025-02')"
                     },
-                    "attributeIdentifiers": {
+                    "attributeLabelIdentifiers": {
                         "type": "array",
-                        "description": "The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.",
+                        "description": "Label identifiers of attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.",
                         "items": {
-                            "$ref": "#/components/schemas/ObjectIdentifier"
+                            "type": "string",
+                            "description": "Label identifiers of attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered."
                         }
                     },
-                    "significanceThreshold": {
-                        "type": "number",
-                        "description": "The significance threshold for changes (default: 2.0 standard deviations)",
-                        "format": "double"
+                    "filters": {
+                        "type": "array",
+                        "description": "Optional filters to apply.",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeEqualityFilter"
+                        }
                     }
                 },
                 "description": "Request for change analysis computation"
-            },
-            "ObjectIdentifier": {
-                "required": ["id", "space", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "analyticalDashboard",
-                            "attribute",
-                            "attributeHierarchy",
-                            "dashboardPlugin",
-                            "dataset",
-                            "fact",
-                            "aggregatedFact",
-                            "label",
-                            "metric",
-                            "userDataFilter",
-                            "exportDefinition",
-                            "automation",
-                            "automationResult",
-                            "prompt",
-                            "visualizationObject",
-                            "filterContext",
-                            "workspaceSettings",
-                            "customApplicationSetting",
-                            "workspaceDataFilter",
-                            "workspaceDataFilterSetting",
-                            "filterView"
-                        ]
-                    },
-                    "space": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "string"
-                    }
-                },
-                "description": "The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered."
             },
             "ChangeAnalysisResponse": {
                 "required": ["links"],
@@ -3678,8 +3664,7 @@
                     "resultIdToCancelTokenPairs": {
                         "type": "object",
                         "additionalProperties": {
-                            "type": "string",
-                            "description": "resultId to cancel token pairs"
+                            "type": "string"
                         },
                         "description": "resultId to cancel token pairs"
                     }
@@ -4588,13 +4573,13 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
@@ -4642,15 +4627,73 @@
                 "type": "object",
                 "properties": {
                     "data": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "object",
-                            "description": "The change analysis result data containing significant changes."
-                        },
-                        "description": "The change analysis result data containing significant changes."
+                        "type": "array",
+                        "description": "The change analysis result data containing significant changes.",
+                        "items": {
+                            "$ref": "#/components/schemas/MetricValueChange"
+                        }
                     }
                 },
                 "description": "Result of a change analysis execution."
+            },
+            "MetricValueChange": {
+                "required": [
+                    "attributeName",
+                    "attributeValue",
+                    "attributeValuesChangeMean",
+                    "attributeValuesChangeStd",
+                    "isSignificantChange",
+                    "metricValueDelta",
+                    "metricValueDeltaAbs",
+                    "metricValueInAnalyzedPeriod",
+                    "metricValueInReferencePeriod"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributeName": {
+                        "type": "string",
+                        "description": "The name of the attribute being analyzed"
+                    },
+                    "attributeValue": {
+                        "type": "string",
+                        "description": "The value of the attribute being analyzed"
+                    },
+                    "metricValueInAnalyzedPeriod": {
+                        "type": "number",
+                        "description": "The metric value in the analyzed period",
+                        "format": "double"
+                    },
+                    "metricValueInReferencePeriod": {
+                        "type": "number",
+                        "description": "The metric value in the reference period",
+                        "format": "double"
+                    },
+                    "metricValueDelta": {
+                        "type": "number",
+                        "description": "The delta between analyzed and reference periods",
+                        "format": "double"
+                    },
+                    "metricValueDeltaAbs": {
+                        "type": "number",
+                        "description": "The absolute delta between analyzed and reference periods",
+                        "format": "double"
+                    },
+                    "attributeValuesChangeMean": {
+                        "type": "number",
+                        "description": "The mean of attribute value changes for the attribute being analyzed",
+                        "format": "double"
+                    },
+                    "attributeValuesChangeStd": {
+                        "type": "number",
+                        "description": "The standard deviation of attribute value changes for the attribute being analyzed",
+                        "format": "double"
+                    },
+                    "isSignificantChange": {
+                        "type": "boolean",
+                        "description": "Whether the change is statistically significant"
+                    }
+                },
+                "description": "Individual change analysis data item"
             },
             "ResultCacheMetadata": {
                 "required": ["afm", "executionResponse", "resultSize", "resultSpec"],

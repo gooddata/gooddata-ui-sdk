@@ -852,5 +852,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Нет факторов увеличения",
     "kdaDialog.dialog.keyDrives.empty_down": "Нет факторов снижения",
     "dialogs.automation.attachments.add": "Добавить вложения",
-    "menu.back": "Вернуться в родительское меню"
+    "menu.back": "Вернуться в родительское меню",
+    "drill_modal_picker.key-driver-analysis": "Объяснить",
+    "kdaDialog.dialog.bars.date.splitter": "против",
+    "drill.kda.from": "от",
+    "drill.kda.in": "в",
+    "drill.kda.drop": "Удалить {where} {title}",
+    "drill.kda.increase": "Увеличить {where} {title}",
+    "drill.kda.no_change": "Устаревший {where} {title}",
+    "drill.kda.year_to_year": "Изменение по сравнению с прошлым годом"
 }

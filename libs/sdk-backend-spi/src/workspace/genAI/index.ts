@@ -11,6 +11,7 @@ import {
     IGenAIMemoryItem,
     IGenAIMemoryItemCreate,
     IGenAIUserContext,
+    ISemanticQualityIssue,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
     type IUser,
@@ -47,6 +48,12 @@ export interface IGenAIService {
      * @internal
      */
     getAnalyticsCatalog(): IAnalyticsCatalogService;
+
+    /**
+     * Get semantic quality related APIs.
+     * @internal
+     */
+    getSemanticQuality(): ISemanticQualityService;
 }
 
 /**
@@ -236,4 +243,15 @@ export interface IAnalyticsCatalogTags {
 export interface IAnalyticsCatalogCreatedBy {
     reasoning: string;
     users: IUser[];
+}
+
+/**
+ * Semantic quality service.
+ * @internal
+ */
+export interface ISemanticQualityService {
+    /**
+     * Returns list of quality issues detected in the workspace metadata.
+     */
+    getQualityIssues(): Promise<ISemanticQualityIssue[]>;
 }

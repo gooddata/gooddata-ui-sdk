@@ -7,7 +7,7 @@ import { IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
 
 export interface KdaDateOptions {
     period: KdaPeriodType;
-    dateAttribute?: ICatalogDateAttribute;
+    dateAttribute?: ICatalogDateAttribute | null;
     range?: [IKdaDataPoint, IKdaDataPoint];
 }
 
@@ -25,8 +25,20 @@ export interface KdaItem {
         date: string;
     };
     to: KdaItem["from"];
+    attribute: ObjRef;
     formatValue: (value: number) => string;
-    drivers: number;
+    //stats
+    isSignificant: boolean;
+    standardDeviation: number;
+    mean: number;
+}
+
+export interface KdaItemGroup {
+    id: string;
+    title: string;
+    description: string;
+    attribute: ObjRef;
+    items: KdaItem[];
 }
 
 export interface KdaState {
@@ -42,6 +54,6 @@ export interface KdaState {
     attributeFilters: KdaAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: "loading" | "success" | "error" | "pending";
-    combinations: number;
     selectedAttributes: ObjRef[];
+    selectedUpdated: number;
 }

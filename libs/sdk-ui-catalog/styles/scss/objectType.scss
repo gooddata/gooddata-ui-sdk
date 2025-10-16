@@ -1,0 +1,20 @@
+// (C) 2024-2025 GoodData Corporation
+
+.gd-analytics-catalog__object-type {
+    &[data-object-type="analyticalDashboard"] {
+        --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
+    }
+
+    &[data-object-type="insight"] {
+        --catalog-object-type-icon-color: #14b2e2;
+    }
+
+    &[data-object-type="measure"],
+    &[data-object-type="fact"] {
+        --catalog-object-type-icon-color: #00c18d;
+    }
+
+    &[data-object-type="attribute"] {
+        --catalog-object-type-icon-color: #f18600;
+    }
+}

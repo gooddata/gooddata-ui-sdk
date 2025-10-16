@@ -803,5 +803,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "Mektup",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Dikey Görünüm",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Yatay Görünüm"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Yatay Görünüm",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Başlık",
+    "table.header.checkbox.ariaLabel": "Eylem seç",
+    "table.header.menu.ariaLabel": "Eylemler",
+    "gs.header.mainMenu.ariaLabel": "Ana menü"
 }

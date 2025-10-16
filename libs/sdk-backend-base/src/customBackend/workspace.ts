@@ -17,6 +17,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -80,6 +81,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
     //
     public permissions(): IWorkspacePermissionsService {
         throw new NotSupported("permissions are not supported");
+    }
+
+    public kda(): IWorkspaceKdaService {
+        throw new NotSupported("kda is not supported");
     }
 
     public catalog(): IWorkspaceCatalogFactory {

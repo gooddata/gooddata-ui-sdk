@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "Uyarı seç: {title}",
     "automations.accessibility.select.schedule": "Zamanlanmış dışa aktarmayı seç: {title}",
     "automations.accessibility.search.alerts": "Uyarıları ara",
-    "automations.accessibility.search.schedules": "Zamanlanmış dışa aktarımları ara"
+    "automations.accessibility.search.schedules": "Zamanlanmış dışa aktarımları ara",
+    "properties.column.headers.wrapText": "Metni kaydır",
+    "properties.cells.title": "Hücreler",
+    "properties.cells.wrapText": "Metni kaydır",
+    "automations.menu.ariaLabel": "{title} için Otomasyon menüsü",
+    "automations.accessibility.gridLabel.alerts": "Uyarı listesi",
+    "automations.accessibility.gridLabel.schedules": "Zamanlanmış dışa aktarımlar listesi"
 }

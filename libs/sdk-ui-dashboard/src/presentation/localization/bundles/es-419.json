@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "No aumentan los conductores",
     "kdaDialog.dialog.keyDrives.empty_down": "No hay conductores decrecientes",
     "dialogs.automation.attachments.add": "Añadir anexos",
-    "menu.back": "Volver al menú principal"
+    "menu.back": "Volver al menú principal",
+    "drill_modal_picker.key-driver-analysis": "Explique",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "de",
+    "drill.kda.in": "en",
+    "drill.kda.drop": "Drop {where} {title}",
+    "drill.kda.increase": "Aumentar {where} {title}",
+    "drill.kda.no_change": "Rancio {where} {title}",
+    "drill.kda.year_to_year": "Variación interanual"
 }

@@ -321,6 +321,19 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
+/**
+ * Attribute equality filter
+ */
+export interface AttributeEqualityFilter {
+    /**
+     * The attribute label identifier to filter on
+     */
+    labelIdentifier: string;
+    /**
+     * List of values to match (IN operation)
+     */
+    values: Array<string | null>;
+}
 export interface AttributeExecutionResultHeader {
     attributeHeader: AttributeResultHeader;
 }
@@ -495,8 +508,14 @@ export type BoundedFilterGranularityEnum =
  * Request for change analysis computation
  */
 export interface ChangeAnalysisRequest {
-    metricIdentifier: ObjectIdentifier;
-    dateAttributeIdentifier: ObjectIdentifier;
+    /**
+     * The metric identifier to analyze for changes
+     */
+    metricIdentifier: string;
+    /**
+     * The date attribute identifier to use for time period comparison
+     */
+    dateAttributeIdentifier: string;
     /**
      * The reference time period (e.g., \'2025-01\')
      */
@@ -506,13 +525,13 @@ export interface ChangeAnalysisRequest {
      */
     analyzedPeriod: string;
     /**
-     * The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
+     * Label identifiers of attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
      */
-    attributeIdentifiers: Array<ObjectIdentifier>;
+    attributeLabelIdentifiers: Array<string>;
     /**
-     * The significance threshold for changes (default: 2.0 standard deviations)
+     * Optional filters to apply.
      */
-    significanceThreshold?: number;
+    filters: Array<AttributeEqualityFilter>;
 }
 /**
  * Response for change analysis computation
@@ -527,7 +546,7 @@ export interface ChangeAnalysisResult {
     /**
      * The change analysis result data containing significant changes.
      */
-    data: { [key: string]: object };
+    data: Array<MetricValueChange>;
 }
 /**
  * List of chat history interactions.
@@ -719,8 +738,8 @@ export interface ClusteringResult {
     xCoord?: Array<number | null>;
     yCoord?: Array<number | null>;
     clusters: Array<number | null>;
-    xcoord: Array<number>;
     ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1542,6 +1561,47 @@ export const MetricAggFunctionEnum = {
 export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof MetricAggFunctionEnum];
 
 /**
+ * Individual change analysis data item
+ */
+export interface MetricValueChange {
+    /**
+     * The name of the attribute being analyzed
+     */
+    attributeName: string;
+    /**
+     * The value of the attribute being analyzed
+     */
+    attributeValue: string;
+    /**
+     * The metric value in the analyzed period
+     */
+    metricValueInAnalyzedPeriod: number;
+    /**
+     * The metric value in the reference period
+     */
+    metricValueInReferencePeriod: number;
+    /**
+     * The delta between analyzed and reference periods
+     */
+    metricValueDelta: number;
+    /**
+     * The absolute delta between analyzed and reference periods
+     */
+    metricValueDeltaAbs: number;
+    /**
+     * The mean of attribute value changes for the attribute being analyzed
+     */
+    attributeValuesChangeMean: number;
+    /**
+     * The standard deviation of attribute value changes for the attribute being analyzed
+     */
+    attributeValuesChangeStd: number;
+    /**
+     * Whether the change is statistically significant
+     */
+    isSignificantChange: boolean;
+}
+/**
  * Filter able to limit element values by label and related selected negated elements.
  */
 export interface NegativeAttributeFilter {
@@ -1553,42 +1613,6 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
-/**
- * The attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
- */
-export interface ObjectIdentifier {
-    type: ObjectIdentifierTypeEnum;
-    space: string;
-    id: string;
-}
-
-export const ObjectIdentifierTypeEnum = {
-    ANALYTICAL_DASHBOARD: "analyticalDashboard",
-    ATTRIBUTE: "attribute",
-    ATTRIBUTE_HIERARCHY: "attributeHierarchy",
-    DASHBOARD_PLUGIN: "dashboardPlugin",
-    DATASET: "dataset",
-    FACT: "fact",
-    AGGREGATED_FACT: "aggregatedFact",
-    LABEL: "label",
-    METRIC: "metric",
-    USER_DATA_FILTER: "userDataFilter",
-    EXPORT_DEFINITION: "exportDefinition",
-    AUTOMATION: "automation",
-    AUTOMATION_RESULT: "automationResult",
-    PROMPT: "prompt",
-    VISUALIZATION_OBJECT: "visualizationObject",
-    FILTER_CONTEXT: "filterContext",
-    WORKSPACE_SETTINGS: "workspaceSettings",
-    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
-    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
-    WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting",
-    FILTER_VIEW: "filterView",
-} as const;
-
-export type ObjectIdentifierTypeEnum =
-    (typeof ObjectIdentifierTypeEnum)[keyof typeof ObjectIdentifierTypeEnum];
-
 /**
  * Current page description.
  */

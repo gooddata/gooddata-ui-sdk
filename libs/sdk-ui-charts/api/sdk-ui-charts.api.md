@@ -55,7 +55,6 @@ import { PatternFillName } from '@gooddata/sdk-ui-vis-commons';
 import { ReactElement } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export function AreaChart(props: IAreaChartProps): JSX.Element;
@@ -494,7 +493,7 @@ export interface ICoreHeadlineExtendedProps {
 }
 
 // @internal (undocumented)
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     onColumnResized?: RepeaterColumnResizedCallback;
     // (undocumented)
     theme?: ITheme;

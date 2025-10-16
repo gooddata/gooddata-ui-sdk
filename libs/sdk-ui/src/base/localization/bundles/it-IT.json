@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "Lettera",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Ritratto",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Paesaggio"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Paesaggio",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Intestazione",
+    "table.header.checkbox.ariaLabel": "Selezionare l'azione",
+    "table.header.menu.ariaLabel": "Azioni",
+    "gs.header.mainMenu.ariaLabel": "Menu principale"
 }

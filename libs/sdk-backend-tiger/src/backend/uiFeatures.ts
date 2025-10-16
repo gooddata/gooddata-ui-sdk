@@ -66,6 +66,7 @@ export enum TigerFeaturesNames {
     EnableSemanticSearchRollout = "enableSemanticSearchRollout",
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
+    EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
@@ -175,6 +176,7 @@ export type ITigerFeatureFlags = {
     enableSemanticSearchRollout: (typeof FeatureFlagsValues)["enableSemanticSearchRollout"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
     enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
+    enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
@@ -287,6 +289,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSemanticSearchRollout: false,
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
+    enableGenAICatalogQualityChecker: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
     enableNewInsightChangedPostMessageEvent: false,
@@ -399,6 +402,7 @@ export const FeatureFlagsValues = {
     enableSemanticSearchRollout: [true, false] as const,
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,
+    enableGenAICatalogQualityChecker: [false, true] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,

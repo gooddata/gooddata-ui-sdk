@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { parseDateValue } from "./dateValueParser.js";
-import { DateFormatter, DateParseFormatter } from "./types.js";
+import { parseDateValue, serializeDateValue } from "./dateValueParser.js";
+import { DateFormatter, DateParseFormatter, DateStringifier } from "./types.js";
 
 /**
  * Creates a function that takes a string date attribute value, granularity, locale and formatting pattern
@@ -16,6 +16,17 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
         }
         const parsed = parseDateValue(value, granularity, timezone, locale);
         return dateFormatter(parsed, granularity, locale, pattern, timezone);
+    };
+}
+
+/**
+ * Creates a function that takes a Date object, granularity, locale and timezone
+ * and returns a formatted date string
+ * @public
+ */
+export function createDateValueStringifier(): DateStringifier {
+    return (value, granularity, locale, timezone) => {
+        return serializeDateValue(value, granularity, timezone, locale);
     };
 }
 

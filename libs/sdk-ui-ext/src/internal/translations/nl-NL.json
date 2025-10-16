@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "Selecteer waarschuwing: {title}",
     "automations.accessibility.select.schedule": "Selecteer geplande export: {title}",
     "automations.accessibility.search.alerts": "Waarschuwingen zoeken",
-    "automations.accessibility.search.schedules": "Geplande export zoeken"
+    "automations.accessibility.search.schedules": "Geplande export zoeken",
+    "properties.column.headers.wrapText": "Tekst inpakken",
+    "properties.cells.title": "Cellen",
+    "properties.cells.wrapText": "Tekst inpakken",
+    "automations.menu.ariaLabel": "Automatiseringsmenu voor {title}",
+    "automations.accessibility.gridLabel.alerts": "Lijst met waarschuwingen",
+    "automations.accessibility.gridLabel.schedules": "Lijst van geplande exporten"
 }

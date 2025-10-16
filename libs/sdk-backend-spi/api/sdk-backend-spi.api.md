@@ -9,6 +9,7 @@ import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
+import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
@@ -105,6 +106,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { ISemanticQualityIssue } from '@gooddata/sdk-model';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -293,6 +295,7 @@ export interface IAnalyticalWorkspace {
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
+    kda(): IWorkspaceKdaService;
     // @internal
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
@@ -489,6 +492,19 @@ export interface IBracketExpressionToken {
 export interface ICancelable<T> {
     // (undocumented)
     withSignal(signal: AbortSignal | undefined): T;
+}
+
+// @internal
+export interface IChangeAnalysisPeriod {
+    dateAttribute: ObjRef;
+    from: string;
+    granularity: DateAttributeGranularity;
+    to: string;
+}
+
+// @internal (undocumented)
+export interface IChangeAnalysisResults {
+    keyDrivers: IKeyDriver[];
 }
 
 // @beta
@@ -951,6 +967,8 @@ export interface IGenAIService {
     getChatThread(): IChatThread;
     // @internal
     getMemory(): IMemoryService;
+    // @internal
+    getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
 }
@@ -1045,6 +1063,20 @@ export interface IInsightsQueryOptions {
 
 // @public
 export type IInsightsQueryResult = IPagedResource<IInsight>;
+
+// @internal
+export interface IKeyDriver {
+    displayForm: ObjRef;
+    isSignificantChange: boolean;
+    mean: number;
+    metricValue: {
+        from: number;
+        to: number;
+        delta: number;
+    };
+    std: number;
+    value: string;
+}
 
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
@@ -1438,6 +1470,11 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
+// @internal
+export interface ISemanticQualityService {
+    getQualityIssues(): Promise<ISemanticQualityIssue[]>;
+}
+
 // @beta
 export interface ISemanticSearchQuery {
     query(options?: {
@@ -1783,6 +1820,11 @@ export interface IWorkspaceInsightsService {
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
     updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
+}
+
+// @internal
+export interface IWorkspaceKdaService {
+    computeChangeAnalysis(period: IChangeAnalysisPeriod, metric: ObjRef, attributes: ObjRef[]): Promise<IChangeAnalysisResults>;
 }
 
 // @internal

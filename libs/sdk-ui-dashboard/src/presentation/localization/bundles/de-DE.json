@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Keine zunehmenden Treiber",
     "kdaDialog.dialog.keyDrives.empty_down": "Keine abnehmenden Treiber",
     "dialogs.automation.attachments.add": "Anhänge hinzufügen",
-    "menu.back": "Zurück zum übergeordneten Menü"
+    "menu.back": "Zurück zum übergeordneten Menü",
+    "drill_modal_picker.key-driver-analysis": "Erklären",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "von",
+    "drill.kda.in": "am",
+    "drill.kda.drop": "Drop {where} {title}",
+    "drill.kda.increase": "Erhöhen {where} {title}",
+    "drill.kda.no_change": "Altbacken {where} {title}",
+    "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr"
 }

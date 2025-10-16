@@ -224,6 +224,11 @@ export type {
     AnalyticsCatalogCreatedBy as AfmAnalyticsCatalogCreatedBy,
     AnalyticsCatalogUser as AfmAnalyticsCatalogUser,
     AnalyticsCatalogTags as AfmAnalyticsCatalogTags,
+    MetricValueChange as AfmMetricValueChange,
+    QualityIssue as AfmQualityIssue,
+    QualityIssueObject as AfmQualityIssueObject,
+    GetQualityIssuesResponse as AfmGetQualityIssuesResponse,
+    ActionsApiGetQualityIssuesRequest as AfmActionsApiGetQualityIssuesRequest,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

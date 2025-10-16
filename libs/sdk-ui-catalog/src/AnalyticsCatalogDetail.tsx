@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import type { MouseEvent } from "react";
+import type { MouseEvent, PropsWithChildren } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -16,6 +16,7 @@ import type { ObjectType } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider } from "./permission/index.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
+import { QualityProvider } from "./quality/QualityContext.js";
 
 /**
  * @internal
@@ -52,22 +53,10 @@ export function AnalyticsCatalogDetail({
     locale,
     ...restProps
 }: AnalyticsCatalogDetailProps) {
-    const b = useBackendStrict(backend);
-    const w = useWorkspaceStrict(workspace);
-    const permissionsState = usePermissionsQuery({ backend: b, workspace: w });
-
     return (
-        <BackendProvider backend={b}>
-            <WorkspaceProvider workspace={w}>
-                <IntlWrapper locale={locale}>
-                    <OverlayProvider>
-                        <PermissionsProvider permissionsState={permissionsState}>
-                            <CatalogDetail {...restProps} />
-                        </PermissionsProvider>
-                    </OverlayProvider>
-                </IntlWrapper>
-            </WorkspaceProvider>
-        </BackendProvider>
+        <Providers backend={backend} workspace={workspace} locale={locale}>
+            <CatalogDetail {...restProps} />
+        </Providers>
     );
 }
 
@@ -111,17 +100,33 @@ export function AnalyticsCatalogDetailContent({
     locale,
     ...restProps
 }: AnalyticsCatalogDetailContentProps) {
-    const b = useBackendStrict(backend);
-    const w = useWorkspaceStrict(workspace);
-    const permissionsState = usePermissionsQuery({ backend: b, workspace: w });
+    return (
+        <Providers backend={backend} workspace={workspace} locale={locale}>
+            <CatalogDetailContent {...restProps} />
+        </Providers>
+    );
+}
+
+type ProvidersProps = PropsWithChildren<{
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    locale?: string;
+}>;
+
+function Providers(props: ProvidersProps) {
+    const backend = useBackendStrict(props.backend);
+    const workspace = useWorkspaceStrict(props.workspace);
+    const permissionsState = usePermissionsQuery({ backend, workspace });
 
     return (
-        <BackendProvider backend={b}>
-            <WorkspaceProvider workspace={w}>
-                <IntlWrapper locale={locale}>
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace={workspace}>
+                <IntlWrapper locale={props.locale}>
                     <OverlayProvider>
                         <PermissionsProvider permissionsState={permissionsState}>
-                            <CatalogDetailContent {...restProps} />
+                            <QualityProvider backend={backend} workspace={workspace}>
+                                {props.children}
+                            </QualityProvider>
                         </PermissionsProvider>
                     </OverlayProvider>
                 </IntlWrapper>

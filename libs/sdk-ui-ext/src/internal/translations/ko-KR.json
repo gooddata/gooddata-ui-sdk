@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "알림 선택: {title}",
     "automations.accessibility.select.schedule": "예약된 내보내기 선택: {title}",
     "automations.accessibility.search.alerts": "검색 알림",
-    "automations.accessibility.search.schedules": "예약된 내보내기 검색"
+    "automations.accessibility.search.schedules": "예약된 내보내기 검색",
+    "properties.column.headers.wrapText": "텍스트 줄 바꿈",
+    "properties.cells.title": "셀",
+    "properties.cells.wrapText": "텍스트 줄 바꿈",
+    "automations.menu.ariaLabel": "{title}에 대한 자동화 메뉴",
+    "automations.accessibility.gridLabel.alerts": "알림 목록",
+    "automations.accessibility.gridLabel.schedules": "예약된 내보내기 목록"
 }

@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "ドライバーは増えない",
     "kdaDialog.dialog.keyDrives.empty_down": "ドライバーの減少なし",
     "dialogs.automation.attachments.add": "添付ファイルの追加",
-    "menu.back": "親メニューに戻る"
+    "menu.back": "親メニューに戻る",
+    "drill_modal_picker.key-driver-analysis": "説明する",
+    "kdaDialog.dialog.bars.date.splitter": "対",
+    "drill.kda.from": "開始時点",
+    "drill.kda.in": "期間:",
+    "drill.kda.drop": "ドロップ{where} {title}",
+    "drill.kda.increase": "増加{where} {title}",
+    "drill.kda.no_change": "陳腐{where} {title}",
+    "drill.kda.year_to_year": "前年比"
 }

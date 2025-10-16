@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Geen toenemende bestuurders",
     "kdaDialog.dialog.keyDrives.empty_down": "Geen afnemende bestuurders",
     "dialogs.automation.attachments.add": "Bijlagen toevoegen",
-    "menu.back": "Terug naar het hoofdmenu"
+    "menu.back": "Terug naar het hoofdmenu",
+    "drill_modal_picker.key-driver-analysis": "Leg uit",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "van",
+    "drill.kda.in": "in",
+    "drill.kda.drop": "Drop {where} {title}",
+    "drill.kda.increase": "Verhogen {where} {title}",
+    "drill.kda.no_change": "Oudbakken {where} {title}",
+    "drill.kda.year_to_year": "Verandering van jaar tot jaar"
 }

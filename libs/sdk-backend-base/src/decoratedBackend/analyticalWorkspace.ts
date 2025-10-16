@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import {
     IAnalyticalWorkspace,
     IAttributeHierarchiesService,
@@ -17,6 +18,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -79,6 +81,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         }
 
         return this.decorated.catalog();
+    }
+
+    public kda(): IWorkspaceKdaService {
+        return this.decorated.kda();
     }
 
     public measures(): IWorkspaceMeasuresService {

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { IWorkspaceAttributesService } from "./attributes/index.js";
@@ -21,6 +22,7 @@ import { IWorkspaceStylingService } from "./styling/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IWorkspaceUsersQuery } from "./users/index.js";
 import { IPagedResource } from "../common/paging.js";
+import { IWorkspaceKdaService } from "./kda/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -76,6 +78,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query and update dashboards.
      */
     dashboards(): IWorkspaceDashboardsService;
+
+    /**
+     * Returns service that can be used to work with key drivers.
+     */
+    kda(): IWorkspaceKdaService;
 
     /**
      * Returns service that can be used to query date filter configs.

@@ -41,6 +41,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -216,6 +217,9 @@ function recordedWorkspace(
         },
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace);
+        },
+        kda(): IWorkspaceKdaService {
+            throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");

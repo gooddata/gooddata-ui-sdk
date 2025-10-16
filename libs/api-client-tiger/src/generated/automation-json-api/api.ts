@@ -415,6 +415,8 @@ export interface AutomationAutomationImageExport {
  * Additional information for the automation.
  */
 export interface AutomationAutomationMetadata {
+    [key: string]: any;
+
     widget?: string;
     visibleFilters?: Array<AutomationVisibleFilter>;
 }

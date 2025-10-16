@@ -78,6 +78,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -145,6 +146,7 @@ import {
 
 import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js";
 import { DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
+import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
@@ -352,6 +354,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         facts(): IWorkspaceFactsService {
             throw new NotSupported("not supported");
         },
+        kda(): IWorkspaceKdaService {
+            throw new NotSupported("not supported");
+        },
         settings(): IWorkspaceSettingsService {
             return new DummyWorkspaceSettingsService(workspace);
         },
@@ -418,6 +423,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 },
                 getAnalyticsCatalog() {
                     return new DummyAnalyticsCatalogService();
+                },
+                getSemanticQuality() {
+                    return new DummySemanticQualityService();
                 },
             };
         },

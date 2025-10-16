@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { memo } from "react";
+import { type ComponentProps, memo } from "react";
 
 import cx from "classnames";
 
@@ -9,33 +9,39 @@ import { type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 import type { ObjectType } from "./types.js";
 import type { VisualizationType } from "../catalogItem/types.js";
 
-type Props = {
+type Props = ComponentProps<"div"> & {
     type: ObjectType;
     visualizationType?: VisualizationType;
-    size?: 26 | 32;
+    size?: 14 | 18;
+    backgroundSize?: 26 | 32;
 };
 
-export function ObjectTypeIcon({ type, size = 26, visualizationType }: Props) {
+export function ObjectTypeIcon({
+    type,
+    size = 14,
+    backgroundSize,
+    visualizationType,
+    className,
+    ...htmlProps
+}: Props) {
+    const sizes = { size, backgroundSize };
     return (
-        <div className={cx("gd-analytics-catalog__object-type", "gd-analytics-catalog__table__column-icon")}>
-            <div data-object-type={type}>
-                {type === "attribute" ? <UiIcon type="ldmAttribute" size={14} backgroundSize={size} /> : null}
-                {type === "fact" ? <UiIcon type="fact" size={14} backgroundSize={size} /> : null}
-                {type === "measure" ? <UiIcon type="metric" size={14} backgroundSize={size} /> : null}
-                {type === "analyticalDashboard" ? (
-                    <UiIcon type="dashboard" size={14} backgroundSize={size} />
-                ) : null}
-                {type === "insight" ? (
-                    <UiIcon
-                        type={
-                            (visualizationType && visualizationIconMap[visualizationType]) ?? "visualization"
-                        }
-                        size={14}
-                        backgroundSize={size}
-                    />
-                ) : null}
-            </div>
-        </div>
+        <span
+            {...htmlProps}
+            className={cx("gd-analytics-catalog__object-type", className)}
+            data-object-type={type}
+        >
+            {type === "attribute" ? <UiIcon type="ldmAttribute" {...sizes} /> : null}
+            {type === "fact" ? <UiIcon type="fact" {...sizes} /> : null}
+            {type === "measure" ? <UiIcon type="metric" {...sizes} /> : null}
+            {type === "analyticalDashboard" ? <UiIcon type="dashboard" {...sizes} /> : null}
+            {type === "insight" ? (
+                <UiIcon
+                    type={(visualizationType && visualizationIconMap[visualizationType]) ?? "visualization"}
+                    {...sizes}
+                />
+            ) : null}
+        </span>
     );
 }
 

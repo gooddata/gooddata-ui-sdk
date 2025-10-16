@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "選擇警報： {title}",
     "automations.accessibility.select.schedule": "選擇預定導出： {title}",
     "automations.accessibility.search.alerts": "搜尋警報",
-    "automations.accessibility.search.schedules": "搜尋預定匯出"
+    "automations.accessibility.search.schedules": "搜尋預定匯出",
+    "properties.column.headers.wrapText": "自動換行",
+    "properties.cells.title": "細胞",
+    "properties.cells.wrapText": "自動換行",
+    "automations.menu.ariaLabel": "自動化選單 {title}",
+    "automations.accessibility.gridLabel.alerts": "警報列表",
+    "automations.accessibility.gridLabel.schedules": "預定出口列表"
 }

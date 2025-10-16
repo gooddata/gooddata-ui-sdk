@@ -4,7 +4,7 @@ import { ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import { isEqual, omitBy } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
 
@@ -52,7 +52,7 @@ export function renderHighCharts(props: IHighChartsRendererProps): ReactElement 
 /**
  * @internal
  */
-export interface IChartTransformationProps extends WrappedComponentProps {
+export interface IChartTransformationProps {
     height: number;
     width: number;
     config: IChartConfig;
@@ -84,7 +84,6 @@ function ChartTransformationImpl({
     onDrill = (): boolean => true,
     onLegendReady = () => {},
     locale,
-    intl,
     theme,
     numericSymbols,
     drillableItems = [],
@@ -92,6 +91,8 @@ function ChartTransformationImpl({
     onNegativeValues = null,
     pushData = () => {},
 }: IChartTransformationProps) {
+    const intl = useIntl();
+
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
     const chartOptions: IChartOptions = getChartOptions(
@@ -194,7 +195,7 @@ function ChartTransformationImpl({
 /**
  * @internal
  */
-const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
+const ChartTransformationWithInjectedProps = withTheme(ChartTransformationImpl);
 export const ChartTransformation = memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
     return isEqual(
         omitBy(props, (v) => typeof v === "function"),

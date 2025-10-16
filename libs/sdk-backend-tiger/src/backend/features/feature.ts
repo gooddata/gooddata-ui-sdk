@@ -403,6 +403,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAICatalogQualityChecker,
+            "enableGenAICatalogQualityChecker",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAICatalogQualityChecker,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFilterViews,
             "enableDashboardFilterViews",
             "BOOLEAN",

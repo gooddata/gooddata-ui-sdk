@@ -32,15 +32,13 @@ import {
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 import {
-    Bubble,
-    BubbleHoverTrigger,
-    IAlignPoint,
     LoadingMask,
     Message,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
     UiIcon,
+    UiTooltip,
     isEscapeKey,
     makeKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
@@ -58,17 +56,6 @@ const SELECT_OPTION = "select-option";
 const MENU_LIST_ID = "gd-recipients-menu-list-id";
 const { Menu, Input, MultiValueRemove, MenuList } = ReactSelectComponents;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
-
-const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
-    {
-        align: "cr cl",
-        offset: { x: 0, y: -2 },
-    },
-    {
-        align: "cl cr",
-        offset: { x: 0, y: -2 },
-    },
-];
 
 export interface IRecipientsSelectRendererProps {
     /**
@@ -210,6 +197,8 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     });
 
     const recipientRef = useRef<HTMLDivElement>(null);
+    const recipientRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+    const inputRef = useRef<HTMLInputElement>(null);
     const intl = useIntl();
 
     const keyboardRecipientNavigationHandler = makeKeyboardNavigation({
@@ -329,15 +318,13 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                 ...props,
                 innerProps: {
                     ...props.innerProps,
-                    "aria-label": intl.formatMessage(
-                        { id: "dialogs.schedule.email.user.remove" },
-                        { name: props.data.name ?? props.data.id },
-                    ),
+                    role: "presentation",
+                    "aria-label": undefined,
                 },
             };
             return <MultiValueRemove {...modifiedProps} />;
         },
-        [intl],
+        [],
     );
 
     const renderLoadingIcon = useCallback((menuProps: MenuProps<any, boolean>): ReactElement => {
@@ -415,7 +402,8 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             } = {},
         ): ReactElement => {
             const style = getStyle();
-            const { focusedRecipientIndex } = state;
+
+            const isFocused = recipientIndex === state.focusedRecipientIndex;
 
             const render = () => {
                 const showErrorIcon =
@@ -423,10 +411,25 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                     options.invalidExternal ||
                     options.invalidLoggedUser ||
                     !options.hasEmail;
-                const isFocused = focusedRecipientIndex === recipientIndex;
+
+                const ariaLabel = options.email
+                    ? intl.formatMessage(
+                          { id: "dialogs.schedule.email.userAndEmail.remove" },
+                          { name: label, email: options.email },
+                      )
+                    : intl.formatMessage({ id: "dialogs.schedule.email.user.remove" }, { name: label });
 
                 return (
                     <div
+                        role="button"
+                        ref={(el) => {
+                            if (el) {
+                                recipientRefs.current.set(recipientIndex, el);
+                            } else {
+                                recipientRefs.current.delete(recipientIndex);
+                            }
+                        }}
+                        tabIndex={isFocused ? 0 : -1}
                         style={{ maxWidth: style.maxWidth }}
                         className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
                             "invalid-email": !options.hasEmail,
@@ -434,6 +437,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                             "invalid-user": options.invalidLoggedUser,
                             "gd-recipient-focused": isFocused,
                         })}
+                        aria-label={ariaLabel}
                     >
                         {showErrorIcon ? (
                             <div className="gd-recipient-label-error">
@@ -453,76 +457,86 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
             if (options.invalidLoggedUser === true) {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                            <FormattedMessage id="dialogs.schedule.email.user.notMe" />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    <UiTooltip
+                        anchor={render()}
+                        content={<FormattedMessage id="dialogs.schedule.email.user.notMe" />}
+                        variant="error"
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             if (options.invalidExternal === true) {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                            <FormattedMessage id="dialogs.schedule.email.user.unknown" />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    <UiTooltip
+                        anchor={render()}
+                        content={<FormattedMessage id="dialogs.schedule.email.user.unknown" />}
+                        variant="error"
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             if (options.hasEmail === false) {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                            <FormattedMessage id="dialogs.schedule.email.user.missing.email.tooltip" />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    <UiTooltip
+                        anchor={render()}
+                        content={<FormattedMessage id="dialogs.schedule.email.user.missing.email.tooltip" />}
+                        variant="error"
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             if (options.noExternal === true) {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                    <UiTooltip
+                        anchor={render()}
+                        content={
                             <FormattedMessage id="dialogs.schedule.email.user.invalid.external.tooltip" />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                        }
+                        variant="error"
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             if (options.type === "externalUser") {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                    <UiTooltip
+                        anchor={render()}
+                        content={
                             <FormattedMessage
                                 id="dialogs.schedule.email.user.used.external"
                                 values={{ email: label }}
                             />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                        }
+                        variant="default"
+                        arrowPlacement="right"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             if (options.email) {
                 return (
-                    <BubbleHoverTrigger>
-                        {render()}
-                        <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                            {options.email}
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    <UiTooltip
+                        anchor={render()}
+                        content={options.email}
+                        variant="default"
+                        arrowPlacement="left"
+                        triggerBy={["hover", "focus"]}
+                    />
                 );
             }
 
             return render();
         },
-        [getStyle, state],
+        [getStyle, state.focusedRecipientIndex, intl],
     );
 
     const renderMultiValueContainer = useCallback(
@@ -584,36 +598,39 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             const renderValue = renderRecipientValue(recipient);
 
             return (
-                <BubbleHoverTrigger>
-                    <div className="gd-recipient-option-item s-gd-recipient-option-item">
-                        <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
-                            {displayName}
-                        </span>
-                        {allowExternalRecipients && recipient.type === "externalUser" ? (
-                            <span className="gd-recipient-quest">
-                                &nbsp;
-                                <FormattedMessage id="dialogs.schedule.email.user.guest" />
+                <UiTooltip
+                    anchor={
+                        <div className="gd-recipient-option-item s-gd-recipient-option-item">
+                            <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
+                                {displayName}
                             </span>
-                        ) : (
-                            renderValue
-                        )}
-                        {!externalRecipientOverride &&
-                        allowExternalRecipients &&
-                        recipient.type === "externalUser" ? (
-                            <div className="gd-recipient-option-label-external-warning">
-                                <Message type="warning">
-                                    <FormattedMessage
-                                        id="dialogs.schedule.email.user.warning.external"
-                                        values={{ email: displayName }}
-                                    />
-                                </Message>
-                            </div>
-                        ) : null}
-                    </div>
-                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                        {displayName} {isEmail(email) ? `(${email})` : ""}
-                    </Bubble>
-                </BubbleHoverTrigger>
+                            {allowExternalRecipients && recipient.type === "externalUser" ? (
+                                <span className="gd-recipient-quest">
+                                    &nbsp;
+                                    <FormattedMessage id="dialogs.schedule.email.user.guest" />
+                                </span>
+                            ) : (
+                                renderValue
+                            )}
+                            {!externalRecipientOverride &&
+                            allowExternalRecipients &&
+                            recipient.type === "externalUser" ? (
+                                <div className="gd-recipient-option-label-external-warning">
+                                    <Message type="warning">
+                                        <FormattedMessage
+                                            id="dialogs.schedule.email.user.warning.external"
+                                            values={{ email: displayName }}
+                                        />
+                                    </Message>
+                                </div>
+                            ) : null}
+                        </div>
+                    }
+                    content={isEmail(email) ? `${displayName} (${email})` : displayName}
+                    variant="default"
+                    arrowPlacement="right"
+                    triggerBy={["hover", "focus"]}
+                />
             );
         },
         [allowExternalRecipients, externalRecipientOverride, renderRecipientValue],
@@ -628,13 +645,23 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             const props: InputProps<IAutomationRecipient> = {
                 ...inputProps,
                 id: id,
-                "aria-controls": MENU_LIST_ID,
+                ...(inputProps["aria-expanded"] === true ? { "aria-controls": MENU_LIST_ID } : {}),
             };
 
             return (
                 <div className="gd-recipient-input s-gd-recipient-input">
                     <Input
                         {...props}
+                        innerRef={(ref: any) => {
+                            // Store ref for keyboard navigation
+                            if (ref) {
+                                inputRef.current = ref;
+                            }
+                            // Call original ref if it exists
+                            if (inputProps.innerRef && typeof inputProps.innerRef === "function") {
+                                inputProps.innerRef(ref);
+                            }
+                        }}
                         autoComplete="new-password" // common hack for Safari to not autocomplete
                         aria-invalid={!isValid}
                         aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
@@ -657,6 +684,16 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             const newFocusIndex = newValues.length === 0 ? -1 : Math.min(index, newValues.length - 1);
 
             setState((prev) => ({ ...prev, focusedRecipientIndex: newFocusIndex }));
+
+            // Focus the appropriate element after removal
+            requestAnimationFrame(() => {
+                if (newFocusIndex === -1) {
+                    inputRef.current?.focus();
+                } else {
+                    const recipientElement = recipientRefs.current.get(newFocusIndex);
+                    recipientElement?.focus();
+                }
+            });
         },
         [value, onChange],
     );
@@ -671,19 +708,42 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                     if (focusedRecipientIndex === -1 && totalRecipients > 0) {
                         const lastIndex = totalRecipients - 1;
                         setState((prev) => ({ ...prev, focusedRecipientIndex: lastIndex }));
+                        // Focus the last recipient
+                        requestAnimationFrame(() => {
+                            const recipientElement = recipientRefs.current.get(lastIndex);
+                            recipientElement?.focus();
+                        });
                     } else if (focusedRecipientIndex > 0) {
                         const prevIndex = focusedRecipientIndex - 1;
                         setState((prev) => ({ ...prev, focusedRecipientIndex: prevIndex }));
+                        // Focus the previous recipient
+                        requestAnimationFrame(() => {
+                            const recipientElement = recipientRefs.current.get(prevIndex);
+                            recipientElement?.focus();
+                        });
                     } else {
                         setState((prev) => ({ ...prev, focusedRecipientIndex: -1 }));
+                        // Focus the input
+                        requestAnimationFrame(() => {
+                            inputRef.current?.focus();
+                        });
                     }
                 },
                 onFocusNext: () => {
                     if (focusedRecipientIndex < totalRecipients - 1) {
                         const nextIndex = focusedRecipientIndex + 1;
                         setState((prev) => ({ ...prev, focusedRecipientIndex: nextIndex }));
+                        // Focus the next recipient
+                        requestAnimationFrame(() => {
+                            const recipientElement = recipientRefs.current.get(nextIndex);
+                            recipientElement?.focus();
+                        });
                     } else if (focusedRecipientIndex === totalRecipients - 1) {
                         setState((prev) => ({ ...prev, focusedRecipientIndex: -1 }));
+                        // Focus the input
+                        requestAnimationFrame(() => {
+                            inputRef.current?.focus();
+                        });
                     }
                 },
                 onSubmit: () => {

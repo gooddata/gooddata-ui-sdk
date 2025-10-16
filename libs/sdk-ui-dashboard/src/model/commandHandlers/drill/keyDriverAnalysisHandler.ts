@@ -29,6 +29,7 @@ export function* keyDriverAnalysisHandler(
     const attribute = drillEvent.dataView.definition.attributes.find((a) => {
         return localIdentifiers.includes(a.attribute.localIdentifier);
     });
+
     const metric = drillEvent.dataView.definition.measures.find((m) => {
         return localIdentifiers.includes(m.measure.localIdentifier);
     });
@@ -70,7 +71,14 @@ export function* keyDriverAnalysisHandler(
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         {
-            metric,
+            metric: {
+                ...metric,
+                measure: {
+                    ...metric.measure,
+                    title: metric.measure.title ?? keyDriveItem.measure.measureHeaderItem.name,
+                    format: metric.measure.format ?? keyDriveItem.measure.measureHeaderItem.format,
+                },
+            },
             dateAttribute: dateAttribute.attribute.ref,
             range: [
                 {

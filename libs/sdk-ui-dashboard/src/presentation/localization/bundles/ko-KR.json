@@ -848,5 +848,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "증가 요인 없음",
     "kdaDialog.dialog.keyDrives.empty_down": "감소 요인 없음",
     "dialogs.automation.attachments.add": "첨부 파일 추가",
-    "menu.back": "상위 메뉴로 돌아가기"
+    "menu.back": "상위 메뉴로 돌아가기",
+    "drill_modal_picker.key-driver-analysis": "설명",
+    "kdaDialog.dialog.bars.date.splitter": "대비",
+    "drill.kda.from": "시작일",
+    "drill.kda.in": "(시간/장소)",
+    "drill.kda.drop": "드롭 {where} {title}",
+    "drill.kda.increase": "증가 {where} {title}",
+    "drill.kda.no_change": "오래된 {where} {title}",
+    "drill.kda.year_to_year": "전년 대비 변화"
 }

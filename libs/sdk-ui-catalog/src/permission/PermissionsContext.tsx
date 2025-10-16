@@ -2,6 +2,8 @@
 
 import { type PropsWithChildren, createContext, useContext } from "react";
 
+import type { ISettings } from "@gooddata/sdk-model";
+
 import type { PermissionsState } from "./types.js";
 
 const PermissionsContext = createContext<PermissionsState | undefined>(undefined);
@@ -20,4 +22,9 @@ export function usePermissionsState(): PermissionsState {
         throw new Error("PermissionsContext not found");
     }
     return permissions;
+}
+
+export function useFeatureFlag(flag: keyof ISettings): boolean {
+    const { result } = usePermissionsState();
+    return Boolean(result?.settings[flag]);
 }

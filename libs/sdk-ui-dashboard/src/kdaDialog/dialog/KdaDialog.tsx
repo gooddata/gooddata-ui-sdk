@@ -20,6 +20,7 @@ import { KeyDriversPanel } from "../composition/KeyDriversPanel.js";
 import { MetricsBar } from "../composition/MetricsBar.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { IKdaDialogProps } from "../types.js";
+import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -28,9 +29,14 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
  */
 export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
     const { state } = useKdaState();
+
     const metric = state.definition?.metric.measure;
-    const accessibilityConfig = useKdaDialogAccessibility(metric?.title ?? "");
+    const title = metric?.alias ?? metric?.title ?? "";
+
+    const accessibilityConfig = useKdaDialogAccessibility(title);
     const detailsId = useId();
+
+    useChangeAnalysis();
 
     return (
         <OverlayControllerProvider overlayController={overlayController}>

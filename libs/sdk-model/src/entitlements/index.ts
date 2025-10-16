@@ -10,7 +10,6 @@ export type IEntitlementsName =
     | "Contract"
     | "CustomTheming"
     | "ExtraCache"
-    | "ManagedOIDC"
     | "PdfExports"
     | "Tier"
     | "UiLocalization"

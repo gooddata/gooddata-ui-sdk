@@ -846,5 +846,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "No increasing drivers",
     "kdaDialog.dialog.keyDrives.empty_down": "No decreasing factors",
     "dialogs.automation.attachments.add": "Add attachments",
-    "menu.back": "Return to the parent menu"
+    "menu.back": "Return to the parent menu",
+    "drill_modal_picker.key-driver-analysis": "Explain",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "from",
+    "drill.kda.in": "in",
+    "drill.kda.drop": "Remove {where} {title}",
+    "drill.kda.increase": "Increase {where} {title}",
+    "drill.kda.no_change": "Outdated {where} {title}",
+    "drill.kda.year_to_year": "Year on year change"
 }

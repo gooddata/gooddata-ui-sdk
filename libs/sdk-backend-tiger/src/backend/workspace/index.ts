@@ -18,6 +18,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -43,13 +44,14 @@ import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
 import { TigerWorkspaceFacts } from "./facts/index.js";
 import { GenAIService } from "./genAI/index.js";
 import { TigerWorkspaceInsights } from "./insights/index.js";
+import { TigerWorkspaceKda } from "./kda/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceMeasures } from "./measures/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
-import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
+import { DateFormatter, DateStringifier } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -59,6 +61,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
         private readonly dateFormatter: DateFormatter,
+        private readonly dateStringifier: DateStringifier,
         private readonly descriptor?: IWorkspaceDescriptor,
     ) {}
 
@@ -103,7 +106,12 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
         const descriptor = await this.getDescriptor();
         if (descriptor.parentWorkspace) {
-            return new TigerWorkspace(this.authCall, descriptor.parentWorkspace, this.dateFormatter);
+            return new TigerWorkspace(
+                this.authCall,
+                descriptor.parentWorkspace,
+                this.dateFormatter,
+                this.dateStringifier,
+            );
         }
         return undefined;
     }
@@ -126,6 +134,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public dashboards(): IWorkspaceDashboardsService {
         return new TigerWorkspaceDashboards(this.authCall, this.workspace);
+    }
+
+    public kda(): IWorkspaceKdaService {
+        return new TigerWorkspaceKda(this.authCall, this.workspace, this.dateStringifier);
     }
 
     public measures(): IWorkspaceMeasuresService {

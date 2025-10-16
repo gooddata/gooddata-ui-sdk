@@ -39,6 +39,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     const { ref, height, width } = useElementSize<HTMLDivElement>();
     const availableWidth = (width > 0 ? width : tableWidth) - UiAsyncTableScrollbarWidth;
 
+    // NOTE: UiAsyncTable is using its own react-intl provider, so we need to pass the intl to the columns directly
     const columns: UiAsyncTableColumn<ICatalogItem>[] = useMemo(() => {
         return [
             titleColumn(intl, getColumnWidth(availableWidth, 400)),

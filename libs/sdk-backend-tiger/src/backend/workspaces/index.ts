@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import {
@@ -18,7 +19,7 @@ import {
     IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
-import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
+import { DateFormatter, DateStringifier } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerWorkspace } from "../workspace/index.js";
@@ -27,14 +28,15 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
+        private readonly dateStringifier: DateStringifier,
     ) {}
 
     public forUser(userId: string): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, userId);
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.dateStringifier, userId);
     }
 
     public forCurrentUser(): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter);
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.dateStringifier);
     }
 }
 
@@ -54,6 +56,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
+        private readonly dateStringifier: DateStringifier,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         private readonly userId?: string,
@@ -156,7 +159,13 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     };
 
     private descriptorToAnalyticalWorkspace = (descriptor: IWorkspaceDescriptor): IAnalyticalWorkspace =>
-        new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
+        new TigerWorkspace(
+            this.authCall,
+            descriptor.id,
+            this.dateFormatter,
+            this.dateStringifier,
+            descriptor,
+        );
 
     private descriptorsToAnalyticalWorkspaces = (
         descriptors: IWorkspaceDescriptor[],

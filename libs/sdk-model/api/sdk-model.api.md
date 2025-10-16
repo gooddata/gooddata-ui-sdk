@@ -1902,7 +1902,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
 
 // @public
 export interface IExecutionConfig {
@@ -3460,6 +3460,28 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
+// @internal
+export interface ISemanticQualityIssue {
+    code: SemanticQualityIssueCode;
+    detail: ISemanticQualityIssueDetail;
+    objects: ISemanticQualityIssueObject[];
+    severity: SemanticQualityIssueSeverity;
+}
+
+// @internal
+export interface ISemanticQualityIssueDetail {
+    // (undocumented)
+    abbreviation?: string;
+}
+
+// @internal
+export interface ISemanticQualityIssueObject {
+    // (undocumented)
+    identifier: Identifier;
+    // (undocumented)
+    type: GenAIObjectType;
+}
+
 // @beta
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
@@ -3552,6 +3574,7 @@ export interface ISettings {
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterAccessibility?: boolean;
+    enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
@@ -5083,6 +5106,21 @@ export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+
+// @internal
+export type SemanticQualityIssueCode = (typeof SemanticQualityIssueCodeValues)[keyof typeof SemanticQualityIssueCodeValues];
+
+// @internal
+export const SemanticQualityIssueCodeValues: {
+    readonly IDENTICAL_TITLE: "IDENTICAL_TITLE";
+    readonly IDENTICAL_DESCRIPTION: "IDENTICAL_DESCRIPTION";
+    readonly SIMILAR_TITLE: "SIMILAR_TITLE";
+    readonly SIMILAR_DESCRIPTION: "SIMILAR_DESCRIPTION";
+    readonly UNKNOWN_ABBREVIATION: "UNKNOWN_ABBREVIATION";
+};
+
+// @internal
+export type SemanticQualityIssueSeverity = "ERROR" | "WARNING" | "INFO";
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;

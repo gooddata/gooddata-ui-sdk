@@ -1,6 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo, useState } from "react";
+import {
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    createContext,
+    useCallback,
+    useContext,
+    useMemo,
+    useState,
+} from "react";
 
 import { KdaState } from "../internalTypes.js";
 
@@ -17,8 +26,8 @@ const defaultState: KdaState = {
     //root data
     attributeFilters: [],
     //summary data
-    combinations: 0,
     selectedAttributes: [],
+    selectedUpdated: 0,
 };
 
 const KdaStateContext = createContext<{
@@ -34,13 +43,14 @@ export function KdaStateProvider({ children, value }: { children: ReactNode; val
         ...defaultState,
         ...value,
     });
-    const providerValue = useMemo(() => {
-        const setState = (newState: SetStateAction<Partial<KdaState>>) => {
-            setStateInternal((prev) => ({ ...prev, ...newState }));
-        };
 
+    const setState = useCallback((newState: SetStateAction<Partial<KdaState>>) => {
+        setStateInternal((prev) => ({ ...prev, ...newState }));
+    }, []);
+
+    const providerValue = useMemo(() => {
         return { state, setState };
-    }, [state]);
+    }, [state, setState]);
 
     return <KdaStateContext.Provider value={providerValue}>{children}</KdaStateContext.Provider>;
 }

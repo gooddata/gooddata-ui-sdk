@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "Select alert: {title}",
     "automations.accessibility.select.schedule": "Select scheduled export: {title}",
     "automations.accessibility.search.alerts": "Search notifications",
-    "automations.accessibility.search.schedules": "Search scheduled exports"
+    "automations.accessibility.search.schedules": "Search scheduled exports",
+    "properties.column.headers.wrapText": "Wrap text",
+    "properties.cells.title": "Cells",
+    "properties.cells.wrapText": "Wrap text",
+    "automations.menu.ariaLabel": "Automation menu for {title}",
+    "automations.accessibility.gridLabel.alerts": "List of alerts",
+    "automations.accessibility.gridLabel.schedules": "List of scheduled exports"
 }
