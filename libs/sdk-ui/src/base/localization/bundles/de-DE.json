@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "Brief",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Hochformat",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Querformat"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Querformat",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Kopfzeile",
+    "table.header.checkbox.ariaLabel": "Aktion auswählen",
+    "table.header.menu.ariaLabel": "Aktionen",
+    "gs.header.mainMenu.ariaLabel": "Hauptmenü"
 }

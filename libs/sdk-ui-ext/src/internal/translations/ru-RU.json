@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "Выберите оповещение: {title}",
     "automations.accessibility.select.schedule": "Выберите запланированный экспорт: {title}",
     "automations.accessibility.search.alerts": "Поиск оповещений",
-    "automations.accessibility.search.schedules": "Поиск запланированных экспортов"
+    "automations.accessibility.search.schedules": "Поиск запланированных экспортов",
+    "properties.column.headers.wrapText": "Перенос текста",
+    "properties.cells.title": "Ячейки",
+    "properties.cells.wrapText": "Перенос текста",
+    "automations.menu.ariaLabel": "Меню автоматизации для {title}",
+    "automations.accessibility.gridLabel.alerts": "Список оповещений",
+    "automations.accessibility.gridLabel.schedules": "Список запланированных экспортов"
 }

@@ -848,5 +848,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Artan sürücüler yok",
     "kdaDialog.dialog.keyDrives.empty_down": "Azalan etken yok",
     "dialogs.automation.attachments.add": "Ekleri ekle",
-    "menu.back": "Ana menüye geri dön"
+    "menu.back": "Ana menüye geri dön",
+    "drill_modal_picker.key-driver-analysis": "Açıklayın",
+    "kdaDialog.dialog.bars.date.splitter": "veya",
+    "drill.kda.from": "itibaren",
+    "drill.kda.in": "içinde",
+    "drill.kda.drop": "Bırak {where} {title}",
+    "drill.kda.increase": "Artır {where} {title}",
+    "drill.kda.no_change": "Eski {where} {title}",
+    "drill.kda.year_to_year": "Yıldan yıla değişim"
 }

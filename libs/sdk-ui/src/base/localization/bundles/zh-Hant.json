@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "郵政",
     "dialogs.export.pdf.pageOrientation.option.portrait": "肖像",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "景觀"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "景觀",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "標題",
+    "table.header.checkbox.ariaLabel": "選擇操作",
+    "table.header.menu.ariaLabel": "行動",
+    "gs.header.mainMenu.ariaLabel": "主選單"
 }

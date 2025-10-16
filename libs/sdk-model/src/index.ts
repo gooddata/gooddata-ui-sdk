@@ -1133,3 +1133,12 @@ export type {
 } from "./llmEndpoints/index.js";
 
 export type { IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType } from "./genAI/memory.js";
+
+export {
+    type ISemanticQualityIssue,
+    type ISemanticQualityIssueObject,
+    type ISemanticQualityIssueDetail,
+    type SemanticQualityIssueSeverity,
+    type SemanticQualityIssueCode,
+    SemanticQualityIssueCodeValues,
+} from "./genAI/quality.js";

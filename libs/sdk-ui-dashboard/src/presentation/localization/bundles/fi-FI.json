@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Ei lisää kuljettajia",
     "kdaDialog.dialog.keyDrives.empty_down": "Ei laskevia kuljettajia",
     "dialogs.automation.attachments.add": "Lisää liitteitä",
-    "menu.back": "Takaisin päävalikkoon"
+    "menu.back": "Takaisin päävalikkoon",
+    "drill_modal_picker.key-driver-analysis": "Selitä",
+    "kdaDialog.dialog.bars.date.splitter": "vs.",
+    "drill.kda.from": "alkaen",
+    "drill.kda.in": "sisään",
+    "drill.kda.drop": "Pudota {where} {title}",
+    "drill.kda.increase": "Lisäys {where} {title}",
+    "drill.kda.no_change": "Vanhentunut {where} {title}",
+    "drill.kda.year_to_year": "Vuosimuutos"
 }

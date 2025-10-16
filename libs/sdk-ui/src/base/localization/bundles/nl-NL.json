@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "Brief",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Portret",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Landschap"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Landschap",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Kop",
+    "table.header.checkbox.ariaLabel": "Actie kiezen",
+    "table.header.menu.ariaLabel": "Acties",
+    "gs.header.mainMenu.ariaLabel": "Hoofdmenu"
 }

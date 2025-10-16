@@ -2,6 +2,8 @@
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+@use "./objectType.scss";
+
 $width: 545px;
 $title-font-size: 24px;
 $title-font-line-height: 30px;
@@ -136,5 +138,52 @@ $content-font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+    }
+
+    &__tab-quality {
+        display: grid;
+        gap: 10px;
+
+        &__empty {
+            color: kit-variables.$gd-color-state-blank;
+            display: grid;
+            place-items: center;
+            gap: 10px;
+            padding: 40px 10px;
+        }
+    }
+}
+
+.gd-analytics-catalog {
+    &__quality-issue {
+        padding: 10px 0;
+        display: grid;
+        gap: 5px 10px;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+
+        > :first-child {
+            grid-row: 1 / -1;
+        }
+
+        &__title {
+            font-weight: 700;
+        }
+
+        &__description__object {
+            .gd-analytics-catalog__object-type {
+                color: var(--catalog-object-type-icon-color);
+
+                .gd-ui-kit-icon {
+                    vertical-align: middle;
+                    margin-right: 3px;
+                    fill: var(--catalog-object-type-icon-color);
+                }
+            }
+
+            &__identifier {
+                text-decoration: underline;
+            }
+        }
     }
 }

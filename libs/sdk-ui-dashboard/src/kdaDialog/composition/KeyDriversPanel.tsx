@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useEffect, useId, useMemo } from "react";
+import { useEffect, useId } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,6 +17,7 @@ import {
 
 import { KeyDriverItem } from "../components/items/KeyDriverItem.js";
 import { SummaryItem } from "../components/items/SummaryItem.js";
+import { useSignificantDrives } from "../hooks/useDriversList.js";
 import { KdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
@@ -34,34 +35,7 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
 
     const { state, setState } = useKdaState();
 
-    const trendUp = useMemo(
-        () =>
-            state.items.filter((item) => {
-                return item.data.from.value < item.data.to.value;
-            }),
-        [state.items],
-    );
-    const trendDown = useMemo(
-        () =>
-            state.items.filter((item) => {
-                return item.data.from.value > item.data.to.value;
-            }),
-        [state.items],
-    );
-
-    const currentItems = useMemo(() => {
-        if (state.selectedTrend === "up") {
-            return trendUp;
-        }
-        return trendDown;
-    }, [state.selectedTrend, trendUp, trendDown]);
-    const maximum = useMemo(() => {
-        return Math.max(
-            ...currentItems.map((item) => {
-                return Math.abs(item.data.to.value - item.data.from.value);
-            }),
-        );
-    }, [currentItems]);
+    const { maximum, list, trendUp, trendDown } = useSignificantDrives();
 
     // When there are no items for selected trend, switch to the other trend
     useEffect(() => {
@@ -159,9 +133,9 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                     </div>
                 ) : (
                     <>
-                        {currentItems.length > 0 ? (
+                        {list.length > 0 ? (
                             <UiListbox
-                                items={currentItems}
+                                items={list}
                                 ariaAttributes={{
                                     id: listId,
                                     "aria-controls": detailsId,

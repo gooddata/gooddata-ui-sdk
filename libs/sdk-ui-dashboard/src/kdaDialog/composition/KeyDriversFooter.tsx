@@ -30,7 +30,7 @@ export function KeyDriversFooter() {
                 <FormattedMessage
                     id="kdaDialog.dialog.keyDrives.overview.summary.drivers.description"
                     values={{
-                        combinations: state.combinations,
+                        combinations: state.items.length,
                         attributes: state.selectedAttributes.length,
                         button: (chunks) => {
                             return (
@@ -51,6 +51,7 @@ export function KeyDriversFooter() {
                                             selectedAttributes: selected.map(
                                                 (item) => item.defaultDisplayForm.ref,
                                             ),
+                                            selectedUpdated: Date.now(),
                                         });
                                     }}
                                     header={

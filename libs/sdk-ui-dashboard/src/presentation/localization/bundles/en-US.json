@@ -531,6 +531,10 @@
         "value": "Remove {name}",
         "comment": "Label of a button for removing a user from the recipients list"
     },
+    "dialogs.schedule.email.userAndEmail.remove": {
+        "value": "Remove {name} ({email})",
+        "comment": "Label of a button for removing a user from the recipients list"
+    },
     "dialogs.schedule.email.user.warning.external": {
         "value": "Warning: External recipient — “{email}” will receive the same dashboard view as you.",
         "comment": "Message for recipients input when a user is external"
@@ -2774,6 +2778,10 @@
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": {
         "value": "Attributes",
         "comment": "Key drivers overview summary drivers attributes in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.diff.title": {
+        "value": "Diff",
+        "comment": "Key drivers overview diff title in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.detail.tip": {
         "value": "Click on column to see key drivers for given country",

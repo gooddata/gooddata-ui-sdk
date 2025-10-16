@@ -20,7 +20,7 @@ import type { Configuration } from "./configuration.js";
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from "axios";
 import globalAxios from "axios";
 
-export const BASE_PATH = "https://staging.dev-latest.stg11.panther.intgdc.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://internal-testing.staging.stg11.panther.intgdc.com".replace(/\/+$/, "");
 
 export const COLLECTION_FORMATS = {
     csv: ",",

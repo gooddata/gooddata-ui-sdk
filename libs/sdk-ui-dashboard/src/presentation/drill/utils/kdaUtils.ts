@@ -43,11 +43,11 @@ export function getKdaKeyDriverCombinations(
     const res: DashboardKeyDriverCombinationItem[] = [];
 
     // There is a previous value in graph
-    const before = createBefore(dateAttribute, metricValue);
+    const before = createBefore(metricHeader, dateAttribute, metricValue);
     res.push(...(before ? [before] : []));
 
     // There is a next value in graph
-    const after = createAfter(dateAttribute, metricValue);
+    const after = createAfter(metricHeader, dateAttribute, metricValue);
     res.push(...(after ? [after] : []));
 
     // There is a previous year value in graph
@@ -58,6 +58,7 @@ export function getKdaKeyDriverCombinations(
 }
 
 function createBefore(
+    measure: IMeasureDescriptor,
     dateAttribute: ReturnType<typeof findDateValues>,
     metricValue: ReturnType<typeof findMetricValues>,
 ): DashboardKeyDriverCombinationItem | undefined {
@@ -66,6 +67,7 @@ function createBefore(
         const previousValue = metricValue.previousValue.rawValue as number;
 
         return {
+            measure,
             where: "before",
             difference: currentValue - previousValue,
             type: "comparative",
@@ -77,6 +79,7 @@ function createBefore(
 }
 
 function createAfter(
+    measure: IMeasureDescriptor,
     dateAttribute: ReturnType<typeof findDateValues>,
     metricValue: ReturnType<typeof findMetricValues>,
 ): DashboardKeyDriverCombinationItem | undefined {
@@ -85,6 +88,7 @@ function createAfter(
         const nextValue = metricValue.nextValue.rawValue as number;
 
         return {
+            measure,
             where: "after",
             difference: nextValue - currentValue,
             type: "comparative",
@@ -97,19 +101,20 @@ function createAfter(
 
 function createYearToYear(
     dv: DataViewFacade,
-    metric: IMeasureDescriptor,
+    measure: IMeasureDescriptor,
     dateAttribute: ReturnType<typeof findDateValues>,
     metricValue: ReturnType<typeof findMetricValues>,
 ): DashboardKeyDriverCombinationItem | undefined {
     const values = dateAttribute.values;
     const previousYear = findValuePreviousYear(dateAttribute.currentValue);
-    const previousYearMetricValue = findMetricPreviousYearValue(dv, metric, values, previousYear);
+    const previousYearMetricValue = findMetricPreviousYearValue(dv, measure, values, previousYear);
 
     if (previousYear && previousYearMetricValue && metricValue) {
         const previousValue = previousYearMetricValue.rawValue as number;
         const currentValue = metricValue.currentValue.rawValue as number;
 
         return {
+            measure,
             where: "none",
             difference: previousValue - currentValue,
             type: "year-to-year",

@@ -10,9 +10,6 @@ import {
     AttributeOrPlaceholder,
     AttributesMeasuresOrPlaceholders,
     ExplicitDrill,
-    ITranslationsComponentProps,
-    IntlTranslationsProvider,
-    IntlWrapper,
     NullableFiltersOrPlaceholders,
     OnFiredDrillEvent,
     Subtract,
@@ -89,15 +86,7 @@ export function Repeater(props: IRepeaterProps): ReactElement {
 }
 
 export function RenderRepeater(props: IRepeaterProps): ReactElement {
-    return (
-        <IntlWrapper locale={props.locale}>
-            <IntlTranslationsProvider>
-                {(translationProps: ITranslationsComponentProps) => {
-                    return <CoreRepeater intl={translationProps.intl} {...toCoreRepeaterProps(props)} />;
-                }}
-            </IntlTranslationsProvider>
-        </IntlWrapper>
-    );
+    return <CoreRepeater {...toCoreRepeaterProps(props)} />;
 }
 
 //

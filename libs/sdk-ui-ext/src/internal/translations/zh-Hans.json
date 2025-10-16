@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "选择警报： {title}",
     "automations.accessibility.select.schedule": "选择计划导出： {title}",
     "automations.accessibility.search.alerts": "搜索提醒",
-    "automations.accessibility.search.schedules": "搜索定期出口"
+    "automations.accessibility.search.schedules": "搜索定期出口",
+    "properties.column.headers.wrapText": "文本换行",
+    "properties.cells.title": "细胞",
+    "properties.cells.wrapText": "文本换行",
+    "automations.menu.ariaLabel": "自动化菜单 {title}",
+    "automations.accessibility.gridLabel.alerts": "警报列表",
+    "automations.accessibility.gridLabel.schedules": "计划出口清单"
 }

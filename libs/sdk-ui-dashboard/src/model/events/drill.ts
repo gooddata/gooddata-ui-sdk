@@ -13,6 +13,7 @@ import {
     IDrillToLegacyDashboard,
     IInsight,
     IKeyDriveAnalysis,
+    IMeasureDescriptor,
     IResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
@@ -39,6 +40,7 @@ export type DashboardKeyDriverCombinationRangeItem = { normalizedValue: string }
 export interface DashboardKeyDriverCombinationItem {
     where: "before" | "after" | "none";
     type: "comparative" | "year-to-year";
+    measure: IMeasureDescriptor;
     difference: number;
     values: [number, number];
     range: [IResultAttributeHeader & IAttributeDescriptor, IResultAttributeHeader & IAttributeDescriptor];

@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "Resposta 4",
     "dialogs.export.pdf.pageSize.option.letter": "Carta",
     "dialogs.export.pdf.pageOrientation.option.portrait": "Retrato",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "Paisagem"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "Paisagem",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "Cabeçalho",
+    "table.header.checkbox.ariaLabel": "Selecione a ação",
+    "table.header.menu.ariaLabel": "Ações",
+    "gs.header.mainMenu.ariaLabel": "Menu principal"
 }

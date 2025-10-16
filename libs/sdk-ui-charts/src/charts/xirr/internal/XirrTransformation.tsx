@@ -2,8 +2,6 @@
 
 import { useCallback } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
-
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     ExplicitDrill,
@@ -38,13 +36,13 @@ export interface IXirrTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-function XirrTransformation({
+export default function XirrTransformation({
     drillableItems = [],
     config = {},
     onDrill = () => true,
     onAfterRender = () => {},
     dataView,
-}: IXirrTransformationProps & WrappedComponentProps) {
+}: IXirrTransformationProps) {
     const getDisableDrillUnderlineFromConfig = useCallback(
         () => (config ? config.disableDrillUnderline : false),
         [config],
@@ -74,5 +72,3 @@ function XirrTransformation({
         />
     );
 }
-
-export default injectIntl(XirrTransformation);

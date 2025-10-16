@@ -940,6 +940,7 @@
                         }
                     }
                 },
+                "additionalProperties": true,
                 "description": "Additional information for the automation.",
                 "nullable": true
             },

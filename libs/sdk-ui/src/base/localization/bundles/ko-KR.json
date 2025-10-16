@@ -803,5 +803,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "편지",
     "dialogs.export.pdf.pageOrientation.option.portrait": "세로형",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "랜드스케이프"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "랜드스케이프",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "헤더",
+    "table.header.checkbox.ariaLabel": "작업 선택",
+    "table.header.menu.ariaLabel": "작업",
+    "gs.header.mainMenu.ariaLabel": "메인 메뉴"
 }

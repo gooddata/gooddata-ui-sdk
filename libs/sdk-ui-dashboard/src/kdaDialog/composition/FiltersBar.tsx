@@ -4,16 +4,13 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IDashboardAttributeFilter, areObjRefsEqual } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import {
-    selectAttributeFilterConfigsOverrides,
-    selectCatalogDateAttributes,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { selectAttributeFilterConfigsOverrides, useDashboardSelector } from "../../model/index.js";
 import { AttributeBar } from "../components/bars/AttributeBar.js";
 import { DateBar } from "../components/bars/DateBar.js";
 import { KdaBar } from "../components/KdaBar.js";
+import { useDateAttribute } from "../hooks/useDateAttribute.js";
 import { KdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { KdaPeriodType } from "../types.js";
@@ -21,7 +18,6 @@ import { KdaPeriodType } from "../types.js";
 export function FiltersBar() {
     const intl = useIntl();
 
-    const dateAttributes = useDashboardSelector(selectCatalogDateAttributes);
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
 
     const { state, setState } = useKdaState();
@@ -56,18 +52,15 @@ export function FiltersBar() {
     );
 
     const def = state.definition;
+    const dateAttributeFinder = useDateAttribute();
+
     const options = useMemo((): KdaDateOptions => {
-        const dateAttribute = dateAttributes.find(
-            (a) =>
-                areObjRefsEqual(def?.dateAttribute, a.attribute.ref) ||
-                a.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, def?.dateAttribute)),
-        );
         return {
-            dateAttribute,
+            dateAttribute: dateAttributeFinder(def?.dateAttribute),
             period: def?.type ?? "previous_period",
             range: def?.range,
         };
-    }, [def?.dateAttribute, def?.range, def?.type, dateAttributes]);
+    }, [dateAttributeFinder, def?.dateAttribute, def?.type, def?.range]);
 
     //TODO: AttributesDropdown will be used to add new filter
 

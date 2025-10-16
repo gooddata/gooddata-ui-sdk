@@ -304,6 +304,11 @@ export interface ISettings {
     enableGenAIChatRollout?: boolean;
 
     /**
+     * Enable GenAI catalog quality checker in Analytics Catalog.
+     */
+    enableGenAICatalogQualityChecker?: boolean;
+
+    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;

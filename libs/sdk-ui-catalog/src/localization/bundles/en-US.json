@@ -179,6 +179,14 @@
         "value": "Details",
         "comment": "Catalog item tab label."
     },
+    "analyticsCatalog.catalogItem.tab.quality": {
+        "value": "Validations {count}",
+        "comment": "Catalog item tab label."
+    },
+    "analyticsCatalog.catalogItem.tab.quality.empty": {
+        "value": "No validation issues found.",
+        "comment": "Catalog item tab label."
+    },
     "analyticsCatalog.catalogItem.lock": {
         "value": "You can’t edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
         "comment": "Tooltip content "
@@ -238,5 +246,65 @@
     "analyticsCatalog.empty.filters.description": {
         "value": "No matching items found for the selected filters.",
         "comment": "Description of the empty state when filters are applied but search input is empty."
+    },
+    "analyticsCatalog.quality.tooltip.identicalTitle": {
+        "value": "There {count, plural, one {is # field} other {are # fields}} with the same title",
+        "comment": "Title for quality issue tooltip when multiple catalog items have identical titles."
+    },
+    "analyticsCatalog.quality.tooltip.identicalDescription": {
+        "value": "There {count, plural, one {is # field} other {are # fields}} with the same description",
+        "comment": "Title for quality issue tooltip when multiple catalog items have identical descriptions."
+    },
+    "analyticsCatalog.quality.tooltip.similarTitle": {
+        "value": "There {count, plural, one {is # field} other {are # fields}} with similar title",
+        "comment": "Title for quality issue tooltip when multiple catalog items have similar titles."
+    },
+    "analyticsCatalog.quality.tooltip.similarDescription": {
+        "value": "There {count, plural, one {is # field} other {are # fields}} with similar description",
+        "comment": "Title for quality issue tooltip when multiple catalog items have similar descriptions."
+    },
+    "analyticsCatalog.quality.tooltip.unknownAbbreviation": {
+        "value": "There {count, plural, one {is # abbreviation that is not recognized} other {are # abbreviations that are not recognized}}",
+        "comment": "Title for quality issue tooltip when a catalog item contains unknown abbreviation."
+    },
+    "analyticsCatalog.quality.title.identicalTitle": {
+        "value": "Identical title",
+        "comment": "Title for quality issue when multiple catalog items have identical titles."
+    },
+    "analyticsCatalog.quality.title.identicalDescription": {
+        "value": "Identical description",
+        "comment": "Title for quality issue when multiple catalog items have identical descriptions."
+    },
+    "analyticsCatalog.quality.title.similarTitle": {
+        "value": "Similar title",
+        "comment": "Title for quality issue when multiple catalog items have similar titles."
+    },
+    "analyticsCatalog.quality.title.similarDescription": {
+        "value": "Similar description",
+        "comment": "Title for quality issue when multiple catalog items have similar descriptions."
+    },
+    "analyticsCatalog.quality.title.unknownAbbreviation": {
+        "value": "Unknown abbreviation",
+        "comment": "Title for quality issue when a catalog item contains unknown abbreviation."
+    },
+    "analyticsCatalog.quality.description.identicalTitle": {
+        "value": "The title is already used by {objects} <u>Rename</u> it to prevent confusion.",
+        "comment": "Description for quality issue when multiple catalog items have identical titles."
+    },
+    "analyticsCatalog.quality.description.identicalDescription": {
+        "value": "The description is already used by {objects} <u>Rename</u> it to prevent confusion.",
+        "comment": "Description for quality issue when multiple catalog items have identical descriptions."
+    },
+    "analyticsCatalog.quality.description.similarTitle": {
+        "value": "The title is similar to {objects} Distinguish it in its <u>description</u> to improve AI accuracy.",
+        "comment": "Description for quality issue when multiple catalog items have similar titles."
+    },
+    "analyticsCatalog.quality.description.similarDescription": {
+        "value": "The description is similar to {objects} Distinguish it in its <u>title</u> to improve AI accuracy.",
+        "comment": "Description for quality issue when multiple catalog items have similar descriptions."
+    },
+    "analyticsCatalog.quality.description.unknownAbbreviation": {
+        "value": "The abbreviation <u>{abbreviation}</u> is not recognized. <u>Replace</u> it with the full form to improve AI accuracy.",
+        "comment": "Description for quality issue when a catalog item contains unknown abbreviation."
     }
 }

@@ -5,18 +5,21 @@ import { type MouseEvent, type RefObject, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { UiButton, type UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiSkeleton, type UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailHeader } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
+import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import { type ICatalogItem, type ICatalogItemRef, canEditCatalogItem } from "../catalogItem/index.js";
 import { type ObjectType } from "../objectType/index.js";
 import { usePermissionsState } from "../permission/index.js";
+import { useQualityIssuesById, useQualityState } from "../quality/index.js";
 
 const Tabs = {
     METADATA: "metadata",
+    QUALITY: "issues",
 } as const;
 
 /**
@@ -95,8 +98,7 @@ export function CatalogDetailContent({
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
 
-    const permissionsState = usePermissionsState();
-    const currentUser = permissionsState.result?.user;
+    const { result: { user: currentUser, permissions, settings } = {} } = usePermissionsState();
 
     const { item, status, error, updateItemTitle, updateItemDescription, updateItemTags } =
         useCatalogItemUpdate({
@@ -108,17 +110,37 @@ export function CatalogDetailContent({
             onError: onCatalogItemUpdateError,
         });
 
-    const canEdit = canEditCatalogItem(permissionsState.result?.permissions, item);
+    const canEdit = canEditCatalogItem(permissions, item);
 
-    const tabs: UiTab[] = useMemo(
-        () => [
+    // Quality
+    const { status: qualityStatus } = useQualityState();
+
+    const isQualityEnabled = Boolean(settings?.["enableGenAICatalogQualityChecker"]);
+    const isQualityVisible = isQualityEnabled && qualityStatus !== "error";
+    const isQualityLoading = qualityStatus === "loading" || qualityStatus === "pending";
+
+    const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];
+    const issueCount = issues.length > 0 ? `(${issues.length})` : "";
+
+    // Tabs
+    const tabs: UiTab[] = useMemo(() => {
+        const tabs: UiTab[] = [
             {
                 id: Tabs.METADATA,
                 label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.details" }),
             },
-        ],
-        [intl],
-    );
+        ];
+        if (isQualityVisible) {
+            tabs.push({
+                id: Tabs.QUALITY,
+                label: intl.formatMessage(
+                    { id: "analyticsCatalog.catalogItem.tab.quality" },
+                    { count: issueCount },
+                ),
+            });
+        }
+        return tabs;
+    }, [intl, isQualityVisible, issueCount]);
     const [selectedTabId, setSelectedTabId] = useState<UiTab["id"]>(Tabs.METADATA);
 
     return (
@@ -168,6 +190,12 @@ export function CatalogDetailContent({
                                 }}
                             />
                         )}
+                        {selectedTabId === Tabs.QUALITY &&
+                            (isQualityLoading ? (
+                                <UiSkeleton itemsCount={2} itemHeight={65} itemsGap={10} />
+                            ) : (
+                                <CatalogDetailTabQuality item={item} issues={issues} />
+                            ))}
                     </div>
                 ) : null}
             </CatalogDetailStatus>

@@ -43,6 +43,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceKdaService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -204,6 +205,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+            throw new NotSupported("not supported");
+        },
+        kda(): IWorkspaceKdaService {
             throw new NotSupported("not supported");
         },
         execution(): IExecutionFactory {
@@ -370,6 +374,9 @@ function recordedWorkspace(
                     remove: async () => {},
                 }),
                 getAnalyticsCatalog() {
+                    throw new NotSupported("not supported");
+                },
+                getSemanticQuality() {
                     throw new NotSupported("not supported");
                 },
             };

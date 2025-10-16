@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "信件",
     "dialogs.export.pdf.pageOrientation.option.portrait": "肖像",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "景观"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "景观",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "标题",
+    "table.header.checkbox.ariaLabel": "选择操作",
+    "table.header.menu.ariaLabel": "操作",
+    "gs.header.mainMenu.ariaLabel": "主菜单"
 }

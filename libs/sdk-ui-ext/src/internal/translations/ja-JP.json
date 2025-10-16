@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "アラートを選択する：{title}",
     "automations.accessibility.select.schedule": "スケジュールされたエクスポートを選択します：{title}",
     "automations.accessibility.search.alerts": "検索アラート",
-    "automations.accessibility.search.schedules": "スケジュールされたエクスポートを検索"
+    "automations.accessibility.search.schedules": "スケジュールされたエクスポートを検索",
+    "properties.column.headers.wrapText": "テキストの折り返し",
+    "properties.cells.title": "細胞",
+    "properties.cells.wrapText": "テキストの折り返し",
+    "automations.menu.ariaLabel": "オートメーション・メニュー{title}",
+    "automations.accessibility.gridLabel.alerts": "アラート一覧",
+    "automations.accessibility.gridLabel.schedules": "輸出予定リスト"
 }

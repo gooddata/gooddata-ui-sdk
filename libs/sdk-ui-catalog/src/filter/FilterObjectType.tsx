@@ -15,7 +15,7 @@ export function FilterObjectType() {
 
     return (
         <FilterGroupLayout
-            className="gd-analytics-catalog__object-type"
+            className="gd-analytics-catalog__filter__group__object-type"
             title={<FormattedMessage id="analyticsCatalog.objectType.title" />}
         >
             <ObjectTypeSelectMemo counter={counter} selectedTypes={types} onSelect={setTypes} />

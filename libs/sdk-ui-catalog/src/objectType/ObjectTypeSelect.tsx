@@ -49,7 +49,12 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter }: Props) {
                 const isSelected = selectedTypes.includes(type);
                 const ariaLabel = intl.formatMessage(messages[type], { count: counter[type] });
                 return (
-                    <div key={type} data-testid={testIds.objectType} data-object-type={type}>
+                    <div
+                        key={type}
+                        className="gd-analytics-catalog__object-type"
+                        data-testid={testIds.objectType}
+                        data-object-type={type}
+                    >
                         <UiTooltip
                             triggerBy={["hover", "focus"]}
                             anchor={

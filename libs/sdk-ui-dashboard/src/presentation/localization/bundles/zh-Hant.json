@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "沒有增加司機",
     "kdaDialog.dialog.keyDrives.empty_down": "沒有減少的驅動因素",
     "dialogs.automation.attachments.add": "新增附件",
-    "menu.back": "返回父選單"
+    "menu.back": "返回父選單",
+    "drill_modal_picker.key-driver-analysis": "解釋",
+    "kdaDialog.dialog.bars.date.splitter": "對比",
+    "drill.kda.from": "從",
+    "drill.kda.in": "在",
+    "drill.kda.drop": "降低 {where} {title}",
+    "drill.kda.increase": "增加 {where} {title}",
+    "drill.kda.no_change": "陳舊 {where} {title}",
+    "drill.kda.year_to_year": "同比變化"
 }

@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "沒有增加的驅動力",
     "kdaDialog.dialog.keyDrives.empty_down": "沒有減少的驅動力",
     "dialogs.automation.attachments.add": "加附件",
-    "menu.back": "返回父選單"
+    "menu.back": "返回父選單",
+    "drill_modal_picker.key-driver-analysis": "講解",
+    "kdaDialog.dialog.bars.date.splitter": "對",
+    "drill.kda.from": "從",
+    "drill.kda.in": "係",
+    "drill.kda.drop": "丟下 {where} {title}",
+    "drill.kda.increase": "加碼 {where} {title}",
+    "drill.kda.no_change": "陳舊 {where} {title}",
+    "drill.kda.year_to_year": "逐年變化"
 }

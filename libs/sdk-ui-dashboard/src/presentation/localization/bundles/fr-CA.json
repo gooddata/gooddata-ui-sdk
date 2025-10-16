@@ -846,5 +846,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Pas d'augmentation du nombre de conducteurs",
     "kdaDialog.dialog.keyDrives.empty_down": "Pas de diminution du nombre de conducteurs",
     "dialogs.automation.attachments.add": "Ajouter des pièces jointes",
-    "menu.back": "Retour au menu parent"
+    "menu.back": "Retour au menu parent",
+    "drill_modal_picker.key-driver-analysis": "Expliquer",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "de",
+    "drill.kda.in": "dans",
+    "drill.kda.drop": "Chute {where} {title}",
+    "drill.kda.increase": "Augmentation {where} {title}",
+    "drill.kda.no_change": "Stale {where} {title}",
+    "drill.kda.year_to_year": "Variation d'une année sur l'autre"
 }

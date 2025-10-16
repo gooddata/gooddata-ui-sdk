@@ -544,5 +544,11 @@
     "automations.accessibility.select.alert": "Valitse hälytys: {title}",
     "automations.accessibility.select.schedule": "Valitse aikataulutettu vienti: {title}",
     "automations.accessibility.search.alerts": "Hae hälytyksiä",
-    "automations.accessibility.search.schedules": "Hae ajoitettuja vientejä"
+    "automations.accessibility.search.schedules": "Hae ajoitettuja vientejä",
+    "properties.column.headers.wrapText": "Rivitä teksti",
+    "properties.cells.title": "Solut",
+    "properties.cells.wrapText": "Rivitä teksti",
+    "automations.menu.ariaLabel": "Automaatiovalikko kohteelle {title}",
+    "automations.accessibility.gridLabel.alerts": "Hälytysluettelo",
+    "automations.accessibility.gridLabel.schedules": "Luettelo aikataulutetuista vienneistä"
 }

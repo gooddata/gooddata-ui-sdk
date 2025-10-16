@@ -532,11 +532,11 @@
         "comment": "Heading for the section that controls text wrapping in headers and cells."
     },
     "visualizations.menu.textWrapping.header": {
-        "value": "Header",
+        "value": "Headers",
         "comment": "Menu option label to toggle text wrapping in header cells."
     },
     "visualizations.menu.textWrapping.cell": {
-        "value": "Cell",
+        "value": "Cells",
         "comment": "Menu option label to toggle text wrapping in body cells."
     },
     "visualizations.menu.sort": {

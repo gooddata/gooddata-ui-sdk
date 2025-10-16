@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "A4",
     "dialogs.export.pdf.pageSize.option.letter": "文字",
     "dialogs.export.pdf.pageOrientation.option.portrait": "ポートレート",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "風景"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "風景",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "ヘッダー",
+    "table.header.checkbox.ariaLabel": "アクションを選択",
+    "table.header.menu.ariaLabel": "アクション",
+    "gs.header.mainMenu.ariaLabel": "メインメニュー"
 }

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { parse } from "date-fns";
+import { format, parse } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -98,4 +98,55 @@ export const parseDateValue = (
     }
 
     return parsedDate;
+};
+
+/**
+ * Serializes a Date object to a string representation based on the specified granularity.
+ * For the en-US-x-24h locale, the parsed date is converted to UTC using fromZonedTime
+ * to prevent double timezone conversion when formatting with formatInTimeZone.
+ *
+ * @param value - Date object to serialize.
+ * @param granularity - granularity to assume when serializing the value.
+ * @param timezone - optional timezone information for time-based granularities.
+ * @param locale - optional locale information to determine if UTC conversion is needed.
+ * @internal
+ */
+export const serializeDateValue = (
+    value: Date,
+    granularity: DateAttributeGranularity,
+    timezone?: string,
+    locale?: string,
+): string => {
+    const parsePattern = granularityParsePatterns[granularity];
+    if (!parsePattern) {
+        throw new UnexpectedError(`No date parser for the "${granularity}" granularity available.`);
+    }
+
+    let date = value;
+    // For en-US-x-24h locale, convert the parsed date to UTC using fromZonedTime
+    // This prevents double timezone conversion when formatting with formatInTimeZone
+    // The backend sends timezone-adjusted values, so we use fromZonedTime to get the equivalent UTC time
+    // Only apply UTC conversion to MINUTE and HOUR granularities (same as defaultDateFormatter)
+    if (
+        locale === "en-US-x-24h" &&
+        timezone &&
+        (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
+    ) {
+        try {
+            // Use fromZonedTime to convert the date from the specified timezone to UTC
+            // This follows the exact pattern: parse string -> Date object -> convert to UTC using timezone
+            date = fromZonedTime(date, timezone);
+        } catch {
+            // If timezone conversion fails, fall back to the date
+            // This ensures backward compatibility
+            date = value;
+        }
+    }
+
+    return format(date, parsePattern, {
+        useAdditionalDayOfYearTokens: true, // for day of year parsing
+        useAdditionalWeekYearTokens: true, // for week parsing
+        weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
+        firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
+    });
 };

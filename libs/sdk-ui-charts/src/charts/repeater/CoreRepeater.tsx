@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 
-import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
 import {
@@ -30,7 +30,7 @@ export type * from "./columnWidths.js";
 /**
  * @internal
  */
-export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps {
     theme?: ITheme;
 
     /**
@@ -59,7 +59,7 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
 
     const intl = useIntl();
 
-    const enableCancelling = props.config?.enableExecutionCancelling ?? false;
+    const enableCancelling = config.enableExecutionCancelling ?? false;
 
     const { result, error } = useCancelablePromise(
         {
@@ -201,7 +201,7 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
     );
 }
 
-const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
+const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
 
 /**
  * @internal

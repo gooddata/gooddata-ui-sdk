@@ -794,5 +794,10 @@
     "dialogs.export.pdf.pageSize.option.a4": "答4",
     "dialogs.export.pdf.pageSize.option.letter": "發佈",
     "dialogs.export.pdf.pageOrientation.option.portrait": "寫真",
-    "dialogs.export.pdf.pageOrientation.option.landscape": "山林"
+    "dialogs.export.pdf.pageOrientation.option.landscape": "山林",
+    "attributesDropdown.alternativeValueTooltipShort": "({label}: {value})",
+    "table.header.ariaLabel": "頭波",
+    "table.header.checkbox.ariaLabel": "選動",
+    "table.header.menu.ariaLabel": "所作所為",
+    "gs.header.mainMenu.ariaLabel": "主餐"
 }

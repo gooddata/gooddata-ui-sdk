@@ -848,5 +848,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Brak rosnących czynników",
     "kdaDialog.dialog.keyDrives.empty_down": "Brak malejących czynników",
     "dialogs.automation.attachments.add": "Dodaj załączniki",
-    "menu.back": "Powrót do menu nadrzędnego"
+    "menu.back": "Powrót do menu nadrzędnego",
+    "drill_modal_picker.key-driver-analysis": "Wyjaśnij",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "z",
+    "drill.kda.in": "w",
+    "drill.kda.drop": "Upuść {where} {title}",
+    "drill.kda.increase": "Zwiększ {where} {title}",
+    "drill.kda.no_change": "Nieaktualne {where} {title}",
+    "drill.kda.year_to_year": "Zmiana rok do roku"
 }

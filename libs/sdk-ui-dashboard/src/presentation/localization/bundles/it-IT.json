@@ -847,5 +847,13 @@
     "kdaDialog.dialog.keyDrives.empty_up": "Nessun aumento dei conducenti",
     "kdaDialog.dialog.keyDrives.empty_down": "Nessun conducente in calo",
     "dialogs.automation.attachments.add": "Aggiungi allegati",
-    "menu.back": "Torna al menu principale"
+    "menu.back": "Torna al menu principale",
+    "drill_modal_picker.key-driver-analysis": "Spiegare",
+    "kdaDialog.dialog.bars.date.splitter": "vs",
+    "drill.kda.from": "da",
+    "drill.kda.in": "in",
+    "drill.kda.drop": "Goccia {where} {title}",
+    "drill.kda.increase": "Aumento {where} {title}",
+    "drill.kda.no_change": "Stantio {where} {title}",
+    "drill.kda.year_to_year": "Variazione anno su anno"
 }

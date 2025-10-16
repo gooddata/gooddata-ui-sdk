@@ -5,12 +5,14 @@ import type {
     IChatThread,
     IGenAIService,
     IMemoryService,
+    ISemanticQualityService,
     ISemanticSearchQuery,
 } from "@gooddata/sdk-backend-spi";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatThreadService } from "./ChatThread.js";
 import { MemoryService } from "./MemoryService.js";
+import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -42,5 +44,9 @@ export class GenAIService implements IGenAIService {
 
     getAnalyticsCatalog(): IAnalyticsCatalogService {
         return new AnalyticsCatalogService(this.authCall, this.workspaceId);
+    }
+
+    getSemanticQuality(): ISemanticQualityService {
+        return new SemanticQualityService(this.authCall, this.workspaceId);
     }
 }

@@ -112,6 +112,7 @@ export type {
     IChatThreadQuery,
     IGenAIChatEvaluation,
     IMemoryService,
+    ISemanticQualityService,
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
@@ -301,6 +302,13 @@ export type {
     AutomationFilterType,
     IGetAutomationsQueryOptions,
 } from "./common/automations.js";
+
+export type {
+    IWorkspaceKdaService,
+    IChangeAnalysisResults,
+    IKeyDriver,
+    IChangeAnalysisPeriod,
+} from "./workspace/kda/index.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
 

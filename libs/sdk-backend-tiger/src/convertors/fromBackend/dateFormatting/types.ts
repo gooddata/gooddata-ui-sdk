@@ -20,6 +20,13 @@ export type DateParseFormatter = (
     timezone?: string,
 ) => string;
 
+export type DateStringifier = (
+    value: Date,
+    granularity: DateAttributeGranularity,
+    locale?: FormattingLocale,
+    timezone?: string,
+) => string;
+
 export type DateNormalizer = (
     value: string | null,
     granularity: DateAttributeGranularity,
