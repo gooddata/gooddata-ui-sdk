@@ -1,8 +1,9 @@
 # Redirects
 / {{ .Site.BaseURL }}/latest/ 301!
 /docs/ {{ .Site.BaseURL }}/latest/ 301!
-/11.4/ {{ .Site.BaseURL }}/latest/ 301!
-/11.4.0/ {{ .Site.BaseURL }}/latest/ 301!
+/11.5/ {{ .Site.BaseURL }}/latest/ 301!
+/11.5.0/ {{ .Site.BaseURL }}/latest/ 301!
+/11.4.0/ {{ .Site.BaseURL }}/11.4/ 301!
 /11.3.0/ {{ .Site.BaseURL }}/11.3/ 301!
 /11.2.0/ {{ .Site.BaseURL }}/11.2/ 301!
 /11.1.0/ {{ .Site.BaseURL }}/11.1/ 301!
