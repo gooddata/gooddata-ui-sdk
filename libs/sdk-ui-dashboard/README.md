@@ -1,4 +1,4 @@
-# GoodData.UI SDK - Dashboard
+# GoodData.UI SDK - Dashboard blab
 
 [![npm version](https://img.shields.io/npm/v/@gooddata/sdk-ui-dashboard)](https://www.npmjs.com/@gooddata/sdk-ui-dashboard)&nbsp;
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-ui-dashboard)](https://npmcharts.com/compare/@gooddata/sdk-ui-dashboard?minimal=true)&nbsp;
