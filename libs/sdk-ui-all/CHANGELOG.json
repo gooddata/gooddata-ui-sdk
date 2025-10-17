@@ -2,6 +2,93 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.5.0",
+            "tag": "@gooddata/sdk-ui-all_v11.5.0",
+            "date": "Fri, 17 Oct 2025 07:29:11 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce React compatibility testing app for dashboard plugins"
+                    },
+                    {
+                        "comment": "api-client-tiger: Expose quality issues API types."
+                    },
+                    {
+                        "comment": "sdk-model: Introduce semantic quality domain model and feature flag."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Implement semantic quality service"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce semantic quality UI integration"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Fix font styles for the embedding case"
+                    },
+                    {
+                        "comment": "sdk-ui-model: Introduce `ISemanticQualityIssuesCalculation` that represents the state of a semantic quality issues calculation."
+                    },
+                    {
+                        "comment": "api-client-tiger: Expose semantic quality calculation endpoints."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce semantic quality score card with capability to run a semantic quality check."
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
+                    },
+                    {
+                        "comment": "[sdk-ui]: Support normalizedValue in execution, propagate into KDA dialog, update date formatter"
+                    },
+                    {
+                        "comment": "key driver analysis implementation, load from backend, update dialog"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Support for graph in key driver detail"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Ellipses in key driver list, Filter only supported attributes"
+                    },
+                    {
+                        "comment": "[sdk-backend-spi]: Rename kda => keyDriverAnalysis"
+                    },
+                    {
+                        "comment": "[sdk-api-client]: Update client by latest openapi specs"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard] Period switch support, Internal definitions for attr filter update, Update design and logic of kda graph"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai] allow accessible tooltip in vis"
+                    },
+                    {
+                        "comment": "Fix: Close the drill window when a filter option is selected"
+                    },
+                    {
+                        "comment": "fix: Display drill menu above chart tooltips"
+                    },
+                    {
+                        "comment": "Improve accessibility of recipient list"
+                    },
+                    {
+                        "comment": "Fixed: Dashboard widget insight menu did not always fit into a mobile viewport."
+                    },
+                    {
+                        "comment": "Fixed: Static descriptions of dashboard sections do not need to wait for filters to load."
+                    },
+                    {
+                        "comment": "Added: Tiger API client has been updated to match the latest backend state."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.4.0",
             "tag": "@gooddata/sdk-ui-all_v11.4.0",
             "date": "Fri, 10 Oct 2025 08:42:12 GMT",
