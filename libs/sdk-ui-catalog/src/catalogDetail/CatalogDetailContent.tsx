@@ -15,7 +15,7 @@ import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import { type ICatalogItem, type ICatalogItemRef, canEditCatalogItem } from "../catalogItem/index.js";
 import { type ObjectType } from "../objectType/index.js";
 import { usePermissionsState } from "../permission/index.js";
-import { useQualityIssuesById, useQualityState } from "../quality/index.js";
+import { useQualityIssuesById, useQualityIssuesState } from "../quality/index.js";
 
 const Tabs = {
     METADATA: "metadata",
@@ -113,7 +113,7 @@ export function CatalogDetailContent({
     const canEdit = canEditCatalogItem(permissions, item);
 
     // Quality
-    const { status: qualityStatus } = useQualityState();
+    const { status: qualityStatus } = useQualityIssuesState();
 
     const isQualityEnabled = Boolean(settings?.["enableGenAICatalogQualityChecker"]);
     const isQualityVisible = isQualityEnabled && qualityStatus !== "error";

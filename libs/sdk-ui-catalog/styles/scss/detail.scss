@@ -107,6 +107,14 @@ $content-font-size: 14px;
                     color: kit-variables.$gd-color-link;
                 }
             }
+
+            .gd-analytics-catalog__object-type {
+                color: var(--catalog-object-type-icon-color);
+
+                .gd-ui-kit-icon {
+                    fill: var(--catalog-object-type-icon-color);
+                }
+            }
         }
 
         &__actions {

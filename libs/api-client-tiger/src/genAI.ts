@@ -18,6 +18,8 @@ export const tigerGenAIClientFactory = (
     | "validateLLMEndpoint"
     | "validateLLMEndpointById"
     | "getQualityIssues"
+    | "getQualityIssuesCalculationStatus"
+    | "triggerQualityIssuesCalculation"
     | "tags"
     | "createdBy"
     // Memory endpoints are currently not generated; we will call them via axios directly in backend.

@@ -62,6 +62,7 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     const { state } = useKdaState();
 
     const description = getDescription(state.selectedItem);
+    const category = getCategory(state.selectedItem);
 
     return (
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
@@ -78,7 +79,12 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
             </div>
             <div className={cx("gd-kda-key-drivers-detail-info")}>
                 <UiIcon type="questionMark" size={12} />{" "}
-                {intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.overview.detail.tip" })}
+                {intl.formatMessage(
+                    { id: "kdaDialog.dialog.keyDrives.overview.detail.tip" },
+                    {
+                        category,
+                    },
+                )}
             </div>
         </div>
     );
@@ -102,4 +108,11 @@ function getDescription(item: IUiListboxInteractiveItem<KdaItem> | string) {
         return "";
     }
     return item.data.description;
+}
+
+function getCategory(item: IUiListboxInteractiveItem<KdaItem> | string) {
+    if (typeof item === "string") {
+        return "";
+    }
+    return item.data.category;
 }

@@ -3230,6 +3230,9 @@ importers:
       '@gooddata/sdk-ui':
         specifier: workspace:*
         version: link:../sdk-ui
+      '@gooddata/sdk-ui-charts':
+        specifier: workspace:*
+        version: link:../sdk-ui-charts
       '@gooddata/sdk-ui-ext':
         specifier: workspace:*
         version: link:../sdk-ui-ext

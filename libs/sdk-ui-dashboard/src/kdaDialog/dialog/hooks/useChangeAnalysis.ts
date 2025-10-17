@@ -60,7 +60,7 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attributes:
 
                 return backend
                     .workspace(workspace)
-                    .kda()
+                    .keyDriverAnalysis()
                     .computeChangeAnalysis(
                         {
                             dateAttribute: definition.dateAttribute,
@@ -144,7 +144,7 @@ function createKdaItem(
         stringTitle,
         data: {
             id,
-            attribute: attribute.defaultDisplayForm,
+            attribute: attribute.defaultDisplayForm.ref,
             title: attribute.attribute.title,
             description: attribute.attribute.description,
             category: driver.value,

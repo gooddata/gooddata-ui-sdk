@@ -8,7 +8,7 @@ import {
     AutomationAutomationSlidesExport,
     AutomationAutomationTabularExport,
     AutomationAutomationVisualExport,
-    JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -55,7 +55,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },

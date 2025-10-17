@@ -13,14 +13,28 @@ import { KdaBar } from "../components/KdaBar.js";
 import { useDateAttribute } from "../hooks/useDateAttribute.js";
 import { KdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
-import { KdaPeriodType } from "../types.js";
+import { usePeriodChangeHandler } from "./hooks/usePeriodChangeHandler.js";
 
 export function FiltersBar() {
     const intl = useIntl();
 
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const dateAttributeFinder = useDateAttribute();
 
-    const { state, setState } = useKdaState();
+    const { state } = useKdaState();
+    const def = state.definition;
+
+    const dateAttribute = useMemo(() => {
+        return dateAttributeFinder(def?.dateAttribute);
+    }, [dateAttributeFinder, def?.dateAttribute]);
+
+    const options = useMemo((): KdaDateOptions => {
+        return {
+            dateAttribute,
+            period: def?.type ?? "previous_period",
+            range: def?.range,
+        };
+    }, [dateAttribute, def?.type, def?.range]);
 
     const onChangeAttributeFilter = useCallback((newFilter: IDashboardAttributeFilter) => {
         // eslint-disable-next-line
@@ -34,42 +48,14 @@ export function FiltersBar() {
         //TODO: onDeleteAttributeFilter
     }, []);
 
-    const onPeriodChange = useCallback(
-        (type: KdaPeriodType) => {
-            // eslint-disable-next-line
-            console.log("on Period Change", type);
-            //TODO: onPeriodChange
-            if (state.definition) {
-                setState({
-                    definition: {
-                        ...state.definition,
-                        type,
-                    },
-                });
-            }
-        },
-        [setState, state.definition],
-    );
-
-    const def = state.definition;
-    const dateAttributeFinder = useDateAttribute();
-
-    const options = useMemo((): KdaDateOptions => {
-        return {
-            dateAttribute: dateAttributeFinder(def?.dateAttribute),
-            period: def?.type ?? "previous_period",
-            range: def?.range,
-        };
-    }, [dateAttributeFinder, def?.dateAttribute, def?.type, def?.range]);
-
-    //TODO: AttributesDropdown will be used to add new filter
+    const { onPeriodChange, isAvailable } = usePeriodChangeHandler(dateAttribute);
 
     return (
         <KdaBar
             title={intl.formatMessage({ id: "kdaDialog.dialog.bars.filters.title" })}
             content={
                 <>
-                    <DateBar options={options} onPeriodChange={onPeriodChange} />
+                    <DateBar options={options} isAvailable={isAvailable} onPeriodChange={onPeriodChange} />
                     {state.attributeFilters.map((attributeFilter, i) => (
                         <AttributeBar
                             key={i}

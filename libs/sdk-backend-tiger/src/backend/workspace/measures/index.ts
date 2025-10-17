@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
+    AfmValidObjectsQuery,
     JsonApiAttributeOut,
     JsonApiFactOut,
     JsonApiLabelOut,
@@ -34,6 +35,7 @@ import { IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.
 import { MeasuresQuery } from "./measuresQuery.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
+import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -328,5 +330,29 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         );
 
         return convertMetricFromBackend(result.data, result.data.included);
+    }
+
+    public async getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]> {
+        const measureItem = convertMeasure(definition);
+
+        const afmValidObjectsQuery: AfmValidObjectsQuery = {
+            types: ["attributes"],
+            afm: {
+                attributes: [],
+                measures: [measureItem],
+                filters: [],
+            },
+        };
+
+        const connectedItemsResponse = await this.authCall((client) =>
+            client.validObjects.computeValidObjects({
+                workspaceId: this.workspace,
+                afmValidObjectsQuery,
+            }),
+        );
+
+        return connectedItemsResponse.data.items
+            .filter((item) => item.type === "attribute")
+            .map(jsonApiIdToObjRef);
     }
 }

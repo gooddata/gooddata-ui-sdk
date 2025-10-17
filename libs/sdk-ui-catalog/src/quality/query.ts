@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ISemanticQualityIssue } from "@gooddata/sdk-model";
+import { ISemanticQualityIssue, type ISemanticQualityIssuesCalculation } from "@gooddata/sdk-model";
 
 type Options = {
     backend: IAnalyticalBackend;
@@ -13,4 +13,15 @@ export async function getQualityIssuesQuery({
     workspace,
 }: Options): Promise<ISemanticQualityIssue[]> {
     return backend.workspace(workspace).genAI().getSemanticQuality().getQualityIssues();
+}
+
+export async function triggerQualityIssuesCalculationQuery({
+    backend,
+    workspace,
+}: Options): Promise<ISemanticQualityIssuesCalculation> {
+    return await backend.workspace(workspace).genAI().getSemanticQuality().triggerQualityIssuesCalculation();
+}
+
+export function createQueryId(): string {
+    return crypto.randomUUID();
 }

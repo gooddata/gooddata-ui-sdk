@@ -179,6 +179,45 @@ $content-font-size: 14px;
         height: 100%;
     }
 
+    &__quality-score-card {
+        width: 280px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 5px;
+        padding: 10px;
+        color: kit-variables.$gd-color-text;
+        border-radius: 3px;
+        border: 1px solid kit-variables.$gd-border-color;
+        background-color: kit-variables.$gd-color-white;
+
+        &__title {
+            font-weight: 700;
+            line-height: 20px;
+        }
+
+        &__score {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .gd-dropdown-button-wrapper,
+        .gd-ui-kit-icon-button {
+            height: 20px;
+            width: 20px;
+        }
+
+        .gd-ui-kit-listbox__item-title {
+            font-size: 12px;
+        }
+    }
+
     &__memory-actions {
         display: flex;
         gap: 8px;

@@ -12,6 +12,7 @@ import {
     IGenAIMemoryItemCreate,
     IGenAIUserContext,
     ISemanticQualityIssue,
+    type ISemanticQualityIssuesCalculation,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
     type IUser,
@@ -254,4 +255,9 @@ export interface ISemanticQualityService {
      * Returns list of quality issues detected in the workspace metadata.
      */
     getQualityIssues(): Promise<ISemanticQualityIssue[]>;
+
+    /**
+     * Triggers asynchronous calculation of metadata quality issues.
+     */
+    triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }

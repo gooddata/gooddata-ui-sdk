@@ -41,7 +41,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -218,7 +218,7 @@ function recordedWorkspace(
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace);
         },
-        kda(): IWorkspaceKdaService {
+        keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
             throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {

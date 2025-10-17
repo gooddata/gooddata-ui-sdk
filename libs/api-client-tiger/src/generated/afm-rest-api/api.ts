@@ -532,6 +532,10 @@ export interface ChangeAnalysisRequest {
      * Optional filters to apply.
      */
     filters: Array<AttributeEqualityFilter>;
+    /**
+     * Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided.
+     */
+    useSmartAttributeSelection: boolean;
 }
 /**
  * Response for change analysis computation
@@ -738,8 +742,8 @@ export interface ClusteringResult {
     xCoord?: Array<number | null>;
     yCoord?: Array<number | null>;
     clusters: Array<number | null>;
-    ycoord: Array<number>;
     xcoord: Array<number>;
+    ycoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1290,6 +1294,9 @@ export interface FoundObjects {
     reasoning: string;
 }
 export interface GetQualityIssuesResponse {
+    /**
+     * List of quality issues found in the workspace
+     */
     issues: Array<QualityIssue>;
 }
 /**
@@ -1697,16 +1704,74 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
+/**
+ * List of quality issues (available when status is COMPLETED)
+ */
 export interface QualityIssue {
+    /**
+     * List of objects affected by this quality issue
+     */
     objects: Array<QualityIssueObject>;
-    severity: string;
+    /**
+     * Severity level
+     */
+    severity: QualityIssueSeverityEnum;
+    /**
+     * Quality issue code
+     */
     code: string;
+    /**
+     * Detailed information about the quality issue
+     */
     detail: { [key: string]: object };
 }
+
+export const QualityIssueSeverityEnum = {
+    ERROR: "error",
+    WARNING: "warning",
+} as const;
+
+export type QualityIssueSeverityEnum =
+    (typeof QualityIssueSeverityEnum)[keyof typeof QualityIssueSeverityEnum];
+
+/**
+ * List of objects affected by this quality issue
+ */
 export interface QualityIssueObject {
+    /**
+     * Object type
+     */
     type: string;
+    /**
+     * Object ID
+     */
     id: string;
 }
+export interface QualityIssuesCalculationStatusResponse {
+    /**
+     * Current status of the calculation
+     */
+    status: QualityIssuesCalculationStatusResponseStatusEnum;
+    /**
+     * List of quality issues (available when status is COMPLETED)
+     */
+    issues?: Array<QualityIssue>;
+    /**
+     * Error message (available when status is FAILED or NOT_FOUND)
+     */
+    error?: string;
+}
+
+export const QualityIssuesCalculationStatusResponseStatusEnum = {
+    RUNNING: "RUNNING",
+    COMPLETED: "COMPLETED",
+    FAILED: "FAILED",
+    NOT_FOUND: "NOT_FOUND",
+} as const;
+
+export type QualityIssuesCalculationStatusResponseStatusEnum =
+    (typeof QualityIssuesCalculationStatusResponseStatusEnum)[keyof typeof QualityIssuesCalculationStatusResponseStatusEnum];
+
 /**
  * Filter the result by comparing specified metric to given range of values.
  */
@@ -2247,6 +2312,26 @@ export interface TotalExecutionResultHeader {
 export interface TotalResultHeader {
     function: string;
 }
+export interface TriggerQualityIssuesCalculationResponse {
+    /**
+     * Process ID for tracking the calculation status
+     */
+    processId: string;
+    /**
+     * Current status of the calculation
+     */
+    status: TriggerQualityIssuesCalculationResponseStatusEnum;
+}
+
+export const TriggerQualityIssuesCalculationResponseStatusEnum = {
+    RUNNING: "RUNNING",
+    COMPLETED: "COMPLETED",
+    FAILED: "FAILED",
+} as const;
+
+export type TriggerQualityIssuesCalculationResponseStatusEnum =
+    (typeof TriggerQualityIssuesCalculationResponseStatusEnum)[keyof typeof TriggerQualityIssuesCalculationResponseStatusEnum];
+
 /**
  * User context, which can affect the behavior of the underlying AI features.
  */
@@ -3560,6 +3645,49 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} processId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssuesCalculationStatus: async (
+            workspaceId: string,
+            processId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
+            // verify required parameter 'processId' is not null or undefined
+            assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
          * @param {string} workspaceId Workspace identifier
@@ -3932,6 +4060,46 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerQualityIssuesCalculation: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4622,6 +4790,28 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} processId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQualityIssuesCalculationStatus(
+            workspaceId: string,
+            processId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<QualityIssuesCalculationStatusResponse>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssuesCalculationStatus(
+                workspaceId,
+                processId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
          * @param {string} workspaceId Workspace identifier
@@ -4785,6 +4975,28 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerQualityIssuesCalculation(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<TriggerQualityIssuesCalculationResponse>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerQualityIssuesCalculation(
+                workspaceId,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5273,6 +5485,25 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {ActionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssuesCalculationStatus(
+            requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
+            return localVarFp
+                .getQualityIssuesCalculationStatus(
+                    requestParameters.workspaceId,
+                    requestParameters.processId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
          * @summary (EXPERIMENTAL) Compute key driver analysis
          * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
@@ -5409,6 +5640,21 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<AnalyticsCatalogTags> {
             return localVarFp
                 .tags(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerQualityIssuesCalculation(
+            requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
+            return localVarFp
+                .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -5774,6 +6020,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<GetQualityIssuesResponse>;
 
     /**
+     * Returns the status of a quality issues calculation process identified by process ID.
+     * @summary Get Quality Issues Calculation Status
+     * @param {ActionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getQualityIssuesCalculationStatus(
+        requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<QualityIssuesCalculationStatusResponse>;
+
+    /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
      * @summary (EXPERIMENTAL) Compute key driver analysis
      * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
@@ -5876,6 +6135,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiTagsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AnalyticsCatalogTags>;
+
+    /**
+     * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+     * @summary Trigger Quality Issues Calculation
+     * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    triggerQualityIssuesCalculation(
+        requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
      * (EXPERIMENTAL) Updates memory item and returns it
@@ -6517,6 +6789,27 @@ export interface ActionsApiGetQualityIssuesRequest {
 }
 
 /**
+ * Request parameters for getQualityIssuesCalculationStatus operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetQualityIssuesCalculationStatusRequest
+ */
+export interface ActionsApiGetQualityIssuesCalculationStatusRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetQualityIssuesCalculationStatus
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetQualityIssuesCalculationStatus
+     */
+    readonly processId: string;
+}
+
+/**
  * Request parameters for keyDriverAnalysis operation in ActionsApi.
  * @export
  * @interface ActionsApiKeyDriverAnalysisRequest
@@ -6708,6 +7001,20 @@ export interface ActionsApiTagsRequest {
      * Workspace identifier
      * @type {string}
      * @memberof ActionsApiTags
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for triggerQualityIssuesCalculation operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTriggerQualityIssuesCalculationRequest
+ */
+export interface ActionsApiTriggerQualityIssuesCalculationRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiTriggerQualityIssuesCalculation
      */
     readonly workspaceId: string;
 }
@@ -7197,6 +7504,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Returns the status of a quality issues calculation process identified by process ID.
+     * @summary Get Quality Issues Calculation Status
+     * @param {ActionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getQualityIssuesCalculationStatus(
+        requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getQualityIssuesCalculationStatus(
+                requestParameters.workspaceId,
+                requestParameters.processId,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
      * @summary (EXPERIMENTAL) Compute key driver analysis
      * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
@@ -7342,6 +7670,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .tags(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+     * @summary Trigger Quality Issues Calculation
+     * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public triggerQualityIssuesCalculation(
+        requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -10062,6 +10407,49 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} processId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssuesCalculationStatus: async (
+            workspaceId: string,
+            processId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
+            // verify required parameter 'processId' is not null or undefined
+            assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Returns a list of memory items
          * @summary (EXPERIMENTAL) List all memory items
          * @param {string} workspaceId Workspace identifier
@@ -10205,6 +10593,46 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerQualityIssuesCalculation: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -10706,6 +11134,28 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} processId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQualityIssuesCalculationStatus(
+            workspaceId: string,
+            processId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<QualityIssuesCalculationStatusResponse>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssuesCalculationStatus(
+                workspaceId,
+                processId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Returns a list of memory items
          * @summary (EXPERIMENTAL) List all memory items
          * @param {string} workspaceId Workspace identifier
@@ -10768,6 +11218,28 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerQualityIssuesCalculation(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<TriggerQualityIssuesCalculationResponse>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerQualityIssuesCalculation(
+                workspaceId,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -11106,6 +11578,25 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns the status of a quality issues calculation process identified by process ID.
+         * @summary Get Quality Issues Calculation Status
+         * @param {SmartFunctionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQualityIssuesCalculationStatus(
+            requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
+            return localVarFp
+                .getQualityIssuesCalculationStatus(
+                    requestParameters.workspaceId,
+                    requestParameters.processId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Returns a list of memory items
          * @summary (EXPERIMENTAL) List all memory items
          * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
@@ -11163,6 +11654,21 @@ export const SmartFunctionsApiFactory = function (
         ): AxiosPromise<AnalyticsCatalogTags> {
             return localVarFp
                 .tags(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+         * @summary Trigger Quality Issues Calculation
+         * @param {SmartFunctionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerQualityIssuesCalculation(
+            requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
+            return localVarFp
+                .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -11424,6 +11930,19 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<GetQualityIssuesResponse>;
 
     /**
+     * Returns the status of a quality issues calculation process identified by process ID.
+     * @summary Get Quality Issues Calculation Status
+     * @param {SmartFunctionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    getQualityIssuesCalculationStatus(
+        requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<QualityIssuesCalculationStatusResponse>;
+
+    /**
      * (EXPERIMENTAL) Returns a list of memory items
      * @summary (EXPERIMENTAL) List all memory items
      * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
@@ -11474,6 +11993,19 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiTagsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AnalyticsCatalogTags>;
+
+    /**
+     * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+     * @summary Trigger Quality Issues Calculation
+     * @param {SmartFunctionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    triggerQualityIssuesCalculation(
+        requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
      * (EXPERIMENTAL) Updates memory item and returns it
@@ -11894,6 +12426,27 @@ export interface SmartFunctionsApiGetQualityIssuesRequest {
 }
 
 /**
+ * Request parameters for getQualityIssuesCalculationStatus operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiGetQualityIssuesCalculationStatusRequest
+ */
+export interface SmartFunctionsApiGetQualityIssuesCalculationStatusRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiGetQualityIssuesCalculationStatus
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiGetQualityIssuesCalculationStatus
+     */
+    readonly processId: string;
+}
+
+/**
  * Request parameters for listMemoryItems operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiListMemoryItemsRequest
@@ -11952,6 +12505,20 @@ export interface SmartFunctionsApiTagsRequest {
      * Workspace identifier
      * @type {string}
      * @memberof SmartFunctionsApiTags
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for triggerQualityIssuesCalculation operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiTriggerQualityIssuesCalculationRequest
+ */
+export interface SmartFunctionsApiTriggerQualityIssuesCalculationRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiTriggerQualityIssuesCalculation
      */
     readonly workspaceId: string;
 }
@@ -12300,6 +12867,27 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
+     * Returns the status of a quality issues calculation process identified by process ID.
+     * @summary Get Quality Issues Calculation Status
+     * @param {SmartFunctionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public getQualityIssuesCalculationStatus(
+        requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .getQualityIssuesCalculationStatus(
+                requestParameters.workspaceId,
+                requestParameters.processId,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * (EXPERIMENTAL) Returns a list of memory items
      * @summary (EXPERIMENTAL) List all memory items
      * @param {SmartFunctionsApiListMemoryItemsRequest} requestParameters Request parameters.
@@ -12361,6 +12949,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     public tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApiFp(this.configuration)
             .tags(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+     * @summary Trigger Quality Issues Calculation
+     * @param {SmartFunctionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public triggerQualityIssuesCalculation(
+        requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

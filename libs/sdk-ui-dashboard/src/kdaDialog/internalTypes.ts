@@ -11,10 +11,6 @@ export interface KdaDateOptions {
     range?: [IKdaDataPoint, IKdaDataPoint];
 }
 
-export interface KdaAttributeFilter {
-    attributeFilter: IDashboardAttributeFilter;
-}
-
 export interface KdaItem {
     id: string;
     title: string;
@@ -51,9 +47,11 @@ export interface KdaState {
     selectedTrend: "up" | "down";
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
     selectedStatus: "loading" | "success" | "error" | "pending";
-    attributeFilters: KdaAttributeFilter[];
+    attributeFilters: IDashboardAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: "loading" | "success" | "error" | "pending";
     selectedAttributes: ObjRef[];
+    relevantStatus: "loading" | "success" | "error" | "pending";
+    relevantAttributes: ObjRef[];
     selectedUpdated: number;
 }

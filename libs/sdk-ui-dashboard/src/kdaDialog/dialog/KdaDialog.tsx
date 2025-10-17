@@ -21,6 +21,8 @@ import { MetricsBar } from "../composition/MetricsBar.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
+import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
+import { useValidAttributes } from "./hooks/useValidAttributes.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -37,6 +39,8 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
     const detailsId = useId();
 
     useChangeAnalysis();
+    useValidAttributes();
+    useKdaDialogTooltipsOverride();
 
     return (
         <OverlayControllerProvider overlayController={overlayController}>

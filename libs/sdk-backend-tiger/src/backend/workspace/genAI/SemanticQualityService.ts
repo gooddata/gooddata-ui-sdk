@@ -1,9 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import type { ISemanticQualityService } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityIssue, SemanticQualityIssueSeverity } from "@gooddata/sdk-model";
+import type {
+    ISemanticQualityIssue,
+    ISemanticQualityIssuesCalculation,
+    SemanticQualityIssueSeverity,
+} from "@gooddata/sdk-model";
 
-import { convertQualityIssuesResponse } from "../../../convertors/fromBackend/SemanticQualityConverter.js";
+import {
+    convertQualityIssuesCalculationResponse,
+    convertQualityIssuesResponse,
+} from "../../../convertors/fromBackend/SemanticQualityConverter.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 const SeverityOrder: Record<SemanticQualityIssueSeverity, number> = {
@@ -40,5 +47,13 @@ export class SemanticQualityService implements ISemanticQualityService {
                 (SeverityOrder[a.severity] ?? SeverityOrder.INFO) -
                 (SeverityOrder[b.severity] ?? SeverityOrder.INFO),
         );
+    }
+
+    async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {
+        const response = await this.authCall((client) => {
+            return client.genAI.triggerQualityIssuesCalculation({ workspaceId: this.workspaceId });
+        });
+
+        return convertQualityIssuesCalculationResponse(response.data);
     }
 }

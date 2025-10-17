@@ -1138,7 +1138,9 @@ export {
     type ISemanticQualityIssue,
     type ISemanticQualityIssueObject,
     type ISemanticQualityIssueDetail,
+    type ISemanticQualityIssuesCalculation,
     type SemanticQualityIssueSeverity,
     type SemanticQualityIssueCode,
+    type SemanticQualityIssuesCalculationStatus,
     SemanticQualityIssueCodeValues,
 } from "./genAI/quality.js";

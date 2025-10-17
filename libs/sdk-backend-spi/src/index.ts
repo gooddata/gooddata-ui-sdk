@@ -304,11 +304,11 @@ export type {
 } from "./common/automations.js";
 
 export type {
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IChangeAnalysisResults,
     IKeyDriver,
     IChangeAnalysisPeriod,
-} from "./workspace/kda/index.js";
+} from "./workspace/keyDriverAnalysis/index.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
 

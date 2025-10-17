@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "[sdk-ui-dashboard]: Ellipses in key driver list, Filter only supported attributes",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "[sdk-backend-spi]: Rename kda => keyDriverAnalysis",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "[sdk-api-client]: Update client by latest openapi specs",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

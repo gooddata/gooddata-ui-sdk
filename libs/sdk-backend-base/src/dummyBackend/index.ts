@@ -78,7 +78,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -354,7 +354,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         facts(): IWorkspaceFactsService {
             throw new NotSupported("not supported");
         },
-        kda(): IWorkspaceKdaService {
+        keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
             throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
@@ -1349,6 +1349,10 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
             isLocked: false,
             unlisted: false,
         });
+    }
+
+    getConnectedAttributes(_definition: IMeasure): Promise<ObjRef[]> {
+        return Promise.resolve([]);
     }
 }
 

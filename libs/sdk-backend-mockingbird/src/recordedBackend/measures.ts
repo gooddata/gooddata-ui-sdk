@@ -8,7 +8,12 @@ import {
     IWorkspaceMeasuresService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    IMeasure,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -47,6 +52,10 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     }
 
     getMeasure(_: ObjRef): Promise<IMeasureMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    getConnectedAttributes(_definition: IMeasure): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
     }
 }

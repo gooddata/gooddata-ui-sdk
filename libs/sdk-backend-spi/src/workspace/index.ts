@@ -22,7 +22,7 @@ import { IWorkspaceStylingService } from "./styling/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IWorkspaceUsersQuery } from "./users/index.js";
 import { IPagedResource } from "../common/paging.js";
-import { IWorkspaceKdaService } from "./kda/index.js";
+import { IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -82,7 +82,7 @@ export interface IAnalyticalWorkspace {
     /**
      * Returns service that can be used to work with key drivers.
      */
-    kda(): IWorkspaceKdaService;
+    keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService;
 
     /**
      * Returns service that can be used to query date filter configs.
