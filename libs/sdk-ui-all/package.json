@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.5.0-alpha.6",
+    "version": "11.6.0-alpha.0",
     "description": "GoodData SDK - All-In-One",
     "repository": {
         "type": "git",
