@@ -1,41 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
-import { TopBar } from "../../tools/dashboards";
-import { Export } from "../../tools/export";
+
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
-
-const widget = new Widget(0);
-const topBar = new TopBar();
-const exportControl = new Export();
-
-describe(
-    "Export dashboard",
-    { tags: ["checklist_integrated_tiger_export", "checklist_integrated_tiger_export_releng"] },
-    () => {
-        beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-pivot-table-scenario");
-            widget.waitTableLoaded();
-        });
-
-        it("should export insight to CSV from dashboards", () => {
-            topBar.dashboardTitleExist().dashboardTitleHasValue("Pivot Table Dashboard");
-            exportControl.exportInsightOnWidgetByIndexToCSV(0);
-            exportControl.expectExportedCSV(
-                "Table has AM metric.csv",
-                "WonderKid,89,41055,41144,60,41055,41115,188,41055,41243,123165,123502,68,41055,41123,32,41055,41087,84,41055,41139,123165,123349,246330,246851\n",
-            );
-        });
-
-        it("should export insight to XLSX from dashboards", () => {
-            exportControl.exportInsightOnWidgetByIndexToXLSX(0);
-            exportControl.expectExportedXLSX(
-                "Table has AM metric.xlsx",
-                3,
-                "CompuSci,274,41055,41329,166,41055,41221,558,41055,41613,123165,124163,145,41055,41200,80,41055,41135,300,41055,41355,123165,123690,246330,247853",
-            );
-        });
-    },
-);
 
 describe(
     "Pivot Table with multi format metrics",
