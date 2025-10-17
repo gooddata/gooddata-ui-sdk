@@ -1,6 +1,39 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 10 Oct 2025 08:42:12 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Oct 2025 07:29:11 GMT and should not be manually modified.
+
+## 11.5.0
+
+Fri, 17 Oct 2025 07:29:11 GMT
+
+### Updates
+
+- Introduce React compatibility testing app for dashboard plugins
+- api-client-tiger: Expose quality issues API types.
+- sdk-model: Introduce semantic quality domain model and feature flag.
+- sdk-backend-tiger: Implement semantic quality service
+- sdk-ui-catalog: Introduce semantic quality UI integration
+- sdk-ui-catalog: Fix font styles for the embedding case
+- sdk-ui-model: Introduce `ISemanticQualityIssuesCalculation` that represents the state of a semantic quality issues calculation.
+- api-client-tiger: Expose semantic quality calculation endpoints.
+- sdk-ui-catalog: Introduce semantic quality score card with capability to run a semantic quality check.
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui]: Support normalizedValue in execution, propagate into KDA dialog, update date formatter
+- key driver analysis implementation, load from backend, update dialog
+- [sdk-ui-dashboard]: Support for graph in key driver detail
+- [sdk-ui-dashboard]: Ellipses in key driver list, Filter only supported attributes
+- [sdk-backend-spi]: Rename kda => keyDriverAnalysis
+- [sdk-api-client]: Update client by latest openapi specs
+- [sdk-ui-dashboard] Period switch support, Internal definitions for attr filter update, Update design and logic of kda graph
+- [sdk-ui-gen-ai] allow accessible tooltip in vis
+- Fix: Close the drill window when a filter option is selected
+- fix: Display drill menu above chart tooltips
+- Improve accessibility of recipient list
+- Fixed: Dashboard widget insight menu did not always fit into a mobile viewport.
+- Fixed: Static descriptions of dashboard sections do not need to wait for filters to load.
+- Added: Tiger API client has been updated to match the latest backend state.
 
 ## 11.4.0
 
