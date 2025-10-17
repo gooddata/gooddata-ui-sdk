@@ -15,7 +15,7 @@ const topBar = new TopBar();
 
 describe(
     "Export dashboard to PDF",
-    { tags: ["checklist_integrated_tiger_export", "checklist_integrated_tiger_export_releng"] },
+    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_export_releng"] },
     () => {
         it("should be able to export dashboard with temporary filter to PDF", () => {
             Navigation.visit("dashboard/nullvalue");

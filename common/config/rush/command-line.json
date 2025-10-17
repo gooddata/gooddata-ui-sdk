@@ -5,12 +5,45 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
 
+    "phases": [
+        {
+            "name": "_phase:build",
+            "dependencies": {
+                "upstream": ["_phase:build"]
+            },
+            "ignoreMissingScript": true,
+            "allowWarningsOnSuccess": false
+        },
+        {
+            "name": "_phase:post-build",
+            "dependencies": {
+                "self": ["_phase:build"]
+            },
+            "missingScriptBehavior": "silent",
+            "allowWarningsOnSuccess": true
+        }
+    ],
+
     /**
      * Custom "commands" introduce new verbs for the command-line.  To see the help for these
      * example commands, try "rush --help", "rush my-bulk-command --help", or
      * "rush my-global-command --help".
      */
     "commands": [
+        /***********************************************************/
+        /* New Phased commands */
+        /***********************************************************/
+        {
+            "commandKind": "phased",
+            "name": "build",
+            "summary": "Build all projects. This command will build all projects in the correct dependency order. This command will not use build cache.",
+            "phases": ["_phase:build", "_phase:post-build"],
+            "enableParallelism": true,
+            "incremental": true
+        },
+        /***********************************************************/
+        /* Bulk commands */
+        /***********************************************************/
         {
             "commandKind": "bulk",
             "name": "clean",
@@ -113,13 +146,6 @@
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
             "ignoreMissingScript": true
-        },
-        {
-            "commandKind": "bulk",
-            "name": "build",
-            "summary": "Run rush build command",
-            "enableParallelism": true,
-            "allowWarningsInSuccessfulBuild": false
         },
         {
             "commandKind": "bulk",
