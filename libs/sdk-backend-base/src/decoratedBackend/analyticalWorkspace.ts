@@ -18,7 +18,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -83,8 +83,8 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.catalog();
     }
 
-    public kda(): IWorkspaceKdaService {
-        return this.decorated.kda();
+    public keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
+        return this.decorated.keyDriverAnalysis();
     }
 
     public measures(): IWorkspaceMeasuresService {

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import type { ISemanticQualityService } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityIssue } from "@gooddata/sdk-model";
+import type { ISemanticQualityIssue, ISemanticQualityIssuesCalculation } from "@gooddata/sdk-model";
 
 /**
  * Dummy semantic quality service.
@@ -10,5 +10,11 @@ import type { ISemanticQualityIssue } from "@gooddata/sdk-model";
 export class DummySemanticQualityService implements ISemanticQualityService {
     async getQualityIssues(): Promise<ISemanticQualityIssue[]> {
         return [];
+    }
+    async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {
+        return {
+            status: "COMPLETED",
+            processId: "",
+        };
     }
 }

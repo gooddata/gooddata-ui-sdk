@@ -1,25 +1,45 @@
 // (C) 2025 GoodData Corporation
 
-import { type PropsWithChildren, createContext, useContext, useMemo } from "react";
+import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssue, Identifier, SemanticQualityIssueCode } from "@gooddata/sdk-model";
 import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { getQualityIssuesQuery } from "./query.js";
+import { createQueryId, getQualityIssuesQuery, triggerQualityIssuesCalculationQuery } from "./query.js";
 import { useFeatureFlag } from "../permission/index.js";
 
 interface IQualityState {
-    status: UseCancelablePromiseStatus;
-    issues: ISemanticQualityIssue[];
+    qualityIssues: {
+        status: UseCancelablePromiseStatus;
+        issues: ISemanticQualityIssue[];
+    };
+    qualityIssuesCalculation: {
+        status: UseCancelablePromiseStatus;
+    };
+}
+
+interface IQualityActions {
+    fetchQualityIssues: () => void;
+    createQualityIssuesCalculation: () => void;
 }
 
 const initialState: IQualityState = {
-    status: "pending",
-    issues: [],
+    qualityIssues: {
+        status: "pending",
+        issues: [],
+    },
+    qualityIssuesCalculation: {
+        status: "pending",
+    },
+};
+const initialActions: IQualityActions = {
+    fetchQualityIssues: () => {},
+    createQualityIssuesCalculation: () => {},
 };
 
-export const QualityStateContext = createContext<IQualityState>(initialState);
+const QualityStateContext = createContext<IQualityState>(initialState);
+const QualityActionsContext = createContext<IQualityActions>(initialActions);
 
 type Props = PropsWithChildren<{
     backend: IAnalyticalBackend;
@@ -29,25 +49,83 @@ type Props = PropsWithChildren<{
 export function QualityProvider({ backend, workspace, children }: Props) {
     const enabled = useFeatureFlag("enableGenAICatalogQualityChecker");
 
-    const { status, result: issues = initialState.issues } = useCancelablePromise(
+    // Quality issues
+    const [qualityIssuesQueryKey, setQualityIssuesQueryKey] = useState<string>(createQueryId);
+
+    const qualityIssues = useCancelablePromise(
         {
             promise: enabled ? () => getQualityIssuesQuery({ backend, workspace }) : null,
             onError: (error) => console.error(error),
         },
-        [backend, workspace, enabled],
+        [backend, workspace, enabled, qualityIssuesQueryKey],
     );
 
-    const state = useMemo(() => ({ status, issues }), [issues, status]);
+    const fetchQualityIssues = useCallback(() => {
+        setQualityIssuesQueryKey(createQueryId());
+    }, []);
 
-    return <QualityStateContext.Provider value={state}>{children}</QualityStateContext.Provider>;
+    // Quality issues calculation
+    const [qualityIssuesCalculationQueryKey, setQualityIssuesCalculationQueryKey] = useState<
+        string | undefined
+    >(undefined);
+
+    const qualityIssuesCalculation = useCancelablePromise(
+        {
+            promise:
+                enabled && qualityIssuesCalculationQueryKey
+                    ? () => triggerQualityIssuesCalculationQuery({ backend, workspace })
+                    : null,
+            onError: (error) => console.error(error),
+        },
+        [backend, workspace, enabled, qualityIssuesCalculationQueryKey],
+    );
+
+    const createQualityIssuesCalculation = useCallback(() => {
+        setQualityIssuesCalculationQueryKey(createQueryId());
+        setQualityIssuesQueryKey(createQueryId()); // Temporary
+    }, []);
+
+    // Exposed state
+    const state = useMemo(
+        () => ({
+            qualityIssues: {
+                status: qualityIssues.status,
+                issues: qualityIssues.result ?? initialState.qualityIssues.issues,
+            },
+            qualityIssuesCalculation: {
+                status: qualityIssuesCalculation.status,
+            },
+        }),
+        [qualityIssues.status, qualityIssues.result, qualityIssuesCalculation.status],
+    );
+
+    // Exposed actions
+    const actions = useMemo(
+        () => ({ fetchQualityIssues, createQualityIssuesCalculation }),
+        [fetchQualityIssues, createQualityIssuesCalculation],
+    );
+
+    return (
+        <QualityStateContext.Provider value={state}>
+            <QualityActionsContext.Provider value={actions}>{children}</QualityActionsContext.Provider>
+        </QualityStateContext.Provider>
+    );
 }
 
 export function useQualityState(): IQualityState {
     return useContext(QualityStateContext);
 }
 
+export function useQualityIssuesState(): IQualityState["qualityIssues"] {
+    return useQualityState().qualityIssues;
+}
+
+export function useQualityActions(): IQualityActions {
+    return useContext(QualityActionsContext);
+}
+
 export function useQualityIssuesMap(): Map<Identifier, ISemanticQualityIssue[]> {
-    const { issues } = useQualityState();
+    const { issues } = useQualityIssuesState();
 
     return useMemo(() => {
         const map = new Map<Identifier, ISemanticQualityIssue[]>();

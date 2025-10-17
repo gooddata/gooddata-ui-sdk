@@ -29,6 +29,7 @@ export function getKdaKeyDriverCombinations(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
 ): DashboardKeyDriverCombinationItem[] {
+    //TODO: Special implementation for table, headline
     const dv = DataViewFacade.for(drillEvent.dataView);
     const { attributeHeader, metricHeader } = findHeadersCombinations(drillDefinition, drillEvent);
 
@@ -106,6 +107,13 @@ function createYearToYear(
     metricValue: ReturnType<typeof findMetricValues>,
 ): DashboardKeyDriverCombinationItem | undefined {
     const values = dateAttribute.values;
+    const isYear = dateAttribute.currentValue.attributeHeader.granularity === "YEAR";
+
+    // Year to year is not available for year granularity, it not makes sense
+    if (isYear) {
+        return undefined;
+    }
+
     const previousYear = findValuePreviousYear(dateAttribute.currentValue);
     const previousYearMetricValue = findMetricPreviousYearValue(dv, measure, values, previousYear);
 

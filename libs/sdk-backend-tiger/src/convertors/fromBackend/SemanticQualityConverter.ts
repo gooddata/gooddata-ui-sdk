@@ -1,12 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import type { AfmGetQualityIssuesResponse, AfmQualityIssue } from "@gooddata/api-client-tiger";
+import type {
+    AfmGetQualityIssuesResponse,
+    AfmQualityIssue,
+    AfmQualityIssuesCalculationStatusResponseStatusEnum,
+    AfmTriggerQualityIssuesCalculationResponse,
+} from "@gooddata/api-client-tiger";
 import type {
     GenAIObjectType,
     ISemanticQualityIssue,
+    ISemanticQualityIssuesCalculation,
     Identifier,
     SemanticQualityIssueCode,
     SemanticQualityIssueSeverity,
+    SemanticQualityIssuesCalculationStatus,
 } from "@gooddata/sdk-model";
 
 /**
@@ -35,4 +42,34 @@ export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIss
             abbreviation: typeof detail["abbreviation"] === "string" ? detail["abbreviation"] : undefined,
         },
     };
+}
+
+/**
+ * Converts a quality issues calculation trigger response from backend format to SDK model format.
+ */
+export function convertQualityIssuesCalculationResponse(
+    response: AfmTriggerQualityIssuesCalculationResponse,
+): ISemanticQualityIssuesCalculation {
+    return {
+        status: convertQualityIssuesCalculationStatus(response.status),
+        processId: response.processId,
+    };
+}
+
+/**
+ * Converts a quality issues calculation status enum from backend format to SDK model format.
+ */
+function convertQualityIssuesCalculationStatus(
+    status: AfmQualityIssuesCalculationStatusResponseStatusEnum,
+): SemanticQualityIssuesCalculationStatus {
+    if (status.includes("RUNNING")) {
+        return "RUNNING";
+    }
+    if (status.includes("COMPLETED")) {
+        return "COMPLETED";
+    }
+    if (status.includes("FAILED")) {
+        return "FAILED";
+    }
+    return "NOT_FOUND";
 }

@@ -107,6 +107,7 @@ import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISemanticQualityIssue } from '@gooddata/sdk-model';
+import { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -295,7 +296,7 @@ export interface IAnalyticalWorkspace {
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
-    kda(): IWorkspaceKdaService;
+    keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService;
     // @internal
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
@@ -1473,6 +1474,7 @@ export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IEle
 // @internal
 export interface ISemanticQualityService {
     getQualityIssues(): Promise<ISemanticQualityIssue[]>;
+    triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }
 
 // @beta
@@ -1823,7 +1825,7 @@ export interface IWorkspaceInsightsService {
 }
 
 // @internal
-export interface IWorkspaceKdaService {
+export interface IWorkspaceKeyDriverAnalysisService {
     computeChangeAnalysis(period: IChangeAnalysisPeriod, metric: ObjRef, attributes: ObjRef[]): Promise<IChangeAnalysisResults>;
 }
 
@@ -1840,6 +1842,7 @@ export interface IWorkspaceMeasuresService {
     }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
+    getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]>;
     getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;

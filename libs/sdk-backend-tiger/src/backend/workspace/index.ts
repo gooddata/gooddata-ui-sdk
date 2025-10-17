@@ -18,7 +18,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -44,7 +44,7 @@ import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
 import { TigerWorkspaceFacts } from "./facts/index.js";
 import { GenAIService } from "./genAI/index.js";
 import { TigerWorkspaceInsights } from "./insights/index.js";
-import { TigerWorkspaceKda } from "./kda/index.js";
+import { TigerWorkspaceKeyDriverAnalysis } from "./keyDriverAnalysis/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceMeasures } from "./measures/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
@@ -136,8 +136,8 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return new TigerWorkspaceDashboards(this.authCall, this.workspace);
     }
 
-    public kda(): IWorkspaceKdaService {
-        return new TigerWorkspaceKda(this.authCall, this.workspace, this.dateStringifier);
+    public keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
+        return new TigerWorkspaceKeyDriverAnalysis(this.authCall, this.workspace, this.dateStringifier);
     }
 
     public measures(): IWorkspaceMeasuresService {

@@ -13,6 +13,7 @@ import { formatTitle } from "../../utils.js";
 
 interface IDateBarProps {
     options: KdaDateOptions;
+    isAvailable: boolean;
     onPeriodChange: (period: KdaPeriodType) => void;
 }
 
@@ -56,6 +57,7 @@ export function DateBar(props: IDateBarProps) {
                 triggerBy={["hover", "focus"]}
                 anchor={
                     <UiPopover
+                        disabled={!props.isAvailable}
                         anchor={<UiChip label={label} iconBefore="date" isExpandable={false} />}
                         title={intl.formatMessage({ id: "kdaDialog.dialog.bars.date.period.title" })}
                         initialFocus={ref as RefObject<HTMLElement>}

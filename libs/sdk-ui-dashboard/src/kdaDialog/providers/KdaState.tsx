@@ -25,9 +25,11 @@ const defaultState: KdaState = {
     selectedStatus: "pending",
     //root data
     attributeFilters: [],
-    //summary data
+    //attributes data
     selectedAttributes: [],
     selectedUpdated: 0,
+    relevantAttributes: [],
+    relevantStatus: "pending",
 };
 
 const KdaStateContext = createContext<{

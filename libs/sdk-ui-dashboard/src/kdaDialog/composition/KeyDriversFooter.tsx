@@ -13,12 +13,21 @@ import { useKdaState } from "../providers/KdaState.js";
 export function KeyDriversFooter() {
     const { state, setState } = useKdaState();
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
-    const isLoading = state.itemsStatus === "pending" || state.itemsStatus === "loading" || !isCatalogLoaded;
+    const isLoading =
+        !isCatalogLoaded ||
+        state.itemsStatus === "pending" ||
+        state.itemsStatus === "loading" ||
+        state.relevantStatus === "pending" ||
+        state.relevantStatus === "loading";
 
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
+
+    const validAttributes = allAttributes.filter((a) => {
+        return state.relevantAttributes.some((attr) => areObjRefsEqual(attr, a.attribute.ref));
+    });
     const initialAttributes = state.selectedAttributes
         .map((attr) => {
-            return allAttributes.find((a) => a.displayForms.some((df) => areObjRefsEqual(df.ref, attr)));
+            return validAttributes.find((a) => a.displayForms.some((df) => areObjRefsEqual(df.ref, attr)));
         })
         .filter(Boolean) as ICatalogAttribute[];
 
@@ -38,13 +47,13 @@ export function KeyDriversFooter() {
                                     className="gd-kda-attributes-dropdown"
                                     initialValue={initialAttributes}
                                     initialIsInverted={false}
-                                    options={allAttributes}
+                                    options={validAttributes}
                                     alignPoints={[{ align: "tl bl" }]}
                                     getItemTitle={(item) => item.attribute.title}
                                     getItemKey={(item) => item.attribute.id}
                                     onChange={(selectedItems, isInverted) => {
                                         const selected = isInverted
-                                            ? allAttributes.filter((a) => !selectedItems.includes(a))
+                                            ? validAttributes.filter((a) => !selectedItems.includes(a))
                                             : selectedItems;
 
                                         setState({

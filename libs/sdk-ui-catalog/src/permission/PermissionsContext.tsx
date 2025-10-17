@@ -26,5 +26,5 @@ export function usePermissionsState(): PermissionsState {
 
 export function useFeatureFlag(flag: keyof ISettings): boolean {
     const { result } = usePermissionsState();
-    return Boolean(result?.settings[flag]);
+    return Boolean(result?.settings?.[flag]);
 }

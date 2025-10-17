@@ -306,5 +306,13 @@
     "analyticsCatalog.quality.description.unknownAbbreviation": {
         "value": "The abbreviation <u>{abbreviation}</u> is not recognized. <u>Replace</u> it with the full form to improve AI accuracy.",
         "comment": "Description for quality issue when a catalog item contains unknown abbreviation."
+    },
+    "analyticsCatalog.quality.scoreCard.title": {
+        "value": "Semantic quality",
+        "comment": "Title of the quality score card."
+    },
+    "analyticsCatalog.quality.scoreCard.runCheck": {
+        "value": "Run check",
+        "comment": "Label for the button that runs the quality check."
     }
 }

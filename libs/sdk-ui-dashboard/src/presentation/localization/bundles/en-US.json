@@ -2784,7 +2784,7 @@
         "comment": "Key drivers overview diff title in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.detail.tip": {
-        "value": "Click on column to see key drivers for given country",
+        "value": "Click on column to see key drivers for given {category}",
         "comment": "Key drivers overview detail tip in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.detail.title": {
@@ -2826,6 +2826,10 @@
     "kdaDialog.dialog.keyDrives.empty_down": {
         "value": "No decreasing drivers",
         "comment": "Key drivers dialog empty down in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDriver.chart.std": {
+        "value": "Change Significance Threshold",
+        "comment": "Key driver chart standard deviation title in key driver analysis chart"
     },
     "menu.back": {
         "value": "Back to the parent menu",

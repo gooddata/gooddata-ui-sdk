@@ -903,6 +903,38 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Trigger Quality Issues Calculation",
+                "description": "Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.",
+                "operationId": "triggerQualityIssuesCalculation",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TriggerQualityIssuesCalculationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/chatStream": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -1558,6 +1590,46 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ResolvedLlmEndpoints"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Quality Issues Calculation Status",
+                "description": "Returns the status of a quality issues calculation process identified by process ID.",
+                "operationId": "getQualityIssuesCalculationStatus",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "processId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QualityIssuesCalculationStatusResponse"
                                 }
                             }
                         }
@@ -2594,7 +2666,8 @@
                     "dateAttributeIdentifier",
                     "filters",
                     "metricIdentifier",
-                    "referencePeriod"
+                    "referencePeriod",
+                    "useSmartAttributeSelection"
                 ],
                 "type": "object",
                 "properties": {
@@ -2628,6 +2701,10 @@
                         "items": {
                             "$ref": "#/components/schemas/AttributeEqualityFilter"
                         }
+                    },
+                    "useSmartAttributeSelection": {
+                        "type": "boolean",
+                        "description": "Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided."
                     }
                 },
                 "description": "Request for change analysis computation"
@@ -3869,6 +3946,21 @@
                     }
                 }
             },
+            "TriggerQualityIssuesCalculationResponse": {
+                "required": ["processId", "status"],
+                "type": "object",
+                "properties": {
+                    "processId": {
+                        "type": "string",
+                        "description": "Process ID for tracking the calculation status"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Current status of the calculation",
+                        "enum": ["RUNNING", "COMPLETED", "FAILED"]
+                    }
+                }
+            },
             "ActiveObjectIdentification": {
                 "required": ["id", "type", "workspaceId"],
                 "type": "object",
@@ -4573,13 +4665,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
@@ -4992,51 +5084,87 @@
                     }
                 }
             },
-            "GetQualityIssuesResponse": {
-                "required": ["issues"],
-                "type": "object",
-                "properties": {
-                    "issues": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/QualityIssue"
-                        }
-                    }
-                }
-            },
             "QualityIssue": {
                 "required": ["code", "detail", "objects", "severity"],
                 "type": "object",
                 "properties": {
                     "objects": {
                         "type": "array",
+                        "description": "List of objects affected by this quality issue",
                         "items": {
                             "$ref": "#/components/schemas/QualityIssueObject"
                         }
                     },
                     "severity": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Severity level",
+                        "enum": ["error", "warning"]
                     },
                     "code": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Quality issue code",
+                        "example": "SIMILAR_NAMES"
                     },
                     "detail": {
                         "type": "object",
                         "additionalProperties": {
-                            "type": "object"
-                        }
+                            "type": "object",
+                            "description": "Detailed information about the quality issue"
+                        },
+                        "description": "Detailed information about the quality issue"
                     }
-                }
+                },
+                "description": "List of quality issues (available when status is COMPLETED)"
             },
             "QualityIssueObject": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "metric"
                     },
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object ID",
+                        "example": "revenue"
+                    }
+                },
+                "description": "List of objects affected by this quality issue"
+            },
+            "QualityIssuesCalculationStatusResponse": {
+                "required": ["status"],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "description": "Current status of the calculation",
+                        "enum": ["RUNNING", "COMPLETED", "FAILED", "NOT_FOUND"]
+                    },
+                    "issues": {
+                        "type": "array",
+                        "description": "List of quality issues (available when status is COMPLETED)",
+                        "items": {
+                            "$ref": "#/components/schemas/QualityIssue"
+                        }
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Error message (available when status is FAILED or NOT_FOUND)"
+                    }
+                }
+            },
+            "GetQualityIssuesResponse": {
+                "required": ["issues"],
+                "type": "object",
+                "properties": {
+                    "issues": {
+                        "type": "array",
+                        "description": "List of quality issues found in the workspace",
+                        "items": {
+                            "$ref": "#/components/schemas/QualityIssue"
+                        }
                     }
                 }
             },

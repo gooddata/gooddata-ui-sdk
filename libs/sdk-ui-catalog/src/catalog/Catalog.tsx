@@ -14,7 +14,8 @@ import type { ICatalogItemRef } from "../catalogItem/index.js";
 import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
 import { MemoryMain } from "../memory/MemoryMain.js";
-import { PermissionsGate, usePermissionsState } from "../permission/index.js";
+import { PermissionsGate, useFeatureFlag } from "../permission/index.js";
+import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 import { FullTextSearch } from "../search/index.js";
 
 type TabId = "catalog" | "memory";
@@ -41,14 +42,15 @@ export function Catalog({
     onTabChange,
 }: Props) {
     const intl = useIntl();
-    const { result } = usePermissionsState();
+
+    const isMemoryEnabled = useFeatureFlag("enableGenAIMemory");
+    const isQualityEnabled = useFeatureFlag("enableGenAICatalogQualityChecker");
+
     const tabs: UiTab[] = [
         { id: "catalog", label: intl.formatMessage({ id: "analyticsCatalog.tabs.catalog" }) },
         { id: "memory", label: intl.formatMessage({ id: "analyticsCatalog.tabs.memory" }) },
     ];
-
     const [selectedTabId, setSelectedTabId] = useState<TabId>(initialTab);
-    const enableGenAIMemory = result?.settings?.enableGenAIMemory;
 
     return (
         <Layout>
@@ -72,7 +74,7 @@ export function Catalog({
                 }
             >
                 <Header
-                    tabs={enableGenAIMemory ? tabs : undefined}
+                    tabs={isMemoryEnabled ? tabs : undefined}
                     selectedTabId={selectedTabId}
                     onTabSelect={(tab) => {
                         const id = tab.id as TabId;
@@ -81,6 +83,7 @@ export function Catalog({
                     }}
                     searchNode={selectedTabId === "catalog" ? <FullTextSearch /> : undefined}
                 />
+                {isQualityEnabled ? <QualityScoreCard /> : null}
                 {selectedTabId === "catalog" ? (
                     <Main
                         openCatalogItemRef={openCatalogItemRef}

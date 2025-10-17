@@ -229,6 +229,11 @@ export type {
     QualityIssueObject as AfmQualityIssueObject,
     GetQualityIssuesResponse as AfmGetQualityIssuesResponse,
     ActionsApiGetQualityIssuesRequest as AfmActionsApiGetQualityIssuesRequest,
+    ActionsApiTriggerQualityIssuesCalculationRequest as AfmActionsApiTriggerQualityIssuesCalculationRequest,
+    TriggerQualityIssuesCalculationResponse as AfmTriggerQualityIssuesCalculationResponse,
+    ActionsApiGetQualityIssuesCalculationStatusRequest as AfmActionsApiGetQualityIssuesCalculationStatusRequest,
+    QualityIssuesCalculationStatusResponse as AfmQualityIssuesCalculationStatusResponse,
+    QualityIssuesCalculationStatusResponseStatusEnum as AfmQualityIssuesCalculationStatusResponseStatusEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

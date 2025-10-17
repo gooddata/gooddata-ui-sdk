@@ -3482,6 +3482,12 @@ export interface ISemanticQualityIssueObject {
     type: GenAIObjectType;
 }
 
+// @internal
+export interface ISemanticQualityIssuesCalculation {
+    processId?: string;
+    status: SemanticQualityIssuesCalculationStatus;
+}
+
 // @beta
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
@@ -5118,6 +5124,9 @@ export const SemanticQualityIssueCodeValues: {
     readonly SIMILAR_DESCRIPTION: "SIMILAR_DESCRIPTION";
     readonly UNKNOWN_ABBREVIATION: "UNKNOWN_ABBREVIATION";
 };
+
+// @internal
+export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
 
 // @internal
 export type SemanticQualityIssueSeverity = "ERROR" | "WARNING" | "INFO";

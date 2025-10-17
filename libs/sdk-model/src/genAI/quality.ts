@@ -80,3 +80,24 @@ export interface ISemanticQualityIssueObject {
 export interface ISemanticQualityIssueDetail {
     abbreviation?: string;
 }
+
+/**
+ * Represents the state of a semantic quality issues calculation.
+ * @internal
+ */
+export interface ISemanticQualityIssuesCalculation {
+    /**
+     * Current status of the calculation
+     */
+    status: SemanticQualityIssuesCalculationStatus;
+    /**
+     * Process ID for tracking the calculation status
+     */
+    processId?: string;
+}
+
+/**
+ * Available statuses for a semantic quality issues calculation.
+ * @internal
+ */
+export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";

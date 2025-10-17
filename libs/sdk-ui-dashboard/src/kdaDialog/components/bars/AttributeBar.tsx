@@ -14,10 +14,9 @@ import {
 import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
-import { KdaAttributeFilter } from "../../internalTypes.js";
 
 interface IAttributeBarProps {
-    attribute: KdaAttributeFilter;
+    attribute: IDashboardAttributeFilter;
     attributeConfigs: IDashboardAttributeFilterConfig[];
     onChange?: (newFilter: IDashboardAttributeFilter) => void;
     onDelete?: (filter: IDashboardAttributeFilter) => void;
@@ -32,20 +31,17 @@ export function AttributeBar(props: IAttributeBarProps) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "kdaDialog.dialog.bars.attribute.deleteLabel" });
 
-    const { attributeFilter } = props.attribute;
-    const overlayPositionType = "absolute";
-
     const config = props.attributeConfigs.find(
-        (attribute) => attribute.localIdentifier === attributeFilter.attributeFilter.localIdentifier,
+        (attribute) => attribute.localIdentifier === props.attribute.attributeFilter.localIdentifier,
     );
     const displayAsLabel = config?.displayAsLabel;
 
     return (
         <div className={cx("gd-kda-dialog-bar__attribute")}>
             <KdaAttributeFilterWrapper
-                filter={attributeFilter}
+                filter={props.attribute}
                 displayAsLabel={displayAsLabel}
-                overlayPositionType={overlayPositionType}
+                overlayPositionType={"absolute"}
                 deleteAriaLabel={deleteAriaLabel}
                 onChange={props.onChange}
                 onDelete={props.onDelete}

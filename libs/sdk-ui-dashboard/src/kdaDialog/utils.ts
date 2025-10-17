@@ -30,5 +30,11 @@ export function formatTitle(option: KdaDateOptions, splitter: string): string {
     }
 
     const pattern = from.format?.pattern ?? "yyyy-MM-dd";
-    return DateFilterHelpers.formatAbsoluteDateRange(from.date, to.date, pattern, splitter);
+
+    return DateFilterHelpers.formatAbsoluteDateRange(
+        new Date(from.date),
+        new Date(to.date),
+        pattern,
+        splitter,
+    );
 }

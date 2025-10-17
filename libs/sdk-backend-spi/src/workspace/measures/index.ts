@@ -144,6 +144,13 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of measure
      */
     getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
+
+    /**
+     * Get connected attributes for a measure
+     *
+     * @param definition - definition of measure
+     */
+    getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]>;
 }
 
 /**

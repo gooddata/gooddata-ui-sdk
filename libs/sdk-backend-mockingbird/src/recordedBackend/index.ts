@@ -43,7 +43,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
-    IWorkspaceKdaService,
+    IWorkspaceKeyDriverAnalysisService,
     IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
@@ -207,7 +207,7 @@ function recordedWorkspace(
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
-        kda(): IWorkspaceKdaService {
+        keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
             throw new NotSupported("not supported");
         },
         execution(): IExecutionFactory {
