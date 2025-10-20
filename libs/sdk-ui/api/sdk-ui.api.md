@@ -230,6 +230,9 @@ export function createExportErrorFunction(error: GoodDataSdkError): IExportFunct
 export function createExportFunction(result: IExecutionResult, exportTitle?: string): IExportFunction;
 
 // @internal (undocumented)
+export function createFocusHighchartsDatapointEvent(detail: IFocusHighchartsDatapointEventDetail): CustomEvent<IFocusHighchartsDatapointEventDetail>;
+
+// @internal (undocumented)
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 
 // @internal (undocumented)
@@ -467,6 +470,9 @@ export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEve
 
 // @public
 export type Flatten<T> = T extends Array<infer A> ? A : T;
+
+// @internal (undocumented)
+export const FOCUS_HIGHCHARTS_DATAPOINT_EVENT = "gd:chart:focusDatapoint";
 
 // @public
 export class ForecastNotReceivedSdkError extends GoodDataSdkError {
@@ -833,17 +839,23 @@ export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 // @public
 export interface IDrillEventContext {
     // (undocumented)
+    chartId?: string;
+    // (undocumented)
     columnIndex?: number;
     // (undocumented)
     element: VisElementType;
     // (undocumented)
     intersection?: IDrillEventIntersectionElement[];
     // (undocumented)
+    pointIndex?: number;
+    // (undocumented)
     points?: IDrillPoint[];
     // (undocumented)
     row?: any[];
     // (undocumented)
     rowIndex?: number;
+    // (undocumented)
+    seriesIndex?: number;
     // (undocumented)
     type: VisType;
     // (undocumented)
@@ -881,11 +893,17 @@ export interface IDrillEventContextHeadline {
 // @public
 export interface IDrillEventContextPoint {
     // (undocumented)
+    chartId?: string;
+    // (undocumented)
     element: ChartElementType;
     // (undocumented)
     elementChartType?: ChartType;
     // (undocumented)
     intersection: IDrillEventIntersectionElement[];
+    // (undocumented)
+    pointIndex?: number;
+    // (undocumented)
+    seriesIndex?: number;
     // (undocumented)
     type: ChartType;
     // (undocumented)
@@ -1068,6 +1086,16 @@ export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<I
 export interface IExtendedExportConfig extends IExportConfig {
     // (undocumented)
     includeFilterContext?: boolean;
+}
+
+// @internal (undocumented)
+export interface IFocusHighchartsDatapointEventDetail {
+    // (undocumented)
+    chartId: string;
+    // (undocumented)
+    pointIndex: number;
+    // (undocumented)
+    seriesIndex: number;
 }
 
 // @internal
@@ -1384,6 +1412,9 @@ export function isDrillableItemUri(item: unknown): item is IDrillableItemUri;
 
 // @public (undocumented)
 export function isDrillIntersectionAttributeItem(header: DrillEventIntersectionElementHeader): header is IDrillIntersectionAttributeItem;
+
+// @public (undocumented)
+export function isDrillIntersectionDateAttributeItem(header: DrillEventIntersectionElementHeader): header is IDrillIntersectionAttributeItem;
 
 // @public
 export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError;

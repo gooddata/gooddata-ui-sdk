@@ -559,7 +559,6 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     settings: IUserWorkspaceSettings | undefined;
     // (undocumented)
     theme?: ITheme;
-    visualizationId?: string;
     widget?: IInsightWidget;
 }
 

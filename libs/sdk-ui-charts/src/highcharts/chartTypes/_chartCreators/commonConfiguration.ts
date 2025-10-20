@@ -186,7 +186,7 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
         "chart.events.drilldown",
         function chartDrilldownHandler(this: any, event: DrilldownEventObject) {
             this.tooltip?.hide();
-            chartClick(drillConfig, event, this.container, chartOptions.type);
+            chartClick(drillConfig, event, this.container, this.id, chartOptions.type);
         },
     );
 

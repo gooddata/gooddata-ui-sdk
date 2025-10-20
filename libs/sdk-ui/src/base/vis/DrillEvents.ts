@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -105,6 +106,19 @@ export function isDrillIntersectionAttributeItem(
 /**
  * @public
  */
+export function isDrillIntersectionDateAttributeItem(
+    header: DrillEventIntersectionElementHeader,
+): header is IDrillIntersectionAttributeItem {
+    return (
+        !isEmpty(header) &&
+        (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined &&
+        (header as IDrillIntersectionAttributeItem).attributeHeader.granularity !== undefined
+    );
+}
+
+/**
+ * @public
+ */
 export type DrillEventIntersectionElementHeader =
     | IAttributeDescriptor
     | IMeasureDescriptor
@@ -168,6 +182,9 @@ export interface IDrillEventContextPoint {
     x?: number;
     y?: number;
     z?: number;
+    seriesIndex?: number;
+    pointIndex?: number;
+    chartId?: string;
     value?: string;
     intersection: IDrillEventIntersectionElement[];
 }
@@ -206,6 +223,9 @@ export interface IDrillEventContext {
     x?: number; // chart x coordinate (if supported)
     y?: number; // chart y coordinate (if supported)
     z?: number; // chart z coordinate (if supported)
+    seriesIndex?: number; // index of series within the chart (if supported)
+    pointIndex?: number; // index of point within the series (if supported)
+    chartId?: string; // unique chart instance id (if available)
     columnIndex?: number;
     rowIndex?: number;
     row?: any[]; // table row data of the drilled row

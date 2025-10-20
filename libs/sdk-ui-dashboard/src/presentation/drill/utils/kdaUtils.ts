@@ -6,9 +6,11 @@ import { IntlShape } from "react-intl";
 import {
     IAttributeDescriptor,
     IAttributeDescriptorBody,
+    ICatalogDateAttribute,
     IKeyDriveAnalysis,
     IMeasureDescriptor,
     IResultAttributeHeader,
+    areObjRefsEqual,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
@@ -16,20 +18,20 @@ import {
     DataViewFacade,
     IDrillEvent,
     IDrillIntersectionAttributeItem,
-    isDrillIntersectionAttributeItem,
+    isDrillIntersectionDateAttributeItem,
 } from "@gooddata/sdk-ui";
 
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { DashboardKeyDriverCombinationItem } from "../../../model/index.js";
 
 /**
  * @internal
  */
 export function getKdaKeyDriverCombinations(
+    dateAttributes: ICatalogDateAttribute[],
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
 ): DashboardKeyDriverCombinationItem[] {
-    //TODO: Special implementation for table, headline
+    //TODO: Special implementation for headline
     const dv = DataViewFacade.for(drillEvent.dataView);
     const { attributeHeader, metricHeader } = findHeadersCombinations(drillDefinition, drillEvent);
 
@@ -38,7 +40,7 @@ export function getKdaKeyDriverCombinations(
         return [];
     }
 
-    const dateAttribute = findDateValues(dv, attributeHeader);
+    const dateAttribute = findDateValues(dv, dateAttributes, attributeHeader);
     const metricValue = findMetricValues(dv, metricHeader, dateAttribute.dims);
 
     const res: DashboardKeyDriverCombinationItem[] = [];
@@ -107,7 +109,13 @@ function createYearToYear(
     metricValue: ReturnType<typeof findMetricValues>,
 ): DashboardKeyDriverCombinationItem | undefined {
     const values = dateAttribute.values;
-    const isYear = dateAttribute.currentValue.attributeHeader.granularity === "YEAR";
+    const attributeDefinition = dateAttribute.attributeDefinition;
+
+    if (!attributeDefinition) {
+        return undefined;
+    }
+
+    const isYear = attributeDefinition.granularity === "GDC.time.year";
 
     // Year to year is not available for year granularity, it not makes sense
     if (isYear) {
@@ -177,14 +185,16 @@ export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: Dashboar
 }
 
 function findHeadersCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent) {
-    const localIdentifier = getDrillOriginLocalIdentifier(drillDefinition);
+    if (drillDefinition.transition !== "in-place") {
+        return {
+            attributeHeader: undefined,
+            metricHeader: undefined,
+        };
+    }
+    //NOTE: For now we only support 1 date and 1 metric
     const attributeHeader = (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
-        .filter(isDrillIntersectionAttributeItem)
-        .find(
-            (intersectionAttributeItem) =>
-                intersectionAttributeItem.attributeHeader.localIdentifier === localIdentifier,
-        );
+        .filter(isDrillIntersectionDateAttributeItem)[0];
     const metricHeader = (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
         .filter(isMeasureDescriptor)[0];
@@ -199,8 +209,10 @@ type AttributeHeader = IResultAttributeHeader & IAttributeDescriptor;
 
 function findDateValues(
     dv: DataViewFacade,
+    dateAttributes: ICatalogDateAttribute[],
     attributeHeader: IDrillIntersectionAttributeItem,
 ): {
+    attributeDefinition: ICatalogDateAttribute | undefined;
     values: IResultAttributeHeader[];
     previousValue: AttributeHeader | undefined;
     currentValue: AttributeHeader;
@@ -236,12 +248,22 @@ function findDateValues(
     const currentValue = attributeHeader;
     const nextValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] + 1]);
 
+    const attributeDefinition = dateAttributes.find((da) => {
+        return (
+            areObjRefsEqual(da.defaultDisplayForm, attributeHeader.attributeHeader.ref) ||
+            da.attribute.displayForms.some((df) =>
+                areObjRefsEqual(df.ref, attributeHeader.attributeHeader.ref),
+            )
+        );
+    });
+
     return {
         values,
         previousValue,
         currentValue,
         nextValue,
         dims,
+        attributeDefinition,
     };
 }
 

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import {
@@ -14,6 +15,7 @@ import {
     isDrillFromMeasure,
     isDrillToLegacyDashboard,
     isIdentifierRef,
+    isKeyDriveAnalysis,
     isLocalIdRef,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
@@ -40,6 +42,7 @@ export function getDrillsBySourceLocalIdentifiers(
         (d) =>
             isDrillToLegacyDashboard(d) ||
             isCrossFiltering(d) ||
+            isKeyDriveAnalysis(d) ||
             drillSourceLocalIdentifiers.includes(getDrillOriginLocalIdentifier(d)),
     );
 }

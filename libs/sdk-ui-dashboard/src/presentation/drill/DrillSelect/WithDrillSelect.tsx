@@ -19,7 +19,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
-import { DrillSelectContext, IDrillSelectCloseBehavior } from "./types.js";
+import { DrillSelectContext } from "./types.js";
 import {
     DashboardCommandFailed,
     DashboardDrillCommand,
@@ -36,13 +36,11 @@ import {
     IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
-import {
-    DASHBOARD_DRILL_MENU_BOTTOM_LAYER_Z_INDEX,
-    DASHBOARD_DRILL_MENU_TOP_LAYER_Z_INDEX,
-} from "../../constants/index.js";
+import { DASHBOARD_DRILL_MENU_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { useDrills } from "../hooks/useDrills.js";
 import {
+    OnDashboardDrill,
     OnDrillDownSuccess,
     OnDrillToAttributeUrlSuccess,
     OnDrillToCustomUrlSuccess,
@@ -59,8 +57,9 @@ import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
 export interface WithDrillSelectProps {
     widgetRef: ObjRef;
     insight: IInsight;
-    closeBehavior?: IDrillSelectCloseBehavior;
     visualizationId?: string;
+    returnFocusToInsight?: (force?: boolean) => void;
+    onDrillStart?: OnDashboardDrill;
     onDrillDownSuccess?: OnDrillDownSuccess;
     onDrillToInsightSuccess?: OnDrillToInsightSuccess;
     onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
@@ -78,8 +77,8 @@ export function WithDrillSelect({
     widgetRef,
     children,
     insight,
-    closeBehavior,
-    visualizationId,
+    returnFocusToInsight,
+    onDrillStart,
     onDrillDownSuccess,
     onDrillToInsightSuccess,
     onDrillToDashboardSuccess,
@@ -97,6 +96,7 @@ export function WithDrillSelect({
     const { supportsAttributeHierarchies } = useDashboardSelector(selectBackendCapabilities);
 
     const drills = useDrills({
+        onDrill: onDrillStart,
         onDrillSuccess: (s) => {
             if (disableDefaultDrills || s.payload.drillEvent.drillDefinitions.length === 0) {
                 return;
@@ -131,11 +131,19 @@ export function WithDrillSelect({
         onError: (e: DashboardCommandFailed<DashboardDrillCommand>) => onError?.(e.payload.error),
     });
 
+    const handleClose = useCallback(() => {
+        setIsOpen(false);
+    }, []);
+    const handleCloseReturnFocus = useCallback(() => {
+        returnFocusToInsight?.();
+        handleClose();
+    }, [handleClose, returnFocusToInsight]);
+
     const onSelectDepsRef = useAutoupdateRef({
         drills,
         dropdownProps: { correlationId: dropdownProps?.correlationId, drillEvent: dropdownProps?.drillEvent },
         insight,
-        closeBehavior,
+        handleClose,
     });
     const onSelect = useCallback(
         (
@@ -145,70 +153,93 @@ export function WithDrillSelect({
             correlationId?: string,
             drillContext?: DashboardDrillContext,
         ) => {
-            const { drills, dropdownProps, insight, closeBehavior } = onSelectDepsRef.current;
+            const { drills, dropdownProps, insight, handleClose } = onSelectDepsRef.current;
 
             const effectiveDrillEvent = drillEvent ?? dropdownProps?.drillEvent;
             const effectiveCorrelationId = correlationId ?? dropdownProps?.correlationId;
             const effectiveInsight = drillContext?.insight ?? insight;
 
-            if (effectiveDrillEvent) {
-                if (isDrillDownDefinition(drillDefinition)) {
-                    drills.drillDown.run(
-                        effectiveInsight,
-                        drillDefinition,
-                        effectiveDrillEvent,
-                        effectiveCorrelationId,
-                    );
-                } else if (isDrillToInsight(drillDefinition)) {
-                    drills.drillToInsight.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
-                } else if (isDrillToDashboard(drillDefinition)) {
-                    drills.drillToDashboard.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
-                } else if (isDrillToAttributeUrl(drillDefinition)) {
-                    drills.drillToAttributeUrl.run(
-                        drillDefinition,
-                        effectiveDrillEvent,
-                        effectiveCorrelationId,
-                    );
-                } else if (isDrillToCustomUrl(drillDefinition)) {
-                    drills.drillToCustomUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
-                } else if (isCrossFiltering(drillDefinition)) {
-                    drills.crossFiltering.run(
-                        insight,
-                        drillDefinition,
-                        effectiveDrillEvent,
-                        effectiveCorrelationId,
-                    );
-                } else if (isKeyDriveAnalysis(drillDefinition)) {
-                    drills.keyDriverAnalysis.run(
-                        drillDefinition,
-                        effectiveDrillEvent,
-                        context as DashboardKeyDriverCombinationItem,
-                        effectiveCorrelationId,
-                    );
+            if (!effectiveDrillEvent) {
+                return;
+            }
+
+            const isNavigatingByKeyboard = document.querySelector(":focus-visible") !== null;
+            handleClose();
+
+            if (isDrillDownDefinition(drillDefinition)) {
+                drills.drillDown.run(
+                    effectiveInsight,
+                    drillDefinition,
+                    effectiveDrillEvent,
+                    effectiveCorrelationId,
+                );
+                return;
+            }
+
+            if (isDrillToInsight(drillDefinition)) {
+                drills.drillToInsight.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                return;
+            }
+
+            if (isDrillToDashboard(drillDefinition)) {
+                drills.drillToDashboard.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                return;
+            }
+
+            if (isDrillToAttributeUrl(drillDefinition)) {
+                drills.drillToAttributeUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                return;
+            }
+
+            if (isDrillToCustomUrl(drillDefinition)) {
+                drills.drillToCustomUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                return;
+            }
+
+            if (isCrossFiltering(drillDefinition)) {
+                drills.crossFiltering.run(
+                    insight,
+                    drillDefinition,
+                    effectiveDrillEvent,
+                    effectiveCorrelationId,
+                );
+
+                if (!returnFocusToInsight) {
+                    return;
                 }
 
-                if (closeBehavior === "closeOnSelect") {
-                    setIsOpen(false);
-                }
+                // We need to wait a bit so the chart reloads after the filter changes
+                window.setTimeout(() => {
+                    returnFocusToInsight(isNavigatingByKeyboard);
+                }, 150);
+
+                return;
+            }
+
+            if (isKeyDriveAnalysis(drillDefinition)) {
+                drills.keyDriverAnalysis.run(
+                    drillDefinition,
+                    effectiveDrillEvent,
+                    context as DashboardKeyDriverCombinationItem,
+                    effectiveCorrelationId,
+                );
+
+                return;
+            }
+
+            if (isKeyDriveAnalysis(drillDefinition)) {
+                //TODO: Run kda analysis dialog
+                return;
             }
         },
-        [onSelectDepsRef],
+        [onSelectDepsRef, returnFocusToInsight],
     );
-
-    const handleClose = () => {
-        if (closeBehavior === "preventClose") {
-            return;
-        }
-        setIsOpen(false);
-    };
 
     const dropDownAnchorClass = `s-drill-picker-${drillPickerId}`;
 
     const overlayController = useMemo(() => {
-        return closeBehavior === "preventClose"
-            ? OverlayController.getInstance(DASHBOARD_DRILL_MENU_BOTTOM_LAYER_Z_INDEX)
-            : OverlayController.getInstance(DASHBOARD_DRILL_MENU_TOP_LAYER_Z_INDEX);
-    }, [closeBehavior]);
+        return OverlayController.getInstance(DASHBOARD_DRILL_MENU_Z_INDEX);
+    }, []);
 
     const drillDownDropdown = dropdownProps ? (
         <IntlWrapper locale={locale}>
@@ -218,8 +249,8 @@ export function WithDrillSelect({
                     dropDownAnchorClass={dropDownAnchorClass}
                     isOpen={isOpen}
                     onClose={handleClose}
+                    onCloseReturnFocus={handleCloseReturnFocus}
                     onSelect={onSelect}
-                    visualizationId={visualizationId}
                 />
             </OverlayControllerProvider>
         </IntlWrapper>
