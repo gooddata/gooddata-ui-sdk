@@ -5,3 +5,4 @@ export { FilterObjectTypeMemo } from "./FilterObjectType.js";
 export { FilterOriginMemo, FilterOriginGuard } from "./FilterOrigin.js";
 export { FilterGroupByMemo } from "./FilterCreatedBy.js";
 export { FilterTagsMemo } from "./FilterTags.js";
+export { FilterQualityMemo } from "./FilterQuality.js";

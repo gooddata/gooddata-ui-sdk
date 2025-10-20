@@ -73,7 +73,13 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
 
-    const displayName = isHeader ? params.displayName : params.value;
+    const effectiveMeasure = rowScope.find((scope) => scope.type === "measureScope");
+    // For non-header cells, get the measure name from the row scope's measure descriptor
+    // instead of using the formatted value directly. The formatted value contains the measure name from
+    // the result headers which may have the original name for renamed custom metrics.
+    const displayName = isHeader
+        ? params.displayName
+        : (effectiveMeasure?.descriptor.measureHeaderItem.name ?? params.value);
 
     return (
         <div

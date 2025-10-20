@@ -632,8 +632,13 @@ function getTooltipConfiguration(
     const { stacking } = chartOptions;
 
     const followPointer = isOneOfTypes(chartType, supportedTooltipFollowPointerChartTypes)
-        ? { followPointer: shouldFollowPointer(chartOptions) }
-        : {};
+        ? {
+              followPointer:
+                  shouldFollowPointer(chartOptions) && !(chartConfig?.enableAccessibleTooltip ?? false),
+          }
+        : {
+              followPointer: chartConfig?.enableAccessibleTooltip ? false : undefined, // undefined means use HCH default behavior
+          };
 
     return tooltipAction
         ? {

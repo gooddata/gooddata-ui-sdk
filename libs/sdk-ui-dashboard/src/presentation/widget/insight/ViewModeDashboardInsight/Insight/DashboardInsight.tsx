@@ -102,7 +102,6 @@ const selectChartConfig = createSelector(
 export function DashboardInsight({
     insight,
     widget,
-    visualizationId,
     clientHeight,
     clientWidth,
     backend,
@@ -350,7 +349,6 @@ export function DashboardInsight({
                                 onExportReady={onExportReady}
                                 afterRender={handleAfterRender}
                                 execConfig={execConfig}
-                                visualizationId={visualizationId}
                             />
                         </div>
                     ) : null}

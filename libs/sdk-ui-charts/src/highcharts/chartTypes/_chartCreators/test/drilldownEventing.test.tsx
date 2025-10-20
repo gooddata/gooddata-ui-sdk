@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
@@ -42,6 +43,10 @@ describe("Drilldown Eventing", () => {
         x: 1,
         y: 2,
         value: 678.0,
+        index: 0,
+        series: { index: 0 } satisfies Partial<
+            IHighchartsPointObject["series"]
+        > as IHighchartsPointObject["series"],
         drillIntersection: [
             {
                 header: {
@@ -105,6 +110,7 @@ describe("Drilldown Eventing", () => {
             drillConfig,
             pointClickEventDataWithNullPoints,
             target as any as EventTarget,
+            "chartId",
             VisualizationTypes.LINE,
         );
 
@@ -118,7 +124,13 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: vi.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData,
+            target as any as EventTarget,
+            "chartId",
+            VisualizationTypes.LINE,
+        );
 
         vi.runAllTimers();
 
@@ -129,6 +141,9 @@ describe("Drilldown Eventing", () => {
             drillContext: {
                 type: "line",
                 element: "point",
+                chartId: "chartId",
+                pointIndex: 0,
+                seriesIndex: 0,
                 x: 1,
                 y: 2,
                 intersection: [
@@ -178,6 +193,7 @@ describe("Drilldown Eventing", () => {
             drillConfig,
             pointClickEventData,
             target as any as EventTarget,
+            "chartId",
             VisualizationTypes.TREEMAP,
         );
 
@@ -191,6 +207,7 @@ describe("Drilldown Eventing", () => {
             drillConfig,
             pointClickEventData,
             target as any as EventTarget,
+            "chartId",
             VisualizationTypes.HEATMAP,
         );
 
@@ -212,6 +229,7 @@ describe("Drilldown Eventing", () => {
             drillConfig,
             pointClickWitZEventData,
             target as any as EventTarget,
+            "chartId",
             VisualizationTypes.BUBBLE,
         );
 
@@ -224,6 +242,9 @@ describe("Drilldown Eventing", () => {
             drillContext: {
                 type: "bubble",
                 element: "point",
+                chartId: "chartId",
+                pointIndex: 0,
+                seriesIndex: 0,
                 x: 1,
                 y: 2,
                 z: 12000,
@@ -270,7 +291,13 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: vi.fn() };
         const target = { dispatchEvent: () => true };
 
-        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData,
+            target as any as EventTarget,
+            "chartId",
+            VisualizationTypes.LINE,
+        );
 
         vi.runAllTimers();
 
@@ -281,7 +308,13 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: vi.fn() };
         const target = { dispatchEvent: vi.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData,
+            target as any as EventTarget,
+            "chartId",
+            VisualizationTypes.LINE,
+        );
 
         vi.runAllTimers();
 
@@ -293,7 +326,13 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: vi.fn().mockReturnValue(false) };
         const target = { dispatchEvent: vi.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData,
+            target as any as EventTarget,
+            "chartId",
+            VisualizationTypes.LINE,
+        );
 
         vi.runAllTimers();
 
@@ -325,7 +364,13 @@ describe("Drilldown Eventing", () => {
             points: [clickedPoint],
         } as any as DrilldownEventObject;
 
-        chartClick(drillConfig, labelClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            labelClickEventData,
+            target as any as EventTarget,
+            "chartId",
+            VisualizationTypes.LINE,
+        );
 
         vi.runAllTimers();
 
@@ -336,6 +381,7 @@ describe("Drilldown Eventing", () => {
             drillContext: {
                 type: "line",
                 element: "label",
+                chartId: "chartId",
                 points: [
                     {
                         x: 1,
@@ -362,14 +408,14 @@ describe("Drilldown Eventing", () => {
     describe("Drilling in Combo chart", () => {
         const columnPoint: IHighchartsPointObject = {
             ...point,
-            series: { type: SeriesChartTypes.COLUMN },
+            series: { type: SeriesChartTypes.COLUMN, index: 0 },
         } as any;
 
         const linePoint: IHighchartsPointObject = {
             ...point,
             x: 2,
             y: 3,
-            series: { type: SeriesChartTypes.LINE },
+            series: { type: SeriesChartTypes.LINE, index: 0 },
             drillIntersection: [
                 {
                     id: "id4",
@@ -406,7 +452,13 @@ describe("Drilldown Eventing", () => {
                 points: [columnPoint, linePoint],
             } as any;
 
-            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+            chartClick(
+                drillConfig,
+                pointClickEventData,
+                target as EventTarget,
+                "chartId",
+                VisualizationTypes.COMBO2,
+            );
 
             vi.runAllTimers();
 
@@ -416,6 +468,7 @@ describe("Drilldown Eventing", () => {
             expect(drillContext).toEqual({
                 type: VisualizationTypes.COMBO,
                 element: "label",
+                chartId: "chartId",
                 points: [
                     {
                         x: columnPoint.x,
@@ -441,7 +494,13 @@ describe("Drilldown Eventing", () => {
                 points: null,
             } as any;
 
-            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+            chartClick(
+                drillConfig,
+                pointClickEventData,
+                target as EventTarget,
+                "chartId",
+                VisualizationTypes.COMBO2,
+            );
 
             vi.runAllTimers();
 
@@ -452,6 +511,9 @@ describe("Drilldown Eventing", () => {
                     type: VisualizationTypes.COMBO,
                     element: "point",
                     elementChartType: SeriesChartTypes.LINE,
+                    chartId: "chartId",
+                    pointIndex: 0,
+                    seriesIndex: 0,
                     x: linePoint.x,
                     y: linePoint.y,
                     intersection: linePoint.drillIntersection,
@@ -467,7 +529,13 @@ describe("Drilldown Eventing", () => {
                 points: [columnPoint],
             } as any;
 
-            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COLUMN);
+            chartClick(
+                drillConfig,
+                pointClickEventData,
+                target as EventTarget,
+                "chartId",
+                VisualizationTypes.COLUMN,
+            );
 
             vi.runAllTimers();
 
@@ -477,6 +545,7 @@ describe("Drilldown Eventing", () => {
             expect(drillContext).toEqual({
                 type: VisualizationTypes.COLUMN,
                 element: "label",
+                chartId: "chartId",
                 points: [
                     {
                         x: columnPoint.x,
@@ -495,7 +564,13 @@ describe("Drilldown Eventing", () => {
                 points: null,
             } as any;
 
-            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.LINE);
+            chartClick(
+                drillConfig,
+                pointClickEventData,
+                target as EventTarget,
+                "chartId",
+                VisualizationTypes.LINE,
+            );
 
             vi.runAllTimers();
 
@@ -505,6 +580,9 @@ describe("Drilldown Eventing", () => {
                 drillContext: {
                     type: VisualizationTypes.LINE,
                     element: "point",
+                    chartId: "chartId",
+                    pointIndex: 0,
+                    seriesIndex: 0,
                     x: linePoint.x,
                     y: linePoint.y,
                     intersection: linePoint.drillIntersection,
@@ -576,6 +654,7 @@ describe("Drilldown Eventing", () => {
                 drillConfig,
                 targetPointClickEventData as DrilldownEventObject,
                 target as EventTarget,
+                "chartId",
                 VisualizationTypes.BULLET,
             );
 
@@ -592,6 +671,7 @@ describe("Drilldown Eventing", () => {
                 drillConfig,
                 primaryPointClickEventData,
                 target as EventTarget,
+                "chartId",
                 VisualizationTypes.BULLET,
             );
 
@@ -608,6 +688,7 @@ describe("Drilldown Eventing", () => {
                 drillConfig,
                 comparativePointClickEventData,
                 target as EventTarget,
+                "chartId",
                 VisualizationTypes.BULLET,
             );
 
@@ -625,6 +706,7 @@ describe("Drilldown Eventing", () => {
                 drillConfig,
                 pointClickEventData as Highcharts.DrilldownEventObject,
                 target as EventTarget,
+                "chartId",
                 VisualizationTypes.BULLET,
             );
 
@@ -647,6 +729,7 @@ describe("Drilldown Eventing", () => {
                 drillConfig,
                 pointClickEventData as Highcharts.DrilldownEventObject,
                 target as EventTarget,
+                "chartId",
                 VisualizationTypes.BULLET,
             );
 

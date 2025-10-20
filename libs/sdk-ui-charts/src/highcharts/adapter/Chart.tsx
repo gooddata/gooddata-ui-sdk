@@ -6,6 +6,9 @@ import { Component } from "react";
 
 import { createCustomEqual } from "fast-equals";
 import Highcharts from "highcharts/esm/highcharts.js";
+import { v4 as uuid } from "uuid";
+
+import { FOCUS_HIGHCHARTS_DATAPOINT_EVENT, IFocusHighchartsDatapointEventDetail } from "@gooddata/sdk-ui";
 
 import { initChartPlugins } from "./chartPlugins.js";
 import { HChart, HighchartsOptions } from "../lib/index.js";
@@ -50,6 +53,24 @@ export class Chart extends Component<IChartProps> {
     private chart: HChart;
     private chartRef: HTMLElement;
 
+    private id = `gd-highcharts-chart-${uuid()}`;
+
+    private focusDatapoint = (event: CustomEventInit<IFocusHighchartsDatapointEventDetail>): void => {
+        const { chartId, seriesIndex, pointIndex } = event.detail;
+
+        if (chartId !== this.id) {
+            return;
+        }
+
+        const point = this.chart.series[seriesIndex]?.points[pointIndex];
+
+        if (!point) {
+            console.error(`Point not found: seriesIndex=${seriesIndex}, pointIndex=${pointIndex}`);
+        }
+
+        point.highlight();
+    };
+
     public override componentDidMount(): void {
         this.createChart(this.props.config);
 
@@ -61,6 +82,8 @@ export class Chart extends Component<IChartProps> {
             this.chart.setSize(currentWidth - 1, undefined, false);
             this.chart.setSize(currentWidth, undefined, false);
         }
+
+        window.addEventListener(FOCUS_HIGHCHARTS_DATAPOINT_EVENT, this.focusDatapoint);
     }
 
     public override shouldComponentUpdate(nextProps: IChartProps): boolean {
@@ -75,6 +98,8 @@ export class Chart extends Component<IChartProps> {
     }
 
     public override componentWillUnmount(): void {
+        window.removeEventListener(FOCUS_HIGHCHARTS_DATAPOINT_EVENT, this.focusDatapoint);
+
         try {
             this.chart.destroy();
         } catch (error) {
@@ -107,17 +132,19 @@ export class Chart extends Component<IChartProps> {
                     ...config,
                     chart: {
                         ...chartConfig,
+                        id: this.id,
                         renderTo: this.chartRef,
                     },
                 },
                 this.props.callback,
             );
+            this.chart.id = this.id;
         } catch (error) {
             console.error("Chart could not be rendered with the current config.", error);
         }
     }
 
     public override render() {
-        return <div {...this.props.domProps} ref={this.setChartRef} />;
+        return <div id={this.id} {...this.props.domProps} ref={this.setChartRef} />;
     }
 }

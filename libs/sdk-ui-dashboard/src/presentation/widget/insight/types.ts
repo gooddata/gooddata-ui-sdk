@@ -26,6 +26,7 @@ import {
 
 import {
     DrillStep,
+    OnDashboardDrill,
     OnDrillDownSuccess,
     OnDrillToAttributeUrlSuccess,
     OnDrillToCustomUrlSuccess,
@@ -212,10 +213,14 @@ export interface IDashboardInsightProps {
     isWidgetAsTable?: boolean;
 
     /**
-     * The ID of the visualization DOM element
      * @internal
      */
-    visualizationId?: string;
+    returnFocusToInsight?: (force?: boolean) => void;
+
+    /**
+     * @internal
+     */
+    onDrillStart?: OnDashboardDrill;
 }
 
 /**
@@ -301,11 +306,6 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * It is defined when the insight is rendered in a drill dialog.
      */
     drillStep?: DrillStep;
-
-    /**
-     * The ID of the visualization DOM element
-     */
-    visualizationId?: string;
 }
 
 ///

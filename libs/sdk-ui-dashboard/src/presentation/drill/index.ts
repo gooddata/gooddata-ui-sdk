@@ -16,7 +16,6 @@ export type { UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDas
 export { useDrillToLegacyDashboard } from "./hooks/useDrillToLegacyDashboard.js";
 export type { WithDrillSelectProps } from "./DrillSelect/WithDrillSelect.js";
 export { WithDrillSelect } from "./DrillSelect/WithDrillSelect.js";
-export type { IDrillSelectCloseBehavior } from "./DrillSelect/types.js";
 export type {
     OnWidgetDrill,
     OnDashboardDrill,

@@ -16,9 +16,11 @@ import {
     FilterObjectTypeMemo,
     FilterOriginGuard,
     FilterOriginMemo,
+    FilterQualityMemo,
     FilterTagsMemo,
     useFilterActions,
 } from "../filter/index.js";
+import { useFeatureFlag } from "../permission/index.js";
 import { Table } from "../table/Table.js";
 
 type Props = {
@@ -47,6 +49,7 @@ export function Main({
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
+    const isQualityEnabled = useFeatureFlag("enableGenAICatalogQualityChecker");
 
     const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
         onCatalogItemOpenClick,
@@ -64,6 +67,7 @@ export function Main({
                 <FilterOriginGuard backend={backend} workspace={workspace}>
                     <FilterOriginMemo />
                 </FilterOriginGuard>
+                {isQualityEnabled ? <FilterQualityMemo /> : null}
             </header>
             <CatalogItemFeed backend={backend} workspace={workspace}>
                 {({ items, next, hasNext, totalCount, status, updateItem }) => (

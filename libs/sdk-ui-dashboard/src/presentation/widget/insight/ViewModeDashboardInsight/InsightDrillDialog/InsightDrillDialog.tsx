@@ -43,7 +43,7 @@ import {
 } from "../../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
-import { DrillStep, OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
+import { DrillStep, OnDashboardDrill, OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
 import { useInsightExport } from "../../../common/index.js";
@@ -66,6 +66,8 @@ export interface InsightDrillDialogProps {
     onDrillDown?: OnDrillDownSuccess;
     onClose: () => void;
     onBackButtonClick: () => void;
+    returnFocusToInsight?: (force?: boolean) => void;
+    onDrillStart?: OnDashboardDrill;
 }
 
 const overlayIgnoredClasses = [
@@ -110,9 +112,11 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
         insight,
         enableDrillDescription,
         drillStep,
+        returnFocusToInsight,
         onClose,
         onBackButtonClick,
         onDrillDown,
+        onDrillStart,
     } = props;
 
     const isMobileDevice = useMediaQuery("mobileDevice");
@@ -232,8 +236,9 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                         <WithDrillSelect
                             widgetRef={widget.ref}
                             insight={props.insight}
+                            returnFocusToInsight={returnFocusToInsight}
+                            onDrillStart={onDrillStart}
                             onDrillDownSuccess={onDrillDown}
-                            closeBehavior={"closeOnSelect"}
                         >
                             {({ onDrill }) => {
                                 return description && enableDrillDescription ? (

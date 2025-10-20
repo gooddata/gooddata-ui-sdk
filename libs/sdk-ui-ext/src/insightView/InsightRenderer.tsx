@@ -58,10 +58,6 @@ export interface IInsightRendererProps
      * When provided, the widget title and description will be passed through to the chart configuration.
      */
     widget?: IInsightWidget;
-    /**
-     * The ID of the visualization DOM element
-     */
-    visualizationId?: string;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -77,7 +73,7 @@ const visualizationUriRootStyle: CSSProperties = {
 // with the same props (referentially) - this might make the rendered visualization behave unpredictably
 // and is bad for performance so we need to make sure the re-renders are performed only if necessary
 class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedComponentProps> {
-    private elementId = this.props.visualizationId ?? getElementId();
+    private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private containerRef = createRef<HTMLDivElement>();
 

@@ -11,6 +11,7 @@ interface IFilterState {
     origin: ObjectOrigin;
     createdBy: string[];
     tags: string[];
+    qualityIds: string[];
 }
 
 interface IFilterActions {
@@ -19,6 +20,7 @@ interface IFilterActions {
     setCreatedBy: (createdBy: string[]) => void;
     setTags: (tags: string[]) => void;
     toggleTag: (tag: string) => void;
+    setQualityIds: (qualityIds: string[]) => void;
 }
 
 const initialState: IFilterState = {
@@ -26,6 +28,7 @@ const initialState: IFilterState = {
     origin: "ALL",
     createdBy: [],
     tags: [],
+    qualityIds: [],
 };
 
 const initialActions: IFilterActions = {
@@ -34,6 +37,7 @@ const initialActions: IFilterActions = {
     setCreatedBy: () => {},
     setTags: () => {},
     toggleTag: () => {},
+    setQualityIds: () => {},
 };
 
 const FilterStateContext = createContext<IFilterState>(initialState);
@@ -44,6 +48,7 @@ export function FilterProvider({ children }: PropsWithChildren) {
     const [origin, setOrigin] = useState<ObjectOrigin>(initialState.origin);
     const [tags, setTags] = useState<string[]>(initialState.tags);
     const [createdBy, setCreatedBy] = useState<string[]>(initialState.createdBy);
+    const [qualityIds, setQualityIds] = useState<string[]>(initialState.qualityIds);
 
     const toggleTag = useCallback((tag: string) => {
         setTags((tags) =>
@@ -51,10 +56,13 @@ export function FilterProvider({ children }: PropsWithChildren) {
         );
     }, []);
 
-    const state = useMemo(() => ({ types, origin, createdBy, tags }), [types, origin, createdBy, tags]);
+    const state = useMemo(
+        () => ({ types, origin, createdBy, tags, qualityIds }),
+        [types, origin, createdBy, tags, qualityIds],
+    );
     const actions = useMemo(
-        () => ({ setTypes, setOrigin, setCreatedBy, setTags, toggleTag }),
-        [setTypes, setOrigin, setCreatedBy, setTags, toggleTag],
+        () => ({ setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds }),
+        [setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds],
     );
 
     return (

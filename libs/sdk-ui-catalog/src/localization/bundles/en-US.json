@@ -67,6 +67,14 @@
         "value": "Current workspace",
         "comment": "Label for the native option in the origin filter."
     },
+    "analyticsCatalog.filter.qualityCodes.title": {
+        "value": "Validations",
+        "comment": "Title of the header section containing the quality codes filter."
+    },
+    "analyticsCatalog.filter.qualityCodes.noOptions": {
+        "value": "No validations available",
+        "comment": "Label for the no options state in the validations filter."
+    },
     "analyticsCatalog.column.title.label": {
         "value": "Title",
         "comment": "Title of the column containing the title of the object."
@@ -246,6 +254,10 @@
     "analyticsCatalog.empty.filters.description": {
         "value": "No matching items found for the selected filters.",
         "comment": "Description of the empty state when filters are applied but search input is empty."
+    },
+    "analyticsCatalog.quality.tooltip.title": {
+        "value": "Validation {count, plural, one {finding} other {findings}}:",
+        "comment": "Title for the quality tooltip."
     },
     "analyticsCatalog.quality.tooltip.identicalTitle": {
         "value": "There {count, plural, one {is # field} other {are # fields}} with the same title",

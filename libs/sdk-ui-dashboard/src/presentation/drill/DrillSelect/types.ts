@@ -33,8 +33,3 @@ export interface DrillSelectContext {
 }
 
 export type IAvailableDrillTargetItem = IAvailableDrillTargetAttribute | IAvailableDrillTargetMeasure;
-
-/**
- * @internal
- */
-export type IDrillSelectCloseBehavior = "closeOnSelect" | "preventClose";

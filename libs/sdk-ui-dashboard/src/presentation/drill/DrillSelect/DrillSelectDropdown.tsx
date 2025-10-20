@@ -9,6 +9,7 @@ import { invariant } from "ts-invariant";
 
 import {
     IAttributeDisplayFormMetadataObject,
+    ICatalogDateAttribute,
     IInsight,
     IListedDashboard,
     IWidget,
@@ -33,6 +34,7 @@ import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
+    selectCatalogDateAttributes,
     selectDashboardTitle,
     selectInsightsMap,
     selectWidgetByRef,
@@ -53,18 +55,18 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
     isOpen: boolean;
     onClose: () => void;
+    onCloseReturnFocus: () => void;
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
-    visualizationId?: string;
 }
 
 export function DrillSelectDropdown({
     isOpen,
     dropDownAnchorClass,
     onClose,
+    onCloseReturnFocus,
     onSelect,
     drillDefinitions,
     drillEvent,
-    visualizationId,
 }: DrillSelectDropdownProps) {
     const intl = useIntl();
 
@@ -73,6 +75,7 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const dateAttributes = useDashboardSelector(selectCatalogDateAttributes);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -137,6 +140,7 @@ export function DrillSelectDropdown({
                 dashboardList,
                 dashboardTitle,
                 attributeDisplayForms,
+                dateAttributes,
                 intl,
                 widget: widget as IWidget,
             }),
@@ -149,6 +153,7 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
+            dateAttributes,
         ],
     );
 
@@ -171,7 +176,6 @@ export function DrillSelectDropdown({
         keyDriverAnalysisItems: grouped["keyDriverAnalysis"] ?? [],
         drillItems: grouped["drill"] ?? [],
         onSelect,
-        onClose,
     });
 
     if (!isOpen) {
@@ -180,33 +184,13 @@ export function DrillSelectDropdown({
 
     return (
         <div className="gd-drill-modal-picker-overlay-mask">
-            <Overlay closeOnOutsideClick closeOnEscape alignTo={`.${dropDownAnchorClass}`} onClose={onClose}>
-                <UiFocusManager
-                    enableFocusTrap
-                    enableAutofocus
-                    enableReturnFocusOnUnmount={
-                        visualizationId
-                            ? {
-                                  returnFocusTo: () => {
-                                      // Charts are rebuilt when the filter changes, which makes them lose focus.
-                                      // We need to refocus after a bit of delay.
-
-                                      window.setTimeout(() => {
-                                          if (document.activeElement !== document.body) {
-                                              // Ugly hack. If the chart is not rebuilt, we don't want to mess with the focus.
-                                              return;
-                                          }
-
-                                          const element = document.getElementById(visualizationId);
-                                          const viz = element?.querySelector("[tabindex='0']");
-                                          (viz as HTMLElement)?.focus();
-                                      }, 150);
-                                      return null;
-                                  },
-                              }
-                            : undefined
-                    }
-                >
+            <Overlay
+                closeOnOutsideClick
+                closeOnEscape
+                alignTo={`.${dropDownAnchorClass}`}
+                onClose={onCloseReturnFocus}
+            >
+                <UiFocusManager enableFocusTrap enableAutofocus>
                     <div
                         onScroll={stopPropagation}
                         className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"
@@ -217,7 +201,7 @@ export function DrillSelectDropdown({
                                 item.data.onSelect();
                             }}
                             shouldCloseOnSelect={false}
-                            onClose={onClose}
+                            onClose={onCloseReturnFocus}
                             onUnhandledKeyDown={handleKeyDown}
                             maxHeight={160}
                             containerBottomPadding="medium"
@@ -250,6 +234,7 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
+    dateAttributes,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -259,6 +244,7 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    dateAttributes: ICatalogDateAttribute[];
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -347,7 +333,7 @@ export const createDrillSelectItems = ({
         }
 
         if (isKeyDriveAnalysis(drillDefinition)) {
-            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent);
+            const items = getKdaKeyDriverCombinations(dateAttributes, drillDefinition, drillEvent);
             return items.map((item) => {
                 return {
                     name: getKeyDriverCombinationItemTitle(intl, item),
