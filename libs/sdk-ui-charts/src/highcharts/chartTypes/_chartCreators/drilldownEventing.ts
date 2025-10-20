@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { cloneDeep, debounce } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -145,6 +146,8 @@ function composeDrillContextPoint(
             ? getClickableElementNameForBulletChart(point)
             : getClickableElementNameByChartType(elementChartType),
         intersection: point.drillIntersection,
+        seriesIndex: point.series.index,
+        pointIndex: point.index,
         ...xyProp,
         ...zProp,
         ...valueProp,
@@ -153,7 +156,13 @@ function composeDrillContextPoint(
 }
 
 const chartClickDebounced = debounce(
-    (drillConfig: IDrillConfig, event: DrilldownEventObject, target: EventTarget, chartType: ChartType) => {
+    (
+        drillConfig: IDrillConfig,
+        event: DrilldownEventObject,
+        target: EventTarget,
+        chartId: string,
+        chartType: ChartType,
+    ) => {
         const { dataView, onDrill } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
@@ -176,6 +185,8 @@ const chartClickDebounced = debounce(
             }
         }
 
+        drillContext.chartId = chartId;
+
         const data: IDrillEvent = {
             dataView,
             drillContext,
@@ -189,9 +200,10 @@ export function chartClick(
     drillConfig: IDrillConfig,
     event: Highcharts.DrilldownEventObject,
     target: EventTarget,
+    chartId: string,
     chartType: ChartType,
 ): void {
-    chartClickDebounced(drillConfig, event, target, chartType);
+    chartClickDebounced(drillConfig, event, target, chartId, chartType);
 }
 
 const tickLabelClickDebounce = debounce(
@@ -199,6 +211,7 @@ const tickLabelClickDebounce = debounce(
         drillConfig: IDrillConfig,
         points: IHighchartsPointObject[],
         target: EventTarget,
+        chartId: string,
         chartType: ChartType,
     ): void => {
         const { dataView, onDrill } = drillConfig;
@@ -219,6 +232,8 @@ const tickLabelClickDebounce = debounce(
             element: "label",
             points: contextPoints,
         };
+        drillContext.chartId = chartId;
+
         const data: IDrillEvent = {
             dataView,
             drillContext,
@@ -232,7 +247,8 @@ export function tickLabelClick(
     drillConfig: IDrillConfig,
     points: IHighchartsPointObject[],
     target: EventTarget,
+    chartId: string,
     chartType: ChartType,
 ): void {
-    tickLabelClickDebounce(drillConfig, points, target, chartType);
+    tickLabelClickDebounce(drillConfig, points, target, chartId, chartType);
 }

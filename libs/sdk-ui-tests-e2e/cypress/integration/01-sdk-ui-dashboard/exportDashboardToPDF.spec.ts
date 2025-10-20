@@ -26,7 +26,7 @@ describe(
             dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
             exportControl.expectExportedPDF(
                 "KD has null value.pdf",
-                "Region\n(empty value)\nProductMetric has null value_Snapshot [EOP]_Timeline [EOP]\nPhoenixSoft1,45941,054.0044,195\nAD has null value\nKD has null value",
+                "Region\n(empty value)\nPhoenixSoft1,45941,054.0044,195\nAD has null value\nProduct\nMetric has null value_Snapshot [EOP]_Timeline [EOP]\nKD has null value",
             );
         });
     },

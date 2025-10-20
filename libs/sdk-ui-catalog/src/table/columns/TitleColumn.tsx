@@ -35,7 +35,7 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
                 <QualityIconMemo
                     className="gd-analytics-catalog__table__column-icon"
                     intl={intl}
-                    item={item}
+                    objectId={item.identifier}
                 />
             );
         },

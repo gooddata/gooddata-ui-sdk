@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IAttribute, IMeasure, Identifier, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
@@ -129,10 +130,12 @@ export function newAttributeColumnLocator(
     attributeOrId: IAttribute | string,
     element?: string,
 ): IAttributeColumnLocator {
+    const elementObj = element === undefined ? {} : { element };
+
     return {
         attributeLocatorItem: {
             attributeIdentifier: attributeLocalId(attributeOrId),
-            element,
+            ...elementObj,
         },
     };
 }

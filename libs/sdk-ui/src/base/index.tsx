@@ -328,6 +328,11 @@ export type {
     IColorAssignment,
     IColorsData,
 } from "./vis/Events.js";
+export type { IFocusHighchartsDatapointEventDetail } from "./vis/HighchartsEvents.js";
+export {
+    FOCUS_HIGHCHARTS_DATAPOINT_EVENT,
+    createFocusHighchartsDatapointEvent,
+} from "./vis/HighchartsEvents.js";
 export type {
     OnFiredDrillEvent,
     IDrillableItem,
@@ -356,6 +361,7 @@ export {
     isDrillableItem,
     isExplicitDrill,
     isDrillIntersectionAttributeItem,
+    isDrillIntersectionDateAttributeItem,
 } from "./vis/DrillEvents.js";
 export {
     convertDrillableItemsToPredicates,

@@ -218,6 +218,17 @@ $content-font-size: 14px;
         }
     }
 
+    &__quality-tooltip {
+        &__content {
+            line-height: 18px;
+
+            ul {
+                padding-left: 12px;
+                margin: 0;
+            }
+        }
+    }
+
     &__memory-actions {
         display: flex;
         gap: 8px;

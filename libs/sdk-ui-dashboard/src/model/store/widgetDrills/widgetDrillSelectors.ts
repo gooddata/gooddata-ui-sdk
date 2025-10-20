@@ -5,6 +5,7 @@ import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
+    DateAttributeGranularity,
     DrillDefinition,
     DrillOrigin,
     ICatalogAttribute,
@@ -55,6 +56,7 @@ import {
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
+    selectCatalogDateAttributes,
     selectCatalogIsLoaded,
 } from "../catalog/catalogSelectors.js";
 import {
@@ -431,7 +433,15 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             selectDisableDashboardKda,
             selectIsDisabledKda,
             selectDrillableItems,
-            (isKdaEnabled, availableDrillTargets, disableKda, disableKdaByConfig, drillableItems) => {
+            selectCatalogDateAttributes,
+            (
+                isKdaEnabled,
+                availableDrillTargets,
+                disableKda,
+                disableKdaByConfig,
+                drillableItems,
+                dateAttributes,
+            ) => {
                 if (
                     !isKdaEnabled ||
                     disableKda ||
@@ -443,6 +453,17 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     return undefined;
                 }
 
+                const supportedGranularities = [
+                    "GDC.time.year",
+                    "GDC.time.week_us",
+                    "GDC.time.week",
+                    "GDC.time.quarter",
+                    "GDC.time.month",
+                    "GDC.time.date",
+                    "GDC.time.hour",
+                    "GDC.time.minute",
+                ] as DateAttributeGranularity[];
+
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
                 const availableDrillAttributesWithDates = availableDrillAttributes.filter(
@@ -453,13 +474,24 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     return undefined;
                 }
 
+                // Find catalog date attribute
                 const date = availableDrillAttributesWithDates[0];
-                // construct predicates for all available attributes and measures
-                const attributePredicates = availableDrillAttributesWithDates.map((drillAttribute) =>
-                    HeaderPredicates.localIdentifierMatch(
-                        drillAttribute.attribute.attributeHeader.localIdentifier,
-                    ),
+                const dateAttribute = dateAttributes.find(
+                    (a) =>
+                        areObjRefsEqual(a.defaultDisplayForm.ref, date.attribute.attributeHeader.ref) ||
+                        a.attribute.displayForms.some((df) =>
+                            areObjRefsEqual(df.ref, date.attribute.attributeHeader.ref),
+                        ),
                 );
+
+                if (!dateAttribute || !supportedGranularities.includes(dateAttribute.granularity)) {
+                    return undefined;
+                }
+
+                // construct predicates for all available attributes and measures
+                const attributePredicates = [
+                    HeaderPredicates.localIdentifierMatch(date.attribute.attributeHeader.localIdentifier),
+                ];
                 const measurePredicates = compact(
                     availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) =>
                         HeaderPredicates.localIdentifierMatch(
@@ -472,10 +504,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     drillDefinition: {
                         type: "keyDriveAnalysis",
                         transition: "in-place",
-                        origin: {
-                            type: "drillFromAttribute",
-                            attribute: localIdRef(date.attribute.attributeHeader.localIdentifier),
-                        },
+                        origin: {} as DrillOrigin,
                     },
                     predicates: [...attributePredicates, ...measurePredicates],
                 };
@@ -668,6 +697,12 @@ const selectCrossFilteringPredicates = createMemoizedSelector((ref: ObjRef) =>
     }),
 );
 
+const selectKeyDriverAnalysisPredicates = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectKdaByWidgetRef(ref), (drill) => {
+        return drill?.predicates ?? [];
+    }),
+);
+
 /**
  * @internal
  */
@@ -689,7 +724,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             implicitDrillDownDrills,
             implicitDrillToUrlDrills,
             crossFiltering,
-            kda,
+            keyDriverAnalysis,
         ) => {
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
@@ -699,7 +734,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
                       ...implicitDrillDownDrills,
                       ...implicitDrillToUrlDrills,
                       crossFiltering,
-                      kda,
+                      keyDriverAnalysis,
                   ])
                 : [];
         },
@@ -718,6 +753,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
             selectImplicitDrillDownPredicates(ref),
             selectImplicitDrillToUrlPredicates(ref),
             selectCrossFilteringPredicates(ref),
+            selectKeyDriverAnalysisPredicates(ref),
             (
                 disableDefaultDrills,
                 drillableItems,
@@ -725,6 +761,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
                 implicitDrillDownDrills,
                 implicitDrillToUrlDrills,
                 crossFilteringDrills,
+                keyDriverAnalysisDrills,
             ) => {
                 const resolvedDrillableItems = [...drillableItems];
 
@@ -734,6 +771,7 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
                         ...implicitDrillDownDrills,
                         ...implicitDrillToUrlDrills,
                         ...crossFilteringDrills,
+                        ...keyDriverAnalysisDrills,
                     );
                 }
 

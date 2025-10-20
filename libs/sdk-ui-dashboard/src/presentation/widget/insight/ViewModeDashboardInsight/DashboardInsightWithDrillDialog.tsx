@@ -3,6 +3,7 @@
 import { ReactElement, useCallback, useMemo, useState } from "react";
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
+import { IDrillEventContext, createFocusHighchartsDatapointEvent } from "@gooddata/sdk-ui";
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
@@ -18,12 +19,17 @@ import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.j
 import {
     DrillStep,
     KeyDriveInfo,
+    OnDashboardDrill,
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
     OnKeyDriverAnalysisSuccess,
     getDrillDownTitle,
 } from "../../../drill/index.js";
 import { IDashboardInsightProps } from "../types.js";
+
+type IReturnFocusInfo =
+    | { type: "chart"; chartId: string; seriesIndex: number; pointIndex: number }
+    | { type: "table"; element: HTMLElement | null };
 
 /**
  * @internal
@@ -63,8 +69,52 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
         setDrillSteps((s) => [...s, drillStep]);
     }, []);
 
+    const [returnFocusInfo, setReturnFocusInfo] = useState<null | IReturnFocusInfo>(null);
+
+    const returnFocusToInsight = useCallback(
+        (force?: boolean) => {
+            const isNavigatingByKeyboard = force || document.querySelector(":focus-visible") !== null;
+
+            if (!returnFocusInfo || !isNavigatingByKeyboard) {
+                return;
+            }
+
+            if (returnFocusInfo.type === "chart") {
+                window.dispatchEvent(createFocusHighchartsDatapointEvent(returnFocusInfo));
+            }
+            if (returnFocusInfo.type === "table") {
+                returnFocusInfo.element?.focus();
+            }
+
+            setReturnFocusInfo(null);
+        },
+        [returnFocusInfo],
+    );
+
     const goBack = useCallback(() => setDrillSteps(([firstDrill]) => [firstDrill]), []);
-    const onClose = useCallback(() => setDrillSteps([]), []);
+    const onClose = useCallback(() => {
+        returnFocusToInsight();
+
+        setDrillSteps([]);
+    }, [returnFocusToInsight]);
+
+    const storeDatapointInfo = useCallback((drillContext: IDrillEventContext) => {
+        // TABLE
+        if (drillContext.type === "table") {
+            setReturnFocusInfo({ type: "table", element: document.activeElement as HTMLElement });
+            return;
+        }
+
+        // CHART
+        const { chartId, seriesIndex, pointIndex } = drillContext;
+
+        if (chartId === undefined || seriesIndex === undefined || pointIndex === undefined) {
+            return;
+        }
+
+        setReturnFocusInfo({ type: "chart", chartId, seriesIndex, pointIndex });
+    }, []);
+
     const onDrillDown = useCallback<OnDrillDownSuccess>(
         (evt) => setNextDrillStep(evt.payload),
         [setNextDrillStep],
@@ -73,14 +123,19 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
         (evt) => setNextDrillStep(evt.payload),
         [setNextDrillStep],
     );
+    const onDrillStart = useCallback<OnDashboardDrill>(
+        (evt) => storeDatapointInfo(evt.payload.drillEvent.drillContext),
+        [storeDatapointInfo],
+    );
 
     const [keyDriveInfo, setKeyDriveInfo] = useState<KeyDriveInfo | undefined>(undefined);
     const onKeyDriverAnalysisSuccess = useCallback<OnKeyDriverAnalysisSuccess>((evt) => {
         setKeyDriveInfo(evt.payload);
     }, []);
     const onCloseKeyDriverAnalysis = useCallback(() => {
+        returnFocusToInsight();
         setKeyDriveInfo(undefined);
-    }, []);
+    }, [returnFocusToInsight]);
 
     return (
         <>
@@ -90,6 +145,8 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                 onDrillToInsight={onDrillToInsight}
                 onKeyDriverAnalysisSuccess={onKeyDriverAnalysisSuccess}
                 drillStep={activeDrillStep}
+                returnFocusToInsight={returnFocusToInsight}
+                onDrillStart={onDrillStart}
             />
             {activeDrillStep ? (
                 <InsightDrillDialog
@@ -102,6 +159,8 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                     onClose={onClose}
                     enableDrillDescription={enableDrillDescription}
                     drillStep={activeDrillStep}
+                    returnFocusToInsight={returnFocusToInsight}
+                    onDrillStart={onDrillStart}
                 />
             ) : null}
             {keyDriveInfo ? (

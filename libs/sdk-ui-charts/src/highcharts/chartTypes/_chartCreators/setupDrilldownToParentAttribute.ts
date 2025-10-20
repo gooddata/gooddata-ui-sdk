@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import Highcharts from "highcharts/esm/highcharts.js";
 import { partial } from "lodash-es";
 
@@ -29,6 +30,7 @@ export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick):
 function setParentTickDrillable(
     drillConfig: IDrillConfig,
     target: EventTarget,
+    chartId: string,
     chartType: ChartType,
     tick: IHighchartsParentTick,
     ddPoints: IHighchartsPointObject[],
@@ -47,7 +49,7 @@ function setParentTickDrillable(
             .addClass("highcharts-drilldown-axis-label")
             .css(drilldownStyle)
             .on("click", () => {
-                tickLabelClick(drillConfig, ddPoints, target, chartType);
+                tickLabelClick(drillConfig, ddPoints, target, chartId, chartType);
             });
     } else if (label?.basicStyles) {
         label.styles = {}; // reset for full overwrite of styles
@@ -77,6 +79,7 @@ export function setupDrilldown(chart: Highcharts.Chart, chartType: ChartType): v
         setParentTickDrillable,
         drillConfig,
         chart.container,
+        chart.id,
         chartType,
     );
 

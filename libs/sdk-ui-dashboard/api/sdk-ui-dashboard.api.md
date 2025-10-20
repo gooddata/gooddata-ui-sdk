@@ -4871,6 +4871,8 @@ export interface IDashboardInsightProps {
     onDrill?: OnWidgetDrill;
     // @alpha (undocumented)
     onDrillDown?: OnDrillDownSuccess;
+    // @internal (undocumented)
+    onDrillStart?: OnDashboardDrill;
     // @alpha (undocumented)
     onDrillToAttributeUrl?: OnDrillToAttributeUrlSuccess;
     // @alpha (undocumented)
@@ -4891,8 +4893,8 @@ export interface IDashboardInsightProps {
     onWidgetFiltersReady?: (filters?: IFilter[]) => void;
     // @internal (undocumented)
     pushData?: (data: IPushData) => void;
-    // @internal
-    visualizationId?: string;
+    // @internal (undocumented)
+    returnFocusToInsight?: (force?: boolean) => void;
     widget: IInsightWidget;
     // @alpha
     workspace?: string;
@@ -5217,9 +5219,6 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
-// @internal (undocumented)
-export type IDrillSelectCloseBehavior = "closeOnSelect" | "preventClose";
-
 // @alpha
 export interface IDrillTargets {
     availableDrillTargets?: IAvailableDrillTargets;
@@ -5367,7 +5366,6 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     LoadingComponent: ComponentType<ILoadingProps>;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
-    visualizationId?: string;
     widget: IInsightWidget;
     workspace: string;
 }
@@ -10877,7 +10875,7 @@ export interface WidthResizerDragItem {
 }
 
 // @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, closeBehavior, visualizationId, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError, }: WithDrillSelectProps): ReactElement;
+export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError, }: WithDrillSelectProps): ReactElement;
 
 // @internal (undocumented)
 export interface WithDrillSelectProps {
@@ -10886,11 +10884,11 @@ export interface WithDrillSelectProps {
         onDrill: OnWidgetDrill;
     }) => ReactElement;
     // (undocumented)
-    closeBehavior?: IDrillSelectCloseBehavior;
-    // (undocumented)
     insight: IInsight;
     // (undocumented)
     onDrillDownSuccess?: OnDrillDownSuccess;
+    // (undocumented)
+    onDrillStart?: OnDashboardDrill;
     // (undocumented)
     onDrillToAttributeUrlSuccess?: OnDrillToAttributeUrlSuccess;
     // (undocumented)
@@ -10903,6 +10901,8 @@ export interface WithDrillSelectProps {
     onError?: (error: any) => void;
     // (undocumented)
     onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
+    // (undocumented)
+    returnFocusToInsight?: (force?: boolean) => void;
     // (undocumented)
     visualizationId?: string;
     // (undocumented)
