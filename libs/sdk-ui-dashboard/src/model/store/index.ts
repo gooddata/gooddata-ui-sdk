@@ -401,6 +401,7 @@ export {
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogReturnFocusTo,
+    selectAlertingDialogReturnFocusTo,
     selectScheduleEmailDialogDefaultAttachment,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,

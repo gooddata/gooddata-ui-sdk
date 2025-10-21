@@ -44,7 +44,7 @@ export interface KdaState {
     //settings
     separators?: ISeparators;
     //rest
-    selectedTrend: "up" | "down";
+    selectedTrend: ("up" | "down")[];
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
     selectedStatus: "loading" | "success" | "error" | "pending";
     attributeFilters: IDashboardAttributeFilter[];

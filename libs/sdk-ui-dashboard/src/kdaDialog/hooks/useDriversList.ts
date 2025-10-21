@@ -2,7 +2,10 @@
 
 import { useMemo } from "react";
 
+import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+
 import { useTrendDrivers } from "./useTrendDrivers.js";
+import { KdaItem } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export function useSignificantDrives() {
@@ -10,10 +13,18 @@ export function useSignificantDrives() {
     const { trendUp, trendDown } = useTrendDrivers();
 
     const list = useMemo(() => {
-        if (state.selectedTrend === "up") {
-            return trendUp;
+        const selected: IUiListboxInteractiveItem<KdaItem>[] = [];
+        if (state.selectedTrend.includes("up")) {
+            selected.push(...trendUp);
         }
-        return trendDown;
+        if (state.selectedTrend.includes("down")) {
+            selected.push(...trendDown);
+        }
+        return selected.sort((a, b) => {
+            return (
+                Math.abs(b.data.to.value - b.data.from.value) - Math.abs(a.data.to.value - a.data.from.value)
+            );
+        });
     }, [state.selectedTrend, trendUp, trendDown]);
 
     const maximum = useMemo(() => {

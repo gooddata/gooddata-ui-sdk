@@ -21,6 +21,7 @@ export const Dialog = memo<IDialogProps>(function Dialog({
     closeOnParentScroll,
     closeOnEscape,
     closeOnMouseDrag,
+    refocusKey,
     ...dialogProps
 }) {
     return (
@@ -45,7 +46,7 @@ export const Dialog = memo<IDialogProps>(function Dialog({
             closeOnMouseDrag={closeOnMouseDrag}
             onClose={onClose}
         >
-            <DialogBase {...dialogProps} isModal={isModal} onClose={onClose} />
+            <DialogBase {...dialogProps} isModal={isModal} onClose={onClose} refocusKey={refocusKey} />
         </Overlay>
     );
 });

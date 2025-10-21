@@ -19,7 +19,9 @@ export function useSummaryDrivers() {
             if (!prev[ref]) {
                 prev[ref] = createKdaGroup(ref, data.attribute, data.title, data.description);
             }
-            prev[ref].items.push(data);
+            if (data.isSignificant) {
+                prev[ref].items.push(data);
+            }
             return prev;
         }, {});
 

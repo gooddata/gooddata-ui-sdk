@@ -65,7 +65,8 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     ];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
         isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
-    const isBubbleWithViewByAttribute = isBubbleChart(type) && hasViewByAttribute;
+    const isBubbleWithViewByAttribute =
+        isBubbleChart(type) && hasViewByAttribute && chartOptions.data.series.length > 1;
     const isScatterPlotWithSegmentationOrClustering =
         isScatterPlot(type) &&
         !!(

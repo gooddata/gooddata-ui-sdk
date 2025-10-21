@@ -2827,6 +2827,10 @@
         "value": "No decreasing drivers",
         "comment": "Key drivers dialog empty down in key driver analysis dialog"
     },
+    "kdaDialog.dialog.keyDrives.empty": {
+        "value": "No key drivers",
+        "comment": "Key drivers dialog empty in key driver analysis dialog"
+    },
     "kdaDialog.dialog.keyDriver.chart.std": {
         "value": "Change Significance Threshold",
         "comment": "Key driver chart standard deviation title in key driver analysis chart"

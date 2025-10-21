@@ -280,6 +280,7 @@ export function AlertingDialogRenderer({
                                 titleElementId,
                             }}
                             showProgressIndicator={isSavingAlert}
+                            returnFocusAfterClose={!enableAutomationManagement}
                             footerLeftRenderer={() => (
                                 <AlertingDialogFooter
                                     isWhiteLabeled={isWhiteLabeled}

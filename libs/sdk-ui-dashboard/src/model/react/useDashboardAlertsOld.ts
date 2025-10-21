@@ -74,7 +74,7 @@ export const useDashboardAlertsOld = () => {
     const isAlertsManagementVisible = isAlertingAvailable && isAlertingEnabled;
 
     const openAlertingManagementDialog = useCallback(
-        () => isAlertingEnabled && dispatch(uiActions.openAlertingManagementDialog()),
+        () => isAlertingEnabled && dispatch(uiActions.openAlertingManagementDialog({})),
         [dispatch, isAlertingEnabled],
     );
 

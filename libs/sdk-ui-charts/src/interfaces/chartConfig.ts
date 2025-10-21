@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { IColorPalette, ISeparators, Identifier } from "@gooddata/sdk-model";
 import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { ChartFillConfig, IColorMapping } from "@gooddata/sdk-ui-vis-commons";
@@ -441,6 +442,20 @@ export interface IChartConfig {
      * Whether the chart supports configurable chart fill.
      */
     supportsChartFill?: boolean;
+
+    /**
+     * Enables single series mode for bubble charts.
+     *
+     * @remarks
+     * When enabled, all data points will be rendered as a single series instead of multiple series.
+     * This can be useful for performance optimization with large datasets or when all bubbles
+     * should be treated as a unified dataset.
+     *
+     * Default: false (multiple series mode)
+     *
+     * @beta
+     */
+    enableSingleBubbleSeries?: boolean;
 }
 
 /**

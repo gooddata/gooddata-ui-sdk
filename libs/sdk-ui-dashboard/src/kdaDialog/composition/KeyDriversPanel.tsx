@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useEffect, useId } from "react";
+import { useCallback, useEffect, useId } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -39,11 +39,36 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
 
     // When there are no items for selected trend, switch to the other trend
     useEffect(() => {
-        if (trendUp.length === 0 && trendDown.length > 0 && state.selectedTrend === "up") {
-            setState({ selectedTrend: "down" });
+        if (state.itemsStatus !== "success") {
+            return;
+        }
+        if (trendUp.length === 0 && trendDown.length > 0 && state.selectedTrend.includes("up")) {
+            setState({ selectedTrend: ["down"] });
         }
         // eslint-disable-next-line
-    }, []);
+    }, [state.itemsStatus]);
+
+    const upSelected = state.selectedTrend.includes("up");
+    const downSelected = state.selectedTrend.includes("down");
+
+    const onSelectCallback = useCallback(
+        (trend: "up" | "down") => {
+            const selected = state.selectedTrend.includes(trend);
+            if (selected) {
+                const selectedTrend = state.selectedTrend.filter((t) => trend !== t);
+                if (selectedTrend.length === 0) {
+                    selectedTrend.push(trend === "up" ? "down" : "up");
+                }
+                setState({
+                    selectedTrend,
+                });
+            } else {
+                const selectedTrend = [...state.selectedTrend, trend];
+                setState({ selectedTrend });
+            }
+        },
+        [setState, state.selectedTrend],
+    );
 
     return (
         <div className={cx("gd-kda-key-drivers-panel")}>
@@ -96,9 +121,9 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                                 { count: trendUp.length },
                             )}
                             size="small"
-                            isSelected={state.selectedTrend === "up"}
+                            isSelected={upSelected}
                             onClick={() => {
-                                setState({ selectedTrend: "up" });
+                                onSelectCallback("up");
                             }}
                             accessibilityConfig={{
                                 ariaControls: listId,
@@ -110,9 +135,9 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                                 { count: trendDown.length },
                             )}
                             size="small"
-                            isSelected={state.selectedTrend === "down"}
+                            isSelected={downSelected}
                             onClick={() => {
-                                setState({ selectedTrend: "down" });
+                                onSelectCallback("down");
                             }}
                             accessibilityConfig={{
                                 ariaControls: listId,
@@ -151,10 +176,16 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                         ) : (
                             <div className={cx("gd-kda-key-drivers-panel-list-empty")}>
                                 <UiIcon type="drawerEmpty" size={26} color="currentColor" />
-                                {state.selectedTrend === "up" ? (
-                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_up" />
+                                {upSelected && downSelected ? (
+                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty" />
                                 ) : (
-                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_down" />
+                                    <>
+                                        {upSelected ? (
+                                            <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_up" />
+                                        ) : (
+                                            <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_down" />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         )}

@@ -96,6 +96,14 @@ export const selectAlertingDialogContext: DashboardSelector<IAlertDialogContext>
 );
 
 /**
+ * @internal
+ */
+export const selectAlertingDialogReturnFocusTo: DashboardSelector<string | undefined> = createSelector(
+    selectSelf,
+    (state) => state.alertsDialog.returnFocusTo ?? undefined,
+);
+
+/**
  * @alpha
  */
 export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean> = createSelector(

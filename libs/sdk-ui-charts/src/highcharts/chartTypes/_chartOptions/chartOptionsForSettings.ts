@@ -35,6 +35,9 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
         ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
         ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
-        ...(settings.enableAccessibleChartTooltip ? { enableAccessibleTooltip: true } : {}),
+        ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
+            ? { enableAccessibleTooltip: true }
+            : {}),
+        ...(settings.enableAccessibilityMode ? { enableSingleBubbleSeries: true } : {}),
     };
 }

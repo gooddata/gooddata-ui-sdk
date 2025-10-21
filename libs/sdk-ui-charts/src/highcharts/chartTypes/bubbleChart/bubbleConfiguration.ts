@@ -1,12 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 
+import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions, SeriesBubbleOptions } from "../../lib/index.js";
-import { IChartOptions } from "../../typings/unsafe.js";
 import { styleVariables } from "../_chartCreators/styles/variables.js";
 
 export function getBubbleConfiguration(
-    _config: IChartOptions,
+    _config: IChartConfig,
     _definition: IExecutionDefinition,
     theme: ITheme,
 ): HighchartsOptions {
@@ -23,6 +24,11 @@ export function getBubbleConfiguration(
     return {
         chart: {
             type: "bubble",
+        },
+        accessibility: {
+            point: {
+                valueDescriptionFormat: "{index}. {point.name}, x: {point.x}, y: {point.y}, z: {point.z}.",
+            },
         },
         plotOptions: {
             series: {

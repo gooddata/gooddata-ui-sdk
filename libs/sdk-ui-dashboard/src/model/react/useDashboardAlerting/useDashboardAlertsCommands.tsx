@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { IAutomationMetadataObject, IWidget, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
@@ -48,11 +49,11 @@ export const useDashboardAlertsCommands = () => {
 
     // List / Management Dialog
     const openAlertsManagementDialog = useCallback(
-        (widget?: IWidget) =>
+        (widget?: IWidget, openedFrom?: string) =>
             isAlertingEnabled &&
             dispatch(
                 uiActions.openAlertingManagementDialog({
-                    ...(widget?.ref ? { widgetRef: widget.ref } : {}),
+                    ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
                 }),
             ),
         [dispatch, isAlertingEnabled],

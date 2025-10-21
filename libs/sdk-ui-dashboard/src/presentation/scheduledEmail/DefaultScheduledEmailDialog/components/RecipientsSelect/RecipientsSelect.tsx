@@ -1,9 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, useMemo, useState } from "react";
+import { KeyboardEvent, useCallback, useMemo, useState } from "react";
 
 import { sortBy } from "lodash-es";
 
+import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     IAutomationRecipient,
     INotificationChannelIdentifier,
@@ -155,6 +156,17 @@ export function RecipientsSelect({
         externalRecipientOverride,
     ]);
 
+    const onLoadHandler = useCallback(
+        (queryOptions?: IWorkspaceUsersQueryOptions) => {
+            setSearch(queryOptions?.search);
+        },
+        [setSearch],
+    );
+
+    const loggedUserPrepared = useMemo(() => {
+        return loggedUser ? convertUserToAutomationRecipient(loggedUser) : undefined;
+    }, [loggedUser]);
+
     return (
         <RecipientsSelectRenderer
             id={id}
@@ -164,10 +176,8 @@ export function RecipientsSelect({
             value={value}
             originalValue={originalValue}
             onChange={onChange}
-            onLoad={(queryOptions) => {
-                setSearch(queryOptions?.search);
-            }}
-            loggedUser={loggedUser ? convertUserToAutomationRecipient(loggedUser) : undefined}
+            onLoad={onLoadHandler}
+            loggedUser={loggedUserPrepared}
             allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
             allowEmptySelection={allowEmptySelection}
             allowExternalRecipients={allowExternalRecipients}
