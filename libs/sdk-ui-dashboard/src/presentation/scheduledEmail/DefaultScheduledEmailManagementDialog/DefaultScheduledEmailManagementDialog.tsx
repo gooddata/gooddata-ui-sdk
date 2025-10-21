@@ -34,6 +34,7 @@ import {
     selectEntitlementUnlimitedAutomations,
     selectExecutionTimestamp,
     selectExternalRecipient,
+    selectIsScheduleEmailDialogOpen,
     selectIsWhiteLabeled,
     selectTimezone,
     useAutomationsInvalidateRef,
@@ -69,6 +70,7 @@ export function ScheduledEmailManagementDialog({
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const isEditDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const enableBulkActions = !useDashboardSelector(selectEnableAccessibilityMode);
     const dashboardId = useDashboardSelector(selectDashboardId);
@@ -134,6 +136,7 @@ export function ScheduledEmailManagementDialog({
                 accessibilityConfig={{ titleElementId, isModal: true }}
                 returnFocusAfterClose
                 returnFocusTo={returnFocusTo}
+                refocusKey={isEditDialogOpen}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>

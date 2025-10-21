@@ -354,6 +354,8 @@ export interface IChartConfig {
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
+    // @beta
+    enableSingleBubbleSeries?: boolean;
     // @internal
     enableVisualizationFineTuning?: boolean;
     forceDisableDrillOnAxes?: boolean;

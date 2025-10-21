@@ -103,17 +103,25 @@ const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.context = undefined;
 };
 
-const openAlertingManagementDialog: UiReducer<PayloadAction<IAlertDialogContext | undefined>> = (
-    state,
-    action,
-) => {
-    const { widgetRef } = action.payload ?? {};
+const openAlertingManagementDialog: UiReducer<
+    PayloadAction<IAlertDialogContext & { openedFrom?: string }>
+> = (state, action) => {
+    const { widgetRef, openedFrom } = action.payload ?? {};
 
     state.alertsManagementDialog.open = true;
     if (widgetRef) {
         state.alertsManagementDialog.context = {
             widgetRef,
         };
+
+        if (openedFrom === "widget") {
+            const returnFocusTo = getDashboardInsightMenuButtonId(objRefToString(widgetRef));
+            state.alertsDialog.returnFocusTo = returnFocusTo;
+        }
+    }
+
+    if (openedFrom === "dashboard") {
+        state.alertsDialog.returnFocusTo = undefined;
     }
 };
 

@@ -408,12 +408,16 @@ export function getChartOptions(
         isViewByTwoAttributes = false,
     } = chartedAttributeDiscovery(dv, type);
 
+    // For bubble chart in single series mode (accessibility), use measure-based coloring like scatter plot
+    const colorStrategyStackByAttribute =
+        isBubbleChart(type) && chartConfig?.enableSingleBubbleSeries ? null : stackByAttribute;
+
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,
         config.colorMapping,
         viewByAttribute,
         viewByParentAttribute,
-        stackByAttribute,
+        colorStrategyStackByAttribute,
         dv,
         type,
         theme,
@@ -436,6 +440,7 @@ export function getChartOptions(
         emptyHeaderTitle,
         theme,
         config.chartFill,
+        config,
     );
 
     const drillableSeries = getDrillableSeries(

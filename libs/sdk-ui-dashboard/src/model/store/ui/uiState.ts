@@ -51,6 +51,7 @@ export interface UiState {
     };
     alertsDialog: {
         open: boolean;
+        returnFocusTo?: string;
         context?: IAlertDialogContext;
     };
     automationsManagement: {
@@ -139,6 +140,7 @@ export const uiInitialState: UiState = {
     },
     alertsDialog: {
         open: false,
+        returnFocusTo: undefined,
     },
     automationsManagement: {
         invalidateItemsRef: undefined,

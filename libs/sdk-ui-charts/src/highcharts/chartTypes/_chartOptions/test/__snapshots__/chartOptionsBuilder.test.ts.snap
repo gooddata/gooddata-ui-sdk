@@ -220,6 +220,7 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
   ],
   "drilldown": true,
   "format": "$#,#00.00",
+  "name": "Jessica Traven",
   "x": 245,
   "y": 32,
   "z": 2280481.04,
@@ -293,6 +294,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Adam Bradley",
         "x": 0,
         "y": 33,
         "z": 2424413.8,
@@ -307,6 +309,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alejandro Vabiano",
         "x": 0,
         "y": 29,
         "z": 1963436.86,
@@ -321,6 +324,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alexsandr Fyodr",
         "x": 0,
         "y": 35,
         "z": 2100205.16,
@@ -335,6 +339,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Cory Owens",
         "x": 0,
         "y": 30,
         "z": 2364179.19,
@@ -349,6 +354,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 0,
         "y": 30,
         "z": 1776567.88,
@@ -363,6 +369,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 0,
         "y": 35,
         "z": 2615259.07,
@@ -377,6 +384,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 0,
         "y": 29,
         "z": 1471667.02,
@@ -391,6 +399,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 0,
         "y": 31,
         "z": 2161030.33,
@@ -405,6 +414,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 0,
         "y": 32,
         "z": 2280481.04,
@@ -419,6 +429,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 0,
         "y": 26,
         "z": 1769560.54,
@@ -433,6 +444,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 0,
         "y": 42,
         "z": 2346482.16,
@@ -447,6 +459,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 0,
         "y": 30,
         "z": 1705084.84,
@@ -461,6 +474,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 0,
         "y": 30,
         "z": 2345090.98,
@@ -475,6 +489,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 0,
         "y": 64,
         "z": 131675.42,
@@ -489,6 +504,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 0,
         "y": 88,
         "z": 1668600.86,
@@ -503,6 +519,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 0,
         "y": 93,
         "z": 1649882.14,
@@ -517,6 +534,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 0,
         "y": 70,
         "z": 1229206.9,
@@ -531,6 +549,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 0,
         "y": 71,
         "z": 457045.18,
@@ -545,6 +564,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 0,
         "y": 60,
         "z": 801178.61,
@@ -559,6 +579,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 0,
         "y": 60,
         "z": 1065164.57,
@@ -578,6 +599,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 546,
         "y": 30,
         "z": 1776567.88,
@@ -592,6 +614,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 12,
         "y": 35,
         "z": 2615259.07,
@@ -606,6 +629,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 199,
         "y": 29,
         "z": 1471667.02,
@@ -620,6 +644,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 475,
         "y": 31,
         "z": 2161030.33,
@@ -634,6 +659,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 245,
         "y": 32,
         "z": 2280481.04,
@@ -648,6 +674,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 347,
         "y": 26,
         "z": 1769560.54,
@@ -662,6 +689,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 345,
         "y": 42,
         "z": 2346482.16,
@@ -676,6 +704,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 34,
         "y": 30,
         "z": 1705084.84,
@@ -690,6 +719,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 323,
         "y": 30,
         "z": 2345090.98,
@@ -704,6 +734,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 346,
         "y": 64,
         "z": 131675.42,
@@ -718,6 +749,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 457,
         "y": 88,
         "z": 1668600.86,
@@ -732,6 +764,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 451,
         "y": 93,
         "z": 1649882.14,
@@ -746,6 +779,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 232,
         "y": 70,
         "z": 1229206.9,
@@ -760,6 +794,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 311,
         "y": 71,
         "z": 457045.18,
@@ -774,6 +809,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 700,
         "y": 60,
         "z": 801178.61,
@@ -788,6 +824,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 246,
         "y": 60,
         "z": 1065164.57,
@@ -1159,6 +1196,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
   ],
   "drilldown": true,
   "format": "$#,#00.00",
+  "name": "Jessica Traven",
   "x": 245,
   "y": 32,
   "z": 2280481.04,
@@ -1232,6 +1270,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Adam Bradley",
         "x": 0,
         "y": 33,
         "z": 2424413.8,
@@ -1246,6 +1285,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alejandro Vabiano",
         "x": 0,
         "y": 29,
         "z": 1963436.86,
@@ -1260,6 +1300,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alexsandr Fyodr",
         "x": 0,
         "y": 35,
         "z": 2100205.16,
@@ -1274,6 +1315,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Cory Owens",
         "x": 0,
         "y": 30,
         "z": 2364179.19,
@@ -1288,6 +1330,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 0,
         "y": 30,
         "z": 1776567.88,
@@ -1302,6 +1345,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 0,
         "y": 35,
         "z": 2615259.07,
@@ -1316,6 +1360,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 0,
         "y": 29,
         "z": 1471667.02,
@@ -1330,6 +1375,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 0,
         "y": 31,
         "z": 2161030.33,
@@ -1344,6 +1390,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 0,
         "y": 32,
         "z": 2280481.04,
@@ -1358,6 +1405,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 0,
         "y": 26,
         "z": 1769560.54,
@@ -1372,6 +1420,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 0,
         "y": 42,
         "z": 2346482.16,
@@ -1386,6 +1435,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 0,
         "y": 30,
         "z": 1705084.84,
@@ -1400,6 +1450,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 0,
         "y": 30,
         "z": 2345090.98,
@@ -1414,6 +1465,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 0,
         "y": 64,
         "z": 131675.42,
@@ -1428,6 +1480,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 0,
         "y": 88,
         "z": 1668600.86,
@@ -1442,6 +1495,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 0,
         "y": 93,
         "z": 1649882.14,
@@ -1456,6 +1510,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 0,
         "y": 70,
         "z": 1229206.9,
@@ -1470,6 +1525,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 0,
         "y": 71,
         "z": 457045.18,
@@ -1484,6 +1540,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 0,
         "y": 60,
         "z": 801178.61,
@@ -1498,6 +1555,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 0,
         "y": 60,
         "z": 1065164.57,
@@ -1517,6 +1575,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 546,
         "y": 30,
         "z": 1776567.88,
@@ -1531,6 +1590,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 12,
         "y": 35,
         "z": 2615259.07,
@@ -1545,6 +1605,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 199,
         "y": 29,
         "z": 1471667.02,
@@ -1559,6 +1620,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 475,
         "y": 31,
         "z": 2161030.33,
@@ -1573,6 +1635,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 245,
         "y": 32,
         "z": 2280481.04,
@@ -1587,6 +1650,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 347,
         "y": 26,
         "z": 1769560.54,
@@ -1601,6 +1665,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 345,
         "y": 42,
         "z": 2346482.16,
@@ -1615,6 +1680,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 34,
         "y": 30,
         "z": 1705084.84,
@@ -1629,6 +1695,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 323,
         "y": 30,
         "z": 2345090.98,
@@ -1643,6 +1710,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 346,
         "y": 64,
         "z": 131675.42,
@@ -1657,6 +1725,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 457,
         "y": 88,
         "z": 1668600.86,
@@ -1671,6 +1740,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 451,
         "y": 93,
         "z": 1649882.14,
@@ -1685,6 +1755,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 232,
         "y": 70,
         "z": 1229206.9,
@@ -1699,6 +1770,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 311,
         "y": 71,
         "z": 457045.18,
@@ -1713,6 +1785,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 700,
         "y": 60,
         "z": 801178.61,
@@ -1727,6 +1800,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 246,
         "y": 60,
         "z": 1065164.57,
@@ -2298,6 +2372,7 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
   ],
   "drilldown": true,
   "format": "$#,#00.00",
+  "name": "Jessica Traven",
   "x": 245,
   "y": 32,
   "z": 2280481.04,
@@ -2371,6 +2446,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Adam Bradley",
         "x": 0,
         "y": 33,
         "z": 2424413.8,
@@ -2385,6 +2461,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alejandro Vabiano",
         "x": 0,
         "y": 29,
         "z": 1963436.86,
@@ -2399,6 +2476,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Alexsandr Fyodr",
         "x": 0,
         "y": 35,
         "z": 2100205.16,
@@ -2413,6 +2491,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Cory Owens",
         "x": 0,
         "y": 30,
         "z": 2364179.19,
@@ -2427,6 +2506,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 0,
         "y": 30,
         "z": 1776567.88,
@@ -2441,6 +2521,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 0,
         "y": 35,
         "z": 2615259.07,
@@ -2455,6 +2536,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 0,
         "y": 29,
         "z": 1471667.02,
@@ -2469,6 +2551,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 0,
         "y": 31,
         "z": 2161030.33,
@@ -2483,6 +2566,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 0,
         "y": 32,
         "z": 2280481.04,
@@ -2497,6 +2581,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 0,
         "y": 26,
         "z": 1769560.54,
@@ -2511,6 +2596,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 0,
         "y": 42,
         "z": 2346482.16,
@@ -2525,6 +2611,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 0,
         "y": 30,
         "z": 1705084.84,
@@ -2539,6 +2626,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 0,
         "y": 30,
         "z": 2345090.98,
@@ -2553,6 +2641,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 0,
         "y": 64,
         "z": 131675.42,
@@ -2567,6 +2656,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 0,
         "y": 88,
         "z": 1668600.86,
@@ -2581,6 +2671,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 0,
         "y": 93,
         "z": 1649882.14,
@@ -2595,6 +2686,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 0,
         "y": 70,
         "z": 1229206.9,
@@ -2609,6 +2701,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 0,
         "y": 71,
         "z": 457045.18,
@@ -2623,6 +2716,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 0,
         "y": 60,
         "z": 801178.61,
@@ -2637,6 +2731,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 0,
         "y": 60,
         "z": 1065164.57,
@@ -2656,6 +2751,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dale Perdadtin",
         "x": 546,
         "y": 30,
         "z": 1776567.88,
@@ -2670,6 +2766,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Dave Bostadt",
         "x": 12,
         "y": 35,
         "z": 2615259.07,
@@ -2684,6 +2781,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ellen Jones",
         "x": 199,
         "y": 29,
         "z": 1471667.02,
@@ -2698,6 +2796,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Huey Jonas",
         "x": 475,
         "y": 31,
         "z": 2161030.33,
@@ -2712,6 +2811,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jessica Traven",
         "x": 245,
         "y": 32,
         "z": 2280481.04,
@@ -2726,6 +2826,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "John Jovi",
         "x": 347,
         "y": 26,
         "z": 1769560.54,
@@ -2740,6 +2841,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Jon Jons",
         "x": 345,
         "y": 42,
         "z": 2346482.16,
@@ -2754,6 +2856,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Lea Forbes",
         "x": 34,
         "y": 30,
         "z": 1705084.84,
@@ -2768,6 +2871,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Monique Babonas",
         "x": 323,
         "y": 30,
         "z": 2345090.98,
@@ -2782,6 +2886,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Gomez",
         "x": 346,
         "y": 64,
         "z": 131675.42,
@@ -2796,6 +2901,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Paul Jacobs",
         "x": 457,
         "y": 88,
         "z": 1668600.86,
@@ -2810,6 +2916,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Ravi Deetri",
         "x": 451,
         "y": 93,
         "z": 1649882.14,
@@ -2824,6 +2931,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Thomas Gones",
         "x": 232,
         "y": 70,
         "z": 1229206.9,
@@ -2838,6 +2946,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Tom Stickler",
         "x": 311,
         "y": 71,
         "z": 457045.18,
@@ -2852,6 +2961,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Trevor Deegan",
         "x": 700,
         "y": 60,
         "z": 801178.61,
@@ -2866,6 +2976,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "data": [
       {
         "format": "$#,#00.00",
+        "name": "Victor Crushetz",
         "x": 246,
         "y": 60,
         "z": 1065164.57,

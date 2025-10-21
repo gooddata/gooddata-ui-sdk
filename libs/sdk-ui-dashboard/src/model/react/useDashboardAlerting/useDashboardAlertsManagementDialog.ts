@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
@@ -50,18 +51,21 @@ export const useDashboardAlertsManagementDialog = () => {
      *
      * the setup of menu items available in the menu needs to reflect this.
      */
-    const defaultOnAlertingManagement = useCallback(() => {
-        if (!dashboardRef) {
-            return;
-        }
+    const defaultOnAlertingManagement = useCallback(
+        (widget?: IWidget) => {
+            if (!dashboardRef) {
+                return;
+            }
 
-        openAlertsManagementDialog();
-    }, [dashboardRef, openAlertsManagementDialog]);
+            openAlertsManagementDialog(widget, "dashboard");
+        },
+        [dashboardRef, openAlertsManagementDialog],
+    );
 
     // Open / Close
     const onAlertingManagementOpen = useCallback(
         (widget?: IWidget) => {
-            openAlertsManagementDialog(widget);
+            openAlertsManagementDialog(widget, "widget");
         },
         [openAlertsManagementDialog],
     );

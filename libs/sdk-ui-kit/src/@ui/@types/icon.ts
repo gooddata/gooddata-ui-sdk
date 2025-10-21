@@ -142,4 +142,5 @@ export type IconType =
     | "filePdf"
     | "fileImage"
     | "fileCsvFormatted"
-    | "fileCsvRaw";
+    | "fileCsvRaw"
+    | "recommendation";

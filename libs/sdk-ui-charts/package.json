@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "11.6.0-alpha.3",
+    "version": "11.6.0-alpha.4",
     "description": "GoodData.UI SDK - Charts",
     "repository": {
         "type": "git",
@@ -16,6 +16,7 @@
     "type": "module",
     "exports": {
         ".": "./esm/index.js",
+        "./internal": "./esm/internal.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/CoreAreaChart": "./esm/charts/areaChart/CoreAreaChart.js",

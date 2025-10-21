@@ -20,7 +20,7 @@ const defaultState: KdaState = {
     items: [],
     itemsStatus: "pending",
     //selected
-    selectedTrend: "up",
+    selectedTrend: ["up", "down"],
     selectedItem: "summary",
     selectedStatus: "pending",
     //root data

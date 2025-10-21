@@ -10,6 +10,8 @@ import { KdaSummaryDrivers } from "../components/KdaSummaryDrivers.js";
 import { KdaSummaryHeadline } from "../components/KdaSummaryHeadline.js";
 import { KdaItem } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { useDataViewWithConfig } from "./hooks/useDataViewWithConfig.js";
+import { useGroupAndItem } from "./hooks/useGroupAndItem.js";
 
 export interface KeyDriversOverviewProps {
     loading?: boolean;
@@ -64,6 +66,9 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     const description = getDescription(state.selectedItem);
     const category = getCategory(state.selectedItem);
 
+    const { group, item } = useGroupAndItem();
+    const { config, dataView } = useDataViewWithConfig(group, item);
+
     return (
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
             <div>
@@ -75,7 +80,7 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
                 ) : null}
             </div>
             <div className={cx("gd-kda-key-drivers-detail-visualisation")}>
-                <KdaKeyDriverChart />
+                <KdaKeyDriverChart config={config} dataView={dataView} />
             </div>
             <div className={cx("gd-kda-key-drivers-detail-info")}>
                 <UiIcon type="questionMark" size={12} />{" "}

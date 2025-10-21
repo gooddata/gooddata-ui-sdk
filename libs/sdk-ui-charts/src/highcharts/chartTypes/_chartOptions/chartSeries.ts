@@ -6,6 +6,7 @@ import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@goodda
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
+import { IChartConfig } from "../../../interfaces/index.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
@@ -215,13 +216,21 @@ export function getSeries(
     emptyHeaderTitle: string,
     theme: ITheme | undefined,
     chartFill: ChartFillConfig | undefined,
+    chartConfig?: IChartConfig,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(dv, viewByAttribute, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy, emptyHeaderTitle);
+        return getBubbleChartSeries(
+            dv,
+            measureGroup,
+            stackByAttribute,
+            colorStrategy,
+            emptyHeaderTitle,
+            chartConfig,
+        );
     } else if (isTreemap(type) && stackByAttribute) {
         return getTreemapStackedSeries(
             dv,

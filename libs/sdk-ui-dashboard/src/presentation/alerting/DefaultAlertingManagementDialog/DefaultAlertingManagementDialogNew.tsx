@@ -21,6 +21,7 @@ import {
     selectEnableAccessibilityMode,
     selectEnableAutomationManagement,
     selectExternalRecipient,
+    selectIsAlertingDialogOpen,
     selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
     selectTimezone,
@@ -29,6 +30,7 @@ import {
 } from "../../../model/index.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
+import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 import { IAlertingManagementDialogProps } from "../types.js";
 
 /**
@@ -54,6 +56,7 @@ export function DefaultAlertingManagementDialogNew({
     const backend = useBackend();
     const timezone = useDashboardSelector(selectTimezone);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const isEditDialogOpen = useDashboardSelector(selectIsAlertingDialogOpen);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const enableBulkActions = !useDashboardSelector(selectEnableAccessibilityMode);
     const dashboardId = useDashboardSelector(selectDashboardId);
@@ -62,6 +65,7 @@ export function DefaultAlertingManagementDialogNew({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
+    const { returnFocusTo } = useAlertingDialogAccessibility();
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -132,8 +136,9 @@ export function DefaultAlertingManagementDialogNew({
                         enableAutomationManagement,
                 })}
                 accessibilityConfig={{ titleElementId, isModal: true }}
-                returnFocusTo={"default-menu-button-id"}
+                returnFocusTo={returnFocusTo}
                 returnFocusAfterClose
+                refocusKey={isEditDialogOpen}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>

@@ -34,6 +34,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     accessibilityConfig,
     className,
     autofocusOnOpen = true,
+    refocusKey,
     children,
     CloseButton = DialogCloseButton,
     initialFocus,
@@ -66,7 +67,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     return (
         <UiFocusManager
             enableFocusTrap={isModal}
-            enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus } : false}
+            enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus, refocusKey } : false}
             enableReturnFocusOnUnmount={returnFocusAfterClose ? { returnFocusTo } : false}
             focusCheckFn={focusCheckFn}
         >

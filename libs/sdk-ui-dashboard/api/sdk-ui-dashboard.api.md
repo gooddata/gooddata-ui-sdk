@@ -8398,6 +8398,9 @@ export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttribute
 // @internal
 export const selectAgGridToken: DashboardSelector<string | undefined>;
 
+// @internal (undocumented)
+export const selectAlertingDialogReturnFocusTo: DashboardSelector<string | undefined>;
+
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;
 
@@ -10043,7 +10046,9 @@ export const uiActions: {
     openedFrom?: string;
     }, "uiSlice/openScheduleEmailManagementDialog">;
     closeScheduleEmailManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailManagementDialog">;
-    openAlertingManagementDialog: ActionCreatorWithOptionalPayload<IAlertDialogContext | undefined, "uiSlice/openAlertingManagementDialog">;
+    openAlertingManagementDialog: ActionCreatorWithPayload<IAlertDialogContext & {
+    openedFrom?: string;
+    }, "uiSlice/openAlertingManagementDialog">;
     closeAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingManagementDialog">;
     openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext, "uiSlice/openAlertingDialog">;
     closeAlertingDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingDialog">;
@@ -10117,6 +10122,7 @@ export interface UiState {
     // (undocumented)
     alertsDialog: {
         open: boolean;
+        returnFocusTo?: string;
         context?: IAlertDialogContext;
     };
     // (undocumented)
@@ -10346,7 +10352,7 @@ export const useDashboardAlerts: () => {
     onAlertingSaveSuccess: () => void;
     isAlertManagementVisible: boolean;
     isAlertManagementDialogOpen: boolean;
-    defaultOnAlertingManagement: () => void;
+    defaultOnAlertingManagement: (widget?: IWidget) => void;
     onAlertingManagementOpen: (widget?: IWidget) => void;
     onAlertingManagementClose: () => void;
     onAlertingManagementAdd: (targetWidget?: IWidget) => void;

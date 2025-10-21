@@ -366,6 +366,7 @@ export function ScheduledMailDialogRenderer({
                             }}
                             showProgressIndicator={isSavingScheduledEmail}
                             returnFocusTo={returnFocusTo}
+                            returnFocusAfterClose={!enableAutomationManagement}
                             footerLeftRenderer={() => (
                                 <ScheduledEmailDialogFooter
                                     isWhiteLabeled={isWhiteLabeled}

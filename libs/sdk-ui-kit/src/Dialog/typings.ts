@@ -40,6 +40,11 @@ export interface IDialogBaseProps {
      * Default is true.
      */
     autofocusOnOpen?: boolean;
+    /**
+     * When this value changes, the dialog will refocus the first focusable element.
+     * Only works when autofocusOnOpen is true.
+     */
+    refocusKey?: unknown;
     CloseButton?: ComponentType<IDialogCloseButtonProps>;
     initialFocus?: RefObject<HTMLElement | null> | string;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
@@ -93,6 +98,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     headline?: string;
     initialFocus?: RefObject<HTMLElement | null> | string;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
+    returnFocusAfterClose?: boolean;
     accessibilityConfig?: {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;

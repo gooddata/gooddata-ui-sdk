@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, useCallback, useMemo } from "react";
+import { ComponentType, useMemo } from "react";
 
 import { ITheme } from "@gooddata/sdk-model";
 import {
@@ -10,18 +10,13 @@ import {
     IErrorProps,
     ILoadingInjectedProps,
     ILoadingProps,
-    ITranslationsComponentProps,
-    IntlTranslationsProvider,
-    IntlWrapper,
     newErrorMapping,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { ChartTransformation, getValidColorPalette } from "../../highcharts/index.js";
+import { IRawChartProps, RawChart } from "./RawChart.js";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
-import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.
@@ -37,79 +32,10 @@ export interface IBaseChartProps extends ICoreChartProps {
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
 function StatelessBaseChart(props: Props) {
-    const {
-        dataView,
-        error,
-        seType,
-        isLoading,
-        ErrorComponent,
-        LoadingComponent,
-        afterRender,
-        height,
-        width,
-        locale,
-        config = {},
-        type,
-        onDataTooLarge = () => {},
-        pushData,
-        theme,
-        drillableItems,
-        onDrill,
-        onNegativeValues,
-        onLegendReady = () => {},
-        intl,
-    } = withDefaultCoreChartProps(props);
+    const { dataView, error, seType, isLoading, ErrorComponent, LoadingComponent, intl, ...restProps } =
+        withDefaultCoreChartProps(props);
 
     const errorMap: IErrorDescriptors = useMemo(() => newErrorMapping(intl), [intl]);
-
-    const renderChartTransformation = useCallback(() => {
-        const colorPalette = getValidColorPalette(config);
-        const fullConfig = { ...config, type, colorPalette };
-        const sanitizedConfig = getSanitizedStackingConfig(dataView!.definition, fullConfig);
-
-        return (
-            <ThemeContextProvider theme={theme} themeIsLoading={false}>
-                <IntlWrapper locale={locale}>
-                    <IntlTranslationsProvider>
-                        {(translationProps: ITranslationsComponentProps) => {
-                            return (
-                                <ChartTransformation
-                                    height={height}
-                                    width={width}
-                                    config={sanitizedConfig}
-                                    drillableItems={drillableItems}
-                                    locale={locale}
-                                    dataView={dataView!}
-                                    afterRender={afterRender}
-                                    onDrill={onDrill}
-                                    onDataTooLarge={onDataTooLarge}
-                                    onNegativeValues={onNegativeValues}
-                                    onLegendReady={onLegendReady}
-                                    pushData={pushData}
-                                    numericSymbols={translationProps.numericSymbols}
-                                />
-                            );
-                        }}
-                    </IntlTranslationsProvider>
-                </IntlWrapper>
-            </ThemeContextProvider>
-        );
-    }, [
-        afterRender,
-        config,
-        dataView,
-        drillableItems,
-        height,
-        locale,
-        onDataTooLarge,
-        onDrill,
-        onLegendReady,
-        onNegativeValues,
-        pushData,
-        theme,
-        type,
-        width,
-    ]);
 
     const TypedErrorComponent = ErrorComponent as ComponentType<IErrorProps>;
     const TypedLoadingComponent = LoadingComponent as ComponentType<ILoadingProps>;
@@ -130,11 +56,11 @@ function StatelessBaseChart(props: Props) {
         return TypedLoadingComponent ? <TypedLoadingComponent /> : null;
     }
 
-    return renderChartTransformation();
+    return <RawChart dataView={dataView} {...(restProps as Omit<IRawChartProps, "dataView">)} />;
 }
 
 /**
- * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside SDK; will disappear.
  *
  * @internal
  */
