@@ -74,7 +74,7 @@ jobs:
       - name: Get Vault secrets for ECR
         uses: hashicorp/vault-action@v2
         with:
-          url: "https://vault.ord1.infra.intgdc.com"
+          url: ${{ vars.VAULT_URL }}
           method: jwt
           path: jwt/github
           role: ecr-push

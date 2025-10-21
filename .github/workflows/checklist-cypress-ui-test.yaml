@@ -132,7 +132,7 @@ jobs:
         uses: hashicorp/vault-action@v3
         id: secrets
         with:
-          url: https://vault.ord1.infra.intgdc.com
+          url: ${{ vars.VAULT_URL }}
           method: jwt
           path: jwt/github
           role: front-end
