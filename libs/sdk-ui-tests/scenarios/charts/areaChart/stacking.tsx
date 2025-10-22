@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
@@ -12,6 +13,9 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("two measures with viewBy and disabled stacking", {
         ...AreaChartWithTwoMeasuresAndViewBy,

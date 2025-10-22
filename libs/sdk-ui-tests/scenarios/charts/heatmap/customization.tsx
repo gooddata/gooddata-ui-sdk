@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
 import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
@@ -11,7 +12,10 @@ import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenar
 
 const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", HeatmapWithMeasureRowsAndColumns, legendCustomizer);
 
@@ -32,7 +36,10 @@ const legendResponziveScenarios = responsiveScenarios(
 
 const dataLabelScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", HeatmapWithMeasureRowsAndColumns, dataLabelCustomizer);
 

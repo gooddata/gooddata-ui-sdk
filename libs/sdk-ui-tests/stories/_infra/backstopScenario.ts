@@ -109,6 +109,11 @@ export interface IBackstopScenarioConfig {
     readySelector?: string;
 
     /**
+     * Reload the page after the ready selector is found
+     */
+    reloadAfterReady?: boolean;
+
+    /**
      * Specify a different state or environment when creating reference
      */
     referenceUrl?: string;
@@ -152,6 +157,7 @@ export interface IViewportNext {
     height: number;
 }
 
+// todo: make this type align with new config
 export type BackstopConfig = {
     /**
      * Backstop scenario ⇒ scenario configuration mapping. Key will be used to name the test scenario.

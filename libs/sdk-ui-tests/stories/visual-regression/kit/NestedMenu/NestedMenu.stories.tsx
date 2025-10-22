@@ -67,15 +67,18 @@ const screenshotProps = {
     closed: {},
     openedMenu: {
         clickSelector: ".s-menu-toggle",
-        postInteractionWait: 200,
+        postInteractionWait: 250,
     },
     openedSubmenu: {
         clickSelectors: [".s-menu-toggle", ".s-submenu-toggle"],
-        postInteractionWait: 200,
+        postInteractionWait: 50,
+        delay: {
+            postOperation: 250,
+        },
     },
     closedByOutsideClick: {
         clickSelectors: [".s-menu-toggle", "#outside-click-anchor"],
-        postInteractionWait: 200,
+        postInteractionWait: 250,
     },
 };
 

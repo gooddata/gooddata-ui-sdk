@@ -522,6 +522,11 @@
                         "description": "Column type",
                         "example": "INT",
                         "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Column description/comment from database",
+                        "example": "Customer unique identifier"
                     }
                 },
                 "description": "A SQL query result column."
@@ -585,6 +590,11 @@
                         "type": "string",
                         "description": "Referenced table (Foreign key)",
                         "example": "customer_id"
+                    },
+                    "description": {
+                        "maxLength": 1024,
+                        "type": "string",
+                        "description": "Column description"
                     }
                 },
                 "description": "A table column."

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 
 import { comboVariants } from "./_variants.js";
@@ -15,13 +16,19 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 const twoMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "dual axis two measures with slicing" })
+    .withVisualTestConfig({
+        groupUnder: "dual axis two measures with slicing",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenarios("dual axis two measures with slicing", ComboChartWithTwoMeasuresAndViewBy, comboVariants);
 
 const twoMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "dual axis two measures without slicing" })
+    .withVisualTestConfig({
+        groupUnder: "dual axis two measures without slicing",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenarios(
         "dual axis two measures without slicing",
         ComboChartWithTwoMeasuresAndNoViewBy,
@@ -31,7 +38,10 @@ const twoMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboC
 const multipleMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "dual axis multiple measures with slicing" })
+    .withVisualTestConfig({
+        groupUnder: "dual axis multiple measures with slicing",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenarios(
         "dual axis multiple measures with slicing",
         ComboChartWithArithmeticMeasuresAndViewBy,
@@ -41,7 +51,10 @@ const multipleMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart
 const multipleMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "dual axis multiple measures without slicing" })
+    .withVisualTestConfig({
+        groupUnder: "dual axis multiple measures without slicing",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenarios(
         "dual axis multiple measures without slicing",
         ComboChartWithMultipleMeasuresAndNoViewBy,
@@ -51,12 +64,18 @@ const multipleMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", C
 const axisNameConfig = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "axis name configuration" })
+    .withVisualTestConfig({
+        groupUnder: "axis name configuration",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenarios("axis name configuration", ComboChartWithTwoMeasuresAndViewBy, axisNameCustomization);
 
 const others = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("dual axis disabled", {
         ...ComboChartWithTwoMeasuresAndViewBy,
         config: {

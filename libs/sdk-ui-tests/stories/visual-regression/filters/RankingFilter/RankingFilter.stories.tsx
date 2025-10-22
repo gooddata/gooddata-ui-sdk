@@ -28,7 +28,10 @@ const dropdownWithOneAttributeItemScenarios = {
 };
 
 const customGranularityScenarios = {
-    attributeDropdownOpened: { clickSelector: ".s-rf-attribute-dropdown-button", postInteractionWait: 200 },
+    attributeDropdownOpened: {
+        clickSelector: ".s-rf-attribute-dropdown-button",
+        delay: { postOperation: 350 },
+    },
 };
 
 const buttonScenarios = {

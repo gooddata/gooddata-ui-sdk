@@ -591,6 +591,7 @@ export const ExportIdentifierRefIdentifierTypeEnum = {
     EXPORT_DEFINITION: "exportDefinition",
     AUTOMATION: "automation",
     AUTOMATION_RESULT: "automationResult",
+    MEMORY_ITEM: "memoryItem",
     PROMPT: "prompt",
     VISUALIZATION_OBJECT: "visualizationObject",
     FILTER_CONTEXT: "filterContext",

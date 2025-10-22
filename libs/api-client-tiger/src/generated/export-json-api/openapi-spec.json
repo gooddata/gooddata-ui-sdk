@@ -2518,6 +2518,7 @@
                                     "exportDefinition",
                                     "automation",
                                     "automationResult",
+                                    "memoryItem",
                                     "prompt",
                                     "visualizationObject",
                                     "filterContext",

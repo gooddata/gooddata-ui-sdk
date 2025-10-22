@@ -10,9 +10,11 @@ import {
     SemanticQualityIssueCode,
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
-import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { useQualityIssuesMapGroupedByCode } from "./QualityContext.js";
+import { useQualityIssuesById } from "./QualityContext.js";
+import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
+import { getQualityIssuesHighestSeverity, groupQualityIssuesByCode } from "./utils.js";
 
 const messages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } = defineMessages({
     [SemanticQualityIssueCodeValues.IDENTICAL_TITLE]: {
@@ -38,11 +40,14 @@ type Props = ComponentProps<"div"> & {
 };
 
 export function QualityIcon({ objectId, intl, className, ...htmlProps }: Props) {
-    const issueMap = useQualityIssuesMapGroupedByCode(objectId);
+    const issues = useQualityIssuesById(objectId);
 
-    if (!issueMap?.size) {
+    if (!issues?.length) {
         return null;
     }
+
+    const codeGroup = groupQualityIssuesByCode(issues);
+    const severity = getQualityIssuesHighestSeverity(issues);
 
     return (
         <div {...htmlProps} className={cx("gd-analytics-catalog__quality-tooltip", className)}>
@@ -50,17 +55,17 @@ export function QualityIcon({ objectId, intl, className, ...htmlProps }: Props) 
                 arrowPlacement="left"
                 optimalPlacement
                 triggerBy={["hover"]}
-                anchor={<UiIcon type="warning" color="warning" size={14} backgroundSize={26} ariaHidden />}
+                anchor={<QualitySeverityIcon severity={severity} size={14} backgroundSize={26} />}
                 content={
                     <div className="gd-analytics-catalog__quality-tooltip__content">
                         <div>
                             {intl.formatMessage(
                                 { id: "analyticsCatalog.quality.tooltip.title" },
-                                { count: issueMap.size },
+                                { count: codeGroup.size },
                             )}
                         </div>
                         <ul>
-                            {Array.from(issueMap.entries()).map(([code, issues]) => {
+                            {[...codeGroup].map(([code, issues]) => {
                                 const message = messages[code];
                                 if (!message) {
                                     return null;

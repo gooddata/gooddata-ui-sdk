@@ -1132,8 +1132,6 @@ export type {
     LlmEndpointTestResults,
 } from "./llmEndpoints/index.js";
 
-export type { IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType } from "./genAI/memory.js";
-
 export {
     type ISemanticQualityIssue,
     type ISemanticQualityIssueObject,
@@ -1143,4 +1141,5 @@ export {
     type SemanticQualityIssueCode,
     type SemanticQualityIssuesCalculationStatus,
     SemanticQualityIssueCodeValues,
+    SemanticQualityIssueSeverityOrder,
 } from "./genAI/quality.js";

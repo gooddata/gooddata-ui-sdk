@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.6.0-alpha.4",
+    "version": "11.6.0-alpha.5",
     "description": "GoodData.UI SDK - Extensions",
     "repository": {
         "type": "git",

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
 import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
@@ -14,7 +15,11 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        reloadAfterReady: true,
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
         "legend position - 1 measure and 2 attributes",
@@ -29,7 +34,10 @@ const legendScenarios = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyCha
 
 const dataLabelScenarios = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", SankeyChartWithMeasureAttributeFromAndTo, dataLabelCustomizer);
 

@@ -18,6 +18,7 @@ import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
+import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
@@ -73,8 +74,6 @@ import { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import { IGenAIChatRouting } from '@gooddata/sdk-model';
 import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import { IGenAIFoundObjects } from '@gooddata/sdk-model';
-import { IGenAIMemoryItem } from '@gooddata/sdk-model';
-import { IGenAIMemoryItemCreate } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -496,8 +495,16 @@ export interface ICancelable<T> {
 }
 
 // @internal
+export interface IChangeAnalysisDefinition {
+    attributes?: IAttribute[];
+    auxMeasures?: IMeasure[];
+    filters?: IFilter[];
+    measure: IMeasure;
+}
+
+// @internal
 export interface IChangeAnalysisPeriod {
-    dateAttribute: ObjRef;
+    dateAttribute: IAttribute;
     from: string;
     granularity: DateAttributeGranularity;
     to: string;
@@ -967,8 +974,6 @@ export interface IGenAIService {
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     getChatThread(): IChatThread;
     // @internal
-    getMemory(): IMemoryService;
-    // @internal
     getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
@@ -1109,16 +1114,6 @@ export interface IMeasuresQuery {
 
 // @public
 export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;
-
-// @internal
-export interface IMemoryService {
-    create(item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
-    list(options?: {
-        signal?: AbortSignal;
-    }): Promise<IGenAIMemoryItem[]>;
-    remove(id: string): Promise<void>;
-    update(id: string, item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
-}
 
 // @beta
 export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;
@@ -1826,7 +1821,7 @@ export interface IWorkspaceInsightsService {
 
 // @internal
 export interface IWorkspaceKeyDriverAnalysisService {
-    computeChangeAnalysis(period: IChangeAnalysisPeriod, metric: ObjRef, attributes: ObjRef[]): Promise<IChangeAnalysisResults>;
+    computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod): Promise<IChangeAnalysisResults>;
 }
 
 // @internal
@@ -1842,7 +1837,7 @@ export interface IWorkspaceMeasuresService {
     }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]>;
+    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]>;
     getMeasure(ref: ObjRef, options?: IGetMeasureOptions): Promise<IMeasureMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;

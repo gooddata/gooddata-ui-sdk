@@ -48,7 +48,10 @@ export const RepeaterWithOneAttributeAndInlineVisualisation = {
 };
 export default scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("one attribute", RepeaterWithOneAttribute)
     .addScenario("one attribute and one measure", RepeaterWithOneAttributeAndMeasure)
     .addScenario("one attribute and one visualisation", RepeaterWithOneAttributeAndInlineVisualisation);

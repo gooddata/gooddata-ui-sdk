@@ -16,7 +16,10 @@ const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("german number format", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,

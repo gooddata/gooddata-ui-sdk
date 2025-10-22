@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { FunnelChart, IBucketChartProps, IChartConfig, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 
 import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base.js";
@@ -15,7 +16,10 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position - two measures", FunnelChartWithTwoMeasures, legendCustomizer)
     .addScenarios(
@@ -48,13 +52,20 @@ function funnelChartDataLabelCustomizer<T extends IBucketChartProps>(
 
 const dataLabelScenarios = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", FunnelChartWithMeasureAndViewBy, funnelChartDataLabelCustomizer);
 
 const chartAlignmentScenarios = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "alignment", screenshotSize: { width: 400, height: 600 } })
+    .withVisualTestConfig({
+        groupUnder: "alignment",
+        screenshotSize: { width: 400, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("vertical alignment", FunnelChartWithMeasureAndViewBy, chartAlignmentVariants);
 

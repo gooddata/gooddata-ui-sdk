@@ -5481,13 +5481,14 @@ export interface IIRichTextMenuItemSeparator {
 export interface IKdaDataPoint {
     date: string;
     format?: IAttributeDescriptorBody["format"];
-    value: number;
+    value: number | undefined;
 }
 
 // @internal (undocumented)
 export interface IKdaDefinition {
     dateAttribute: ObjRef;
     metric: IMeasure;
+    metrics?: IMeasure[];
     range: [IKdaDataPoint, IKdaDataPoint];
     type: KdaPeriodType;
 }

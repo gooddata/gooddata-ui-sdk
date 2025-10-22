@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
@@ -23,19 +24,28 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", LineChartTwoMeasuresWithTrendyBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", LineChartTwoMeasuresWithTrendyBy, dataLabelCustomizer);
 
 const dataPointScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data points" })
+    .withVisualTestConfig({
+        groupUnder: "data points",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data points - sparse chart", LineChartWithArithmeticMeasuresAndViewBy, dataPointCustomizer)
     .addScenarios("data points - dense chart", LineChartWithManyDataPoints, dataPointCustomizer);
@@ -52,6 +62,9 @@ const legendResponziveScenarios = responsiveScenarios(
 
 const continuousLineScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("null values with continuous line", {
         ...LineChartViewByDate,
@@ -60,6 +73,9 @@ const continuousLineScenario = scenariosFor<ILineChartProps>("LineChart", LineCh
 
 const thresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("threshold zones", {
         measures: [
             ReferenceMd.SnapshotBOP,
@@ -76,6 +92,9 @@ const thresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineCh
 
 const stackedThresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("stacked threshold zones", {
         measures: [ReferenceMd.TimelineBOP, ReferenceMd.MetricHasNullValue],
         trendBy: ReferenceMd.DateDatasets.Closed.ClosedDate.Default,

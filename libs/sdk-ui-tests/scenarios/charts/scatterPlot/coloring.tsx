@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
@@ -12,7 +13,10 @@ import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ScatterPlotWithMeasuresAndAttribute, coloringCustomizer)
     .addScenarios(
@@ -23,6 +27,9 @@ const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterP
 
 const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",

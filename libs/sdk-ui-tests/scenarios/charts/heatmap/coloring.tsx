@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
@@ -12,12 +13,18 @@ import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", HeatmapWithMeasureRowsAndColumns, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",

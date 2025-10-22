@@ -56,13 +56,21 @@ export const SemanticQualityIssueCodeValues = {
  * Severity level for semantic quality issues.
  *
  * @remarks
- * - ERROR: Critical issues that should be addressed immediately
- * - WARNING: Issues that may cause confusion or problems but are not critical
+ * - WARNING: Issues that that should be addressed
  * - INFO: Informational notices about potential improvements
  *
  * @internal
  */
-export type SemanticQualityIssueSeverity = "ERROR" | "WARNING" | "INFO";
+export type SemanticQualityIssueSeverity = "WARNING" | "INFO";
+
+/**
+ * Order of semantic quality issue severities.
+ * @internal
+ */
+export const SemanticQualityIssueSeverityOrder = {
+    INFO: 0,
+    WARNING: 1,
+} as const satisfies Record<SemanticQualityIssueSeverity, number>;
 
 /**
  * Represents an object related to a quality issue.

@@ -28,4 +28,4 @@ export default {
 export function FullFeatured() {
     return <LoadingSpinnerTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured" };

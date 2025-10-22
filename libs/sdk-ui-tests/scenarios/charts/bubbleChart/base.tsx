@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
@@ -15,6 +16,9 @@ export const BubbleChartWithAllMeasuresAndAttribute = {
 
 export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("x axis measure", {
         xAxisMeasure: ReferenceMd.Amount,
     })

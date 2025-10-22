@@ -223,13 +223,6 @@ export function WithDrillSelect({
                     context as DashboardKeyDriverCombinationItem,
                     effectiveCorrelationId,
                 );
-
-                return;
-            }
-
-            if (isKeyDriveAnalysis(drillDefinition)) {
-                //TODO: Run kda analysis dialog
-                return;
             }
         },
         [onSelectDepsRef, returnFocusToInsight],

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     newAttributeSort,
@@ -76,7 +77,10 @@ export const ColumnChartStackByDate = {
  */
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure", {
         measures: [ReferenceMd.Amount],
     })

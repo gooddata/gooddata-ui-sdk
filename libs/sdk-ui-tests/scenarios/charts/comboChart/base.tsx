@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
@@ -56,6 +57,9 @@ export const ComboChartViewByDate = {
 
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("one primary measure", {
         primaryMeasures: [ReferenceMd.Amount],
     })

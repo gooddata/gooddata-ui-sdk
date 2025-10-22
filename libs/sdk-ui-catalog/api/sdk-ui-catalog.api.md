@@ -62,12 +62,10 @@ export interface CatalogDetailProps extends CatalogDetailContentProps {
 // @internal (undocumented)
 export interface IAnalyticsCatalogProps {
     backend?: IAnalyticalBackend;
-    initialTab?: "catalog" | "memory";
     locale?: string;
     onCatalogDetailClosed?: () => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogItemOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
-    onTabChange?: (tabId: "catalog" | "memory") => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;
 }

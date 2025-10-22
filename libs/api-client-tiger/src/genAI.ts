@@ -22,5 +22,4 @@ export const tigerGenAIClientFactory = (
     | "triggerQualityIssuesCalculation"
     | "tags"
     | "createdBy"
-    // Memory endpoints are currently not generated; we will call them via axios directly in backend.
 > => new ActionsApi(undefined, "", axios);

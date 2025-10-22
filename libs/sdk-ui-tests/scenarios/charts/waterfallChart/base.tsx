@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
@@ -21,7 +22,10 @@ export const WaterfallChartWithMultiMeasures = {
 
 export default scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure", {
         measures: [ReferenceMd.Amount],
     })

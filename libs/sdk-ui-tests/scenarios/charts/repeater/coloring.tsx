@@ -9,7 +9,10 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const colorsAndPalette = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", RepeaterWithOneAttributeAndInlineVisualisation, coloringCustomizer);
 

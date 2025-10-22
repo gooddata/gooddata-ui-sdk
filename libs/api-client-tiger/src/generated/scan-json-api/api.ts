@@ -142,6 +142,10 @@ export interface DeclarativeColumn {
      * Referenced table (Foreign key)
      */
     referencedTableColumn?: string;
+    /**
+     * Column description
+     */
+    description?: string;
 }
 
 export const DeclarativeColumnDataTypeEnum = {
@@ -285,6 +289,10 @@ export interface SqlColumn {
      * Column type
      */
     dataType: SqlColumnDataTypeEnum;
+    /**
+     * Column description/comment from database
+     */
+    description?: string;
 }
 
 export const SqlColumnDataTypeEnum = {

@@ -6,7 +6,6 @@ import { action } from "storybook/actions";
 
 import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -89,11 +88,11 @@ function DialogListHeaderExamples() {
     );
 }
 
-const scenarios: BackstopConfig = {
+const scenarios = {
     normal: {},
     hover: {
         hoverSelector: ".s-dialog-list-header-button",
-        postInteractionWait: 100,
+        delay: { postOperation: 350 },
     },
 };
 

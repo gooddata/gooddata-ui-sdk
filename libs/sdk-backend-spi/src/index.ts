@@ -111,7 +111,6 @@ export type {
     IChatThreadHistory,
     IChatThreadQuery,
     IGenAIChatEvaluation,
-    IMemoryService,
     ISemanticQualityService,
 } from "./workspace/genAI/index.js";
 
@@ -308,6 +307,7 @@ export type {
     IChangeAnalysisResults,
     IKeyDriver,
     IChangeAnalysisPeriod,
+    IChangeAnalysisDefinition,
 } from "./workspace/keyDriverAnalysis/index.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";

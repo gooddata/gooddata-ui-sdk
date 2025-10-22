@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
@@ -14,13 +15,19 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", WaterfallChartWithMultiMeasures, legendForceEnabledCustomizer);
 
 const dataLabelScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", WaterfallChartWithMultiMeasures, extendedDataLabelCustomizer);
 
@@ -43,7 +50,10 @@ const legendResponziveScenarios = responsiveScenarios(
 
 const totalConfigScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "total section" })
+    .withVisualTestConfig({
+        groupUnder: "total section",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("disable total column", {
         ...WaterfallChartWithMultiMeasures,
@@ -56,7 +66,10 @@ const totalConfigScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart"
 
 const orientationConfigScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "orientation section" })
+    .withVisualTestConfig({
+        groupUnder: "orientation section",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("default state", {
         ...WaterfallChartWithMultiMeasures,

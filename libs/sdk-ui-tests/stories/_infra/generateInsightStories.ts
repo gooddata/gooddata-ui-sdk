@@ -176,6 +176,31 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 
             const exportName = generateExportName(scenario.name);
 
+            const screenshotConfig = group.testConfig.visual.skip
+                ? undefined
+                : {
+                      clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
+                      readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+                      // give specific charts some more time to finish rendering
+                      postInteractionWait: insightVisualizationUrl(insight).includes("table")
+                          ? ShortPostInteractionTimeout
+                          : insightVisualizationUrl(insight).includes("repeater")
+                            ? LongPostInteractionTimeout
+                            : 200,
+                      ...(undefined === group.testConfig.visual.delay
+                          ? {}
+                          : { delay: group.testConfig.visual.delay }),
+                      ...(group.testConfig.visual.viewports
+                          ? { viewports: group.testConfig.visual.viewports }
+                          : {}),
+                      ...(group.testConfig.visual.reloadAfterReady
+                          ? { reloadAfterReady: group.testConfig.visual.reloadAfterReady }
+                          : {}),
+                      ...(group.testConfig.visual.misMatchThreshold === undefined
+                          ? {}
+                          : { misMatchThreshold: group.testConfig.visual.misMatchThreshold }),
+                  };
+
             storyExports.push(`export const ${exportName} = () => plugVizStory(${JSON.stringify(
                 insight,
                 null,
@@ -184,18 +209,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 ${exportName}.parameters = ${JSON.stringify(
                 {
                     kind: scenario.name,
-                    screenshot: group.testConfig.visual.skip
-                        ? undefined
-                        : {
-                              clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
-                              readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-                              // give specific charts some more time to finish rendering
-                              postInteractionWait: insightVisualizationUrl(insight).includes("table")
-                                  ? ShortPostInteractionTimeout
-                                  : insightVisualizationUrl(insight).includes("repeater")
-                                    ? LongPostInteractionTimeout
-                                    : 200,
-                          },
+                    screenshot: screenshotConfig,
                 },
                 null,
                 4,

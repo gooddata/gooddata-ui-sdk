@@ -202,10 +202,12 @@ export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",
 };
 
+const screenshotConfig = { clickSelector: ".screenshot-target" };
+
 export function FullFeatured() {
     return <ManagementDialogCompositionExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
 
 export function Loading() {
     return <ManagementDialogCompositionLoadingExample />;
@@ -213,4 +215,4 @@ export function Loading() {
 Loading.parameters = { kind: "loading" };
 
 export const Themed = () => wrapWithTheme(<ManagementDialogCompositionExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig };

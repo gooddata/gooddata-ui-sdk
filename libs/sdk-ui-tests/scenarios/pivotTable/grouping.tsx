@@ -15,7 +15,10 @@ const PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasu
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("grouping")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure pivot with grouping sorted by first row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
         sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],

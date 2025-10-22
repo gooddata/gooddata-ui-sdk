@@ -61,7 +61,7 @@ function customToId(title: string, exportName: string) {
     return `${kebabTitle}--${kebabExport}`;
 }
 
-interface IStoryInfo {
+export interface IStoryInfo {
     storyId: string;
     storyKind: string;
     storyName: string;
@@ -127,7 +127,7 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
     }
 }
 
-export async function toBackstopJson(): Promise<string> {
+export async function toBackstopJson(): Promise<IStoryInfo[]> {
     const storybookMain = (
         (await import("../../.storybook/main.js" as any)) as { default: { stories: string[] } }
     ).default;
@@ -158,13 +158,9 @@ export async function toBackstopJson(): Promise<string> {
     // eslint-disable-next-line no-console
     console.log(`Processed ${stories.length} stories total`);
 
-    return JSON.stringify(
-        stories.sort((x, y): number => {
-            if (x.storyId < y.storyId) return -1;
-            if (x.storyId > y.storyId) return 1;
-            return 0;
-        }),
-        null,
-        4,
-    );
+    return stories.sort((x, y): number => {
+        if (x.storyId < y.storyId) return -1;
+        if (x.storyId > y.storyId) return 1;
+        return 0;
+    });
 }

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
@@ -34,6 +35,9 @@ export const BulletChartWithAllMeasuresMeasuresAndTwoViewByDates = {
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("primary measure", {
         primaryMeasure: ReferenceMd.Won,
     })

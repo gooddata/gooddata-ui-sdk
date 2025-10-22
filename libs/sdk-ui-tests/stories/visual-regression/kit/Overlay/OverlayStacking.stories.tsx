@@ -84,10 +84,12 @@ FullFeatured.parameters = {
     screenshots: {
         "open-first": {
             clickSelector: ".open-first",
-            postInteractionWait: 1000,
+            delay: { postOperation: 500 },
         },
         "open-stacked": {
-            clickSelectors: [".open-first", ".open-stacked"],
+            reloadAfterReady: true,
+            clickSelectors: [".open-first", 100, ".open-stacked"],
+            delay: { postOperation: 500 },
         },
     },
 };

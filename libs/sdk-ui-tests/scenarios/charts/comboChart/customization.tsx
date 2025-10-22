@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
@@ -39,19 +40,28 @@ export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
 
 const legendScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", ComboChartWithTwoMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", ComboChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
 
 const dataPointScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data points" })
+    .withVisualTestConfig({
+        groupUnder: "data points",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
         "data points - sparse chart",
@@ -76,6 +86,9 @@ const legendResponziveScenarios = responsiveScenarios(
 
 const connectNullsScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("connect nulls values", {
         ...ComboChartViewByDate,
@@ -84,6 +97,9 @@ const connectNullsScenarios = scenariosFor<IComboChartProps>("ComboChart", Combo
 
 const thresholdComboZonesScenario = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("threshold combo zones", {
         primaryMeasures: [ReferenceMd.SnapshotBOP, ReferenceMd.MetricHasNullValue],
         secondaryMeasures: [ReferenceMd.SnapshotEOP, ReferenceMd.TimelineBOP],
@@ -96,6 +112,9 @@ const thresholdComboZonesScenario = scenariosFor<IComboChartProps>("ComboChart",
 
 const thresholdComboZonesWithExcludedScenario = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("threshold combo zones with excluded measures", {
         primaryMeasures: [ReferenceMd.SnapshotBOP, ReferenceMd.MetricHasNullValue],
         secondaryMeasures: [ReferenceMd.SnapshotEOP, ReferenceMd.TimelineBOP],

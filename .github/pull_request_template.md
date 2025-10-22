@@ -13,7 +13,7 @@ The only exception is PRs targeting the legacy BEAR platform, specifically the *
 Commands can be triggered by posting a comment with specific text on the pull request. It is possible to trigger multiple commands simultaneously.
 
 ```
-extended-test-legacy --backstop
+extended-test-legacy --neobackstop
 extended-test-legacy --isolated
 extended-test-legacy --record
 ```

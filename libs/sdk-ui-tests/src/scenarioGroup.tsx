@@ -308,6 +308,15 @@ export function scenariosFor<T extends VisProps>(
 type ScenarioSet<T extends VisProps> = { [name: string]: IScenario<T> };
 
 /**
+ * Viewport configuration for visual tests
+ */
+export type Viewport = {
+    label: string;
+    width: number;
+    height: number;
+};
+
+/**
  * Configuration for visual tests in included in a scenario group
  */
 export type VisualTestConfiguration = {
@@ -330,6 +339,31 @@ export type VisualTestConfiguration = {
      * Specify that visual scenarios in the scenario group should be skipped.
      */
     skip?: boolean;
+
+    /**
+     * Specify a delay in milliseconds before taking the screenshot.
+     * This is useful when charts need time for animations, legend positioning, or font loading.
+     */
+    delay?: number;
+
+    /**
+     * Specify custom viewports for the browser window during screenshot capture.
+     * If not specified, uses the default viewport from config.json (1024x768).
+     * Useful for testing responsive layouts or mobile views.
+     */
+    viewports?: Viewport[];
+
+    /**
+     * Reload the page after the ready selector is found.
+     * Useful when initial page load state differs from subsequent renders.
+     */
+    reloadAfterReady?: boolean;
+
+    /**
+     * Percentage of different pixels allowed to pass test.
+     * Useful for scenarios with minor rendering variations.
+     */
+    misMatchThreshold?: number;
 };
 
 /**

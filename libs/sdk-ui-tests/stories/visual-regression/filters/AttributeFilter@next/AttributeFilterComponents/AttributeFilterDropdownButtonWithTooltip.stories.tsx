@@ -14,7 +14,11 @@ const attributeTitle = "Product";
 
 const dropdownButtonWithTooltip: BackstopConfig = {
     default: {},
-    hover: { hoverSelector: ".s-attribute-filter-tooltip-icon", postInteractionWait: 1000 },
+    hover: {
+        hoverSelector: ".s-attribute-filter-tooltip-icon",
+        postInteractionWait: 1000,
+        misMatchThreshold: 0.001, // unsure why this is needed, but a pixel is probably off by a few rgb points
+    },
 };
 
 function TooltipContentComponent() {

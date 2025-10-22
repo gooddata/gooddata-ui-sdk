@@ -122,7 +122,10 @@ export const PivotTableWithRepeatingRowAttributes = {
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single attribute", {
         rows: [ReferenceMd.Product.Name],
     })

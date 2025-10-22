@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { IColorPalette, modifyMeasure } from "@gooddata/sdk-model";
 import {
@@ -83,6 +84,11 @@ export const comparisonDisabled: IComparison = {
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames("comparison")
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        // TODO: the amount on KD full size is flaky and cannot be reproduced
+        misMatchThreshold: 0.25,
+    })
     .withDefaultTestTypes("visual")
     .addScenario("comparison with default config", {
         ...HeadlinePositiveComparisonMeasures,

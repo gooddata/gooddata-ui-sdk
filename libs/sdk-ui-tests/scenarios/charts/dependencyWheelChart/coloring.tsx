@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { DependencyWheelChart, IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -15,12 +16,18 @@ const colorsAndPalette = scenariosFor<IDependencyWheelChartProps>(
     DependencyWheelChart,
 )
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", DependencyWheelChartWithMeasureAttributeFromAndTo, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to nodes",

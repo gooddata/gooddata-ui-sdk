@@ -2,8 +2,6 @@
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../stories/visual-regression/kit/styles/goodstrap.scss";
-import "./pivot-table-next-color-mix.scss";
-import "./polyfills";
 
 export const preview = {
     parameters: {

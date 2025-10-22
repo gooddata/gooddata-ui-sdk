@@ -157,10 +157,12 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",
 };
 
+const screenshotConfig = { clickSelector: "h4" };
+
 export function FullFeatured() {
     return <EmbedInsightDialogBaseExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
 
 export const Themed = () => wrapWithTheme(<EmbedInsightDialogBaseExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig };

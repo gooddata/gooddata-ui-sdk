@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { action } from "storybook/actions";
 
 import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
@@ -15,7 +16,10 @@ import {
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("drilling")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with drill on all row atributes", {
         ...PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,

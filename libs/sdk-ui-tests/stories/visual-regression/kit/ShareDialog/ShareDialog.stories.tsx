@@ -92,12 +92,18 @@ function ShareDialogExamples() {
 
 const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 
-const scenarios: BackstopConfig = {
+const scenarios = {
     open: {
-        clickSelectors: [".s-share-dialog-button", 100],
+        clickSelectors: [".s-share-dialog-button"],
+        delay: {
+            postOperation: 500,
+        },
     },
     "add-grantee": {
-        clickSelectors: [".s-share-dialog-button", 100, ".s-add-users-or-groups", 100],
+        clickSelectors: [".s-share-dialog-button", 50, ".s-add-users-or-groups", 50],
+        delay: {
+            postOperation: 500, // dialog appears slightly higher, then shifts down...
+        },
     },
     "selected-grantee": {
         clickSelectors: [

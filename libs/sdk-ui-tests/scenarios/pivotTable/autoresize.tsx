@@ -13,7 +13,10 @@ import { scenariosFor } from "../../src/index.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("auto-resizing")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with column attributes only and auto-resizing", {
         ...PivotTableWithSingleColumn,

@@ -41,10 +41,12 @@ export default {
     title: "12 UI Kit/SimpleSettingWidget",
 };
 
+const screenshotConfig = { misMatchThreshold: 0.025 }; // misMatchThreshold needed for loading spinner
+
 export function FullFeatured() {
     return <SimpleSettingWidgetTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
 
 export const Themed = () => wrapWithTheme(<SimpleSettingWidgetTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
