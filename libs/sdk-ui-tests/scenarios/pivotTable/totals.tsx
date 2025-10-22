@@ -99,7 +99,10 @@ export const PivotTableWithSingleMeasureAndRowColumnGrandTotal = {
 
 const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("totals", "rows")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -162,7 +165,10 @@ const totalsForRows = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
 
 const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("totals", "columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
         config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
@@ -248,7 +254,10 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
 
 const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("totals", "rows & columns")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario(
         "single measure and single column/row grand total",
         PivotTableWithSingleMeasureAndRowColumnGrandTotal,

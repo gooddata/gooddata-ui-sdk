@@ -37,7 +37,7 @@ export interface IKdaDataPoint {
     /**
      * Valuer of metric for given range
      */
-    value: number;
+    value: number | undefined;
     /**
      * Format of date attribute
      */
@@ -52,6 +52,10 @@ export interface IKdaDefinition {
      * Metric to analyze
      */
     metric: IMeasure;
+    /**
+     * Metrics related to main metric
+     */
+    metrics?: IMeasure[];
     /**
      * Date attribute
      */

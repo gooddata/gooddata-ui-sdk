@@ -321,19 +321,6 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
-/**
- * Attribute equality filter
- */
-export interface AttributeEqualityFilter {
-    /**
-     * The attribute label identifier to filter on
-     */
-    labelIdentifier: string;
-    /**
-     * List of values to match (IN operation)
-     */
-    values: Array<string | null>;
-}
 export interface AttributeExecutionResultHeader {
     attributeHeader: AttributeResultHeader;
 }
@@ -508,14 +495,8 @@ export type BoundedFilterGranularityEnum =
  * Request for change analysis computation
  */
 export interface ChangeAnalysisRequest {
-    /**
-     * The metric identifier to analyze for changes
-     */
-    metricIdentifier: string;
-    /**
-     * The date attribute identifier to use for time period comparison
-     */
-    dateAttributeIdentifier: string;
+    measure: MeasureItem;
+    dateAttribute: AttributeItem;
     /**
      * The reference time period (e.g., \'2025-01\')
      */
@@ -525,18 +506,30 @@ export interface ChangeAnalysisRequest {
      */
     analyzedPeriod: string;
     /**
-     * Label identifiers of attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
+     * Attributes to analyze for significant changes. If empty, valid attributes will be automatically discovered.
      */
-    attributeLabelIdentifiers: Array<string>;
+    attributes?: Array<AttributeItem>;
     /**
      * Optional filters to apply.
      */
-    filters: Array<AttributeEqualityFilter>;
+    filters?: Array<ChangeAnalysisRequestFiltersInner>;
+    /**
+     * Auxiliary measures
+     */
+    auxMeasures?: Array<MeasureItem>;
     /**
      * Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided.
      */
-    useSmartAttributeSelection: boolean;
+    useSmartAttributeSelection?: boolean;
 }
+/**
+ * @type ChangeAnalysisRequestFiltersInner
+ */
+export type ChangeAnalysisRequestFiltersInner =
+    | AbstractMeasureValueFilter
+    | FilterDefinitionForSimpleMeasure
+    | InlineFilterDefinition;
+
 /**
  * Response for change analysis computation
  */
@@ -742,8 +735,8 @@ export interface ClusteringResult {
     xCoord?: Array<number | null>;
     yCoord?: Array<number | null>;
     clusters: Array<number | null>;
-    xcoord: Array<number>;
     ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1298,6 +1291,10 @@ export interface GetQualityIssuesResponse {
      * List of quality issues found in the workspace
      */
     issues: Array<QualityIssue>;
+    /**
+     * Timestamp when the quality issues were last updated (ISO format)
+     */
+    updatedAt?: string;
 }
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1709,6 +1706,10 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
  */
 export interface QualityIssue {
     /**
+     * Unique identifier for the quality issue
+     */
+    id: string;
+    /**
      * List of objects affected by this quality issue
      */
     objects: Array<QualityIssueObject>;
@@ -1746,6 +1747,10 @@ export interface QualityIssueObject {
      * Object ID
      */
     id: string;
+    /**
+     * Workspace ID where the object belongs
+     */
+    workspaceId: string;
 }
 export interface QualityIssuesCalculationStatusResponse {
     /**

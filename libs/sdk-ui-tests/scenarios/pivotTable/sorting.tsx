@@ -12,7 +12,10 @@ import { scenariosFor } from "../../src/index.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("sorting")
-    .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1000, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure pivot sorted by first row attr", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],

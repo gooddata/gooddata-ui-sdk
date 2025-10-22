@@ -24,7 +24,10 @@ const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceMd.A
 
 const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "no other options")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("simple table with custom attribute column size", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
@@ -69,7 +72,10 @@ const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTab
 
 const withColumnAutoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "combined with column autoresize")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(
         justManualResizing,
@@ -81,7 +87,10 @@ const withColumnAutoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotT
     );
 const withGrowToFit = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "combined with growToFit")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(
         justManualResizing,
@@ -93,7 +102,10 @@ const withGrowToFit = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     );
 const withAllAutoresizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "combined with growToFit and autoResize")
-    .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 1200, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(
         justManualResizing,

@@ -19,7 +19,10 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "stack primary measures with different chart type" })
+    .withVisualTestConfig({
+        groupUnder: "stack primary measures with different chart type",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("stack primary measures with different chart type - column", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
@@ -38,7 +41,10 @@ const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", Com
 const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "stack primary measures to 100% with different chart type" })
+    .withVisualTestConfig({
+        groupUnder: "stack primary measures to 100% with different chart type",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("stack primary measures to 100% with different chart type - column", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
@@ -57,7 +63,10 @@ const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboCh
 const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "stack primary measures when both column chart" })
+    .withVisualTestConfig({
+        groupUnder: "stack primary measures when both column chart",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("stack primary measures when both column chart - normal stacking", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
@@ -79,7 +88,10 @@ const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart
 const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are on line chart" })
+    .withVisualTestConfig({
+        groupUnder: "discard stacking when primary measures are on line chart",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("discard stacking when primary measures are on line chart - secondary is column", {
         ...ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
         config: {
@@ -100,7 +112,10 @@ const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
 const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are not specified" })
+    .withVisualTestConfig({
+        groupUnder: "discard stacking when primary measures are not specified",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("discard stacking when primary measures are not specified - secondary is column", {
         ...ComboChartWithTwoSecondaryMeasures,
         config: {
@@ -121,7 +136,10 @@ const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart"
 const stackingWithoutDualAxis = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .withVisualTestConfig({ groupUnder: "stacking without dual axis" })
+    .withVisualTestConfig({
+        groupUnder: "stacking without dual axis",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("'Stack Measures' off and 'Stack to 100%' on", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {

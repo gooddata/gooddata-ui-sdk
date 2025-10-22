@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
@@ -58,6 +59,9 @@ export const LineChartViewByDate = {
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure", {
         measures: [ReferenceMd.Amount],
     })

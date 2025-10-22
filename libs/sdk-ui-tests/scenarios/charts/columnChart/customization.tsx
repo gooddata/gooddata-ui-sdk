@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
@@ -17,13 +18,19 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", ColumnChartWithTwoMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
         "data labels",

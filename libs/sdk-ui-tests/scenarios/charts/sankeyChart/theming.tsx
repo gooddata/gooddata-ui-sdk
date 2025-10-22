@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
 import { SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
@@ -7,6 +8,9 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
     .addScenario("themed", SankeyChartWithMeasureAttributeFromAndTo)

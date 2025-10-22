@@ -131,7 +131,7 @@ export function Dateformat() {
         </div>
     );
 }
-Dateformat.parameters = { kind: "dateFormat", screenshot: true };
+Dateformat.parameters = { kind: "dateFormat", screenshot: { misMatchThreshold: 0.1 } }; // shows current date, which changes (every day)
 
 export const Themed = () =>
     wrapWithTheme(

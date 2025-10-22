@@ -26,6 +26,7 @@ function useValidObjectsResults(definition: IKdaDefinition | null) {
     const workspace = useWorkspaceStrict();
 
     const metric = definition?.metric;
+    const metrics = definition?.metrics;
 
     return useCancelablePromise(
         {
@@ -33,7 +34,7 @@ function useValidObjectsResults(definition: IKdaDefinition | null) {
                 if (!metric) {
                     return Promise.resolve(undefined);
                 }
-                return backend.workspace(workspace).measures().getConnectedAttributes(metric);
+                return backend.workspace(workspace).measures().getConnectedAttributes(metric, metrics);
             },
         },
         [],

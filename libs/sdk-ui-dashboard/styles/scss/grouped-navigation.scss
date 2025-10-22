@@ -230,6 +230,13 @@ $grouped-navigation-item-height: 36px;
     }
 }
 
+.grouped-navigation-off {
+    .grouped-navigation,
+    .gd-ui-kit-navigation-bypass {
+        display: none;
+    }
+}
+
 .grouped-navigation-on {
     .grouped-navigation {
         left: 0;

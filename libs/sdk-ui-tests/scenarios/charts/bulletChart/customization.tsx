@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
 import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
@@ -14,13 +15,19 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", BulletChartWithAllMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", BulletChartWithAllMeasuresAndViewBy, dataLabelCustomizer);
 

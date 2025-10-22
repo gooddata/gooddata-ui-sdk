@@ -8,6 +8,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { RawChart } from "@gooddata/sdk-ui-charts/internal";
 import { UiSkeleton, useElementSize } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 export interface KdaKeyDriverChartProps {
     config: IChartConfig | null;
@@ -16,6 +17,7 @@ export interface KdaKeyDriverChartProps {
 
 export function KdaKeyDriverChart({ config, dataView }: KdaKeyDriverChartProps) {
     const intl = useIntl();
+    const theme = useTheme();
 
     const { ref, width, height } = useElementSize<HTMLDivElement>();
 
@@ -35,6 +37,7 @@ export function KdaKeyDriverChart({ config, dataView }: KdaKeyDriverChartProps) 
                     afterRender={noop}
                     onDataTooLarge={noop}
                     onNegativeValues={noop}
+                    theme={theme}
                 />
             ) : (
                 <UiSkeleton itemWidth={width} itemHeight={height} />

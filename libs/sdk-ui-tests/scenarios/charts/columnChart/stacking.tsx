@@ -14,7 +14,10 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("two measures and two viewBy with stackMeasures", {
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,

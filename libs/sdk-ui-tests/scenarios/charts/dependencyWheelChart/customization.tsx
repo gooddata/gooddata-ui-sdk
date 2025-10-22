@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { DependencyWheelChart, IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
@@ -17,7 +18,10 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
         "legend position - 1 measure and 2 attributes",
@@ -35,7 +39,10 @@ const dataLabelScenarios = scenariosFor<IDependencyWheelChartProps>(
     DependencyWheelChart,
 )
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", DependencyWheelChartWithMeasureAttributeFromAndTo, dataLabelCustomizer);
 

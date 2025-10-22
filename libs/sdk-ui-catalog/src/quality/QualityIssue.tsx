@@ -9,8 +9,8 @@ import {
     type SemanticQualityIssueCode,
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
-import { UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
 import { ObjectTypeIconMemo, mapObjectType } from "../objectType/index.js";
 
 type Props = {
@@ -68,7 +68,7 @@ export function QualityIssue({ issue, objectId, objectTitle }: Props) {
 
     return (
         <div className="gd-analytics-catalog__quality-issue">
-            <UiIcon type="warning" color="warning" size={20} ariaHidden backgroundColor="complementary-0" />
+            <QualitySeverityIcon severity={issue.severity} size={20} backgroundColor="complementary-0" />
             <div className="gd-analytics-catalog__quality-issue__title">
                 <FormattedMessage {...titleMessage} />
             </div>

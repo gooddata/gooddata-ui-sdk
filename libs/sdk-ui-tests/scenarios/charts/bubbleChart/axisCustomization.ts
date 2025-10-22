@@ -12,6 +12,7 @@ const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", Bubb
     .withVisualTestConfig({
         groupUnder: "axis name customization",
         screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("axis name customization", BubbleChartWithAllMeasuresAndAttribute, axisNameCustomization);
@@ -22,7 +23,10 @@ const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", Bubb
  */
 const axisConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {
         ...BubbleChartWithAllMeasuresAndAttribute,

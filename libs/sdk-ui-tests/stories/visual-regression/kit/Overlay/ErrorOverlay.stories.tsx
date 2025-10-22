@@ -52,17 +52,15 @@ export default {
     title: "12 UI Kit/ErrorOverlay",
 };
 
-const delayConfig = { delay: 200 };
-
 export function Default() {
     return <WrappedErrorOverlayExampleDefault />;
 }
-Default.parameters = { kind: "default", screenshot: delayConfig };
+Default.parameters = { kind: "default" };
 
 export function Custom() {
     return <WrappedErrorOverlayExampleCustom />;
 }
-Custom.parameters = { kind: "custom", screenshot: delayConfig };
+Custom.parameters = { kind: "custom" };
 
 export const Themed = () => wrapWithTheme(<WrappedErrorOverlayExampleDefault />);
-Themed.parameters = { kind: "themed", screenshot: delayConfig };
+Themed.parameters = { kind: "themed" };

@@ -4,7 +4,14 @@ import { useEffect, useMemo } from "react";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IChangeAnalysisResults, IKeyDriver } from "@gooddata/sdk-backend-spi";
-import { ICatalogAttribute, IMeasure, ISeparators, ObjRef, isSimpleMeasure } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    ICatalogAttribute,
+    IMeasure,
+    ISeparators,
+    ObjRef,
+    newAttribute,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
@@ -31,13 +38,14 @@ export function useChangeAnalysis() {
     }, [list, setState]);
 }
 
-function useChangeAnalysisResults(definition: IKdaDefinition | null, attributes: ObjRef[]) {
+function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjRef[]) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
     const from = definition?.range[0].date;
     const to = definition?.range[1].date;
     const dateAttributeFinder = useDateAttribute();
+    const attributeFinder = useAttribute();
 
     return useCancelablePromise<IChangeAnalysisResults | undefined>(
         {
@@ -49,31 +57,33 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attributes:
                 }
 
                 const granularity = dateAttribute.granularity;
-
-                //TODO: This is hack: Replace this code for metric definition not only id
-                const ref = isSimpleMeasure(definition.metric)
-                    ? definition.metric.measure.definition.measureDefinition.item
-                    : null;
-                if (!ref) {
-                    return Promise.resolve(undefined);
-                }
+                const attributes = attrs
+                    .map((ref) => {
+                        const attr = attributeFinder(ref);
+                        return attr ? newAttribute(ref) : null;
+                    })
+                    .filter(Boolean) as IAttribute[];
 
                 return backend
                     .workspace(workspace)
                     .keyDriverAnalysis()
                     .computeChangeAnalysis(
                         {
-                            dateAttribute: definition.dateAttribute,
+                            measure: definition.metric,
+                            auxMeasures: definition.metrics,
+                            attributes: attributes,
+                            filters: [], //TODO: Implement filters
+                        },
+                        {
+                            dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
                             from: from ?? "",
                             to: to ?? "",
                             granularity,
                         },
-                        ref,
-                        attributes,
                     );
             },
         },
-        [backend, definition, attributes, workspace, from, to],
+        [backend, definition, attrs, workspace, from, to],
     );
 }
 

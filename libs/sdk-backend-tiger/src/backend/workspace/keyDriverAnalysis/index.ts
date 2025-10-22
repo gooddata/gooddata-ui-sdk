@@ -1,16 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AfmObjectIdentifier, ITigerClient } from "@gooddata/api-client-tiger";
+import { FilterDefinition, ITigerClient } from "@gooddata/api-client-tiger";
 import {
+    type IChangeAnalysisDefinition,
     type IChangeAnalysisPeriod,
     type IChangeAnalysisResults,
     type IWorkspaceKeyDriverAnalysisService,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
 
 import { DateStringifier } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { convertChangeAnalyzeToKeyDriver } from "../../../convertors/fromBackend/KdaConverter.js";
-import { toAfmIdentifier } from "../../../convertors/toBackend/ObjRefConverter.js";
+import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
+import { convertFilter } from "../../../convertors/toBackend/afm/FilterConverter.js";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnalysisService {
@@ -21,11 +23,14 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
     ) {}
 
     public async computeChangeAnalysis(
+        definition: IChangeAnalysisDefinition,
         period: IChangeAnalysisPeriod,
-        metric: ObjRef,
-        attributes: ObjRef[],
     ): Promise<IChangeAnalysisResults> {
         return this.authCall(async (client) => {
+            const filters = definition.filters?.map((f) => convertFilter(f)).filter(Boolean) as
+                | FilterDefinition[]
+                | undefined;
+
             const results = await client.execution.changeAnalysis(
                 {
                     workspaceId: this.workspace,
@@ -33,12 +38,13 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
                         //period
                         referencePeriod: this.dateStringifier(new Date(period.from), period.granularity),
                         analyzedPeriod: this.dateStringifier(new Date(period.to), period.granularity),
-                        dateAttributeIdentifier: objRefToId(period.dateAttribute),
-                        //key drivers
-                        attributeLabelIdentifiers: attributes.map(objRefToId),
-                        metricIdentifier: objRefToId(metric),
+                        //definition
+                        measure: convertMeasure(definition.measure),
+                        dateAttribute: convertAttribute(period.dateAttribute, 0),
+                        auxMeasures: definition.auxMeasures?.map(convertMeasure),
+                        attributes: definition.attributes?.map((attr, i) => convertAttribute(attr, i + 1)),
                         //filters
-                        filters: [],
+                        filters: filters,
                         //settings
                         useSmartAttributeSelection: true,
                     },
@@ -67,9 +73,4 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
             keyDrivers,
         };
     }
-}
-
-function objRefToId(ref: ObjRef) {
-    const identifier = toAfmIdentifier(ref) as AfmObjectIdentifier;
-    return identifier.identifier.id;
 }

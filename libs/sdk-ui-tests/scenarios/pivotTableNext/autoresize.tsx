@@ -18,6 +18,7 @@ export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNe
             width: 1200,
             height: 800,
         },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with column attributes only and auto-resizing", {

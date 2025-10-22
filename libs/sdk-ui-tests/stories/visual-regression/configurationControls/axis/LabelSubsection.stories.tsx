@@ -19,10 +19,15 @@ const commonScenarios = {
     opened: {
         clickSelector: ".gd-button-primary",
         postInteractionWait: ".gd-list",
+        delay: {
+            postOperation: 500,
+        },
     },
     "label-toggle": {
-        clickSelectors: [".s-checkbox-toggle-label", ".s-checkbox-toggle"],
-        postInteractionWait: 200,
+        clickSelectors: [".s-checkbox-toggle-label"],
+        delay: {
+            postOperation: 500,
+        },
     },
 };
 

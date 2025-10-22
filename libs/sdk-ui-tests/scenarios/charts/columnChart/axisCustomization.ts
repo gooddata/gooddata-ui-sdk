@@ -18,6 +18,7 @@ const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Colu
     .withVisualTestConfig({
         groupUnder: "single axis name customization",
         screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
@@ -31,6 +32,7 @@ const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Column
     .withVisualTestConfig({
         groupUnder: "dual axis name customization",
         screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
@@ -48,7 +50,10 @@ const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Column
 
 const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {
         ...ColumnChartWithTwoMeasuresAndViewBy,

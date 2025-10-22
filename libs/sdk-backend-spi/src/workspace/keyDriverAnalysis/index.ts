@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DateAttributeGranularity, ObjRef } from "@gooddata/sdk-model";
+import { DateAttributeGranularity, IAttribute, IFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -66,7 +66,7 @@ export interface IChangeAnalysisPeriod {
     /**
      * Date attribute reference
      */
-    dateAttribute: ObjRef;
+    dateAttribute: IAttribute;
     /**
      * Granularity for date attribute, its necessary for date conversion
      */
@@ -82,6 +82,30 @@ export interface IChangeAnalysisPeriod {
 }
 
 /**
+ * @internal
+ *
+ * Change analysis period definition
+ */
+export interface IChangeAnalysisDefinition {
+    /**
+     * Analyzed measure definition
+     */
+    measure: IMeasure;
+    /**
+     * All related measures to analyzed measure
+     */
+    auxMeasures?: IMeasure[];
+    /**
+     * All attributes to run analysis for
+     */
+    attributes?: IAttribute[];
+    /**
+     * All applied filters
+     */
+    filters?: IFilter[];
+}
+
+/**
  * Service for key drivers analysis
  *
  * @internal
@@ -91,8 +115,7 @@ export interface IWorkspaceKeyDriverAnalysisService {
      * Compute change analysis
      */
     computeChangeAnalysis(
+        definition: IChangeAnalysisDefinition,
         period: IChangeAnalysisPeriod,
-        metric: ObjRef,
-        attributes: ObjRef[],
     ): Promise<IChangeAnalysisResults>;
 }

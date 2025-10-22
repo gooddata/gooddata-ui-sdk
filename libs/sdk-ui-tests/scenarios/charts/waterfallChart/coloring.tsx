@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isColorDescriptor } from "@gooddata/sdk-model";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
@@ -21,12 +22,18 @@ const NegativePredicate = (header: IMappingHeader) => {
 
 const colorsAndPalette = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", WaterfallChartWithSingleMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...WaterfallChartWithMultiMeasures,

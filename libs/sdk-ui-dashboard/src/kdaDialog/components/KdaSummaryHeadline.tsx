@@ -36,7 +36,7 @@ export function KdaSummaryHeadline() {
         } as KdaDateOptions;
     }, [dateAttributeFinder, def?.dateAttribute, def?.type, to]);
 
-    if (!definition || !from || !to) {
+    if (!definition || from?.value === undefined || to?.value === undefined) {
         return null;
     }
 

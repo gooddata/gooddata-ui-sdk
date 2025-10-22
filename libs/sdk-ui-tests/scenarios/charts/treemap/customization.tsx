@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
 
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
@@ -14,13 +15,19 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", TreemapWithMeasureViewByAndSegmentBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", TreemapWithMeasureViewByAndSegmentBy, dataLabelCustomizer);
 

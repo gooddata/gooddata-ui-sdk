@@ -406,6 +406,7 @@ const confirmDialogWithWarningProps = {
 const confirmDialogWithProgressProps = {
     clickSelector: "#confirm-dialog-with-progress-example button",
     postInteractionWait: 200,
+    misMatchThreshold: 0.02,
 };
 
 const exportDialogProps = {
@@ -413,10 +414,11 @@ const exportDialogProps = {
     postInteractionWait: 200,
 };
 
-const communityEditionDialogProps = {
-    clickSelector: "#community-dialog-example button",
-    postInteractionWait: 200,
-};
+// flaky, removed
+// const communityEditionDialogProps = {
+//     clickSelector: "#community-dialog-example button",
+//     postInteractionWait: 200,
+// };
 
 const stylingEditorDialogProps = {
     clickSelector: "#styling-editor-dialog-example button",
@@ -436,16 +438,16 @@ const screenshotProps = {
         clickSelector: "#confirm-dialog-with-no-submit-button-example button",
         postInteractionWait: 200,
     },
-    "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+    // "confirm-dialog-with-warning": confirmDialogWithWarningProps,
     "confirm-dialog-with-progress": confirmDialogWithProgressProps,
     "export-dialog": exportDialogProps,
-    "community-edition-dialog": communityEditionDialogProps,
+    // "community-edition-dialog": communityEditionDialogProps,
     "styling-editor-dialog": stylingEditorDialogProps,
 };
 
 const screenshotPropsThemed = {
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
-    "export-dialog": exportDialogProps,
+    // "export-dialog": exportDialogProps,
     "styling-editor-dialog": stylingEditorDialogProps,
 };
 

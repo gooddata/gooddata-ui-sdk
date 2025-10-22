@@ -1,0 +1,177 @@
+name: rw ~ rush ~ e2e tests neobackstop
+on:
+  workflow_call:
+    inputs:
+      source-ref:
+        required: false
+        description: "source ref of the current code"
+        type: string
+      keep-passing-screenshots:
+        required: false
+        description: "whether to keep all neobackstop output as artifacts, even for passing tests (large)"
+        type: boolean
+        default: false
+    outputs:
+      results:
+        description: "JSON output from neobackstop test results"
+        value: ${{ jobs.e2e-neobackstop.outputs.results }}
+
+jobs:
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+
+  e2e-neobackstop:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-2xlarge
+    outputs:
+      results: ${{ steps.output-results.outputs.json }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+      - name: Run neobackstop tests
+        run: |
+          export EXECUTOR_NUMBER=$GH_RUN_ID
+          ./common/scripts/ci/run_neobackstop_tests.sh
+        env:
+          GH_RUN_ID: ${{ github.run_id }}
+      - name: Output test results JSON
+        id: output-results
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -f libs/sdk-ui-tests/neobackstop/output/ci-report/results.json ]; then
+            # Filter out successful tests to reduce output size
+            # Keep only tests where:
+            # - error is not null (test has an error), OR
+            # - reference_file_name is null (missing reference), OR
+            # - screenshot_file_name is null (missing screenshot), OR
+            # - matches_reference is false (test failed)
+            JSON_CONTENT=$(jq -c '[.[] | select(.error or (.reference_file_name == null) or (.screenshot_file_name == null) or (.matches_reference == false))]' libs/sdk-ui-tests/neobackstop/output/ci-report/results.json)
+            echo "json=$JSON_CONTENT" >> $GITHUB_OUTPUT
+          else
+            echo "json=[]" >> $GITHUB_OUTPUT
+          fi
+      - name: Generate test summary
+        if: ${{ !cancelled() }}
+        run: |
+          RESULTS_FILE="libs/sdk-ui-tests/neobackstop/output/ci-report/results.json"
+
+          if [ ! -f "$RESULTS_FILE" ]; then
+            echo "❌ Results file not found" >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          # Parse results using jq
+          TOTAL=$(jq '. | length' "$RESULTS_FILE")
+          PASSED=$(jq '[.[] | select(.matches_reference == true)] | length' "$RESULTS_FILE")
+          FAILED=$(jq '[.[] | select(.matches_reference == false)] | length' "$RESULTS_FILE")
+          ERRORS=$(jq '[.[] | select(.error != null)] | length' "$RESULTS_FILE")
+
+          # Generate summary
+          echo "## 🎨 Neobackstop Visual Tests" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Tests | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚠️ Errors | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Show failed tests if any
+          if [ $FAILED -gt 0 ]; then
+            echo "### ❌ Failed Tests" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Test | Mismatch % |" >> $GITHUB_STEP_SUMMARY
+            echo "|------|------------|" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | select(.matches_reference == false) | "| \(.scenario.label) | \(.misMatchPercentage)% |"' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Show errors if any
+          if [ $ERRORS -gt 0 ]; then
+            echo "### ⚠️ Tests with Errors" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | select(.error != null) | "- **\(.scenario.label)**: \(.error)"' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+      - name: Cleanup neobackstop artifacts
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
+        run: |
+          # Set permissions on output directories
+          sudo chmod 0777 libs/sdk-ui-tests/neobackstop/output/test
+          sudo chmod 0777 libs/sdk-ui-tests/neobackstop/output/reference
+          sudo chmod 0777 libs/sdk-ui-tests/neobackstop/output/html-report/config.js
+          
+          # Run cleanup script
+          node libs/sdk-ui-tests/neobackstop/backstop-cleanup-artifacts.cjs
+        env:
+          KEEP_ALL_ARTIFACTS: ${{ inputs.keep-passing-screenshots }}
+      - name: Prepare artifact folder
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
+        run: |
+          # this is needed, otherwise the references in the config.js file break, the output folder needs to wrap the contents of the zip
+          mkdir output-artifact
+          cp -r libs/sdk-ui-tests/neobackstop/output output-artifact/output
+          touch output-artifact/placeholder
+      - name: Archive the neobackstop test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
+        with:
+          name: neobackstop-test-artifacts-failed
+          path: |
+            output-artifact

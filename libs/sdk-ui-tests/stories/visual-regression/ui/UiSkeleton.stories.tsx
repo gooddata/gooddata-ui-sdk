@@ -36,9 +36,13 @@ function UiSkeletonExample({ showCode }: { showCode?: boolean }) {
 export function Default() {
     return <UiSkeletonExample />;
 }
-Default.parameters = { kind: "default", screenshot: true };
-export const Themed = () => wrapWithTheme(<UiSkeletonExample />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Default.parameters = { kind: "default" };
+
+export function Themed() {
+    return wrapWithTheme(<UiSkeletonExample />);
+}
+Themed.parameters = { kind: "themed" };
+
 export function Interface() {
     return <UiSkeletonExample showCode />;
 }

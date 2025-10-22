@@ -332,7 +332,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         return convertMetricFromBackend(result.data, result.data.included);
     }
 
-    public async getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]> {
+    public async getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]> {
         const measureItem = convertMeasure(definition);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
@@ -341,6 +341,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 attributes: [],
                 measures: [measureItem],
                 filters: [],
+                auxMeasures: auxMeasures?.map(convertMeasure),
             },
         };
 

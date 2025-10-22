@@ -8,8 +8,6 @@ import {
     IGenAIChatRouting,
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
-    IGenAIMemoryItem,
-    IGenAIMemoryItemCreate,
     IGenAIUserContext,
     ISemanticQualityIssue,
     type ISemanticQualityIssuesCalculation,
@@ -37,12 +35,6 @@ export interface IGenAIService {
      * Get a chatbot thread builder.
      */
     getChatThread(): IChatThread;
-
-    /**
-     * Get a memory service for listing and managing memory items.
-     * @internal
-     */
-    getMemory(): IMemoryService;
 
     /**
      * Get Analytics Catalog related APIs.
@@ -171,32 +163,6 @@ export interface IChatThreadQuery {
      * Execute the chat thread and stream the results.
      */
     stream(): ReadableStream<IGenAIChatEvaluation>;
-}
-
-/**
- * Memory service.
- * @internal
- */
-export interface IMemoryService {
-    /**
-     * List all memory items.
-     */
-    list(options?: { signal?: AbortSignal }): Promise<IGenAIMemoryItem[]>;
-
-    /**
-     * Create a new memory item.
-     */
-    create(item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
-
-    /**
-     * Update an existing memory item.
-     */
-    update(id: string, item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
-
-    /**
-     * Delete a memory item.
-     */
-    remove(id: string): Promise<void>;
 }
 
 /**

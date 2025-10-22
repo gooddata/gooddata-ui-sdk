@@ -12,6 +12,7 @@ const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", Bull
     .withVisualTestConfig({
         groupUnder: "axis name customization",
         screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("axis name customization", BulletChartWithAllMeasuresAndViewBy, axisNameCustomization);
@@ -22,7 +23,10 @@ const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", Bull
  */
 const axisConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {
         ...BulletChartWithAllMeasuresAndViewBy,

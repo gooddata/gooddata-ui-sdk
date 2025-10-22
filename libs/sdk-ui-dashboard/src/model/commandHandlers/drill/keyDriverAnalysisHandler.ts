@@ -33,6 +33,7 @@ export function* keyDriverAnalysisHandler(
     const metric = drillEvent.dataView.definition.measures.find((m) => {
         return localIdentifiers.includes(m.measure.localIdentifier);
     });
+    const metrics = drillEvent.dataView.definition.measures.filter((m) => m !== metric);
 
     // Attributes that are used
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
@@ -79,6 +80,7 @@ export function* keyDriverAnalysisHandler(
                     format: metric.measure.format ?? keyDriveItem.measure.measureHeaderItem.format,
                 },
             },
+            metrics,
             dateAttribute: dateAttribute.attribute.ref,
             range: [
                 {

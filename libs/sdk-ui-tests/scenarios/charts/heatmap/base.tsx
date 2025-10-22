@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
@@ -26,7 +27,10 @@ export const HeatmapWithNullDataPoints = {
  */
 export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("measure only", {
         measure: ReferenceMd.Amount,
     })

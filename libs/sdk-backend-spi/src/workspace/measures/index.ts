@@ -149,8 +149,9 @@ export interface IWorkspaceMeasuresService {
      * Get connected attributes for a measure
      *
      * @param definition - definition of measure
+     * @param auxMeasures - optional aux measures
      */
-    getConnectedAttributes(definition: IMeasure): Promise<ObjRef[]>;
+    getConnectedAttributes(definition: IMeasure, auxMeasures?: IMeasure[]): Promise<ObjRef[]>;
 }
 
 /**

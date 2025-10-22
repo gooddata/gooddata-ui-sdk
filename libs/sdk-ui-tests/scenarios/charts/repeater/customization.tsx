@@ -9,7 +9,10 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const canvasScenarios = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "canvas" })
+    .withVisualTestConfig({
+        groupUnder: "canvas",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("canvas", RepeaterWithOneAttributeAndInlineVisualisation, canvasCustomizer);
 

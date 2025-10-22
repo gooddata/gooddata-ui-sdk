@@ -200,11 +200,17 @@ $content-font-size: 14px;
             grid-column: span 2;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
             height: 30px;
             line-height: 30px;
             font-size: 24px;
             font-weight: 700;
+
+            &__item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
         }
 
         .gd-dropdown-button-wrapper,
@@ -225,105 +231,6 @@ $content-font-size: 14px;
             ul {
                 padding-left: 12px;
                 margin: 0;
-            }
-        }
-    }
-
-    &__memory-actions {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        justify-content: flex-start;
-        min-width: 140px; // Ensure container has enough width
-
-        .gd-button {
-            min-width: 65px;
-            max-width: none;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            line-height: 1;
-            padding: 8px 12px;
-            white-space: nowrap;
-            border-radius: 3px;
-            box-sizing: border-box;
-            flex-shrink: 0; // Prevent buttons from shrinking
-
-            &.gd-button-small {
-                min-width: 65px;
-                height: 32px;
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-        }
-    }
-}
-
-.gd-memory-dialog {
-    width: 500px;
-    max-height: 80vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    .gd-dialog-content {
-        flex: 1;
-        overflow-y: auto;
-        max-height: calc(80vh - 140px); // Account for header and footer
-    }
-}
-
-.gd-memory-dialog-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    &-input {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        font-size: 14px;
-        line-height: 21px;
-        color: kit-variables.$gd-color-link;
-
-        .gd-input-field {
-            margin-top: 5px;
-        }
-
-        textarea.gd-input-field {
-            resize: vertical;
-            min-height: 80px;
-            max-height: 200px;
-            font-family: kit-variables.$gd-font-primary;
-        }
-    }
-
-    &-select {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        font-size: 14px;
-        line-height: 21px;
-        color: kit-variables.$gd-color-link;
-
-        &-wrapper {
-            margin-top: 5px;
-
-            .gd-dropdown-button {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .gd-list-item {
-                padding: 8px 12px;
-                cursor: pointer;
-                font-size: 14px;
-
-                &:hover {
-                    background-color: kit-variables.$gd-color-light;
-                }
             }
         }
     }

@@ -3,7 +3,7 @@
 import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityIssue, Identifier, SemanticQualityIssueCode } from "@gooddata/sdk-model";
+import type { ISemanticQualityIssue, Identifier } from "@gooddata/sdk-model";
 import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { createQueryId, getQualityIssuesQuery, triggerQualityIssuesCalculationQuery } from "./query.js";
@@ -148,29 +148,4 @@ export function useQualityIssuesMap(): Map<Identifier, ISemanticQualityIssue[]> 
 export function useQualityIssuesById(id: Identifier): ISemanticQualityIssue[] | undefined {
     const map = useQualityIssuesMap();
     return map.get(id);
-}
-
-export function useQualityIssuesMapGroupedByCode(
-    id: Identifier,
-): Map<SemanticQualityIssueCode, ISemanticQualityIssue[]> | undefined {
-    const issues = useQualityIssuesById(id);
-
-    return useMemo(() => {
-        if (!issues?.length) {
-            return undefined;
-        }
-
-        const groupMap = new Map<SemanticQualityIssueCode, ISemanticQualityIssue[]>();
-
-        for (const issue of issues) {
-            const existingIssue = groupMap.get(issue.code);
-            if (existingIssue) {
-                existingIssue.push(issue);
-            } else {
-                groupMap.set(issue.code, [issue]);
-            }
-        }
-
-        return groupMap;
-    }, [issues]);
 }

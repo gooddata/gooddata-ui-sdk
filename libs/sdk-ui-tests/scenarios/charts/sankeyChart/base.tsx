@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
@@ -19,7 +20,10 @@ export const SankeyChartWithMeasureAttributeTo = {
 };
 export default scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withVisualTestConfig({ screenshotSize: { width: 800, height: 800 } })
+    .withVisualTestConfig({
+        screenshotSize: { width: 800, height: 800 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("measure only", {
         measure: ReferenceMd.Amount,
     })

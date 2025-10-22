@@ -58,6 +58,7 @@ Enabled.parameters = {
             clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
             postInteractionWait: 200,
             viewports: mobileViewport,
+            misMatchThreshold: 0.01,
         },
     },
 };

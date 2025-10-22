@@ -569,9 +569,6 @@ export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" 
 export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter | GenAIRankingFilter;
 
 // @internal
-export type GenAIMemoryItemType = "INSTRUCTION" | "SYNONYM" | "ABBREVIATION";
-
-// @internal
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 // @internal
@@ -2097,21 +2094,6 @@ export interface IGenAIFoundObjects {
     objects: ISemanticSearchResultItem[];
     reasoning: string;
 }
-
-// @internal
-export interface IGenAIMemoryItem {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    instruction: string;
-    // (undocumented)
-    keywords: string[];
-    // (undocumented)
-    type: GenAIMemoryItemType;
-}
-
-// @internal
-export type IGenAIMemoryItemCreate = Omit<IGenAIMemoryItem, "id">;
 
 // @internal
 export type IGenAISuggestion = {
@@ -5129,7 +5111,13 @@ export const SemanticQualityIssueCodeValues: {
 export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
 
 // @internal
-export type SemanticQualityIssueSeverity = "ERROR" | "WARNING" | "INFO";
+export type SemanticQualityIssueSeverity = "WARNING" | "INFO";
+
+// @internal
+export const SemanticQualityIssueSeverityOrder: {
+    readonly INFO: 0;
+    readonly WARNING: 1;
+};
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;

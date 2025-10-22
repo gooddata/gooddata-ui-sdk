@@ -96,12 +96,36 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 
                 const exportName = generateExportName(group.testConfig.visual.groupUnder);
 
+                // Build screenshot config with delay and/or viewports and/or reloadAfterReady and/or misMatchThreshold if specified
+                let screenshotConfig = "true";
+                if (
+                    group.testConfig.visual.delay !== undefined ||
+                    group.testConfig.visual.viewports ||
+                    group.testConfig.visual.reloadAfterReady ||
+                    group.testConfig.visual.misMatchThreshold !== undefined
+                ) {
+                    const config: any = {};
+                    if (group.testConfig.visual.delay !== undefined) {
+                        config.delay = group.testConfig.visual.delay;
+                    }
+                    if (group.testConfig.visual.viewports) {
+                        config.viewports = group.testConfig.visual.viewports;
+                    }
+                    if (group.testConfig.visual.reloadAfterReady) {
+                        config.reloadAfterReady = group.testConfig.visual.reloadAfterReady;
+                    }
+                    if (group.testConfig.visual.misMatchThreshold !== undefined) {
+                        config.misMatchThreshold = group.testConfig.visual.misMatchThreshold;
+                    }
+                    screenshotConfig = JSON.stringify(config);
+                }
+
                 storyExports.push(`export const ${exportName} = () => groupedStory(getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}), ${JSON.stringify(
                     wrapperStyle,
                     null,
                     4,
                 )})();
-${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : "true"} };`);
+${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} };`);
 
                 // we need an additional import
                 helperFileNamedImports.push("groupedStory");
@@ -112,15 +136,39 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
                 scenarios.forEach(([name]) => {
                     const exportName = generateExportName(name);
 
+                    // Build screenshot config with delay and/or viewports and/or reloadAfterReady and/or misMatchThreshold if specified
+                    let screenshotConfig = "true";
+                    if (
+                        group.testConfig.visual.delay !== undefined ||
+                        group.testConfig.visual.viewports ||
+                        group.testConfig.visual.reloadAfterReady ||
+                        group.testConfig.visual.misMatchThreshold !== undefined
+                    ) {
+                        const config: any = {};
+                        if (group.testConfig.visual.delay !== undefined) {
+                            config.delay = group.testConfig.visual.delay;
+                        }
+                        if (group.testConfig.visual.viewports) {
+                            config.viewports = group.testConfig.visual.viewports;
+                        }
+                        if (group.testConfig.visual.reloadAfterReady) {
+                            config.reloadAfterReady = group.testConfig.visual.reloadAfterReady;
+                        }
+                        if (group.testConfig.visual.misMatchThreshold !== undefined) {
+                            config.misMatchThreshold = group.testConfig.visual.misMatchThreshold;
+                        }
+                        screenshotConfig = JSON.stringify(config);
+                    }
+
                     storyExports.push(`export const ${exportName} = () => (() => {
     const scenarios = getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}).asScenarioDescAndScenario();
     const scenarioAndDescriptions = scenarios.filter(([name]) => name === "${name}");
-    if (scenarioAndDescriptions.length === 0) 
+    if (scenarioAndDescriptions.length === 0)
         throw new Error("Failed to find scenario '${name}'");
     if (scenarioAndDescriptions.length > 1)
         throw new Error("Multiple '${name}' scenarios found");
     const scenarioAndDescription = scenarioAndDescriptions[0];
-        
+
     const scenario = scenarioAndDescription[1];
 
     const { propsFactory, workspaceType, component: Component } = scenario;
@@ -128,7 +176,7 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
         withCustomSetting(backend, scenario.backendSettings),
         workspaceType,
     );
-    
+
     return buildStory(
         Component,
         props,
@@ -136,7 +184,7 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
         scenario.tags,
     )();
 })();
-${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : "true"} };`);
+${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} };`);
                 });
 
                 // we need additional imports

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
@@ -12,12 +13,18 @@ import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", SankeyChartWithMeasureAttributeFromAndTo, coloringCustomizer);
 
 const colorAssignment = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to nodes",

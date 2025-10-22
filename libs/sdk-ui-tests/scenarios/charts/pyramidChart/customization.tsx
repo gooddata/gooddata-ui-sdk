@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
 
 import { PyramidChartWithMeasureAndViewBy, PyramidChartWithTwoMeasures } from "./base.js";
@@ -15,7 +16,10 @@ import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "legend position" })
+    .withVisualTestConfig({
+        groupUnder: "legend position",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position - two measures", PyramidChartWithTwoMeasures, legendCustomizer)
     .addScenarios(
@@ -26,13 +30,20 @@ const legendScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", Pyramid
 
 const dataLabelScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "data labels" })
+    .withVisualTestConfig({
+        groupUnder: "data labels",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", PyramidChartWithMeasureAndViewBy, dataLabelCustomizer);
 
 const chartAlignmentScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
-    .withVisualTestConfig({ groupUnder: "alignment", screenshotSize: { width: 400, height: 600 } })
+    .withVisualTestConfig({
+        groupUnder: "alignment",
+        screenshotSize: { width: 400, height: 600 },
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("vertical alignment", PyramidChartWithMeasureAndViewBy, chartAlignmentVariants);
 

@@ -207,38 +207,6 @@
         "value": "Search by title or description…",
         "comment": "Accessible label for the search input."
     },
-    "analyticsCatalog.tabs.catalog": {
-        "value": "Catalog",
-        "comment": "Tab label for the main analytics catalog list."
-    },
-    "analyticsCatalog.tabs.memory": {
-        "value": "Memory",
-        "comment": "Tab label for the Memory items section."
-    },
-    "analyticsCatalog.memory.column.instruction.label": {
-        "value": "Instruction",
-        "comment": "Column header for memory item instruction."
-    },
-    "analyticsCatalog.memory.column.type.label": {
-        "value": "Type",
-        "comment": "Column header for memory item type."
-    },
-    "analyticsCatalog.memory.column.keywords.label": {
-        "value": "Keywords",
-        "comment": "Column header for memory item keywords."
-    },
-    "analyticsCatalog.memory.column.actions.label": {
-        "value": "Actions",
-        "comment": "Column header for memory item actions."
-    },
-    "analyticsCatalog.memory.empty.title": {
-        "value": "No memory items found",
-        "comment": "Title shown when memory list is empty."
-    },
-    "analyticsCatalog.memory.empty.description": {
-        "value": "Create your first memory item to get started.",
-        "comment": "Description shown when memory list is empty."
-    },
     "analyticsCatalog.empty.search.title": {
         "value": "No match found",
         "comment": "Title of the empty state when search input is filled."

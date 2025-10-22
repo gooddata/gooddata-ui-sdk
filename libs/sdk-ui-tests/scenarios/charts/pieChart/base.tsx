@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
 
@@ -22,6 +23,9 @@ export const PieChartWithSingleMeasureAndViewBy = {
 
 export default scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure", {
         measures: [ReferenceMd.Amount],
     })

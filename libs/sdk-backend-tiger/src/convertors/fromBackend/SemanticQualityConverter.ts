@@ -6,14 +6,15 @@ import type {
     AfmQualityIssuesCalculationStatusResponseStatusEnum,
     AfmTriggerQualityIssuesCalculationResponse,
 } from "@gooddata/api-client-tiger";
-import type {
-    GenAIObjectType,
-    ISemanticQualityIssue,
-    ISemanticQualityIssuesCalculation,
-    Identifier,
-    SemanticQualityIssueCode,
-    SemanticQualityIssueSeverity,
-    SemanticQualityIssuesCalculationStatus,
+import {
+    type GenAIObjectType,
+    type ISemanticQualityIssue,
+    type ISemanticQualityIssuesCalculation,
+    type Identifier,
+    type SemanticQualityIssueCode,
+    type SemanticQualityIssueSeverity,
+    type SemanticQualityIssuesCalculationStatus,
+    SemanticQualityIssueSeverityOrder as SeverityOrder,
 } from "@gooddata/sdk-model";
 
 /**
@@ -23,7 +24,17 @@ export function convertQualityIssuesResponse(response: AfmGetQualityIssuesRespon
     if (!response.issues) {
         return [];
     }
-    return response.issues.map(convertQualityIssue);
+
+    return (
+        response.issues
+            .map(convertQualityIssue)
+            // Sort issues by severity (highest severity first)
+            .sort(
+                (a, b) =>
+                    (SeverityOrder[b.severity] ?? SeverityOrder.INFO) -
+                    (SeverityOrder[a.severity] ?? SeverityOrder.INFO),
+            )
+    );
 }
 
 /**
@@ -33,7 +44,7 @@ export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIss
     const detail = issue.detail as Record<string, unknown>;
     return {
         code: issue.code as SemanticQualityIssueCode,
-        severity: issue.severity as SemanticQualityIssueSeverity,
+        severity: convertQualityIssueSeverity(issue.severity),
         objects: issue.objects.map((obj) => ({
             type: obj.type as GenAIObjectType,
             identifier: obj.id as Identifier,
@@ -42,6 +53,20 @@ export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIss
             abbreviation: typeof detail["abbreviation"] === "string" ? detail["abbreviation"] : undefined,
         },
     };
+}
+
+/**
+/**
+ * Converts a quality issue severity from backend format to SDK model format.
+ */
+function convertQualityIssueSeverity(severity: AfmQualityIssue["severity"]): SemanticQualityIssueSeverity {
+    switch (severity.toUpperCase()) {
+        case "ERROR":
+        case "WARNING":
+            return "WARNING";
+        default:
+            return "INFO";
+    }
 }
 
 /**

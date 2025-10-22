@@ -1,0 +1,21 @@
+# (C) 2025 GoodData Corporation
+
+services:
+    backstop:
+        build:
+          context: ./neobackstop/test
+          dockerfile: Dockerfile
+        volumes:
+          - ./neobackstop/output:/usr/neobackstop/output
+          - ./neobackstop/config.json:/usr/neobackstop/config.json:ro
+          - ./neobackstop/scenarios.json:/usr/neobackstop/scenarios.json:ro
+        command: ${COMMAND_ARGS}
+        depends_on:
+          - storybook
+
+    storybook:
+        build:
+          context: ./neobackstop/serve
+          dockerfile: Dockerfile
+#        volumes:
+#            - ./dist-storybook:/srv/storybook:ro # this is now copied in Dockerfile

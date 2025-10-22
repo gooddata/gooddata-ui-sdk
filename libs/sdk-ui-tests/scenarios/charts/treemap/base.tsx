@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
@@ -25,6 +26,9 @@ export const TreemapWithViewByDateAndStackByDate = {
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
     .addScenario("single measure", {
         measures: [ReferenceMd.Amount],
     })

@@ -259,10 +259,20 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     );
 }
 
+const screenshotViewport = {
+    viewports: [{ label: "desktop", width: 1076, height: 768 }],
+};
+
 export function Default() {
     return <UiAsyncTableExample />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = {
+    kind: "default",
+    screenshot: screenshotViewport,
+};
 
 export const Themed = () => wrapWithTheme(<UiAsyncTableExample />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = {
+    kind: "themed",
+    screenshot: screenshotViewport,
+};
