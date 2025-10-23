@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-repeater",
-    "version": "11.6.0-alpha.7",
+    "version": "11.7.0-alpha.0",
     "private": false,
     "description": "This example demonstrates how to use Repeater component.",
     "license": "LicenseRef-LICENSE",
