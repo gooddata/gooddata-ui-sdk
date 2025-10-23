@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { ITableMeasureGroupValueColumnDefinition } from "@gooddata/sdk-ui";
+import { ICellRendererParams } from "ag-grid-enterprise";
 
+import { DataViewFacade, ExplicitDrill, ITableMeasureGroupValueColumnDefinition } from "@gooddata/sdk-ui";
+
+import { MetricCell } from "../../components/Cell/MetricCell.js";
 import { MEASURE_GROUP_VALUE_COL_DEF_ID } from "../../constants/internal.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
-import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
-import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
+import { extractFormattedValue } from "../columns/shared.js";
+import { getCellClassName, getCellTypes, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -16,6 +19,8 @@ import { getHeaderCellClassName } from "../styling/headerCell.js";
  */
 export const createMeasureGroupValueColDef = (
     columnDefinition: ITableMeasureGroupValueColumnDefinition,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): AgGridColumnDef => {
     return {
         colId: MEASURE_GROUP_VALUE_COL_DEF_ID,
@@ -28,7 +33,10 @@ export const createMeasureGroupValueColDef = (
         },
         cellClass: getCellClassName,
         cellStyle: getMeasureCellStyle,
-        cellRenderer: metricCellRenderer,
+        cellRenderer: (params: ICellRendererParams) => {
+            const cellTypes = getCellTypes(params, drillableItems, dv);
+            return MetricCell({ ...params, cellTypes });
+        },
         headerClass: getHeaderCellClassName,
         headerComponent: "EmptyMeasureGroupValueHeader",
         sortable: false,

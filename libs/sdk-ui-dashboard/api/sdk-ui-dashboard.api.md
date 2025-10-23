@@ -5487,6 +5487,7 @@ export interface IKdaDataPoint {
 // @internal (undocumented)
 export interface IKdaDefinition {
     dateAttribute: ObjRef;
+    filters?: IDashboardAttributeFilter[];
     metric: IMeasure;
     metrics?: IMeasure[];
     range: [IKdaDataPoint, IKdaDataPoint];

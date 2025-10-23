@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "分析概要",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "<button>{attributes} 属性を持つ{combinations} バリアントをテストした。</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "属性",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "列をクリックすると、その国の主要ドライバーを見ることができる。",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "列をクリックすると、その列の主なドライバーを見ることができる。{category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "{title} 。{category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "アトリビュート",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "最も重要なドライバー",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "ドロップ{where} {title}",
     "drill.kda.increase": "増加{where} {title}",
     "drill.kda.no_change": "陳腐{where} {title}",
-    "drill.kda.year_to_year": "前年比"
+    "drill.kda.year_to_year": "前年比",
+    "dialogs.schedule.email.userAndEmail.remove": "{name} を削除 ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "拡散",
+    "kdaDialog.dialog.keyDrives.empty": "キードライバーなし",
+    "kdaDialog.dialog.keyDriver.chart.std": "重大性の閾値"
 }

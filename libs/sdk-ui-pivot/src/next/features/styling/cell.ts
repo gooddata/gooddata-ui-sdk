@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CellClassParams, CellStyle } from "ag-grid-enterprise";
+import { CellClassParams, CellStyle, ICellRendererParams } from "ag-grid-enterprise";
 import cx from "classnames";
 
 import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
@@ -37,8 +37,55 @@ import { AgGridRowData } from "../../types/internal.js";
 import { getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
 
-const getCellClassTypes = (
-    params: CellClassParams<AgGridRowData, string | null>,
+export type CellTypes = ReturnType<typeof getCellTypes>;
+
+/**
+ * Common parameters shared between CellClassParams and ICellRendererParams
+ */
+type CommonCellParams =
+    | CellClassParams<AgGridRowData, string | null>
+    | ICellRendererParams<AgGridRowData, string | null>;
+
+/**
+ * Type guard to check if params is CellClassParams (has rowIndex directly)
+ */
+const isCellClassParams = (params: unknown): params is CellClassParams<AgGridRowData, string | null> => {
+    return (
+        params !== undefined &&
+        params !== null &&
+        (params as CellClassParams<AgGridRowData, string | null>).rowIndex !== undefined
+    );
+};
+
+/**
+ * Type guard to check if params is ICellRendererParams (has node.rowIndex)
+ */
+const isCellRendererParams = (
+    params: unknown,
+): params is ICellRendererParams<AgGridRowData, string | null> => {
+    return (
+        !isCellClassParams(params) &&
+        params !== undefined &&
+        params !== null &&
+        (params as ICellRendererParams<AgGridRowData, string | null>).node !== undefined
+    );
+};
+
+/**
+ * Helper function to get rowIndex from either CellClassParams or ICellRendererParams
+ */
+const getRowIndex = (params: CommonCellParams): number | null => {
+    if (isCellClassParams(params)) {
+        return params.rowIndex;
+    }
+    if (isCellRendererParams(params)) {
+        return params.node.rowIndex;
+    }
+    return null;
+};
+
+export const getCellTypes = (
+    params: CommonCellParams,
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ) => {
@@ -126,9 +173,9 @@ export const getCellClassName = (
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ): string => {
-    const classTypes = getCellClassTypes(params, drillableItems, dv);
+    const cellTypes = getCellTypes(params, drillableItems, dv);
 
-    if (!classTypes) {
+    if (!cellTypes) {
         return CELL_CLASSNAME;
     }
 
@@ -150,7 +197,7 @@ export const getCellClassName = (
         isFirstOfGroup,
         isTotal,
         isTransposedLeftBorder,
-    } = classTypes;
+    } = cellTypes;
 
     return cx(
         e("cell", {
@@ -194,9 +241,9 @@ export const getTransposedCellClassName = (
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ): string => {
-    const classTypes = getCellClassTypes(params, drillableItems, dv);
+    const cellTypes = getCellTypes(params, drillableItems, dv);
 
-    if (!classTypes) {
+    if (!cellTypes) {
         return CELL_CLASSNAME;
     }
 
@@ -215,7 +262,7 @@ export const getTransposedCellClassName = (
         isSeparated,
         isFirstOfGroup,
         isTransposedLeftBorder,
-    } = classTypes;
+    } = cellTypes;
 
     return cx(
         e("cell", {
@@ -241,13 +288,11 @@ export const getTransposedCellClassName = (
     );
 };
 
-const isAttributeGroupedCell = (
-    params: CellClassParams<AgGridRowData, string | null>,
-    colId: string,
-): boolean => {
-    const { rowIndex, api, data } = params;
+const isAttributeGroupedCell = (params: CommonCellParams, colId: string): boolean => {
+    const rowIndex = getRowIndex(params);
+    const { api, data } = params;
 
-    if (rowIndex === 0) {
+    if (rowIndex === null || rowIndex === 0) {
         return false;
     }
 
@@ -278,11 +323,13 @@ const isAttributeGroupedCell = (
     return currentValue === previousValue && currentValue !== undefined && currentValue !== "";
 };
 
-const isRowFirstOfGroup = (
-    params: CellClassParams<AgGridRowData, string | null>,
-    attributeColId: string,
-): boolean => {
-    const { rowIndex, api, data } = params;
+const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): boolean => {
+    const rowIndex = getRowIndex(params);
+    const { api, data } = params;
+
+    if (rowIndex === null) {
+        return false;
+    }
 
     const currentRow = data?.cellDataByColId?.[attributeColId];
     if (!currentRow || currentRow.columnDefinition.type !== "attribute") {
@@ -341,7 +388,7 @@ const isRowFirstOfGroup = (
     return false;
 };
 
-const isGroupFirstRow = (params: CellClassParams<AgGridRowData, string | null>): boolean => {
+const isGroupFirstRow = (params: CommonCellParams): boolean => {
     const { data } = params;
 
     const attributeColIds = getAttributeColIds(data);

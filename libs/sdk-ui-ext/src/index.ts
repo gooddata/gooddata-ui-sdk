@@ -71,11 +71,11 @@ export {
  * @internal
  */
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo {
-    return FullVisualizationCatalog.forInsight(insight, settings?.enableNewPivotTable ?? false).getSizeInfo(
+    return FullVisualizationCatalog.forInsight(
         insight,
-        fluidLayoutDescriptor,
-        settings,
-    );
+        settings?.enableNewPivotTable ?? false,
+        settings?.enableNewGeoPushpin ?? false,
+    ).getSizeInfo(insight, fluidLayoutDescriptor, settings);
 }
 
 /**
@@ -86,8 +86,13 @@ export function getInsightWithAppliedDrillDown(
     drillEvent: IDrillEvent,
     drillDefinition: IDrillDownDefinition,
     backendSupportsElementUris: boolean,
+    settings: ISettings,
 ): IInsight {
-    return FullVisualizationCatalog.forInsight(insight).applyDrillDown(
+    return FullVisualizationCatalog.forInsight(
+        insight,
+        false,
+        settings?.enableNewGeoPushpin ?? false,
+    ).applyDrillDown(
         insight,
         {
             drillDefinition,
@@ -104,9 +109,11 @@ export function getInsightVisualizationMeta(
     insight: IInsightDefinition,
     settings?: ISettings,
 ): IVisualizationMeta {
-    return FullVisualizationCatalog.forInsight(insight, settings?.enableNewPivotTable ?? false).getMeta(
-        settings,
-    );
+    return FullVisualizationCatalog.forInsight(
+        insight,
+        settings?.enableNewPivotTable ?? false,
+        settings?.enableNewGeoPushpin ?? false,
+    ).getMeta(settings);
 }
 
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import type { ISemanticQualityService } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityIssue, ISemanticQualityIssuesCalculation } from "@gooddata/sdk-model";
+import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
 
 import {
     convertQualityIssuesCalculationResponse,
-    convertQualityIssuesResponse,
+    convertQualityReportResponse,
 } from "../../../convertors/fromBackend/SemanticQualityConverter.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -24,12 +24,12 @@ export class SemanticQualityService implements ISemanticQualityService {
      *
      * Issues are sorted by severity (ERROR, WARNING, INFO).
      */
-    async getQualityIssues(): Promise<ISemanticQualityIssue[]> {
+    async getQualityReport(): Promise<ISemanticQualityReport> {
         const response = await this.authCall((client) => {
             return client.genAI.getQualityIssues({ workspaceId: this.workspaceId });
         });
 
-        return convertQualityIssuesResponse(response.data);
+        return convertQualityReportResponse(response.data);
     }
 
     async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {

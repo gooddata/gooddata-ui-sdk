@@ -20,6 +20,7 @@ export function KdaProvider({ children, definition, separators }: KdaProps) {
             separators,
             definition,
             definitionStatus: "success",
+            //attributeFilters: definition.filters?.slice() ?? [],
         };
     }, [definition, separators]);
 

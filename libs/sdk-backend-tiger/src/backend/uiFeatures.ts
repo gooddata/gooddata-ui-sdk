@@ -115,6 +115,7 @@ export enum TigerFeaturesNames {
     EnableToDateFilters = "enableToDateFilters",
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
+    EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -228,6 +229,7 @@ export type ITigerFeatureFlags = {
     enableToDateFilters: (typeof FeatureFlagsValues)["enableToDateFilters"][number];
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
+    enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -341,6 +343,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
+    enableNewGeoPushpin: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: false,
     enableFilterAccessibility: false,
@@ -455,6 +458,7 @@ export const FeatureFlagsValues = {
     enableToDateFilters: [true, false] as const,
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
+    enableNewGeoPushpin: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,

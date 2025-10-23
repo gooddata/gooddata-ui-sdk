@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.6.0-alpha.5",
+    "version": "11.6.0-alpha.6",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -16,6 +16,7 @@
     "type": "module",
     "exports": {
         ".": "./esm/index.js",
+        "./next": "./esm/next/index.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/GeoChartOptionsWrapper": "./esm/core/geoChart/GeoChartOptionsWrapper.js"
@@ -44,7 +45,7 @@
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist styles/scss/main.scss:styles/css/main.css",
+        "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist --load-path=node_modules/maplibre-gl/dist styles/scss/main.scss:styles/css/main.css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
@@ -68,6 +69,7 @@
         "default-import": "1.1.5",
         "lodash-es": "^4.17.21",
         "mapbox-gl": "^2.6.1",
+        "maplibre-gl": "^4.7.1",
         "react-intl": "7.1.11",
         "react-measure": "^2.5.2",
         "ts-invariant": "^0.7.5",
@@ -84,6 +86,7 @@
         "@testing-library/react": "16.3.0",
         "@types/lodash-es": "^4.17.12",
         "@types/mapbox-gl": "^2.6.0",
+        "@types/maplibre-gl": "^1.14.0",
         "@types/node": "^22.13.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",

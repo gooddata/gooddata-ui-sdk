@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Resumo da análise",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Variantes testadas {combinations} com <button>{attributes} atributos</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Atributos",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Clique na coluna para ver os principais fatores para cada país",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Clique na coluna para ver os principais motivadores para determinado {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Mudança em {title} por {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Atributo",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Fator mais significativo",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "Deixar cair {where} {title}",
     "drill.kda.increase": "Aumento {where} {title}",
     "drill.kda.no_change": "Velho {where} {title}",
-    "drill.kda.year_to_year": "Mudança ano a ano"
+    "drill.kda.year_to_year": "Mudança ano a ano",
+    "dialogs.schedule.email.userAndEmail.remove": "Remover {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Diff",
+    "kdaDialog.dialog.keyDrives.empty": "Sem fatores-chave",
+    "kdaDialog.dialog.keyDriver.chart.std": "Alterar limite de significância"
 }

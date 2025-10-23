@@ -262,7 +262,7 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
 export function getInsightVisualizationMeta(insight: IInsightDefinition, settings?: ISettings): IVisualizationMeta;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean, settings: ISettings): IInsight;
 
 // @internal (undocumented)
 export const getRelativeOperatorTitle: (operator: IAlertRelativeOperator, art: IAlertRelativeArithmeticOperator, intl: IntlShape) => string;

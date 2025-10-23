@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Résumé de l'analyse",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Variantes testées d{combinations}e  a<button>{attributes}vec les attributs de</button> ",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Attributs",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Cliquez sur une colonne pour voir les facteurs clés pour un pays donné",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Cliquez sur une colonne pour voir les principaux facteurs de changement.{category} ",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Variation de {title} par {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Attribut",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Facteur le plus important",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "Chute {where} {title}",
     "drill.kda.increase": "Augmentation {where} {title}",
     "drill.kda.no_change": "Stale {where} {title}",
-    "drill.kda.year_to_year": "Variation d'une année sur l'autre"
+    "drill.kda.year_to_year": "Variation d'une année sur l'autre",
+    "dialogs.schedule.email.userAndEmail.remove": "Supprimer {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Différence",
+    "kdaDialog.dialog.keyDrives.empty": "Pas de facteurs clés",
+    "kdaDialog.dialog.keyDriver.chart.std": "Changement Seuil de signification"
 }

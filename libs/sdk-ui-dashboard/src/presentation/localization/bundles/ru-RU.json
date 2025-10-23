@@ -840,7 +840,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Сводка анализа",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Протестированы {combinations} варианты с <button>{attributes} атрибутами</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Атрибуты",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Щелкните на столбец, чтобы увидеть ключевые факторы для данной страны",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Щелкните по столбцу, чтобы увидеть ключевые факторы для данного {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Изменение в {title} на {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Атрибут",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Наиболее значимый фактор",
@@ -860,5 +860,9 @@
     "drill.kda.drop": "Удалить {where} {title}",
     "drill.kda.increase": "Увеличить {where} {title}",
     "drill.kda.no_change": "Устаревший {where} {title}",
-    "drill.kda.year_to_year": "Изменение по сравнению с прошлым годом"
+    "drill.kda.year_to_year": "Изменение по сравнению с прошлым годом",
+    "dialogs.schedule.email.userAndEmail.remove": "Удалить {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Разница",
+    "kdaDialog.dialog.keyDrives.empty": "Нет ключевых факторов",
+    "kdaDialog.dialog.keyDriver.chart.std": "Изменить порог значимости"
 }

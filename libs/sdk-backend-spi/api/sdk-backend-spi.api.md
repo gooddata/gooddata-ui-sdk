@@ -83,6 +83,8 @@ import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IMemoryItemDefinition } from '@gooddata/sdk-model';
+import { IMemoryItemMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
@@ -105,8 +107,8 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
-import { ISemanticQualityIssue } from '@gooddata/sdk-model';
 import { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
+import { ISemanticQualityReport } from '@gooddata/sdk-model';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -131,6 +133,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmEndpointTestResults } from '@gooddata/sdk-model';
+import { MemoryItemStrategy } from '@gooddata/sdk-model';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectOrigin } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -974,6 +977,8 @@ export interface IGenAIService {
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     getChatThread(): IChatThread;
     // @internal
+    getMemoryItems(): IMemoryItemsService;
+    // @internal
     getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
@@ -1114,6 +1119,36 @@ export interface IMeasuresQuery {
 
 // @public
 export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;
+
+// @public
+export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    strategy?: MemoryItemStrategy[];
+}
+
+// @public
+export interface IMemoryItemsQuery {
+    query(): Promise<IMemoryItemsQueryResult>;
+    withFilter(filter: IMemoryItemsFilterOptions): IMemoryItemsQuery;
+    withInclude(include: string[]): IMemoryItemsQuery;
+    withOrigin(origin: ObjectOrigin | (string & {})): IMemoryItemsQuery;
+    withPage(page: number): IMemoryItemsQuery;
+    withSize(size: number): IMemoryItemsQuery;
+    withSorting(sort: string[]): IMemoryItemsQuery;
+}
+
+// @internal
+export type IMemoryItemsQueryResult = IPagedResource<IMemoryItemMetadataObject>;
+
+// @internal
+export interface IMemoryItemsService {
+    create(item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
+    delete(id: string): Promise<void>;
+    getMemoryItemsQuery(): IMemoryItemsQuery;
+    update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
+}
 
 // @beta
 export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;
@@ -1468,7 +1503,7 @@ export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IEle
 
 // @internal
 export interface ISemanticQualityService {
-    getQualityIssues(): Promise<ISemanticQualityIssue[]>;
+    getQualityReport(): Promise<ISemanticQualityReport>;
     triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }
 

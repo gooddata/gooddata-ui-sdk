@@ -836,7 +836,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Analiz özeti",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "{combinations} varyantları <button>{attributes} </button>nitelikleriyle test edildi",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Öznitelikler",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Belirtilen ülke için ana etkenleri görmek üzere sütuna tıklayın",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Verilen  için ana etkenleri görmek üzere{category} sütuna tıklayın",
     "kdaDialog.dialog.keyDrives.overview.detail.title": " değişikliği{title}  ile{category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Öznitelik",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "En önemli etken",
@@ -856,5 +856,9 @@
     "drill.kda.drop": "Bırak {where} {title}",
     "drill.kda.increase": "Artır {where} {title}",
     "drill.kda.no_change": "Eski {where} {title}",
-    "drill.kda.year_to_year": "Yıldan yıla değişim"
+    "drill.kda.year_to_year": "Yıldan yıla değişim",
+    "dialogs.schedule.email.userAndEmail.remove": "{name} ({email}) kaldır",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Fark",
+    "kdaDialog.dialog.keyDrives.empty": "Anahtar etken yok",
+    "kdaDialog.dialog.keyDriver.chart.std": "Önem Eşiğini Değiştir"
 }

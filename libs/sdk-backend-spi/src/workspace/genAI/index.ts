@@ -9,12 +9,19 @@ import {
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
     IGenAIUserContext,
-    ISemanticQualityIssue,
+    IMemoryItemDefinition,
+    IMemoryItemMetadataObject,
     type ISemanticQualityIssuesCalculation,
+    type ISemanticQualityReport,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
     type IUser,
+    MemoryItemStrategy,
+    ObjectOrigin,
 } from "@gooddata/sdk-model";
+
+import { IFilterBaseOptions } from "../../common/filtering.js";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * GenAI-powered features.
@@ -35,6 +42,12 @@ export interface IGenAIService {
      * Get a chatbot thread builder.
      */
     getChatThread(): IChatThread;
+
+    /**
+     * Get a memory service for listing and managing memory items.
+     * @internal
+     */
+    getMemoryItems(): IMemoryItemsService;
 
     /**
      * Get Analytics Catalog related APIs.
@@ -166,6 +179,32 @@ export interface IChatThreadQuery {
 }
 
 /**
+ * Memory service.
+ * @internal
+ */
+export interface IMemoryItemsService {
+    /**
+     * Get a memory items query builder.
+     */
+    getMemoryItemsQuery(): IMemoryItemsQuery;
+
+    /**
+     * Create a new memory item.
+     */
+    create(item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
+
+    /**
+     * Update an existing memory item.
+     */
+    update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
+
+    /**
+     * Delete a memory item.
+     */
+    delete(id: string): Promise<void>;
+}
+
+/**
  * GenAI chat evaluation result.
  * @beta
  */
@@ -218,12 +257,92 @@ export interface IAnalyticsCatalogCreatedBy {
  */
 export interface ISemanticQualityService {
     /**
-     * Returns list of quality issues detected in the workspace metadata.
+     * Returns a report of quality issues detected in the workspace metadata.
      */
-    getQualityIssues(): Promise<ISemanticQualityIssue[]>;
+    getQualityReport(): Promise<ISemanticQualityReport>;
 
     /**
      * Triggers asynchronous calculation of metadata quality issues.
      */
     triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }
+
+/**
+ * Memory items filter options.
+ * @public
+ */
+export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
+    strategy?: MemoryItemStrategy[];
+    isDisabled?: boolean;
+}
+
+/**
+ * Service to query memory items.
+ *
+ * @public
+ */
+export interface IMemoryItemsQuery {
+    /**
+     * Sets number of memory items to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of memory items per page must be a positive number
+     * @returns memory items query
+     */
+    withSize(size: number): IMemoryItemsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns memory items query
+     */
+    withPage(page: number): IMemoryItemsQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns memory items query
+     */
+    withFilter(filter: IMemoryItemsFilterOptions): IMemoryItemsQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns memory items query
+     */
+    withSorting(sort: string[]): IMemoryItemsQuery;
+
+    /**
+     * Sets include for the query.
+     *
+     * @param include - include to apply
+     * @returns memory items query
+     */
+    withInclude(include: string[]): IMemoryItemsQuery;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns memory items query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IMemoryItemsQuery;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IMemoryItemsQueryResult>;
+}
+
+/**
+ * Memory items query result.
+ * @internal
+ */
+export type IMemoryItemsQueryResult = IPagedResource<IMemoryItemMetadataObject>;

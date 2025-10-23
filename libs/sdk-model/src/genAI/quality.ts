@@ -4,6 +4,21 @@ import type { GenAIObjectType } from "./common.js";
 import type { Identifier } from "../objRef/index.js";
 
 /**
+ * Represents a single semantic quality issue report.
+ * @internal
+ */
+export interface ISemanticQualityReport {
+    /**
+     * List of quality issues detected in the workspace metadata.
+     */
+    issues: ISemanticQualityIssue[];
+    /**
+     * Timestamp when the quality issue report was last updated (ISO format)
+     */
+    updatedAt: string | undefined;
+}
+
+/**
  * Represents a quality issue detected in workspace metadata.
  * @internal
  */

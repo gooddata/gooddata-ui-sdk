@@ -12,11 +12,11 @@ export const driversCountColumn: (intl: IntlShape, width: number) => UiAsyncTabl
 ) => {
     return {
         label: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.overview.detail.table.drivers" }),
-        key: "items",
+        key: "significantDrivers",
         align: "right",
         width,
         getTextContent: (item) => {
-            return item.items.length;
+            return item.significantDrivers.length;
         },
     };
 };

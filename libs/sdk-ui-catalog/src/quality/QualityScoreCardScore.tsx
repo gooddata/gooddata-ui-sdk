@@ -19,7 +19,7 @@ export function QualityScoreCardScore({ issues, isLoading }: Props) {
     return (
         <div className="gd-analytics-catalog__quality-score-card__score">
             {isLoading ? (
-                <LoadingComponent />
+                <LoadingComponent className="gd-analytics-catalog__quality-score-card__score__loading" />
             ) : totalCount > 0 ? (
                 [...severityGroup].map(([severity, issues]) => {
                     if (issues.length === 0) {

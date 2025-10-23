@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { isEqualWith } from "lodash-es";
+import { groupBy, isEqualWith } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
@@ -41,7 +41,7 @@ export function getKdaKeyDriverCombinations(
     }
 
     const dateAttribute = findDateValues(dv, dateAttributes, attributeHeader);
-    const metricValue = findMetricValues(dv, metricHeader, dateAttribute.dims);
+    const metricValue = findMetricValues(dv, metricHeader, dateAttribute);
 
     const res: DashboardKeyDriverCombinationItem[] = [];
 
@@ -122,11 +122,15 @@ function createYearToYear(
         return undefined;
     }
 
-    const previousYear = findValuePreviousYear(dateAttribute.currentValue);
-    const previousYearMetricValue = findMetricPreviousYearValue(dv, measure, values, previousYear);
+    const { previousYear, previousYearDatePoint } = findPreviousYearValue(
+        dv,
+        measure,
+        values,
+        dateAttribute.currentValue,
+    );
 
-    if (previousYear && previousYearMetricValue && metricValue) {
-        const previousValue = previousYearMetricValue.rawValue as number;
+    if (previousYear && previousYearDatePoint && metricValue) {
+        const previousValue = previousYearDatePoint.rawValue as number;
         const currentValue = metricValue.currentValue.rawValue as number;
 
         return {
@@ -218,35 +222,13 @@ function findDateValues(
     currentValue: AttributeHeader;
     nextValue: AttributeHeader | undefined;
     dims: [number, number, number];
+    shift: number;
 } {
-    const headers = dv.meta().attributeHeaders();
-    const dims = headers.reduce(
-        (prev, f, dim1) => {
-            const [dim2, dim3] = f.reduce(
-                (prev, f, i) => {
-                    const dim3 = f.findIndex((a) => {
-                        return isEqualWith(a.attributeHeaderItem, attributeHeader.attributeHeaderItem);
-                    });
-                    if (dim3 >= 0) {
-                        return [i, dim3];
-                    }
-                    return prev;
-                },
-                [-1, -1],
-            );
-            if (dim2 >= 0 && dim3 >= 0) {
-                return [dim1, dim2, dim3];
-            }
-            return prev;
-        },
-        [-1, -1, -1],
-    ) as [number, number, number];
+    const { dims, values, shift } = calculateDimensions(dv, attributeHeader);
 
-    const values = headers[dims[0]][dims[1]];
-
-    const previousValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] - 1]);
+    const previousValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] - shift]);
     const currentValue = attributeHeader;
-    const nextValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] + 1]);
+    const nextValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] + shift]);
 
     const attributeDefinition = dateAttributes.find((da) => {
         return (
@@ -262,8 +244,9 @@ function findDateValues(
         previousValue,
         currentValue,
         nextValue,
-        dims,
         attributeDefinition,
+        dims,
+        shift,
     };
 }
 
@@ -282,7 +265,7 @@ function getAttributeHeader(
 function findMetricValues(
     dv: DataViewFacade,
     metricHeader: IMeasureDescriptor,
-    dims: [number, number, number],
+    dateAttribute: ReturnType<typeof findDateValues>,
 ): {
     previousValue: DataPoint | undefined;
     currentValue: DataPoint;
@@ -291,9 +274,9 @@ function findMetricValues(
     const localId = metricHeader.measureHeaderItem.localIdentifier;
     const data = Array.from(dv.data().series().allForMeasure(localId))[0].dataPoints();
 
-    const previousValue = data[dims[2] - 1];
-    const currentValue = data[dims[2]];
-    const nextValue = data[dims[2] + 1];
+    const previousValue = data[dateAttribute.dims[2] - dateAttribute.shift];
+    const currentValue = data[dateAttribute.dims[2]];
+    const nextValue = data[dateAttribute.dims[2] + dateAttribute.shift];
 
     return {
         previousValue,
@@ -302,39 +285,87 @@ function findMetricValues(
     };
 }
 
-function findMetricPreviousYearValue(
+function findPreviousYearValue(
     dv: DataViewFacade,
     metricHeader: IMeasureDescriptor,
     values: IResultAttributeHeader[],
-    previousYear: IResultAttributeHeader | null,
-): DataPoint | null {
-    if (!previousYear) {
-        return null;
-    }
-
+    currentYear: AttributeHeader,
+): {
+    previousYear: AttributeHeader | null;
+    previousYearDatePoint: DataPoint | null;
+} {
     const localId = metricHeader.measureHeaderItem.localIdentifier;
     const data = Array.from(dv.data().series().allForMeasure(localId))[0].dataPoints();
-    const prevYearIndex = values.findIndex(
-        (v) => v.attributeHeaderItem.normalizedValue === previousYear.attributeHeaderItem.normalizedValue,
-    );
 
-    return data[prevYearIndex] ?? null;
+    const split = currentYear.attributeHeaderItem.uri.split("-");
+    split[0] = (parseInt(split[0]) - 1).toString();
+    const prevYearUri = split.join("-");
+
+    const prevYearHeader = values.find((v) => v.attributeHeaderItem.uri === prevYearUri);
+    const prevYearIndex = prevYearHeader ? values.indexOf(prevYearHeader) : -1;
+
+    return {
+        previousYear: prevYearHeader
+            ? {
+                  ...currentYear,
+                  ...prevYearHeader,
+              }
+            : null,
+        previousYearDatePoint: data[prevYearIndex] ?? null,
+    };
 }
 
-function findValuePreviousYear(current: AttributeHeader): AttributeHeader | null {
-    const value = current.attributeHeaderItem.normalizedValue;
+function calculateDimensions(
+    dv: DataViewFacade,
+    attributeHeader: IDrillIntersectionAttributeItem,
+): {
+    dims: [number, number, number];
+    shift: number;
+    values: IResultAttributeHeader[];
+} {
+    const headers = dv.meta().attributeHeaders();
+    // const dims = headers.reduce(
+    //     (prev, f, dim1) => {
+    //         const [dim2, dim3] = f.reduce(
+    //             (prev, f, i) => {
+    //                 const dim3 = f.findIndex((a) => {
+    //                     return isEqualWith(a.attributeHeaderItem, attributeHeader.attributeHeaderItem);
+    //                 });
+    //                 if (dim3 >= 0) {
+    //                     return [i, dim3];
+    //                 }
+    //                 return prev;
+    //             },
+    //             [-1, -1],
+    //         );
+    //         if (dim2 >= 0 && dim3 >= 0) {
+    //             return [dim1, dim2, dim3];
+    //         }
+    //         return prev;
+    //     },
+    //     [-1, -1, -1],
+    // ) as [number, number, number];
 
-    if (!value) {
-        return null;
-    }
+    // Find a dimension of the attribute header
+    const dims =
+        (headers.flatMap((f, dim1) =>
+            f.flatMap((group, dim2) => {
+                const dim3 = group.findIndex((a) =>
+                    isEqualWith(a.attributeHeaderItem, attributeHeader.attributeHeaderItem),
+                );
+                return dim3 >= 0 ? [[dim1, dim2, dim3]] : [];
+            }),
+        )[0] as [number, number, number]) ?? ([-1, -1, -1] as [number, number, number]);
 
-    const date = new Date(value);
-    date.setFullYear(date.getFullYear() - 1);
+    // Retrieve the values for the attribute header by dimensions
+    const values = headers[dims[0]][dims[1]];
+
+    // Find a shift for the attribute header
+    const shift = Object.values(groupBy(values, (val) => val.attributeHeaderItem.uri))[0].length;
+
     return {
-        ...current,
-        attributeHeaderItem: {
-            ...current.attributeHeaderItem,
-            normalizedValue: date.toISOString(),
-        },
+        dims,
+        shift,
+        values,
     };
 }

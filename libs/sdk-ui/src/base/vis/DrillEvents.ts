@@ -112,7 +112,7 @@ export function isDrillIntersectionDateAttributeItem(
     return (
         !isEmpty(header) &&
         (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined &&
-        (header as IDrillIntersectionAttributeItem).attributeHeader.granularity !== undefined
+        Boolean((header as IDrillIntersectionAttributeItem).attributeHeader.granularity)
     );
 }
 

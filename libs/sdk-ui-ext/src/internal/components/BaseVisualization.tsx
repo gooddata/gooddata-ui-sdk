@@ -265,7 +265,11 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
 
         try {
             visFactory = this.props.visualizationCatalog
-                .forUri(visUri, featureFlags?.enableNewPivotTable ?? false)
+                .forUri(
+                    visUri,
+                    featureFlags?.enableNewPivotTable ?? false,
+                    featureFlags?.enableNewGeoPushpin ?? false,
+                )
                 .getFactory();
         } catch {
             console.error(`Error: unsupported visualization type - ${visUri}`);

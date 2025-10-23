@@ -36,9 +36,17 @@
         outline: none;
 
         .gd-attribute-filter-list-item--isFocused {
-            .gd-list-item-only:not(.gd-list-item-only--isFocusedSelectItem) {
+            .gd-list-item-only {
                 opacity: 1;
                 outline: none;
+
+                a {
+                    outline: none;
+                }
+
+                &.gd-list-item-only--isFocusedSelectItem {
+                    @include mixins.focus-ring;
+                }
             }
 
             .gd-item-title-tooltip-wrapper.gd-list-item-only.gd-list-item-only--isFocusedSelectItem,

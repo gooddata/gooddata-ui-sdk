@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeDescriptorBody, IMeasure, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDescriptorBody, IDashboardAttributeFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -56,6 +56,10 @@ export interface IKdaDefinition {
      * Metrics related to main metric
      */
     metrics?: IMeasure[];
+    /**
+     * Filters to apply
+     */
+    filters?: IDashboardAttributeFilter[];
     /**
      * Date attribute
      */

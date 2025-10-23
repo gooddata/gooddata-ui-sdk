@@ -761,7 +761,7 @@
     "table.bulkActions.selectedCountShort": "{selectedCount} 選ばれた",
     "visualizations.menu.textWrapping": "テキストの折り返し",
     "visualizations.menu.textWrapping.header": "ヘッダー",
-    "visualizations.menu.textWrapping.cell": "セル",
+    "visualizations.menu.textWrapping.cell": "細胞",
     "visualizations.menu.header.openAriaLabel": "ヘッダーメニューを開く",
     "table.filter.optionAll": "すべて",
     "table.filter.optionApply": "適用",

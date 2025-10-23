@@ -1,0 +1,166 @@
+// (C) 2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+//
+// GeoPushpinChartNext Legend Styles
+// BEM-based legend styles for the new geo pushpin chart implementation
+//
+
+.gd-geo-pushpin-next-legend {
+    // Position modifiers
+    &--position-top,
+    &--position-bottom {
+        margin: 5px 0;
+        justify-content: flex-end;
+        // Prevent legend from growing and overflowing the map
+        display: flex;
+        flex: unset;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+
+    &--position-left,
+    &--position-right {
+        max-width: 210px;
+    }
+
+    // Static legend modifier
+    &--static {
+        margin-left: 0;
+
+        &.gd-geo-pushpin-next-legend--position-top,
+        &.gd-geo-pushpin-next-legend--position-bottom {
+            align-items: center;
+        }
+    }
+
+    // Size legend modifier - when legend has size legend alongside
+    &--has-size .color-legend {
+        margin-right: 10px;
+    }
+
+    // Static legend wrap override
+    .viz-static-legend-wrap {
+        display: flex;
+        flex: 1 auto;
+        margin-right: 20px;
+        flex-flow: row wrap;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    // Position-specific overrides for vis-commons legend
+    .viz-legend.position-right,
+    .viz-legend.position-left {
+        flex-basis: 0;
+    }
+
+    // Paging element
+    > .paging {
+        margin-left: 20px;
+    }
+
+    // Size legend component
+    &__size {
+        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex: 0 0 auto;
+
+        .metric-name {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 30px;
+            white-space: nowrap;
+            color: kit-variables.$gd-color-link;
+            margin-right: 6px;
+            text-overflow: ellipsis;
+            max-width: 250px;
+            min-width: 50px;
+        }
+
+        .circle-value {
+            margin-left: 6px;
+        }
+
+        .circle-max-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .circle-average-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .circle-min-icon {
+            width: 10px;
+            height: 10px;
+        }
+
+        .circle-separator {
+            width: 10px;
+            height: 2px;
+            margin: auto 5px;
+            background-color: variables.$border-color-circle-legend;
+        }
+    }
+
+    // Size legend circle element
+    &__circle {
+        display: inline-block;
+
+        span:first-child {
+            box-sizing: content-box;
+            display: inline-block;
+            border: 1px solid variables.$border-color-circle-legend;
+            border-radius: 50%;
+        }
+
+        span {
+            font-size: 11px;
+            vertical-align: middle;
+            color: kit-variables.$gd-color-link;
+        }
+
+        &::after {
+            content: "...";
+            display: inline-block;
+            margin-left: 6px;
+            margin-right: 6px;
+            margin-top: -6px;
+            vertical-align: middle;
+            color: variables.$border-color-circle-legend;
+            font-family: kit-variables.$gd-font-primary;
+        }
+
+        &:last-child {
+            &::after {
+                content: "";
+            }
+        }
+    }
+
+    // Size legend circle list element
+    &__circle-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &--small {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    // Size legend container modifiers
+    &__size-container {
+        &--small {
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 5px;
+        }
+    }
+}

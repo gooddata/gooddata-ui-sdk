@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Sintesi dell'analisi",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Varianti  {combinations}testate con g<button>{attributes}li attribu</button>ti ",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Attributi",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Fare clic sulla colonna per visualizzare i driver principali per un determinato paese",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Fare clic sulla colonna per visualizzare i driver principali per un dato {category}dato ",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Variazione di {title} da {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Attributo",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Il driver più significativo",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "Goccia {where} {title}",
     "drill.kda.increase": "Aumento {where} {title}",
     "drill.kda.no_change": "Stantio {where} {title}",
-    "drill.kda.year_to_year": "Variazione anno su anno"
+    "drill.kda.year_to_year": "Variazione anno su anno",
+    "dialogs.schedule.email.userAndEmail.remove": "Rimuovere {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Diff",
+    "kdaDialog.dialog.keyDrives.empty": "Nessun driver chiave",
+    "kdaDialog.dialog.keyDriver.chart.std": "Modifica Soglia di significatività"
 }

@@ -413,6 +413,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 async semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
                 },
+                getMemoryItems() {
+                    throw new NotSupported("not supported");
+                },
                 getAnalyticsCatalog() {
                     return new DummyAnalyticsCatalogService();
                 },

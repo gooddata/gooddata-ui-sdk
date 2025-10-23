@@ -24,6 +24,11 @@ import {
     isMeasureMetadataObjectDefinition,
 } from "./measure/index.js";
 import {
+    IMemoryItemDefinition,
+    IMemoryItemMetadataObject,
+    isMemoryItemMetadataObject,
+} from "./memoryItem/index.js";
+import {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectDefinition,
@@ -49,6 +54,8 @@ export type {
     IDashboardMetadataObject,
     IAttributeHierarchyMetadataObject,
     IDateHierarchyTemplate,
+    IMemoryItemDefinition,
+    IMemoryItemMetadataObject,
 };
 export {
     isMetadataObject,
@@ -64,6 +71,7 @@ export {
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
     isAttributeHierarchyMetadataObject,
+    isMemoryItemMetadataObject,
 };
 export type {
     IMdObjectBase,
@@ -87,7 +95,8 @@ export type MetadataObject =
     | IDataSetMetadataObject
     | IVariableMetadataObject
     | IDashboardMetadataObject
-    | IAttributeHierarchyMetadataObject;
+    | IAttributeHierarchyMetadataObject
+    | IMemoryItemMetadataObject;
 
 /**
  * Get metadata object identifier

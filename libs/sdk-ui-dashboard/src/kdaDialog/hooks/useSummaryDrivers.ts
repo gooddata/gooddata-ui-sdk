@@ -20,8 +20,9 @@ export function useSummaryDrivers() {
                 prev[ref] = createKdaGroup(ref, data.attribute, data.title, data.description);
             }
             if (data.isSignificant) {
-                prev[ref].items.push(data);
+                prev[ref].significantDrivers.push(data);
             }
+            prev[ref].allDrivers.push(data);
             return prev;
         }, {});
 
@@ -42,14 +43,17 @@ export function useSummaryDrivers() {
             return prev;
         }, groups);
 
-        return Object.values(groups).sort((a, b) => b.items.length - a.items.length) as KdaItemGroup[];
+        return Object.values(groups).sort(
+            (a, b) => b.significantDrivers.length - a.significantDrivers.length,
+        ) as KdaItemGroup[];
     }, [state.items, attributeFinder, state.selectedAttributes]);
 }
 
 function createKdaGroup(id: string, attribute: ObjRef, title: string, description: string): KdaItemGroup {
     return {
         id,
-        items: [],
+        significantDrivers: [],
+        allDrivers: [],
         attribute,
         title,
         description,

@@ -753,6 +753,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableNewGeoPushpin,
+            "enableNewGeoPushpin",
+            "BOOLEAN",
+            FeatureFlagsValues.enableNewGeoPushpin,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAutomationManagement,
             "enableAutomationManagement",
             "BOOLEAN",

@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Resumen del análisis",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Variantes probadas de {combinations} con atributos de <button>{attributes}</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Atributos",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Haga clic en una columna para ver los principales impulsores de un país determinado",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Haga clic en una columna para ver los factores clave {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Cambio en {title} por {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Atributo",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Motor más importante",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "Drop {where} {title}",
     "drill.kda.increase": "Aumentar {where} {title}",
     "drill.kda.no_change": "Rancio {where} {title}",
-    "drill.kda.year_to_year": "Variación interanual"
+    "drill.kda.year_to_year": "Variación interanual",
+    "dialogs.schedule.email.userAndEmail.remove": "Eliminar {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Dif",
+    "kdaDialog.dialog.keyDrives.empty": "No hay impulsores clave",
+    "kdaDialog.dialog.keyDriver.chart.std": "Cambio Umbral de significación"
 }

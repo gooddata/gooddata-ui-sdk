@@ -834,7 +834,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Analysis summary",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Tested {combinations} variants with <button>{attributes} attributes</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Attributes",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Click on column to view key drivers for selected country",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Click on column to view key drivers for given {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Change in {title} by {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Attribute",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Most significant driver",
@@ -854,5 +854,9 @@
     "drill.kda.drop": "Remove {where} {title}",
     "drill.kda.increase": "Increase {where} {title}",
     "drill.kda.no_change": "Outdated {where} {title}",
-    "drill.kda.year_to_year": "Year on year change"
+    "drill.kda.year_to_year": "Year on year change",
+    "dialogs.schedule.email.userAndEmail.remove": "Remove {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Difference",
+    "kdaDialog.dialog.keyDrives.empty": "No key drivers",
+    "kdaDialog.dialog.keyDriver.chart.std": "Modify Significance Threshold"
 }

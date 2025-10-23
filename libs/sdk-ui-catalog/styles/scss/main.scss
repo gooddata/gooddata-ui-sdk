@@ -63,6 +63,7 @@ $content-font-size: 14px;
         header {
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 20px;
             margin: 20px 0;
 
@@ -81,6 +82,10 @@ $content-font-size: 14px;
             min-width: 240px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
+        }
+
+        &__reset {
+            margin-left: -10px;
         }
     }
 
@@ -196,6 +201,10 @@ $content-font-size: 14px;
             line-height: 20px;
         }
 
+        &__menu {
+            justify-self: end;
+        }
+
         &__score {
             grid-column: span 2;
             display: flex;
@@ -206,11 +215,33 @@ $content-font-size: 14px;
             font-size: 24px;
             font-weight: 700;
 
+            &__loading {
+                flex: none;
+            }
+
             &__item {
                 display: flex;
                 align-items: center;
                 gap: 5px;
             }
+        }
+
+        &__action {
+            font-size: 12px;
+            height: 20px;
+            line-height: 18px;
+            color: var(--gd-palette-complementary-7);
+
+            .gd-ui-kit-button {
+                height: fit-content;
+            }
+        }
+
+        &__date {
+            justify-self: end;
+            font-size: 10px;
+            line-height: 17px;
+            color: var(--gd-palette-complementary-6);
         }
 
         .gd-dropdown-button-wrapper,

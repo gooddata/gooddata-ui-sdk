@@ -1,16 +1,14 @@
 // (C) 2025 GoodData Corporation
 
+import { ICellRendererParams } from "ag-grid-enterprise";
 import { IntlShape } from "react-intl";
 
 import { DataViewFacade, ExplicitDrill, ITableValueColumnDefinition } from "@gooddata/sdk-ui";
 
-import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
-import {
-    extractFormattedValue,
-    getAttributeHeaderName,
-    transposedMetricCellRenderer,
-} from "../columns/shared.js";
-import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
+import { TransposedMetricCell } from "../../components/Cell/TransposedMetricCell.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
+import { extractFormattedValue, getAttributeHeaderName } from "../columns/shared.js";
+import { getCellClassName, getCellTypes, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -41,8 +39,9 @@ export function createAttributeHeaderColDef(
             return getCellClassName(params, drillableItems, dv);
         },
         cellStyle: getMeasureCellStyle,
-        cellRenderer: (params: AgGridCellRendererParams) => {
-            return transposedMetricCellRenderer(params, tableHasMeasures);
+        cellRenderer: (params: ICellRendererParams) => {
+            const cellTypes = getCellTypes(params, drillableItems, dv);
+            return TransposedMetricCell({ ...params, tableHasMeasures, cellTypes });
         },
         headerClass: getHeaderCellClassName,
         headerComponent: "AttributeHeader",

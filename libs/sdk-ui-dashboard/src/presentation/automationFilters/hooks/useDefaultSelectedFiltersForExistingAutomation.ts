@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import {
@@ -25,7 +26,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
-import { removeIgnoredWidgetFilters } from "../utils.js";
+import { removeIgnoredWidgetFilters } from "../../utils.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,

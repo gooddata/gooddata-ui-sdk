@@ -1,0 +1,64 @@
+// (C) 2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+//
+// MapLibre GL JS CSS Overrides
+// Overrides for the MapLibre map library styles
+//
+
+// Map container
+.maplibregl-map {
+    flex: 1;
+    // If the outer container have scroll bar, the chart can be showed by scrolling.
+    // stylelint-disable-next-line declaration-no-important
+    overflow: visible !important;
+}
+
+// Always show map library wordmark
+.maplibregl-ctrl {
+    // stylelint-disable-next-line declaration-no-important
+    display: block !important;
+}
+
+// Adjust the MapLibre logo to be smaller
+.maplibregl-ctrl-logo {
+    background-size: 65px 20px;
+    width: 65px;
+    height: 20px;
+}
+
+// Move AttributionControl to the left of NavigationControl
+.maplibregl-ctrl-bottom-right {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+}
+
+// Overwrite MapLibre popup styles
+.maplibregl-popup-tip {
+    display: none;
+}
+
+.maplibregl-popup-content {
+    padding: 0;
+    pointer-events: none;
+}
+
+// Partially overwrite MapLibre blocker CSS
+.maplibregl-scroll-zoom-blocker,
+.maplibregl-touch-pan-blocker {
+    font-family: variables.$font-stack-roman;
+    // stylelint-disable-next-line declaration-no-important
+    font-size: 16px !important;
+    // stylelint-disable-next-line declaration-no-important
+    background: rgba(kit-variables.$gd-outside-background-color, 0.9);
+}
+
+// Fix the scale problem of map canvas when exporting
+.isExportMode .maplibregl-canvas {
+    // stylelint-disable-next-line declaration-no-important
+    width: 100% !important;
+    // stylelint-disable-next-line declaration-no-important
+    height: 100% !important;
+}
