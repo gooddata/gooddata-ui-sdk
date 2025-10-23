@@ -10,6 +10,7 @@ import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 import { KdaDialog as KdaDialogComponent, KdaProvider } from "../../../../kdaDialog/internal.js";
 import {
     selectCatalogAttributeDisplayFormsById,
+    selectDashboardFiltersWithoutCrossFiltering,
     selectEnableDrilledTooltip,
     selectLocale,
     selectSeparators,
@@ -25,6 +26,7 @@ import {
     OnKeyDriverAnalysisSuccess,
     getDrillDownTitle,
 } from "../../../drill/index.js";
+import { removeDateFilters, removeIgnoredWidgetFilters } from "../../../utils.js";
 import { IDashboardInsightProps } from "../types.js";
 
 type IReturnFocusInfo =
@@ -42,6 +44,11 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     const separators = useDashboardSelector(selectSeparators);
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
     const enableDrillDescription = useDashboardSelector(selectEnableDrilledTooltip);
+
+    const availableFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
+    const attributeFilters = useMemo(() => {
+        return removeDateFilters(removeIgnoredWidgetFilters(availableFilters, widget!));
+    }, [availableFilters, widget]);
 
     const breadcrumbs = useMemo(
         () =>
@@ -129,9 +136,18 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     );
 
     const [keyDriveInfo, setKeyDriveInfo] = useState<KeyDriveInfo | undefined>(undefined);
-    const onKeyDriverAnalysisSuccess = useCallback<OnKeyDriverAnalysisSuccess>((evt) => {
-        setKeyDriveInfo(evt.payload);
-    }, []);
+    const onKeyDriverAnalysisSuccess = useCallback<OnKeyDriverAnalysisSuccess>(
+        (evt) => {
+            setKeyDriveInfo({
+                ...evt.payload,
+                keyDriveDefinition: {
+                    ...evt.payload.keyDriveDefinition,
+                    filters: attributeFilters,
+                },
+            });
+        },
+        [attributeFilters],
+    );
     const onCloseKeyDriverAnalysis = useCallback(() => {
         returnFocusToInsight();
         setKeyDriveInfo(undefined);

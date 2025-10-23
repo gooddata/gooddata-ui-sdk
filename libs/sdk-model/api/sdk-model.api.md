@@ -2547,6 +2547,32 @@ export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
 }
 
+// @public
+export interface IMemoryItemDefinition {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    instruction: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    keywords?: string[];
+    // (undocumented)
+    strategy: MemoryItemStrategy;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @public
+export interface IMemoryItemMetadataObject extends IMetadataObject, IMemoryItemDefinition {
+    // (undocumented)
+    createdBy: IUser | undefined;
+    // (undocumented)
+    type: "memoryItem";
+}
+
 // @public (undocumented)
 export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
 }
@@ -3470,6 +3496,12 @@ export interface ISemanticQualityIssuesCalculation {
     status: SemanticQualityIssuesCalculationStatus;
 }
 
+// @internal
+export interface ISemanticQualityReport {
+    issues: ISemanticQualityIssue[];
+    updatedAt: string | undefined;
+}
+
 // @beta
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
@@ -3587,6 +3619,7 @@ export interface ISettings {
     enableMultipleDateFilters?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
+    enableNewGeoPushpin?: boolean;
     enableNewPdfTabularExport?: boolean;
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
@@ -4867,11 +4900,14 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 // @public
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
+// @public
+export type MemoryItemStrategy = "ALWAYS" | "AUTO";
+
 // @internal
 export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined, commonDateFilterId?: string): IFilter[];
 
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject | IMemoryItemMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
@@ -5009,7 +5045,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel" | "memoryItem";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

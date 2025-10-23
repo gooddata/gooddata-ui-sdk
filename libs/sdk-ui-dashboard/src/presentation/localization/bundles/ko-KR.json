@@ -836,7 +836,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "분석 요약",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "{combinations} 변형을 <button>{attributes} 속성과 함께 테스트함</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "속성",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "지정된 국가의 주요 요인을 보려면 열을 클릭하세요",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "주어진 {category}에 대한 주요 요인을 보려면 열을 클릭하세요",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "{title}의 변경 사항 {category}에 의해",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "속성",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "가장 중요한 동인",
@@ -856,5 +856,9 @@
     "drill.kda.drop": "드롭 {where} {title}",
     "drill.kda.increase": "증가 {where} {title}",
     "drill.kda.no_change": "오래된 {where} {title}",
-    "drill.kda.year_to_year": "전년 대비 변화"
+    "drill.kda.year_to_year": "전년 대비 변화",
+    "dialogs.schedule.email.userAndEmail.remove": "{name} 제거 ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "차이점",
+    "kdaDialog.dialog.keyDrives.empty": "주요 요인 없음",
+    "kdaDialog.dialog.keyDriver.chart.std": "유의성 임계값 변경"
 }

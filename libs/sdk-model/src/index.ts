@@ -1093,6 +1093,11 @@ export {
     isAutomationUnknownUserRecipient,
 } from "./automations/index.js";
 
+export type {
+    IMemoryItemDefinition,
+    IMemoryItemMetadataObject,
+    MemoryItemStrategy,
+} from "./ldm/metadata/memoryItem/index.js";
 export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
 export { isSemanticSearchResultItem, isSemanticSearchRelationship } from "./genAI/semanticSearch.js";
 
@@ -1133,6 +1138,7 @@ export type {
 } from "./llmEndpoints/index.js";
 
 export {
+    type ISemanticQualityReport,
     type ISemanticQualityIssue,
     type ISemanticQualityIssueObject,
     type ISemanticQualityIssueDetail,

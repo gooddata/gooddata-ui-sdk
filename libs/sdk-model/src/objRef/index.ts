@@ -60,7 +60,8 @@ export type ObjectType =
     | "filterView"
     | "workspaceDataFilter"
     | "workspaceDataFilterSetting"
-    | "notificationChannel";
+    | "notificationChannel"
+    | "memoryItem";
 
 /**
  * Model object reference using object's unique identifier.

@@ -760,7 +760,7 @@
     "messages.accessibility.label": "{count, plural, one {# 訊息} other {# 消息}}：{partial}",
     "table.bulkActions.selectedCountShort": "{selectedCount} 選擇",
     "visualizations.menu.textWrapping": "換行",
-    "visualizations.menu.textWrapping.header": "頁眉",
+    "visualizations.menu.textWrapping.header": "鏟頭",
     "visualizations.menu.textWrapping.cell": "細胞",
     "visualizations.menu.header.openAriaLabel": "打開標題餐牌",
     "table.filter.optionAll": "所有",

@@ -24,6 +24,7 @@ import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
 import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
 import { useClearCellSelection } from "./hooks/useClearCellSelection.js";
 import { useResolvedProps } from "./hooks/useResolvedProps.js";
+import { getPivotContainerTestIdProps } from "./testing/dataTestIdGenerators.js";
 import { ICorePivotTableNextProps } from "./types/internal.js";
 import { IPivotTableNextProps } from "./types/public.js";
 
@@ -142,7 +143,7 @@ function RenderPivotTableNextAgGrid() {
                         onDragStart={stopEventWhenResizeHeader}
                         onClick={stopEventWhenResizeHeader}
                         onBlur={handleBlur}
-                        data-testid={isReadyForInitialPaint ? "pivot-table-next" : undefined}
+                        {...getPivotContainerTestIdProps(isReadyForInitialPaint)}
                     >
                         <AgGridReact {...agGridReactProps} />
                     </div>

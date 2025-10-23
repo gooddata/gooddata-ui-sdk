@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useMemo, useState } from "react";
 
 import { FilterContextItem, IAutomationMetadataObject, IAutomationVisibleFilter } from "@gooddata/sdk-model";
@@ -6,12 +7,12 @@ import { FilterContextItem, IAutomationMetadataObject, IAutomationVisibleFilter 
 import { useAutomationVisibleFilters } from "./hooks/useAutomationVisibleFilters.js";
 import { useDefaultSelectedFiltersForExistingAutomation } from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
 import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
-import { removeIgnoredWidgetFilters } from "./utils.js";
 import {
     ExtendedDashboardWidget,
     selectDashboardFiltersWithoutCrossFiltering,
     useDashboardSelector,
 } from "../../model/index.js";
+import { removeIgnoredWidgetFilters } from "../utils.js";
 
 interface IUseAutomationFiltersSelect {
     editedAutomationFilters: FilterContextItem[];

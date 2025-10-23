@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { ICellRendererParams } from "ag-grid-enterprise";
+
 import {
     DataViewFacade,
     ExplicitDrill,
@@ -9,9 +11,10 @@ import {
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
-import { extractFormattedValue, metricCellRenderer } from "./shared.js";
+import { extractFormattedValue } from "./shared.js";
+import { MetricCell } from "../../components/Cell/MetricCell.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
-import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
+import { getCellClassName, getCellTypes, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -31,6 +34,7 @@ export function createMeasureColDef(
     dv?: DataViewFacade,
 ): AgGridColumnDef {
     const { measureDescriptor } = columnDefinition;
+
     return {
         colId,
         field: `cellDataByColId.${colId}.formattedValue`,
@@ -46,7 +50,10 @@ export function createMeasureColDef(
         valueGetter: (params) => {
             return extractFormattedValue(params, colId);
         },
-        cellRenderer: metricCellRenderer,
+        cellRenderer: (params: ICellRendererParams) => {
+            const cellTypes = getCellTypes(params, drillableItems, dv);
+            return MetricCell({ ...params, cellTypes });
+        },
         headerComponent: "MeasureHeader",
         sortable: isValueColumnDefinition(columnDefinition),
     };

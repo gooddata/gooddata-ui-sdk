@@ -45,7 +45,8 @@ export function createDataView(
     );
     const [attribute, attributeDescriptor] = createDateAttribute(item.attribute, item.title);
 
-    const attributeData = getLimitedDataOnly(group, trend).map((item) => item.to.value - item.from.value);
+    const items = getLimitedDataOnly(group, trend);
+    const attributeData = items.map((item) => item.to.value - item.from.value);
     const stdDate = attributeData.map(() => deviation);
 
     const definition: IExecutionDefinition = {
@@ -92,7 +93,7 @@ export function createDataView(
         headerItems: [
             [[tempMeasureHeader, stdMeasureHeader]],
             [
-                group.items.map((item) => ({
+                items.map((item) => ({
                     attributeHeaderItem: {
                         uri: item.category,
                         name: item.category,
@@ -329,13 +330,14 @@ export function createConfig(
 }
 
 function getLimitedDataOnly(group: KdaItemGroup, trend: number) {
-    return group.items.slice(0, LIMIT_KDA).filter((item) => {
-        const diff = item.to.value - item.from.value;
-        if (trend >= 0) {
-            return diff >= 0;
+    const items = group.allDrivers.slice().sort((a, b) => {
+        if (trend < 0) {
+            return a.to.value - a.from.value - (b.to.value - b.from.value);
         }
-        return diff < 0;
+        return b.to.value - b.from.value - (a.to.value - a.from.value);
     });
+
+    return items.slice(0, LIMIT_KDA);
 }
 
 function getTrendAndDeviation(item: KdaItem) {

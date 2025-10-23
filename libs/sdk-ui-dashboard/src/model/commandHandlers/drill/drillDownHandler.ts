@@ -10,6 +10,7 @@ import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionU
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
 import { DrillDown } from "../../commands/drill.js";
 import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
@@ -55,11 +56,14 @@ export function* drillDownHandler(
         };
     }
 
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+
     const insightWithDrillDownApplied = getInsightWithAppliedDrillDown(
         insight,
         effectiveDrillEvent,
         drillDefinition,
         ctx.backend.capabilities.supportsElementUris ?? true,
+        settings,
     );
 
     return drillDownResolved(

@@ -37,6 +37,7 @@ import {
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
 import { ExtendedDashboardWidget } from "../../model/index.js";
+import { removeIgnoredWidgetFilters } from "../utils.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {
@@ -365,34 +366,6 @@ export function isFilterMatch(filter1: IFilter, filter2: IFilter): boolean {
     }
 
     return false;
-}
-
-export function removeIgnoredWidgetFilters(
-    filters: FilterContextItem[],
-    widget: ExtendedDashboardWidget | undefined,
-) {
-    if (!isInsightWidget(widget)) {
-        return filters;
-    }
-
-    return filters.filter((filter) =>
-        isDashboardCommonDateFilter(filter)
-            ? !!widget.dateDataSet
-            : !widget.ignoreDashboardFilters.some((ignoredFilter) => {
-                  if (isDashboardDateFilter(filter) && ignoredFilter.type === "dateFilterReference") {
-                      return areObjRefsEqual(ignoredFilter.dataSet, filter.dateFilter.dataSet);
-                  }
-
-                  if (
-                      isDashboardAttributeFilter(filter) &&
-                      ignoredFilter.type === "attributeFilterReference"
-                  ) {
-                      return areObjRefsEqual(ignoredFilter.displayForm, filter.attributeFilter.displayForm);
-                  }
-
-                  return false;
-              }),
-    );
 }
 
 export const getFilterTitle = (

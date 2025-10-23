@@ -14,6 +14,7 @@ import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/depend
 import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor.js";
 import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor.js";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor.js";
+import { GeoPushpinChartNextDescriptor } from "./pluggableVisualizations/geoChartNext/GeoPushpinChartNextDescriptor.js";
 import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor.js";
 import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor.js";
 import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor.js";
@@ -41,9 +42,14 @@ export interface IVisualizationCatalog {
      *
      * @param uri - visualization URI (in format such as local:<type>)
      * @param enablePivotTableNext - enable new pivot table
+     * @param enableGeoPushpinNext - enable new geo pushpin chart
      * @alpha
      */
-    forUri(uri: string, enablePivotTableNext?: boolean): IVisualizationDescriptor;
+    forUri(
+        uri: string,
+        enablePivotTableNext?: boolean,
+        enableGeoPushpinNext?: boolean,
+    ): IVisualizationDescriptor;
 
     /**
      * Looks up whether there is a pluggable visualization descriptor for a given vis class URI.
@@ -58,9 +64,14 @@ export interface IVisualizationCatalog {
      *
      * @param insight - insight to render
      * @param enablePivotTableNext - enable new pivot table
+     * @param enableGeoPushpinNext - enable new geo pushpin chart
      * @alpha
      */
-    forInsight(insight: IInsightDefinition, enablePivotTableNext?: boolean): IVisualizationDescriptor;
+    forInsight(
+        insight: IInsightDefinition,
+        enablePivotTableNext?: boolean,
+        enableGeoPushpinNext?: boolean,
+    ): IVisualizationDescriptor;
 
     /**
      * Looks up whether there is a pluggable visualization descriptor for the provided insight.
@@ -81,8 +92,18 @@ type TypeToClassMapping = {
 export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
     constructor(private readonly mapping: TypeToClassMapping) {}
 
-    public forUri(uri: string, enablePivotTableNext?: boolean): IVisualizationDescriptor {
-        const sanitizedUri = enablePivotTableNext && uri === "local:table" ? "local:tablenext" : uri;
+    public forUri(
+        uri: string,
+        enablePivotTableNext?: boolean,
+        enableGeoPushpinNext?: boolean,
+    ): IVisualizationDescriptor {
+        let sanitizedUri = uri;
+        if (enablePivotTableNext && uri === "local:table") {
+            sanitizedUri = "local:tablenext";
+        } else if (enableGeoPushpinNext && uri === "local:pushpin") {
+            sanitizedUri = "local:pushpinnext";
+        }
+
         const VisType = this.findInMapping(sanitizedUri);
 
         if (!VisType) {
@@ -99,13 +120,17 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         return !!this.findInMapping(uri);
     }
 
-    public forInsight(insight: IInsightDefinition, enablePivotTableNext?: boolean): IVisualizationDescriptor {
+    public forInsight(
+        insight: IInsightDefinition,
+        enablePivotTableNext?: boolean,
+        enableGeoPushpinNext?: boolean,
+    ): IVisualizationDescriptor {
         /*
          * the URIs follow "local:visualizationType" format
          */
         const vizClass = insightVisualizationUrl(insight);
 
-        return this.forUri(vizClass, enablePivotTableNext);
+        return this.forUri(vizClass, enablePivotTableNext, enableGeoPushpinNext);
     }
 
     public hasDescriptorForInsight(insight: IInsightDefinition): boolean {
@@ -151,6 +176,7 @@ const DefaultVisualizations = {
     waterfall: WaterfallChartDescriptor,
     repeater: RepeaterDescriptor,
     tablenext: PivotTableNextDescriptor,
+    pushpinnext: GeoPushpinChartNextDescriptor,
 };
 
 /**

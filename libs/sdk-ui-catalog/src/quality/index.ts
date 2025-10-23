@@ -3,7 +3,7 @@
 export {
     QualityProvider,
     useQualityState,
-    useQualityIssuesState,
+    useQualityReportState,
     useQualityActions,
     useQualityIssuesMap,
     useQualityIssuesById,

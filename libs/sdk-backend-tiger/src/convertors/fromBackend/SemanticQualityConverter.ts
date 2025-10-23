@@ -10,6 +10,7 @@ import {
     type GenAIObjectType,
     type ISemanticQualityIssue,
     type ISemanticQualityIssuesCalculation,
+    type ISemanticQualityReport,
     type Identifier,
     type SemanticQualityIssueCode,
     type SemanticQualityIssueSeverity,
@@ -20,21 +21,19 @@ import {
 /**
  * Converts the full quality issues response from backend format to SDK model format.
  */
-export function convertQualityIssuesResponse(response: AfmGetQualityIssuesResponse): ISemanticQualityIssue[] {
-    if (!response.issues) {
-        return [];
-    }
-
-    return (
-        response.issues
+export function convertQualityReportResponse(response: AfmGetQualityIssuesResponse): ISemanticQualityReport {
+    const { issues = [], updatedAt } = response;
+    return {
+        issues: issues
             .map(convertQualityIssue)
             // Sort issues by severity (highest severity first)
             .sort(
                 (a, b) =>
                     (SeverityOrder[b.severity] ?? SeverityOrder.INFO) -
                     (SeverityOrder[a.severity] ?? SeverityOrder.INFO),
-            )
-    );
+            ),
+        updatedAt,
+    };
 }
 
 /**

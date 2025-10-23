@@ -836,7 +836,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "Podsumowanie analizy",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "Przetestowano {combinations} warianty z <button>{attributes} atrybutami</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "Atrybuty",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Kliknij kolumnę, aby zobaczyć kluczowe czynniki dla danego kraju",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "Kliknij kolumnę, aby zobaczyć kluczowe czynniki dla danego {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "Zmiana w {title} przez {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "Atrybut",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "Najważniejszy czynnik",
@@ -856,5 +856,9 @@
     "drill.kda.drop": "Upuść {where} {title}",
     "drill.kda.increase": "Zwiększ {where} {title}",
     "drill.kda.no_change": "Nieaktualne {where} {title}",
-    "drill.kda.year_to_year": "Zmiana rok do roku"
+    "drill.kda.year_to_year": "Zmiana rok do roku",
+    "dialogs.schedule.email.userAndEmail.remove": "Usuń {name} ({email})",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "Różnica",
+    "kdaDialog.dialog.keyDrives.empty": "Brak kluczowych czynników",
+    "kdaDialog.dialog.keyDriver.chart.std": "Zmień Próg Istotności"
 }

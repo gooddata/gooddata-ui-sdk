@@ -1,12 +1,19 @@
 // (C) 2025 GoodData Corporation
 
+import { ICellRendererParams } from "ag-grid-enterprise";
 import { IntlShape } from "react-intl";
 
-import { ITableGrandTotalColumnDefinition, ITableSubtotalColumnDefinition } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    ExplicitDrill,
+    ITableGrandTotalColumnDefinition,
+    ITableSubtotalColumnDefinition,
+} from "@gooddata/sdk-ui";
 
+import { MetricCell } from "../../components/Cell/MetricCell.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
-import { extractFormattedValue, extractIntlTotalHeaderValue, metricCellRenderer } from "../columns/shared.js";
-import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
+import { extractFormattedValue, extractIntlTotalHeaderValue } from "../columns/shared.js";
+import { getCellClassName, getCellTypes, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -20,6 +27,8 @@ export function createTotalHeaderColDef(
         isTransposed: true;
     },
     intl: IntlShape,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
 ): AgGridColumnDef {
     const { totalHeader } = columnDefinition;
     const localizedHeaderName = extractIntlTotalHeaderValue(totalHeader, intl);
@@ -36,7 +45,10 @@ export function createTotalHeaderColDef(
         },
         cellClass: getCellClassName,
         cellStyle: getMeasureCellStyle,
-        cellRenderer: metricCellRenderer,
+        cellRenderer: (params: ICellRendererParams) => {
+            const cellTypes = getCellTypes(params, drillableItems, dv);
+            return MetricCell({ ...params, cellTypes });
+        },
         headerClass: getHeaderCellClassName,
         sortable: false,
     };

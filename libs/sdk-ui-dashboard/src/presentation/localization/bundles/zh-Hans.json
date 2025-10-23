@@ -835,7 +835,7 @@
     "kdaDialog.dialog.keyDrives.overview.summary.title": "分析总结",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": "已测试 {combinations} 变体 <button>{attributes} 属性</button>",
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": "属性",
-    "kdaDialog.dialog.keyDrives.overview.detail.tip": "点击列查看特定国家/地区的关键驱动因素",
+    "kdaDialog.dialog.keyDrives.overview.detail.tip": "点击列查看给定的关键驱动因素 {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.title": "改变 {title} 经过 {category}",
     "kdaDialog.dialog.keyDrives.overview.detail.table.attribute": "属性",
     "kdaDialog.dialog.keyDrives.overview.detail.table.driver": "最重要的驱动因素",
@@ -855,5 +855,9 @@
     "drill.kda.drop": "降低 {where} {title}",
     "drill.kda.increase": "增加 {where} {title}",
     "drill.kda.no_change": "陈旧 {where} {title}",
-    "drill.kda.year_to_year": "同比变化"
+    "drill.kda.year_to_year": "同比变化",
+    "dialogs.schedule.email.userAndEmail.remove": "消除 {name} （{email}）",
+    "kdaDialog.dialog.keyDrives.overview.diff.title": "差异",
+    "kdaDialog.dialog.keyDrives.empty": "没有关键驱动因素",
+    "kdaDialog.dialog.keyDriver.chart.std": "变化重要性阈值"
 }

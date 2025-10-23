@@ -13,17 +13,17 @@ export const driverColumn: (
 ) => UiAsyncTableColumn<KdaItemGroup> = (intl, width, onSelect) => {
     return {
         label: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.overview.detail.table.driver" }),
-        key: "items",
+        key: "significantDrivers",
         width,
         align: "left",
         getTextContent: (item) => {
-            const first = item.items.sort((a, b) => {
+            const first = item.significantDrivers.sort((a, b) => {
                 const aValue = Math.abs(a.to.value - a.from.value);
                 const bValue = Math.abs(b.to.value - b.from.value);
                 return bValue - aValue;
             })[0];
 
-            if (item.items.length === 0) {
+            if (item.significantDrivers.length === 0) {
                 return "-";
             }
             return (

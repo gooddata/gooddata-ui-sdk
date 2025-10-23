@@ -294,5 +294,17 @@
     "analyticsCatalog.quality.scoreCard.runCheck": {
         "value": "Run check",
         "comment": "Label for the button that runs the quality check."
+    },
+    "analyticsCatalog.quality.scoreCard.action.empty": {
+        "value": "No findings",
+        "comment": "Label for the empty state of the quality score card action."
+    },
+    "analyticsCatalog.quality.scoreCard.action.loading": {
+        "value": "Running...",
+        "comment": "Label for the loading state of the quality score card action."
+    },
+    "analyticsCatalog.quality.scoreCard.action.success": {
+        "value": "Show affected objects",
+        "comment": "Label for the success state of the quality score card action."
     }
 }

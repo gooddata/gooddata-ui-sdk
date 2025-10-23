@@ -112,6 +112,7 @@ export type {
     IChatThreadQuery,
     IGenAIChatEvaluation,
     ISemanticQualityService,
+    IMemoryItemsService,
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
@@ -314,3 +315,9 @@ export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoin
 
 export type { IOrganizationNotificationService } from "./organization/notifications/index.js";
 export type { INotificationsQuery, INotificationsQueryResult } from "./organization/notifications/query.js";
+
+export type {
+    IMemoryItemsQuery,
+    IMemoryItemsFilterOptions,
+    IMemoryItemsQueryResult,
+} from "./workspace/genAI/index.js";

@@ -6,6 +6,11 @@ import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { SortIndicator } from "./SortIndicator.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
+import {
+    getPivotHeaderClickableAreaTestIdProps,
+    getPivotHeaderTestIdProps,
+    getPivotHeaderTextTestIdProps,
+} from "../../testing/dataTestIdGenerators.js";
 import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
@@ -57,15 +62,22 @@ export function AttributeHeader(params: AgGridHeaderParams) {
                 "is-menu-open": isMenuOpen,
                 drillable: isDrillable,
             })}
+            {...getPivotHeaderTestIdProps({ drillable: isDrillable })}
         >
             <div className="gd-header-content">
-                <span className="gd-header-text">{params.displayName}</span>
+                <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
+                    {params.displayName}
+                </span>
                 {!!colDef.sortable && sortDirection ? (
                     <SortIndicator sortDirection={sortDirection} sortIndex={sortIndex} />
                 ) : null}
             </div>
             {!!colDef.sortable || !!isDrillable ? (
-                <div className="gd-header-cell-clickable-area" onClick={handleHeaderClick}></div>
+                <div
+                    className="gd-header-cell-clickable-area"
+                    {...getPivotHeaderClickableAreaTestIdProps()}
+                    onClick={handleHeaderClick}
+                ></div>
             ) : null}
             {hasMenuItems ? (
                 <HeaderMenu

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import { assertNever } from "@gooddata/sdk-model";
@@ -41,7 +42,7 @@ export function createColDef(
         case "subtotal":
         case "grandTotal": {
             if (columnDefinition.isTransposed) {
-                return createTotalHeaderColDef(colId, columnDefinition, intl);
+                return createTotalHeaderColDef(colId, columnDefinition, intl, drillableItems, dv);
             }
 
             return createMeasureColDef(colId, columnDefinition, drillableItems, dv);
@@ -50,7 +51,7 @@ export function createColDef(
             return createMeasureGroupHeaderColDef(colId, columnDefinition, columnHeadersPosition);
         }
         case "measureGroupValue":
-            return createMeasureGroupValueColDef(columnDefinition);
+            return createMeasureGroupValueColDef(columnDefinition, drillableItems, dv);
         default:
             assertNever(columnDefinition);
             throw new UnexpectedSdkError(

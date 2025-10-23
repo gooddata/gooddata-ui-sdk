@@ -543,6 +543,11 @@ export interface ISettings {
     enableNewPivotTable?: boolean;
 
     /**
+     * Enable new geo pushpin chart
+     */
+    enableNewGeoPushpin?: boolean;
+
+    /**
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;

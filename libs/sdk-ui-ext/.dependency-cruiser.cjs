@@ -1,4 +1,24 @@
+// (C) 2025 GoodData Corporation
+
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
+
+const GeoChartNextSeparationRules = [
+    {
+        name: "no-geoChartNext-to-geoChart-imports",
+        comment:
+            "The new geoChartNext pluggable implementation (in src/internal/components/pluggableVisualizations/geoChartNext/) " +
+            "must not import from the old geoChart implementation. " +
+            "This ensures complete independence between implementations.",
+        severity: "error",
+        from: {
+            path: "^src/internal/components/pluggableVisualizations/geoChartNext/",
+        },
+        to: {
+            path: "^src/internal/components/pluggableVisualizations/geoChart/",
+            pathNot: "^src/internal/components/pluggableVisualizations/geoChartNext/",
+        },
+    },
+];
 
 const options = {
     forbidden: [
@@ -11,9 +31,8 @@ const options = {
 
         ...depCruiser.DefaultSdkRules,
         ...depCruiser.PublicLibraryRules,
-        depCruiser.moduleWithDependencies("internal", "src/internal", [
-            "src/kdaDialog/internal.ts"
-        ]),
+        ...GeoChartNextSeparationRules,
+        depCruiser.moduleWithDependencies("internal", "src/internal", ["src/kdaDialog/internal.ts"]),
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [
             "src/dataLoaders",
             "src/internal",

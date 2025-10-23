@@ -9,6 +9,7 @@ import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } f
 import { AggregationsMenuItemData, SmallInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
 import { messages } from "../../../../locales.js";
 import { e } from "../../../features/styling/bem.js";
+import { getPivotHeaderMenuButtonTestIdProps } from "../../../testing/dataTestIdGenerators.js";
 import {
     IAggregationsMenuItem,
     IAggregationsSubMenuItem,
@@ -36,6 +37,7 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
             className={e("header-cell-menu-button")}
             onClick={onClick}
             aria-label={intl.formatMessage(messages["openHeaderMenuAria"])}
+            {...getPivotHeaderMenuButtonTestIdProps()}
         >
             <UiIcon type="ellipsisVertical" ariaHidden />
             <span className={e("header-cell-menu-clickable-area")}></span>

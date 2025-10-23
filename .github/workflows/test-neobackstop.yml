@@ -9,8 +9,6 @@ on:
         type: boolean
         required: false
         default: false
-  schedule:
-    - cron: '0 4 * * 1-5'
 
 jobs:
   e2e-neobackstop:
@@ -34,12 +32,130 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
+      - name: Get slack user for actor
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: slack-user-fragment
+        uses: ./.github/actions/slack/get-slack-user-fragment
+        with:
+          github-user: ${{ github.actor }}
+          users-mapping: ./.github/users.yml
+      - name: prepare tag
+        id: prepare-tag
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" && "${{ needs.e2e-neobackstop.result }}" == "failure" ]]; then
+            echo "tag=${{ env.FRONT_END_TEAMS }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=" >> $GITHUB_OUTPUT
+          fi
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          NEOBACKSTOP_RESULT: ${{ needs.e2e-neobackstop.result }}
+          # F1 team: S07924TD2Q0 and Lynx team S078DB3K36W
+          FRONT_END_TEAMS: 'cc: <!subteam^S07924TD2Q0>, <!subteam^S078DB3K36W>'
+      - name: Build Slack message
+        id: slack-message
+        run: |
+          # Configuration
+          DETAIL_THRESHOLD=5  # Show failed scenarios if this many or fewer tests fail
+
+          # Variables
+          RESULT="${{ needs.e2e-neobackstop.result }}"
+          IS_SCHEDULED="${{ github.event_name == 'schedule' }}"
+
+          # Get the Slack user fragment (either @mention or *bold* fallback)
+          if [ "$IS_SCHEDULED" == "true" ]; then
+            ACTOR_FRAGMENT="scheduled run"
+          else
+            # Check if we have a Slack mapping for this user
+            SLACK_FRAGMENT="${{ steps.slack-user-fragment.outputs.slack-user-fragment }}"
+            GITHUB_USER="${{ github.actor }}"
+
+            # If the fragment is bold text (starts with *), user is not mapped
+            if [[ "$SLACK_FRAGMENT" == "*"* ]]; then
+              ACTOR_FRAGMENT="*${GITHUB_USER}* _(please add yourself to GitHub-Slack mappings in gdc-ui)_"
+            else
+              ACTOR_FRAGMENT="$SLACK_FRAGMENT"
+            fi
+          fi
+
+          # Initialize counts
+          FAILED_COUNT=0
+          ERROR_COUNT=0
+
+          # Parse test results if available
+          echo '${{ needs.e2e-neobackstop.outputs.results }}' > test_results_raw.json
+
+          # Check if results exist and are not empty
+          if [ -s test_results_raw.json ] && [ "$(cat test_results_raw.json)" != "null" ] && [ "$(cat test_results_raw.json)" != "[]" ] && [ "$(cat test_results_raw.json)" != "" ]; then
+            cp test_results_raw.json test_results.json
+
+            # Count failed tests and errors
+            FAILED_COUNT=$(jq '[.[] | select(.matches_reference == false)] | length' test_results.json)
+            ERROR_COUNT=$(jq '[.[] | select(.error != null)] | length' test_results.json)
+          fi
+
+          # Build the message based on result
+          if [ "$RESULT" == "success" ]; then
+            # Success message
+            if [ "$IS_SCHEDULED" == "true" ]; then
+              MESSAGE="✅ The scheduled neobackstop tests passed successfully."
+            else
+              MESSAGE="✅ Neobackstop tests triggered by $ACTOR_FRAGMENT passed successfully."
+            fi
+          else
+            # Failure message
+            # Build failure/error text
+            FAILURE_TEXT=""
+            if [ "$FAILED_COUNT" -gt 0 ] && [ "$ERROR_COUNT" -gt 0 ]; then
+              FAILURE_TEXT="observed *$FAILED_COUNT failures* and *$ERROR_COUNT errors*"
+            elif [ "$FAILED_COUNT" -gt 0 ]; then
+              FAILURE_TEXT="observed *$FAILED_COUNT failures*"
+            elif [ "$ERROR_COUNT" -gt 0 ]; then
+              FAILURE_TEXT="observed *$ERROR_COUNT errors*"
+            else
+              FAILURE_TEXT="failed"
+            fi
+
+            # Build base message
+            if [ "$IS_SCHEDULED" == "true" ]; then
+              MESSAGE="❌ The scheduled neobackstop tests $FAILURE_TEXT."
+            else
+              MESSAGE="❌ Neobackstop tests triggered by $ACTOR_FRAGMENT $FAILURE_TEXT."
+            fi
+
+            MESSAGE="$MESSAGE For more details, check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>*."
+
+            # Add failed scenarios if threshold not exceeded
+            if [ "$FAILED_COUNT" -gt 0 ] && [ "$FAILED_COUNT" -le "$DETAIL_THRESHOLD" ] && [ -f test_results.json ]; then
+              MESSAGE="$MESSAGE\n\n*Failed scenarios:*"
+              FAILED_SCENARIOS=$(jq -r '[.[] | select(.matches_reference == false)] | .[] | "• \(.scenario.label)"' test_results.json)
+              MESSAGE="$MESSAGE\n$FAILED_SCENARIOS"
+            fi
+
+            # Add error scenarios if threshold not exceeded and there are errors
+            if [ "$ERROR_COUNT" -gt 0 ] && [ "$ERROR_COUNT" -le "$DETAIL_THRESHOLD" ] && [ -f test_results.json ]; then
+              MESSAGE="$MESSAGE\n\n*Scenarios with errors:*"
+              ERROR_SCENARIOS=$(jq -r '[.[] | select(.error != null)] | .[] | "• \(.scenario.label)"' test_results.json)
+              MESSAGE="$MESSAGE\n$ERROR_SCENARIOS"
+            fi
+          fi
+
+          # Clean up temporary files
+          rm -f test_results.json test_results_raw.json
+
+          # Add team tags if needed
+          if [ "${{ steps.prepare-tag.outputs.tag }}" != "" ]; then
+            MESSAGE="$MESSAGE\n\n${{ steps.prepare-tag.outputs.tag }}"
+          fi
+
+          # Output the message using heredoc to preserve newlines
+          {
+            echo "message<<EOF"
+            echo -e "$MESSAGE"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
       - name: Notify to slack
         uses: ./.github/actions/slack/send-notification
         with:
-          message: "${{env.ICON}} The scheduled neobackstop tests for *gooddata-ui-sdk* dispatched by *${{env.DISPATCHED_BY}}* finished with result *${{env.TEST_RESULT_NEOBACKSTOP}}*. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>*"
+          message: ${{ steps.slack-message.outputs.message }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        env:
-          TEST_RESULT_NEOBACKSTOP: ${{ needs.e2e-neobackstop.result }}
-          ICON: ${{ needs.e2e-neobackstop.result == 'success' && '✅' || '❌' }}
-          DISPATCHED_BY: ${{ github.event_name == 'workflow_dispatch' && github.actor || 'cron scheduler' }}

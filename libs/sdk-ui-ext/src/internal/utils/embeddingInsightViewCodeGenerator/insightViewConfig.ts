@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { DefaultLocale, ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -24,7 +25,7 @@ export function configForInsightView(
     insight: IInsightDefinition,
     settings?: ISettings,
 ): PropWithMeta<IGeoConfig | IChartConfig | PivotTableNextConfig> | undefined {
-    if (isGeoChart(insight)) {
+    if (isGeoChart(insight) && !settings.enableNewGeoPushpin) {
         return geoConfigForInsightViewComponent();
     }
     if (isPivotTableNext(insight, settings)) {

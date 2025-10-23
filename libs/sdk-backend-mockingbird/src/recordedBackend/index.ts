@@ -367,6 +367,9 @@ function recordedWorkspace(
                 semanticSearchIndex: () => {
                     throw new NotSupported("not supported");
                 },
+                getMemoryItems: () => {
+                    throw new NotSupported("not supported");
+                },
                 getAnalyticsCatalog() {
                     throw new NotSupported("not supported");
                 },

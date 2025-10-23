@@ -383,6 +383,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/maplibre-gl",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/mdast",
       "allowedCategories": [ "production" ]
     },
@@ -916,6 +920,10 @@
     },
     {
       "name": "mapbox-gl",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "maplibre-gl",
       "allowedCategories": [ "production" ]
     },
     {

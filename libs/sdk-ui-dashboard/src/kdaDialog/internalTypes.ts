@@ -34,7 +34,8 @@ export interface KdaItemGroup {
     title: string;
     description: string;
     attribute: ObjRef;
-    items: KdaItem[];
+    significantDrivers: KdaItem[];
+    allDrivers: KdaItem[];
 }
 
 export interface KdaState {
