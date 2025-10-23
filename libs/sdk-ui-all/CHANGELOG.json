@@ -2,6 +2,96 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.6.0",
+            "tag": "@gooddata/sdk-ui-all_v11.6.0",
+            "date": "Thu, 23 Oct 2025 07:42:08 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: Add `recommendation` icon."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for filtering catalog items by semantic quality validations."
+                    },
+                    {
+                        "comment": "sdk-model: Remove ERROR semantic quality issue severity and add severity order constant."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce semantic quality issue grouping by code and severity."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce `ISemanticQualityReport` interface with additional metadata like `updatedAt`."
+                    },
+                    {
+                        "comment": "sdk-backend: Rename `getQualityIssues` to `getQualityReport`."
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard] KDA Cannot Be Triggered When Visualization Is Sliced by Date–Week/Year, Support table chart for drill"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: repair KDA graph to show relevant key drivers"
+                    },
+                    {
+                        "comment": "[api-client-tiger]: Update definition from new server openapi specs"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Update key driver analysis dialog to use new api + some minor fixes"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard] Drivers Detail Chart - the columns don’t match the driver names for negative values. Cannot activate Year-over-Year option for chart sliced by Week."
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: prepare for filters from dashboard, repairs for more slicing"
+                    },
+                    {
+                        "comment": "fix: Display focus outline on the \"Only\" filter option in Safari"
+                    },
+                    {
+                        "comment": "Improved focus handling in insights"
+                    },
+                    {
+                        "comment": "Bubble chart produces just single series to align its behavior with other charts and improve its accessibility"
+                    },
+                    {
+                        "comment": "Fix accessible tooltip on some charts"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix bug when custom metric in transposed table has original title instead of provided title"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix unexpected active/disabled pivot table menu wrapping items"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix dispatch of visualization properties in view mode for pivot table"
+                    },
+                    {
+                        "comment": "LDM Modeler: Added support for column description field from scan API"
+                    },
+                    {
+                        "comment": "Add new MapLibre-based geo pushpin chart implementation, currently exported as @alpha from @gooddata/sdk-ui-geo/next."
+                    },
+                    {
+                        "comment": "[api-client-tiger]: update openapi spec to include new memory item endpoint"
+                    },
+                    {
+                        "comment": "[home-ui]: Add AI Memory to workspace catalog."
+                    },
+                    {
+                        "comment": "Removing AI Memory POC UI"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.5.0",
             "tag": "@gooddata/sdk-ui-all_v11.5.0",
             "date": "Fri, 17 Oct 2025 07:29:11 GMT",

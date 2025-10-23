@@ -1,6 +1,40 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 17 Oct 2025 07:29:11 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Oct 2025 07:42:08 GMT and should not be manually modified.
+
+## 11.6.0
+
+Thu, 23 Oct 2025 07:42:08 GMT
+
+### Updates
+
+- sdk-ui-kit: Add `recommendation` icon.
+- sdk-ui-catalog: Add support for filtering catalog items by semantic quality validations.
+- sdk-model: Remove ERROR semantic quality issue severity and add severity order constant.
+- sdk-ui-catalog: Introduce semantic quality issue grouping by code and severity.
+- sdk-ui-catalog: Introduce `ISemanticQualityReport` interface with additional metadata like `updatedAt`.
+- sdk-backend: Rename `getQualityIssues` to `getQualityReport`.
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-dashboard] KDA Cannot Be Triggered When Visualization Is Sliced by Date–Week/Year, Support table chart for drill
+- [sdk-ui-dashboard]: repair KDA graph to show relevant key drivers
+- [api-client-tiger]: Update definition from new server openapi specs
+- [sdk-ui-dashboard]: Update key driver analysis dialog to use new api + some minor fixes
+- [sdk-ui-dashboard] Drivers Detail Chart - the columns don’t match the driver names for negative values. Cannot activate Year-over-Year option for chart sliced by Week.
+- [sdk-ui-dashboard]: prepare for filters from dashboard, repairs for more slicing
+- fix: Display focus outline on the "Only" filter option in Safari
+- Improved focus handling in insights
+- Bubble chart produces just single series to align its behavior with other charts and improve its accessibility
+- Fix accessible tooltip on some charts
+- sdk-ui-pivot: Fix bug when custom metric in transposed table has original title instead of provided title
+- sdk-ui-pivot: Fix unexpected active/disabled pivot table menu wrapping items
+- sdk-ui-dashboard: Fix dispatch of visualization properties in view mode for pivot table
+- LDM Modeler: Added support for column description field from scan API
+- Add new MapLibre-based geo pushpin chart implementation, currently exported as @alpha from @gooddata/sdk-ui-geo/next.
+- [api-client-tiger]: update openapi spec to include new memory item endpoint
+- [home-ui]: Add AI Memory to workspace catalog.
+- Removing AI Memory POC UI
 
 ## 11.5.0
 
