@@ -100,15 +100,22 @@ export function CatalogDetailContent({
 
     const { result: { user: currentUser, permissions, settings } = {} } = usePermissionsState();
 
-    const { item, status, error, updateItemTitle, updateItemDescription, updateItemTags } =
-        useCatalogItemUpdate({
-            currentUser,
-            objectId,
-            objectType,
-            objectDefinition,
-            onUpdate: onCatalogItemUpdate,
-            onError: onCatalogItemUpdateError,
-        });
+    const {
+        item,
+        status,
+        error,
+        updateItemTitle,
+        updateItemDescription,
+        updateItemTags,
+        updateItemIsHidden,
+    } = useCatalogItemUpdate({
+        currentUser,
+        objectId,
+        objectType,
+        objectDefinition,
+        onUpdate: onCatalogItemUpdate,
+        onError: onCatalogItemUpdateError,
+    });
 
     const canEdit = canEditCatalogItem(permissions, item);
 
@@ -187,6 +194,9 @@ export function CatalogDetailContent({
                                 }}
                                 onTagRemove={(tag) => {
                                     updateItemTags(item.tags.filter((t) => t !== tag.label));
+                                }}
+                                onIsHiddenChange={(isHidden) => {
+                                    updateItemIsHidden(isHidden);
                                 }}
                             />
                         )}

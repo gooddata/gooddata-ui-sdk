@@ -1068,30 +1068,19 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmValidObjectsResponse, any, {}>>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiCreatedByRequest" needs to be exported by the entry point index.d.ts
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmAnalyticsCatalogCreatedBy, any, {}>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiCreateMemoryItemRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "MemoryItem" needs to be exported by the entry point index.d.ts
-    createMemoryItem(requestParameters: ActionsApiCreateMemoryItemRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MemoryItem, any, {}>>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any, {}>>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any, {}>>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ForecastResult, any, {}>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetMemoryItemRequest" needs to be exported by the entry point index.d.ts
-    getMemoryItem(requestParameters: ActionsApiGetMemoryItemRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MemoryItem, any, {}>>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmGetQualityIssuesResponse, any, {}>>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmQualityIssuesCalculationStatusResponse, any, {}>>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResponse, any, {}>>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<KeyDriversResult, any, {}>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiListMemoryItemsRequest" needs to be exported by the entry point index.d.ts
-    listMemoryItems(requestParameters: ActionsApiListMemoryItemsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MemoryItem[], any, {}>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiRemoveMemoryItemRequest" needs to be exported by the entry point index.d.ts
-    removeMemoryItem(requestParameters: ActionsApiRemoveMemoryItemRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any, {}>>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResolvedLlmEndpoints, any, {}>>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any, {}>>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any, {}>>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiTagsRequest" needs to be exported by the entry point index.d.ts
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmAnalyticsCatalogTags, any, {}>>;
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AfmTriggerQualityIssuesCalculationResponse, any, {}>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiUpdateMemoryItemRequest" needs to be exported by the entry point index.d.ts
-    updateMemoryItem(requestParameters: ActionsApiUpdateMemoryItemRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<MemoryItem, any, {}>>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any, {}>>;
 }
@@ -1114,24 +1103,19 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
     computeReport: (workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidDescendants: (workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidObjects: (workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    createMemoryItem: (workspaceId: string, memoryItem: MemoryItem, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     createdBy: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     explainAFM: (workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | "COMPRESSED_SQL", options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     forecast: (workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     forecastResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    getMemoryItem: (workspaceId: string, memoryId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     getQualityIssues: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     getQualityIssuesCalculationStatus: (workspaceId: string, processId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     keyDriverAnalysis: (workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     keyDriverAnalysisResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    listMemoryItems: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    removeMemoryItem: (workspaceId: string, memoryId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     resolveLlmEndpoints: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveExecutionMetadata: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveResult: (workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     tags: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     triggerQualityIssuesCalculation: (workspaceId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    updateMemoryItem: (workspaceId: string, memoryId: string, memoryItem: MemoryItem, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     validateLLMEndpoint: (validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     validateLLMEndpointById: (llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
 };
@@ -1154,24 +1138,19 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, 
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
-    createMemoryItem(requestParameters: ActionsApiCreateMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
-    getMemoryItem(requestParameters: ActionsApiGetMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
-    listMemoryItems(requestParameters: ActionsApiListMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<MemoryItem>>;
-    removeMemoryItem(requestParameters: ActionsApiRemoveMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    updateMemoryItem(requestParameters: ActionsApiUpdateMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 };
@@ -1194,24 +1173,19 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
     computeReport(workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean, timestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>>;
     computeValidDescendants(workspaceId: string, afmValidDescendantsQuery: AfmValidDescendantsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>>;
     computeValidObjects(workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>>;
-    createMemoryItem(workspaceId: string, memoryItem: MemoryItem, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>>;
     createdBy(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmAnalyticsCatalogCreatedBy>>;
     explainAFM(workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | "COMPRESSED_SQL", options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     forecast(workspaceId: string, resultId: string, forecastRequest: ForecastRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>>;
     forecastResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>>;
-    getMemoryItem(workspaceId: string, memoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>>;
     getQualityIssues(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmGetQualityIssuesResponse>>;
     getQualityIssuesCalculationStatus(workspaceId: string, processId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmQualityIssuesCalculationStatusResponse>>;
     keyDriverAnalysis(workspaceId: string, keyDriversRequest: KeyDriversRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>>;
     keyDriverAnalysisResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>>;
-    listMemoryItems(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MemoryItem>>>;
-    removeMemoryItem(workspaceId: string, memoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     resolveLlmEndpoints(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>>;
     retrieveExecutionMetadata(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>>;
     retrieveResult(workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>>;
     tags(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmAnalyticsCatalogTags>>;
     triggerQualityIssuesCalculation(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>>;
-    updateMemoryItem(workspaceId: string, memoryId: string, memoryItem: MemoryItem, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItem>>;
     validateLLMEndpoint(validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
     validateLLMEndpointById(llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
 };
@@ -1246,23 +1220,18 @@ export interface AfmActionsApiInterface {
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
-    createMemoryItem(requestParameters: ActionsApiCreateMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
-    getMemoryItem(requestParameters: ActionsApiGetMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
-    listMemoryItems(requestParameters: ActionsApiListMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<MemoryItem>>;
-    removeMemoryItem(requestParameters: ActionsApiRemoveMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    updateMemoryItem(requestParameters: ActionsApiUpdateMemoryItemRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItem>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 }
@@ -1437,6 +1406,8 @@ export type AfmFilterDefinitionForSimpleMeasure = AfmAttributeFilter | AfmDateFi
 // @public (undocumented)
 export interface AfmGetQualityIssuesResponse {
     issues: Array<AfmQualityIssue>;
+    // Warning: (ae-forgotten-export) The symbol "GetQualityIssuesResponseStatusEnum" needs to be exported by the entry point index.d.ts
+    status: GetQualityIssuesResponseStatusEnum;
     updatedAt?: string;
 }
 
@@ -1853,6 +1824,7 @@ export interface AfmQualityIssue {
 // @public
 export interface AfmQualityIssueObject {
     id: string;
+    title: string;
     type: string;
     workspaceId: string;
 }
@@ -28546,6 +28518,6 @@ export interface Xliff {
 
 // Warnings were encountered during analysis:
 //
-// src/generated/afm-rest-api/api.ts:2840:9 - (ae-forgotten-export) The symbol "ChangeAnalysisRequest" needs to be exported by the entry point index.d.ts
+// src/generated/afm-rest-api/api.ts:2794:9 - (ae-forgotten-export) The symbol "ChangeAnalysisRequest" needs to be exported by the entry point index.d.ts
 
 ```

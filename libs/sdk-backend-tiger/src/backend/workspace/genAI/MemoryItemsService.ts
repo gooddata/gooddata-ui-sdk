@@ -2,7 +2,11 @@
 
 import { v4 as uuid } from "uuid";
 
-import { JsonApiMemoryItemInTypeEnum, JsonApiUserIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
+import {
+    JsonApiMemoryItemInTypeEnum,
+    JsonApiMemoryItemPatchTypeEnum,
+    JsonApiUserIdentifierOutWithLinks,
+} from "@gooddata/api-client-tiger";
 import { IMemoryItemsQuery, IMemoryItemsService } from "@gooddata/sdk-backend-spi";
 import { IMemoryItemDefinition, IMemoryItemMetadataObject } from "@gooddata/sdk-model";
 
@@ -59,6 +63,26 @@ export class MemoryItemsService implements IMemoryItemsService {
                     data: {
                         id: id,
                         type: JsonApiMemoryItemInTypeEnum.MEMORY_ITEM,
+                        attributes: item,
+                    },
+                },
+            });
+            return convertMemoryItem(
+                response.data.data,
+                response.data.included as JsonApiUserIdentifierOutWithLinks[],
+            );
+        });
+    }
+
+    async patch(id: string, item: Partial<IMemoryItemDefinition>): Promise<IMemoryItemMetadataObject> {
+        return this.authCall(async (client) => {
+            const response = await client.entities.patchEntityMemoryItems({
+                workspaceId: this.workspaceId,
+                objectId: id,
+                jsonApiMemoryItemPatchDocument: {
+                    data: {
+                        id: id,
+                        type: JsonApiMemoryItemPatchTypeEnum.MEMORY_ITEM,
                         attributes: item,
                     },
                 },

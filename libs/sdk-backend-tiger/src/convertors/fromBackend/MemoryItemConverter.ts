@@ -22,7 +22,7 @@ export function convertMemoryItem(
         tags: memoryItem.attributes?.tags,
         strategy: memoryItem.attributes?.strategy,
         instruction: memoryItem.attributes?.instruction,
-        isDisabled: memoryItem.attributes?.isDisabled,
+        isDisabled: Boolean(memoryItem.attributes?.isDisabled),
         keywords: memoryItem.attributes?.keywords ?? [],
         createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
         ref: {

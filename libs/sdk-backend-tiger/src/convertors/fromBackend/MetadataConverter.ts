@@ -52,13 +52,16 @@ export type MetadataObjectFromApi =
 
 export const commonMetadataObjectModifications =
     <TItem extends MetadataObjectFromApi, T extends IMetadataObjectBuilder>(item: TItem) =>
-    (builder: T): T =>
-        builder
+    (builder: T): T => {
+        const { attributes } = item;
+        return builder
             .id(item.id)
             .uri(item.links!.self)
-            .title(item.attributes?.title || "")
-            .description(item.attributes?.description || "")
-            .tags(item.attributes?.tags || []);
+            .title(attributes?.title || "")
+            .description(attributes?.description || "")
+            .tags(attributes?.tags || [])
+            .isHidden(attributes && "isHidden" in attributes ? attributes.isHidden : undefined);
+    };
 
 export function createLabelMap(
     included: JsonApiAttributeOutDocument["included"] | undefined,
@@ -146,6 +149,7 @@ function convertAttributeDocument(
             .uri(attributeDoc.links!.self)
             .displayForms(convertAttributeLabels(attribute, labelMap))
             .isLocked(isInheritedObject(attribute))
+            .isHidden(attribute.attributes?.isHidden)
             .dataSet(convertDatasetRelationship(attribute.relationships, dataSetMap)),
     );
 }
@@ -246,6 +250,7 @@ export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObjec
             .tags(fact.attributes?.tags || [])
             .uri(factDoc.links!.self)
             .isLocked(isInheritedObject(fact))
+            .isHidden(fact.attributes?.isHidden)
             .dataSet(convertDatasetRelationship(fact.relationships, datasetMap)),
     );
 }

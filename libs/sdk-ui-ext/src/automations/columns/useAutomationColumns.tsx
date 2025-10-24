@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { useMemo } from "react";
+import { RefObject, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIcon } from "./AutomationIcon.js";
 import { AutomationMenu } from "./AutomationMenu.js";
@@ -33,7 +33,9 @@ export const useAutomationColumns = ({
     timezone,
     selectedColumnDefinitions,
     automationsType,
-    isSmall,
+    tableVariant,
+    isMobileView,
+    enableBulkActions,
     deleteAutomation,
     unsubscribeFromAutomation,
     pauseAutomation,
@@ -45,11 +47,13 @@ export const useAutomationColumns = ({
 }: IUseAutomationColumnsProps): {
     columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
     includeAutomationResult: boolean;
+    containerRef: RefObject<HTMLDivElement>;
 } => {
     const workspace = useWorkspace();
     const intl = useIntl();
     const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
         useUser();
+    const isSmall = tableVariant === "small";
 
     const allColumns = useMemo(
         (): Partial<Record<AutomationsColumnName, UiAsyncTableColumn<IAutomationMetadataObject>>> => ({
@@ -212,12 +216,23 @@ export const useAutomationColumns = ({
         ],
     );
 
-    const columnDefinitions = useMemo(() => {
+    const columnDefinitionsFull = useMemo(() => {
         return selectedColumnDefinitions.map((columnDef) => {
             const selectedColumn = allColumns[columnDef.name];
-            return { ...selectedColumn, width: columnDef.width ?? selectedColumn.width };
+            return {
+                ...selectedColumn,
+                width: columnDef.width ?? selectedColumn.width,
+                minWidth: columnDef.minWidth,
+            };
         });
     }, [allColumns, selectedColumnDefinitions]);
+
+    const { columns: columnDefinitionsTransformed, ref: containerRef } = useAsyncTableResponsiveColumns(
+        columnDefinitionsFull,
+        enableBulkActions,
+    );
+
+    const columnDefinitions = isMobileView ? columnDefinitionsTransformed : columnDefinitionsFull;
 
     const includeAutomationResult = useMemo(() => {
         return selectedColumnDefinitions.some(
@@ -225,5 +240,5 @@ export const useAutomationColumns = ({
         );
     }, [selectedColumnDefinitions]);
 
-    return { columnDefinitions, includeAutomationResult };
+    return { columnDefinitions, includeAutomationResult, containerRef };
 };

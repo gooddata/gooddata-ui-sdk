@@ -872,6 +872,7 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     deprecated(isDeprecated: boolean): this;
     description(description: string): this;
     id(id: string): this;
+    isHidden(isHidden?: boolean): this;
     production(isProduction: boolean): this;
     tags(tags: string[]): this;
     title(title: string): this;
@@ -1018,6 +1019,8 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
     description(description: string): this;
     // (undocumented)
     id(identifier: string): this;
+    // (undocumented)
+    isHidden(isHidden?: boolean): this;
     // (undocumented)
     production(isProduction: boolean): this;
     // (undocumented)

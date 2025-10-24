@@ -171,6 +171,7 @@ function updateMeasureCatalogItem(
             title: item.title,
             description: item.description,
             tags: item.tags,
+            isHidden: item.isHidden,
         });
 }
 
@@ -187,6 +188,7 @@ function updateInsightCatalogItem(
             title: item.title,
             description: item.description,
             tags: item.tags,
+            isHidden: item.isHidden,
         });
 }
 
@@ -203,6 +205,7 @@ function updateAttributeCatalogItem(
             title: item.title,
             description: item.description,
             tags: item.tags,
+            isHidden: item.isHidden,
         });
 }
 
@@ -219,6 +222,7 @@ function updateFactCatalogItem(
             title: item.title,
             description: item.description,
             tags: item.tags,
+            isHidden: item.isHidden,
         });
 }
 

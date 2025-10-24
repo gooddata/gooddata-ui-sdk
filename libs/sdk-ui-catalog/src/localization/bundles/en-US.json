@@ -103,6 +103,14 @@
         "value": "Last modified by",
         "comment": "Title of the column containing the name of the last modifier of the object."
     },
+    "analyticsCatalog.column.title.isHidden": {
+        "value": "Show in AI results",
+        "comment": "Title of the field indicating whether the object is hidden in AI results."
+    },
+    "analyticsCatalog.column.title.isHidden.tooltip": {
+        "value": "Include in Smart Search and AI Assistant results for all users.",
+        "comment": "Tooltip content for the field indicating whether the object is hidden in AI results."
+    },
     "analyticsCatalog.tags.manager.label.more": {
         "value": "More tags",
         "comment": "Label for the button that opens more tags  in tags manager component."
@@ -196,8 +204,8 @@
         "comment": "Catalog item tab label."
     },
     "analyticsCatalog.catalogItem.lock": {
-        "value": "You can’t edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
-        "comment": "Tooltip content "
+        "value": "You can't edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
+        "comment": "Tooltip content for lock icon indicating the catalog item is locked and cannot be edited."
     },
     "analyticsCatalog.tooltip.content": {
         "value": "Centralized catalog of dashboards, metrics, visualizations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",

@@ -49,6 +49,7 @@ import { PivotTableNextConfig } from '@gooddata/sdk-ui-pivot/next';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
+import { UiAsyncTableVariant } from '@gooddata/sdk-ui-kit';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
@@ -100,13 +101,14 @@ export function AttributeHierarchyDialog({ initialAttributeRef, editingAttribute
 export type AutomationColumnDefinition = {
     name: AutomationsColumnName;
     width?: number;
+    minWidth?: number;
 };
 
 // @internal
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, enableBulkActions, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -384,7 +386,7 @@ export interface IAutomationsProps {
     // (undocumented)
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     // (undocumented)
-    isSmall?: boolean;
+    isMobileView?: boolean;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -401,6 +403,8 @@ export interface IAutomationsProps {
     scope: AutomationsScope;
     // (undocumented)
     selectedColumnDefinitions?: AutomationColumnDefinitions;
+    // (undocumented)
+    tableVariant?: UiAsyncTableVariant;
     // (undocumented)
     timezone?: string;
     // (undocumented)

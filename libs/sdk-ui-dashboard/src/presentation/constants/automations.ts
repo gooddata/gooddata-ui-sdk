@@ -11,10 +11,12 @@ export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [
     {
         name: "dashboard",
         width: 187,
+        minWidth: 187,
     },
     {
         name: "lastRun",
         width: 187,
+        minWidth: 187,
     },
     {
         name: "menu",

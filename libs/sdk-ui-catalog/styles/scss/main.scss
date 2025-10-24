@@ -147,6 +147,7 @@ $content-font-size: 14px;
 
         .gd-ui-kit-tooltip__anchor {
             width: 100%;
+            display: flex;
 
             time {
                 line-height: 23px;

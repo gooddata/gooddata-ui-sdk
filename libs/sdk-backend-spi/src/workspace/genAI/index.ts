@@ -199,6 +199,11 @@ export interface IMemoryItemsService {
     update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
 
     /**
+     * Patch an existing memory item.
+     */
+    patch(id: string, item: Partial<IMemoryItemDefinition>): Promise<IMemoryItemMetadataObject>;
+
+    /**
      * Delete a memory item.
      */
     delete(id: string): Promise<void>;

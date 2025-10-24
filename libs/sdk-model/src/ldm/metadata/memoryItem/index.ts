@@ -19,7 +19,7 @@ export interface IMemoryItemDefinition {
     tags?: string[];
     strategy: MemoryItemStrategy;
     instruction: string;
-    isDisabled?: boolean;
+    isDisabled: boolean;
     keywords?: string[];
 }
 

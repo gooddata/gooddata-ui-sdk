@@ -38,3 +38,15 @@ export const stopPropagationCallback = <T extends HTMLElement>(
     event.stopPropagation();
     callback?.();
 };
+
+export const computeProportionalWidth = (
+    originalColumnWidth: number,
+    availableWidth: number,
+    columnsWidthSum: number,
+) => {
+    if (columnsWidthSum === 0) {
+        return originalColumnWidth;
+    }
+    const ratio = originalColumnWidth / columnsWidthSum;
+    return Math.floor(availableWidth * ratio);
+};

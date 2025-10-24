@@ -7,6 +7,15 @@ import { SortDirection } from "@gooddata/sdk-model";
 import { IconType } from "../@types/icon.js";
 
 /**
+ * Variant for UiAsyncTable component.
+ * - "regular": Standard table size for full pages
+ * - "small": Compact table size for embedding in modals/dialogs
+ *
+ * @internal
+ */
+export type UiAsyncTableVariant = "regular" | "small";
+
+/**
  * @internal
  */
 export interface UiAsyncTableAccessibilityConfig<T> {
@@ -36,8 +45,10 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     //default: add up all column widths
     width?: number;
     maxHeight?: number;
-    // small variant, used for embedding in modals
-    isSmall?: boolean;
+    // variant
+    variant?: UiAsyncTableVariant;
+    // mobile design
+    isMobileView?: boolean;
 
     //loading
     skeletonItemsCount?: number;
@@ -108,6 +119,13 @@ export interface UiAsyncTableColumn<T> {
 /**
  * @internal
  */
+export interface UiAsyncTableColumnDefinitionResponsive<T> extends UiAsyncTableColumn<T> {
+    minWidth?: number;
+}
+
+/**
+ * @internal
+ */
 export interface UiAsyncTableFilter {
     label: string;
     options: Array<UiAsyncTableFilterOption>;
@@ -166,7 +184,9 @@ export interface UiAsyncTableHeaderProps<T> {
 
 export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
     isFiltersTooLarge?: boolean;
-    isSmall?: boolean;
+    variant?: UiAsyncTableVariant;
+    isMobileView?: boolean;
+    width?: number;
 }
 
 export interface UiAsyncTableRowProps<T extends { id: string }> {
@@ -202,7 +222,9 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
     items: Array<T>;
-    isSmall?: boolean;
+    variant?: UiAsyncTableVariant;
+    isMobileView?: boolean;
+    width?: number;
     onSearch?: (search: string) => void;
     accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }

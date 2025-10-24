@@ -2214,6 +2214,7 @@ export type IInsight = IInsightDefinition & {
         uri: string;
         ref: ObjRef;
         isLocked?: boolean;
+        isHidden?: boolean;
     };
 };
 
@@ -2554,7 +2555,7 @@ export interface IMemoryItemDefinition {
     // (undocumented)
     instruction: string;
     // (undocumented)
-    isDisabled?: boolean;
+    isDisabled: boolean;
     // (undocumented)
     keywords?: string[];
     // (undocumented)
@@ -2581,6 +2582,7 @@ export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIde
 export interface IMetadataObjectBase {
     deprecated: boolean;
     description: string;
+    isHidden?: boolean;
     production: boolean;
     tags?: string[];
     title: string;

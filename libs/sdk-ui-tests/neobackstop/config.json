@@ -46,6 +46,6 @@
         "--disable-setuid-sandbox",
         "--force-device-scale-factor=1"
     ],
-    "asyncCaptureLimit": 20,
-    "asyncCompareLimit": 18
+    "asyncCaptureLimit": 6,
+    "asyncCompareLimit": 6
 }

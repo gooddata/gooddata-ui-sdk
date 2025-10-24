@@ -18,6 +18,7 @@ export interface IHeaderMenuItem {
     iconName?: string;
     icon?: ReactNode;
     onClick?: (obj: any) => void;
+    isActiveByStartWith?: boolean; // if true, item is active when pathname starts with href
 }
 
 /**

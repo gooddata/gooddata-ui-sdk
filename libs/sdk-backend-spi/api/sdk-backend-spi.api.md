@@ -1147,6 +1147,7 @@ export interface IMemoryItemsService {
     create(item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
     delete(id: string): Promise<void>;
     getMemoryItemsQuery(): IMemoryItemsQuery;
+    patch(id: string, item: Partial<IMemoryItemDefinition>): Promise<IMemoryItemMetadataObject>;
     update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
 }
 
@@ -1388,6 +1389,7 @@ export interface IOrganizationUserService {
     getUsersByEmail(email: string): Promise<IUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
+    getUsersSummary(): Promise<IOrganizationUser[]>;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
     updateUser(user: IUser): Promise<void>;
     updateUserGroup(group: IUserGroup): Promise<void>;

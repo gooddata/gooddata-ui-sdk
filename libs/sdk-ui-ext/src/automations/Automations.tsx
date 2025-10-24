@@ -40,7 +40,8 @@ export function Automations({
     maxHeight = DEFAULT_MAX_HEIGHT,
     pageSize = DEFAULT_PAGE_SIZE,
     type = "schedule",
-    isSmall = false,
+    tableVariant = "regular",
+    isMobileView = false,
     enableBulkActions = true,
     invalidateItemsRef,
     dashboardUrlBuilder = buildDashboardUrl,
@@ -65,7 +66,8 @@ export function Automations({
                                         timezone={timezone}
                                         maxHeight={maxHeight}
                                         pageSize={pageSize}
-                                        isSmall={isSmall}
+                                        tableVariant={tableVariant}
+                                        isMobileView={isMobileView}
                                         enableBulkActions={enableBulkActions}
                                         dashboardUrlBuilder={dashboardUrlBuilder}
                                         widgetUrlBuilder={widgetUrlBuilder}

@@ -292,6 +292,8 @@ export type {
     UiAsyncTableEmptyStateProps,
     UiAsyncTableAccessibilityConfig,
     UiAsyncTableColumnAccessibilityConfig,
+    UiAsyncTableColumnDefinitionResponsive,
+    UiAsyncTableVariant,
 } from "./@ui/UiAsyncTable/types.js";
 
 export {
@@ -303,6 +305,7 @@ export {
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
 export { UiAsyncTableEmptyState } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTableEmptyState.js";
+export { useAsyncTableResponsiveColumns } from "./@ui/UiAsyncTable/UiAsyncTable/useAsyncTableResponsiveColumns.js";
 
 export { UiTags } from "./@ui/UiTags/UiTags.js";
 export type { UiTagsProps, UiTagDef } from "./@ui/UiTags/types.js";

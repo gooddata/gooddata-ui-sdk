@@ -30,7 +30,8 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         skeletonItemsCount = 0,
         columns,
         scrollToIndex,
-        isSmall,
+        variant = "regular",
+        isMobileView,
         isFiltersTooLarge,
         loadNextPage,
         setSelectedItemIds,
@@ -48,7 +49,9 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 setSelectedItemIds={setSelectedItemIds}
                 totalItemsCount={totalItemsCount}
                 items={items}
-                isSmall={isSmall}
+                variant={variant}
+                isMobileView={isMobileView}
+                width={width}
                 onSearch={onSearch}
                 accessibilityConfig={accessibilityConfig}
             />
@@ -95,10 +98,11 @@ const useAsyncTable = <T extends { id: string }>({
     sortDirection,
     selectedItemIds,
     setSelectedItemIds,
-    isSmall,
+    variant,
     onItemClick,
     accessibilityConfig,
 }: UiAsyncTableProps<T>) => {
+    const isSmall = variant === "small";
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
             onSort?.(key);

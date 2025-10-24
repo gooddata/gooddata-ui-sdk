@@ -4,7 +4,10 @@
     "operationSettings": [
         {
             "operationName": "_phase:build",
-            "outputFolderNames": ["esm"]
+            //"outputFolderNames": ["esm"]
+            //result of build is extremely big and build is not consume anywhere
+            //we will skip storing the result
+            "outputFolderNames": []
         },
         {
             "operationName": "_phase:validate",
