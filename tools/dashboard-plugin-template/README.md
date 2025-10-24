@@ -6,6 +6,8 @@ which is responsible for bootstrap of the new project.
 
 See build script included in the `@gooddata/plugin-toolkit` to see learn how the contents of this package are processed.
 
+> **Important**: Build caching for dashboard-plugin-template can and should be disabled since the build output is extremely large and nothing consumes it see: ./config/rush-project.json
+
 ## License
 
 (C) 2017-2022 GoodData Corporation

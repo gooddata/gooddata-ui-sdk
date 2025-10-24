@@ -135,6 +135,34 @@ export function useCatalogItemUpdate({
         },
         [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
     );
+    const updateItemIsHidden = useCallback(
+        (isHidden: boolean) => {
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    isHidden,
+                }),
+                (newItem, changes) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem, changes);
+                },
+                (err) => {
+                    if (!mounted.current || !item) {
+                        return;
+                    }
+                    // Revert changes
+                    setItem(item);
+                    onError?.(err);
+                    onUpdate?.(item, item);
+                },
+            );
+        },
+        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+    );
 
     return {
         item,
@@ -143,6 +171,7 @@ export function useCatalogItemUpdate({
         updateItemTitle,
         updateItemDescription,
         updateItemTags,
+        updateItemIsHidden,
     };
 }
 

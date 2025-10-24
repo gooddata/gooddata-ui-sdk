@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" ",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

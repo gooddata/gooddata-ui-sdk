@@ -8,7 +8,16 @@ import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations, AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
-import { Button, ContentDivider, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    ContentDivider,
+    Dialog,
+    Hyperlink,
+    OverlayController,
+    OverlayControllerProvider,
+    Typography,
+    useId,
+} from "@gooddata/sdk-ui-kit";
 
 import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
@@ -28,10 +37,16 @@ import {
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
+import {
+    AUTOMATIONS_COLUMN_CONFIG,
+    AUTOMATIONS_MAX_HEIGHT,
+    DASHBOARD_DIALOG_OVERS_Z_INDEX,
+} from "../../../presentation/constants/index.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 import { IAlertingManagementDialogProps } from "../types.js";
+
+const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 /**
  * @alpha
@@ -66,6 +81,8 @@ export function DefaultAlertingManagementDialogNew({
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
     const { returnFocusTo } = useAlertingDialogAccessibility();
+
+    const isMobile = isMobileView();
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -118,7 +135,7 @@ export function DefaultAlertingManagementDialogNew({
         ? (["dashboard", "status"] as AutomationsAvailableFilters)
         : undefined;
 
-    const helpTextId = isMobileView()
+    const helpTextId = isMobile
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
         : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
 
@@ -140,82 +157,85 @@ export function DefaultAlertingManagementDialogNew({
                 returnFocusAfterClose
                 refocusKey={isEditDialogOpen}
             >
-                <div className="gd-notifications-channels-management-dialog-title">
-                    <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
-                        <FormattedMessage id="dialogs.alerting.management.title" />
-                    </Typography>
-                </div>
-                <div className="gd-notifications-channels-content">
-                    {enableAutomationManagement ? (
-                        <ContentDivider />
-                    ) : (
-                        <div className="gd-notifications-channels-content-header">
-                            <Typography tagName="h3">
-                                <FormattedMessage id={messages.alertingManagementListTitle.id!} />
-                            </Typography>
-                        </div>
-                    )}
-                    {enableAutomationManagement ? (
-                        <Automations
-                            workspace={workspace}
-                            timezone={timezone}
-                            backend={backend}
-                            scope="workspace"
-                            type="alert"
-                            maxHeight={AUTOMATIONS_MAX_HEIGHT}
-                            isSmall
-                            editAutomation={handleAlertEdit}
-                            preselectedFilters={{
-                                dashboard: dashboardId
-                                    ? [{ value: dashboardId, label: dashboardTitle }]
-                                    : undefined,
-                                externalRecipients: externalRecipientOverride
-                                    ? [{ value: externalRecipientOverride }]
-                                    : undefined,
-                            }}
-                            enableBulkActions={enableBulkActions}
-                            availableFilters={availableFilters}
-                            locale={intl.locale}
-                            invalidateItemsRef={invalidateItemsRef}
-                            selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
-                        />
-                    ) : (
-                        <Alerts
-                            onDelete={handleAlertDeleteOpen}
-                            onEdit={handleAlertEdit}
-                            onPause={handleAlertPause}
-                            isLoading={isLoadingAlertingData}
-                            alerts={automations}
-                            noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
-                        />
-                    )}
-                </div>
-                <div className="gd-content-divider"></div>
-                <div className={`gd-buttons${isWhiteLabeled ? " gd-buttons--end" : ""}`}>
-                    {isWhiteLabeled ? null : (
-                        <Hyperlink
-                            text={intl.formatMessage({ id: helpTextId })}
-                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
-                            iconClass="gd-icon-circle-question"
-                        />
-                    )}
-                    <div className="gd-buttons">
-                        <Button
-                            onClick={onClose}
-                            className="gd-button-secondary s-close-button"
-                            value={intl.formatMessage({ id: "close" })}
-                        />
-                        {enableAutomationManagement &&
-                        managementDialogContext.widgetRef &&
-                        canCreateAutomation ? (
-                            <Button
-                                onClick={handleAddAlert}
-                                className="gd-button-action s-add-alert-button"
-                                value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
-                            />
-                        ) : null}
+                <OverlayControllerProvider overlayController={overlayController}>
+                    <div className="gd-notifications-channels-management-dialog-title">
+                        <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
+                            <FormattedMessage id="dialogs.alerting.management.title" />
+                        </Typography>
                     </div>
-                </div>
+                    <div className="gd-notifications-channels-content">
+                        {enableAutomationManagement ? (
+                            <ContentDivider />
+                        ) : (
+                            <div className="gd-notifications-channels-content-header">
+                                <Typography tagName="h3">
+                                    <FormattedMessage id={messages.alertingManagementListTitle.id!} />
+                                </Typography>
+                            </div>
+                        )}
+                        {enableAutomationManagement ? (
+                            <Automations
+                                workspace={workspace}
+                                timezone={timezone}
+                                backend={backend}
+                                scope="workspace"
+                                type="alert"
+                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                                isMobileView={isMobile}
+                                tableVariant="small"
+                                editAutomation={handleAlertEdit}
+                                preselectedFilters={{
+                                    dashboard: dashboardId
+                                        ? [{ value: dashboardId, label: dashboardTitle }]
+                                        : undefined,
+                                    externalRecipients: externalRecipientOverride
+                                        ? [{ value: externalRecipientOverride }]
+                                        : undefined,
+                                }}
+                                enableBulkActions={enableBulkActions}
+                                availableFilters={availableFilters}
+                                locale={intl.locale}
+                                invalidateItemsRef={invalidateItemsRef}
+                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                            />
+                        ) : (
+                            <Alerts
+                                onDelete={handleAlertDeleteOpen}
+                                onEdit={handleAlertEdit}
+                                onPause={handleAlertPause}
+                                isLoading={isLoadingAlertingData}
+                                alerts={automations}
+                                noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                            />
+                        )}
+                    </div>
+                    <div className="gd-content-divider"></div>
+                    <div className={`gd-buttons${isWhiteLabeled ? " gd-buttons--end" : ""}`}>
+                        {isWhiteLabeled ? null : (
+                            <Hyperlink
+                                text={intl.formatMessage({ id: helpTextId })}
+                                href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
+                                iconClass="gd-icon-circle-question"
+                            />
+                        )}
+                        <div className="gd-buttons">
+                            <Button
+                                onClick={onClose}
+                                className="gd-button-secondary s-close-button"
+                                value={intl.formatMessage({ id: "close" })}
+                            />
+                            {enableAutomationManagement &&
+                            managementDialogContext.widgetRef &&
+                            canCreateAutomation ? (
+                                <Button
+                                    onClick={handleAddAlert}
+                                    className="gd-button-action s-add-alert-button"
+                                    value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
+                                />
+                            ) : null}
+                        </div>
+                    </div>
+                </OverlayControllerProvider>
             </Dialog>
             {alertToDelete ? (
                 <DeleteAlertConfirmDialog

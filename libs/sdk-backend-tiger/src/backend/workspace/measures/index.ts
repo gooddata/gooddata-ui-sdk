@@ -247,6 +247,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                                     ? {}
                                     : { description: measure.description }),
                                 ...(measure.tags === undefined ? {} : { tags: measure.tags }),
+                                ...(measure.isHidden === undefined ? {} : { isHidden: measure.isHidden }),
                             },
                         },
                     },

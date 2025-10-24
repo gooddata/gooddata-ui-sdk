@@ -125,7 +125,7 @@ $content-font-size: 14px;
     &__tab-content {
         display: grid;
         grid-template-columns: minmax(120px, auto) 1fr;
-        gap: 10px;
+        gap: 10px 20px;
 
         &__cell {
             padding: 4px 0;
@@ -133,11 +133,28 @@ $content-font-size: 14px;
     }
 
     &__title-cell {
+        display: flex;
+        gap: 5px;
+        align-items: center;
         color: kit-variables.$gd-color-link;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+
+        .gd-ui-kit-tooltip__anchor {
+            display: flex;
+        }
+    }
+
+    &__detail-cell {
+        .input-checkbox-toggle .input-label-text {
+            padding-right: 30px;
+        }
+
+        .gd-ui-kit-tags__tags-container {
+            padding: 0;
+        }
     }
 
     &__content-cell {

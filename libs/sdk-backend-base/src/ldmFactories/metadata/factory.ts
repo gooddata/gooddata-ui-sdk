@@ -73,6 +73,14 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
      * @returns this
      */
     deprecated(isDeprecated: boolean): this;
+
+    /**
+     * Set metadata object isHidden flag
+     *
+     * @param isHidden - true if hidden
+     * @returns this
+     */
+    isHidden(isHidden?: boolean): this;
 }
 
 /**
@@ -123,6 +131,11 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject>
 
     public deprecated(isDeprecated: boolean): this {
         this.item.deprecated = isDeprecated;
+        return this;
+    }
+
+    public isHidden(isHidden?: boolean): this {
+        this.item.isHidden = isHidden;
         return this;
     }
 }

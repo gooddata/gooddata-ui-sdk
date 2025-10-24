@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
-import { FILTER_CHIP_MAX_WIDTH, FILTER_OPTION_ALL_VALUE } from "./constants.js";
+import { FILTER_CHIP_MAX_WIDTH, FILTER_OPTION_ALL_VALUE, SCROLLBAR_WIDTH } from "./constants.js";
 import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
@@ -37,7 +37,15 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { isMultiSelect, isFiltersTooLarge, isSmall } = props;
+    const { isMultiSelect, isFiltersTooLarge, variant, isMobileView, width } = props;
+    const isSmall = variant === "small";
+
+    const chipMaxWidth = useMemo(() => {
+        if (isSmall && isMobileView && width) {
+            return width - SCROLLBAR_WIDTH;
+        }
+        return isSmall ? FILTER_CHIP_MAX_WIDTH : undefined;
+    }, [isSmall, isMobileView, width]);
 
     return (
         <div className={e("filter")}>
@@ -45,7 +53,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                 renderButton={({ toggleDropdown, isOpen }) => (
                     <UiChip
                         label={labelWithSelected}
-                        maxWidth={isSmall ? FILTER_CHIP_MAX_WIDTH : undefined}
+                        maxWidth={chipMaxWidth}
                         onClick={() => toggleDropdown()}
                         isActive={isOpen}
                     />

@@ -79,6 +79,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: insight.isLocked ?? false,
         isEditable: true,
+        isHidden: insight.isHidden,
     };
 }
 
@@ -96,6 +97,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: measure.isLocked ?? false,
         isEditable: true,
+        isHidden: measure.isHidden,
     };
 }
 
@@ -112,6 +114,7 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
         updatedAt: null,
         isLocked: fact.isLocked ?? false,
         isEditable: true,
+        isHidden: fact.isHidden,
         dataSet: fact.dataSet,
     };
 }
@@ -129,6 +132,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         updatedAt: null,
         isLocked: attribute.isLocked ?? false,
         isEditable: true,
+        isHidden: attribute.isHidden,
         dataSet: attribute.dataSet,
     };
 }

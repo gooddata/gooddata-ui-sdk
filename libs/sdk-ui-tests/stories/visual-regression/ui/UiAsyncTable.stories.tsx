@@ -247,7 +247,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
                 Simple Table
             </h1>
             <UiAsyncTable<ScheduleItem>
-                isSmall
+                variant="small"
                 items={filteredAndSortedItems}
                 totalItemsCount={filteredAndSortedItems.length}
                 columns={simpleColumns}

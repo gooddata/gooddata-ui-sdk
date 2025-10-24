@@ -555,6 +555,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getUserGroupsOfUser: () => Promise.resolve([]),
                 getUsersOfUserGroup: () => Promise.resolve([]),
                 getUsers: () => Promise.resolve([]),
+                getUsersSummary: () => Promise.resolve([]),
                 getUsersByEmail: () => Promise.resolve([]),
                 removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),

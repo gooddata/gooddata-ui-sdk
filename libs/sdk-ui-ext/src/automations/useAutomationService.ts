@@ -96,7 +96,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
             //fetch filter options
             promiseGetUsers: () => {
                 if (scope === "organization") {
-                    return (service as IOrganization).users().getUsers();
+                    return (service as IOrganization).users().getUsersSummary();
                 } else {
                     return (service as IAnalyticalWorkspace).users().queryAll();
                 }

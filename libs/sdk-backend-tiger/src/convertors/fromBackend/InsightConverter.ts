@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import {
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiMetricOutIncludes,
@@ -19,6 +20,7 @@ export const insightFromInsightDefinition = (
     uri: string,
     tags: string[] | undefined,
     isLocked: boolean | undefined,
+    isHidden: boolean | undefined,
     created: string | undefined,
     updated: string | undefined,
     createdBy: IUser | undefined,
@@ -31,6 +33,7 @@ export const insightFromInsightDefinition = (
             uri,
             ref: idRef(id, "insight"),
             isLocked,
+            isHidden,
             tags,
             created,
             createdBy,
@@ -46,7 +49,7 @@ export const visualizationObjectsItemToInsight = (
 ): IInsight => {
     const { id, attributes, links, relationships = {} } = visualizationObject;
     const { createdBy, modifiedBy } = relationships;
-    const { content, title, description, tags, createdAt, modifiedAt } = attributes!;
+    const { content, title, description, tags, isHidden, createdAt, modifiedAt } = attributes!;
 
     return insightFromInsightDefinition(
         convertVisualizationObject(
@@ -62,6 +65,7 @@ export const visualizationObjectsItemToInsight = (
         tags,
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isInheritedObject(visualizationObject),
+        isHidden,
         createdAt,
         modifiedAt,
         convertUserIdentifier(createdBy, included),

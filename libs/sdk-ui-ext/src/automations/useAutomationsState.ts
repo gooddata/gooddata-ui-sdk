@@ -24,7 +24,8 @@ export const useAutomationsState = ({
     availableFilters,
     preselectedFilters,
     invalidateItemsRef,
-    isSmall,
+    tableVariant,
+    isMobileView,
     enableBulkActions,
     dashboardUrlBuilder,
     widgetUrlBuilder,
@@ -70,12 +71,14 @@ export const useAutomationsState = ({
         bulkResumeAutomations,
         setPendingAction,
     });
-    const { columnDefinitions, includeAutomationResult } = useAutomationColumns({
+    const { columnDefinitions, includeAutomationResult, containerRef } = useAutomationColumns({
         type,
         timezone,
         selectedColumnDefinitions,
         automationsType: type,
-        isSmall,
+        tableVariant,
+        isMobileView,
+        enableBulkActions,
         deleteAutomation,
         unsubscribeFromAutomation,
         pauseAutomation,
@@ -282,7 +285,7 @@ export const useAutomationsState = ({
         search: state.search,
         availableBulkActions,
         columnDefinitions,
-        isSmall,
+        tableVariant,
         automationsLength: state.automations.length,
     });
 
@@ -296,6 +299,7 @@ export const useAutomationsState = ({
         bulkActions,
         selectedIds,
         isFiltersOrSearchActive,
+        containerRef,
         handleSort,
         handleItemClick,
         loadNextPage,

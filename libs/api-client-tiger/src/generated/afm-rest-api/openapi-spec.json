@@ -17,125 +17,6 @@
         }
     ],
     "paths": {
-        "/api/v1/actions/workspaces/{workspaceId}/ai/memory/{memoryId}": {
-            "get": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(EXPERIMENTAL) Get memory item",
-                "description": "(EXPERIMENTAL) Get memory item by id",
-                "operationId": "getMemoryItem",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "memoryId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MemoryItem"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(EXPERIMENTAL) Update memory item",
-                "description": "(EXPERIMENTAL) Updates memory item and returns it",
-                "operationId": "updateMemoryItem",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "memoryId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/MemoryItem"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MemoryItem"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(EXPERIMENTAL) Remove memory item",
-                "description": "(EXPERIMENTAL) Removes memory item",
-                "operationId": "removeMemoryItem",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "memoryId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -821,81 +702,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SearchResult"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/memory": {
-            "get": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(EXPERIMENTAL) List all memory items",
-                "description": "(EXPERIMENTAL) Returns a list of memory items",
-                "operationId": "listMemoryItems",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/MemoryItem"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(EXPERIMENTAL) Create new memory item",
-                "description": "(EXPERIMENTAL) Creates a new memory item and returns it",
-                "operationId": "createMemoryItem",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/MemoryItem"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MemoryItem"
                                 }
                             }
                         }
@@ -1768,90 +1574,6 @@
     },
     "components": {
         "schemas": {
-            "MemoryItem": {
-                "required": ["id", "instruction", "keywords"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "maxLength": 255,
-                        "type": "string",
-                        "description": "Memory item ID"
-                    },
-                    "useCases": {
-                        "$ref": "#/components/schemas/MemoryItemUseCases"
-                    },
-                    "strategy": {
-                        "type": "string",
-                        "description": "Defines the application strategy.",
-                        "enum": [
-                            "MEMORY_ITEM_STRATEGY_ALLWAYS",
-                            "MEMORY_ITEM_STRATEGY_NEVER",
-                            "MEMORY_ITEM_STRATEGY_AUTO"
-                        ]
-                    },
-                    "instruction": {
-                        "maxLength": 255,
-                        "type": "string",
-                        "description": "Instruction that will be injected into the prompt."
-                    },
-                    "keywords": {
-                        "type": "array",
-                        "description": "List of keywords used to match the memory item.",
-                        "items": {
-                            "type": "string",
-                            "description": "List of keywords used to match the memory item."
-                        }
-                    }
-                }
-            },
-            "MemoryItemUseCases": {
-                "required": [
-                    "general",
-                    "howto",
-                    "keywords",
-                    "metric",
-                    "normalize",
-                    "router",
-                    "search",
-                    "visualization"
-                ],
-                "type": "object",
-                "properties": {
-                    "router": {
-                        "type": "boolean",
-                        "description": "Appy this memory item to the router prompt."
-                    },
-                    "keywords": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the search keyword extraction prompt."
-                    },
-                    "search": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the search prompt."
-                    },
-                    "visualization": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the visualization prompt."
-                    },
-                    "general": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the general answer prompt."
-                    },
-                    "howto": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the how-to prompt."
-                    },
-                    "normalize": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the normalize prompt."
-                    },
-                    "metric": {
-                        "type": "boolean",
-                        "description": "Apply this memory item to the metric selection prompt."
-                    }
-                },
-                "description": "Defines the prompts where the given instruction should be applied."
-            },
             "ForecastRequest": {
                 "required": ["forecastPeriod"],
                 "type": "object",
@@ -4653,13 +4375,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
@@ -5090,7 +4812,7 @@
                     "severity": {
                         "type": "string",
                         "description": "Severity level",
-                        "enum": ["error", "warning"]
+                        "enum": ["WARNING", "INFO"]
                     },
                     "code": {
                         "type": "string",
@@ -5109,7 +4831,7 @@
                 "description": "List of quality issues (available when status is COMPLETED)"
             },
             "QualityIssueObject": {
-                "required": ["id", "type", "workspaceId"],
+                "required": ["id", "title", "type", "workspaceId"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -5126,6 +4848,11 @@
                         "type": "string",
                         "description": "Workspace ID where the object belongs",
                         "example": "demo"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Object title",
+                        "example": "Total Revenue"
                     }
                 },
                 "description": "List of objects affected by this quality issue"
@@ -5153,7 +4880,7 @@
                 }
             },
             "GetQualityIssuesResponse": {
-                "required": ["issues"],
+                "required": ["issues", "status"],
                 "type": "object",
                 "properties": {
                     "issues": {
@@ -5166,6 +4893,11 @@
                     "updatedAt": {
                         "type": "string",
                         "description": "Timestamp when the quality issues were last updated (ISO format)"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of the latest triggered quality check process",
+                        "enum": ["RUNNING", "COMPLETED", "FAILED", "NOT_FOUND"]
                     }
                 }
             },

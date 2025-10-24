@@ -281,6 +281,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.links!.self,
             insightData.data.attributes?.tags,
             isInheritedObject(insightData.data),
+            insightData.data.attributes?.isHidden,
             insightData.data.attributes?.createdAt,
             insightData.data.attributes?.modifiedAt,
             convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
@@ -334,6 +335,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                                     ? {}
                                     : { description: insightMeta.description }),
                                 ...(insightMeta.tags === undefined ? {} : { tags: insightMeta.tags }),
+                                ...(insightMeta.isHidden === undefined
+                                    ? {}
+                                    : { isHidden: insightMeta.isHidden }),
                             },
                         },
                     },
@@ -423,6 +427,7 @@ function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, r
         links!.self,
         visualizationObject.attributes!.tags,
         isInheritedObject(visualizationObject),
+        visualizationObject.attributes?.isHidden,
         visualizationObject.attributes?.createdAt,
         visualizationObject.attributes?.modifiedAt,
         convertUserIdentifier(createdBy, included),

@@ -83,6 +83,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     isEditable: boolean;
     // (undocumented)
+    isHidden?: boolean;
+    // (undocumented)
     isLocked: boolean;
     // (undocumented)
     tags: string[];

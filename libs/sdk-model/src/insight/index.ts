@@ -74,6 +74,11 @@ export type IInsight = IInsightDefinition & {
          * Insight is locked for editing & deleting
          */
         isLocked?: boolean;
+
+        /**
+         * Whether the insight is hidden
+         */
+        isHidden?: boolean;
     };
 };
 

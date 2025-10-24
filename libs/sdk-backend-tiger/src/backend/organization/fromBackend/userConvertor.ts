@@ -87,6 +87,21 @@ export const convertIncludedUser = (user: JsonApiUserOutWithLinks): IUser => {
     };
 };
 
+export const convertEntityUserToOrganizationUser = (user: JsonApiUserOutWithLinks): IOrganizationUser => {
+    const firstName = user.attributes?.firstname;
+    const lastName = user.attributes?.lastname;
+    return {
+        ref: idRef(user.id),
+        id: user.id,
+        email: user.attributes?.email,
+        fullName: constructFullName(firstName, lastName),
+        isOrganizationAdmin: false,
+        assignedUserGroups: [],
+        assignedWorkspaces: [],
+        assignedDataSources: [],
+    };
+};
+
 export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganizationUser => ({
     ref: idRef(user.id),
     id: user.id,

@@ -6,21 +6,25 @@ exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panthe
     {
       "className": "s-menu-kpis",
       "href": "https://cdnUrl/dashboards/#/workspace/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },
     {
       "className": "s-menu-analyze",
       "href": "https://cdnUrl/analyze/#/TestWorkspaceId/reportId/edit",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },
     {
       "className": "s-menu-metrics",
       "href": "https://cdnUrl/metrics/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
       "href": "https://cdnUrl/modeler/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },
   ],
@@ -33,21 +37,25 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
     {
       "className": "s-menu-kpis",
       "href": "https://cdnUr/dashboards/#/workspace/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },
     {
       "className": "s-menu-analyze",
       "href": "https://cdnUr/analyze/#/TestWorkspaceId/reportId/edit",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },
     {
       "className": "s-menu-metrics",
       "href": "https://cdnUr/metrics/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
       "href": "https://cdnUr/modeler/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },
   ],
@@ -60,21 +68,25 @@ exports[`generateHeaderMenuItemsGroups > should return relative paths for Panthe
     {
       "className": "s-menu-kpis",
       "href": "/dashboards/#/workspace/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },
     {
       "className": "s-menu-analyze",
       "href": "/analyze/#/TestWorkspaceId/reportId/edit",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.analyze",
     },
     {
       "className": "s-menu-metrics",
       "href": "/metrics/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
       "href": "/modeler/#/TestWorkspaceId",
+      "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },
   ],

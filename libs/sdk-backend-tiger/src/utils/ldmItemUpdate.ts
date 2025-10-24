@@ -60,6 +60,9 @@ function updateItem(
         if (updated.tags !== undefined) {
             item.tags = updated.tags;
         }
+        if (updated.isHidden !== undefined) {
+            item.isHidden = updated.isHidden;
+        }
         return true;
     }
     return false;

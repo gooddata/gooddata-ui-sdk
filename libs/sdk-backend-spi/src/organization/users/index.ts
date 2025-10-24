@@ -88,6 +88,16 @@ export interface IOrganizationUserService {
     getUsers(): Promise<IOrganizationUser[]>;
 
     /**
+     * Get list of users with basic information only.
+     *
+     * This method provides a lightweight alternative to {@link IOrganizationUserService.getUsers}
+     * that fetches only basic user information (id, email, name)
+     *
+     * @returns promise
+     */
+    getUsersSummary(): Promise<IOrganizationUser[]>;
+
+    /**
      * Get user by email.
      *
      * @param email - email of the user.

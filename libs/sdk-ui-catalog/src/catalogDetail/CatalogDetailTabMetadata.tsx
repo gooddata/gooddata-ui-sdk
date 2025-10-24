@@ -1,11 +1,15 @@
 // (C) 2025 GoodData Corporation
 
+import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { UiDate, type UiTagDef, UiTags } from "@gooddata/sdk-ui-kit";
+import { UiDate, UiIcon, type UiTagDef, UiTags, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import type { ICatalogItem } from "../catalogItem/index.js";
+import type { ObjectType } from "../objectType/types.js";
+
+const TYPES_SUPPORTING_IS_HIDDEN: ObjectType[] = ["insight", "measure", "attribute", "fact"];
 
 type Props = {
     item: ICatalogItem;
@@ -13,9 +17,17 @@ type Props = {
     onTagClick: (tag: UiTagDef) => void;
     onTagAdd: (tag: UiTagDef) => void;
     onTagRemove: (tag: UiTagDef) => void;
+    onIsHiddenChange: (isHidden: boolean) => void;
 };
 
-export function CatalogDetailTabMetadata({ item, canEdit, onTagClick, onTagAdd, onTagRemove }: Props) {
+export function CatalogDetailTabMetadata({
+    item,
+    canEdit,
+    onTagClick,
+    onTagAdd,
+    onTagRemove,
+    onIsHiddenChange,
+}: Props) {
     const intl = useIntl();
 
     return (
@@ -48,6 +60,40 @@ export function CatalogDetailTabMetadata({ item, canEdit, onTagClick, onTagAdd, 
                     }
                 />
             )}
+            {TYPES_SUPPORTING_IS_HIDDEN.includes(item.type) ? (
+                <CatalogDetailContentRow
+                    title={
+                        <>
+                            <FormattedMessage id="analyticsCatalog.column.title.isHidden" />
+                            <UiTooltip
+                                anchor={<UiIcon type="question" size={12} color="complementary-6" />}
+                                content={
+                                    <FormattedMessage id="analyticsCatalog.column.title.isHidden.tooltip" />
+                                }
+                                arrowPlacement="left"
+                                optimalPlacement
+                                offset={10}
+                                width={280}
+                                triggerBy={["hover", "click"]}
+                            />
+                        </>
+                    }
+                    content={
+                        <label className="input-checkbox-toggle">
+                            <input
+                                type="checkbox"
+                                checked={item.isHidden !== true}
+                                disabled={!canEdit}
+                                onChange={(event) => {
+                                    onIsHiddenChange(!event.target.checked);
+                                }}
+                                className={cx("s-checkbox-toggle", canEdit ? "s-enabled" : "s-disabled")}
+                            />
+                            <span className="input-label-text" />
+                        </label>
+                    }
+                />
+            ) : null}
             <CatalogDetailContentRow
                 title={<FormattedMessage id="analyticsCatalog.column.title.tags" />}
                 content={

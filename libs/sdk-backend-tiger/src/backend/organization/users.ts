@@ -12,6 +12,7 @@ import {
 import { IOrganizationUser, IOrganizationUserGroup, IUser, IUserGroup } from "@gooddata/sdk-model";
 
 import {
+    convertEntityUserToOrganizationUser,
     convertIncludedUser,
     convertIncludedUserGroup,
     convertOrganizationUser,
@@ -149,6 +150,16 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 client.userManagement
                     .listUsers({ page, size })
                     .then((response) => response.data.users.map(convertOrganizationUser)),
+            );
+        });
+    };
+
+    public getUsersSummary = async (): Promise<IOrganizationUser[]> => {
+        return this.authCall(async (client) => {
+            return ActionsUtilities.loadAllPages(({ page, size }) =>
+                client.entities
+                    .getAllEntitiesUsers({ page, size })
+                    .then((response) => response.data.data.map(convertEntityUserToOrganizationUser)),
             );
         });
     };

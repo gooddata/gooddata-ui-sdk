@@ -26,6 +26,7 @@ import {
     UiAsyncTableBulkAction,
     UiAsyncTableColumn,
     UiAsyncTableFilter,
+    UiAsyncTableVariant,
 } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -44,7 +45,8 @@ export interface IAutomationsProps {
     maxHeight?: number;
     pageSize?: number;
     type?: AutomationsType;
-    isSmall?: boolean;
+    tableVariant?: UiAsyncTableVariant;
+    isMobileView?: boolean;
     enableBulkActions?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     onLoad?: AutomationsOnLoad;
@@ -151,6 +153,7 @@ export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutoma
 export type AutomationColumnDefinition = {
     name: AutomationsColumnName;
     width?: number;
+    minWidth?: number;
 };
 
 /**
@@ -174,7 +177,8 @@ export interface IAutomationsCoreProps {
     preselectedFilters: AutomationsPreselectedFilters;
     maxHeight: number;
     pageSize: number;
-    isSmall: boolean;
+    tableVariant: UiAsyncTableVariant;
+    isMobileView?: boolean;
     enableBulkActions: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     locale: string;
@@ -269,7 +273,9 @@ export interface IUseAutomationColumnsProps {
     timezone?: string;
     selectedColumnDefinitions: AutomationColumnDefinitions;
     automationsType: AutomationsType;
-    isSmall?: boolean;
+    tableVariant: UiAsyncTableVariant;
+    isMobileView?: boolean;
+    enableBulkActions: boolean;
     deleteAutomation: AutomationAction;
     unsubscribeFromAutomation: AutomationAction;
     pauseAutomation: AutomationAction;
@@ -357,7 +363,7 @@ export interface IUseAutomationsSmallLayoutProps {
     search?: string;
     availableBulkActions: UiAsyncTableBulkAction[];
     columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
-    isSmall: boolean;
+    tableVariant: UiAsyncTableVariant;
     automationsLength?: number;
 }
 

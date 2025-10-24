@@ -67,7 +67,7 @@ class SingleDimIterator implements Iterator<DataPoint> {
         const { valueFormatter } = this.config;
         const seriesDesc = this.accessors.seriesDescriptors(this.seriesIdx);
         const measureFormat = seriesDesc.measureFormat();
-        const formatable = canFormatValue(seriesDesc);
+        const formatable = canFormatValue(seriesDesc, rawValue);
 
         this.returned = true;
 
@@ -93,7 +93,7 @@ class SingleDimIterator implements Iterator<DataPoint> {
 const types: ObjectType[] = ["attribute", "displayForm"];
 const aggregations: MeasureAggregation[] = ["min", "max"];
 
-function canFormatValue(desc: DataSeriesDescriptor): boolean {
+function canFormatValue(desc: DataSeriesDescriptor, rawValue: DataValue): boolean {
     const def = desc.measureDefinition.measure.definition;
 
     if (isMeasureDefinition(def) && def.measureDefinition.aggregation) {
@@ -105,7 +105,8 @@ function canFormatValue(desc: DataSeriesDescriptor): boolean {
         const notFormat = aggregations.includes(agg) && types.some((t) => type?.includes(t));
         return !notFormat;
     }
-    return true;
+
+    return !(typeof rawValue === "string" && Number.isNaN(parseFloat(rawValue)));
 }
 
 /**
@@ -150,7 +151,7 @@ class TwoDimIterator implements Iterator<DataPoint> {
         const seriesDesc = this.accessors.seriesDescriptors(seriesIdx);
         const sliceDesc = this.accessors.sliceDescriptors(sliceIdx);
         const measureFormat = seriesDesc.measureFormat();
-        const formatable = canFormatValue(seriesDesc);
+        const formatable = canFormatValue(seriesDesc, rawValue);
 
         this.offset += 1;
 

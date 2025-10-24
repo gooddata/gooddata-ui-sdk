@@ -1334,7 +1334,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
+export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -2305,6 +2305,8 @@ export interface IHeaderMenuItem {
     iconName?: string;
     // (undocumented)
     isActive?: boolean;
+    // (undocumented)
+    isActiveByStartWith?: boolean;
     // (undocumented)
     key: string;
     // (undocumented)
@@ -6018,6 +6020,12 @@ export interface UiAsyncTableColumnAccessibilityConfig {
 }
 
 // @internal (undocumented)
+export interface UiAsyncTableColumnDefinitionResponsive<T> extends UiAsyncTableColumn<T> {
+    // (undocumented)
+    minWidth?: number;
+}
+
+// @internal (undocumented)
 export function UiAsyncTableEmptyState({ title, description, icon }: UiAsyncTableEmptyStateProps): JSX.Element;
 
 // @internal (undocumented)
@@ -6076,7 +6084,7 @@ export interface UiAsyncTableProps<T extends {
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
-    isSmall?: boolean;
+    isMobileView?: boolean;
     // (undocumented)
     items: T[];
     // (undocumented)
@@ -6112,6 +6120,8 @@ export interface UiAsyncTableProps<T extends {
     // (undocumented)
     totalItemsCount?: number;
     // (undocumented)
+    variant?: UiAsyncTableVariant;
+    // (undocumented)
     width?: number;
 }
 
@@ -6146,6 +6156,9 @@ export interface UiAsyncTableTitleProps {
     // (undocumented)
     title: string;
 }
+
+// @internal
+export type UiAsyncTableVariant = "regular" | "small";
 
 // @internal
 export function UiAutofocus({ root, children, ...options }: {
@@ -6909,6 +6922,12 @@ export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
+
+// @internal
+export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
+    ref: RefObject<HTMLDivElement>;
+    columns: UiAsyncTableColumnDefinitionResponsive<T>[];
+};
 
 // @internal (undocumented)
 export function useElementSize<T extends HTMLElement>(): {

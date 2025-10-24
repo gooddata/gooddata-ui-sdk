@@ -4,6 +4,8 @@
  * @internal
  */
 export type IconType =
+    | "brain"
+    | "brainDisabled"
     | "check"
     | "checkCircle"
     | "plus"

@@ -19,6 +19,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         columns,
         bulkActions,
         selectedIds,
+        containerRef,
         handleSort,
         handleItemClick,
         loadNextPage,
@@ -41,7 +42,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
     } = state;
 
     return (
-        <div>
+        <div ref={containerRef}>
             <UiAsyncTable<IAutomationMetadataObject>
                 items={automations}
                 totalItemsCount={totalItemsCount}
@@ -61,9 +62,10 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 filters={filters}
                 isFiltersTooLarge={isFiltersTooLarge}
                 columns={columns}
-                isSmall={props.isSmall}
+                variant={props.tableVariant}
                 locale={props.locale}
                 onSearch={setSearch}
+                isMobileView={props.isMobileView}
                 accessibilityConfig={accessibilityConfig}
                 renderEmptyState={() => (
                     <AutomationsEmptyState

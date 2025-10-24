@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { ObjRef, ObjectType } from "../../objRef/index.js";
@@ -70,6 +71,11 @@ export interface IMetadataObjectBase {
      * not be shown to the users at all or may be shown with a special indicator.
      */
     unlisted: boolean;
+
+    /**
+     * Whether the metadata object is hidden from users.
+     */
+    isHidden?: boolean;
 }
 
 /**

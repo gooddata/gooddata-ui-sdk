@@ -156,6 +156,7 @@ function createInsightsItemsGroup(
             HEADER_ITEM_ID_CATALOG,
             "s-menu-workspace-catalog",
             catalogItemUrl(workspaceId),
+            true, // isActiveByStartWith: true for catalog to match sub-routes
         ),
         canShowCatalogItem(featureFlags, workspacePermissions),
     );
@@ -169,11 +170,17 @@ function createInsightsItemsGroup(
     return insightItemsGroup;
 }
 
-function createIHeaderMenuItem(key: string, className: string, href: string): IHeaderMenuItem {
+function createIHeaderMenuItem(
+    key: string,
+    className: string,
+    href: string,
+    isActiveByStartWith?: boolean,
+): IHeaderMenuItem {
     return {
         key,
         className,
         href,
+        isActiveByStartWith,
     };
 }
 

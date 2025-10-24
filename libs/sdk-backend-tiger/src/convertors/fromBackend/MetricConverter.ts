@@ -31,6 +31,7 @@ export function convertMetricFromBackend(
             .id(id)
             .title(attributes?.title || "")
             .isLocked(isInheritedObject(object))
+            .isHidden(attributes?.isHidden)
             .tags(object.attributes.tags ?? [])
             .description(attributes?.description || "")
             .expression(attributes.content.maql)

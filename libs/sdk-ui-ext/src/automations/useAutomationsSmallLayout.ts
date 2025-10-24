@@ -15,9 +15,11 @@ export const useAutomationsSmallLayout = ({
     search,
     availableBulkActions,
     columnDefinitions,
-    isSmall,
+    tableVariant,
     automationsLength = 0,
 }: IUseAutomationsSmallLayoutProps) => {
+    const isSmall = tableVariant === "small";
+
     return useMemo(() => {
         if (!isSmall) {
             return {
