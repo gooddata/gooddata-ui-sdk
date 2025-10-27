@@ -94,6 +94,13 @@ export interface IMapOptions {
     interactive?: boolean;
 
     /**
+     * Whether the map canvas should preserve the drawing buffer.
+     *
+     * When enabled, the WebGL canvas can be captured (for example during visual exports).
+     */
+    preserveDrawingBuffer?: boolean;
+
+    /**
      * Whether to enable cooperative gestures (requires modifier key for scroll zoom)
      */
     cooperativeGestures?: boolean;

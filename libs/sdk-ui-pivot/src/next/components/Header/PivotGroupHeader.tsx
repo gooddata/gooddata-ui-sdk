@@ -2,6 +2,10 @@
 
 import { MouseEvent, useCallback, useState } from "react";
 
+import { ColGroupDef } from "ag-grid-enterprise";
+
+import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
+
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
@@ -32,6 +36,23 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const isValueColDef = isValueColumnDef(columnDefinition);
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
+
+    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
+    const isTotalGroup =
+        !isRegularValueColumn &&
+        (colGroupDef as ColGroupDef).children?.some((child) =>
+            isGrandTotalColumnDefinition(child.context?.columnDefinition),
+        );
+    const isSubtotal = !isRegularValueColumn && isSubtotalColumnDefinition(columnDefinition);
+    const isSubtotalGroup =
+        !isRegularValueColumn &&
+        (colGroupDef as ColGroupDef).children?.some((child) =>
+            isSubtotalColumnDefinition(child.context?.columnDefinition),
+        );
+
+    const isTotalHeader = isTotal || isTotalGroup;
+    const isSubtotalHeader = isSubtotal || isSubtotalGroup;
 
     const allowAggregations =
         params.pivotGroupDepth !== 0 && // Not description level of the pivoting group
@@ -88,7 +109,11 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
                 "is-menu-open": isMenuOpen,
                 drillable: isDrillable,
             })}
-            {...getPivotHeaderTestIdProps({ drillable: isDrillable })}
+            {...getPivotHeaderTestIdProps({
+                drillable: isDrillable,
+                isTotal: isTotalHeader,
+                isSubtotal: isSubtotalHeader,
+            })}
         >
             <div className="gd-header-content">
                 <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>

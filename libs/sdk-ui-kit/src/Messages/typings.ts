@@ -56,4 +56,5 @@ export interface IMessageProps {
     contrast?: boolean;
     intensive?: boolean;
     children?: ReactNode;
+    dataTestId?: string;
 }

@@ -2,6 +2,7 @@
 
 import { ReactElement, useMemo, useRef, useState } from "react";
 
+import cx from "classnames";
 import { defaultImport } from "default-import";
 import { useIntl } from "react-intl";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
@@ -14,12 +15,14 @@ import { useGeoPushpinProps } from "./context/GeoPushpinPropsContext.js";
 import { useInitialExecution } from "./context/InitialExecutionContext.js";
 import { calculateViewport } from "./features/map/viewportManagement.js";
 import { useLegendConfig } from "./hooks/legend/useLegendConfig.js";
+import { useLegendDetails } from "./hooks/legend/useLegendDetails.js";
 import { useLegendItemsWithState } from "./hooks/legend/useLegendItemsWithState.js";
 import { useSelectedSegments } from "./hooks/legend/useSelectedSegments.js";
 import { useAfterRender } from "./hooks/map/useAfterRender.js";
 import { useMapCallbacks } from "./hooks/map/useMapCallbacks.js";
 import { getValidLocations, useMapDataSync } from "./hooks/map/useMapDataSync.js";
 import { useMapInitialization } from "./hooks/map/useMapInitialization.js";
+import { useMapResize } from "./hooks/map/useMapResize.js";
 import { useTooltipHandlers } from "./hooks/map/useTooltipHandlers.js";
 import { usePushData } from "./hooks/shared/usePushData.js";
 
@@ -52,9 +55,9 @@ export function RenderGeoPushpinChart(): ReactElement {
     // Get all computed data from context (no transformations needed here)
     const { geoData, colorStrategy, baseLegendItems, colorPalette } = useGeoData();
 
-    // Calculate initial viewport from data (before map initialization)
-    // This prevents the "world view -> zoom to data" transition
-    const initialViewport = useMemo(() => {
+    // Calculate viewport from data
+    // This is used for initial map setup and for updating viewport on resize
+    const viewport = useMemo(() => {
         if (!geoData?.location?.data || !props.config) {
             return null;
         }
@@ -66,12 +69,7 @@ export function RenderGeoPushpinChart(): ReactElement {
     }, [geoData?.location?.data, props.config]);
 
     // Initialize map with pre-calculated viewport
-    const { map, tooltip, isMapReady } = useMapInitialization(
-        mapContainerRef,
-        intl,
-        props.config,
-        initialViewport,
-    );
+    const { map, tooltip, isMapReady } = useMapInitialization(mapContainerRef, intl, props.config, viewport);
 
     // Merge base items with visibility state from context
     const legendItems = useLegendItemsWithState(baseLegendItems);
@@ -90,6 +88,9 @@ export function RenderGeoPushpinChart(): ReactElement {
 
     // Sync data to map
     useMapDataSync(map, geoData, configWithSegments, colorStrategy, isMapReady, initialDataView);
+
+    // Handle container resize
+    useMapResize(map, isMapReady, chartContainerRect, viewport);
 
     // Set up map interaction callbacks
     useMapCallbacks(map, {
@@ -113,7 +114,11 @@ export function RenderGeoPushpinChart(): ReactElement {
 
     // Get legend configuration
     const legendConfig = useLegendConfig(props.config);
-    const { position } = legendConfig;
+
+    // Compute legend details to get the actual position (may differ from config due to responsive behavior)
+    // This ensures container layout and legend rendering use the same position
+    const legendDetails = useLegendDetails(props.config, geoData, chartContainerRect ?? undefined);
+    const position = legendDetails?.position ?? legendConfig.position;
 
     // Determine if legend should be rendered first (top or left position)
     const isLegendRenderedFirst = position === "top" || position === "left";
@@ -122,7 +127,16 @@ export function RenderGeoPushpinChart(): ReactElement {
     // Include gd-geo-component for legacy legend CSS support
     const isRow = position === "left" || position === "right";
     const flexDirection = isRow ? "flex-direction-row" : "flex-direction-column";
-    const containerClass = `gd-geo-pushpin-next__container gd-geo-component ${flexDirection} ${isRow ? "gd-geo-pushpin-next__container--flex-row" : "gd-geo-pushpin-next__container--flex-column"}`;
+    const isExportMode = props.config?.isExportMode ?? false;
+    const containerClass = cx(
+        "gd-geo-pushpin-next__container",
+        "gd-geo-component",
+        flexDirection,
+        isRow ? "gd-geo-pushpin-next__container--flex-row" : "gd-geo-pushpin-next__container--flex-column",
+        {
+            isExportMode,
+        },
+    );
 
     const legendComponent = (
         <Legend
@@ -139,7 +153,9 @@ export function RenderGeoPushpinChart(): ReactElement {
             {({ measureRef }: MeasuredComponentProps) => (
                 <div
                     id="geo-pushpin-chart-next"
-                    data-testid="geo-pushpin-chart-next"
+                    data-testid={
+                        isExportMode ? "geo-pushpin-chart-next-export-mode" : "geo-pushpin-chart-next"
+                    }
                     className={containerClass}
                     ref={measureRef}
                 >

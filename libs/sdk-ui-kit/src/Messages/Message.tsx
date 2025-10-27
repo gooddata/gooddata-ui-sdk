@@ -9,7 +9,15 @@ import { Button } from "../Button/index.js";
 /**
  * @internal
  */
-export function Message({ onClose, type, children, className, contrast, intensive }: IMessageProps) {
+export function Message({
+    onClose,
+    type,
+    children,
+    className,
+    contrast,
+    intensive,
+    dataTestId,
+}: IMessageProps) {
     const intl = useIntl();
 
     const classes = cx("gd-message", "s-message", className, {
@@ -27,7 +35,12 @@ export function Message({ onClose, type, children, className, contrast, intensiv
         id: "message.accessibility.dismiss.notification",
     });
     return (
-        <div role={accesibilityRole} aria-live={type === "error" ? undefined : "polite"} className={classes}>
+        <div
+            role={accesibilityRole}
+            aria-live={type === "error" ? undefined : "polite"}
+            className={classes}
+            data-testid={dataTestId}
+        >
             <div className="gd-message-text">
                 {children}
                 {onClose ? (
