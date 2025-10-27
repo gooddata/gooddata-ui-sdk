@@ -36,7 +36,16 @@ export interface IMapInitResult {
  * @internal
  */
 export async function initializeMapLibreMap(
-    { container, center, zoom, bounds, interactive = true, cooperativeGestures = true, style }: IMapOptions,
+    {
+        container,
+        center,
+        zoom,
+        bounds,
+        interactive = true,
+        preserveDrawingBuffer = false,
+        cooperativeGestures = true,
+        style,
+    }: IMapOptions,
     locale?: IMapLibreLocale,
 ): Promise<IMapInitResult> {
     // Dynamically import maplibre-gl to avoid bundling issues
@@ -53,6 +62,7 @@ export async function initializeMapLibreMap(
         container,
         interactive,
         cooperativeGestures,
+        preserveDrawingBuffer,
         ...(cooperativeGestures && locale ? { locale } : {}),
     };
 

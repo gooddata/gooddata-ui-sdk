@@ -2,9 +2,26 @@
 
 import { CellTypes } from "../features/styling/cell.js";
 
-export function getPivotHeaderTestIdProps(options?: { drillable?: boolean }) {
-    const id = options?.drillable ? "pivot-header-drillable" : "pivot-header";
-    return { "data-testid": id };
+export function getPivotHeaderTestIdProps(options?: {
+    drillable?: boolean;
+    isTotal?: boolean;
+    isSubtotal?: boolean;
+}) {
+    const tokens: string[] = ["pivot-header"];
+
+    if (options?.drillable) {
+        tokens.push("pivot-header-drillable");
+    }
+
+    if (options?.isTotal) {
+        tokens.push("pivot-header-total");
+    }
+
+    if (options?.isSubtotal) {
+        tokens.push("pivot-header-subtotal");
+    }
+
+    return { "data-testid": tokens.join(" ") };
 }
 
 /**

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
+
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { SortIndicator } from "./SortIndicator.js";
 import {
@@ -35,6 +37,10 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
     const measureIdentifier = getColumnMeasureIdentifier(columnScope);
+
+    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
+    const isSubtotal = !isRegularValueColumn && isSubtotalColumnDefinition(columnDefinition);
 
     const allowAggregations = isValueColDef && !isTransposed;
     // Measure columns:
@@ -75,7 +81,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
             className={e("header-cell", {
                 "is-menu-open": isMenuOpen,
             })}
-            {...getPivotHeaderTestIdProps()}
+            {...getPivotHeaderTestIdProps({ isTotal, isSubtotal })}
         >
             <div className="gd-header-content">
                 <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>

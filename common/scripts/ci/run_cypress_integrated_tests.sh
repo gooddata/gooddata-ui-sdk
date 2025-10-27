@@ -30,6 +30,8 @@ fi
 (cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js create-ref-workspace)
 WORKSPACE_CREATED=true
 DELETE_MODE="${DELETE_MODE:-delete_always}"
+# Set Node.js memory limit for build-scenarios to 6GB
+export NODE_OPTIONS="--max-old-space-size=6144 ${NODE_OPTIONS:-}"
 (cd $ROOT_DIR/libs/sdk-ui-tests-e2e && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js build-scenarios)
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
 

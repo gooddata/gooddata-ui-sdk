@@ -40,11 +40,16 @@ export function useLegendDetails(
         const responsive = config?.legend?.responsive;
         const legendLabel = geoData?.segment?.name;
 
+        // Default respectLegendPosition to true when position is explicitly set (not "auto")
+        // This prevents autoPositionWithPopup from overriding explicit positions
+        const respectLegendPosition =
+            config?.respectLegendPosition ?? (position === "auto" ? undefined : true);
+
         return getLegendDetails(
             position,
             responsive ?? false,
             { contentRect, legendLabel },
-            config?.respectLegendPosition,
+            respectLegendPosition,
         );
     }, [
         config?.legend?.position,

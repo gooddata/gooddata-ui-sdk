@@ -116,6 +116,9 @@ export function useMapInitialization(
         return cooperativeGestures ? generateMapLibreLocale(intl) : undefined;
     }, [cooperativeGestures, intl]);
 
+    const isExportMode = config?.isExportMode ?? false;
+    const isViewportFrozen = Boolean(config?.viewport?.frozen);
+
     // Create and manage map instance
     useEffect(() => {
         const container = containerRef.current;
@@ -134,6 +137,8 @@ export function useMapInitialization(
                 center: initialCenterRef.current,
                 zoom: initialZoomRef.current,
                 cooperativeGestures,
+                interactive: !isViewportFrozen,
+                preserveDrawingBuffer: isExportMode,
                 style: config?.mapStyle as string | StyleSpecification,
             },
             locale,
@@ -167,7 +172,7 @@ export function useMapInitialization(
             mapInstanceRef.current = null;
             tooltipInstanceRef.current = null;
         };
-    }, [containerRef, config?.mapStyle, cooperativeGestures, locale]);
+    }, [containerRef, config?.mapStyle, cooperativeGestures, isViewportFrozen, isExportMode, locale]);
 
     return { map, tooltip, isMapReady, error };
 }

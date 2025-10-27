@@ -17,6 +17,7 @@ import { IListProps, List } from "../List/index.js";
 import { LoadingMask } from "../LoadingMask/index.js";
 import { NoData } from "../NoData/index.js";
 import { ITab } from "../Tabs/index.js";
+import { isTypingKey } from "../utils/events.js";
 
 /**
  * @internal
@@ -196,20 +197,29 @@ export function DropdownList<T>({
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <>
-                    <Input
-                        className={searchFieldClassNames}
-                        value={currentSearchString}
-                        onChange={onChange}
-                        isSmall={searchFieldSize === "small"}
-                        placeholder={searchPlaceholder}
-                        clearOnEsc
-                        onEscKeyPress={onEscKeyPress}
-                        isSearch
-                        autofocus={!disableAutofocus}
-                        accessibilityConfig={{
-                            ariaLabel: searchLabel,
+                    <div
+                        style={{ display: "contents" }}
+                        onKeyDown={(e) => {
+                            if (isTypingKey(e)) {
+                                e.stopPropagation();
+                            }
                         }}
-                    />
+                    >
+                        <Input
+                            className={searchFieldClassNames}
+                            value={currentSearchString}
+                            onChange={onChange}
+                            isSmall={searchFieldSize === "small"}
+                            placeholder={searchPlaceholder}
+                            clearOnEsc
+                            onEscKeyPress={onEscKeyPress}
+                            isSearch
+                            autofocus={!disableAutofocus}
+                            accessibilityConfig={{
+                                ariaLabel: searchLabel,
+                            }}
+                        />
+                    </div>
                     <UiSearchResultsAnnouncement
                         totalResults={currentSearchString ? itemsCount : undefined}
                         resultValues={

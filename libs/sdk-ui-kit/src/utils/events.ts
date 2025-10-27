@@ -51,6 +51,26 @@ export const isArrowKey = (event: KeyboardEvent): boolean => {
 };
 
 /**
+ * Checks if the given keyboard event is triggered by a key used for typing.
+ * E.g. a letter, a number, arrow keys, home, end, etc.
+ *
+ * @param event - The keyboard event to check.
+ * @returns `true` if the event has been triggered by a key used for typing, `false` otherwise.
+ *
+ * @internal
+ */
+export const isTypingKey = (event: KeyboardEvent): boolean => {
+    return (
+        event.key.length === 1 ||
+        isArrowKey(event) ||
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "Home" ||
+        event.key === "End"
+    );
+};
+
+/**
  * Checks if the given keyboard event is triggered by an Escape key.
  *
  * @param event - The keyboard event to check.
