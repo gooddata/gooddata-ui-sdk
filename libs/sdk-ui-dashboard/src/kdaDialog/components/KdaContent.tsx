@@ -25,8 +25,11 @@ export function KdaContent({
 }: IKdaContentProps) {
     const { state } = useKdaState();
 
-    const leftPanelLoading = state.itemsStatus === "pending" || state.itemsStatus === "loading";
-    const rightPanelLoading = state.selectedStatus === "pending" || state.selectedStatus === "loading";
+    const loading = state.relevantStatus === "loading" || state.relevantStatus === "pending";
+
+    const leftPanelLoading = loading || state.itemsStatus === "pending" || state.itemsStatus === "loading";
+    const rightPanelLoading =
+        loading || state.selectedStatus === "pending" || state.selectedStatus === "loading";
 
     const leftPanelError = state.itemsStatus === "error";
     const rightPanelError = state.selectedStatus === "error";

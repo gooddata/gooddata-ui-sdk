@@ -1,14 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { groupBy, isEqualWith } from "lodash-es";
+import { isEqual, isEqualWith } from "lodash-es";
 import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
 
 import {
     IAttributeDescriptor,
-    IAttributeDescriptorBody,
     ICatalogDateAttribute,
     IKeyDriveAnalysis,
-    IMeasureDescriptor,
     IResultAttributeHeader,
     areObjRefsEqual,
     isMeasureDescriptor,
@@ -16,8 +15,10 @@ import {
 import {
     DataPoint,
     DataViewFacade,
+    IDataSeries,
     IDrillEvent,
     IDrillIntersectionAttributeItem,
+    isDrillIntersectionAttributeItem,
     isDrillIntersectionDateAttributeItem,
 } from "@gooddata/sdk-ui";
 
@@ -33,39 +34,40 @@ export function getKdaKeyDriverCombinations(
 ): DashboardKeyDriverCombinationItem[] {
     //TODO: Special implementation for headline
     const dv = DataViewFacade.for(drillEvent.dataView);
-    const { attributeHeader, metricHeader } = findHeadersCombinations(drillDefinition, drillEvent);
+    const combinations = findHeadersCombinations(drillDefinition, drillEvent);
 
     // No relevant headers
-    if (!attributeHeader || !metricHeader) {
+    if (!combinations.attributeHeader || !combinations.metricHeader) {
         return [];
     }
 
-    const dateAttribute = findDateValues(dv, dateAttributes, attributeHeader);
-    const metricValue = findMetricValues(dv, metricHeader, dateAttribute);
+    const dateAttribute = findDateValues(dv, dateAttributes, combinations);
+    const metricValue = findMetricValues(dv, combinations);
 
     const res: DashboardKeyDriverCombinationItem[] = [];
 
     // There is a previous value in graph
-    const before = createBefore(metricHeader, dateAttribute, metricValue);
+    const before = createBefore(combinations, dateAttribute, metricValue);
     res.push(...(before ? [before] : []));
 
     // There is a next value in graph
-    const after = createAfter(metricHeader, dateAttribute, metricValue);
+    const after = createAfter(combinations, dateAttribute, metricValue);
     res.push(...(after ? [after] : []));
 
     // There is a previous year value in graph
-    const year = createYearToYear(dv, metricHeader, dateAttribute, metricValue);
+    const year = createYearToYear(combinations, dateAttribute, metricValue);
     res.push(...(year ? [year] : []));
 
     return res;
 }
 
 function createBefore(
-    measure: IMeasureDescriptor,
-    dateAttribute: ReturnType<typeof findDateValues>,
-    metricValue: ReturnType<typeof findMetricValues>,
+    combinations: Combinations,
+    dataValues: DataValues,
+    metricValue: MetricValues,
 ): DashboardKeyDriverCombinationItem | undefined {
-    if (dateAttribute.previousValue && metricValue.previousValue) {
+    const measure = combinations.metricHeader;
+    if (measure && dataValues.previousValue && metricValue.previousValue) {
         const currentValue = metricValue.currentValue.rawValue as number;
         const previousValue = metricValue.previousValue.rawValue as number;
 
@@ -75,18 +77,19 @@ function createBefore(
             difference: currentValue - previousValue,
             type: "comparative",
             values: [previousValue, currentValue],
-            range: [dateAttribute.previousValue, dateAttribute.currentValue],
+            range: [dataValues.previousValue, dataValues.currentValue],
         };
     }
     return undefined;
 }
 
 function createAfter(
-    measure: IMeasureDescriptor,
-    dateAttribute: ReturnType<typeof findDateValues>,
-    metricValue: ReturnType<typeof findMetricValues>,
+    combinations: Combinations,
+    dataValues: DataValues,
+    metricValue: MetricValues,
 ): DashboardKeyDriverCombinationItem | undefined {
-    if (dateAttribute.nextValue && metricValue.nextValue) {
+    const measure = combinations.metricHeader;
+    if (measure && dataValues.nextValue && metricValue.nextValue) {
         const currentValue = metricValue.currentValue.rawValue as number;
         const nextValue = metricValue.nextValue.rawValue as number;
 
@@ -96,22 +99,21 @@ function createAfter(
             difference: nextValue - currentValue,
             type: "comparative",
             values: [currentValue, nextValue],
-            range: [dateAttribute.currentValue, dateAttribute.nextValue],
+            range: [dataValues.currentValue, dataValues.nextValue],
         };
     }
     return undefined;
 }
 
 function createYearToYear(
-    dv: DataViewFacade,
-    measure: IMeasureDescriptor,
-    dateAttribute: ReturnType<typeof findDateValues>,
-    metricValue: ReturnType<typeof findMetricValues>,
+    combinations: Combinations,
+    dataValues: DataValues,
+    metricValue: MetricValues,
 ): DashboardKeyDriverCombinationItem | undefined {
-    const values = dateAttribute.values;
-    const attributeDefinition = dateAttribute.attributeDefinition;
+    const measure = combinations.metricHeader;
+    const attributeDefinition = dataValues.attributeDefinition;
 
-    if (!attributeDefinition) {
+    if (!attributeDefinition || !measure) {
         return undefined;
     }
 
@@ -122,15 +124,9 @@ function createYearToYear(
         return undefined;
     }
 
-    const { previousYear, previousYearDatePoint } = findPreviousYearValue(
-        dv,
-        measure,
-        values,
-        dateAttribute.currentValue,
-    );
-
-    if (previousYear && previousYearDatePoint && metricValue) {
-        const previousValue = previousYearDatePoint.rawValue as number;
+    const previousYearDefinition = findPreviousYearValue(combinations, dataValues, metricValue);
+    if (previousYearDefinition && metricValue) {
+        const previousValue = previousYearDefinition.previousYearDataPoint.rawValue as number;
         const currentValue = metricValue.currentValue.rawValue as number;
 
         return {
@@ -139,7 +135,7 @@ function createYearToYear(
             difference: previousValue - currentValue,
             type: "year-to-year",
             values: [previousValue, currentValue],
-            range: [previousYear, dateAttribute.currentValue],
+            range: [previousYearDefinition.previousYear, dataValues.currentValue],
         };
     }
     return undefined;
@@ -188,6 +184,8 @@ export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: Dashboar
     }
 }
 
+type Combinations = ReturnType<typeof findHeadersCombinations>;
+
 function findHeadersCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent) {
     if (drillDefinition.transition !== "in-place") {
         return {
@@ -203,82 +201,146 @@ function findHeadersCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent:
         .map((intersectionElement) => intersectionElement.header)
         .filter(isMeasureDescriptor)[0];
 
+    const attributeHeaders = (drillEvent.drillContext.intersection || [])
+        .map((intersectionElement) => intersectionElement.header)
+        .filter(isDrillIntersectionAttributeItem)
+        .filter((header) => header !== attributeHeader);
+
     return {
+        attributeHeaders,
         attributeHeader,
         metricHeader,
     };
 }
 
-type AttributeHeader = IResultAttributeHeader & IAttributeDescriptor;
+type DataValues = ReturnType<typeof findDateValues>;
+type DataValue = IResultAttributeHeader & IAttributeDescriptor;
 
 function findDateValues(
     dv: DataViewFacade,
     dateAttributes: ICatalogDateAttribute[],
-    attributeHeader: IDrillIntersectionAttributeItem,
+    combinations: Combinations,
 ): {
     attributeDefinition: ICatalogDateAttribute | undefined;
-    values: IResultAttributeHeader[];
-    previousValue: AttributeHeader | undefined;
-    currentValue: AttributeHeader;
-    nextValue: AttributeHeader | undefined;
-    dims: [number, number, number];
-    shift: number;
+    dimensions: DimensionArrayItem[];
+    previousValue: DataValue | undefined;
+    currentValue: DataValue;
+    nextValue: DataValue | undefined;
 } {
-    const { dims, values, shift } = calculateDimensions(dv, attributeHeader);
+    const dimensions = calculateDimensions(dv, combinations);
+    invariant(combinations.attributeHeader, "Primary attribute header is missing");
 
-    const previousValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] - shift]);
-    const currentValue = attributeHeader;
-    const nextValue = getAttributeHeader(attributeHeader.attributeHeader, values[dims[2] + shift]);
+    const previousValue = getAttributeHeaders(combinations, dimensions, -1);
+    const currentValue = combinations.attributeHeader;
+    const nextValue = getAttributeHeaders(combinations, dimensions, 1);
 
     const attributeDefinition = dateAttributes.find((da) => {
         return (
-            areObjRefsEqual(da.defaultDisplayForm, attributeHeader.attributeHeader.ref) ||
-            da.attribute.displayForms.some((df) =>
-                areObjRefsEqual(df.ref, attributeHeader.attributeHeader.ref),
-            )
+            areObjRefsEqual(da.defaultDisplayForm, currentValue.attributeHeader.ref) ||
+            da.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentValue.attributeHeader.ref))
         );
     });
 
     return {
-        values,
+        dimensions,
         previousValue,
         currentValue,
         nextValue,
         attributeDefinition,
-        dims,
-        shift,
     };
 }
 
-function getAttributeHeader(
-    attributeHeader: IAttributeDescriptorBody,
-    header: IResultAttributeHeader | undefined,
-) {
-    return header
-        ? {
-              ...header,
-              attributeHeader,
-          }
-        : undefined;
+function getAttributeHeaders(
+    combinations: Combinations,
+    dimensions: DimensionArrayItem[],
+    direction: -1 | 1,
+): DataValue | undefined {
+    const currentHeader = combinations.attributeHeader;
+    invariant(currentHeader, "Primary attribute header is missing");
+
+    const primaryDimension = dimensions[0];
+    const otherDimensions = dimensions.slice(1);
+
+    const grouped = groupByDimension(otherDimensions, primaryDimension);
+    const primaryValid = primaryDimension.values.map((v, i) => {
+        const filled = grouped.every((g) => g.values[i]);
+        return filled ? v : null;
+    });
+
+    const dates = primaryValid.filter(Boolean) as DataValue[];
+
+    const currentHeaderIndex = dates.findIndex((d) =>
+        isEqual(d.attributeHeaderItem, primaryDimension.value.attributeHeaderItem),
+    );
+    const directionHeaderIndex = primaryDimension.values.indexOf(dates[currentHeaderIndex + direction]);
+
+    return primaryDimension.values[directionHeaderIndex] ?? undefined;
 }
+
+type MetricValues = ReturnType<typeof findMetricValues>;
 
 function findMetricValues(
     dv: DataViewFacade,
-    metricHeader: IMeasureDescriptor,
-    dateAttribute: ReturnType<typeof findDateValues>,
+    combinations: Combinations,
 ): {
     previousValue: DataPoint | undefined;
     currentValue: DataPoint;
     nextValue: DataPoint | undefined;
+    values: IDataSeries[];
+    dataPointIndex: number;
 } {
-    const localId = metricHeader.measureHeaderItem.localIdentifier;
-    const data = Array.from(dv.data().series().allForMeasure(localId))[0].dataPoints();
+    invariant(combinations.metricHeader, "Missing metric header.");
 
-    const previousValue = data[dateAttribute.dims[2] - dateAttribute.shift];
-    const currentValue = data[dateAttribute.dims[2]];
-    const nextValue = data[dateAttribute.dims[2] + dateAttribute.shift];
+    const localId = combinations.metricHeader.measureHeaderItem.localIdentifier;
+    const data = Array.from(dv.data().series().allForMeasure(localId));
+
+    const titles = [
+        combinations.attributeHeader.attributeHeaderItem.uri,
+        ...combinations.attributeHeaders.map(asUri),
+    ];
+    const foundData = data.filter(dataSeriesExactMatch(titles));
+
+    const scopeTitles = [...combinations.attributeHeaders.map(asUri)];
+    const scopeDateData = data.filter(dataSeriesPartialMatch(scopeTitles));
+
+    const selectedData = foundData[0] ?? scopeDateData[0] ?? data[0];
+    const selectedDataIndex = scopeDateData.indexOf(selectedData);
+
+    const selectedDataPoints = selectedData.dataPoints();
+    const foundDataPoints = selectedDataPoints.filter(dataPointPartialMatch(scopeTitles));
+    const foundDataPoint = selectedDataPoints.find(dataPointExactMatch(titles));
+    const selectDataPoint = foundDataPoint ?? foundDataPoints[0] ?? selectedDataPoints[0];
+
+    //only one dimensionality
+    if (scopeDateData.length === 1) {
+        const selectedDataPointIndex = foundDataPoints.indexOf(selectDataPoint);
+
+        const previousValue = foundDataPoints[selectedDataPointIndex - 1] as DataPoint | undefined;
+        const currentValue = selectDataPoint;
+        const nextValue = foundDataPoints[selectedDataPointIndex + 1] as DataPoint | undefined;
+
+        return {
+            dataPointIndex: selectedDataPointIndex,
+            values: scopeDateData,
+            previousValue,
+            currentValue,
+            nextValue,
+        };
+    }
+
+    //multiple dimensionality
+    const selectedDataPointIndex = selectedDataPoints.indexOf(selectDataPoint);
+
+    const previousData = scopeDateData[selectedDataIndex - 1];
+    const nextData = scopeDateData[selectedDataIndex + 1];
+
+    const previousValue = previousData?.dataPoints()[selectedDataPointIndex] ?? undefined;
+    const currentValue = selectDataPoint;
+    const nextValue = nextData?.dataPoints()[selectedDataPointIndex] ?? undefined;
 
     return {
+        dataPointIndex: selectedDataPointIndex,
+        values: scopeDateData,
         previousValue,
         currentValue,
         nextValue,
@@ -286,86 +348,183 @@ function findMetricValues(
 }
 
 function findPreviousYearValue(
-    dv: DataViewFacade,
-    metricHeader: IMeasureDescriptor,
-    values: IResultAttributeHeader[],
-    currentYear: AttributeHeader,
-): {
-    previousYear: AttributeHeader | null;
-    previousYearDatePoint: DataPoint | null;
-} {
-    const localId = metricHeader.measureHeaderItem.localIdentifier;
-    const data = Array.from(dv.data().series().allForMeasure(localId))[0].dataPoints();
+    combinations: Combinations,
+    dataValues: DataValues,
+    metricValue: MetricValues,
+):
+    | {
+          previousYear: DataValue;
+          previousYearDataPoint: DataPoint;
+      }
+    | undefined {
+    const attributeDefinition = dataValues.attributeDefinition;
+    const currentYear = dataValues.currentValue;
+    const values = metricValue.values;
 
-    const split = currentYear.attributeHeaderItem.uri.split("-");
-    split[0] = (parseInt(split[0]) - 1).toString();
-    const prevYearUri = split.join("-");
+    invariant(attributeDefinition);
 
-    const prevYearHeader = values.find((v) => v.attributeHeaderItem.uri === prevYearUri);
-    const prevYearIndex = prevYearHeader ? values.indexOf(prevYearHeader) : -1;
+    const previousYear = getPreviousYear(currentYear);
+    const previousYearSeries = values.find(dataSeriesPartialMatch([previousYear]));
+
+    const scopeTitles = [previousYear, ...(combinations.attributeHeaders?.map(asUri) ?? [])];
+    const allDataPoints = previousYearSeries?.dataPoints() ?? [];
+    const prevYearDataPoint = allDataPoints.find(dataPointExactMatch(scopeTitles));
+
+    if (!prevYearDataPoint) {
+        return undefined;
+    }
+
+    const descriptors = [
+        ...(prevYearDataPoint.seriesDesc.attributeDescriptors ?? []),
+        ...(prevYearDataPoint.sliceDesc?.descriptors ?? []),
+    ];
+    const headers = [
+        ...(prevYearDataPoint.seriesDesc.attributeHeaders ?? []),
+        ...(prevYearDataPoint.sliceDesc?.headers ?? []),
+    ];
+
+    const index =
+        descriptors.findIndex((ah) => {
+            return areObjRefsEqual(
+                ah.attributeHeader.primaryLabel,
+                attributeDefinition.defaultDisplayForm.ref,
+            );
+        }) ?? -1;
+
+    const prevYearHeader = headers[index] as IResultAttributeHeader;
+    const descriptor = descriptors[index];
+    if (!prevYearHeader || !descriptor) {
+        return undefined;
+    }
 
     return {
-        previousYear: prevYearHeader
-            ? {
-                  ...currentYear,
-                  ...prevYearHeader,
-              }
-            : null,
-        previousYearDatePoint: data[prevYearIndex] ?? null,
+        previousYear: {
+            ...prevYearHeader,
+            ...descriptor,
+        },
+        previousYearDataPoint: prevYearDataPoint,
     };
 }
 
-function calculateDimensions(
-    dv: DataViewFacade,
-    attributeHeader: IDrillIntersectionAttributeItem,
-): {
-    dims: [number, number, number];
-    shift: number;
-    values: IResultAttributeHeader[];
-} {
+// Dimensions
+
+type DimensionArrayItem = {
+    dimensions: [number, number, number];
+    values: DataValue[];
+    value: DataValue;
+};
+
+function calculateDimensions(dv: DataViewFacade, combinations: Combinations): DimensionArrayItem[] {
     const headers = dv.meta().attributeHeaders();
-    // const dims = headers.reduce(
-    //     (prev, f, dim1) => {
-    //         const [dim2, dim3] = f.reduce(
-    //             (prev, f, i) => {
-    //                 const dim3 = f.findIndex((a) => {
-    //                     return isEqualWith(a.attributeHeaderItem, attributeHeader.attributeHeaderItem);
-    //                 });
-    //                 if (dim3 >= 0) {
-    //                     return [i, dim3];
-    //                 }
-    //                 return prev;
-    //             },
-    //             [-1, -1],
-    //         );
-    //         if (dim2 >= 0 && dim3 >= 0) {
-    //             return [dim1, dim2, dim3];
-    //         }
-    //         return prev;
-    //     },
-    //     [-1, -1, -1],
-    // ) as [number, number, number];
+    invariant(combinations.attributeHeader, "Primary attribute header is missing");
 
     // Find a dimension of the attribute header
-    const dims =
+    const primaryDimensions = getDimensions(dv, combinations.attributeHeader);
+    const otherDimensions = combinations.attributeHeaders.map((h) => getDimensions(dv, h));
+
+    const descriptor = dv.meta().attributeDescriptorsForDim(primaryDimensions[0])[primaryDimensions[1]];
+    const values: DataValue[] = headers[primaryDimensions[0]][primaryDimensions[1]].map((v) => ({
+        ...v,
+        ...descriptor,
+    }));
+
+    const items: DimensionArrayItem[] = [
+        {
+            dimensions: primaryDimensions,
+            values: values,
+            value: values[primaryDimensions[2]],
+        },
+    ];
+    otherDimensions.forEach((d) => {
+        const descriptor = dv.meta().attributeDescriptorsForDim(d[0])[d[1]];
+        const values = headers[d[0]][d[1]].map((v) => ({
+            ...v,
+            ...descriptor,
+        }));
+        items.push({
+            dimensions: d,
+            values: values,
+            value: values[d[2]],
+        });
+    });
+    return items;
+}
+
+function getDimensions(dv: DataViewFacade, item: IDrillIntersectionAttributeItem) {
+    const headers = dv.meta().attributeHeaders();
+
+    // Find a dimension of the attribute header
+    return (
         (headers.flatMap((f, dim1) =>
             f.flatMap((group, dim2) => {
                 const dim3 = group.findIndex((a) =>
-                    isEqualWith(a.attributeHeaderItem, attributeHeader.attributeHeaderItem),
+                    isEqualWith(a.attributeHeaderItem, item.attributeHeaderItem),
                 );
                 return dim3 >= 0 ? [[dim1, dim2, dim3]] : [];
             }),
-        )[0] as [number, number, number]) ?? ([-1, -1, -1] as [number, number, number]);
+        )[0] as [number, number, number]) ?? ([-1, -1, -1] as [number, number, number])
+    );
+}
 
-    // Retrieve the values for the attribute header by dimensions
-    const values = headers[dims[0]][dims[1]];
+function getPreviousYear(currentYear: IResultAttributeHeader) {
+    const split = currentYear.attributeHeaderItem.uri.split("-");
+    split[0] = (parseInt(split[0]) - 1).toString();
+    return split.join("-");
+}
 
-    // Find a shift for the attribute header
-    const shift = Object.values(groupBy(values, (val) => val.attributeHeaderItem.uri))[0].length;
+// Utils
 
-    return {
-        dims,
-        shift,
-        values,
+function asUri(ch: IDrillIntersectionAttributeItem) {
+    return ch.attributeHeaderItem.uri;
+}
+
+function dataSeriesExactMatch(titles: string[]) {
+    return (d: IDataSeries) => {
+        return d.scopeTitles().every((t) => (t === null ? true : titles.includes(t)));
     };
+}
+
+function dataSeriesPartialMatch(titles: string[]) {
+    return (d: IDataSeries) => {
+        const scTitles = d.scopeTitles();
+        if (scTitles.length > 0 && titles.length > 0) {
+            return scTitles.some((t) => (t === null ? true : titles.includes(t)));
+        }
+        return true;
+    };
+}
+
+function dataPointPartialMatch(titles: string[]) {
+    return (d: DataPoint) => {
+        if (d.sliceDesc) {
+            const scTitles = d.sliceDesc.sliceTitles();
+            if (scTitles.length > 0 && titles.length > 0) {
+                return scTitles.some((t) => (t === null ? true : titles.includes(t)));
+            }
+        }
+        return true;
+    };
+}
+
+function dataPointExactMatch(titles: string[]) {
+    return (d: DataPoint) => {
+        if (d.sliceDesc) {
+            const scTitles = d.sliceDesc.sliceTitles();
+            if (scTitles.length > 0) {
+                return scTitles.every((t) => (t === null ? true : titles.includes(t)));
+            }
+        }
+        return true;
+    };
+}
+
+function groupByDimension(otherDimensions: DimensionArrayItem[], primaryDimension: DimensionArrayItem) {
+    return otherDimensions
+        .filter(({ dimensions }) => dimensions[0] === primaryDimension.dimensions[0])
+        .map((dim) => ({
+            ...dim,
+            values: dim.values.map((v) =>
+                v.attributeHeaderItem.uri === dim.value.attributeHeaderItem.uri ? v : null,
+            ),
+        }));
 }

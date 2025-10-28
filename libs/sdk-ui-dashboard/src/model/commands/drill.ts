@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    FilterContextItem,
     ICrossFiltering,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
@@ -546,6 +547,10 @@ export interface KeyDriverAnalysisPayload {
      * Original drill event, that triggered this particular drill interaction.
      */
     readonly drillEvent: IDashboardDrillEvent;
+    /**
+     * Filters to apply.
+     */
+    readonly filters: FilterContextItem[];
 }
 
 /**
@@ -564,6 +569,7 @@ export interface KeyDriverAnalysis extends IDashboardCommand {
  * @beta
  * @param drillDefinition - drill definition to apply.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
+ * @param filters - filters to apply.
  * @param keyDriveItem - key driver item to analyze.
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns cross filtering command
@@ -571,6 +577,7 @@ export interface KeyDriverAnalysis extends IDashboardCommand {
 export function keyDriverAnalysis(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDashboardDrillEvent,
+    filters: FilterContextItem[],
     keyDriveItem: DashboardKeyDriverCombinationItem,
     correlationId?: string,
 ): KeyDriverAnalysis {
@@ -581,6 +588,7 @@ export function keyDriverAnalysis(
             drillDefinition,
             drillEvent,
             keyDriveItem,
+            filters,
         },
     };
 }

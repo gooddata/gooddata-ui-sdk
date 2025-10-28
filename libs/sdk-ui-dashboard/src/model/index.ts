@@ -144,4 +144,5 @@ export * from "./headlessDashboard/index.js";
 
 export { isTemporaryIdentity, getWidgetTitle } from "./utils/dashboardItemUtils.js";
 export { existBlacklistHierarchyPredicate } from "./utils/attributeHierarchyUtils.js";
+export { removeDateFilters, removeIgnoredWidgetFilters } from "./utils/widgetFilters.js";
 export { getAuthor } from "./utils/author.js";

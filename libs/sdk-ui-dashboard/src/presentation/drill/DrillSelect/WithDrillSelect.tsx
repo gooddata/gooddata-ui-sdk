@@ -25,6 +25,7 @@ import {
     DashboardDrillCommand,
     DashboardKeyDriverCombinationItem,
     selectBackendCapabilities,
+    selectDashboardFiltersWithoutCrossFiltering,
     selectDisableDefaultDrills,
     selectLocale,
     selectWidgetDrills,
@@ -92,6 +93,7 @@ export function WithDrillSelect({
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const locale = useDashboardSelector(selectLocale);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
+    const filters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const configuredDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
     const { supportsAttributeHierarchies } = useDashboardSelector(selectBackendCapabilities);
 
@@ -220,12 +222,13 @@ export function WithDrillSelect({
                 drills.keyDriverAnalysis.run(
                     drillDefinition,
                     effectiveDrillEvent,
+                    filters,
                     context as DashboardKeyDriverCombinationItem,
                     effectiveCorrelationId,
                 );
             }
         },
-        [onSelectDepsRef, returnFocusToInsight],
+        [onSelectDepsRef, returnFocusToInsight, filters],
     );
 
     const dropDownAnchorClass = `s-drill-picker-${drillPickerId}`;

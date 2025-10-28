@@ -21,12 +21,12 @@ import {
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
     ExtendedDashboardWidget,
+    removeIgnoredWidgetFilters,
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
-import { removeIgnoredWidgetFilters } from "../../utils.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,

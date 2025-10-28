@@ -86,20 +86,31 @@
         }
 
         &-content {
+            flex-wrap: wrap;
             display: flex;
             gap: 5px;
         }
 
         &__metric {
+            display: flex;
             max-width: 300px;
         }
 
         &__date {
+            display: flex;
             max-width: 300px;
         }
 
         &__attribute {
+            display: flex;
             max-width: 300px;
+        }
+    }
+
+    //attribute add dropdown
+    .gd-kda-attribute-add-dropdown {
+        & > div {
+            margin: 0;
         }
     }
 

@@ -6893,12 +6893,13 @@ export interface KeyDriverAnalysis extends IDashboardCommand {
 }
 
 // @beta
-export function keyDriverAnalysis(drillDefinition: IKeyDriveAnalysis, drillEvent: IDashboardDrillEvent, keyDriveItem: DashboardKeyDriverCombinationItem, correlationId?: string): KeyDriverAnalysis;
+export function keyDriverAnalysis(drillDefinition: IKeyDriveAnalysis, drillEvent: IDashboardDrillEvent, filters: FilterContextItem[], keyDriveItem: DashboardKeyDriverCombinationItem, correlationId?: string): KeyDriverAnalysis;
 
 // @beta
 export interface KeyDriverAnalysisPayload {
     readonly drillDefinition: IKeyDriveAnalysis;
     readonly drillEvent: IDashboardDrillEvent;
+    readonly filters: FilterContextItem[];
     readonly keyDriveItem: DashboardKeyDriverCombinationItem;
 }
 
@@ -7824,6 +7825,9 @@ export interface RemoveDateFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
 }
 
+// @internal (undocumented)
+export function removeDateFilters(filters: FilterContextItem[]): IDashboardAttributeFilter[];
+
 // @beta
 export interface RemoveDateFiltersPayload {
     readonly dataSets: ObjRef[];
@@ -7881,6 +7885,9 @@ export interface RemoveDrillsForInsightWidgetPayload {
 
 // @beta (undocumented)
 export type RemoveDrillsSelector = LocalIdRef[] | "*";
+
+// @internal (undocumented)
+export function removeIgnoredWidgetFilters(filters: FilterContextItem[], widget: ExtendedDashboardWidget | undefined): FilterContextItem[];
 
 // @beta (undocumented)
 export interface RemoveLayoutSection extends IDashboardCommand {

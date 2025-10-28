@@ -21,11 +21,11 @@ import {
     getLocalizedIcuDateFormatPattern,
 } from "@gooddata/sdk-ui-filters";
 
+import { useAttributeFilterDisplayFormFromMap } from "./useAttributeFilterDisplayFormFromMap.js";
 import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 import {
     selectAllCatalogAttributesMap,
-    selectAttributeFilterDisplayFormsMap,
     selectLocale,
     selectSettings,
     useDashboardSelector,
@@ -53,7 +53,7 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (Filte
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings.responsiveUiDateFormat;
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const dateFiltersToDisplay = filtersToDisplay.filter(isDashboardDateFilterWithDimension);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
@@ -64,7 +64,7 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (Filte
 
     return extendedFiltersToDisplay.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
-            const displayForm = dfMap.get(filter.attributeFilter.displayForm);
+            const displayForm = getAttributeFilterDisplayFormFromMap(filter.attributeFilter.displayForm);
             if (!displayForm) {
                 return undefined;
             }

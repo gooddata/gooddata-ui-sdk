@@ -18,7 +18,7 @@ import { stringUtils } from "@gooddata/util";
 
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
-import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model/index.js";
+import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
@@ -35,7 +35,7 @@ export function AttributeFilterConfigurationItem({
     displayAsLabel,
     title,
 }: IAttributeFilterConfigurationItemProps) {
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
 
     const [isApplied, setIsApplied] = useState(
         () =>
@@ -43,7 +43,7 @@ export function AttributeFilterConfigurationItem({
                 if (!isDashboardAttributeFilterReference(reference)) {
                     return false;
                 }
-                const df = dfMap.get(reference.displayForm);
+                const df = getAttributeFilterDisplayFormFromMap(reference.displayForm);
                 return areObjRefsEqual(df?.ref, displayFormRef) || areObjRefsEqual(df?.ref, displayAsLabel);
             }),
     );

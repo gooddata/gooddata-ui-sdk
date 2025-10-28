@@ -3,8 +3,14 @@
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { areObjRefsEqual, isAttributeDescriptor, isMeasureDescriptor } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilter,
+    areObjRefsEqual,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+} from "@gooddata/sdk-model";
 
+import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import { IDashboardDrillEvent } from "../../../types.js";
 import { KeyDriverAnalysis } from "../../commands/drill.js";
 import {
@@ -13,14 +19,17 @@ import {
     keyDriverAnalysisResolved,
 } from "../../events/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
 
 export function* keyDriverAnalysisHandler(
     ctx: DashboardContext,
     cmd: KeyDriverAnalysis,
 ): SagaIterator<DashboardKeyDriverAnalysisResolved> {
-    const { drillDefinition, drillEvent, keyDriveItem } = cmd.payload;
+    const { drillDefinition, drillEvent, keyDriveItem, filters: availableFilters } = cmd.payload;
 
     yield put(keyDriverAnalysisRequested(ctx, drillDefinition, drillEvent, keyDriveItem, cmd.correlationId));
 
@@ -67,6 +76,35 @@ export function* keyDriverAnalysisHandler(
         );
     }
 
+    const dateDataSetsAttributesRefs = dateAttributes.map((dateAttribute) => dateAttribute.attribute.ref);
+    const drillIntersectionFilters = convertIntersectionToAttributeFilters(
+        cmd.payload.drillEvent.drillContext.intersection ?? [],
+        dateDataSetsAttributesRefs,
+        true,
+        0,
+    );
+    const intersectionFilters = drillIntersectionFilters.map(({ attributeFilter }, i) => {
+        const { displayForm, attributeElements, negativeSelection, title } = attributeFilter.attributeFilter;
+
+        const dashboardFilter: IDashboardAttributeFilter = {
+            attributeFilter: {
+                displayForm,
+                attributeElements,
+                negativeSelection,
+                localIdentifier: generateFilterLocalIdentifier(displayForm, i),
+                selectionMode: "multi",
+                title,
+            },
+        };
+
+        return dashboardFilter;
+    });
+
+    const widget = yield select(selectWidgetByRef(drillEvent.widgetRef));
+    const attributeFilters = removeDateFilters(removeIgnoredWidgetFilters(availableFilters, widget!));
+
+    const filters = mergeFilters(intersectionFilters, attributeFilters);
+
     return keyDriverAnalysisResolved(
         ctx,
         cmd.payload.drillDefinition,
@@ -81,6 +119,7 @@ export function* keyDriverAnalysisHandler(
                 },
             },
             metrics,
+            filters,
             dateAttribute: dateAttribute.attribute.ref,
             range: [
                 {
@@ -107,11 +146,36 @@ function loadLocalIdentifiers(drillEvent: IDashboardDrillEvent) {
                 if (isMeasureDescriptor(header.header)) {
                     return header.header.measureHeaderItem.localIdentifier;
                 }
-                if (isAttributeDescriptor(header.header)) {
+                //NOTE: Only date attributes
+                if (isAttributeDescriptor(header.header) && header.header.attributeHeader.granularity) {
                     return header.header.attributeHeader.localIdentifier;
                 }
                 return null;
             })
             .filter(Boolean) as string[]) ?? []
     );
+}
+
+function mergeFilters(
+    intersectionFilters: IDashboardAttributeFilter[],
+    attributeFilters: IDashboardAttributeFilter[],
+): IDashboardAttributeFilter[] {
+    const unusedFilters = intersectionFilters.filter((filter) => {
+        return !attributeFilters.find((f) =>
+            areObjRefsEqual(f.attributeFilter.displayForm, filter.attributeFilter.displayForm),
+        );
+    });
+
+    return [
+        ...attributeFilters.map((filter) => {
+            const intersectionFilter = intersectionFilters.find((f) =>
+                areObjRefsEqual(f.attributeFilter.displayForm, filter.attributeFilter.displayForm),
+            );
+            if (intersectionFilter) {
+                return intersectionFilter;
+            }
+            return filter;
+        }),
+        ...unusedFilters,
+    ];
 }
