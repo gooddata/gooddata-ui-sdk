@@ -12,9 +12,9 @@ import {
 import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters";
 import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
+import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import {
     selectAllCatalogAttributesMap,
-    selectAttributeFilterDisplayFormsMap,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
     useDashboardSelector,
@@ -22,8 +22,8 @@ import {
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
-    const filterDisplayForm = dfMap.get(filterDisplayFormRef);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
+    const filterDisplayForm = getAttributeFilterDisplayFormFromMap(filterDisplayFormRef);
     invariant(filterDisplayForm);
 
     const attributesMap = useDashboardSelector(selectAllCatalogAttributesMap);

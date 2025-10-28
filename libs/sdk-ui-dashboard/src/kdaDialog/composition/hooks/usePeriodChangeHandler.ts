@@ -4,11 +4,28 @@ import { useCallback, useMemo } from "react";
 
 import { DateAttributeGranularity, ICatalogDateAttribute } from "@gooddata/sdk-model";
 
+import { useDateAttribute } from "../../hooks/useDateAttribute.js";
+import { KdaDateOptions } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition, KdaPeriodType } from "../../types.js";
 
-export function usePeriodChangeHandler(dateAttribute: ICatalogDateAttribute | null) {
+export function usePeriodChangeHandler() {
+    const dateAttributeFinder = useDateAttribute();
+
     const { state, setState } = useKdaState();
+    const def = state.definition;
+
+    const dateAttribute = useMemo(() => {
+        return dateAttributeFinder(def?.dateAttribute);
+    }, [dateAttributeFinder, def?.dateAttribute]);
+
+    const options = useMemo((): KdaDateOptions => {
+        return {
+            dateAttribute,
+            period: def?.type ?? "previous_period",
+            range: def?.range,
+        };
+    }, [dateAttribute, def?.type, def?.range]);
 
     const onPeriodChange = useCallback(
         (type: KdaPeriodType) => {
@@ -31,6 +48,7 @@ export function usePeriodChangeHandler(dateAttribute: ICatalogDateAttribute | nu
     }, [dateAttribute]);
 
     return {
+        options,
         isAvailable,
         onPeriodChange,
     };

@@ -9,10 +9,10 @@ import { useDefaultSelectedFiltersForExistingAutomation } from "./hooks/useDefau
 import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
 import {
     ExtendedDashboardWidget,
+    removeIgnoredWidgetFilters,
     selectDashboardFiltersWithoutCrossFiltering,
     useDashboardSelector,
 } from "../../model/index.js";
-import { removeIgnoredWidgetFilters } from "../utils.js";
 
 interface IUseAutomationFiltersSelect {
     editedAutomationFilters: FilterContextItem[];

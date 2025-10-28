@@ -15,12 +15,12 @@ import {
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
 import { getAttributeByDisplayForm } from "./utils.js";
+import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectAttributeFilterDisplayFormsMap,
     selectFilterContextFilters,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -31,7 +31,7 @@ interface IFilterConfigurationProps {
 
 export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     const allFilters = useDashboardSelector(selectFilterContextFilters);
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
@@ -67,7 +67,9 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                     if (!attributes) {
                         return null;
                     }
-                    const displayForm = dfMap.get(filter.attributeFilter.displayForm);
+                    const displayForm = getAttributeFilterDisplayFormFromMap(
+                        filter.attributeFilter.displayForm,
+                    );
                     invariant(displayForm, "Inconsistent state in AttributeFilterConfiguration");
 
                     const attributeByDisplayForm = getAttributeByDisplayForm(

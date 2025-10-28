@@ -10,8 +10,11 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
-import { ExtendedDashboardWidget } from "../model/index.js";
+import { ExtendedDashboardWidget } from "../types/layoutTypes.js";
 
+/**
+ * @internal
+ */
 export function removeIgnoredWidgetFilters(
     filters: FilterContextItem[],
     widget: ExtendedDashboardWidget | undefined,
@@ -40,6 +43,9 @@ export function removeIgnoredWidgetFilters(
     );
 }
 
+/**
+ * @internal
+ */
 export function removeDateFilters(filters: FilterContextItem[]): IDashboardAttributeFilter[] {
     return filters.filter(isDashboardAttributeFilter);
 }

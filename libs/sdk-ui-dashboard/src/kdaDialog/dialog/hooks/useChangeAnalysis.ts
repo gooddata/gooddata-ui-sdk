@@ -7,6 +7,7 @@ import { IChangeAnalysisResults, IKeyDriver } from "@gooddata/sdk-backend-spi";
 import {
     IAttribute,
     ICatalogAttribute,
+    IDashboardAttributeFilter,
     IMeasure,
     ISeparators,
     ObjRef,
@@ -15,8 +16,10 @@ import {
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
+import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
+import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
 import { KdaItem, KdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition } from "../../types.js";
@@ -30,7 +33,10 @@ export function useChangeAnalysis() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.selectedUpdated]);
 
-    const results = useChangeAnalysisResults(definition, attributes);
+    const filters = useRelevantFilters();
+    const loading = state.relevantStatus === "loading" || state.relevantStatus === "pending";
+
+    const results = useChangeAnalysisResults(definition, attributes, filters, loading);
     const list = useKdaStateWithList(results, definition);
 
     useEffect(() => {
@@ -38,7 +44,12 @@ export function useChangeAnalysis() {
     }, [list, setState]);
 }
 
-function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjRef[]) {
+function useChangeAnalysisResults(
+    definition: IKdaDefinition | null,
+    attrs: ObjRef[],
+    attrFilters: IDashboardAttributeFilter[],
+    loading: boolean,
+) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -52,7 +63,7 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjR
             promise: () => {
                 const dateAttribute = dateAttributeFinder(definition?.dateAttribute);
 
-                if (!definition || !dateAttribute) {
+                if (!definition || !dateAttribute || loading) {
                     return Promise.resolve(undefined);
                 }
 
@@ -63,6 +74,7 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjR
                         return attr ? newAttribute(ref) : null;
                     })
                     .filter(Boolean) as IAttribute[];
+                const filters = attrFilters.map(dashboardAttributeFilterToAttributeFilter);
 
                 return backend
                     .workspace(workspace)
@@ -71,8 +83,8 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjR
                         {
                             measure: definition.metric,
                             auxMeasures: definition.metrics,
-                            attributes: attributes,
-                            filters: [], //TODO: Implement filters
+                            attributes,
+                            filters,
                         },
                         {
                             dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
@@ -83,7 +95,7 @@ function useChangeAnalysisResults(definition: IKdaDefinition | null, attrs: ObjR
                     );
             },
         },
-        [backend, definition, attrs, workspace, from, to],
+        [backend, definition, attrs, workspace, from, to, loading, attrFilters],
     );
 }
 

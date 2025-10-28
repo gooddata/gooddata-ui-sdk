@@ -8,10 +8,10 @@ import { IWidget, isAttributeMetadataObject, objRefToString } from "@gooddata/sd
 
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { getAttributeByDisplayForm } from "./utils.js";
+import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 import {
     selectAllCatalogAttributesMap,
-    selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -22,7 +22,7 @@ interface IAttributeFilterConfigurationProps {
 
 export function AttributeFilterConfiguration({ widget }: IAttributeFilterConfigurationProps) {
     const attributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
-    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
 
     const displayForms = useMemo(() => {
@@ -42,7 +42,7 @@ export function AttributeFilterConfiguration({ widget }: IAttributeFilterConfigu
     return (
         <div className="s-attribute-filter-configuration">
             {attributeFilters.map((filter) => {
-                const displayForm = dfMap.get(filter.attributeFilter.displayForm);
+                const displayForm = getAttributeFilterDisplayFormFromMap(filter.attributeFilter.displayForm);
                 invariant(displayForm, "Inconsistent state in AttributeFilterConfiguration");
 
                 const attributeByDisplayForm = getAttributeByDisplayForm(attributes, displayForm.attribute);

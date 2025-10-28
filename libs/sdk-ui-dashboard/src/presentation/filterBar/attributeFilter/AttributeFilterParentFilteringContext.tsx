@@ -24,9 +24,9 @@ import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/h
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import {
     selectAllCatalogDisplayFormsMap,
-    selectAttributeFilterDisplayFormsMap,
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectOtherContextAttributeFilters,
@@ -120,9 +120,8 @@ export function AttributeFilterParentFilteringProvider({
     );
 
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-
-    const attributeFilterDisplayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
-    const filterDisplayForm = attributeFilterDisplayFormsMap.get(currentFilter.attributeFilter.displayForm);
+    const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
+    const filterDisplayForm = getAttributeFilterDisplayFormFromMap(currentFilter.attributeFilter.displayForm);
     invariant(filterDisplayForm);
 
     const attributeByDisplayForm = memoizedAttributes.find((attribute) =>

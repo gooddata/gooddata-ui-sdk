@@ -2727,6 +2727,22 @@
         "value": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart.",
         "comment": "Success message shown when cross filters are applied from a chart visualization."
     },
+    "kdaDialog.dialog.filters.title": {
+        "value": "Filters",
+        "comment": "Filters title in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.filters.noFilters": {
+        "value": "No filters",
+        "comment": "No filters message in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.filters.add.tooltip": {
+        "value": "Add filter",
+        "comment": "Add filter tooltip in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.filters.search": {
+        "value": "Search",
+        "comment": "Search placeholder in key driver analysis dialog"
+    },
     "kdaDialog.dialog.title": {
         "value": "Key driver analysis for {metric}",
         "comment": "Dialog title for key driver analysis"
