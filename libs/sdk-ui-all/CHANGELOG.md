@@ -1,6 +1,35 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 23 Oct 2025 07:42:08 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Oct 2025 08:25:43 GMT and should not be manually modified.
+
+## 11.7.0
+
+Thu, 30 Oct 2025 08:25:43 GMT
+
+### Updates
+
+- sdk-model: Add `isHidden` property to metadata objects.
+- sdk-backend-tiger: Added support for reading and writing the `isHidden` property on metadata objects.
+- sdk-ui-catalog: Introduce UI toggle for hiding objects from AI results
+- api-client-tiger: Update generated client.
+- sdk-model: Add `status` field to `ISemanticQualityReport` in order to track the status of the quality report calculation.
+- sdk-backend-tiger: Add `AbortSignal` support to semantic quality service `getQualityReport` method.
+- sdk-ui-catalog: Tweak the quality score card date display to show only the year, month, and day to prevent overly long date strings.
+- sdk-backend: Add `isHidden` filter support to backend metadata queries.
+- sdk-ui-catalog: Add support for AI visibility filtering.
+- adding data-testid for some elements
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-dashboard]: Use filters from dashboard and also drill (apply filter) on graph click
+- [sdk-ui-dashboard]: fix error that appears when drilling into some drivers
+- [sdk-ui-dashboard]: blank page appears when clicking on certain data points
+- fix: Make menu items properly selectable to align with ARIA
+- fix: Display focus outline on the "Only" filter option in Safari
+- fix: Do not leak arrow key event from new filter creation popup
+- sdk-ui-gen-ai: Fix AG grid token propagation for the new pivot table
+- [home-ui]: Improving AI Memory UI
+- [sdk-ui-kit] Ability to specify to the header menu item use the starting path to check if the item is active.
 
 ## 11.6.0
 
