@@ -32,6 +32,11 @@ export interface InitializeDashboardPayload {
      * @internal
      */
     readonly persistedDashboard?: IDashboard;
+    /**
+     * Explicitly specify which tab should be opened first. This overrides the dashboard's persisted activeTabId.
+     * @alpha
+     */
+    readonly initialTabId?: string;
 }
 
 /**
@@ -77,6 +82,7 @@ export function initializeDashboard(
     config?: DashboardConfig,
     permissions?: IWorkspacePermissions,
     correlationId?: string,
+    initialTabId?: string,
 ): InitializeDashboard {
     return {
         type: "GDC.DASH/CMD.INITIALIZE",
@@ -84,6 +90,7 @@ export function initializeDashboard(
         payload: {
             config,
             permissions,
+            initialTabId,
         },
     };
 }
@@ -116,6 +123,7 @@ export function initializeDashboard(
  *  different from the dashboard param
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param initialTabId - specify the initial tab to open when the dashboard is loaded
  *
  * @internal
  */
@@ -124,6 +132,7 @@ export function initializeDashboardWithPersistedDashboard(
     permissions?: IWorkspacePermissions,
     persistedDashboard?: IDashboard,
     correlationId?: string,
+    initialTabId?: string,
 ): InitializeDashboard {
     return {
         type: "GDC.DASH/CMD.INITIALIZE",
@@ -132,6 +141,7 @@ export function initializeDashboardWithPersistedDashboard(
             config,
             permissions,
             persistedDashboard,
+            initialTabId,
         },
     };
 }

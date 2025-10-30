@@ -23,6 +23,7 @@ export interface IDashboardStoreProviderProps {
     dashboard?: ObjRef | IDashboard;
     persistedDashboard?: IDashboard;
     filterContextRef?: ObjRef;
+    initialTabId?: string;
     eventHandlers?: DashboardEventHandler[];
     config?: DashboardConfig;
     permissions?: IWorkspacePermissions;

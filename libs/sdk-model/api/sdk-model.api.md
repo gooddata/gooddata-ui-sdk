@@ -1315,6 +1315,7 @@ export type ICustomSmtpDestinationConfiguration = {
 
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+    readonly activeTabId?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
@@ -1327,6 +1328,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    readonly tabs?: IDashboardTab<TWidget>[];
     // (undocumented)
     readonly type: "IDashboard";
 }
@@ -1434,6 +1436,7 @@ export interface IDashboardDateFilterReference {
 
 // @alpha
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
+    readonly activeTabId?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
@@ -1445,6 +1448,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    readonly tabs?: IDashboardTab<TWidget>[];
     // (undocumented)
     readonly type: "IDashboard";
 }
@@ -1589,6 +1593,17 @@ export interface IDashboardPluginLink {
     readonly plugin: ObjRef;
     // (undocumented)
     readonly type: "IDashboardPluginLink";
+}
+
+// @alpha
+export interface IDashboardTab<TWidget = IDashboardWidget> {
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+    filterContext: IFilterContext | ITempFilterContext;
+    identifier: string;
+    layout?: IDashboardLayout<TWidget>;
+    title: string;
 }
 
 // @public
@@ -3432,6 +3447,9 @@ export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboa
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
 
 // @alpha
+export function isDashboardTab(obj: unknown): obj is IDashboardTab;
+
+// @alpha
 export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
 
 // @public
@@ -3501,6 +3519,7 @@ export interface ISemanticQualityIssuesCalculation {
 // @internal
 export interface ISemanticQualityReport {
     issues: ISemanticQualityIssue[];
+    status: SemanticQualityIssuesCalculationStatus;
     updatedAt: string | undefined;
 }
 
@@ -3581,6 +3600,7 @@ export interface ISettings {
     enableDashboardFilterViews?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
+    enableDashboardTabs?: boolean;
     enableDashboardTabularExport?: boolean;
     // (undocumented)
     enableDataSection?: boolean;

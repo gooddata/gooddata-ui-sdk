@@ -69,5 +69,6 @@ export interface ICatalogItemQueryOptions {
     id?: string[];
     createdBy?: string[];
     tags?: string[];
+    isHidden?: boolean;
     pageSize?: number;
 }

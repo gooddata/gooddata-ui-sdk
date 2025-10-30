@@ -22,7 +22,7 @@ import {
  * Converts the full quality issues response from backend format to SDK model format.
  */
 export function convertQualityReportResponse(response: AfmGetQualityIssuesResponse): ISemanticQualityReport {
-    const { issues = [], updatedAt } = response;
+    const { issues = [], updatedAt, status } = response;
     return {
         issues: issues
             .map(convertQualityIssue)
@@ -33,6 +33,7 @@ export function convertQualityReportResponse(response: AfmGetQualityIssuesRespon
                     (SeverityOrder[a.severity] ?? SeverityOrder.INFO),
             ),
         updatedAt,
+        status,
     };
 }
 

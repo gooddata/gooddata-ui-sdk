@@ -116,8 +116,6 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
 
     isFocused: boolean;
 
-    onSelect: (e: MouseEvent | KeyboardEvent) => void;
-
     size?: SizeSmall | SizeMedium;
 }
 
@@ -141,7 +139,6 @@ export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
 export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
     isFocused: boolean;
-    onSelect: (e: MouseEvent | KeyboardEvent) => void;
 }
 
 /**

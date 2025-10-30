@@ -1403,13 +1403,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const filterContextByExport = exportId
             ? await this.getFilterContextByExportId(exportId, type)
-            : undefined;
+            : undefined; // TODO INE: handle this external filters with tabbed dashboard
 
         return {
             filterContext:
                 filterContextByExport?.filterContext ||
                 filterContextByRef ||
-                getFilterContextFromIncluded(includedFilterContext),
+                getFilterContextFromIncluded(includedFilterContext), // TODO INE: it returns always first filterContext from included, which will not always work with tabs
             title: filterContextByExport?.title,
             hideWidgetTitles: filterContextByExport?.hideWidgetTitles,
         };

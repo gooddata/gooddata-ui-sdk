@@ -27,7 +27,7 @@ function createBubbleDataPoint(
         x: primaryMeasuresBucketEmpty ? 0 : parseValue(resData[0]),
         y: secondaryMeasuresBucketEmpty ? 0 : parseValue(resData[1 - emptyBucketsCount]),
         // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
-        z: parseFloat(resData[2 - emptyBucketsCount]),
+        z: Number(parseFloat(resData[2 - emptyBucketsCount]).toFixed(5)),
         format: unwrap(measureGroup.items.at(-1)).format, // only for dataLabel format
         name: stackByAttribute
             ? valueWithEmptyHandling(

@@ -88,12 +88,13 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
             aria-disabled={item.isDisabled}
             onMouseMove={handleMouseFocus}
+            onClick={item.isDisabled ? undefined : handleSelect}
             tabIndex={-1}
             id={makeItemId(item)}
             className={classNames}
             data-testid={dataTestId}
         >
-            <InteractiveItemComponent item={item} isFocused={isFocused} onSelect={handleSelect} />
+            <InteractiveItemComponent item={item} isFocused={isFocused} />
         </li>
     );
 }
@@ -104,7 +105,6 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
-    onSelect,
     size = "medium",
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
     return (
@@ -115,7 +115,6 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
                 isDisabled: !!item.isDisabled,
                 size,
             })}
-            onClick={onSelect}
         >
             {item.iconLeft ? item.iconLeft : null}
             <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>

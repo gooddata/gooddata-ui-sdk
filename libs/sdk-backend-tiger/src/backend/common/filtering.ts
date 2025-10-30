@@ -35,6 +35,12 @@ export function buildFilterQuery(filter: IFilterBaseOptions) {
     if (filter.tags && filter.tags.length > 0) {
         filters.push(`tags=in=(${formatInValues(filter.tags)})`);
     }
+    if (filter.isHidden === true) {
+        filters.push(`isHidden==true`);
+    }
+    if (filter.isHidden === false) {
+        filters.push(`isHidden==false,isHidden=isnull=true`);
+    }
 
     // Join all filters if any
     if (filters.length > 0) {

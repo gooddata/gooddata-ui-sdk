@@ -18,6 +18,7 @@ import {
     FilterOriginMemo,
     FilterQualityMemo,
     FilterTagsMemo,
+    FilterVisibilityMemo,
     useFilterActions,
 } from "../filter/index.js";
 import { useFeatureFlag } from "../permission/index.js";
@@ -68,6 +69,7 @@ export function Main({
                     <FilterOriginMemo />
                 </FilterOriginGuard>
                 {isQualityEnabled ? <FilterQualityMemo /> : null}
+                <FilterVisibilityMemo />
             </header>
             <CatalogItemFeed backend={backend} workspace={workspace}>
                 {({ items, next, hasNext, totalCount, status, updateItem }) => (

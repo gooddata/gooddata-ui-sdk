@@ -554,6 +554,10 @@ $attribute-filter-drag-handle-left: 10px;
             }
         }
     }
+
+    .gd-filter-views-button__label {
+        text-decoration: underline;
+    }
 }
 
 .gd-button-primary.gd-filter-views-button--open {

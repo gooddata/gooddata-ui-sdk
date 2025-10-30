@@ -16,10 +16,10 @@ import { useDrillAttributeHandler } from "../composition/hooks/useDrillAttribute
 export interface KdaKeyDriverChartProps {
     config: IChartConfig | null;
     dataView: IDataView | null;
-    attribute?: ObjRef | null;
+    displayForm?: ObjRef | null;
 }
 
-export function KdaKeyDriverChart({ config, dataView, attribute }: KdaKeyDriverChartProps) {
+export function KdaKeyDriverChart({ config, dataView, displayForm }: KdaKeyDriverChartProps) {
     const intl = useIntl();
     const theme = useTheme();
 
@@ -36,7 +36,7 @@ export function KdaKeyDriverChart({ config, dataView, attribute }: KdaKeyDriverC
                     height={height}
                     config={config}
                     dataView={dataView}
-                    drillableItems={attribute ? [attribute] : []}
+                    drillableItems={displayForm ? [displayForm] : []}
                     onDrill={onDrillCallback}
                     onLegendReady={noop}
                     afterRender={noop}

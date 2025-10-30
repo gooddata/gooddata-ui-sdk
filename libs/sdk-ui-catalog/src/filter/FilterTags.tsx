@@ -38,7 +38,11 @@ export function FilterTags({ backend, workspace }: Props) {
     const options = useMemo(() => sortTags(result?.tags), [result?.tags]);
 
     if (status === "loading" || status === "pending") {
-        return <UiSkeleton itemsCount={1} itemWidth={92} itemHeight={27} itemBorderRadius={4} />;
+        return (
+            <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
+                <UiSkeleton itemsCount={1} itemWidth={54} itemHeight={27} itemBorderRadius={4} />
+            </FilterGroupLayout>
+        );
     }
 
     if (status === "error") {

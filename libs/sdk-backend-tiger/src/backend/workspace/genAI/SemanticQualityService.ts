@@ -24,9 +24,12 @@ export class SemanticQualityService implements ISemanticQualityService {
      *
      * Issues are sorted by severity (ERROR, WARNING, INFO).
      */
-    async getQualityReport(): Promise<ISemanticQualityReport> {
+    async getQualityReport(options?: { signal?: AbortSignal }): Promise<ISemanticQualityReport> {
         const response = await this.authCall((client) => {
-            return client.genAI.getQualityIssues({ workspaceId: this.workspaceId });
+            return client.genAI.getQualityIssues(
+                { workspaceId: this.workspaceId },
+                { signal: options?.signal },
+            );
         });
 
         return convertQualityReportResponse(response.data);

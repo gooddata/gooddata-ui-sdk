@@ -793,6 +793,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "NUMBER",
             FeatureFlagsValues.aiChatSearchLimit,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardTabs,
+            "enableDashboardTabs",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardTabs,
+        ),
     };
 }
 

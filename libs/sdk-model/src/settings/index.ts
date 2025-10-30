@@ -582,6 +582,11 @@ export interface ISettings {
      */
     registeredPluggableApplications?: string;
 
+    /**
+     * Enable dashboard tabs feature
+     */
+    enableDashboardTabs?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

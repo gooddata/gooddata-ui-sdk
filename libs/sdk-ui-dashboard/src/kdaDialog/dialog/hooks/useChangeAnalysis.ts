@@ -124,7 +124,7 @@ function useKdaStateWithList(
                 attributes.push(attribute);
             }
             if (attribute && metric && from && to) {
-                return createKdaItem(metric, attribute, keyDriver, i, from, to, separators);
+                return createKdaItem(metric, attribute, ref, keyDriver, i, from, to, separators);
             }
             return null;
         }
@@ -152,6 +152,7 @@ function useKdaStateWithList(
 function createKdaItem(
     metric: IMeasure,
     attribute: ICatalogAttribute,
+    displayForm: ObjRef,
     driver: IKeyDriver,
     i: number,
     from: string,
@@ -167,6 +168,7 @@ function createKdaItem(
         data: {
             id,
             attribute: attribute.defaultDisplayForm.ref,
+            displayForm: displayForm,
             title: attribute.attribute.title,
             description: attribute.attribute.description,
             category: driver.value,

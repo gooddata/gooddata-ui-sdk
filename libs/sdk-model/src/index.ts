@@ -843,6 +843,7 @@ export type {
     SharePermission,
     IDashboardPermissions,
     IExistingDashboard,
+    IDashboardTab,
 } from "./dashboard/dashboard.js";
 export {
     DashboardDateFilterConfigModeValues,
@@ -850,6 +851,7 @@ export {
     isDashboard,
     isDashboardDefinition,
     isListedDashboard,
+    isDashboardTab,
 } from "./dashboard/dashboard.js";
 
 export type {

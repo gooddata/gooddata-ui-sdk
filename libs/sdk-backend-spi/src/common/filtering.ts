@@ -30,4 +30,9 @@ export interface IFilterBaseOptions {
      * @beta
      */
     tags?: string[];
+    /**
+     * Resource is hidden.
+     * @beta
+     */
+    isHidden?: boolean;
 }

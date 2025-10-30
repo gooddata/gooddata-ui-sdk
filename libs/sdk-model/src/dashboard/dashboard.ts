@@ -131,6 +131,52 @@ export interface IDashboardDateFilterConfigItem {
 }
 
 /**
+ * Dashboard tab definition.
+ *
+ * @remarks
+ * Each tab can have its own layout and its own filter context. Tabs are optional and
+ * dashboards without tabs continue to work using the root layout and filter context.
+ *
+ * @alpha
+ */
+export interface IDashboardTab<TWidget = IDashboardWidget> {
+    /**
+     * Unique identifier of the tab (stable within dashboard).
+     */
+    identifier: string;
+
+    /**
+     * Display title of the tab.
+     */
+    title: string;
+
+    /**
+     * Complete layout definition for this tab.
+     */
+    layout?: IDashboardLayout<TWidget>;
+
+    /**
+     * Tab-specific filter context.
+     */
+    filterContext: IFilterContext | ITempFilterContext;
+
+    /**
+     * Dashboard tab common date filter config
+     */
+    dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Dashboard tab date filters with date data set/dimension configs
+     */
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+
+    /**
+     * Dashboard extended attribute filter configs
+     */
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+}
+
+/**
  * Dashboard common properties
  * @alpha
  */
@@ -349,6 +395,21 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Override the default evaluation frequency for the dashboard.
      */
     readonly evaluationFrequency?: string;
+
+    /**
+     * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.
+     * Each tab has its own layout, filter context and filter configs.
+     *
+     * @alpha
+     */
+    readonly tabs?: IDashboardTab<TWidget>[];
+
+    /**
+     * Identifier of the active tab for persistence purposes.
+     *
+     * @alpha
+     */
+    readonly activeTabId?: string;
 }
 
 /**
@@ -416,6 +477,21 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Evaluation frequency of alerts for the dashboard.
      */
     readonly evaluationFrequency?: string;
+
+    /**
+     * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.
+     * Each tab has its own layout, filter context and filter configs.
+     *
+     * @alpha
+     */
+    readonly tabs?: IDashboardTab<TWidget>[];
+
+    /**
+     * Identifier of the active tab for persistence purposes.
+     *
+     * @alpha
+     */
+    readonly activeTabId?: string;
 }
 
 /**
@@ -512,6 +588,23 @@ export function isListedDashboard(obj: unknown): obj is IListedDashboard {
     const asDash: IListedDashboard | undefined = obj as IListedDashboard;
 
     return !isEmpty(asDash) && asDash.availability !== undefined && asDash.ref !== undefined;
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardTab}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isDashboardTab(obj: unknown): obj is IDashboardTab {
+    const asTab = obj as IDashboardTab;
+
+    return (
+        !isEmpty(asTab) &&
+        typeof asTab.identifier === "string" &&
+        typeof asTab.title === "string" &&
+        asTab.filterContext !== undefined
+    );
 }
 
 /**

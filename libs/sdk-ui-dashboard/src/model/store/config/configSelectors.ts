@@ -925,3 +925,12 @@ export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createS
         return Boolean(state.settings?.enableAccessibilityMode) ?? false;
     },
 );
+
+/**
+ * Returns whether dashboard tabs feature is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardTabs: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableDashboardTabs ?? false;
+});

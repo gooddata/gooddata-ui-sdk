@@ -79,11 +79,8 @@ const createSeparator = (id: string): IUiMenuItem<IAttributeMenuData> => ({
 export function CustomInteractiveItem({
     item,
     isFocused,
-    onSelect,
 }: IUiMenuInteractiveItemProps<IAttributeMenuData>): ReactNode {
-    return (
-        <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} onSelect={onSelect} size="small" />
-    );
+    return <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} size="small" />;
 }
 
 function CustomStaticItem({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): ReactNode {

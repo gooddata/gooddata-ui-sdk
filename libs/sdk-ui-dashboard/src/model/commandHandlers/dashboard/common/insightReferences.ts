@@ -1,7 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
+    IDashboard,
     IDashboardLayout,
+    IWidget,
     ObjRef,
     isDrillToInsight,
     isInsightWidget,
@@ -50,5 +53,41 @@ export function insightReferences(layout?: IDashboardLayout): ObjRef[] {
             },
         });
     }
+    return insightRefsFromWidgets;
+}
+
+/**
+ * Extracts insight references from a dashboard, including all tabs if present.
+ */
+export function insightReferencesFromDashboard(dashboard: IDashboard): ObjRef[] {
+    const insightRefsFromWidgets: ObjRef[] = [];
+
+    const collectInsightRefs = (widget: any) => {
+        if (isInsightWidget(widget)) {
+            insightRefsFromWidgets.push(...getReferencesFromInsightWidget(widget));
+        }
+        if (isVisualizationSwitcherWidget(widget)) {
+            insightRefsFromWidgets.push(...getReferencesFromVisualizationSwitcherWidget(widget));
+        }
+    };
+
+    // Walk through tabs if they exist
+    if (dashboard.tabs && dashboard.tabs.length > 0) {
+        dashboard.tabs.forEach((tab) => {
+            if (tab.layout) {
+                walkLayout(tab.layout as IDashboardLayout<IWidget>, {
+                    widgetCallback: collectInsightRefs,
+                });
+            }
+        });
+    }
+
+    // Also walk through root layout for backwards compatibility
+    if (dashboard.layout) {
+        walkLayout(dashboard.layout as IDashboardLayout<IWidget>, {
+            widgetCallback: collectInsightRefs,
+        });
+    }
+
     return insightRefsFromWidgets;
 }

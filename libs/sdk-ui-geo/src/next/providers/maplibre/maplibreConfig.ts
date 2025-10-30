@@ -100,7 +100,7 @@ export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
     // Disable infinite geochart scrolling
     // maxBounds: VIEWPORTS["world"] as LngLatBoundsLike,
     // The maximum zoom level of the map (0-24).
-    maxZoom: 14,
+    maxZoom: 8,
     // If false, the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.
     pitchWithRotate: false,
     // Disable infinite geochart scrolling

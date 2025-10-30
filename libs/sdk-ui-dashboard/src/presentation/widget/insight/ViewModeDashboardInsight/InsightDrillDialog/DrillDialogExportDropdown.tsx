@@ -26,7 +26,7 @@ import {
     useDrillDialogExportItems,
 } from "./useDrillDialogExportItems.js";
 
-function InteractiveItemWithIcon({ item, isFocused, onSelect }: IUiMenuInteractiveItemProps<IMenuItemData>) {
+function InteractiveItemWithIcon({ item, isFocused }: IUiMenuInteractiveItemProps<IMenuItemData>) {
     return (
         <div
             className={cx("gd-ui-kit-menu__item", "gd-ui-kit-menu__item--size-medium", {
@@ -34,7 +34,6 @@ function InteractiveItemWithIcon({ item, isFocused, onSelect }: IUiMenuInteracti
                 "gd-ui-kit-menu__item--isSelected": !!item.isSelected,
                 "gd-ui-kit-menu__item--isDisabled": !!item.isDisabled,
             })}
-            onClick={onSelect}
         >
             <UiIcon type={item.data.icon} />
             <ShortenedText className="gd-ui-kit-menu-item-title" ellipsisPosition="end">

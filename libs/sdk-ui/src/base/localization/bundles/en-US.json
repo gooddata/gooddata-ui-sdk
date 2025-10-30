@@ -3079,6 +3079,14 @@
         "value": "Check the spelling or adjust filters.",
         "comment": "Suggestion text shown when no items match the current filters or search"
     },
+    "tabs.all": {
+        "value": "All",
+        "comment": "Label for the overflow dropdown button in tabs component. When clicked, shows all available tabs in a dropdown list."
+    },
+    "tabs.showAllTabs": {
+        "value": "Show all tabs",
+        "comment": "Accessibility label for the overflow dropdown button in tabs component. Used by screen readers to describe the action of opening a dropdown with all available tabs."
+    },
     "messages.accessibility.noMessages": {
         "value": "No messages",
         "comment": "Accessibility label for the empty state of the message list. Used by screen readers."

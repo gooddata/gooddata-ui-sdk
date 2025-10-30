@@ -538,14 +538,11 @@ function AppHeaderCore({
                     tabIndex={0}
                     className="hamburger-wrapper"
                     key="hamburger-wrapper"
+                    onClick={() => {
+                        setOverlayMenu(!state.isOverlayMenuOpen);
+                    }}
                 >
-                    <div
-                        className={iconClasses}
-                        key="hamburger-icon"
-                        onClick={() => {
-                            setOverlayMenu(!state.isOverlayMenuOpen);
-                        }}
-                    >
+                    <div className={iconClasses} key="hamburger-icon">
                         <i />
                     </div>
                 </div>

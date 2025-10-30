@@ -121,6 +121,7 @@ export enum TigerFeaturesNames {
     EnableFilterAccessibility = "enableFilterAccessibility",
     EnableGenAIMemory = "enableGenAIMemory",
     AIChatSearchLimit = "aiChatSearchLimit",
+    EnableDashboardTabs = "enableDashboardTabs",
 }
 
 export type ITigerFeatureFlags = {
@@ -235,6 +236,7 @@ export type ITigerFeatureFlags = {
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
+    enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -349,6 +351,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFilterAccessibility: false,
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
+    enableDashboardTabs: false,
 };
 
 export const FeatureFlagsValues = {
@@ -464,4 +467,5 @@ export const FeatureFlagsValues = {
     enableFilterAccessibility: [false, true] as const,
     enableGenAIMemory: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
+    enableDashboardTabs: [true, false] as const,
 };

@@ -12,10 +12,17 @@ export interface ISemanticQualityReport {
      * List of quality issues detected in the workspace metadata.
      */
     issues: ISemanticQualityIssue[];
+
     /**
      * Timestamp when the quality issue report was last updated (ISO format)
      */
     updatedAt: string | undefined;
+
+    /**
+     * Current status of the quality report calculation.
+     * The report can return the previous issues while a new calculation is in progress.
+     */
+    status: SemanticQualityIssuesCalculationStatus;
 }
 
 /**

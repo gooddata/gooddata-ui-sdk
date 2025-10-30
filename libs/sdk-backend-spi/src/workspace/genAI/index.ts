@@ -264,7 +264,7 @@ export interface ISemanticQualityService {
     /**
      * Returns a report of quality issues detected in the workspace metadata.
      */
-    getQualityReport(): Promise<ISemanticQualityReport>;
+    getQualityReport(options?: { signal?: AbortSignal }): Promise<ISemanticQualityReport>;
 
     /**
      * Triggers asynchronous calculation of metadata quality issues.

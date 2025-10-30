@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { uniqBy } from "lodash-es";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -7,8 +8,10 @@ import { SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
 import { IDashboardWithReferences, IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     IDashboard,
+    IDashboardLayout,
     IDateHierarchyTemplate,
     IInsight,
+    IWidget,
     ObjRef,
     areObjRefsEqual,
     isDrillToInsight,
@@ -118,37 +121,54 @@ async function loadInsightsForPersistedDashboard(
     ctx: DashboardContext,
     dashboard: IDashboard | undefined,
 ): Promise<IInsight[]> {
-    if (!dashboard?.layout) {
+    if (!dashboard) {
         return [];
     }
 
     const { backend, workspace } = ctx;
 
     const referencedInsights: ObjRef[] = [];
-    walkLayout(dashboard.layout, {
-        widgetCallback: (widget) => {
-            if (isInsightWidget(widget)) {
-                referencedInsights.push(
-                    // insight itself
-                    widget.insight,
-                    // insights in drills to insight
-                    ...widget.drills.filter(isDrillToInsight).map((drill) => drill.target),
-                );
-            }
-            if (isVisualizationSwitcherWidget(widget)) {
-                widget.visualizations.forEach((vis) => {
-                    if (isInsightWidget(vis)) {
-                        referencedInsights.push(
-                            // insight itself
-                            vis.insight,
-                            // insights in drills to insight
-                            ...vis.drills.filter(isDrillToInsight).map((drill) => drill.target),
-                        );
-                    }
+
+    const collectInsightsFromWidget = (widget: IWidget) => {
+        if (isInsightWidget(widget)) {
+            referencedInsights.push(
+                // insight itself
+                widget.insight,
+                // insights in drills to insight
+                ...widget.drills.filter(isDrillToInsight).map((drill) => drill.target),
+            );
+        }
+        if (isVisualizationSwitcherWidget(widget)) {
+            widget.visualizations.forEach((vis) => {
+                if (isInsightWidget(vis)) {
+                    referencedInsights.push(
+                        // insight itself
+                        vis.insight,
+                        // insights in drills to insight
+                        ...vis.drills.filter(isDrillToInsight).map((drill) => drill.target),
+                    );
+                }
+            });
+        }
+    };
+
+    // Walk through tabs if they exist
+    if (dashboard.tabs && dashboard.tabs.length > 0) {
+        dashboard.tabs.forEach((tab) => {
+            if (tab.layout) {
+                walkLayout(tab.layout as IDashboardLayout<IWidget>, {
+                    widgetCallback: collectInsightsFromWidget,
                 });
             }
-        },
-    });
+        });
+    }
+
+    // Also walk through root layout for backwards compatibility or when tabs are not used
+    if (dashboard.layout) {
+        walkLayout(dashboard.layout as IDashboardLayout<IWidget>, {
+            widgetCallback: collectInsightsFromWidget,
+        });
+    }
 
     const uniqueRefs = uniqBy(referencedInsights, serializeObjRef);
 
@@ -230,6 +250,7 @@ function* loadExistingDashboard(
         effectiveDateFilterConfig.config,
         createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
+        cmd.payload.initialTabId,
     );
 
     const catalogPayload = {
@@ -319,6 +340,7 @@ function* initializeNewDashboard(
             config.settings,
             config.dateFilterConfig,
             catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
+            cmd.payload.initialTabId,
         );
 
     const batch: BatchAction = batchActions(

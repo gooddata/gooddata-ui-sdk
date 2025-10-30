@@ -58,6 +58,12 @@ export const useDrillSelectDropdownMenuItems = ({
                 type: "interactive" as const,
                 id: `${groupId}-${index}`,
                 stringTitle: item.name,
+                ariaAttributes: {
+                    "aria-haspopup":
+                        item.type === DrillType.DRILL_TO_INSIGHT || item.type === DrillType.DRILL_DOWN
+                            ? "dialog"
+                            : undefined,
+                },
                 data: {
                     type: item.type,
                     name: item.name,

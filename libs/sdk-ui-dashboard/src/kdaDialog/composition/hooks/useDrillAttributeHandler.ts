@@ -66,7 +66,7 @@ export function useDrillAttributeHandler() {
                 setState({
                     attributeFilters: [
                         ...state.attributeFilters,
-                        createNewAttributeFilter(catalogAttribute, id, value),
+                        createNewAttributeFilter(catalogAttribute, attribute.attributeHeader.ref, id, value),
                     ],
                 });
             }

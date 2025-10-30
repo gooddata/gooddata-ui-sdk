@@ -17,7 +17,13 @@ export function useSummaryDrivers() {
         const groups = state.items.reduce<Record<string, KdaItemGroup>>((prev, { data }) => {
             const ref = objRefToString(data.attribute);
             if (!prev[ref]) {
-                prev[ref] = createKdaGroup(ref, data.attribute, data.title, data.description);
+                prev[ref] = createKdaGroup(
+                    ref,
+                    data.attribute,
+                    data.displayForm,
+                    data.title,
+                    data.description,
+                );
             }
             if (data.isSignificant) {
                 prev[ref].significantDrivers.push(data);
@@ -35,6 +41,7 @@ export function useSummaryDrivers() {
                     prev[ref] = createKdaGroup(
                         ref,
                         current,
+                        attribute.defaultDisplayForm,
                         attribute.attribute.title,
                         attribute.attribute.description,
                     );
@@ -49,12 +56,19 @@ export function useSummaryDrivers() {
     }, [state.items, attributeFinder, state.selectedAttributes]);
 }
 
-function createKdaGroup(id: string, attribute: ObjRef, title: string, description: string): KdaItemGroup {
+function createKdaGroup(
+    id: string,
+    attribute: ObjRef,
+    displayForm: ObjRef,
+    title: string,
+    description: string,
+): KdaItemGroup {
     return {
         id,
         significantDrivers: [],
         allDrivers: [],
         attribute,
+        displayForm,
         title,
         description,
     };

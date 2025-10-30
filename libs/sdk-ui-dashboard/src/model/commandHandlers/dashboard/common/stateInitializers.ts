@@ -12,14 +12,19 @@ import {
     IDashboard,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
+    IDashboardDateFilterConfig,
+    IDashboardDateFilterConfigItem,
     IDashboardLayout,
     IDashboardObjectIdentity,
+    IDashboardTab,
     IDashboardWidget,
     IDataSetMetadataObject,
     IDateFilterConfig,
+    IFilterContext,
     IFilterContextDefinition,
     IInsight,
     ISettings,
+    ITempFilterContext,
     IWidget,
     ObjRef,
     areObjRefsEqual,
@@ -51,6 +56,7 @@ import { insightsActions } from "../../../store/insights/index.js";
 import { layoutActions } from "../../../store/layout/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { uiActions } from "../../../store/ui/index.js";
 import {
     DashboardContext,
@@ -74,11 +80,58 @@ import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  */
+/**
+ * Helper function to extract effective layout, filter context, and filter configs from a dashboard.
+ * If the dashboard has tabs, it uses the active tab (or first tab) instead of root-level properties.
+ */
+function getEffectiveDashboardProperties<TWidget>(
+    dashboard: IDashboard<TWidget>,
+    enableDashboardTabs: boolean,
+    initialTabId?: string,
+): {
+    layout: IDashboardLayout<TWidget> | undefined;
+    filterContext: IFilterContext | ITempFilterContext | undefined;
+    dateFilterConfig: IDashboardDateFilterConfig | undefined;
+    dateFilterConfigs: IDashboardDateFilterConfigItem[] | undefined;
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined;
+} {
+    // If dashboard has tabs and feature flag is enabled, use the active tab (or first tab) instead of root properties
+    if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
+        // Priority: initialTabId > activeTabId > first tab
+        const targetTabId = initialTabId ?? dashboard.activeTabId;
+        const activeTab: IDashboardTab<TWidget> | undefined = targetTabId
+            ? dashboard.tabs.find((tab) => tab.identifier === targetTabId)
+            : undefined;
+        const effectiveTab = activeTab ?? dashboard.tabs[0];
+
+        return {
+            layout: effectiveTab.layout,
+            filterContext: effectiveTab.filterContext,
+            dateFilterConfig: effectiveTab.dateFilterConfig,
+            dateFilterConfigs: effectiveTab.dateFilterConfigs,
+            attributeFilterConfigs: effectiveTab.attributeFilterConfigs,
+        };
+    }
+
+    if (!dashboard.layout && !dashboard.filterContext) {
+        console.error("Dashboard has no layout or filter context");
+    }
+    // No tabs or feature flag disabled - use root-level properties
+    return {
+        layout: dashboard.layout,
+        filterContext: dashboard.filterContext,
+        dateFilterConfig: dashboard.dateFilterConfig,
+        dateFilterConfigs: dashboard.dateFilterConfigs,
+        attributeFilterConfigs: dashboard.attributeFilterConfigs,
+    };
+}
+
 export function* actionsToInitializeNewDashboard(
     ctx: DashboardContext,
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    initialTabId?: string,
 ): SagaIterator<{
     initActions: Array<PayloadAction<any>>;
     dashboard: IDashboard | undefined;
@@ -96,6 +149,25 @@ export function* actionsToInitializeNewDashboard(
         initialContent,
     } = yield call(actionsToInitializeOrFillNewDashboard, ctx, settings, dateFilterConfig, displayForms);
 
+    // Check if dashboard tabs feature is enabled
+    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
+
+    // Extract effective properties from active/first tab if tabs are present and feature is enabled
+    const effectiveProps = dashboard
+        ? getEffectiveDashboardProperties(dashboard, enableDashboardTabs, initialTabId)
+        : undefined;
+
+    // Prepare tabs action if tabs exist and feature is enabled
+    const tabsAction =
+        enableDashboardTabs && dashboard?.tabs
+            ? [
+                  tabsActions.setTabs({
+                      tabs: dashboard.tabs,
+                      activeTabId: initialTabId ?? dashboard.activeTabId,
+                  }),
+              ]
+            : [];
+
     return {
         initActions: [
             filterContextActions.setFilterContext({
@@ -105,6 +177,7 @@ export function* actionsToInitializeNewDashboard(
                 attributeFilterDisplayForms,
             }),
             layoutActions.setLayout(dashboardLayout),
+            ...tabsAction,
             ...(dashboard
                 ? [
                       metaActions.setMeta({
@@ -112,11 +185,11 @@ export function* actionsToInitializeNewDashboard(
                           initialContent,
                       }),
                       attributeFilterConfigsActions.setAttributeFilterConfigs({
-                          attributeFilterConfigs: dashboard.attributeFilterConfigs,
+                          attributeFilterConfigs: effectiveProps!.attributeFilterConfigs,
                       }),
-                      dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
+                      dateFilterConfigActions.updateDateFilterConfig(effectiveProps!.dateFilterConfig!),
                       dateFilterConfigsActions.setDateFilterConfigs({
-                          dateFilterConfigs: dashboard.dateFilterConfigs,
+                          dateFilterConfigs: effectiveProps!.dateFilterConfigs,
                       }),
                       metaActions.setDashboardTitle(dashboard.title),
                       uiActions.clearWidgetSelection(),
@@ -182,11 +255,19 @@ function* actionsToInitializeOrFillNewDashboard(
           ) as IDashboard<ExtendedDashboardWidget>)
         : undefined;
 
+    // Check if dashboard tabs feature is enabled
+    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
+
+    // Extract effective properties from active/first tab if tabs are present and feature is enabled
+    const effectiveProps = dashboard
+        ? getEffectiveDashboardProperties(dashboard, enableDashboardTabs, undefined)
+        : undefined;
+
     const sanitizedFilterContext = yield call(
         sanitizeFilterContext,
         ctx,
         (overrideFilterContext ??
-            dashboard?.filterContext ??
+            effectiveProps?.filterContext ??
             createDefaultFilterContext(updatedDateFilterConfig, true)) as IDashboard["filterContext"],
         dashboard?.dataSets,
         displayForms,
@@ -195,7 +276,7 @@ function* actionsToInitializeOrFillNewDashboard(
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> | null = dashboard
         ? {
               ...dashboard,
-              layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+              layout: (effectiveProps?.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
               filterContext: sanitizedFilterContext,
           }
         : null;
@@ -213,7 +294,7 @@ function* actionsToInitializeOrFillNewDashboard(
         updatedDateFilterConfig,
         ctx.config?.overrideDefaultFilters,
     );
-    const effectiveAttributeFilterConfigs = dashboard?.attributeFilterConfigs;
+    const effectiveAttributeFilterConfigs = effectiveProps?.attributeFilterConfigs;
     const filterContextIdentity = customizedDashboard
         ? dashboardFilterContextIdentity(customizedDashboard)
         : undefined;
@@ -404,11 +485,18 @@ export function* actionsToInitializeExistingDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
+    initialTabId?: string,
 ): SagaIterator<Array<PayloadAction<any>>> {
+    // Check if dashboard tabs feature is enabled
+    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
+
+    // Extract effective properties from active/first tab if tabs are present and feature is enabled
+    const effectiveProps = getEffectiveDashboardProperties(dashboard, enableDashboardTabs, initialTabId);
+
     const sanitizedFilterContext = yield call(
         sanitizeFilterContext,
         ctx,
-        dashboard.filterContext,
+        effectiveProps.filterContext,
         dashboard.dataSets,
         displayForms,
     );
@@ -416,12 +504,12 @@ export function* actionsToInitializeExistingDashboard(
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = updateDashboard(
         {
             ...dashboard,
-            layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+            layout: (effectiveProps.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
             filterContext: sanitizedFilterContext,
-        },
+        } as IDashboard,
         ctx.config?.overrideTitle,
         ctx.config?.hideWidgetTitles,
-    );
+    ) as IDashboard<ExtendedDashboardWidget>;
 
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const customizedDashboard =
@@ -462,7 +550,7 @@ export function* actionsToInitializeExistingDashboard(
 
     const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
         ? migratedAttributeFilterConfigs
-        : dashboard.attributeFilterConfigs;
+        : effectiveProps.attributeFilterConfigs;
 
     const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
 
@@ -487,6 +575,15 @@ export function* actionsToInitializeExistingDashboard(
         insights,
         settings,
     );
+    // Prepare tabs action if tabs exist and feature is enabled
+    const tabsAction =
+        enableDashboardTabs && dashboard?.tabs
+            ? tabsActions.setTabs({
+                  tabs: dashboard.tabs as IDashboardTab<ExtendedDashboardWidget>[],
+                  activeTabId: initialTabId ?? dashboard.activeTabId,
+              })
+            : null;
+
     return compact([
         filterContextActions.setFilterContext({
             originalFilterContextDefinition: migratedOriginalFilterContext,
@@ -498,6 +595,7 @@ export function* actionsToInitializeExistingDashboard(
             ? filterContextActions.setDefaultFilterOverrides(overrideDefaultFilters)
             : null,
         layoutActions.setLayout(dashboardLayout),
+        tabsAction,
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,
             initialContent: false,
@@ -505,9 +603,9 @@ export function* actionsToInitializeExistingDashboard(
         attributeFilterConfigsActions.setAttributeFilterConfigs({
             attributeFilterConfigs: effectiveAttributeFilterConfigs,
         }),
-        dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
+        dateFilterConfigActions.updateDateFilterConfig(effectiveProps.dateFilterConfig!),
         dateFilterConfigsActions.setDateFilterConfigs({
-            dateFilterConfigs: dashboard.dateFilterConfigs,
+            dateFilterConfigs: effectiveProps.dateFilterConfigs,
         }),
         insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
