@@ -1,5 +1,5 @@
 # Stage 1: Build the Go app
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/golang:1.25.2 AS builder
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/golang:1.25.3-alpine AS builder
 WORKDIR /app
 
 # Copy Go module files and download dependencies
@@ -10,10 +10,10 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN go build -o app .
+RUN GCO_ENABLED=0 GOOS=linux go build -o app .
 
 # Stage 2: Run the app
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/ubuntu:latest
+FROM scratch
 WORKDIR /
 
 # Copy the built Go app binary

@@ -108,6 +108,7 @@ export type IconType =
     | "genai"
     | "genai2"
     | "explainai"
+    | "hiddenForAi"
     | "box"
     | "ellipsisVertical"
     | "list"

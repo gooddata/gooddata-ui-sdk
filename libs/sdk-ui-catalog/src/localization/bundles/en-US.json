@@ -119,7 +119,11 @@
         "value": "Show in AI results",
         "comment": "Title of the field indicating whether the object is hidden in AI results."
     },
-    "analyticsCatalog.column.title.isHidden.tooltip": {
+    "analyticsCatalog.column.isHidden.icon.tooltip": {
+        "value": "Hidden from Smart Search and AI Assistant results for all users.",
+        "comment": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
+    },
+    "analyticsCatalog.column.isHidden.field.tooltip": {
         "value": "Include in Smart Search and AI Assistant results for all users.",
         "comment": "Tooltip content for the field indicating whether the object is hidden in AI results."
     },

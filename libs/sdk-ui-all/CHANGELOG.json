@@ -2,6 +2,81 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.7.0",
+            "tag": "@gooddata/sdk-ui-all_v11.7.0",
+            "date": "Thu, 30 Oct 2025 08:25:43 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-model: Add `isHidden` property to metadata objects."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Added support for reading and writing the `isHidden` property on metadata objects."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce UI toggle for hiding objects from AI results"
+                    },
+                    {
+                        "comment": "api-client-tiger: Update generated client."
+                    },
+                    {
+                        "comment": "sdk-model: Add `status` field to `ISemanticQualityReport` in order to track the status of the quality report calculation."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add `AbortSignal` support to semantic quality service `getQualityReport` method."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Tweak the quality score card date display to show only the year, month, and day to prevent overly long date strings."
+                    },
+                    {
+                        "comment": "sdk-backend: Add `isHidden` filter support to backend metadata queries."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for AI visibility filtering."
+                    },
+                    {
+                        "comment": "adding data-testid for some elements"
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Use filters from dashboard and also drill (apply filter) on graph click"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: fix error that appears when drilling into some drivers"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: blank page appears when clicking on certain data points"
+                    },
+                    {
+                        "comment": "fix: Make menu items properly selectable to align with ARIA"
+                    },
+                    {
+                        "comment": "fix: Display focus outline on the \"Only\" filter option in Safari"
+                    },
+                    {
+                        "comment": "fix: Do not leak arrow key event from new filter creation popup"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Fix AG grid token propagation for the new pivot table"
+                    },
+                    {
+                        "comment": "[home-ui]: Improving AI Memory UI"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit] Ability to specify to the header menu item use the starting path to check if the item is active."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.6.0",
             "tag": "@gooddata/sdk-ui-all_v11.6.0",
             "date": "Thu, 23 Oct 2025 07:42:08 GMT",
