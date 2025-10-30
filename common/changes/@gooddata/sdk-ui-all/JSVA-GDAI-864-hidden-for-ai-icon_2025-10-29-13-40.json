@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-pivot: Fix initial grow to fit behaviour in new pivot tables",
+            "comment": "sdk-ui-kit: Add new `hiddenForAi` icon.",
             "type": "none"
         }
     ],

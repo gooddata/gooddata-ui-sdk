@@ -1,6 +1,6 @@
 module serve
 
-go 1.25.2
+go 1.25.3
 
 require github.com/valyala/fasthttp v1.67.0
 

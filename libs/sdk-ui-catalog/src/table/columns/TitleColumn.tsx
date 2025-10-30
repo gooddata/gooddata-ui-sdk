@@ -4,7 +4,11 @@ import type { IntlShape } from "react-intl";
 
 import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
-import { CatalogItemLockMemo, type ICatalogItem } from "../../catalogItem/index.js";
+import {
+    CatalogItemLockMemo,
+    CatalogItemVisibilityIconMemo,
+    type ICatalogItem,
+} from "../../catalogItem/index.js";
 import { ObjectTypeIconMemo } from "../../objectType/index.js";
 import { QualityIconMemo } from "../../quality/index.js";
 
@@ -32,11 +36,18 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
         },
         renderSuffixIcon: (item) => {
             return (
-                <QualityIconMemo
-                    className="gd-analytics-catalog__table__column-icon"
-                    intl={intl}
-                    objectId={item.identifier}
-                />
+                <>
+                    <QualityIconMemo
+                        className="gd-analytics-catalog__table__column-icon"
+                        intl={intl}
+                        objectId={item.identifier}
+                    />
+                    <CatalogItemVisibilityIconMemo
+                        className="gd-analytics-catalog__table__column-icon"
+                        intl={intl}
+                        item={item}
+                    />
+                </>
             );
         },
         getTextContent: (item) => item.title,

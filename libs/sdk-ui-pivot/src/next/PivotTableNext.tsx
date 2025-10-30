@@ -122,22 +122,6 @@ function RenderPivotTableNextAgGrid() {
         [clearCellSelection],
     );
 
-    const containerRef = useCallback(
-        (element: HTMLDivElement | null) => {
-            if (element) {
-                // Use requestAnimationFrame to ensure DOM has fully laid out before measuring width
-                // This prevents measuring incorrect width when element is initially hidden
-                requestAnimationFrame(() => {
-                    const width = element.clientWidth;
-                    if (width > 0) {
-                        setContainerWidth(width);
-                    }
-                });
-            }
-        },
-        [setContainerWidth],
-    );
-
     return (
         <AvoidResizeFlickering>
             {({ isReadyForInitialPaint }) => {
@@ -150,7 +134,9 @@ function RenderPivotTableNextAgGrid() {
                 };
                 return (
                     <div
-                        ref={containerRef}
+                        ref={(element) => {
+                            if (element) setContainerWidth(element.clientWidth);
+                        }}
                         className={b()}
                         style={containerStyle}
                         onMouseDown={stopEventWhenResizeHeader}

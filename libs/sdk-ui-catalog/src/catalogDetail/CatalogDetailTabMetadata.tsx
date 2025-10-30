@@ -68,7 +68,7 @@ export function CatalogDetailTabMetadata({
                             <UiTooltip
                                 anchor={<UiIcon type="question" size={12} color="complementary-6" />}
                                 content={
-                                    <FormattedMessage id="analyticsCatalog.column.title.isHidden.tooltip" />
+                                    <FormattedMessage id="analyticsCatalog.column.isHidden.field.tooltip" />
                                 }
                                 arrowPlacement="left"
                                 optimalPlacement

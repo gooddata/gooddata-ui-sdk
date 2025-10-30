@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { debounce } from "lodash-es";
 
@@ -20,7 +20,6 @@ export function useInitialAutoResizeVisibility(): boolean {
     const { currentDataView } = useCurrentDataView();
     const { growToFit, defaultWidth } = config.columnSizing;
     const [readyForPaint, setReadyForPaint] = useState(false);
-    const readyForPaintRef = useRef(false);
 
     useEffect(() => {
         const isCellSizing = defaultWidth === "autoresizeAll" || defaultWidth === "viewport";
@@ -32,39 +31,23 @@ export function useInitialAutoResizeVisibility(): boolean {
             return;
         }
 
-        // If no resizing is needed, mark as ready immediately
-        if (!needsResize) {
-            if (!readyForPaintRef.current) {
-                readyForPaintRef.current = true;
-                setReadyForPaint(true);
-            }
-            return;
-        }
-
-        // If already ready, don't set up listeners again
-        if (readyForPaintRef.current) {
+        if (!needsResize || readyForPaint) {
+            setReadyForPaint(true);
             return;
         }
 
         const setIsReadyForPaint = debounce(() => {
-            readyForPaintRef.current = true;
             setReadyForPaint(true);
         }, debounceTime);
 
-        // Listen to resize events for optimal timing
         agGridApi.addEventListener("virtualColumnsChanged", setIsReadyForPaint);
         agGridApi.addEventListener("columnResized", setIsReadyForPaint);
-        // Fallback: Listen to firstDataRendered to ensure table becomes visible
-        // even if resize events don't fire (e.g., empty table, small data)
-        agGridApi.addEventListener("firstDataRendered", setIsReadyForPaint);
 
         return () => {
             agGridApi.removeEventListener("virtualColumnsChanged", setIsReadyForPaint);
             agGridApi.removeEventListener("columnResized", setIsReadyForPaint);
-            agGridApi.removeEventListener("firstDataRendered", setIsReadyForPaint);
-            setIsReadyForPaint.cancel();
         };
-    }, [agGridApi, defaultWidth, growToFit, currentDataView, columns, rows]);
+    }, [agGridApi, defaultWidth, growToFit, readyForPaint, currentDataView, columns, rows]);
 
     return readyForPaint;
 }

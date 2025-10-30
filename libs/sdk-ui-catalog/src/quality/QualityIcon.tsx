@@ -52,7 +52,7 @@ export function QualityIcon({ objectId, intl, className, ...htmlProps }: Props) 
     return (
         <div {...htmlProps} className={cx("gd-analytics-catalog__quality-tooltip", className)}>
             <UiTooltip
-                arrowPlacement="left"
+                arrowPlacement="top"
                 optimalPlacement
                 triggerBy={["hover"]}
                 anchor={<QualitySeverityIcon severity={severity} size={14} backgroundSize={26} />}
