@@ -20,7 +20,10 @@ export function useAddNewAttributeHandler() {
 
             if (attr) {
                 setState({
-                    attributeFilters: [...state.attributeFilters, createNewAttributeFilter(attr, id)],
+                    attributeFilters: [
+                        ...state.attributeFilters,
+                        createNewAttributeFilter(attr, attr.defaultDisplayForm, id),
+                    ],
                 });
             }
         },

@@ -42,6 +42,7 @@ import { permissionsSliceReducer } from "./permissions/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { savingSliceReducer } from "./saving/index.js";
 import { showWidgetAsTableSliceReducer } from "./showWidgetAsTable/index.js";
+import { tabsSliceReducer } from "./tabs/index.js";
 import { DashboardDispatch, DashboardState } from "./types.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { userSliceReducer } from "./user/index.js";
@@ -319,6 +320,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         dateFilterConfig: dateFilterConfigSliceReducer,
         attributeFilterConfigs: attributeFilterConfigsSliceReducer,
         dateFilterConfigs: dateFilterConfigsSliceReducer,
+        tabs: tabsSliceReducer,
         insights: insightsSliceReducer,
         drillTargets: drillTargetsReducer,
         catalog: catalogSliceReducer,

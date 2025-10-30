@@ -14,6 +14,7 @@ export function getDashboardsQuery({
     id,
     createdBy,
     tags,
+    isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -26,7 +27,7 @@ export function getDashboardsQuery({
         .withMetaInclude(["permissions"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy });
+        .withFilter({ search, id, tags, createdBy, isHidden });
 }
 
 export function getInsightsQuery({
@@ -37,6 +38,7 @@ export function getInsightsQuery({
     id,
     createdBy,
     tags,
+    isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -48,7 +50,7 @@ export function getInsightsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy });
+        .withFilter({ search, id, tags, createdBy, isHidden });
 }
 
 export function getMetricsQuery({
@@ -59,6 +61,7 @@ export function getMetricsQuery({
     id,
     createdBy,
     tags,
+    isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -70,7 +73,7 @@ export function getMetricsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy });
+        .withFilter({ search, id, tags, createdBy, isHidden });
 }
 
 export function getAttributesQuery({
@@ -80,6 +83,7 @@ export function getAttributesQuery({
     origin,
     id,
     tags,
+    isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return (
@@ -93,7 +97,7 @@ export function getAttributesQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, tags })
+            .withFilter({ search, id, tags, isHidden })
     );
 }
 
@@ -104,6 +108,7 @@ export function getFactsQuery({
     origin,
     id,
     tags,
+    isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return (
@@ -117,7 +122,7 @@ export function getFactsQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, tags })
+            .withFilter({ search, id, tags, isHidden })
     );
 }
 

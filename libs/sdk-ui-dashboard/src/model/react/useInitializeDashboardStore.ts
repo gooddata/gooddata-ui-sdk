@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "@reduxjs/toolkit";
@@ -172,6 +173,7 @@ export const useInitializeDashboardStore = (
                     props.permissions,
                     persistedDashboard,
                     InitialLoadCorrelationId,
+                    props.initialTabId,
                 ) as Action,
             );
             setDashboardStore(newDashboardStore);

@@ -727,6 +727,18 @@ export interface IDashboardBaseProps {
     filterContextRef?: ObjRef;
 
     /**
+     * Explicitly specify which tab should be opened first when the dashboard is rendered.
+     *
+     * @remarks
+     * This prop takes precedence over the dashboard's persisted activeTabId.
+     * If the specified tab ID doesn't exist, the first tab will be used.
+     * Only effective when the enableDashboardTabs feature flag is enabled.
+     *
+     * @alpha
+     */
+    initialTabId?: string;
+
+    /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.
      *
      * @remarks

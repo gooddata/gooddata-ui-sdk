@@ -32,6 +32,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     flex-basis: 100%;
 }
 
+.gd-dash-tabs-bar {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
 .gd-dash-bottom-position-pixel {
     height: 1px;
     width: 1px;

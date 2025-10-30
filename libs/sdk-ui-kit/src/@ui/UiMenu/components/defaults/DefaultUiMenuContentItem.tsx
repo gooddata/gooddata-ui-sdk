@@ -83,12 +83,13 @@ export const DefaultUiMenuContentItemWrapper = memo(function DefaultUiMenuConten
             aria-haspopup="dialog"
             className={classNames}
             tabIndex={-1}
+            onClick={item.isDisabled ? undefined : handleSelect}
             aria-disabled={item.isDisabled}
             id={makeItemId(item)}
             onMouseMove={handleMouseFocus}
             data-testid={dataTestId}
         >
-            <ContentItemComponent item={item} isFocused={isFocused} onSelect={handleSelect} />
+            <ContentItemComponent item={item} isFocused={isFocused} />
         </li>
     );
 });
@@ -99,7 +100,6 @@ export const DefaultUiMenuContentItemWrapper = memo(function DefaultUiMenuConten
 export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
-    onSelect,
 }: IUiMenuContentItemProps<T>): ReactNode {
     return (
         <div
@@ -107,7 +107,6 @@ export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
                 isFocused,
                 isDisabled: !!item.isDisabled,
             })}
-            onClick={onSelect}
         >
             <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
                 {item.stringTitle}

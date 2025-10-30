@@ -103,6 +103,7 @@ export function DashboardRenderer(props: IDashboardProps) {
                         additionalReduxContext={props.additionalReduxContext}
                         customizationFns={props.customizationFns}
                         widgetsOverlayFn={props.widgetsOverlayFn}
+                        initialTabId={props.initialTabId}
                     >
                         <ExportXlsxDialogContextProvider>
                             <ExportTabularPdfDialogContextProvider>

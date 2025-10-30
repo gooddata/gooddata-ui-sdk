@@ -1,9 +1,12 @@
 // (C) 2025 GoodData Corporation
 
+import { invariant } from "ts-invariant";
+
 import { ClientFormatterFacade, ISeparators } from "@gooddata/number-formatter";
 import {
     ICatalogAttribute,
     IDashboardAttributeFilter,
+    ObjRef,
     areObjRefsEqual,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
@@ -59,16 +62,24 @@ export function getOnlyRelevantFilters(all: IDashboardAttributeFilter[], relevan
     });
 }
 
-export function createNewAttributeFilter(attr: ICatalogAttribute, id: string, value?: string) {
+export function createNewAttributeFilter(
+    attr: ICatalogAttribute,
+    displayForm: ObjRef,
+    id: string,
+    value?: string,
+) {
+    const displayFormOf = attr.displayForms.find((df) => areObjRefsEqual(df.ref, displayForm));
+    invariant(displayFormOf);
+
     const dashboardFilter: IDashboardAttributeFilter = {
         attributeFilter: {
-            displayForm: attr.defaultDisplayForm.ref,
+            displayForm: displayFormOf.ref,
             negativeSelection: !value,
             attributeElements: {
                 values: value ? [value] : [],
             },
-            localIdentifier: `${objRefToString(attr.defaultDisplayForm.ref)}_${id}`,
-            title: attr.defaultDisplayForm.title,
+            localIdentifier: `${objRefToString(displayFormOf.ref)}_${id}`,
+            title: displayFormOf.title,
             selectionMode: "multi",
         },
     };

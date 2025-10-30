@@ -9,6 +9,7 @@ import {
     IDashboardLayout,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    IDashboardTab,
     IDashboardWidget,
     IFilterContextDefinition,
     IInsightWidget,
@@ -83,20 +84,61 @@ function removeWidgetIdentifiersInLayout(
     }, layout);
 }
 
+function convertDashboardTabToBackend(
+    tab: IDashboardTab,
+    filterContextRef?: ObjRef,
+    useWidgetLocalIdentifiers?: boolean,
+): AnalyticalDashboardModelV2.IDashboardTab {
+    const layout = convertLayout(
+        false,
+        removeWidgetIdentifiersInLayout(tab.layout, useWidgetLocalIdentifiers),
+    );
+
+    return {
+        identifier: tab.identifier,
+        title: tab.title,
+        layout: cloneWithSanitizedIds(layout),
+        filterContextRef: cloneWithSanitizedIds(filterContextRef)!,
+        dateFilterConfig: cloneWithSanitizedIds(tab.dateFilterConfig),
+        dateFilterConfigs: cloneWithSanitizedIds(tab.dateFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIds(tab.attributeFilterConfigs),
+    };
+}
+
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
     useWidgetLocalIdentifiers?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
+    // For backward compatibility, if dashboard has tabs, fill root-level properties
+    // with active/first tab's content so older SDK versions can still read the dashboard
+    let effectiveLayout = dashboard.layout;
+    let effectiveDateFilterConfig = dashboard.dateFilterConfig;
+    let effectiveDateFilterConfigs = dashboard.dateFilterConfigs;
+    let effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
+
+    if (dashboard.tabs && dashboard.tabs.length > 0) {
+        const activeTab = dashboard.activeTabId
+            ? dashboard.tabs.find((tab) => tab.identifier === dashboard.activeTabId)
+            : undefined;
+        const effectiveTab = activeTab ?? dashboard.tabs[0];
+
+        // Use tab's properties for root-level (backward compatibility)
+        effectiveLayout = effectiveTab.layout;
+        effectiveDateFilterConfig = effectiveTab.dateFilterConfig;
+        effectiveDateFilterConfigs = effectiveTab.dateFilterConfigs;
+        effectiveAttributeFilterConfigs = effectiveTab.attributeFilterConfigs;
+    }
+
     const layout = convertLayout(
         false,
-        removeWidgetIdentifiersInLayout(dashboard.layout, useWidgetLocalIdentifiers),
+        removeWidgetIdentifiersInLayout(effectiveLayout, useWidgetLocalIdentifiers),
     );
 
     return {
-        dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
-        dateFilterConfigs: cloneWithSanitizedIds(dashboard.dateFilterConfigs),
-        attributeFilterConfigs: cloneWithSanitizedIds(dashboard.attributeFilterConfigs),
+        dateFilterConfig: cloneWithSanitizedIds(effectiveDateFilterConfig),
+        dateFilterConfigs: cloneWithSanitizedIds(effectiveDateFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIds(effectiveAttributeFilterConfigs),
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
         layout: cloneWithSanitizedIds(layout),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
@@ -105,6 +147,10 @@ export function convertAnalyticalDashboard(
         disableUserFilterSave: dashboard.disableUserFilterSave,
         disableFilterViews: dashboard.disableFilterViews,
         evaluationFrequency: dashboard.evaluationFrequency,
+        tabs: dashboard.tabs?.map((tab) =>
+            convertDashboardTabToBackend(tab, filterContextRef, useWidgetLocalIdentifiers),
+        ),
+        activeTabId: dashboard.activeTabId,
         version: "2",
     };
 }

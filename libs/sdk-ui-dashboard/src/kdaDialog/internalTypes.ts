@@ -22,6 +22,7 @@ export interface KdaItem {
     };
     to: KdaItem["from"];
     attribute: ObjRef;
+    displayForm: ObjRef;
     formatValue: (value: number) => string;
     //stats
     isSignificant: boolean;
@@ -34,6 +35,7 @@ export interface KdaItemGroup {
     title: string;
     description: string;
     attribute: ObjRef;
+    displayForm: ObjRef;
     significantDrivers: KdaItem[];
     allDrivers: KdaItem[];
 }

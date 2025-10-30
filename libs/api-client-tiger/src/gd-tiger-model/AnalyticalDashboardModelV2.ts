@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -18,6 +19,52 @@ export interface IDashboardDateFilterConfigItem {
 }
 
 /**
+ * Dashboard tab definition.
+ *
+ * @remarks
+ * Each tab can have its own layout and its own filter context. Tabs are optional and
+ * dashboards without tabs continue to work using the root layout and filter context.
+ *
+ * @alpha
+ */
+export interface IDashboardTab {
+    /**
+     * Unique identifier of the tab (stable within dashboard).
+     */
+    identifier: string;
+
+    /**
+     * Display title of the tab.
+     */
+    title: string;
+
+    /**
+     * Complete layout definition for this tab.
+     */
+    layout: IDashboardLayout;
+
+    /**
+     * Tab-specific filter context.
+     */
+    filterContextRef: ObjRef;
+
+    /**
+     * Dashboard tab common date filter config
+     */
+    dateFilterConfig?: IDashboardDateFilterConfig;
+
+    /**
+     * Dashboard tab date filters with date data set/dimension configs
+     */
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+
+    /**
+     * Dashboard extended attribute filter configs
+     */
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+}
+
+/**
  * @public
  */
 export interface IAnalyticalDashboard {
@@ -33,6 +80,21 @@ export interface IAnalyticalDashboard {
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
     evaluationFrequency?: string;
+
+    /**
+     * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.
+     * Each tab has its own layout, filter context and filter configs.
+     *
+     * @alpha
+     */
+    tabs?: IDashboardTab[];
+
+    /**
+     * Identifier of the active tab for persistence purposes.
+     *
+     * @alpha
+     */
+    activeTabId?: string;
 }
 
 /**
@@ -86,4 +148,17 @@ export function isDashboardPlugin(plugin: unknown): plugin is IDashboardPlugin {
  */
 export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPluginLink {
     return !isEmpty(pluginLink) && (pluginLink as IDashboardPluginLink).version === "2";
+}
+
+/**
+ * @alpha
+ */
+export function isDashboardTab(tab: unknown): tab is IDashboardTab {
+    return (
+        !isEmpty(tab) &&
+        typeof (tab as IDashboardTab).identifier === "string" &&
+        typeof (tab as IDashboardTab).title === "string" &&
+        typeof (tab as IDashboardTab).layout === "object" &&
+        typeof (tab as IDashboardTab).filterContextRef === "object"
+    );
 }

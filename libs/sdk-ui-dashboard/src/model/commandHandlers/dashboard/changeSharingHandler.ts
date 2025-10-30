@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -40,18 +41,21 @@ function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<Da
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
         yield select(selectPersistedDashboard);
     invariant(persistedDashboard, "Cant change sharing of unsaved dashboard");
-    const { filterContext, ...otherDashboardProps } = persistedDashboard;
+    const { filterContext, tabs, ...otherDashboardProps } = persistedDashboard;
     // ignore temp filter context to please TS as it can be present only during export
     const filterContextProp = isFilterContext(filterContext)
         ? {
               filterContext,
           }
         : {};
+    // Tabs in persisted dashboard are already resolved (IFilterContext), so they're compatible with IDashboardTabDefinition
+    const tabsProp = tabs ? { tabs } : {};
 
     const dashboardFromState: IDashboardDefinition = {
         ...otherDashboardProps,
         ...filterContextProp,
-    };
+        ...tabsProp,
+    } as IDashboardDefinition;
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         shareStatus: newSharingProperties.shareStatus,

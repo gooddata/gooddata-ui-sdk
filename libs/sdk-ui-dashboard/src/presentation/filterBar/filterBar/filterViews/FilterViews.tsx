@@ -174,7 +174,7 @@ export function FilterViews() {
                         }}
                         dropdownId={dropdownId}
                     >
-                        <span id={triggerLabelId}>
+                        <span className="gd-filter-views-button__label" id={triggerLabelId}>
                             <DropdownButtonLabel filterViews={filterViews} />
                         </span>
                     </DropdownButton>

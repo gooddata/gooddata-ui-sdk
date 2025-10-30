@@ -37,7 +37,7 @@ export function useDataViewWithConfig(group: KdaItemGroup | null, item: KdaItem 
         return {
             config,
             dataView,
-            attribute: group.attribute,
+            displayForm: group.displayForm,
         };
     }, [colorPalette, definition, group, item, settings, title, workspace]);
 }

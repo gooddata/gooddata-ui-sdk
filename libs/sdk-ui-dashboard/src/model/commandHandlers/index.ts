@@ -80,6 +80,7 @@ import { initializeAutomationsHandler } from "./scheduledEmail/initializeAutomat
 import { refreshAutomationsHandlers } from "./scheduledEmail/refreshAutomationsHandlers.js";
 import { saveScheduledEmailHandler } from "./scheduledEmail/saveScheduledEmailHandler.js";
 import { handleSetWidgetToShowAsTable } from "./showWidgetAsTable/showWidgetAsTableHandler.js";
+import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
@@ -238,4 +239,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.USERS.LOAD_ALL": loadAllWorkspaceUsersHandler,
     "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP": changeIgnoreExecutionTimestampHandler,
     "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET": handleSetWidgetToShowAsTable,
+    "GDC.DASH/CMD.TAB.SWITCH": switchDashboardTabHandler,
 };

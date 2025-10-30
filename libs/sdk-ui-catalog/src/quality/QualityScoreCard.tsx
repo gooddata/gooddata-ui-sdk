@@ -11,15 +11,11 @@ import { useFilterActions } from "../filter/index.js";
 
 export function QualityScoreCard() {
     const intl = useIntl();
-    const { qualityReport, qualityIssuesCalculation } = useQualityState();
+    const { status, issues, updatedAt } = useQualityState();
     const { createQualityIssuesCalculation } = useQualityActions();
     const { setQualityIds } = useFilterActions();
 
-    const { issues } = qualityReport;
-    const isLoading =
-        qualityReport.status === "pending" ||
-        qualityReport.status === "loading" ||
-        qualityIssuesCalculation.status === "loading";
+    const isLoading = status === "pending" || status === "loading";
 
     const handleActionClick = () => {
         const idSet: Set<string> = new Set();
@@ -44,9 +40,7 @@ export function QualityScoreCard() {
                 isLoading={isLoading}
                 onActionClick={handleActionClick}
             />
-            {qualityReport.updatedAt ? (
-                <QualityScoreCardDate date={qualityReport.updatedAt} locale={intl.locale} />
-            ) : null}
+            {updatedAt ? <QualityScoreCardDate date={updatedAt} locale={intl.locale} /> : null}
         </div>
     );
 }

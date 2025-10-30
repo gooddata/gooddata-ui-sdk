@@ -3,6 +3,7 @@
 import { ReactElement } from "react";
 
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
+import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
 import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
@@ -53,6 +54,11 @@ function CancelEditDialogWrapper() {
     return <CancelEditDialog {...cancelEditDialogProps} />;
 }
 
+function DashboardTabsWrapper() {
+    const dashboardTabsProps = useDashboardTabsProps();
+    return <DashboardTabs {...dashboardTabsProps} />;
+}
+
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 export function DashboardHeader(): ReactElement {
@@ -70,6 +76,7 @@ export function DashboardHeader(): ReactElement {
             <KpiDeleteDialogWrapper />
             <SaveAsDialogWrapper />
             <TopBarWrapper />
+            <DashboardTabsWrapper />
             <FilterBarWrapper />
             <CancelEditDialogWrapper />
         </>

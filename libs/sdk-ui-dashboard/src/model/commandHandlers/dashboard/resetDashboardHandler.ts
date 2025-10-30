@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
 import { uniqWith } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -13,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { applyDefaultFilterView } from "./common/filterViews.js";
-import { insightReferences } from "./common/insightReferences.js";
+import { insightReferencesFromDashboard } from "./common/insightReferences.js";
 import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 import {
     actionsToInitializeExistingDashboard,
@@ -135,7 +136,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             settings,
         );
 
-        const insightRefsFromWidgets = insightReferences(dashboardWithUpdatedFilterContext.layout);
+        const insightRefsFromWidgets = insightReferencesFromDashboard(dashboardWithUpdatedFilterContext);
         const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);
         const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
             resolveInsights,

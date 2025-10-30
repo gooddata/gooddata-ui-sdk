@@ -235,7 +235,6 @@ describe("UiMenu", () => {
         function CustomInteractiveItemComponent({
             item,
             isFocused,
-            onSelect,
         }: IUiMenuInteractiveItemProps<{ interactive: string }>) {
             return (
                 <div
@@ -243,7 +242,6 @@ describe("UiMenu", () => {
                         "custom-focused": isFocused,
                         "custom-disabled": item.isDisabled,
                     })}
-                    onClick={item.isDisabled ? undefined : onSelect}
                     data-testid="custom-item"
                 >
                     {item.stringTitle} - {item.data}

@@ -30,7 +30,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
     const state = useFeedState();
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
-    const { types, origin, createdBy, tags, qualityIds } = useFilterState();
+    const { types, origin, createdBy, tags, qualityIds, isHidden } = useFilterState();
     const { status, totalCount, totalCounts, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
@@ -42,9 +42,10 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
             id: qualityIds.length > 0 ? [...qualityIds, ...(id ?? [])] : id,
             tags,
             createdBy,
+            isHidden,
             pageSize,
         };
-    }, [backend, workspace, search, origin, id, createdBy, pageSize, tags, qualityIds]);
+    }, [backend, workspace, search, origin, id, createdBy, pageSize, tags, qualityIds, isHidden]);
     const endpoints = useEndpoints(types, queryOptions);
 
     // reset

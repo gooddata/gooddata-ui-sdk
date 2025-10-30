@@ -12,6 +12,7 @@ interface IFilterState {
     createdBy: string[];
     tags: string[];
     qualityIds: string[];
+    isHidden?: boolean;
 }
 
 interface IFilterActions {
@@ -21,6 +22,7 @@ interface IFilterActions {
     setTags: (tags: string[]) => void;
     toggleTag: (tag: string) => void;
     setQualityIds: (qualityIds: string[]) => void;
+    setIsHidden: (isHidden?: boolean) => void;
 }
 
 const initialState: IFilterState = {
@@ -29,6 +31,7 @@ const initialState: IFilterState = {
     createdBy: [],
     tags: [],
     qualityIds: [],
+    isHidden: undefined,
 };
 
 const initialActions: IFilterActions = {
@@ -38,6 +41,7 @@ const initialActions: IFilterActions = {
     setTags: () => {},
     toggleTag: () => {},
     setQualityIds: () => {},
+    setIsHidden: () => {},
 };
 
 const FilterStateContext = createContext<IFilterState>(initialState);
@@ -49,6 +53,7 @@ export function FilterProvider({ children }: PropsWithChildren) {
     const [tags, setTags] = useState<string[]>(initialState.tags);
     const [createdBy, setCreatedBy] = useState<string[]>(initialState.createdBy);
     const [qualityIds, setQualityIds] = useState<string[]>(initialState.qualityIds);
+    const [isHidden, setIsHidden] = useState<boolean | undefined>(initialState.isHidden);
 
     const toggleTag = useCallback((tag: string) => {
         setTags((tags) =>
@@ -57,12 +62,12 @@ export function FilterProvider({ children }: PropsWithChildren) {
     }, []);
 
     const state = useMemo(
-        () => ({ types, origin, createdBy, tags, qualityIds }),
-        [types, origin, createdBy, tags, qualityIds],
+        () => ({ types, origin, createdBy, tags, qualityIds, isHidden }),
+        [types, origin, createdBy, tags, qualityIds, isHidden],
     );
     const actions = useMemo(
-        () => ({ setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds }),
-        [setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds],
+        () => ({ setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds, setIsHidden }),
+        [setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds, setIsHidden],
     );
 
     return (

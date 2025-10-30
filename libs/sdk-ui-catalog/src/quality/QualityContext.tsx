@@ -9,13 +9,13 @@ import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata
 import { createQueryId, getQualityReportQuery, triggerQualityIssuesCalculationQuery } from "./query.js";
 import { useFeatureFlag } from "../permission/index.js";
 
+type QualityQueryType = "fetch" | "trigger";
+
 interface IQualityState {
-    qualityReport: ISemanticQualityReport & {
-        status: UseCancelablePromiseStatus;
-    };
-    qualityIssuesCalculation: {
-        status: UseCancelablePromiseStatus;
-    };
+    status: UseCancelablePromiseStatus;
+    issues: ISemanticQualityIssue[];
+    updatedAt: ISemanticQualityReport["updatedAt"];
+    reportStatus: ISemanticQualityReport["status"];
 }
 
 interface IQualityActions {
@@ -24,14 +24,10 @@ interface IQualityActions {
 }
 
 const initialState: IQualityState = {
-    qualityReport: {
-        status: "pending",
-        issues: [],
-        updatedAt: undefined,
-    },
-    qualityIssuesCalculation: {
-        status: "pending",
-    },
+    status: "pending",
+    issues: [],
+    updatedAt: undefined,
+    reportStatus: "NOT_FOUND",
 };
 const initialActions: IQualityActions = {
     fetchQualityReport: () => {},
@@ -49,55 +45,44 @@ type Props = PropsWithChildren<{
 export function QualityProvider({ backend, workspace, children }: Props) {
     const enabled = useFeatureFlag("enableGenAICatalogQualityChecker");
 
-    // Quality issues
-    const [qualityIssuesQueryKey, setQualityIssuesQueryKey] = useState<string>(createQueryId);
+    const [queryType, setQueryType] = useState<QualityQueryType>("fetch");
+    const [queryKey, setQueryKey] = useState<string>(createQueryId);
 
     const qualityReport = useCancelablePromise(
         {
-            promise: enabled ? () => getQualityReportQuery({ backend, workspace }) : null,
+            promise: enabled
+                ? (signal) => {
+                      if (queryType === "trigger") {
+                          return triggerQualityIssuesCalculationQuery({ backend, workspace, signal });
+                      }
+                      return getQualityReportQuery({ backend, workspace, signal });
+                  }
+                : null,
             onError: (error) => console.error(error),
+            enableAbortController: true,
         },
-        [backend, workspace, enabled, qualityIssuesQueryKey],
+        [backend, workspace, enabled, queryType, queryKey],
     );
 
     const fetchQualityReport = useCallback(() => {
-        setQualityIssuesQueryKey(createQueryId());
+        setQueryType("fetch");
+        setQueryKey(createQueryId());
     }, []);
 
-    // Quality issues calculation
-    const [qualityIssuesCalculationQueryKey, setQualityIssuesCalculationQueryKey] = useState<
-        string | undefined
-    >(undefined);
-
-    const qualityIssuesCalculation = useCancelablePromise(
-        {
-            promise:
-                enabled && qualityIssuesCalculationQueryKey
-                    ? () => triggerQualityIssuesCalculationQuery({ backend, workspace })
-                    : null,
-            onError: (error) => console.error(error),
-        },
-        [backend, workspace, enabled, qualityIssuesCalculationQueryKey],
-    );
-
     const createQualityIssuesCalculation = useCallback(() => {
-        setQualityIssuesCalculationQueryKey(createQueryId());
-        setQualityIssuesQueryKey(createQueryId()); // Temporary
+        setQueryType("trigger");
+        setQueryKey(createQueryId());
     }, []);
 
     // Exposed state
     const state = useMemo(
         () => ({
-            qualityReport: {
-                status: qualityReport.status,
-                issues: qualityReport.result?.issues ?? initialState.qualityReport.issues,
-                updatedAt: qualityReport.result?.updatedAt,
-            },
-            qualityIssuesCalculation: {
-                status: qualityIssuesCalculation.status,
-            },
+            status: qualityReport.status,
+            issues: qualityReport.result?.issues ?? initialState.issues,
+            updatedAt: qualityReport.result?.updatedAt,
+            reportStatus: qualityReport.result?.status ?? initialState.reportStatus,
         }),
-        [qualityReport, qualityIssuesCalculation.status],
+        [qualityReport],
     );
 
     // Exposed actions
@@ -117,8 +102,8 @@ export function useQualityState(): IQualityState {
     return useContext(QualityStateContext);
 }
 
-export function useQualityReportState(): IQualityState["qualityReport"] {
-    return useQualityState().qualityReport;
+export function useQualityReportState(): IQualityState {
+    return useQualityState();
 }
 
 export function useQualityActions(): IQualityActions {

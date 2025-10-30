@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import { SyntheticEvent } from "react";
-
 import cx from "classnames";
 import { compact } from "lodash-es";
 
@@ -21,7 +19,7 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
 
 export function DrillSelectDropdownMenuItem({
     item: {
-        data: { type, name, attributeValue, onSelect },
+        data: { type, name, attributeValue },
     },
 }: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>) {
     const renderLoading = () => {
@@ -32,11 +30,6 @@ export function DrillSelectDropdownMenuItem({
         );
     };
 
-    const onClick = (e: SyntheticEvent) => {
-        e.preventDefault();
-        onSelect();
-    };
-
     const itemClassName = cx(
         "gd-drill-modal-picker-list-item",
         "s-gd-drill-modal-picker-item",
@@ -44,18 +37,11 @@ export function DrillSelectDropdownMenuItem({
         {},
     );
 
-    const shouldHaveAriaPopup = type === DrillType.DRILL_TO_INSIGHT || type === DrillType.DRILL_DOWN;
-
     // make sure there is no trailing space in case attributeLabel is empty
     const title = compact([name, attributeValue]).join(" ");
 
     return (
-        <button
-            onClick={onClick}
-            className={itemClassName}
-            title={title}
-            aria-haspopup={shouldHaveAriaPopup ? "dialog" : undefined}
-        >
+        <div className={itemClassName} title={title}>
             <div className="gd-drill-modal-picker-icon-wrapper">
                 <UiIcon type={DRILL_ICON_NAME[type]} size={16} color="complementary-5" ariaHidden />
             </div>
@@ -67,6 +53,6 @@ export function DrillSelectDropdownMenuItem({
             ) : (
                 renderLoading()
             )}
-        </button>
+        </div>
     );
 }

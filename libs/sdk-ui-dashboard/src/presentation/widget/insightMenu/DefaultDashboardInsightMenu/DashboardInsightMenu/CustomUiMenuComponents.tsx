@@ -40,11 +40,9 @@ export type IMenuData = IDashboardInsightMenuTitleProps;
 function FocusableItemComponent({
     item,
     isFocused,
-    onClick,
 }: {
     item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
     isFocused: boolean;
-    onClick: (event: MouseEvent) => void;
 }) {
     const { id, isDisabled, stringTitle } = item;
     const { icon, className, subMenu, tooltip } = item.data ?? {};
@@ -63,7 +61,6 @@ function FocusableItemComponent({
             submenu={subMenu}
             icon={icon}
             className={itemClassName}
-            onClick={isDisabled ? undefined : onClick}
             tooltip={tooltip}
             isFocused={isFocused}
         />
@@ -73,17 +70,15 @@ function FocusableItemComponent({
 export function CustomUiMenuInteractiveItemComponent({
     item,
     isFocused,
-    onSelect,
 }: IUiMenuInteractiveItemProps<IMenuItemData>) {
-    return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
+    return <FocusableItemComponent item={item} isFocused={isFocused} />;
 }
 
 export function CustomUiMenuContentItemComponent({
     item,
     isFocused,
-    onSelect,
 }: IUiMenuContentItemProps<IMenuItemData>) {
-    return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
+    return <FocusableItemComponent item={item} isFocused={isFocused} />;
 }
 
 export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenuItemData>) {

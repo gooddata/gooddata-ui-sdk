@@ -105,6 +105,7 @@ export {
     selectEnableExportToPdfTabular,
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
+    selectEnableDashboardTabs,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -279,6 +280,15 @@ export {
     selectAttributeFilterConfigsDisplayAsLabelMap,
 } from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export type { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+export type { TabsState } from "./tabs/tabsState.js";
+export {
+    selectTabs,
+    selectActiveTabId,
+    selectActiveTab,
+    selectTabById,
+    selectHasTabs,
+    tabsActions,
+} from "./tabs/index.js";
 export {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsModeMap,

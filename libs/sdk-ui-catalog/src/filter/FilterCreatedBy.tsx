@@ -43,7 +43,11 @@ export function FilterGroupBy({ backend, workspace }: Props) {
     const options = useMemo(() => sortUsers(result?.users), [result?.users]);
 
     if (status === "loading" || status === "pending") {
-        return <UiSkeleton itemsCount={1} itemWidth={131} itemHeight={27} itemBorderRadius={4} />;
+        return (
+            <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
+                <UiSkeleton itemsCount={1} itemWidth={54} itemHeight={27} itemBorderRadius={4} />
+            </FilterGroupLayout>
+        );
     }
 
     if (status === "error") {

@@ -350,7 +350,7 @@ item: IUiMenuContentItem<T>;
 }) => ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: IUiMenuContentItemProps<T>): ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuContentItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContentItemWrapper: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuContentItemWrapperProps<T>) => ReactElement)>;
@@ -362,7 +362,7 @@ export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ ite
 export const DefaultUiMenuHeader: FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, size, }: IUiMenuInteractiveItemProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, size, }: IUiMenuInteractiveItemProps<T>): ReactNode;
 
 // @internal (undocumented)
 export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
@@ -4982,8 +4982,6 @@ export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     isFocused: boolean;
     // (undocumented)
     item: IUiMenuContentItem<T>;
-    // (undocumented)
-    onSelect: (e: MouseEvent_2 | KeyboardEvent_2) => void;
 }
 
 // @internal (undocumented)
@@ -5079,8 +5077,6 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     isFocused: boolean;
     // (undocumented)
     item: IUiMenuInteractiveItem<T>;
-    // (undocumented)
-    onSelect: (e: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
     size?: SizeSmall | SizeMedium;
 }
@@ -6757,7 +6753,7 @@ export function UiTabOutHandler({ onTabOut, children }: {
 }): JSX.Element;
 
 // @internal (undocumented)
-export function UiTabs({ size, tabs, onTabSelect, selectedTabId, accessibilityConfig, }: UiTabsProps): JSX.Element;
+export function UiTabs({ size, tabs, onTabSelect, selectedTabId, accessibilityConfig, maxLabelLength, enableOverflowDropdown, }: UiTabsProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
@@ -6769,6 +6765,8 @@ export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
 export interface UiTabsProps {
     // (undocumented)
     accessibilityConfig?: UiTabsAccessibilityConfig;
+    enableOverflowDropdown?: boolean;
+    maxLabelLength?: number;
     // (undocumented)
     onTabSelect: (tab: UiTab) => void;
     // (undocumented)

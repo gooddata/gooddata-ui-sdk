@@ -21,7 +21,7 @@ type DashboardMetaInclude = NonNullable<
 export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;
     private page = 0;
-    private filter: string | undefined = undefined;
+    private filter: IFilterBaseOptions | undefined = undefined;
     private sort = {};
     private include: DashboardInclude[] | undefined = undefined;
     private metaInclude: DashboardMetaInclude[] | undefined = undefined;
@@ -48,7 +48,7 @@ export class DashboardsQuery implements IDashboardsQuery {
     }
 
     withFilter(filter: IFilterBaseOptions): IDashboardsQuery {
-        this.filter = buildFilterQuery(filter);
+        this.filter = filter;
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
@@ -79,6 +79,7 @@ export class DashboardsQuery implements IDashboardsQuery {
     query(): Promise<IDashboardsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
+                const filter: IFilterBaseOptions = this.filter ?? {};
                 const metaIncludeSet: Set<DashboardMetaInclude> = new Set([
                     "accessInfo",
                     // For backend performance reasons, we do not want to ask for paging info each time.
@@ -86,11 +87,21 @@ export class DashboardsQuery implements IDashboardsQuery {
                     ...(this.metaInclude ?? []),
                 ]);
 
+                // NOTE: Dashboards API doesn't support `isHidden` filter parameter yet.
+                // When filtering for hidden dashboards, return empty results immediately
+                // since no dashboards can be hidden at this time.
+                if ("isHidden" in filter) {
+                    if (filter.isHidden === true) {
+                        return { items: [], totalCount: 0 };
+                    }
+                    delete filter.isHidden;
+                }
+
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAnalyticalDashboards({
                         ...this.requestParameters,
                         ...this.sort,
-                        filter: this.filter,
+                        filter: buildFilterQuery(filter),
                         include: this.include,
                         metaInclude: [...metaIncludeSet],
                         origin: this.origin,

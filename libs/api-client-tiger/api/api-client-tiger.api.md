@@ -2089,7 +2089,9 @@ declare namespace AnalyticalDashboardModelV2 {
         isFilterContext_2 as isFilterContext,
         isDashboardPlugin,
         isDashboardPluginLink,
+        isDashboardTab,
         IDashboardDateFilterConfigItem,
+        IDashboardTab,
         IAnalyticalDashboard_2 as IAnalyticalDashboard,
         IFilterContext_3 as IFilterContext,
         IDashboardPlugin,
@@ -12946,6 +12948,8 @@ interface IAnalyticalDashboard {
 
 // @public (undocumented)
 interface IAnalyticalDashboard_2 {
+    // @alpha
+    activeTabId?: string;
     // (undocumented)
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     // (undocumented)
@@ -12968,6 +12972,8 @@ interface IAnalyticalDashboard_2 {
     layout?: IDashboardLayout;
     // (undocumented)
     plugins?: IDashboardPluginLink[];
+    // @alpha
+    tabs?: IDashboardTab[];
     // (undocumented)
     version: "2";
 }
@@ -13006,6 +13012,17 @@ interface IDashboardPluginLink {
     plugin: ObjRef;
     // (undocumented)
     version: "2";
+}
+
+// @alpha
+interface IDashboardTab {
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+    filterContextRef: ObjRef;
+    identifier: string;
+    layout: IDashboardLayout;
+    title: string;
 }
 
 // @public (undocumented)
@@ -13468,6 +13485,9 @@ function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPlu
 
 // @public (undocumented)
 export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugin is JsonApiDashboardPluginOutWithLinks;
+
+// @alpha (undocumented)
+function isDashboardTab(tab: unknown): tab is IDashboardTab;
 
 // @public (undocumented)
 export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks;

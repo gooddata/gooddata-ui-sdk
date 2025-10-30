@@ -10,7 +10,9 @@ import {
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
+    JsonApiFilterContextOutWithLinks,
     isDataSetItem,
+    isFilterContextData,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,6 +24,7 @@ import {
     IDashboardLayoutWidget,
     IDashboardPlugin,
     IDashboardPluginLink,
+    IDashboardTab,
     IDashboardWidget,
     IFilterContext,
     IInsightWidget,
@@ -29,6 +32,7 @@ import {
     IVisualizationSwitcherWidget,
     IdentifierRef,
     ObjectType,
+    areObjRefsEqual,
     idRef,
     isDashboardLayout,
     isVisualizationSwitcherWidget,
@@ -119,6 +123,8 @@ interface IAnalyticalDashboardContent {
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
     evaluationFrequency?: string;
+    tabs?: IDashboardTab[];
+    activeTabId?: string;
 }
 
 function convertDashboardPluginLink(
@@ -131,9 +137,71 @@ function convertDashboardPluginLink(
     };
 }
 
+function getTabFilterContext(
+    tab: AnalyticalDashboardModelV2.IDashboardTab,
+    filterContextsList: IFilterContext[],
+): IFilterContext | undefined {
+    const sanitizedTabFilterRef = cloneWithSanitizedIds(tab.filterContextRef);
+    return filterContextsList.find((fc) => areObjRefsEqual(fc.ref, sanitizedTabFilterRef));
+}
+
+function convertDashboardTabContent(
+    tab: AnalyticalDashboardModelV2.IDashboardTab,
+    filterContext?: IFilterContext,
+): IDashboardTab {
+    return {
+        identifier: tab.identifier,
+        title: tab.title,
+        layout: convertLayout(
+            true,
+            prepareDrillLocalIdentifierIfMissing(setWidgetRefsInLayout(cloneWithSanitizedIds(tab.layout))),
+        ),
+        filterContext: filterContext || {
+            ref: cloneWithSanitizedIds(tab.filterContextRef)!,
+            identifier: "",
+            uri: "",
+            title: "",
+            description: "",
+            filters: [],
+        },
+        dateFilterConfig: cloneWithSanitizedIds(tab.dateFilterConfig),
+        dateFilterConfigs: cloneWithSanitizedIds(tab.dateFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIds(tab.attributeFilterConfigs),
+    };
+}
+
+function convertDashboardTab(
+    tab: AnalyticalDashboardModelV2.IDashboardTab,
+    filterContextsList: IFilterContext[],
+): IDashboardTab {
+    const filterContext = getTabFilterContext(tab, filterContextsList);
+    return {
+        ...convertDashboardTabContent(tab, filterContext),
+    };
+}
+
 function getConvertedAnalyticalDashboardContent(
     analyticalDashboard: AnalyticalDashboardModelV2.IAnalyticalDashboard,
+    included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IAnalyticalDashboardContent {
+    const filterContextsList: IFilterContext[] = [];
+    if (included) {
+        const filterContexts = included.filter(isFilterContextData) as JsonApiFilterContextOutWithLinks[];
+        filterContexts.forEach((fc) => {
+            const { id, type, attributes } = fc;
+            const { title = "", description = "", content } = attributes!;
+            const filters = convertFilterContextFilters(content as AnalyticalDashboardModelV2.IFilterContext);
+            filterContextsList.push({
+                ref: idRef(id, type),
+                identifier: id,
+                uri: fc.links!.self,
+                title,
+                description,
+                filters,
+            });
+        });
+    }
+
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs),
@@ -150,6 +218,10 @@ function getConvertedAnalyticalDashboardContent(
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
         disableFilterViews: analyticalDashboard.disableFilterViews,
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
+        tabs: analyticalDashboard.tabs?.map((tab) => {
+            return convertDashboardTab(tab, filterContextsList);
+        }),
+        activeTabId: analyticalDashboard.activeTabId,
     };
 }
 
@@ -174,7 +246,12 @@ export function convertDashboard(
         disableUserFilterSave,
         disableFilterViews,
         evaluationFrequency,
-    } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
+        tabs,
+        activeTabId,
+    } = getConvertedAnalyticalDashboardContent(
+        content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
+        included,
+    );
 
     return {
         type: "IDashboard",
@@ -203,6 +280,8 @@ export function convertDashboard(
         disableUserFilterSave,
         disableFilterViews,
         evaluationFrequency,
+        tabs,
+        activeTabId,
         dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }

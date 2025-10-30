@@ -69,7 +69,7 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     const category = getCategory(state.selectedItem);
 
     const { group, item } = useGroupAndItem();
-    const { config, dataView, attribute } = useDataViewWithConfig(group, item);
+    const { config, dataView, displayForm } = useDataViewWithConfig(group, item);
 
     return (
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
@@ -82,7 +82,7 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
                 ) : null}
             </div>
             <div className={cx("gd-kda-key-drivers-detail-visualisation")}>
-                <KdaKeyDriverChart config={config} dataView={dataView} attribute={attribute} />
+                <KdaKeyDriverChart config={config} dataView={dataView} displayForm={displayForm} />
             </div>
             <div className={cx("gd-kda-key-drivers-detail-info")}>
                 <UiIcon type="questionMark" size={12} />{" "}

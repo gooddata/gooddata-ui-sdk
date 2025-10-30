@@ -12,6 +12,7 @@ export class DummySemanticQualityService implements ISemanticQualityService {
         return {
             issues: [],
             updatedAt: undefined,
+            status: "COMPLETED",
         };
     }
     async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {

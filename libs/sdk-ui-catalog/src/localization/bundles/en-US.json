@@ -67,6 +67,18 @@
         "value": "Current workspace",
         "comment": "Label for the native option in the origin filter."
     },
+    "analyticsCatalog.filter.visibility.title": {
+        "value": "AI visibility",
+        "comment": "Title of the header section containing the AI visibility filter."
+    },
+    "analyticsCatalog.filter.visibility.visible": {
+        "value": "Visible in AI results",
+        "comment": "Label for the visible option in the AI visibility filter."
+    },
+    "analyticsCatalog.filter.visibility.hidden": {
+        "value": "Hidden from AI results",
+        "comment": "Label for the hidden option in the AI visibility filter."
+    },
     "analyticsCatalog.filter.qualityCodes.title": {
         "value": "Validations",
         "comment": "Title of the header section containing the quality codes filter."
@@ -312,7 +324,11 @@
         "comment": "Label for the loading state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.action.success": {
-        "value": "Show affected objects",
+        "value": "Show objects",
         "comment": "Label for the success state of the quality score card action."
+    },
+    "analyticsCatalog.quality.scoreCard.lastCheck": {
+        "value": "Last checked: {date}",
+        "comment": "Text that is prepended to the date of the last check of the quality score card."
     }
 }

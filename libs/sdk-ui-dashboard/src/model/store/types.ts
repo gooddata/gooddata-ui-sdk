@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { AnyAction, Dispatch, EntityId, EntityState } from "@reduxjs/toolkit";
 
 import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
@@ -27,6 +28,7 @@ import { PermissionsState } from "./permissions/permissionsState.js";
 import { RenderModeState } from "./renderMode/renderModeState.js";
 import { SavingState } from "./saving/savingState.js";
 import { ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
+import { TabsState } from "./tabs/tabsState.js";
 import { UiState } from "./ui/uiState.js";
 import { UserState } from "./user/userState.js";
 import { UsersState } from "./users/usersState.js";
@@ -74,6 +76,8 @@ export interface DashboardState {
     attributeFilterConfigs: AttributeFilterConfigsState;
     /** @alpha */
     dateFilterConfigs: DateFilterConfigsState;
+    /** @alpha */
+    tabs: TabsState;
     catalog: CatalogState;
     user: UserState;
     /** @beta */

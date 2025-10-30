@@ -43,7 +43,7 @@ export function createDataView(
         title,
         deviation,
     );
-    const [attribute, attributeDescriptor] = createDateAttribute(item.attribute, item.title);
+    const [attribute, attributeDescriptor] = createDateAttribute(item.displayForm, item.title);
 
     const items = getLimitedDataOnly(group, trend);
     const attributeData = items.map((item) => item.to.value - item.from.value);

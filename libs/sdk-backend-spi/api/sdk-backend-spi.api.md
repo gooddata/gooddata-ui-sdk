@@ -906,6 +906,7 @@ export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
 export interface IFilterBaseOptions {
     createdBy?: string[];
     id?: string[];
+    isHidden?: boolean;
     search?: string;
     tags?: string[];
     title?: string;
@@ -1505,7 +1506,9 @@ export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IEle
 
 // @internal
 export interface ISemanticQualityService {
-    getQualityReport(): Promise<ISemanticQualityReport>;
+    getQualityReport(options?: {
+        signal?: AbortSignal;
+    }): Promise<ISemanticQualityReport>;
     triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }
 

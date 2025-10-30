@@ -8,3 +8,4 @@ export const catalog = "analytics-catalog";
 export const objectType = `${catalog}-object-type`;
 export const filter = `${catalog}-filter`;
 export const filterOrigin = `${filter}/origin`;
+export const filterVisibility = `${filter}/visibility`;

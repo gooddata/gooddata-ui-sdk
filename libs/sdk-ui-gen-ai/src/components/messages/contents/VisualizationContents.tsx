@@ -36,7 +36,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
@@ -76,6 +76,7 @@ export type VisualizationContentsProps = {
     colorPalette?: IColorPalette;
     enableNewPivotTable?: boolean;
     enableAccessibleChartTooltip?: boolean;
+    agGridToken?: string;
     onCopyToClipboard?: (data: { content: string }) => void;
 };
 
@@ -86,10 +87,13 @@ function VisualizationContentsComponentCore({
     colorPalette,
     enableNewPivotTable = false,
     enableAccessibleChartTooltip = false,
+    agGridToken,
     showSuggestions = false,
     onCopyToClipboard,
 }: VisualizationContentsProps) {
     const dispatch = useDispatch();
+    // Resolve agGridToken from context if provided via AgGridTokenProvider, otherwise use prop from Redux
+    const resolvedAgGridToken = useAgGridToken(agGridToken);
     const className = cx(
         "gd-gen-ai-chat__messages__content",
         "gd-gen-ai-chat__messages__content--visualization",
@@ -436,6 +440,7 @@ function VisualizationContentsComponentCore({
                                         {
                                             enableNewPivotTable,
                                             enableAccessibleChartTooltip,
+                                            agGridToken: resolvedAgGridToken,
                                         },
                                     );
                                 }
@@ -514,6 +519,7 @@ function VisualizationContentsComponentCore({
                                             {
                                                 enableNewPivotTable,
                                                 enableAccessibleChartTooltip,
+                                                agGridToken: resolvedAgGridToken,
                                             },
                                         );
                                     case "HEADLINE":
@@ -732,6 +738,7 @@ const renderTable = (
     props: {
         enableAccessibleChartTooltip?: boolean;
         enableNewPivotTable?: boolean;
+        agGridToken?: string;
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
@@ -742,6 +749,7 @@ const renderTable = (
             rows={dimensions}
             filters={filters}
             sortBy={sortBy}
+            config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
             onError={onError}
             onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
@@ -783,13 +791,14 @@ const mapStateToProps = (
     state: RootState,
 ): Pick<
     VisualizationContentsProps,
-    "colorPalette" | "enableNewPivotTable" | "enableAccessibleChartTooltip"
+    "colorPalette" | "enableNewPivotTable" | "enableAccessibleChartTooltip" | "agGridToken"
 > => {
     const settings = settingsSelector(state);
     return {
         colorPalette: colorPaletteSelector(state),
         enableNewPivotTable: settings?.enableNewPivotTable,
         enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
+        agGridToken: settings?.agGridToken,
     };
 };
 
