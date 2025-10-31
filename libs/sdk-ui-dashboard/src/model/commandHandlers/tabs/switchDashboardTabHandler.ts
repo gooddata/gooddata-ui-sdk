@@ -4,7 +4,7 @@ import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDisplayFormMetadataObject, IDashboardTab, ObjRef } from "@gooddata/sdk-model";
 
 import { SwitchDashboardTab } from "../../commands/tabs.js";
 import { DashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
@@ -20,6 +20,7 @@ import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { resolveFilterDisplayForms } from "../../utils/filterResolver.js";
 
 /**
@@ -68,15 +69,20 @@ export function* switchDashboardTabHandler(
             filters: currentFilterContext.filters || [],
         };
 
-        const updatedOldTab = {
+        const updatedOldTab: IDashboardTab<ExtendedDashboardWidget> = {
             ...currentTab,
             layout: currentLayout,
             filterContext: filterContextForTab,
-            dateFilterConfig: currentDateFilterConfig,
-            dateFilterConfigs: currentDateFilterConfigs,
-            attributeFilterConfigs: currentAttributeFilterConfigs,
+            ...(currentDateFilterConfig ? { dateFilterConfig: currentDateFilterConfig } : {}),
+            ...(currentDateFilterConfigs && currentDateFilterConfigs.length > 0
+                ? { dateFilterConfigs: currentDateFilterConfigs }
+                : {}),
+            ...(currentAttributeFilterConfigs && currentAttributeFilterConfigs.length > 0
+                ? { attributeFilterConfigs: currentAttributeFilterConfigs }
+                : {}),
         };
-        actions.push(tabsActions.updateTab(updatedOldTab as any));
+
+        actions.push(tabsActions.updateTab(updatedOldTab));
     }
 
     // 5. Set new active tab

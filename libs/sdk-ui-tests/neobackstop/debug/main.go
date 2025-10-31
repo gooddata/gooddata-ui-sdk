@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"neobackstop/config"
-	"neobackstop/converters"
-	"neobackstop/internals"
-	"neobackstop/scenario"
-	"neobackstop/screenshotter"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/gooddata/gooddata-neobackstop/config"
+	"github.com/gooddata/gooddata-neobackstop/converters"
+	"github.com/gooddata/gooddata-neobackstop/internals"
+	"github.com/gooddata/gooddata-neobackstop/scenario"
+	"github.com/gooddata/gooddata-neobackstop/screenshotter"
 
 	"github.com/playwright-community/playwright-go"
 )

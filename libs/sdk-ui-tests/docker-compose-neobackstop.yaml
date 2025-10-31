@@ -2,9 +2,7 @@
 
 services:
     backstop:
-        build:
-          context: ./neobackstop/test
-          dockerfile: Dockerfile
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-neobackstop:0.2.0
         volumes:
           - ./neobackstop/output:/usr/neobackstop/output
           - ./neobackstop/config.json:/usr/neobackstop/config.json:ro

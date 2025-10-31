@@ -92,6 +92,7 @@ export function updateExistingAttributeFilter(f: IDashboardAttributeFilter, val:
         ...f,
         attributeFilter: {
             ...f.attributeFilter,
+            negativeSelection: false,
             attributeElements: {
                 ...(isAttributeElementsByRef(f.attributeFilter.attributeElements)
                     ? {

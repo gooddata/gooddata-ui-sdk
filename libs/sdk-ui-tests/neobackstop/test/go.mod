@@ -1,8 +1,11 @@
 module neobackstop
 
-go 1.25.2
+go 1.25.3
 
-require github.com/playwright-community/playwright-go v0.5200.1
+require (
+	github.com/gooddata/gooddata-neobackstop v0.2.0
+	github.com/playwright-community/playwright-go v0.5200.1
+)
 
 require (
 	github.com/deckarep/golang-set/v2 v2.8.0 // indirect

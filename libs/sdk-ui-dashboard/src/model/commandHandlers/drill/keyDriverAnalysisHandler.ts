@@ -61,14 +61,14 @@ export function* keyDriverAnalysisHandler(
 
     const [from, to] = keyDriveItem.range;
 
-    if (!from.attributeHeaderItem.normalizedValue) {
+    if (!from.header.attributeHeaderItem.normalizedValue) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
             `Key drive analysis failed to resolve date attribute normalized value.`,
         );
     }
-    if (!to.attributeHeaderItem.normalizedValue) {
+    if (!to.header.attributeHeaderItem.normalizedValue) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
@@ -123,13 +123,13 @@ export function* keyDriverAnalysisHandler(
             dateAttribute: dateAttribute.attribute.ref,
             range: [
                 {
-                    date: from.attributeHeaderItem.normalizedValue,
-                    format: from.attributeHeader.format,
+                    date: from.header.attributeHeaderItem.normalizedValue,
+                    format: from.descriptor.attributeHeader.format,
                     value: keyDriveItem.values[0],
                 },
                 {
-                    date: to.attributeHeaderItem.normalizedValue,
-                    format: to.attributeHeader.format,
+                    date: to.header.attributeHeaderItem.normalizedValue,
+                    format: to.descriptor.attributeHeader.format,
                     value: keyDriveItem.values[1],
                 },
             ],

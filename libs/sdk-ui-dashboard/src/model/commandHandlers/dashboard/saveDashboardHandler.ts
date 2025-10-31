@@ -38,6 +38,7 @@ import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
+import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
@@ -140,6 +141,8 @@ function* createDashboardSaveContext(
     const dateFilterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
         selectDateFilterConfigsOverrides,
     );
+    const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
@@ -170,6 +173,7 @@ function* createDashboardSaveContext(
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+        ...(tabs ? { tabs: tabs as any, activeTabId } : {}),
         ...pluginsProp,
     };
 

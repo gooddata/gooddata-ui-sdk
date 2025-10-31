@@ -319,6 +319,14 @@ export interface IAttributeFilterCoreProps {
     enableAttributeFilterVirtualised?: boolean;
 
     /**
+     * Enables preserving existing filter selection during initialization.
+     * Prevents race condition where restored filters get cleared by SDK init process.
+     *
+     * @internal
+     */
+    enablePreserveSelectionDuringInit?: boolean;
+
+    /**
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;

@@ -43,29 +43,108 @@ const configData = fs.readFileSync(outputConfig, "utf8");
 const configJson = configData.slice("report(".length, -2);
 const data = JSON.parse(configJson);
 
+// Create a map of test files for O(1) lookup
+// Key: filename, Value: test status
+const testFileMap = new Map();
+const referenceFileMap = new Map();
+
 data.tests.forEach((test) => {
-    if (test.status === "pass") {
-        const referenceFile = test.pair?.reference;
-        const testFile = test.pair?.test;
-        const referenceFilePath = path.join(htmlReportPath, referenceFile);
-        const testFilePath = path.join(htmlReportPath, testFile);
-
-        if (!keepPassingScreenshots) {
-            if (fs.existsSync(testFilePath)) {
-                fs.unlinkSync(testFilePath);
-            }
-
-            if (fs.existsSync(referenceFilePath)) {
-                fs.unlinkSync(referenceFilePath);
-            }
-        }
+    if (test.pair?.test) {
+        // Extract just the filename from the path
+        const testFileName = path.basename(test.pair.test);
+        testFileMap.set(testFileName, test.status);
     }
-
-    if (test.status !== "pass" && test.status !== "fail") {
-        // eslint-disable-next-line no-console
-        console.log(`Processing "${test.pair?.label}", unrecognized test status: "${test.status}"`);
+    if (test.pair?.reference) {
+        // Extract just the filename from the path
+        const refFileName = path.basename(test.pair.reference);
+        referenceFileMap.set(refFileName, test.status);
     }
 });
+
+// Process all PNG files in the reference directory (not html-report)
+if (fs.existsSync(referenceDirectory)) {
+    const allFiles = fs.readdirSync(referenceDirectory);
+    const pngFiles = allFiles.filter((file) => file.endsWith(".png"));
+
+    // eslint-disable-next-line no-console
+    console.log(`Found ${pngFiles.length} PNG files in reference directory`);
+    // eslint-disable-next-line no-console
+    console.log(`Config contains ${data.tests.length} test results from this matrix run`);
+
+    let removedCount = 0;
+    let keptCount = 0;
+    let errorCount = 0;
+
+    pngFiles.forEach((file) => {
+        const filePath = path.join(referenceDirectory, file);
+
+        try {
+            // Check if this file is in our test results (from this matrix run)
+            const isInConfig = referenceFileMap.has(file) || testFileMap.has(file);
+
+            if (isInConfig) {
+                // File is part of this matrix run - check its status
+                const status = referenceFileMap.get(file) || testFileMap.get(file);
+
+                if (status === "pass" && !keepPassingScreenshots) {
+                    // Passed test - remove unless keeping all artifacts
+                    fs.unlinkSync(filePath);
+                    removedCount++;
+                } else if (status === "fail") {
+                    // Failed test - keep the file
+                    keptCount++;
+                } else if (status !== "pass" && status !== "fail") {
+                    // eslint-disable-next-line no-console
+                    console.log(`File ${file} has unrecognized test status: "${status}"`);
+                    keptCount++;
+                }
+            } else {
+                // File not in this matrix run's results - delete it
+                fs.unlinkSync(filePath);
+                removedCount++;
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`Warning: Could not process ${file}: ${error.message}`);
+            errorCount++;
+        }
+    });
+
+    // eslint-disable-next-line no-console
+    console.log(`Cleanup summary: ${removedCount} removed, ${keptCount} kept, ${errorCount} errors`);
+} else {
+    // eslint-disable-next-line no-console
+    console.log("Reference directory does not exist, skipping reference cleanup");
+}
+
+// Also clean up test images in html-report directory if they exist
+if (fs.existsSync(htmlReportPath)) {
+    const htmlReportFiles = fs.readdirSync(htmlReportPath);
+    const testPngFiles = htmlReportFiles.filter((file) => file.endsWith(".png"));
+
+    testPngFiles.forEach((file) => {
+        const filePath = path.join(htmlReportPath, file);
+
+        try {
+            // Check if this file is in our test results
+            const isInConfig = testFileMap.has(file);
+
+            if (isInConfig) {
+                const status = testFileMap.get(file);
+                if (status === "pass" && !keepPassingScreenshots) {
+                    fs.unlinkSync(filePath);
+                }
+                // Keep failed test screenshots
+            } else {
+                // Not in this matrix run - remove
+                fs.unlinkSync(filePath);
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`Warning: Could not process test file ${file}: ${error.message}`);
+        }
+    });
+}
 
 const updatedTests = data.tests.filter((test) => test.status === "fail");
 

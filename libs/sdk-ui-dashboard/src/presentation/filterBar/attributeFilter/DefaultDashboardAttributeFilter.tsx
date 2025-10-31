@@ -47,6 +47,7 @@ import {
     selectBackendCapabilities,
     selectEnableAttributeFilterVirtualisedList,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectEnablePreserveFilterSelectionDuringInit,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
@@ -117,6 +118,9 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableAttributeFilterVirtualisedList = useDashboardSelector(
         selectEnableAttributeFilterVirtualisedList,
+    );
+    const enablePreserveSelectionDuringInit = useDashboardSelector(
+        selectEnablePreserveFilterSelectionDuringInit,
     );
 
     const filterRef = useMemo(() => {
@@ -545,6 +549,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
                 enableDashboardFiltersApplyWithoutLoading
+                enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}
             />
         </AttributeFilterParentFilteringProvider>
     );

@@ -587,6 +587,17 @@ export interface ISettings {
      */
     enableDashboardTabs?: boolean;
 
+    /**
+     * Enable automatic reset of column sizing in pivot table when container width changes or column structure changes.
+     * This fixes issues where tables with growToFit don't expand to full width after tab switching.
+     */
+    enablePivotTableAutoSizeReset?: boolean;
+
+    /**
+     * Enable preserving filter selection during initialization
+     */
+    enablePreserveFilterSelectionDuringInit?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

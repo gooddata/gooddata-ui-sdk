@@ -103,6 +103,7 @@ export const useAttributeFilterController = (
         withoutApply: withoutApplyProp = false,
         enableDashboardFiltersApplyModes = false,
         enableDashboardFiltersApplyWithoutLoading = false,
+        enablePreserveSelectionDuringInit,
     } = props;
 
     const withoutApply = withoutApplyProp ?? enableDashboardFiltersApplyModes;
@@ -159,6 +160,7 @@ export const useAttributeFilterController = (
         staticElements,
         displayAsLabel,
         withoutApply,
+        enablePreserveSelectionDuringInit,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler,
