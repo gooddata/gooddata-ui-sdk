@@ -15,6 +15,7 @@ import {
 
 import { PivotTableNextCellSelectionConfig } from "./cellSelection.js";
 import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
+import { PivotTableNextExperimentalConfig } from "./experimental.js";
 import { PivotTableNextFormattingConfig } from "./formatting.js";
 import { PivotTableNextLayoutConfig } from "./layout.js";
 import { PivotTableNextAgGridLicenseConfig } from "./license.js";
@@ -31,7 +32,8 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextExecutionCancellingConfig &
     PivotTableNextLayoutConfig &
     PivotTableNextCellSelectionConfig &
-    PivotTableNextAgGridLicenseConfig;
+    PivotTableNextAgGridLicenseConfig &
+    PivotTableNextExperimentalConfig;
 
 /**
  * Props for the pivot table.

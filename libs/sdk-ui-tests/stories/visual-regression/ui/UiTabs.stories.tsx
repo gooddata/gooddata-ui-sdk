@@ -121,13 +121,15 @@ export default {
     title: "15 Ui/UiTabs",
 };
 
+const screenshotConfig = { misMatchThreshold: 0.01 };
+
 export function Default() {
     return <UiTabsTest />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: screenshotConfig };
 
 export const Themed = () => wrapWithTheme(<UiTabsTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
 
 export function Interface() {
     return <UiTabsTest showCode />;

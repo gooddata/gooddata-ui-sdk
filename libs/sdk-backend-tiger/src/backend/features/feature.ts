@@ -800,6 +800,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardTabs,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePivotTableAutoSizeReset,
+            "enablePivotTableAutoSizeReset",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePivotTableAutoSizeReset,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePreserveFilterSelectionDuringInit,
+            "enablePreserveFilterSelectionDuringInit",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePreserveFilterSelectionDuringInit,
+        ),
     };
 }
 

@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { Action, AnyAction, Middleware, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import defaultReduxSaga from "redux-saga";
@@ -91,6 +92,7 @@ export function createAttributeFilterHandlerStore(
                 hiddenElements: context.hiddenElements,
                 staticElements: context.staticElements,
                 withoutApply: context.withoutApply,
+                enablePreserveSelectionDuringInit: context.enablePreserveSelectionDuringInit,
             },
             originalFilter: context.attributeFilter,
         },

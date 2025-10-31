@@ -7,6 +7,10 @@ github.com/go-jose/go-jose/v3 v3.0.4 h1:Wp5HA7bLQcKnf6YYao/4kpRpVMp/yf6+pJKV8WFS
 github.com/go-jose/go-jose/v3 v3.0.4/go.mod h1:5b+7YgP7ZICgJDBdfjZaIt+H/9L9T/YQrVfLAMboGkQ=
 github.com/go-stack/stack v1.8.1 h1:ntEHSVwIt7PNXNpgPmVfMrNhLtgjlmnZha2kOpuRiDw=
 github.com/go-stack/stack v1.8.1/go.mod h1:dcoOX6HbPZSZptuspn9bctJ+N/CnF5gGygcUP3XYfe4=
+github.com/gooddata/gooddata-neobackstop v0.1.0 h1:wOA5OdWBEMU6/GkI/k6Hwi4Qrm/0gdx1b0J7qqSvhFA=
+github.com/gooddata/gooddata-neobackstop v0.1.0/go.mod h1:HrhD1YpnskZCGLQZOwRuGdxCL1qj/s6uW/dlUAZ6GsM=
+github.com/gooddata/gooddata-neobackstop v0.2.0 h1:hJsHi6B4S1NaPIP6KfA635ri1T9V8z9jP3MAkUYMKmY=
+github.com/gooddata/gooddata-neobackstop v0.2.0/go.mod h1:HrhD1YpnskZCGLQZOwRuGdxCL1qj/s6uW/dlUAZ6GsM=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/mitchellh/go-ps v1.0.0 h1:i6ampVEEF4wQFF+bkYfwYgY+F/uYJDktmvLPf7qIgjc=
 github.com/mitchellh/go-ps v1.0.0/go.mod h1:J4lOc8z8yJs6vUwklHw2XEIiT4z4C40KtWVN3nvg8Pg=

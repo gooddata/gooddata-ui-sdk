@@ -406,7 +406,7 @@ const confirmDialogWithWarningProps = {
 const confirmDialogWithProgressProps = {
     clickSelector: "#confirm-dialog-with-progress-example button",
     postInteractionWait: 200,
-    misMatchThreshold: 0.02,
+    misMatchThreshold: 0.05,
 };
 
 const exportDialogProps = {

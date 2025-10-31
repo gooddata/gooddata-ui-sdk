@@ -51,6 +51,7 @@ export function getOptions(
     },
 ): CompletionItem[] {
     const options = items
+        .filter((item) => !isCatalogItemHidden(item))
         .map((item): CompletionItem[] => {
             return getItems(intl, item, { canManage, canAnalyze, onCompletionSelected });
         })
@@ -269,4 +270,23 @@ export function getCatalogItemType(
         return "attribute";
     }
     return null;
+}
+
+/**
+ * Determines whether a catalog item should be hidden from suggestions
+ */
+function isCatalogItemHidden(item: CatalogItem): boolean {
+    if (isCatalogAttribute(item)) {
+        return item.attribute.isHidden === true;
+    }
+    if (isCatalogMeasure(item)) {
+        return item.measure.isHidden === true;
+    }
+    if (isCatalogFact(item)) {
+        return item.fact.isHidden === true;
+    }
+    if (isCatalogDateDataset(item)) {
+        return item.dataSet.isHidden === true;
+    }
+    return false;
 }

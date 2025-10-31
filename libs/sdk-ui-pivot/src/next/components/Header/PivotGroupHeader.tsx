@@ -32,7 +32,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const isTransposed = useIsTransposed();
     const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
 
-    const columnDefinition = colGroupDef.context.columnDefinition;
+    const columnDefinition = colGroupDef?.context?.columnDefinition;
     const isValueColDef = isValueColumnDef(columnDefinition);
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);

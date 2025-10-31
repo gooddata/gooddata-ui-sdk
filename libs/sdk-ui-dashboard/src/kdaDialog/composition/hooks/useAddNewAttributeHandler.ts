@@ -22,7 +22,7 @@ export function useAddNewAttributeHandler() {
                 setState({
                     attributeFilters: [
                         ...state.attributeFilters,
-                        createNewAttributeFilter(attr, attr.defaultDisplayForm, id),
+                        createNewAttributeFilter(attr, attr.defaultDisplayForm.ref, id),
                     ],
                 });
             }

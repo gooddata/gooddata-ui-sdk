@@ -32,7 +32,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     const { isPivoted } = useColumnDefs();
 
     const colDef = params.column.getColDef() as AgGridColumnDef;
-    const columnDefinition = colDef.context.columnDefinition;
+    const columnDefinition = colDef?.context?.columnDefinition;
     const isValueColDef = isValueColumnDef(columnDefinition);
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);

@@ -44,4 +44,5 @@ export interface AttributeFilterHandlerStoreContext {
     staticElements?: IAttributeElement[];
     eventListener: AttributeFilterHandlerEventListener;
     withoutApply?: boolean;
+    enablePreserveSelectionDuringInit?: boolean;
 }

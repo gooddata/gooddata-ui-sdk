@@ -14,9 +14,8 @@ import {
     IInsight,
     IKeyDriveAnalysis,
     IMeasureDescriptor,
-    IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { ExplicitDrill, ITableDataAttributeScope } from "@gooddata/sdk-ui";
 
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -43,7 +42,7 @@ export interface DashboardKeyDriverCombinationItem {
     measure: IMeasureDescriptor;
     difference: number;
     values: [number, number];
-    range: [IResultAttributeHeader & IAttributeDescriptor, IResultAttributeHeader & IAttributeDescriptor];
+    range: [ITableDataAttributeScope, ITableDataAttributeScope];
 }
 
 /**

@@ -122,6 +122,8 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableDashboardTabs = "enableDashboardTabs",
+    EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
+    EnablePreserveFilterSelectionDuringInit = "enablePreserveFilterSelectionDuringInit",
 }
 
 export type ITigerFeatureFlags = {
@@ -237,6 +239,8 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
+    enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
+    enablePreserveFilterSelectionDuringInit: (typeof FeatureFlagsValues)["enablePreserveFilterSelectionDuringInit"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -352,6 +356,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
     enableDashboardTabs: false,
+    enablePivotTableAutoSizeReset: false,
+    enablePreserveFilterSelectionDuringInit: false,
 };
 
 export const FeatureFlagsValues = {
@@ -468,4 +474,6 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableDashboardTabs: [true, false] as const,
+    enablePivotTableAutoSizeReset: [true, false] as const,
+    enablePreserveFilterSelectionDuringInit: [true, false] as const,
 };

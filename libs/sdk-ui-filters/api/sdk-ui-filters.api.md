@@ -414,6 +414,8 @@ export interface IAttributeFilterCoreProps {
     // @deprecated
     enableDashboardFiltersApplyWithoutLoading?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    // @internal
+    enablePreserveSelectionDuringInit?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
@@ -640,6 +642,8 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
     displayAsLabel?: ObjRef;
+    // @internal
+    enablePreserveSelectionDuringInit?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     withoutApply?: boolean;
@@ -1159,6 +1163,8 @@ export interface IUseAttributeFilterHandlerProps {
     backend: IAnalyticalBackend;
     // (undocumented)
     displayAsLabel: ObjRef;
+    // (undocumented)
+    enablePreserveSelectionDuringInit?: boolean;
     // (undocumented)
     filter: IAttributeFilter;
     // (undocumented)

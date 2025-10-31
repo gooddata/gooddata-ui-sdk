@@ -9,7 +9,6 @@ import { invariant } from "ts-invariant";
 
 import {
     IAttributeDisplayFormMetadataObject,
-    ICatalogDateAttribute,
     IInsight,
     IListedDashboard,
     IWidget,
@@ -34,7 +33,6 @@ import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
-    selectCatalogDateAttributes,
     selectDashboardTitle,
     selectInsightsMap,
     selectWidgetByRef,
@@ -75,7 +73,6 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const dateAttributes = useDashboardSelector(selectCatalogDateAttributes);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -140,7 +137,6 @@ export function DrillSelectDropdown({
                 dashboardList,
                 dashboardTitle,
                 attributeDisplayForms,
-                dateAttributes,
                 intl,
                 widget: widget as IWidget,
             }),
@@ -153,7 +149,6 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
-            dateAttributes,
         ],
     );
 
@@ -234,7 +229,6 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
-    dateAttributes,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -244,7 +238,6 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
-    dateAttributes: ICatalogDateAttribute[];
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -333,7 +326,7 @@ export const createDrillSelectItems = ({
         }
 
         if (isKeyDriveAnalysis(drillDefinition)) {
-            const items = getKdaKeyDriverCombinations(dateAttributes, drillDefinition, drillEvent);
+            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent);
             return items.map((item) => {
                 return {
                     name: getKeyDriverCombinationItemTitle(intl, item),

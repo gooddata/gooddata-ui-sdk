@@ -57,6 +57,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         enableDashboardFiltersApplyWithoutLoading = false,
         enableDashboardFiltersApplyModes = false,
+        enablePreserveSelectionDuringInit,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -120,6 +121,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     withoutApply={withoutApply ?? enableDashboardFiltersApplyModes}
                     overlayPositionType={overlayPositionType}
                     enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}
+                    enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}
                 >
                     {children}
                 </AttributeFilterContextProvider>

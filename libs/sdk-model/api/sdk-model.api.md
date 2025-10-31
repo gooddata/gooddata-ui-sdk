@@ -3651,8 +3651,10 @@ export interface ISettings {
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
+    enablePivotTableAutoSizeReset?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePreAggregationDatasets?: boolean;
+    enablePreserveFilterSelectionDuringInit?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;

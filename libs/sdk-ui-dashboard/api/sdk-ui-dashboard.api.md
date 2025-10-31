@@ -37,7 +37,6 @@ import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IAttributeDescriptor } from '@gooddata/sdk-model';
 import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -147,7 +146,6 @@ import { IPushData } from '@gooddata/sdk-ui';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
-import { IResultAttributeHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -155,6 +153,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
+import { ITableDataAttributeScope } from '@gooddata/sdk-ui';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
@@ -2442,7 +2441,7 @@ export interface DashboardKeyDriverCombinationItem {
     // (undocumented)
     measure: IMeasureDescriptor;
     // (undocumented)
-    range: [IResultAttributeHeader & IAttributeDescriptor, IResultAttributeHeader & IAttributeDescriptor];
+    range: [ITableDataAttributeScope, ITableDataAttributeScope];
     // (undocumented)
     type: "comparative" | "year-to-year";
     // (undocumented)
@@ -8982,6 +8981,9 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnablePreserveFilterSelectionDuringInit: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;

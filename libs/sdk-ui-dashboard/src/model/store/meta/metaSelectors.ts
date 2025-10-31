@@ -29,6 +29,7 @@ import {
 
 import { DashboardDescriptor } from "./metaState.js";
 import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEnableDashboardTabs } from "../config/configSelectors.js";
 import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
 import {
@@ -39,6 +40,7 @@ import {
     selectFilterContextIdentity,
 } from "../filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../layout/layoutSelectors.js";
+import { selectActiveTabId, selectTabs } from "../tabs/tabsSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -86,8 +88,24 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
  */
 export const selectPersistedDashboardFilterContext: DashboardSelector<
     IFilterContext | ITempFilterContext | undefined
-> = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.filterContext ?? undefined;
+> = createSelector(selectSelf, selectEnableDashboardTabs, (state, enableDashboardTabs) => {
+    const persistedDashboard = state.persistedDashboard;
+    if (!persistedDashboard) {
+        return undefined;
+    }
+
+    // If tabs are enabled and dashboard has tabs, get filter context from the active tab
+    if (enableDashboardTabs && persistedDashboard.tabs && persistedDashboard.tabs.length > 0) {
+        const persistedActiveTabId = persistedDashboard.activeTabId;
+        const activeTab = persistedActiveTabId
+            ? persistedDashboard.tabs.find((tab) => tab.identifier === persistedActiveTabId)
+            : undefined;
+        const effectiveTab = activeTab ?? persistedDashboard.tabs[0];
+        return effectiveTab.filterContext ?? undefined;
+    }
+
+    // No tabs or feature disabled - use root-level filter context
+    return persistedDashboard.filterContext ?? undefined;
 });
 
 /**
@@ -559,7 +577,7 @@ export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> =
 );
 
 /**
- * Selects persisted attribute filter configs - that is the attribute filter configs array object that was used to initialize the rest
+ * Selects persisted date filter configs - that is the date filter configs array object that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
@@ -567,6 +585,28 @@ export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> =
  */
 const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.dateFilterConfigs || [];
+});
+
+/**
+ * Selects persisted tabs - that is the tabs array that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardTabs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.tabs;
+});
+
+/**
+ * Selects persisted active tab ID - that is the active tab ID that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardActiveTabId = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.activeTabId;
 });
 
 /**
@@ -719,6 +759,27 @@ export const selectEvaluationFrequencyChanged: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selects a boolean indication if the dashboard has any changes to the tabs compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardTabs,
+    selectPersistedDashboardActiveTabId,
+    selectTabs,
+    selectActiveTabId,
+    (persistedTabs, persistedActiveTabId, currentTabs, currentActiveTabId) => {
+        // Check if active tab ID changed
+        if (persistedActiveTabId !== currentActiveTabId) {
+            return true;
+        }
+
+        // Compare tabs arrays
+        return !isEqual(persistedTabs, currentTabs);
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the title compared to the persisted version (if any)
  *
  * @internal
@@ -761,6 +822,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableUserFilterSaveChanged,
     selectIsDisableFilterViewsChanged,
     selectEvaluationFrequencyChanged,
+    selectIsTabsChanged,
     (
         isNew,
         layout,
@@ -773,6 +835,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableUserFilterSaveChanged,
         isDisableFilterViewsChanged,
         isEvaluationFrequencyChanged,
+        isTabsChanged,
     ) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
@@ -788,6 +851,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableUserFilterSaveChanged,
             isDisableFilterViewsChanged,
             isEvaluationFrequencyChanged,
+            isTabsChanged,
         ].some(Boolean);
     },
 );
@@ -803,6 +867,8 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
         selectFilterContextIdentity,
         selectBasicLayout,
         selectDateFilterConfigOverrides,
+        selectTabs,
+        selectActiveTabId,
         (
             persistedDashboard,
             dashboardDescriptor,
@@ -810,6 +876,8 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
             filterContextIdentity,
             layout,
             dateFilterConfig,
+            tabs,
+            activeTabId,
         ): IDashboardDefinition => {
             const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
                 ref: persistedDashboard?.ref,
@@ -829,6 +897,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
+                ...(tabs ? { tabs: tabs as any, activeTabId } : {}),
                 ...pluginsProp,
             };
         },

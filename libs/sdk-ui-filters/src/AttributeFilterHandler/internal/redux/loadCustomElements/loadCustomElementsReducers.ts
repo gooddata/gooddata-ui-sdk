@@ -80,7 +80,14 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
         });
     }
 
-    if (shouldOverrideKeys) {
+    const hasExistingSelection = state.selection.working.keys && state.selection.working.keys.length > 0;
+    const isSettingToEmpty = keys.length === 0;
+
+    // This prevents filters from being overriden with default selection if there is already a selection
+    const shouldPreserveExistingSelection =
+        state.config.enablePreserveSelectionDuringInit && isSettingToEmpty && hasExistingSelection;
+
+    if (shouldOverrideKeys && !shouldPreserveExistingSelection) {
         state.selection.working.keys = keys;
         state.selection.commited.keys = keys;
     }

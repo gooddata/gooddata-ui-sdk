@@ -934,3 +934,15 @@ export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createS
 export const selectEnableDashboardTabs: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableDashboardTabs ?? false;
 });
+
+/**
+ * Returns whether preserving filter selection during initialization is enabled.
+ *
+ * @alpha
+ */
+export const selectEnablePreserveFilterSelectionDuringInit: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enablePreserveFilterSelectionDuringInit ?? false;
+    },
+);

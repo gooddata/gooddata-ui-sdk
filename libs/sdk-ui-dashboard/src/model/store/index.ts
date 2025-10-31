@@ -106,6 +106,7 @@ export {
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
     selectEnableDashboardTabs,
+    selectEnablePreserveFilterSelectionDuringInit,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

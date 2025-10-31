@@ -59,6 +59,13 @@ export interface IAttributeFilterHandlerOptionsBase {
      * Several other behaviours are also affected by this option like dependent filters
      */
     withoutApply?: boolean;
+
+    /**
+     * If true, preserves existing filter selection during initialization. Prevents overriding by default selection.
+     *
+     * @internal
+     */
+    enablePreserveSelectionDuringInit?: boolean;
 }
 
 /**
@@ -119,7 +126,14 @@ export function newAttributeFilterHandler(
         withoutApply: false,
     },
 ): IAttributeFilterHandler {
-    const { selectionMode, hiddenElements, staticElements, displayAsLabel, withoutApply } = options;
+    const {
+        selectionMode,
+        hiddenElements,
+        staticElements,
+        displayAsLabel,
+        withoutApply,
+        enablePreserveSelectionDuringInit,
+    } = options;
 
     if (selectionMode === "multi") {
         return new MultiSelectAttributeFilterHandler({
@@ -130,6 +144,7 @@ export function newAttributeFilterHandler(
             staticElements,
             displayAsLabel,
             withoutApply,
+            enablePreserveSelectionDuringInit,
         });
     }
 
@@ -141,5 +156,6 @@ export function newAttributeFilterHandler(
         staticElements,
         displayAsLabel,
         withoutApply,
+        enablePreserveSelectionDuringInit,
     });
 }

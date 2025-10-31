@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
+import { useAutoSizeReset } from "./useAutoSizeReset.js";
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
-import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
@@ -27,15 +27,11 @@ export function useColumnSizingForFullHorizontalSpace() {
     const isColumnSizingForFullHorizontalSpace =
         shouldFillFullHorizontalSpace && !shouldAdaptSizeToCellContent;
 
-    const { autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
-    const { columnDefsFlat } = useColumnDefs();
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
-    // Reset autoSizeInitialized when column structure changes (e.g., adding totals)
-    useEffect(() => {
-        setAutoSizeInitialized(false);
-    }, [columnDefsFlat, setAutoSizeInitialized]);
+    useAutoSizeReset();
+    const { autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
 
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
