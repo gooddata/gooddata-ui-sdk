@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.7.0",
+    "version": "11.7.1",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
         "type": "git",
