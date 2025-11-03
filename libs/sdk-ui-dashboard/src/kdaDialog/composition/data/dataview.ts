@@ -288,6 +288,7 @@ export function createConfig(
     const { trend, deviation } = getTrendAndDeviation(item);
 
     const items = getLimitedDataOnly(group, trend);
+    const index = items.indexOf(item);
     const min = Math.min(
         items.reduce((c, item) => Math.min(c, item.to.value - item.from.value), Infinity),
         deviation,
@@ -296,6 +297,9 @@ export function createConfig(
         items.reduce((c, item) => Math.max(c, item.to.value - item.from.value), -Infinity),
         deviation,
     );
+
+    const firstColor = colorPalette[0]?.fill;
+    const color = firstColor ? `rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b})` : "rgb(20, 178, 226)";
 
     return {
         colorPalette,
@@ -326,18 +330,19 @@ export function createConfig(
             max: max?.toString(),
         },
         enableAccessibleTooltip: settings.enableAccessibleChartTooltip,
+        enableVisualizationFineTuning: true,
+        chartConfigOverride: getConfigOverride(index, color),
     };
 }
 
 function getLimitedDataOnly(group: KdaItemGroup, trend: number) {
-    const items = group.allDrivers.slice().sort((a, b) => {
-        if (trend < 0) {
-            return a.to.value - a.from.value - (b.to.value - b.from.value);
+    return group.allDrivers.slice(0, LIMIT_KDA).filter((item) => {
+        const diff = item.to.value - item.from.value;
+        if (trend >= 0) {
+            return diff >= 0;
         }
-        return b.to.value - b.from.value - (a.to.value - a.from.value);
+        return diff < 0;
     });
-
-    return items.slice(0, LIMIT_KDA);
 }
 
 function getTrendAndDeviation(item: KdaItem) {
@@ -348,4 +353,13 @@ function getTrendAndDeviation(item: KdaItem) {
         trend,
         deviation,
     };
+}
+
+function getConfigOverride(index: number, color: string) {
+    return `
+series:
+  '0':
+    data:
+      '${index}':
+        color: ${color}`;
 }

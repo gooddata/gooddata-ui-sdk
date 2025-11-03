@@ -2327,7 +2327,15 @@
                     },
                     "valueType": {
                         "type": "string",
-                        "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE"]
+                        "enum": [
+                            "TEXT",
+                            "HYPERLINK",
+                            "GEO",
+                            "GEO_LONGITUDE",
+                            "GEO_LATITUDE",
+                            "GEO_AREA",
+                            "IMAGE"
+                        ]
                     }
                 }
             },
@@ -3297,7 +3305,15 @@
                             "valueType": {
                                 "type": "string",
                                 "description": "Attribute value type.",
-                                "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE"]
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "IMAGE"
+                                ]
                             }
                         }
                     }
@@ -3797,6 +3813,10 @@
                             "NO_RESULTS",
                             "OUT_OF_TOPIC"
                         ]
+                    },
+                    "userTextFeedback": {
+                        "type": "string",
+                        "description": "User text feedback for the interaction."
                     }
                 }
             },
@@ -3861,6 +3881,63 @@
                     }
                 ]
             },
+            "ChangeAnalysisParams": {
+                "required": [
+                    "analyzedPeriod",
+                    "attributes",
+                    "dateAttribute",
+                    "filters",
+                    "measure",
+                    "referencePeriod",
+                    "useSmartAttributeSelection"
+                ],
+                "type": "object",
+                "properties": {
+                    "measure": {
+                        "$ref": "#/components/schemas/MeasureItem"
+                    },
+                    "dateAttribute": {
+                        "$ref": "#/components/schemas/AttributeItem"
+                    },
+                    "referencePeriod": {
+                        "type": "string",
+                        "description": "The reference time period"
+                    },
+                    "analyzedPeriod": {
+                        "type": "string",
+                        "description": "The analyzed time period"
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "description": "Attributes to analyze for significant changes",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeItem"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Optional filters to apply",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "useSmartAttributeSelection": {
+                        "type": "boolean",
+                        "description": "Whether to use smart attribute selection"
+                    }
+                },
+                "description": "Change analysis specification."
+            },
             "ChatHistoryInteraction": {
                 "required": ["chatHistoryInteractionId", "interactionFinished", "question", "routing"],
                 "type": "object",
@@ -3898,6 +3975,9 @@
                     },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
+                    },
+                    "changeAnalysisParams": {
+                        "$ref": "#/components/schemas/ChangeAnalysisParams"
                     },
                     "userFeedback": {
                         "type": "string",
@@ -4181,7 +4261,8 @@
                             "SEARCH",
                             "CREATE_VISUALIZATION",
                             "EXTEND_VISUALIZATION",
-                            "HOWTO"
+                            "HOWTO",
+                            "CHANGE_ANALYSIS"
                         ]
                     },
                     "reasoning": {
@@ -4225,6 +4306,9 @@
                     },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
+                    },
+                    "changeAnalysisParams": {
+                        "$ref": "#/components/schemas/ChangeAnalysisParams"
                     },
                     "threadIdSuffix": {
                         "type": "string",

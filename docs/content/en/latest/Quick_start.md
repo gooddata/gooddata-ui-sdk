@@ -9,7 +9,7 @@ GoodData Platform users must stay on GoodData.UI version 9, do not update to ver
 From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
 {{% /alert %}}
 
-The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app
+The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contains a sample setup for a React app.
 
 To see it in action:
 
@@ -26,7 +26,7 @@ The project includes:
     - `npm run clean` - to clear the results of the previous build.
     - `npm run refresh-md` - to update the [metadata catalogue](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications).
 - A development proxy to easily connect to the public demo data for visualizations without the need to work around CORS.
-- An example code for GoodData Rect SDK in the `App.tsx` file.
+- An example code for GoodData React SDK in the `App.tsx` file.
 
 ## What's next?
 
@@ -45,17 +45,16 @@ Here are a few ideas:
 By default, the project is configured to render a simple visualization from the demo workspace. So let's render
 a Dashboard instead!
 
-It's an easy 2 step solution. In `App.tsx` simply:
+It's an easy 2-step solution. In `App.tsx` simply:
 
 1.  Import the `Dashboard` component instead of the `InsightView` component.
-    `diff
+
+    ```diff
     - import { InsightView } from "@gooddata/sdk-ui-ext";
-    * import { Dashboard } from "@gooddata/sdk-ui-dashboard";
-      `
+    + import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+    ```
 
-            {{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
-
-    {{% /alert %}}
+    {{% alert %}}The term 'insight' is an obsolete expression for 'visualization' but is still employed within the SDK's components and functions.{{% /alert %}}
 
 2.  Replace the component used in JSX and provide the correct dashboard reference from the metadata catalog.
     ```diff
@@ -67,9 +66,9 @@ To learn more, see [Dashboard component](../references/dashboard_component/).
 
 ### Build a visualization programmatically
 
-If you don't want to use the pre-built visualization, you can easily define your visualization programatically!
+If you don't want to use the pre-built visualization, you can easily define your visualization programmatically!
 
-Let's build a simple pie chart in two steps!
+Let's build a simple pie chart in two steps.
 
 In `App.tsx` file:
 
@@ -137,12 +136,12 @@ Get your data in three steps:
     };
     ```
 
-2. Import the newly created component in the `App.tsx`:
+2. Import the newly created component in `App.tsx`:
     ```diff
     -   import { InsightView } from "@gooddata/sdk-ui-ext";
     +   import { MyTable } from "./MyTable";
     ```
-3. Import the newly created component in the `App.tsx`:
+3. Use the newly created component in `App.tsx`:
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} />
     +   <MyTable />
@@ -168,8 +167,8 @@ Theming is important for making embedded analytics look like it truly is a part 
     +       </ThemeProvider>
         </WorkspaceProvider>
     ```
-    Now `ThemeProvider` will load a theme from GoodData server, so if you have a custom one defined there - it should be applied.
-3. Let's override the way tooltips look like:
+    Now `ThemeProvider` will load a theme from GoodData server, so if you have a custom one defined there, it should be applied.
+3. Let's override what tooltips look like:
     ```diff
     -   <ThemeProvider>
     +   <ThemeProvider theme={{
@@ -187,10 +186,9 @@ Read more about the [theming](../learn/apply_theming/) and check out [an example
 ### Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers
 
 By default, GoodData React SDK is connecting to [the same demo data](https://www.gooddata.com/docs/cloud/getting-started/connect-data/#example-database)
-as you would get in your GoodData Cloud or GoodData.CN trial account.
+that you would get in your GoodData Cloud or GoodData.CN trial account.
 
-Here are a few steps on how to connect to
-your own data:
+Follow these steps to connect your own data:
 
 1. In package.json replace `hostname` and `workspaceId`:
     ```diff
@@ -199,21 +197,20 @@ your own data:
     +    "hostname": "https://<your-gooddata-instance-host>",
     +    "workspaceId": "<your-workspace-id>",
     ```
-2. Generate an [API Token](https://www.gooddata.com/docs/cloud/getting-started/create-api-token/)and add it to the `.env` file:
-   `     TIGER_API_TOKEN=<your_api_token>
- `
+2. Generate an [API Token](https://www.gooddata.com/docs/cloud/manage-organization/user-token/) and add it to the `.env` file:
+   `TIGER_API_TOKEN=<your_api_token>`.
 
     > Make sure you do not commit the `.env` file to your VCS (e.g. Git)
 
 3. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace: `npm run refresh-md`.
-4. Update the `App.tsx`. Since we've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
+4. Update `App.tsx`. Since we've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
    Select a new visualization to render from the catalog and update `App.tsx`:
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
     +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
     ```
 
-Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integrate_and_authenticate/cn_and_cloud_authentication/) .
+Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integrate_and_authenticate/cn_and_cloud_authentication/).
 
 ### Update from v9 to v10
 
