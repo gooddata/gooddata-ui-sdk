@@ -69,6 +69,7 @@ export function mapTypeToKey(
         case "JWT_JIT_PROVISIONING":
         case "ATTACHMENT_LINK_TTL":
         case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
+        case "DATA_LOCALE":
         case undefined:
             return fallback;
         default:
