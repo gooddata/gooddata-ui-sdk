@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
+
 import { ISeparators } from "@gooddata/sdk-model";
 
 /**
  * Configuration for formatting.
  *
- * @alpha
+ * @public
  */
 export interface PivotTableNextFormattingConfig {
     /**

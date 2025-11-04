@@ -85,7 +85,7 @@ function VisualizationContentsComponentCore({
     messageId,
     useMarkdown,
     colorPalette,
-    enableNewPivotTable = false,
+    enableNewPivotTable = true,
     enableAccessibleChartTooltip = false,
     agGridToken,
     showSuggestions = false,
@@ -802,7 +802,7 @@ const mapStateToProps = (
     };
 };
 
-export const VisualizationContentsComponent: any = connect(
+export const VisualizationContentsComponent = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(VisualizationContentsComponentCore);

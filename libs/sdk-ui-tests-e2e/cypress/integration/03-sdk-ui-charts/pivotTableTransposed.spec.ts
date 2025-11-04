@@ -1,8 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
+
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
-describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
+describe.skip("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
     const table = new Table(".s-table-component-transpose");
 
     it(

@@ -12,41 +12,73 @@ import { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
  * @internal
  */
 export function buildFilterQuery(filter: IFilterBaseOptions) {
-    const filters: string[] = [];
+    return joinClauses([
+        buildSearchClause(filter.search),
+        buildListClause("id", "in", filter.id),
+        buildListClause("id", "out", filter.excludeId),
+        buildContainsIcClause("title", filter.title),
+        buildListClause("createdBy.id", "in", filter.createdBy),
+        buildListClause("createdBy.id", "out", filter.excludeCreatedBy),
+        buildListClause("tags", "in", filter.tags),
+        buildListClause("tags", "out", filter.excludeTags),
+        buildIsHiddenClause(filter.isHidden),
+    ]);
+}
 
-    if (filter.search) {
-        const search = formatValue(filter.search);
+/**
+ * Builds the search clause applied across multiple fields
+ */
+function buildSearchClause(search?: string): string | undefined {
+    if (!search) {
+        return undefined;
+    }
+    const value = formatValue(search);
+    // Parentheses ensure the search filter is evaluated as a single condition.
+    // The OR `,` operator is used to match any of the properties.
+    return `(id==${value},title=containsic=${value},description=containsic=${value},tags=containsic=${value})`;
+}
+
+/**
+ * Builds a single clause for a list-based operator (in/out) if values are provided.
+ */
+function buildListClause(field: string, operator: "in" | "out", values?: string[]): string | undefined {
+    if (!hasValues(values)) {
+        return undefined;
+    }
+    return `${field}=${operator}=(${formatInValues(values)})`;
+}
+
+/**
+ * Builds a case-insensitive contains clause for a single string value.
+ */
+function buildContainsIcClause(field: string, value?: string): string | undefined {
+    if (!value) {
+        return undefined;
+    }
+    return `${field}=containsic=${formatValue(value)}`;
+}
+
+/**
+ * Builds the visibility clause for `isHidden`.
+ */
+function buildIsHiddenClause(isHidden?: boolean): string | undefined {
+    if (isHidden === true) {
+        return "isHidden==true";
+    }
+    if (isHidden === false) {
         // Parentheses ensure the search filter is evaluated as a single condition.
-        // The OR `,` operator is used to match any of the properties.
-        filters.push(
-            `(id==${search},title=containsic=${search},description=containsic=${search},tags=containsic=${search})`,
-        );
-    }
-
-    if (filter.id && filter.id.length > 0) {
-        filters.push(`id=in=(${formatInValues(filter.id)})`);
-    }
-    if (filter.title) {
-        filters.push(`title=containsic=${formatValue(filter.title)}`);
-    }
-    if (filter.createdBy && filter.createdBy.length > 0) {
-        filters.push(`createdBy.id=in=(${formatInValues(filter.createdBy)})`);
-    }
-    if (filter.tags && filter.tags.length > 0) {
-        filters.push(`tags=in=(${formatInValues(filter.tags)})`);
-    }
-    if (filter.isHidden === true) {
-        filters.push(`isHidden==true`);
-    }
-    if (filter.isHidden === false) {
-        filters.push(`isHidden==false,isHidden=isnull=true`);
-    }
-
-    // Join all filters if any
-    if (filters.length > 0) {
-        return filters.join(";");
+        return "(isHidden==false,isHidden=isnull=true)";
     }
     return undefined;
+}
+
+function joinClauses(clauses: Array<string | undefined>): string | undefined {
+    const present = clauses.filter(Boolean);
+    return present.length > 0 ? present.join(";") : undefined;
+}
+
+function hasValues(values?: string[]): values is string[] {
+    return Array.isArray(values) && values.length > 0;
 }
 
 /**

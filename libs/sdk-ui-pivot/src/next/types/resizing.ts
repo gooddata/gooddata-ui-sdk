@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IAttribute, IMeasure, Identifier, attributeLocalId } from "@gooddata/sdk-model";
@@ -12,7 +13,7 @@ import {
 } from "./locators.js";
 
 /**
- * @alpha
+ * @public
  */
 export type PivotTableNextColumnsSizingConfig = {
     /**
@@ -22,17 +23,17 @@ export type PivotTableNextColumnsSizingConfig = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
 
 /**
- * @alpha
+ * @public
  */
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
 /**
- * @alpha
+ * @public
  */
 export interface IColumnSizing {
     /**
@@ -84,7 +85,7 @@ export interface IManuallyResizedColumnsItem {
 //
 
 /**
- * @alpha
+ * @public
  */
 export interface IAbsoluteColumnWidth {
     value: number;
@@ -92,21 +93,21 @@ export interface IAbsoluteColumnWidth {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IAutoColumnWidth {
     value: "auto";
 }
 
 /**
- * @alpha
+ * @public
  */
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 /**
  * Object defining the {@link IAttributeColumnWidthItem} object body.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
@@ -114,7 +115,7 @@ export interface IAttributeColumnWidthItemBody {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IAttributeColumnWidthItem {
     attributeColumnWidthItem: IAttributeColumnWidthItemBody;
@@ -123,7 +124,7 @@ export interface IAttributeColumnWidthItem {
 /**
  * Object defining the {@link IMeasureColumnWidthItem} object body.
  *
- * @alpha
+ * @public
  */
 export interface IMeasureColumnWidthItemBody {
     width: ColumnWidth;
@@ -131,7 +132,7 @@ export interface IMeasureColumnWidthItemBody {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IMeasureColumnWidthItem {
     measureColumnWidthItem: IMeasureColumnWidthItemBody;
@@ -140,7 +141,7 @@ export interface IMeasureColumnWidthItem {
 /**
  * Object defining the {@link ISliceMeasureColumnWidthItem } object body.
  *
- * @alpha
+ * @public
  */
 export interface ISliceMeasureColumnWidthItemBody {
     width: ColumnWidth;
@@ -148,7 +149,7 @@ export interface ISliceMeasureColumnWidthItemBody {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface ISliceMeasureColumnWidthItem {
     sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
@@ -157,7 +158,7 @@ export interface ISliceMeasureColumnWidthItem {
 /**
  * Object defining the {@link IMixedValuesColumnWidthItemBody } object body.
  *
- * @alpha
+ * @public
  */
 export interface IMixedValuesColumnWidthItemBody {
     width: ColumnWidth;
@@ -165,7 +166,7 @@ export interface IMixedValuesColumnWidthItemBody {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IMixedValuesColumnWidthItem {
     mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
@@ -174,14 +175,14 @@ export interface IMixedValuesColumnWidthItem {
 /**
  * Object defining {@link IAllMeasureColumnWidthItem} object body.
  *
- * @alpha
+ * @public
  */
 export interface IAllMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IAllMeasureColumnWidthItem {
     measureColumnWidthItem: IAllMeasureColumnWidthItemBody;
@@ -190,7 +191,7 @@ export interface IAllMeasureColumnWidthItem {
 /**
  * Object defining the {@link IWeakMeasureColumnWidthItem} object body.
  *
- * @alpha
+ * @public
  */
 export interface IWeakMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
@@ -198,14 +199,14 @@ export interface IWeakMeasureColumnWidthItemBody {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IWeakMeasureColumnWidthItem {
     measureColumnWidthItem: IWeakMeasureColumnWidthItemBody;
 }
 
 /**
- * @alpha
+ * @public
  */
 export type ColumnWidthItem =
     | IAttributeColumnWidthItem
@@ -218,7 +219,7 @@ export type ColumnWidthItem =
 /**
  * Tests whether object is an instance of {@link IAbsoluteColumnWidth}
  *
- * @alpha
+ * @public
  */
 export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is IAbsoluteColumnWidth {
     return Number(columnWidth.value) === columnWidth.value;
@@ -227,7 +228,7 @@ export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is 
 /**
  * Tests whether object is an instance of {@link IAttributeColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem {
     return !isEmpty(obj) && (obj as IAttributeColumnWidthItem).attributeColumnWidthItem !== undefined;
@@ -236,7 +237,7 @@ export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColum
 /**
  * Tests whether object is an instance of {@link IMeasureColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
     return !isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
@@ -245,7 +246,7 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
 /**
  * Tests whether object is an instance of {@link ISliceMeasureColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem {
     return (
@@ -257,7 +258,7 @@ export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasur
 /**
  * Tests whether object is an instance of {@link IMixedValuesColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesColumnWidthItem {
     return (
@@ -269,7 +270,7 @@ export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesC
 /**
  * Tests whether object is an instance of {@link IAllMeasureColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureColumnWidthItem {
     return (
@@ -283,7 +284,7 @@ export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureCol
 /**
  * Tests whether object is an instance of {@link IWeakMeasureColumnWidthItem}
  *
- * @alpha
+ * @public
  */
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem {
     return (
@@ -297,7 +298,7 @@ export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureC
  * @param attributeOrId - Attribute specified by value or by localId reference
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
- * @alpha
+ * @public
  */
 export function newWidthForAttributeColumn(
     attributeOrId: IAttribute | string,
@@ -322,7 +323,7 @@ export function newWidthForAttributeColumn(
  *
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
- * @alpha
+ * @public
  */
 export function newWidthForAllMeasureColumns(
     width: number,
@@ -346,7 +347,7 @@ export function newWidthForAllMeasureColumns(
  * @param measureOrId - Measure specified either by value or by localId reference
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
- * @alpha
+ * @public
  */
 export function newWidthForAllColumnsForMeasure(
     measureOrId: IMeasure | string,
@@ -379,7 +380,7 @@ export function newWidthForAllColumnsForMeasure(
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
    @deprecated this method is deprecated, please use {@link setNewWidthForSelectedColumns} instead.
- * @alpha
+ * @public
  */
 export function newWidthForSelectedColumns(
     measureOrId: IMeasure | string,
@@ -401,7 +402,7 @@ export function newWidthForSelectedColumns(
  * @param locators - Attribute locators to narrow down selection
  * @param width - Width in pixels
  * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
- * @alpha
+ * @public
  */
 export function setNewWidthForSelectedColumns(
     measuresOrIds: IMeasure | string | IMeasure[] | string[] | null,

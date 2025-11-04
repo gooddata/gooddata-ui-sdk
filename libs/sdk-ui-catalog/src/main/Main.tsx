@@ -2,7 +2,7 @@
 
 import { type MouseEvent } from "react";
 
-import { defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -12,11 +12,13 @@ import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
 import { CatalogItemFeed, type ICatalogItemRef } from "../catalogItem/index.js";
 import {
-    FilterGroupByMemo,
+    FilterCreatedByMemo,
+    FilterGroupLayout,
     FilterObjectTypeMemo,
     FilterOriginGuard,
     FilterOriginMemo,
     FilterQualityMemo,
+    FilterResetButtonMemo,
     FilterTagsMemo,
     FilterVisibilityMemo,
     useFilterActions,
@@ -63,13 +65,16 @@ export function Main({
         <section className="gd-analytics-catalog__main">
             <header>
                 <FilterObjectTypeMemo />
-                <FilterGroupByMemo backend={backend} workspace={workspace} />
-                <FilterTagsMemo backend={backend} workspace={workspace} />
-                <FilterOriginGuard backend={backend} workspace={workspace}>
-                    <FilterOriginMemo />
-                </FilterOriginGuard>
-                {isQualityEnabled ? <FilterQualityMemo /> : null}
-                <FilterVisibilityMemo />
+                <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.title" />}>
+                    <FilterCreatedByMemo backend={backend} workspace={workspace} />
+                    <FilterTagsMemo backend={backend} workspace={workspace} />
+                    <FilterOriginGuard backend={backend} workspace={workspace}>
+                        <FilterOriginMemo />
+                    </FilterOriginGuard>
+                    {isQualityEnabled ? <FilterQualityMemo /> : null}
+                    <FilterVisibilityMemo />
+                    <FilterResetButtonMemo />
+                </FilterGroupLayout>
             </header>
             <CatalogItemFeed backend={backend} workspace={workspace}>
                 {({ items, next, hasNext, totalCount, status, updateItem }) => (

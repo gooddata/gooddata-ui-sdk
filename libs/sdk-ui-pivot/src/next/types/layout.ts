@@ -3,7 +3,7 @@
 /**
  * Layout-related configuration for the PivotTableNext component.
  *
- * @alpha
+ * @public
  */
 export interface PivotTableNextLayoutConfig {
     /**

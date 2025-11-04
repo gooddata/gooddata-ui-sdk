@@ -1403,6 +1403,38 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get AI Memory CreatedBy Users",
+                "description": "Returns a list of Users who created any memory item for this workspace",
+                "operationId": "memoryCreatedByUsers",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MemoryItemCreatedByUsers"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -1542,7 +1574,7 @@
         "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
-                "summary": "Get Analytics Catalog CreatedBy",
+                "summary": "Get Analytics Catalog CreatedBy Users",
                 "description": "Returns a list of Users who created any object for this workspace",
                 "operationId": "createdBy",
                 "parameters": [
@@ -4532,7 +4564,9 @@
                     "metricValueDelta",
                     "metricValueDeltaAbs",
                     "metricValueInAnalyzedPeriod",
-                    "metricValueInReferencePeriod"
+                    "metricValueInReferencePeriod",
+                    "overallMetricValueInAnalyzedPeriod",
+                    "overallMetricValueInReferencePeriod"
                 ],
                 "type": "object",
                 "properties": {
@@ -4577,6 +4611,16 @@
                     "isSignificantChange": {
                         "type": "boolean",
                         "description": "Whether the change is statistically significant"
+                    },
+                    "overallMetricValueInAnalyzedPeriod": {
+                        "type": "number",
+                        "description": "The overall metric value in the analyzed period",
+                        "format": "double"
+                    },
+                    "overallMetricValueInReferencePeriod": {
+                        "type": "number",
+                        "description": "The overall metric value in the reference period",
+                        "format": "double"
                     }
                 },
                 "description": "Individual change analysis data item"
@@ -4877,6 +4921,42 @@
                         }
                     }
                 }
+            },
+            "MemoryItemCreatedByUsers": {
+                "required": ["reasoning", "users"],
+                "type": "object",
+                "properties": {
+                    "users": {
+                        "type": "array",
+                        "description": "Users who created memory item",
+                        "items": {
+                            "$ref": "#/components/schemas/MemoryItemUser"
+                        }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Reasoning for error states"
+                    }
+                }
+            },
+            "MemoryItemUser": {
+                "required": ["firstname", "lastname", "userId"],
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "description": "User ID of the user who created memory item"
+                    },
+                    "firstname": {
+                        "type": "string",
+                        "description": "First name of the user who created memory item"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "description": "Last name of the user who created memory item"
+                    }
+                },
+                "description": "Users who created memory item"
             },
             "QualityIssue": {
                 "required": ["code", "detail", "id", "objects", "severity"],

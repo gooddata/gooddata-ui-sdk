@@ -21,7 +21,7 @@ import {
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
 import type { AsyncStatus } from "../async/index.js";
-import { useFilterState } from "../filter/index.js";
+import { useFilterState, useQualityFilter } from "../filter/index.js";
 import { useMounted } from "../hooks/useMounted.js";
 import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 import { useFullTextSearchState } from "../search/index.js";
@@ -30,18 +30,33 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
     const state = useFeedState();
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
-    const { types, origin, createdBy, tags, qualityIds, isHidden } = useFilterState();
+    const { types, origin, createdBy, tags, isHidden } = useFilterState();
+    const qualityIds = useQualityFilter();
     const { status, totalCount, totalCounts, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
+        let includeIds: string[] | undefined = id;
+        let excludeIds: string[] | undefined = undefined;
+
+        if (qualityIds) {
+            if (qualityIds.isInverted) {
+                excludeIds = qualityIds.values;
+            } else {
+                includeIds = [...new Set([...qualityIds.values, ...(id ?? [])])];
+            }
+        }
+
         return {
             backend,
             workspace,
             search,
             origin,
-            id: qualityIds.length > 0 ? [...qualityIds, ...(id ?? [])] : id,
-            tags,
-            createdBy,
+            id: includeIds,
+            excludeId: excludeIds,
+            createdBy: createdBy.isInverted ? undefined : createdBy.values,
+            excludeCreatedBy: createdBy.isInverted ? createdBy.values : undefined,
+            tags: tags.isInverted ? undefined : tags.values,
+            excludeTags: tags.isInverted ? tags.values : undefined,
             isHidden,
             pageSize,
         };
@@ -134,7 +149,7 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
         if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
             promises.push({ query: () => getMetricsQuery(queryOptions).query(), type: ObjectTypes.METRIC });
         }
-        if (!queryOptions.createdBy?.length) {
+        if (!queryOptions.createdBy?.length && !queryOptions.excludeCreatedBy?.length) {
             if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
                 promises.push({
                     query: () => getAttributesQuery(queryOptions).query(),

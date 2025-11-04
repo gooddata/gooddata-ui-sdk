@@ -3,7 +3,7 @@
 /**
  * AG Grid Enterprise license configuration.
  *
- * @alpha
+ * @public
  */
 export interface PivotTableNextAgGridLicenseConfig {
     /**

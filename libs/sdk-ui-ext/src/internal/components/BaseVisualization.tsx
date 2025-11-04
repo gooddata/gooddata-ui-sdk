@@ -267,7 +267,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             visFactory = this.props.visualizationCatalog
                 .forUri(
                     visUri,
-                    featureFlags?.enableNewPivotTable ?? false,
+                    featureFlags?.enableNewPivotTable ?? true,
                     featureFlags?.enableNewGeoPushpin ?? false,
                 )
                 .getFactory();

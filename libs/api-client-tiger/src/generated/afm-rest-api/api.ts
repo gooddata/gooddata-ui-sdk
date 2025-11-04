@@ -1509,6 +1509,33 @@ export interface MeasureResultHeader {
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 
+export interface MemoryItemCreatedByUsers {
+    /**
+     * Users who created memory item
+     */
+    users: Array<MemoryItemUser>;
+    /**
+     * Reasoning for error states
+     */
+    reasoning: string;
+}
+/**
+ * Users who created memory item
+ */
+export interface MemoryItemUser {
+    /**
+     * User ID of the user who created memory item
+     */
+    userId: string;
+    /**
+     * First name of the user who created memory item
+     */
+    firstname: string;
+    /**
+     * Last name of the user who created memory item
+     */
+    lastname: string;
+}
 /**
  * List of metrics to be used in the new visualization
  */
@@ -1589,6 +1616,14 @@ export interface MetricValueChange {
      * Whether the change is statistically significant
      */
     isSignificantChange: boolean;
+    /**
+     * The overall metric value in the analyzed period
+     */
+    overallMetricValueInAnalyzedPeriod: number;
+    /**
+     * The overall metric value in the reference period
+     */
+    overallMetricValueInReferencePeriod: number;
 }
 /**
  * Filter able to limit element values by label and related selected negated elements.
@@ -3281,7 +3316,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {string} workspaceId Workspace identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3688,6 +3723,46 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             if (limit !== undefined) {
                 localVarQueryParameter["limit"] = limit;
             }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        memoryCreatedByUsers: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -4399,7 +4474,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {string} workspaceId Workspace identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4578,6 +4653,23 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 resultId,
                 offset,
                 limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async memoryCreatedByUsers(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItemCreatedByUsers>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.memoryCreatedByUsers(
+                workspaceId,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5029,7 +5121,7 @@ export const ActionsApiFactory = function (
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5177,6 +5269,21 @@ export const ActionsApiFactory = function (
                     requestParameters.limit,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        memoryCreatedByUsers(
+            requestParameters: ActionsApiMemoryCreatedByUsersRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItemCreatedByUsers> {
+            return localVarFp
+                .memoryCreatedByUsers(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -5515,7 +5622,7 @@ export interface ActionsApiInterface {
 
     /**
      * Returns a list of Users who created any object for this workspace
-     * @summary Get Analytics Catalog CreatedBy
+     * @summary Get Analytics Catalog CreatedBy Users
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5616,6 +5723,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<KeyDriversResult>;
+
+    /**
+     * Returns a list of Users who created any memory item for this workspace
+     * @summary Get AI Memory CreatedBy Users
+     * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    memoryCreatedByUsers(
+        requestParameters: ActionsApiMemoryCreatedByUsersRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItemCreatedByUsers>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -6351,6 +6471,20 @@ export interface ActionsApiKeyDriverAnalysisResultRequest {
 }
 
 /**
+ * Request parameters for memoryCreatedByUsers operation in ActionsApi.
+ * @export
+ * @interface ActionsApiMemoryCreatedByUsersRequest
+ */
+export interface ActionsApiMemoryCreatedByUsersRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiMemoryCreatedByUsers
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for resolveLlmEndpoints operation in ActionsApi.
  * @export
  * @interface ActionsApiResolveLlmEndpointsRequest
@@ -6799,7 +6933,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * Returns a list of Users who created any object for this workspace
-     * @summary Get Analytics Catalog CreatedBy
+     * @summary Get Analytics Catalog CreatedBy Users
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6950,6 +7084,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.limit,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of Users who created any memory item for this workspace
+     * @summary Get AI Memory CreatedBy Users
+     * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public memoryCreatedByUsers(
+        requestParameters: ActionsApiMemoryCreatedByUsersRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .memoryCreatedByUsers(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -9445,7 +9596,7 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {string} workspaceId Workspace identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9659,6 +9810,46 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        memoryCreatedByUsers: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10110,7 +10301,7 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {string} workspaceId Workspace identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10206,6 +10397,23 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssuesCalculationStatus(
                 workspaceId,
                 processId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async memoryCreatedByUsers(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItemCreatedByUsers>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.memoryCreatedByUsers(
+                workspaceId,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -10475,7 +10683,7 @@ export const SmartFunctionsApiFactory = function (
         },
         /**
          * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy
+         * @summary Get Analytics Catalog CreatedBy Users
          * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10562,6 +10770,21 @@ export const SmartFunctionsApiFactory = function (
                     requestParameters.processId,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of Users who created any memory item for this workspace
+         * @summary Get AI Memory CreatedBy Users
+         * @param {SmartFunctionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        memoryCreatedByUsers(
+            requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<MemoryItemCreatedByUsers> {
+            return localVarFp
+                .memoryCreatedByUsers(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -10771,7 +10994,7 @@ export interface SmartFunctionsApiInterface {
 
     /**
      * Returns a list of Users who created any object for this workspace
-     * @summary Get Analytics Catalog CreatedBy
+     * @summary Get Analytics Catalog CreatedBy Users
      * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10833,6 +11056,19 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<QualityIssuesCalculationStatusResponse>;
+
+    /**
+     * Returns a list of Users who created any memory item for this workspace
+     * @summary Get AI Memory CreatedBy Users
+     * @param {SmartFunctionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    memoryCreatedByUsers(
+        requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<MemoryItemCreatedByUsers>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -11258,6 +11494,20 @@ export interface SmartFunctionsApiGetQualityIssuesCalculationStatusRequest {
 }
 
 /**
+ * Request parameters for memoryCreatedByUsers operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiMemoryCreatedByUsersRequest
+ */
+export interface SmartFunctionsApiMemoryCreatedByUsersRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiMemoryCreatedByUsers
+     */
+    readonly workspaceId: string;
+}
+
+/**
  * Request parameters for resolveLlmEndpoints operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiResolveLlmEndpointsRequest
@@ -11508,7 +11758,7 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
 
     /**
      * Returns a list of Users who created any object for this workspace
-     * @summary Get Analytics Catalog CreatedBy
+     * @summary Get Analytics Catalog CreatedBy Users
      * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11598,6 +11848,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
                 requestParameters.processId,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of Users who created any memory item for this workspace
+     * @summary Get AI Memory CreatedBy Users
+     * @param {SmartFunctionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public memoryCreatedByUsers(
+        requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .memoryCreatedByUsers(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

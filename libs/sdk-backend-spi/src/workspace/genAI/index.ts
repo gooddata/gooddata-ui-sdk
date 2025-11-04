@@ -4,6 +4,7 @@ import {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
+    IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
     IGenAIChatRouting,
     IGenAICreatedVisualizations,
@@ -207,6 +208,11 @@ export interface IMemoryItemsService {
      * Delete a memory item.
      */
     delete(id: string): Promise<void>;
+
+    /**
+     * Get memory created by users.
+     */
+    getCreatedByUsers(): Promise<IMemoryCreatedByUsers>;
 }
 
 /**
@@ -218,6 +224,7 @@ export interface IGenAIChatEvaluation {
     textResponse?: string;
     foundObjects?: IGenAIFoundObjects;
     createdVisualizations?: IGenAICreatedVisualizations;
+    changeAnalysisParams?: IGenAIChangeAnalysisParams;
     errorResponse?: string;
     chatHistoryThreadId?: string;
     chatHistoryInteractionId?: string;
@@ -279,6 +286,15 @@ export interface ISemanticQualityService {
 export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
     strategy?: MemoryItemStrategy[];
     isDisabled?: boolean;
+}
+
+/**
+ * Memory created by users response.
+ * @internal
+ */
+export interface IMemoryCreatedByUsers {
+    reasoning: string;
+    users: IUser[];
 }
 
 /**

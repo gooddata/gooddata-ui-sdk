@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { v4 as uuidv4 } from "uuid";
 
 import {
     GenAIChatInteractionUserFeedback,
     GenAIChatRoutingUseCase,
+    IGenAIChangeAnalysisParams,
     IGenAIVisualization,
     ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
@@ -121,6 +123,28 @@ export const makeVisualizationContents = (
 /**
  * @public
  */
+export type ChangeAnalysisContents = {
+    type: "changeAnalysis";
+    params: IGenAIChangeAnalysisParams;
+};
+
+/**
+ * @internal
+ */
+export const isChangeAnalysisContents = (contents: Contents): contents is ChangeAnalysisContents =>
+    contents.type === "changeAnalysis";
+
+/**
+ * @internal
+ */
+export const makeChangeAnalysisContents = (params: IGenAIChangeAnalysisParams): ChangeAnalysisContents => ({
+    type: "changeAnalysis",
+    params,
+});
+
+/**
+ * @public
+ */
 export type ErrorContents = {
     type: "error";
     text: string;
@@ -147,6 +171,7 @@ export type Contents =
     | RoutingContents
     | SearchContents
     | VisualizationContents
+    | ChangeAnalysisContents
     | ErrorContents;
 
 /**

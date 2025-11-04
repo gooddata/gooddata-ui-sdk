@@ -6,6 +6,7 @@
 
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
+import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
@@ -30,10 +31,19 @@ import { WrappedComponentProps } from 'react-intl';
 export type ColumnHeadersPosition = "top" | "left";
 
 // @public (undocumented)
+export type ColumnHeadersPositionNext = "left" | "top";
+
+// @public (undocumented)
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 // @public (undocumented)
+export type ColumnLocatorNext = IAttributeColumnLocatorNext | IMeasureColumnLocatorNext | ITotalColumnLocatorNext;
+
+// @public (undocumented)
 export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
+
+// @public (undocumented)
+export type ColumnResizedCallbackNext = (columnWidths: ColumnWidthItemNext[]) => void;
 
 // @public (undocumented)
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
@@ -41,17 +51,34 @@ export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 // @public (undocumented)
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
+// @public (undocumented)
+export type ColumnWidthItemNext = IAttributeColumnWidthItemNext | IMeasureColumnWidthItemNext | ISliceMeasureColumnWidthItemNext | IMixedValuesColumnWidthItemNext | IAllMeasureColumnWidthItemNext | IWeakMeasureColumnWidthItemNext;
+
+// @public (undocumented)
+export type ColumnWidthNext = IAbsoluteColumnWidthNext | IAutoColumnWidthNext;
+
 // @internal (undocumented)
 export function CorePivotTable(props: ICorePivotTableProps): JSX.Element;
 
 // @public (undocumented)
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
+// @public (undocumented)
+export type DefaultColumnWidthNext = "unset" | "autoresizeAll" | "viewport";
+
 // @public
 export function getPivotTableDimensions(buckets: IBucket[], isTransposed: boolean): IDimension[];
 
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {
+    // (undocumented)
+    allowGrowToFit?: boolean;
+    // (undocumented)
+    value: number;
+}
+
+// @public (undocumented)
+export interface IAbsoluteColumnWidthNext {
     // (undocumented)
     allowGrowToFit?: boolean;
     // (undocumented)
@@ -71,6 +98,18 @@ export interface IAllMeasureColumnWidthItemBody {
 }
 
 // @public
+export interface IAllMeasureColumnWidthItemBodyNext {
+    // (undocumented)
+    width: IAbsoluteColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface IAllMeasureColumnWidthItemNext {
+    // (undocumented)
+    measureColumnWidthItem: IAllMeasureColumnWidthItemBodyNext;
+}
+
+// @public
 export interface IAttributeColumnLocator {
     // (undocumented)
     attributeLocatorItem: IAttributeColumnLocatorBody;
@@ -80,6 +119,18 @@ export interface IAttributeColumnLocator {
 export interface IAttributeColumnLocatorBody {
     attributeIdentifier: Identifier;
     element?: string | null;
+}
+
+// @public
+export interface IAttributeColumnLocatorBodyNext {
+    attributeIdentifier: Identifier;
+    element?: string | null;
+}
+
+// @public
+export interface IAttributeColumnLocatorNext {
+    // (undocumented)
+    attributeLocatorItem: IAttributeColumnLocatorBodyNext;
 }
 
 // @public (undocumented)
@@ -96,8 +147,28 @@ export interface IAttributeColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
+// @public
+export interface IAttributeColumnWidthItemBodyNext {
+    // (undocumented)
+    attributeIdentifier: Identifier;
+    // (undocumented)
+    width: IAbsoluteColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface IAttributeColumnWidthItemNext {
+    // (undocumented)
+    attributeColumnWidthItem: IAttributeColumnWidthItemBodyNext;
+}
+
 // @public (undocumented)
 export interface IAutoColumnWidth {
+    // (undocumented)
+    value: "auto";
+}
+
+// @public (undocumented)
+export interface IAutoColumnWidthNext {
     // (undocumented)
     value: "auto";
 }
@@ -107,6 +178,21 @@ export interface IColumnSizing {
     columnWidths?: ColumnWidthItem[];
     defaultWidth?: DefaultColumnWidth;
     growToFit?: boolean;
+}
+
+// @public (undocumented)
+export interface IColumnSizingNext {
+    columnWidths?: ColumnWidthItemNext[];
+    defaultWidth?: DefaultColumnWidthNext;
+    growToFit?: boolean;
+}
+
+// @public
+export interface IColumnTextWrappingItem {
+    locators: ColumnLocatorNext[];
+    matchType?: "column" | "pivotGroup";
+    wrapHeaderText?: boolean;
+    wrapText?: boolean;
 }
 
 // @internal (undocumented)
@@ -128,6 +214,17 @@ export interface IMeasureColumnLocatorBody {
     measureIdentifier: Identifier;
 }
 
+// @public
+export interface IMeasureColumnLocatorBodyNext {
+    measureIdentifier: Identifier;
+}
+
+// @public
+export interface IMeasureColumnLocatorNext {
+    // (undocumented)
+    measureLocatorItem: IMeasureColumnLocatorBodyNext;
+}
+
 // @public (undocumented)
 export interface IMeasureColumnWidthItem {
     // (undocumented)
@@ -142,8 +239,30 @@ export interface IMeasureColumnWidthItemBody {
     width: ColumnWidth;
 }
 
+// @public
+export interface IMeasureColumnWidthItemBodyNext {
+    // (undocumented)
+    locators: ColumnLocatorNext[];
+    // (undocumented)
+    width: ColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface IMeasureColumnWidthItemNext {
+    // (undocumented)
+    measureColumnWidthItem: IMeasureColumnWidthItemBodyNext;
+}
+
 // @public (undocumented)
 export interface IMenu {
+    aggregations?: boolean;
+    aggregationsSubMenu?: boolean;
+    aggregationsSubMenuForRows?: boolean;
+    aggregationTypes?: TotalType[];
+}
+
+// @public
+export interface IMenuNext {
     aggregations?: boolean;
     aggregationsSubMenu?: boolean;
     aggregationsSubMenuForRows?: boolean;
@@ -162,6 +281,20 @@ export interface IMixedValuesColumnWidthItemBody {
     locators: IMeasureColumnLocator[];
     // (undocumented)
     width: ColumnWidth;
+}
+
+// @public
+export interface IMixedValuesColumnWidthItemBodyNext {
+    // (undocumented)
+    locators: IMeasureColumnLocatorNext[];
+    // (undocumented)
+    width: ColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface IMixedValuesColumnWidthItemNext {
+    // (undocumented)
+    mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBodyNext;
 }
 
 // @public (undocumented)
@@ -197,6 +330,24 @@ export interface IPivotTableConfig {
     separators?: ISeparators;
 }
 
+// @public
+export interface IPivotTableNextProps extends IVisualizationProps, IVisualizationCallbacks {
+    backend?: IAnalyticalBackend;
+    columns?: AttributesOrPlaceholders;
+    config?: PivotTableNextConfig;
+    drillableItems?: ExplicitDrill[];
+    execConfig?: IExecutionConfig;
+    filters?: NullableFiltersOrPlaceholders;
+    measures?: AttributesMeasuresOrPlaceholders;
+    onColumnResized?: ColumnResizedCallbackNext;
+    pageSize?: number;
+    placeholdersResolutionContext?: any;
+    rows?: AttributesOrPlaceholders;
+    sortBy?: SortsOrPlaceholders;
+    totals?: TotalsOrPlaceholders;
+    workspace?: string;
+}
+
 // @public (undocumented)
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
     backend?: IAnalyticalBackend;
@@ -230,6 +381,20 @@ export interface ISliceMeasureColumnWidthItemBody {
 }
 
 // @public
+export interface ISliceMeasureColumnWidthItemBodyNext {
+    // (undocumented)
+    locators: IMeasureColumnLocatorNext[];
+    // (undocumented)
+    width: ColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface ISliceMeasureColumnWidthItemNext {
+    // (undocumented)
+    sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBodyNext;
+}
+
+// @public
 export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator;
 
 // @public
@@ -247,6 +412,13 @@ export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator;
 // @public
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
 
+// @public (undocumented)
+export interface ITextWrapping {
+    columnOverrides?: IColumnTextWrappingItem[];
+    wrapHeaderText?: boolean;
+    wrapText?: boolean;
+}
+
 // @public
 export interface ITotalColumnLocator {
     // (undocumented)
@@ -257,6 +429,18 @@ export interface ITotalColumnLocator {
 export interface ITotalColumnLocatorBody {
     attributeIdentifier: Identifier;
     totalFunction: string;
+}
+
+// @public
+export interface ITotalColumnLocatorBodyNext {
+    attributeIdentifier: Identifier;
+    totalFunction: string;
+}
+
+// @public
+export interface ITotalColumnLocatorNext {
+    // (undocumented)
+    totalLocatorItem: ITotalColumnLocatorBodyNext;
 }
 
 // @public (undocumented)
@@ -273,8 +457,25 @@ export interface IWeakMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
+// @public
+export interface IWeakMeasureColumnWidthItemBodyNext {
+    // (undocumented)
+    locator: IMeasureColumnLocatorNext;
+    // (undocumented)
+    width: IAbsoluteColumnWidthNext;
+}
+
+// @public (undocumented)
+export interface IWeakMeasureColumnWidthItemNext {
+    // (undocumented)
+    measureColumnWidthItem: IWeakMeasureColumnWidthItemBodyNext;
+}
+
 // @public (undocumented)
 export type MeasureGroupDimension = "columns" | "rows";
+
+// @public
+export type MeasureGroupDimensionNext = "columns" | "rows";
 
 // @public
 export function newAttributeColumnLocator(attributeOrId: IAttribute | string, element?: string): IAttributeColumnLocator;
@@ -299,6 +500,63 @@ export function PivotTable(props: IPivotTableProps): JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
+
+// @public
+export function PivotTableNext(props: IPivotTableNextProps): JSX.Element;
+
+// @public
+export interface PivotTableNextAgGridLicenseConfig {
+    agGridToken?: string;
+}
+
+// @public (undocumented)
+export type PivotTableNextCellSelectionConfig = {
+    enableCellSelection?: boolean;
+};
+
+// @public (undocumented)
+export type PivotTableNextColumnsSizingConfig = {
+    columnSizing?: IColumnSizingNext;
+};
+
+// @public
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextExperimentalConfig;
+
+// @public
+export interface PivotTableNextExecutionCancellingConfig {
+    enableExecutionCancelling?: boolean;
+}
+
+// @public
+export interface PivotTableNextExperimentalConfig {
+    enablePivotTableAutoSizeReset?: boolean;
+}
+
+// @public
+export interface PivotTableNextFormattingConfig {
+    separators?: ISeparators;
+}
+
+// @public
+export interface PivotTableNextLayoutConfig {
+    maxHeight?: number;
+}
+
+// @public (undocumented)
+export type PivotTableNextMenuConfig = {
+    menu?: IMenuNext;
+};
+
+// @public (undocumented)
+export type PivotTableNextTextWrappingConfig = {
+    textWrapping?: ITextWrapping;
+};
+
+// @public (undocumented)
+export type PivotTableNextTranspositionConfig = {
+    measureGroupDimension?: MeasureGroupDimensionNext;
+    columnHeadersPosition?: ColumnHeadersPositionNext;
+};
 
 // @public
 export function setNewWidthForSelectedColumns(measuresOrIds: IMeasure | string | IMeasure[] | string[] | null, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;

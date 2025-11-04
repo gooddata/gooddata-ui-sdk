@@ -7,11 +7,14 @@ import {
     JsonApiMemoryItemPatchTypeEnum,
     JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { IMemoryItemsQuery, IMemoryItemsService } from "@gooddata/sdk-backend-spi";
+import { IMemoryCreatedByUsers, IMemoryItemsQuery, IMemoryItemsService } from "@gooddata/sdk-backend-spi";
 import { IMemoryItemDefinition, IMemoryItemMetadataObject } from "@gooddata/sdk-model";
 
 import { MemoryItemsQuery } from "./MemoryItemsQuery.js";
-import { convertMemoryItem } from "../../../convertors/fromBackend/MemoryItemConverter.js";
+import {
+    convertMemoryItem,
+    convertMemoryItemCreatedByUsers,
+} from "../../../convertors/fromBackend/MemoryItemConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class MemoryItemsService implements IMemoryItemsService {
@@ -101,5 +104,12 @@ export class MemoryItemsService implements IMemoryItemsService {
                 objectId: id,
             });
         });
+    }
+
+    async getCreatedByUsers(): Promise<IMemoryCreatedByUsers> {
+        const response = await this.authCall((client) =>
+            client.genAI.memoryCreatedByUsers({ workspaceId: this.workspaceId }),
+        );
+        return convertMemoryItemCreatedByUsers(response.data);
     }
 }

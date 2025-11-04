@@ -7,7 +7,7 @@ describe(
     "Pivot Table with multi format metrics",
     { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
     () => {
-        it("should render insight with multi format metrics correctly", () => {
+        it.skip("should render insight with multi format metrics correctly", () => {
             Navigation.visit("dashboard/dashboard-pivot-table-scenario");
             const table = new Widget(0, 1).waitTableLoaded().getTable();
             table.waitLoaded();

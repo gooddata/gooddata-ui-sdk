@@ -224,6 +224,8 @@ export type {
     AnalyticsCatalogCreatedBy as AfmAnalyticsCatalogCreatedBy,
     AnalyticsCatalogUser as AfmAnalyticsCatalogUser,
     AnalyticsCatalogTags as AfmAnalyticsCatalogTags,
+    MemoryItemCreatedByUsers as AfmMemoryItemCreatedByUsers,
+    MemoryItemUser as AfmMemoryItemUser,
     MetricValueChange as AfmMetricValueChange,
     QualityIssue as AfmQualityIssue,
     QualityIssueObject as AfmQualityIssueObject,

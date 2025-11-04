@@ -84,6 +84,8 @@ class DummyClassDescriptor extends BaseChartDescriptor {
 describe("BaseVisualization", () => {
     const defaultVisualizationsCatalog = new CatalogViaTypeToClassMap({
         table: DummyClassDescriptor,
+        // include tablenext so tests work when enableNewPivotTable is on
+        tablenext: DummyClassDescriptor,
     });
 
     const defaultProps: IBaseVisualizationProps = {
@@ -170,6 +172,7 @@ describe("BaseVisualization", () => {
 
         const visualizationCatalog = new CatalogViaTypeToClassMap({
             table: DummyTableDescriptor,
+            tablenext: DummyTableDescriptor,
             column: DummyColumnDescriptor,
         });
 
@@ -471,7 +474,7 @@ describe("BaseVisualization", () => {
                 }
             }
 
-            visualizationCatalog = new CatalogViaTypeToClassMap({ table: DummyTable });
+            visualizationCatalog = new CatalogViaTypeToClassMap({ table: DummyTable, tablenext: DummyTable });
         });
 
         afterEach(() => {

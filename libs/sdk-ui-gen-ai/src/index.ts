@@ -18,6 +18,7 @@ export type {
     SearchContents,
     RoutingContents,
     VisualizationContents,
+    ChangeAnalysisContents,
     ErrorContents,
     TextContentObject,
 } from "./model.js";

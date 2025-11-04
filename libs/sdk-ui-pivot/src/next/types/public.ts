@@ -24,6 +24,11 @@ import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resi
 import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
 import { PivotTableNextTranspositionConfig } from "./transposition.js";
 
+/**
+ * Configuration for the pivot table next.
+ *
+ * @public
+ */
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextTextWrappingConfig &
     PivotTableNextColumnsSizingConfig &
@@ -36,9 +41,16 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextExperimentalConfig;
 
 /**
- * Props for the pivot table.
+ * Props for the PivotTableNext component.
  *
- * @alpha
+ * @remarks
+ * PivotTableNext is the new implementation of the pivot table built on AG Grid Enterprise.
+ * It replaces the legacy PivotTable component and offers improved performance, accessibility,
+ * text wrapping, cell selection, and other enhanced features.
+ *
+ * See {@link PivotTableNext} for more information.
+ *
+ * @public
  */
 export interface IPivotTableNextProps extends IVisualizationProps, IVisualizationCallbacks {
     /**

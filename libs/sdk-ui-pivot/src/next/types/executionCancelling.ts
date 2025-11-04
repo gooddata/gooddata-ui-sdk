@@ -3,7 +3,7 @@
 /**
  * Configuration for execution cancelling.
  *
- * @alpha
+ * @public
  */
 export interface PivotTableNextExecutionCancellingConfig {
     /**

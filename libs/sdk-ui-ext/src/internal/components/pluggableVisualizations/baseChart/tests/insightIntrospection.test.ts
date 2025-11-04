@@ -2,11 +2,24 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsightDefinition, IMeasure, idRef } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { countBucketItems, countItemsOnAxes } from "../insightIntrospection.js";
+
+const createMeasure = (localIdentifier: string): IMeasure => ({
+    measure: {
+        localIdentifier,
+        definition: {
+            measureDefinition: {
+                item: idRef(localIdentifier),
+            },
+        },
+    },
+});
+
+const createMeasures = (localIdentifiers: string[]) => localIdentifiers.map(createMeasure);
 
 describe("countItemsOnAxesInMdObject", () => {
     it("should return number of items in buckets", () => {
@@ -19,8 +32,11 @@ describe("countItemsOnAxesInMdObject", () => {
                 visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
-                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) },
+                    { localIdentifier: BucketNames.MEASURES, items: createMeasures(["m1", "m2", "m3"]) },
+                    {
+                        localIdentifier: BucketNames.SECONDARY_MEASURES,
+                        items: createMeasures(["m1", "m2", "m3", "m4"]),
+                    },
                 ],
             },
         };
@@ -44,7 +60,7 @@ describe("countItemsOnAxes", () => {
                 visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
+                    { localIdentifier: BucketNames.MEASURES, items: createMeasures(["m1", "m2", "m3"]) },
                 ],
             },
         };
@@ -71,7 +87,7 @@ describe("countItemsOnAxes", () => {
                 visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
+                    { localIdentifier: BucketNames.MEASURES, items: createMeasures(["m1", "m2", "m3"]) },
                 ],
             },
         };
@@ -98,8 +114,11 @@ describe("countItemsOnAxes", () => {
                 visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
-                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) },
+                    { localIdentifier: BucketNames.MEASURES, items: createMeasures(["m1", "m2", "m3"]) },
+                    {
+                        localIdentifier: BucketNames.SECONDARY_MEASURES,
+                        items: createMeasures(["m1", "m2", "m3", "m4"]),
+                    },
                 ],
             },
         };

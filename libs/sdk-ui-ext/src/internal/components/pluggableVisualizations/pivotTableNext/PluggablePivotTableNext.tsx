@@ -92,7 +92,7 @@ export function createPivotTableNextConfig(
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
         agGridToken: config.agGridToken,
-        enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? false,
+        enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? true,
     };
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {

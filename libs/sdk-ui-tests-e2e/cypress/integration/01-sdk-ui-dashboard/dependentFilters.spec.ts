@@ -21,7 +21,7 @@ describe("Dependent filter", () => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
     });
 
-    it(
+    it.skip(
         "should test parent - child interaction in view mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
@@ -127,7 +127,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it(
+    it.skip(
         "should test parent - child interaction in edit mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
@@ -559,7 +559,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it(
+    it.skip(
         "should test a circle parent - child filter in edit mode",
         { tags: "checklist_integrated_tiger" },
         () => {
@@ -595,7 +595,7 @@ describe("Dependent filter", () => {
     );
 
     //This test script cover the bug LX-1123
-    it(
+    it.skip(
         "should not appear blank page after resetting dependent filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {

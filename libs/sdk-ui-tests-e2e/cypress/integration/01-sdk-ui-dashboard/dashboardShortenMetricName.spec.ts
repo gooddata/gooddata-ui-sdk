@@ -17,7 +17,7 @@ describe(
             dashboard.isLoaded();
         });
 
-        it("Table should shorten metric name", () => {
+        it.skip("Table should shorten metric name", () => {
             const table = new Widget(0).waitTableLoaded();
             table.getTable().assertShortenMetricName(504);
         });

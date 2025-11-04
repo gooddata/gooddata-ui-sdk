@@ -1,73 +1,112 @@
 // (C) 2025 GoodData Corporation
 
-import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { type PropsWithChildren, createContext, useContext, useMemo, useReducer } from "react";
 
-import type { ObjectOrigin } from "@gooddata/sdk-model";
+import { isEqual } from "lodash-es";
+
+import type { Identifier, ObjectOrigin, SemanticQualityIssueCode } from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/index.js";
+import { useQualityReportState } from "../quality/QualityContext.js";
+import { getQualityIssueIdsByCodes } from "../quality/utils.js";
+
+interface IFilterParams<T> {
+    values: T;
+    isInverted: boolean;
+}
 
 interface IFilterState {
     types: ObjectType[];
     origin: ObjectOrigin;
-    createdBy: string[];
-    tags: string[];
-    qualityIds: string[];
-    isHidden?: boolean;
+    createdBy: IFilterParams<string[]>;
+    tags: IFilterParams<string[]>;
+    qualityCodes: IFilterParams<SemanticQualityIssueCode[]>;
+    isHidden: boolean | undefined;
+}
+
+interface FilterState extends IFilterState {
+    // Derived state
+    isModified: boolean;
 }
 
 interface IFilterActions {
+    // Setters
     setTypes: (types: ObjectType[]) => void;
     setOrigin: (origin: ObjectOrigin) => void;
-    setCreatedBy: (createdBy: string[]) => void;
-    setTags: (tags: string[]) => void;
+    setCreatedBy: (params: IFilterParams<string[]>) => void;
+    setTags: (params: IFilterParams<string[]>) => void;
+    setQualityCodes: (params: IFilterParams<SemanticQualityIssueCode[]>) => void;
+    setIsHidden: (isHidden: boolean | undefined) => void;
+    // Actions
+    reset: () => void;
     toggleTag: (tag: string) => void;
-    setQualityIds: (qualityIds: string[]) => void;
-    setIsHidden: (isHidden?: boolean) => void;
 }
+
+type FilterReducerAction =
+    | { type: "setTypes"; payload: ObjectType[] }
+    | { type: "setOrigin"; payload: ObjectOrigin }
+    | { type: "setCreatedBy"; payload: IFilterParams<string[]> }
+    | { type: "setTags"; payload: IFilterParams<string[]> }
+    | { type: "setQualityCodes"; payload: IFilterParams<SemanticQualityIssueCode[]> }
+    | { type: "setIsHidden"; payload: boolean | undefined }
+    | { type: "reset" }
+    | { type: "toggleTag"; payload: string };
 
 const initialState: IFilterState = {
     types: [],
     origin: "ALL",
-    createdBy: [],
-    tags: [],
-    qualityIds: [],
+    createdBy: { values: [], isInverted: true },
+    tags: { values: [], isInverted: true },
+    qualityCodes: { values: [], isInverted: true },
     isHidden: undefined,
 };
 
+const initialFullState: FilterState = {
+    ...initialState,
+    // Derived state
+    isModified: false,
+};
+
 const initialActions: IFilterActions = {
+    // Setters
     setTypes: () => {},
     setOrigin: () => {},
     setCreatedBy: () => {},
     setTags: () => {},
-    toggleTag: () => {},
-    setQualityIds: () => {},
+    setQualityCodes: () => {},
     setIsHidden: () => {},
+    // Actions
+    reset: () => {},
+    toggleTag: () => {},
 };
 
-const FilterStateContext = createContext<IFilterState>(initialState);
+const FilterStateContext = createContext<FilterState>(initialFullState);
 const FilterActionsContext = createContext<IFilterActions>(initialActions);
 
 export function FilterProvider({ children }: PropsWithChildren) {
-    const [types, setTypes] = useState<ObjectType[]>(initialState.types);
-    const [origin, setOrigin] = useState<ObjectOrigin>(initialState.origin);
-    const [tags, setTags] = useState<string[]>(initialState.tags);
-    const [createdBy, setCreatedBy] = useState<string[]>(initialState.createdBy);
-    const [qualityIds, setQualityIds] = useState<string[]>(initialState.qualityIds);
-    const [isHidden, setIsHidden] = useState<boolean | undefined>(initialState.isHidden);
+    const [filters, dispatch] = useReducer(filterReducer, initialState);
 
-    const toggleTag = useCallback((tag: string) => {
-        setTags((tags) =>
-            tags.includes(tag) ? tags.filter((currentTag) => currentTag !== tag) : [...tags, tag],
-        );
-    }, []);
-
-    const state = useMemo(
-        () => ({ types, origin, createdBy, tags, qualityIds, isHidden }),
-        [types, origin, createdBy, tags, qualityIds, isHidden],
+    const state: FilterState = useMemo(
+        () => ({
+            ...filters,
+            // Derived state
+            isModified: !isEqual(filters, initialState),
+        }),
+        [filters],
     );
-    const actions = useMemo(
-        () => ({ setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds, setIsHidden }),
-        [setTypes, setOrigin, setCreatedBy, setTags, toggleTag, setQualityIds, setIsHidden],
+
+    const actions: IFilterActions = useMemo(
+        () => ({
+            setTypes: (types) => dispatch({ type: "setTypes", payload: types }),
+            setOrigin: (origin) => dispatch({ type: "setOrigin", payload: origin }),
+            setCreatedBy: (params) => dispatch({ type: "setCreatedBy", payload: params }),
+            setTags: (params) => dispatch({ type: "setTags", payload: params }),
+            setQualityCodes: (params) => dispatch({ type: "setQualityCodes", payload: params }),
+            setIsHidden: (hidden) => dispatch({ type: "setIsHidden", payload: hidden }),
+            reset: () => dispatch({ type: "reset" }),
+            toggleTag: (tag) => dispatch({ type: "toggleTag", payload: tag }),
+        }),
+        [],
     );
 
     return (
@@ -77,10 +116,78 @@ export function FilterProvider({ children }: PropsWithChildren) {
     );
 }
 
+function filterReducer(state: IFilterState, action: FilterReducerAction): IFilterState {
+    switch (action.type) {
+        // Setters
+        case "setTypes": {
+            if (isEqual(state.types, action.payload)) return state;
+            return { ...state, types: action.payload };
+        }
+        case "setOrigin": {
+            if (isEqual(state.origin, action.payload)) return state;
+            return { ...state, origin: action.payload };
+        }
+        case "setCreatedBy": {
+            if (isEqual(state.createdBy, action.payload)) return state;
+            return { ...state, createdBy: action.payload };
+        }
+        case "setTags": {
+            if (isEqual(state.tags, action.payload)) return state;
+            return { ...state, tags: action.payload };
+        }
+        case "setQualityCodes": {
+            if (isEqual(state.qualityCodes, action.payload)) return state;
+            return { ...state, qualityCodes: action.payload };
+        }
+        case "setIsHidden": {
+            if (isEqual(state.isHidden, action.payload)) return state;
+            return { ...state, isHidden: action.payload };
+        }
+        // Actions
+        case "reset": {
+            return initialState;
+        }
+        case "toggleTag": {
+            const tag = action.payload;
+            const tags = state.tags.values;
+            const nextTags = tags.includes(tag)
+                ? tags.filter((currentTag) => currentTag !== tag)
+                : [...tags, tag];
+            return {
+                ...state,
+                tags: {
+                    values: nextTags,
+                    isInverted: nextTags.length === 0,
+                },
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+}
+
 export function useFilterState() {
     return useContext(FilterStateContext);
 }
 
 export function useFilterActions() {
     return useContext(FilterActionsContext);
+}
+
+/**
+ * Hook that returns the derived quality ids from the quality codes filter state.
+ */
+export function useQualityFilter(): IFilterParams<Identifier[]> | undefined {
+    const { qualityCodes } = useFilterState();
+    const { issues } = useQualityReportState();
+    const { values, isInverted } = qualityCodes;
+
+    return useMemo(() => {
+        if (values.length === 0 || issues.length === 0) {
+            return undefined;
+        }
+        const ids = getQualityIssueIdsByCodes(issues, values, isInverted ? "excluded" : "included");
+        return { values: ids, isInverted };
+    }, [isInverted, values, issues]);
 }

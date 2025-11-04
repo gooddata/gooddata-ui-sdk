@@ -9,20 +9,18 @@ import type { IUser } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { useFilterActions } from "./FilterContext.js";
-import { FilterGroupLayout } from "./FilterGroupLayout.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
 import { testIds } from "../automation/index.js";
-
-const dataTestId = `${testIds.filter}/created-by`;
 
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
 };
 
-export function FilterGroupBy({ backend, workspace }: Props) {
+export function FilterCreatedBy({ backend, workspace }: Props) {
     const intl = useIntl();
+    const { createdBy } = useFilterState();
     const { setCreatedBy } = useFilterActions();
 
     const [queryKey, setQueryKey] = useState(0);
@@ -41,13 +39,13 @@ export function FilterGroupBy({ backend, workspace }: Props) {
     );
 
     const options = useMemo(() => sortUsers(result?.users), [result?.users]);
+    const selection = useMemo(
+        () => options.filter((item) => createdBy.values.includes(getItemKey(item))),
+        [options, createdBy.values],
+    );
 
     if (status === "loading" || status === "pending") {
-        return (
-            <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
-                <UiSkeleton itemsCount={1} itemWidth={54} itemHeight={27} itemBorderRadius={4} />
-            </FilterGroupLayout>
-        );
+        return <UiSkeleton itemsCount={1} itemWidth={100} itemHeight={27} itemBorderRadius={4} />;
     }
 
     if (status === "error") {
@@ -58,38 +56,36 @@ export function FilterGroupBy({ backend, workspace }: Props) {
     const isSyncing = reasoning !== "" && users.length === 0; // Metadata sync in progress
 
     return (
-        <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
-            <StaticFilter
-                options={options}
-                onChange={(selection) => setCreatedBy(selection.map(getItemKey))}
-                getItemKey={getItemKey}
-                getItemTitle={getItemTitle}
-                dataTestId={dataTestId}
-                header={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}
-                noDataMessage={
-                    isSyncing ? (
-                        reasoning
-                    ) : (
-                        <FormattedMessage id="analyticsCatalog.filter.createdBy.noOptions" />
-                    )
-                }
-                statusBar={isSyncing ? <></> : undefined}
-                actions={
-                    isSyncing ? (
-                        <UiButton
-                            onClick={refetch}
-                            label={intl.formatMessage({ id: "analyticsCatalog.filter.refresh" })}
-                            size="small"
-                            variant="primary"
-                        />
-                    ) : undefined
-                }
-            />
-        </FilterGroupLayout>
+        <StaticFilter
+            label={intl.formatMessage({ id: "analyticsCatalog.filter.createdBy.title" })}
+            options={options}
+            selection={selection}
+            isSelectionInverted={createdBy.isInverted}
+            onSelectionChange={(selection, isInverted) =>
+                setCreatedBy({ values: selection.map(getItemKey), isInverted })
+            }
+            getItemKey={getItemKey}
+            getItemTitle={getItemTitle}
+            dataTestId={testIds.filterCreatedBy}
+            noDataMessage={
+                isSyncing ? reasoning : <FormattedMessage id="analyticsCatalog.filter.createdBy.noOptions" />
+            }
+            statusBar={isSyncing ? <></> : undefined}
+            actions={
+                isSyncing ? (
+                    <UiButton
+                        onClick={refetch}
+                        label={intl.formatMessage({ id: "analyticsCatalog.filter.refresh" })}
+                        size="small"
+                        variant="primary"
+                    />
+                ) : undefined
+            }
+        />
     );
 }
 
-export const FilterGroupByMemo = memo(FilterGroupBy);
+export const FilterCreatedByMemo = memo(FilterCreatedBy);
 
 function getItemKey(item: IUser): string {
     return item.login;

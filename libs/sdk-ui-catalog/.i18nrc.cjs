@@ -11,8 +11,16 @@ module.exports = {
     debug: false,
     source: "src/**/*.{ts,js,tsx,jsx}",
     rules: [
+        // validate only this package's own keys
         {
-            pattern: [/.+/],
+            pattern: [/^(?!(gs)).*/],
+            filterTranslationFile: true,
+        },
+        // ignore global keys coming from external SDK translations (e.g., gs.*)
+        {
+            pattern: [/^gs\./],
+            filterTranslationFile: true,
+            ignore: true,
         },
     ],
 };

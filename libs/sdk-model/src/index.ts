@@ -1114,6 +1114,7 @@ export type {
     IGenAIVisualizationMetric,
     IGenAIActiveObject,
     IGenAISuggestion,
+    IGenAIChangeAnalysisParams,
     GenAIChatRoutingUseCase,
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,

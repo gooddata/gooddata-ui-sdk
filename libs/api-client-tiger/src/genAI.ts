@@ -22,4 +22,5 @@ export const tigerGenAIClientFactory = (
     | "triggerQualityIssuesCalculation"
     | "tags"
     | "createdBy"
+    | "memoryCreatedByUsers"
 > => new ActionsApi(undefined, "", axios);

@@ -1,6 +1,6 @@
 # Release process
 
-## NOTE: This document serves as a technical description, not a guide. You should never have to do this manually, always use the build jobs on CI servers.
+> :information_source: This document serves as a technical description, not a guide. You should never have to do this manually, always use the corresponding github workflows. Starting with version 11.7 all the releases are done via `gdc-ui`. For patching older versions, use workflows in this repository.
 
 The release process consists of two steps – bumping the version and publishing the new version. Both are described below.
 
@@ -45,26 +45,26 @@ This is a documentation of observed behavior of `rush version` command. The vari
 
 ### From state: prerelease (e.g. 8.0.0-alpha.#)
 
--   `rush version --bump --override-bump patch|minor|major`
+- `rush version --bump --override-bump patch|minor|major`
 
     **Result**: bumps to 8.0.0 - regardless of the value of --override-bump
 
     _Note_: The `override-prerelease-id` is ignored
 
--   `rush version --bump --override-bump preminor`
+- `rush version --bump --override-bump preminor`
 
     **Result**: bumps to 8.1.0-#
 
     _Note_: The `override-prerelease-id` value is taken into account. Thus running `rush version --bump --override-bump preminor --override-prerelease-id alpha`
     would result in bump to "8.1.0-alpha.#"
 
--   `rush version --bump --override-bump prerelease`
+- `rush version --bump --override-bump prerelease`
 
     **Result**: bumps to 8.0.0-alpha.#+1
 
     _Note_: the `override-prerelease-id` value is taken into account. Can be used to switch prerelease type. See below.
 
--   `rush version --bump --override-bump prerelease --override-prerelease-id beta`
+- `rush version --bump --override-bump prerelease --override-prerelease-id beta`
 
     **Result**: bumps to 8.0.0-beta.0; will not update changelogs
 
@@ -74,17 +74,17 @@ This is a documentation of observed behavior of `rush version` command. The vari
 
 ### From state: release (e.g. 8.0.0)
 
--   `rush version --bump --override-bump patch|minor|major`
+- `rush version --bump --override-bump patch|minor|major`
 
     **Result**: as expected, creates 8.0.1, 8.1.0 or 9.0.0
 
     _Note_: The `override-prerelease-id` is ignored
 
--   `rush version --bump --override-bump prerelease --override-prerelease-id alpha`
+- `rush version --bump --override-bump prerelease --override-prerelease-id alpha`
 
     **Result**: creates prerelease for next patch release. e.g.: 8.0.1-alpha.0
 
--   `rush version --bump --override-bump preminor --override-prerelease-id alpha`
+- `rush version --bump --override-bump preminor --override-prerelease-id alpha`
 
     **Result**: creates prerelease for the next minor release: 8.1.0-alpha.0
 
@@ -92,10 +92,10 @@ This is a documentation of observed behavior of `rush version` command. The vari
 
 It is important to remember that:
 
--   moving between prerelease version is possible and can be done as long as the next prerelease ID
-    compares 'greater' than current prerelease ID.
--   moving from prerelease version to official version is always about stripping away the `-*` part
-    of the release
--   moving from official version to prerelease of the next minor or patch version is possible.
--   moving from official version to prerelease of the next major version is not possible (seems like
-    this either has to be done 'manually' or using some kind of additional version overrides)
+- moving between prerelease version is possible and can be done as long as the next prerelease ID
+  compares 'greater' than current prerelease ID.
+- moving from prerelease version to official version is always about stripping away the `-*` part
+  of the release
+- moving from official version to prerelease of the next minor or patch version is possible.
+- moving from official version to prerelease of the next major version is not possible (seems like
+  this either has to be done 'manually' or using some kind of additional version overrides)

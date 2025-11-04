@@ -5,7 +5,7 @@ import { ColumnLocator } from "./locators.js";
 /**
  * Column text wrapping item that specifies text wrapping settings for specific column(s).
  *
- * @alpha
+ * @public
  */
 export interface IColumnTextWrappingItem {
     /**
@@ -37,7 +37,7 @@ export interface IColumnTextWrappingItem {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface ITextWrapping {
     /**
@@ -61,7 +61,7 @@ export interface ITextWrapping {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type PivotTableNextTextWrappingConfig = {
     /**

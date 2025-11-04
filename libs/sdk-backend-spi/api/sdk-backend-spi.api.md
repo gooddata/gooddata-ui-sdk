@@ -70,6 +70,7 @@ import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import { IGenAIChatRouting } from '@gooddata/sdk-model';
 import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
@@ -905,6 +906,9 @@ export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
 // @beta (undocumented)
 export interface IFilterBaseOptions {
     createdBy?: string[];
+    excludeCreatedBy?: string[];
+    excludeId?: string[];
+    excludeTags?: string[];
     id?: string[];
     isHidden?: boolean;
     search?: string;
@@ -956,6 +960,8 @@ export interface IForecastView {
 
 // @beta
 export interface IGenAIChatEvaluation {
+    // (undocumented)
+    changeAnalysisParams?: IGenAIChangeAnalysisParams;
     // (undocumented)
     chatHistoryInteractionId?: string;
     // (undocumented)
@@ -1121,6 +1127,14 @@ export interface IMeasuresQuery {
 // @public
 export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;
 
+// @internal
+export interface IMemoryCreatedByUsers {
+    // (undocumented)
+    reasoning: string;
+    // (undocumented)
+    users: IUser[];
+}
+
 // @public
 export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
     // (undocumented)
@@ -1147,6 +1161,7 @@ export type IMemoryItemsQueryResult = IPagedResource<IMemoryItemMetadataObject>;
 export interface IMemoryItemsService {
     create(item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;
     delete(id: string): Promise<void>;
+    getCreatedByUsers(): Promise<IMemoryCreatedByUsers>;
     getMemoryItemsQuery(): IMemoryItemsQuery;
     patch(id: string, item: Partial<IMemoryItemDefinition>): Promise<IMemoryItemMetadataObject>;
     update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject>;

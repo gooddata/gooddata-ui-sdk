@@ -5,12 +5,17 @@ import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
+import { v4 as uuid } from "uuid";
 
 import {
     IAccessControlAware,
     IDashboard,
     IDashboardDefinition,
+    IDashboardLayout,
     IDashboardObjectIdentity,
+    IDashboardTab,
+    IFilterContext,
+    ITempFilterContext,
 } from "@gooddata/sdk-model";
 
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
@@ -24,6 +29,7 @@ import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import {
@@ -40,6 +46,7 @@ import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.j
 import { savingActions } from "../../store/saving/index.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
@@ -112,6 +119,17 @@ export function getDashboardWithSharing(
     return dashboard;
 }
 
+function processExistingTabs(tabs: IDashboardTab<ExtendedDashboardWidget>[]): IDashboardTab[] {
+    return tabs.map((tab) => ({
+        ...tab,
+        layout: tab.layout ? processLayout(tab.layout) : undefined,
+    }));
+}
+
+function processLayout(layout: IDashboardLayout<ExtendedDashboardWidget>): IDashboardLayout {
+    return dashboardLayoutRemoveIdentity(layout as IDashboardLayout, isTemporaryIdentity);
+}
+
 /*
  * TODO: custom widget persistence; we need a new backend capability that indicates whether the
  *  backend can persist custom widget content (tiger can already, bear cannot). Based on that
@@ -146,6 +164,9 @@ function* createDashboardSaveContext(
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
+
     /*
      * When updating an existing dashboard, the services expect that the dashboard definition to use for
      * updating contains the identity of the existing dashboard.
@@ -160,6 +181,38 @@ function* createDashboardSaveContext(
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
 
+    // If tabs feature is enabled but no tabs exist, create a default tab with root-level properties
+    const rootFilterContext = filterContextDefinition
+        ? ({
+              ...filterContextIdentity,
+              ...filterContextDefinition,
+          } as IFilterContext | ITempFilterContext)
+        : undefined;
+
+    const shouldHaveTabs = enableDashboardTabs && (!tabs || tabs.length === 0);
+
+    const processedTabs: IDashboardTab[] | undefined =
+        shouldHaveTabs && rootFilterContext
+            ? [
+                  {
+                      identifier: uuid(),
+                      title: "",
+                      layout: layout ? processLayout(layout) : undefined,
+                      filterContext: rootFilterContext,
+                      dateFilterConfig,
+                      ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+                      ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
+                  },
+              ]
+            : tabs
+              ? processExistingTabs(tabs)
+              : undefined;
+
+    const defaultActiveTabId =
+        enableDashboardTabs && (!tabs || tabs.length === 0) && processedTabs
+            ? processedTabs[0].identifier
+            : activeTabId;
+
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
@@ -173,7 +226,7 @@ function* createDashboardSaveContext(
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-        ...(tabs ? { tabs: tabs as any, activeTabId } : {}),
+        ...(processedTabs ? { tabs: processedTabs, activeTabId: defaultActiveTabId } : {}),
         ...pluginsProp,
     };
 

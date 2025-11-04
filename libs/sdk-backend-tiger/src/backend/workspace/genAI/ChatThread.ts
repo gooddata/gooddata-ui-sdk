@@ -3,6 +3,12 @@
 import { EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
 import {
+    ChatHistoryInteraction,
+    ChatHistoryResult,
+    CreatedVisualization,
+    SearchResultObject,
+} from "@gooddata/api-client-tiger";
+import {
     IChatThread,
     IChatThreadHistory,
     IChatThreadQuery,
@@ -11,9 +17,21 @@ import {
 import {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
+    GenAIFilter,
+    GenAIObjectType,
+    IGenAIChangeAnalysisParams,
+    IGenAIChatInteraction,
+    IGenAIChatRouting,
+    IGenAICreatedVisualizations,
+    IGenAIFoundObjects,
     IGenAIUserContext,
+    IGenAIVisualization,
+    ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 
+import { convertFilter } from "../../../convertors/fromBackend/afm/FilterConverter.js";
+import { convertMeasure } from "../../../convertors/fromBackend/afm/MeasureConverter.js";
+import { convertAttribute } from "../../../convertors/fromBackend/AttributeConvertor.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
@@ -42,7 +60,7 @@ export class ChatThreadService implements IChatThread {
             );
         });
 
-        return response.data as IChatThreadHistory;
+        return convertChatHistoryResult(response.data);
     }
 
     async reset(): Promise<void> {
@@ -222,7 +240,8 @@ export class ChatThreadQuery implements IChatThreadQuery {
         // and then to a stream of IGenAIChatEvaluation.
         return textStream
             .pipeThrough(new EventSourceParserStream())
-            .pipeThrough(new ServerSentEventsDataParser());
+            .pipeThrough(new ServerSentEventsDataParser())
+            .pipeThrough(new ServerSentEventsDataConverter());
     }
 }
 
@@ -230,7 +249,10 @@ export class ChatThreadQuery implements IChatThreadQuery {
  * A transform stream from SSE to IGenAIChatEvaluation
  * @internal
  */
-class ServerSentEventsDataParser extends TransformStream<EventSourceMessage, IGenAIChatEvaluation> {
+class ServerSentEventsDataParser extends TransformStream<
+    EventSourceMessage,
+    Partial<ChatHistoryInteraction>
+> {
     constructor() {
         super({
             transform(event, controller) {
@@ -240,4 +262,156 @@ class ServerSentEventsDataParser extends TransformStream<EventSourceMessage, IGe
             },
         });
     }
+}
+
+/**
+ * A transform stream from SSE to IGenAIChatEvaluation
+ * @internal
+ */
+class ServerSentEventsDataConverter extends TransformStream<
+    Partial<ChatHistoryInteraction>,
+    IGenAIChatEvaluation
+> {
+    constructor() {
+        super({
+            transform(event, controller) {
+                controller.enqueue(convertChatEvaluation(event));
+            },
+        });
+    }
+}
+
+function convertChatHistoryResult(data: ChatHistoryResult): IChatThreadHistory {
+    return {
+        ...data,
+        interactions: data.interactions.map(convertChatHistoryInteraction),
+    };
+}
+
+function convertChatHistoryInteraction(data: ChatHistoryInteraction): IGenAIChatInteraction {
+    return {
+        question: data.question,
+        chatHistoryInteractionId: data.chatHistoryInteractionId,
+        interactionFinished: data.interactionFinished,
+        textResponse: data.textResponse,
+        userFeedback: data.userFeedback,
+        errorResponse: data.errorResponse,
+        routing: convertRouting(data.routing),
+        ...(data.foundObjects
+            ? {
+                  foundObjects: convertFoundObjects(data.foundObjects),
+              }
+            : {}),
+        ...(data.createdVisualizations
+            ? {
+                  createdVisualizations: convertCreatedVisualizations(data.createdVisualizations),
+              }
+            : {}),
+        ...(data.changeAnalysisParams
+            ? {
+                  changeAnalysisParams: convertChangeAnalysisParams(data.changeAnalysisParams),
+              }
+            : {}),
+    };
+}
+
+function convertChatEvaluation(data: Partial<ChatHistoryInteraction>): IGenAIChatEvaluation {
+    return {
+        ...(data.routing
+            ? {
+                  routing: convertRouting(data.routing),
+              }
+            : {}),
+        ...(data.question
+            ? {
+                  question: data.question,
+              }
+            : {}),
+        ...(data.textResponse
+            ? {
+                  textResponse: data.textResponse,
+              }
+            : {}),
+        ...(data.foundObjects
+            ? {
+                  foundObjects: convertFoundObjects(data.foundObjects),
+              }
+            : {}),
+        ...(data.createdVisualizations
+            ? {
+                  createdVisualizations: convertCreatedVisualizations(data.createdVisualizations),
+              }
+            : {}),
+        ...(data.changeAnalysisParams
+            ? {
+                  changeAnalysisParams: convertChangeAnalysisParams(data.changeAnalysisParams),
+              }
+            : {}),
+        ...(data.errorResponse
+            ? {
+                  errorResponse: data.errorResponse,
+              }
+            : {}),
+        ...(data.chatHistoryInteractionId
+            ? {
+                  chatHistoryInteractionId: data.chatHistoryInteractionId,
+              }
+            : {}),
+        ...(data.userFeedback
+            ? {
+                  userFeedback: data.userFeedback,
+              }
+            : {}),
+    };
+}
+
+function convertRouting(data: ChatHistoryInteraction["routing"]): IGenAIChatRouting {
+    return {
+        ...data,
+    };
+}
+
+function convertFoundObjects(data: Required<ChatHistoryInteraction>["foundObjects"]): IGenAIFoundObjects {
+    return {
+        reasoning: data.reasoning,
+        objects: data.objects?.map(convertFoundObject) ?? [],
+    };
+}
+
+function convertFoundObject(data: SearchResultObject): ISemanticSearchResultItem {
+    return {
+        ...data,
+        type: data.type as GenAIObjectType,
+    };
+}
+
+function convertCreatedVisualizations(
+    data: Required<ChatHistoryInteraction>["createdVisualizations"],
+): IGenAICreatedVisualizations {
+    return {
+        objects: data.objects?.map(convertCreatedVisualization) ?? [],
+        reasoning: data.reasoning,
+        suggestions: data.suggestions,
+    };
+}
+
+function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualization {
+    return {
+        ...data,
+        filters: data.filters.map((f) => {
+            return f as GenAIFilter;
+        }),
+    };
+}
+
+function convertChangeAnalysisParams(
+    data: Required<ChatHistoryInteraction>["changeAnalysisParams"],
+): IGenAIChangeAnalysisParams {
+    return {
+        ...data,
+        measure: convertMeasure(data.measure),
+        dateAttribute: convertAttribute(data.dateAttribute),
+        attributes: data.attributes?.map(convertAttribute) ?? [],
+        filters: data.filters?.map(convertFilter) ?? [],
+    };
 }

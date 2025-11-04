@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.8.0-alpha.2",
+    "version": "11.8.0-alpha.3",
     "description": "GoodData GenAI SDK",
     "repository": {
         "type": "git",
@@ -73,6 +73,8 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
+        "@gooddata/sdk-ui-dashboard": "workspace:*",
+        "@gooddata/sdk-ui-filters": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "@gooddata/util": "workspace:*",

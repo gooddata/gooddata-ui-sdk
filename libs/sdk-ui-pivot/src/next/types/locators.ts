@@ -5,14 +5,14 @@ import { isEmpty } from "lodash-es";
 import { IAttribute, IMeasure, Identifier, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
 /**
  * Locates all columns for an attribute or columns for particular attribute element.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeColumnLocator {
     attributeLocatorItem: IAttributeColumnLocatorBody;
@@ -21,7 +21,7 @@ export interface IAttributeColumnLocator {
 /**
  * Locates table column by column measure's localId.
  *
- * @alpha
+ * @public
  */
 export interface IMeasureColumnLocator {
     measureLocatorItem: IMeasureColumnLocatorBody;
@@ -30,7 +30,7 @@ export interface IMeasureColumnLocator {
 /**
  * Locates all columns for a columns for particular total.
  *
- * @alpha
+ * @public
  */
 export interface ITotalColumnLocator {
     totalLocatorItem: ITotalColumnLocatorBody;
@@ -39,7 +39,7 @@ export interface ITotalColumnLocator {
 /**
  * Object defining the {@link IAttributeColumnLocator} object body.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeColumnLocatorBody {
     /**
@@ -56,7 +56,7 @@ export interface IAttributeColumnLocatorBody {
 /**
  * Object defining the {@link IMeasureColumnLocator} object body.
  *
- * @alpha
+ * @public
  */
 export interface IMeasureColumnLocatorBody {
     /**
@@ -68,7 +68,7 @@ export interface IMeasureColumnLocatorBody {
 /**
  * Object defining the {@link ITotalColumnLocator} object body.
  *
- * @alpha
+ * @public
  */
 export interface ITotalColumnLocatorBody {
     /**
@@ -85,7 +85,7 @@ export interface ITotalColumnLocatorBody {
 /**
  * Tests whether object is an instance of {@link IAttributeColumnLocator}
  *
- * @alpha
+ * @public
  */
 export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
     return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
@@ -94,7 +94,7 @@ export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnL
 /**
  * Tests whether object is an instance of {@link IMeasureColumnLocator}
  *
- * @alpha
+ * @public
  */
 export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator {
     return !isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
@@ -103,7 +103,7 @@ export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocat
 /**
  * Tests whether object is an instance of {@link ITotalColumnLocator}
  *
- * @alpha
+ * @public
  */
 export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator {
     return !isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
@@ -124,7 +124,7 @@ export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator {
  * @param attributeOrId - Column attribute specified by either value or by localId reference
  * @param element - specify attribute element URI or primary key; if not specified, the locator will match
  *  all elements of the attribute
- * @alpha
+ * @public
  */
 export function newAttributeColumnLocator(
     attributeOrId: IAttribute | string,
@@ -158,7 +158,7 @@ export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasur
  *
  * @param attributeOrId - Column attribute specified by either value or by localId reference
  * @param totalFunction - Function for the total, such as sum, max, min...
- * @alpha
+ * @public
  */
 export function newTotalColumnLocator(
     attributeOrId: IAttribute | string,

@@ -1,7 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { JsonApiMemoryItemOutWithLinks, JsonApiUserIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
-import { IMemoryItemMetadataObject } from "@gooddata/sdk-model";
+import { invariant } from "ts-invariant";
+
+import {
+    type AfmMemoryItemCreatedByUsers,
+    type AfmMemoryItemUser,
+    type JsonApiMemoryItemOutWithLinks,
+    type JsonApiUserIdentifierOutWithLinks,
+} from "@gooddata/api-client-tiger";
+import { IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
+import { IMemoryItemMetadataObject, IUser, idRef } from "@gooddata/sdk-model";
 
 import { IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 
@@ -32,5 +40,31 @@ export function convertMemoryItem(
         production: true,
         deprecated: false,
         unlisted: false,
+    };
+}
+
+export function convertMemoryItemCreatedByUsers(
+    response: AfmMemoryItemCreatedByUsers,
+): IMemoryCreatedByUsers {
+    const { users = [], reasoning = "" } = response ?? {};
+
+    return {
+        users: users.map(convertMemoryItemCreatedByUser),
+        reasoning,
+    };
+}
+
+function convertMemoryItemCreatedByUser(user: AfmMemoryItemUser): IUser {
+    invariant(user.userId, "Memory Item creator user is missing userId.");
+
+    const firstName = user.firstname;
+    const lastName = user.lastname;
+
+    return {
+        ref: idRef(user.userId, "user"),
+        login: user.userId,
+        firstName,
+        lastName,
+        fullName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
     };
 }

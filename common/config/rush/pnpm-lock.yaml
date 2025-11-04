@@ -3974,6 +3974,12 @@ importers:
       '@gooddata/sdk-ui-charts':
         specifier: workspace:*
         version: link:../sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard':
+        specifier: workspace:*
+        version: link:../sdk-ui-dashboard
+      '@gooddata/sdk-ui-filters':
+        specifier: workspace:*
+        version: link:../sdk-ui-filters
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../sdk-ui-kit

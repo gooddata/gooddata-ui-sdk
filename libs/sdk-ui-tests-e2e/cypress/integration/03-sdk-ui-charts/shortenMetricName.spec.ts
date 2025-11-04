@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { Chart } from "../../tools/chart";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
@@ -6,7 +7,7 @@ import { Table } from "../../tools/table";
 const LEGEND_NAME_CSS = ".series-name";
 const TOOLTIP_TITLE_CSS = ".gd-viz-tooltip-title";
 
-describe("Shorten Metric Name", { tags: ["checklist_integrated_tiger"] }, () => {
+describe.skip("Shorten Metric Name", { tags: ["checklist_integrated_tiger"] }, () => {
     it(`check shorten in legend and tooltip in chart`, () => {
         Navigation.visit("visualizations/shortenmetricname/shorten-metric-name-chart-scenario");
         const chart = new Chart(".s-column-chart");

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 /**
- * @alpha
+ * @public
  */
 export type PivotTableNextCellSelectionConfig = {
     /**

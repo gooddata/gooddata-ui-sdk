@@ -67,8 +67,11 @@ export interface ICatalogItemQueryOptions {
     search?: string;
     origin: ObjectOrigin;
     id?: string[];
+    excludeId?: string[];
     createdBy?: string[];
+    excludeCreatedBy?: string[];
     tags?: string[];
+    excludeTags?: string[];
     isHidden?: boolean;
     pageSize?: number;
 }

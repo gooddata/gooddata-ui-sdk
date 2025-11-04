@@ -12,8 +12,11 @@ export function getDashboardsQuery({
     search,
     origin,
     id,
+    excludeId,
     createdBy,
+    excludeCreatedBy,
     tags,
+    excludeTags,
     isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -27,7 +30,7 @@ export function getDashboardsQuery({
         .withMetaInclude(["permissions"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
 }
 
 export function getInsightsQuery({
@@ -36,8 +39,11 @@ export function getInsightsQuery({
     search,
     origin,
     id,
+    excludeId,
     createdBy,
+    excludeCreatedBy,
     tags,
+    excludeTags,
     isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -50,7 +56,7 @@ export function getInsightsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
 }
 
 export function getMetricsQuery({
@@ -59,8 +65,11 @@ export function getMetricsQuery({
     search,
     origin,
     id,
+    excludeId,
     createdBy,
+    excludeCreatedBy,
     tags,
+    excludeTags,
     isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -73,7 +82,7 @@ export function getMetricsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, tags, createdBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
 }
 
 export function getAttributesQuery({
@@ -82,7 +91,9 @@ export function getAttributesQuery({
     search,
     origin,
     id,
+    excludeId,
     tags,
+    excludeTags,
     isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -97,7 +108,7 @@ export function getAttributesQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, tags, isHidden })
+            .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
     );
 }
 
@@ -107,7 +118,9 @@ export function getFactsQuery({
     search,
     origin,
     id,
+    excludeId,
     tags,
+    excludeTags,
     isHidden,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -122,7 +135,7 @@ export function getFactsQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, tags, isHidden })
+            .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
     );
 }
 

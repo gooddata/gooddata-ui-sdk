@@ -177,7 +177,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
 
         const visualizationFactory = FullVisualizationCatalog.forInsight(
             this.props.insight,
-            this.props.settings?.enableNewPivotTable ?? false,
+            this.props.settings?.enableNewPivotTable ?? true,
             this.props.settings?.enableNewGeoPushpin ?? false,
         ).getFactory();
 

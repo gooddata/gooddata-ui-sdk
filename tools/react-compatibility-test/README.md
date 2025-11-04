@@ -43,11 +43,13 @@ DASHBOARD_ID=your-dashboard-id
 
 # Plugin Configuration
 PLUGIN_BUILD_DIRECTORY=/path/to/your/plugin/esm/dashboardPlugin
-MODULE_FEDERATION_NAME=your-plugin-name
+MODULE_FEDERATION_NAME=plugin-identification
 
 # Optional: Plugin Parameters
 PLUGIN_PARAMETERS_JSON_PATH=/path/to/plugin-parameters.json
 ```
+
+Note that `MODULE_FEDERATION_NAME` typically matches with the value in `src/metadata.json` of the plugin, for example `dp_myplugin`.
 
 #### Create `.env.secrets` file (based on `.env.secrets.template`):
 
@@ -101,5 +103,6 @@ Visit: https://localhost:8000
 - **Build errors**: Ensure your plugin is compatible with the Module Federation setup
 
 ## Available Scripts
+
 - `npm run start:react18` - Explicitly start with React 18
 - `npm run start:react19` - Start with React 19

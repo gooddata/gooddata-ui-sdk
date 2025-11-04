@@ -16,6 +16,11 @@ export interface IFilterBaseOptions {
      */
     id?: string[];
     /**
+     * Resource id to exclude (case sensitive).
+     * @beta
+     */
+    excludeId?: string[];
+    /**
      * Resource contains title (case insensitive).
      * @beta
      */
@@ -26,10 +31,20 @@ export interface IFilterBaseOptions {
      */
     createdBy?: string[];
     /**
+     * Resource was not created by user (case sensitive).
+     * @beta
+     */
+    excludeCreatedBy?: string[];
+    /**
      * Resource contains tags (case sensitive).
      * @beta
      */
     tags?: string[];
+    /**
+     * Resource does not contain tags (case sensitive).
+     * @beta
+     */
+    excludeTags?: string[];
     /**
      * Resource is hidden.
      * @beta

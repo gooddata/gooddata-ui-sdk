@@ -2,6 +2,9 @@
 
 import { GenAIObjectType } from "./common.js";
 import { ISemanticSearchResultItem } from "./semanticSearch.js";
+import { IAttribute } from "../execution/attribute/index.js";
+import { IFilter } from "../execution/filter/index.js";
+import { IMeasure } from "../execution/measure/index.js";
 
 /**
  * Role of the chat interaction.
@@ -35,6 +38,9 @@ export type GenAIChatInteractionUserVisualisation = {
  * @internal
  */
 export type GenAIChatRoutingUseCase =
+    | "SEARCH"
+    | "HOWTO"
+    | "CHANGE_ANALYSIS"
     | "SEARCH_ALL"
     | "SEARCH_VISUALIZATIONS"
     | "SEARCH_DASHBOARDS"
@@ -322,6 +328,10 @@ export interface IGenAIChatInteraction {
      */
     createdVisualizations?: IGenAICreatedVisualizations;
     /**
+     * Change analysis parameters for the interaction.
+     */
+    changeAnalysisParams?: IGenAIChangeAnalysisParams;
+    /**
      * User feedback for the assistant reply.
      */
     userFeedback?: GenAIChatInteractionUserFeedback;
@@ -359,4 +369,39 @@ export interface IGenAICreatedVisualizations {
      * Assistant reasoning on how the visualizations were created.
      */
     reasoning: string;
+    /**
+     * Assistant suggestions for the visualizations.
+     */
+    suggestions?: IGenAISuggestion[];
+}
+
+/**
+ * Change analysis parameters for a given interaction
+ * @internal
+ */
+export interface IGenAIChangeAnalysisParams {
+    /**
+     * Measure definition to analyze
+     */
+    measure: IMeasure;
+    /**
+     * Date attribute definition
+     */
+    dateAttribute: IAttribute;
+    /**
+     * Attributes to apply
+     */
+    attributes: IAttribute[];
+    /**
+     * Reference period
+     */
+    referencePeriod: string;
+    /**
+     * Analyzed period
+     */
+    analyzedPeriod: string;
+    /**
+     * Filters to apply
+     */
+    filters: IFilter[];
 }

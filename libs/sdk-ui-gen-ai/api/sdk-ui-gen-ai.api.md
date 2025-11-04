@@ -11,6 +11,7 @@ import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -36,6 +37,12 @@ export type BaseMessage = {
     cancelled: boolean;
     complete: boolean;
     content: Contents[];
+};
+
+// @public (undocumented)
+export type ChangeAnalysisContents = {
+    type: "changeAnalysis";
+    params: IGenAIChangeAnalysisParams;
 };
 
 // @public
@@ -113,7 +120,7 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
 
 // @public (undocumented)
-export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ErrorContents;
+export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @public (undocumented)
 export type ErrorContents = {

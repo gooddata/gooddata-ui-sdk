@@ -2,10 +2,33 @@
 
 import {
     type ISemanticQualityIssue,
+    type Identifier,
     type SemanticQualityIssueCode,
     type SemanticQualityIssueSeverity,
     SemanticQualityIssueSeverityOrder as SeverityOrder,
 } from "@gooddata/sdk-model";
+
+export function getQualityIssueCodes(issues: ISemanticQualityIssue[]): SemanticQualityIssueCode[] {
+    return [...new Set(issues.map((issue) => issue.code))];
+}
+
+export function getQualityIssueIdsByCodes(
+    issues: ISemanticQualityIssue[],
+    codes: SemanticQualityIssueCode[],
+    type: "included" | "excluded" = "included",
+): Identifier[] {
+    const idSet = new Set<Identifier>();
+    for (const issue of issues) {
+        const matches = codes.includes(issue.code);
+        const shouldInclude = type === "excluded" ? !matches : matches;
+        if (shouldInclude) {
+            for (const obj of issue.objects) {
+                idSet.add(obj.identifier);
+            }
+        }
+    }
+    return [...idSet];
+}
 
 export function getQualityIssuesHighestSeverity(
     issues: ISemanticQualityIssue[],
