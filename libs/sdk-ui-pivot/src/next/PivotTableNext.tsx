@@ -31,7 +31,24 @@ import { IPivotTableNextProps } from "./types/public.js";
 const pivotOverlayController = OverlayController.getInstance(OVERLAY_CONTROLLER_Z_INDEX);
 
 /**
- * @alpha
+ * PivotTableNext is the new pivot table component built on AG Grid Enterprise.
+ *
+ * This component replaces the legacy PivotTable component and offers:
+ * - Better performance for large datasets
+ * - Configurable text wrapping for long content
+ * - Cell selection and copy capabilities
+ * - Advanced column resizing options
+ *
+ * @remarks
+ * This component uses AG Grid Enterprise. While an AG Grid license is optional,
+ * tables will display a watermark without one. For production use, you can provide
+ * your license via the `agGridToken` prop or using `AgGridTokenProvider`.
+ *
+ * The legacy PivotTable component will be replaced by PivotTableNext in the next major version.
+ * We will also remove all '*next' suffixes from the component names and move this component to
+ * the main package exports.
+ *
+ * @public
  */
 export function PivotTableNext(props: IPivotTableNextProps) {
     const resolvedProps = useResolvedProps(props);

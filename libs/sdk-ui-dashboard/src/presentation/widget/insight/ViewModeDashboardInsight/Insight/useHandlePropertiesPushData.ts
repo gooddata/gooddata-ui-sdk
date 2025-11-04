@@ -42,7 +42,7 @@ export function useHandlePropertiesPushData(widget: IInsightWidget, insight: IIn
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const settings = useDashboardSelector(selectSettings);
-    const enableNewPivotTable = settings?.enableNewPivotTable ?? false;
+    const enableNewPivotTable = settings?.enableNewPivotTable ?? true;
 
     const visType = insightVisualizationType(insight);
 

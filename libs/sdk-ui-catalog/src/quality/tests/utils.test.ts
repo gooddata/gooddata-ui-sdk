@@ -5,10 +5,324 @@ import { describe, expect, it } from "vitest";
 import type { ISemanticQualityIssue } from "@gooddata/sdk-model";
 
 import {
+    getQualityIssueCodes,
+    getQualityIssueIdsByCodes,
     getQualityIssuesHighestSeverity,
     groupQualityIssuesByCode,
     groupQualityIssuesBySeverity,
 } from "../utils.js";
+
+describe("getQualityIssueCodes", () => {
+    it("returns empty array for empty array", () => {
+        const codes = getQualityIssueCodes([]);
+        expect(codes).toEqual([]);
+    });
+
+    it("returns single code for single issue", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr1" }],
+                detail: {},
+            },
+        ];
+        const codes = getQualityIssueCodes(issues);
+        expect(codes).toEqual(["IDENTICAL_TITLE"]);
+    });
+
+    it("returns unique codes for multiple issues with same code", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr1" }],
+                detail: {},
+            },
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "attribute", identifier: "attr2" }],
+                detail: {},
+            },
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr3" }],
+                detail: {},
+            },
+        ];
+        const codes = getQualityIssueCodes(issues);
+        expect(codes).toEqual(["IDENTICAL_TITLE"]);
+    });
+
+    it("returns all unique codes for multiple issues with different codes", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr1" }],
+                detail: {},
+            },
+            {
+                code: "SIMILAR_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "attribute", identifier: "attr2" }],
+                detail: {},
+            },
+            {
+                code: "UNKNOWN_ABBREVIATION",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr3" }],
+                detail: {},
+            },
+        ];
+        const codes = getQualityIssueCodes(issues);
+        expect(codes).toHaveLength(3);
+        expect(codes).toContain("IDENTICAL_TITLE");
+        expect(codes).toContain("SIMILAR_TITLE");
+        expect(codes).toContain("UNKNOWN_ABBREVIATION");
+    });
+
+    it("deduplicates codes in mixed scenarios", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr1" }],
+                detail: {},
+            },
+            {
+                code: "SIMILAR_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "attribute", identifier: "attr2" }],
+                detail: {},
+            },
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr3" }],
+                detail: {},
+            },
+            {
+                code: "UNKNOWN_ABBREVIATION",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr4" }],
+                detail: {},
+            },
+            {
+                code: "SIMILAR_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "attribute", identifier: "attr5" }],
+                detail: {},
+            },
+        ];
+        const codes = getQualityIssueCodes(issues);
+        expect(codes).toHaveLength(3);
+        expect(codes).toContain("IDENTICAL_TITLE");
+        expect(codes).toContain("SIMILAR_TITLE");
+        expect(codes).toContain("UNKNOWN_ABBREVIATION");
+    });
+
+    it("handles issues with multiple objects", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [
+                    { type: "attribute", identifier: "attr1" },
+                    { type: "attribute", identifier: "attr2" },
+                ],
+                detail: {},
+            },
+        ];
+        const codes = getQualityIssueCodes(issues);
+        expect(codes).toEqual(["IDENTICAL_TITLE"]);
+    });
+});
+
+describe("getQualityIssueIdsByCodes", () => {
+    it("returns empty array for empty issues", () => {
+        const ids = getQualityIssueIdsByCodes([], ["IDENTICAL_TITLE"]);
+        expect(ids).toEqual([]);
+    });
+
+    it("returns empty array for empty codes", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [
+                    { type: "attribute", identifier: "attr1" },
+                    { type: "attribute", identifier: "attr2" },
+                ],
+                detail: {},
+            },
+        ];
+        const ids = getQualityIssueIdsByCodes(issues, []);
+        expect(ids).toEqual([]);
+    });
+
+    it("collects identifiers for matching codes", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [
+                    { type: "attribute", identifier: "attr1" },
+                    { type: "attribute", identifier: "attr2" },
+                ],
+                detail: {},
+            },
+            {
+                code: "SIMILAR_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "metric", identifier: "metric1" }],
+                detail: {},
+            },
+            {
+                code: "UNKNOWN_ABBREVIATION",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attrX" }],
+                detail: {},
+            },
+        ];
+        const ids = getQualityIssueIdsByCodes(issues, ["IDENTICAL_TITLE", "SIMILAR_TITLE"]);
+        expect(ids).toEqual(["attr1", "attr2", "metric1"]);
+    });
+
+    it("ignores non-matching codes", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "UNKNOWN_ABBREVIATION",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "attr1" }],
+                detail: {},
+            },
+        ];
+        const ids = getQualityIssueIdsByCodes(issues, ["SIMILAR_TITLE"]);
+        expect(ids).toEqual([]);
+    });
+
+    it("deduplicates identifiers across issues and objects", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "INFO",
+                objects: [
+                    { type: "attribute", identifier: "attr1" },
+                    { type: "attribute", identifier: "attr2" },
+                    { type: "attribute", identifier: "attr1" },
+                ],
+                detail: {},
+            },
+            {
+                code: "IDENTICAL_TITLE",
+                severity: "WARNING",
+                objects: [
+                    { type: "attribute", identifier: "attr2" },
+                    { type: "attribute", identifier: "attr3" },
+                ],
+                detail: {},
+            },
+        ];
+        const ids = getQualityIssueIdsByCodes(issues, ["IDENTICAL_TITLE"]);
+        expect(ids).toEqual(["attr1", "attr2", "attr3"]);
+    });
+
+    it("deduplicates identifiers across different object types", () => {
+        const issues: ISemanticQualityIssue[] = [
+            {
+                code: "SIMILAR_TITLE",
+                severity: "INFO",
+                objects: [{ type: "attribute", identifier: "obj1" }],
+                detail: {},
+            },
+            {
+                code: "SIMILAR_TITLE",
+                severity: "WARNING",
+                objects: [{ type: "metric", identifier: "obj1" }],
+                detail: {},
+            },
+        ];
+        const ids = getQualityIssueIdsByCodes(issues, ["SIMILAR_TITLE"]);
+        expect(ids).toEqual(["obj1"]);
+    });
+
+    describe("with type 'excluded'", () => {
+        it("returns identifiers for codes NOT in the selection", () => {
+            const issues: ISemanticQualityIssue[] = [
+                {
+                    code: "IDENTICAL_TITLE",
+                    severity: "INFO",
+                    objects: [
+                        { type: "attribute", identifier: "attr1" },
+                        { type: "attribute", identifier: "attr2" },
+                    ],
+                    detail: {},
+                },
+                {
+                    code: "SIMILAR_TITLE",
+                    severity: "WARNING",
+                    objects: [{ type: "metric", identifier: "metric1" }],
+                    detail: {},
+                },
+                {
+                    code: "UNKNOWN_ABBREVIATION",
+                    severity: "INFO",
+                    objects: [{ type: "attribute", identifier: "attrX" }],
+                    detail: {},
+                },
+            ];
+            const ids = getQualityIssueIdsByCodes(issues, ["IDENTICAL_TITLE"], "excluded");
+            expect(ids).toEqual(["metric1", "attrX"]);
+        });
+
+        it("returns all identifiers when codes array is empty", () => {
+            const issues: ISemanticQualityIssue[] = [
+                {
+                    code: "IDENTICAL_TITLE",
+                    severity: "INFO",
+                    objects: [
+                        { type: "attribute", identifier: "attr1" },
+                        { type: "attribute", identifier: "attr2" },
+                    ],
+                    detail: {},
+                },
+                {
+                    code: "SIMILAR_TITLE",
+                    severity: "WARNING",
+                    objects: [{ type: "metric", identifier: "metric1" }],
+                    detail: {},
+                },
+            ];
+            const ids = getQualityIssueIdsByCodes(issues, [], "excluded");
+            expect(ids).toEqual(["attr1", "attr2", "metric1"]);
+        });
+
+        it("returns empty array when all codes are excluded", () => {
+            const issues: ISemanticQualityIssue[] = [
+                {
+                    code: "IDENTICAL_TITLE",
+                    severity: "INFO",
+                    objects: [
+                        { type: "attribute", identifier: "attr1" },
+                        { type: "attribute", identifier: "attr2" },
+                    ],
+                    detail: {},
+                },
+                {
+                    code: "SIMILAR_TITLE",
+                    severity: "WARNING",
+                    objects: [{ type: "metric", identifier: "metric1" }],
+                    detail: {},
+                },
+            ];
+            const ids = getQualityIssueIdsByCodes(issues, ["IDENTICAL_TITLE", "SIMILAR_TITLE"], "excluded");
+            expect(ids).toEqual([]);
+        });
+    });
+});
 
 describe("getQualityIssuesHighestSeverity", () => {
     it("returns INFO for empty array", () => {

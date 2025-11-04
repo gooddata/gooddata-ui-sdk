@@ -560,7 +560,7 @@ export type GenAIChatInteractionUserVisualisation = {
 export type GenAIChatRole = "USER" | "AI";
 
 // @internal
-export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
+export type GenAIChatRoutingUseCase = "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
 // @internal
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
@@ -2080,7 +2080,18 @@ export interface IGenAIActiveObject {
 }
 
 // @internal
+export interface IGenAIChangeAnalysisParams {
+    analyzedPeriod: string;
+    attributes: IAttribute[];
+    dateAttribute: IAttribute;
+    filters: IFilter[];
+    measure: IMeasure;
+    referencePeriod: string;
+}
+
+// @internal
 export interface IGenAIChatInteraction {
+    changeAnalysisParams?: IGenAIChangeAnalysisParams;
     chatHistoryInteractionId: string;
     createdVisualizations?: IGenAICreatedVisualizations;
     errorResponse?: string;
@@ -2102,6 +2113,7 @@ export interface IGenAIChatRouting {
 export interface IGenAICreatedVisualizations {
     objects?: IGenAIVisualization[];
     reasoning: string;
+    suggestions?: IGenAISuggestion[];
 }
 
 // @internal

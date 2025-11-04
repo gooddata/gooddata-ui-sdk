@@ -32,7 +32,7 @@ function ColumnHeadersPositionControl({
     defaultValue = "top",
     insight,
     isLoading,
-    enableNewPivotTable = false,
+    enableNewPivotTable = true,
 }: IColumnHeadersPositionControlProps & WrappedComponentProps) {
     const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
         ? (properties?.controls?.["columnHeadersPosition"] ?? defaultValue)

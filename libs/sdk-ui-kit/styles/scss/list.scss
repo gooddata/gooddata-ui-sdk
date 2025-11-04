@@ -182,6 +182,13 @@ button.gd-list-item {
         text-align: left;
     }
 
+    &.variant-delete {
+        &:hover {
+            color: variables.$gd-palette-error-base;
+            background: variables.$gd-palette-error-dimmed;
+        }
+    }
+
     &.is-disabled {
         opacity: 0.5;
     }

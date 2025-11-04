@@ -1,16 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { type PropsWithChildren, memo } from "react";
+import { type PropsWithChildren, memo, useCallback, useMemo } from "react";
 
-import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
+import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
-import { DropdownInvertableSelect } from "@gooddata/sdk-ui-kit";
 
-import { useFilterActions } from "./FilterContext.js";
-import { FilterGroupLayout } from "./FilterGroupLayout.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
+import { StaticFilter } from "./StaticFilter.js";
 import { testIds } from "../automation/index.js";
 
 type OriginOption = Exclude<ObjectOrigin, "ALL">;
@@ -24,44 +23,37 @@ const messages: Record<OriginOption, MessageDescriptor> = defineMessages({
 
 export function FilterOrigin() {
     const intl = useIntl();
+    const { origin } = useFilterState();
     const { setOrigin } = useFilterActions();
 
-    const handleChange = (selection: OriginOption[], isInverted: boolean) => {
-        const optionsSet = new Set(options);
-        const selectionSet = new Set(selection);
-        const nextSelection = isInverted
-            ? options.filter((item) => !selectionSet.has(item))
-            : selection.filter((item) => optionsSet.has(item));
+    const selection: OriginOption[] = useMemo(() => (origin === "ALL" ? [] : [origin]), [origin]);
+    const isSelectionInverted = origin === "ALL";
 
-        if (nextSelection.length === options.length) {
+    const getItemTitle = useCallback((item: OriginOption) => intl.formatMessage(messages[item]), [intl]);
+
+    const handleChange = (selection: OriginOption[], isInverted: boolean) => {
+        const included = isInverted ? options.filter((option) => !selection.includes(option)) : selection;
+        if (included.length === 0 || included.length === options.length) {
             setOrigin("ALL");
+            return;
+        }
+        if (included.includes("PARENTS")) {
+            setOrigin("PARENTS");
         } else {
-            const [origin] = nextSelection;
-            if (origin) {
-                setOrigin(origin);
-            }
+            setOrigin("NATIVE");
         }
     };
 
     return (
-        <FilterGroupLayout
-            title={<FormattedMessage id="analyticsCatalog.filter.origin.title" />}
-            data-testid={testIds.filterOrigin}
-        >
-            <DropdownInvertableSelect
-                options={options}
-                alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
-                getItemTitle={(item) => intl.formatMessage(messages[item])}
-                getItemKey={(item) => item}
-                onChange={handleChange}
-                header={
-                    <div className="gd-list-title gd-analytics-catalog__filter__header">
-                        <FormattedMessage id="analyticsCatalog.filter.origin.title" />
-                    </div>
-                }
-                renderSearchBar={() => <div className="gd-analytics-catalog__filter__search-bar" />}
-            />
-        </FilterGroupLayout>
+        <StaticFilter
+            label={intl.formatMessage({ id: "analyticsCatalog.filter.origin.title" })}
+            options={options}
+            selection={selection}
+            isSelectionInverted={isSelectionInverted}
+            onSelectionChange={handleChange}
+            getItemTitle={getItemTitle}
+            dataTestId={testIds.filterOrigin}
+        />
     );
 }
 

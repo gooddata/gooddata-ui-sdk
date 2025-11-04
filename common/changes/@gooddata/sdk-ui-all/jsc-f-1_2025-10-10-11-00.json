@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pivot: PivotTableNext is now enabled by default and promoted from @alpha to @public. This new pivot table component, built on AG Grid Enterprise, offers better performance, text wrapping, and cell selection capabilities. PivotTableNext will be exported as PivotTable in the next major release and thus replace the legacy PivotTable component. To try out new features, users should use PivotTableNext instead of PivotTable.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

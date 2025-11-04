@@ -9,6 +9,20 @@ export {
 } from "./context/AgGridTokenContext.js";
 
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
+export type { PivotTableNextCellSelectionConfig } from "./types/cellSelection.js";
+export type { PivotTableNextExecutionCancellingConfig } from "./types/executionCancelling.js";
+export type { PivotTableNextFormattingConfig } from "./types/formatting.js";
+export type { PivotTableNextLayoutConfig } from "./types/layout.js";
+export type { PivotTableNextAgGridLicenseConfig } from "./types/license.js";
+export type { PivotTableNextMenuConfig } from "./types/menu.js";
+export type { PivotTableNextColumnsSizingConfig } from "./types/resizing.js";
+export type { PivotTableNextTextWrappingConfig } from "./types/textWrapping.js";
+export type {
+    PivotTableNextTranspositionConfig,
+    MeasureGroupDimension,
+    ColumnHeadersPosition,
+} from "./types/transposition.js";
+export type { PivotTableNextExperimentalConfig } from "./types/experimental.js";
 
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
@@ -34,6 +48,7 @@ export type {
     IColumnSizing,
     ColumnWidth,
     ColumnWidthItem,
+    ColumnResizedCallback,
     DefaultColumnWidth,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
@@ -65,4 +80,5 @@ export {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "./types/resizing.js";
-export type { ITextWrapping } from "./types/textWrapping.js";
+export type { ITextWrapping, IColumnTextWrappingItem } from "./types/textWrapping.js";
+export type { IMenu } from "./types/menu.js";

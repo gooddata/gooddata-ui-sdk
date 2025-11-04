@@ -73,7 +73,7 @@ export {
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo {
     return FullVisualizationCatalog.forInsight(
         insight,
-        settings?.enableNewPivotTable ?? false,
+        settings?.enableNewPivotTable ?? true,
         settings?.enableNewGeoPushpin ?? false,
     ).getSizeInfo(insight, fluidLayoutDescriptor, settings);
 }
@@ -111,7 +111,7 @@ export function getInsightVisualizationMeta(
 ): IVisualizationMeta {
     return FullVisualizationCatalog.forInsight(
         insight,
-        settings?.enableNewPivotTable ?? false,
+        settings?.enableNewPivotTable ?? true,
         settings?.enableNewGeoPushpin ?? false,
     ).getMeta(settings);
 }

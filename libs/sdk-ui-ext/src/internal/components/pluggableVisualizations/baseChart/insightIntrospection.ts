@@ -1,9 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
-import { IInsightDefinition, bucketItems, insightBucket } from "@gooddata/sdk-model";
+
+import {
+    IAttributeOrMeasure,
+    IInsightDefinition,
+    bucketItems,
+    insightBucket,
+    isMeasure,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isBubbleChart, isBulletChart, isScatterPlot } from "@gooddata/sdk-ui-charts";
 
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+
+function filterOutStylingMetric(bucketItems: IAttributeOrMeasure[], insight: IInsightDefinition) {
+    const stylingMetricsIds: string[] = insight.insight.properties?.["controls"]?.["thresholdMeasures"] ?? [];
+    return bucketItems.filter((item) => {
+        return isMeasure(item) && !stylingMetricsIds.includes(item.measure.localIdentifier);
+    });
+}
 
 export function countBucketItems(insight: IInsightDefinition): {
     viewByItemCount: number;
@@ -24,8 +38,12 @@ export function countBucketItems(insight: IInsightDefinition): {
 
     return {
         viewByItemCount: viewBucket ? bucketItems(viewBucket).length : 0,
-        measureItemCount: measureBucket ? bucketItems(measureBucket).length : 0,
-        secondaryMeasureItemCount: secondaryMeasureBucket ? bucketItems(secondaryMeasureBucket).length : 0,
+        measureItemCount: measureBucket
+            ? filterOutStylingMetric(bucketItems(measureBucket), insight).length
+            : 0,
+        secondaryMeasureItemCount: secondaryMeasureBucket
+            ? filterOutStylingMetric(bucketItems(secondaryMeasureBucket), insight).length
+            : 0,
     };
 }
 

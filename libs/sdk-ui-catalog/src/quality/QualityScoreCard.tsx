@@ -7,24 +7,20 @@ import { QualityScoreCardAction } from "./QualityScoreCardAction.js";
 import { QualityScoreCardDate } from "./QualityScoreCardDate.js";
 import { QualityScoreCardMenu } from "./QualityScoreCardMenu.js";
 import { QualityScoreCardScore } from "./QualityScoreCardScore.js";
+import { getQualityIssueCodes } from "./utils.js";
 import { useFilterActions } from "../filter/index.js";
 
 export function QualityScoreCard() {
     const intl = useIntl();
     const { status, issues, updatedAt } = useQualityState();
     const { createQualityIssuesCalculation } = useQualityActions();
-    const { setQualityIds } = useFilterActions();
+    const { setQualityCodes } = useFilterActions();
 
     const isLoading = status === "pending" || status === "loading";
 
     const handleActionClick = () => {
-        const idSet: Set<string> = new Set();
-        for (const issue of issues) {
-            for (const obj of issue.objects) {
-                idSet.add(obj.identifier);
-            }
-        }
-        setQualityIds([...idSet]);
+        const codes = getQualityIssueCodes(issues);
+        setQualityCodes({ values: codes, isInverted: false });
     };
 
     return (

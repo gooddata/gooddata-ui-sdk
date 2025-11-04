@@ -6,12 +6,14 @@ const AUTO_SIZE_TOLERANCE = 10;
 const RESIZE_SELECTOR = `.ag-header-cell-resize`;
 
 export const nonEmptyValue = /\$?[0-9,.]+/;
+/** utility: convert 0-based column index to aria-colindex (1-based) */
+const colAria = (index: number) => index + 1;
 
 export class Table {
     constructor(private parentSelector: string) {}
 
     getElement(): Cypress.Chainable {
-        return cy.get(this.parentSelector).find(".s-pivot-table");
+        return cy.get(this.parentSelector).find("[data-testid='pivot-table-next']");
     }
 
     public isEmpty() {
@@ -31,8 +33,11 @@ export class Table {
     }
 
     public waitLoaded(): this {
+        // Wait for loading to complete and cells to be present
         this.getElement().find(".s-loading").should("not.exist");
-        this.getElement().find(".s-loading-done").should("exist");
+        this.getElement().should("exist");
+        // Wait for actual data cells to appear (not just the container)
+        this.getElement().find("[data-testid*='pivot-cell']").should("exist");
         return this;
     }
 
@@ -162,11 +167,16 @@ export class Table {
     }
 
     getCellValue(row: number, column: number) {
-        return this.getElement().find(`.s-cell-${row}-${column} .s-value`);
+        this.waitLoaded();
+        // Structure: [row-index] > [aria-colindex] > [data-testid*='pivot-cell']
+        const cellSelector = `[row-index="${row}"] [aria-colindex="${colAria(column)}"] [data-testid*="pivot-cell"]`;
+        return this.getElement().find(cellSelector);
     }
 
     hasCellValue(row: number, column: number, value: string) {
-        this.getCellValue(row, column).should("have.text", value);
+        this.getCellValue(row, column).should(($el) => {
+            expect(($el.text() || "").trim()).to.eq(value);
+        });
         return this;
     }
 

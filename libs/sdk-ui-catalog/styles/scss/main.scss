@@ -84,7 +84,9 @@ $content-font-size: 14px;
         }
 
         &__reset {
-            margin-left: -10px;
+            .gd-ui-kit-icon-button {
+                --gd-icon-fill-color: var(--gd-palette-complementary-6);
+            }
         }
     }
 

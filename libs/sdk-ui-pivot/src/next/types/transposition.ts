@@ -7,17 +7,17 @@
  * - "columns" - measures are included in the first dimension (top to bottom).
  * - "rows" - measures are included in the second dimension (left to right).
  *
- * @alpha
+ * @public
  */
 export type MeasureGroupDimension = "columns" | "rows";
 
 /**
- * @alpha
+ * @public
  */
 export type ColumnHeadersPosition = "left" | "top";
 
 /**
- * @alpha
+ * @public
  */
 export type PivotTableNextTranspositionConfig = {
     /**

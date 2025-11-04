@@ -166,7 +166,7 @@ const getLinkToPropertiesDocumentation = (
     if (codeType === "definition") {
         const meta = FullVisualizationCatalog.forInsight(
             insight,
-            settings?.enableNewPivotTable ?? false,
+            settings?.enableNewPivotTable ?? true,
             settings?.enableNewGeoPushpin ?? false,
         ).getMeta();
         if (meta?.documentationUrl) {
@@ -207,7 +207,7 @@ const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
     if (codeOption.componentType === "definition") {
         const descriptor = FullVisualizationCatalog.forInsight(
             insight,
-            settings?.enableNewPivotTable ?? false,
+            settings?.enableNewPivotTable ?? true,
             settings?.enableNewGeoPushpin ?? false,
         );
         return descriptor.getEmbeddingCode?.(insight, generateCodeConfig);

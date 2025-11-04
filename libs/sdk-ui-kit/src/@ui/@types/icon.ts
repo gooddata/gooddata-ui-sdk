@@ -114,6 +114,7 @@ export type IconType =
     | "list"
     | "drillTo"
     | "hierarchy"
+    | "history"
     | "thumbsUp"
     | "thumbsDown"
     | "send"

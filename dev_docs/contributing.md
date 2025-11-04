@@ -4,6 +4,9 @@ We are happy that you are considering contribution to GoodData.UI SDK. Before pr
 with the technical aspects of the contribution. This document gives overview how to build and test the SDK and perform
 other typical tasks related to contributing.
 
+> :warning: Although pull-requests can be created for this repository,
+> the changes need to be delivered via the `gdc-ui` main repository.
+
 ## Environment Requirements
 
 The development process is tested on macOS and Linux and uses bash for some of the scripting.
@@ -389,20 +392,6 @@ Applink can make your life easier by watching for source code changes, automatic
 their artifacts into the target application's `node_modules` similar to what you would be doing manually with `rsync`.
 
 To learn more about it check out the [tools/applink/README.md](../tools/applink/README.md).
-
-## CI jobs and gating
-
-Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
-
-You can run all checks which are executed in CI pipelines locally:
-
-- `rush rebuild`
-- `rush validate-ci`
-- `rush test-ci`
-- `cd libs/sdk-ui-tests; npm run backstop-test`
-
-> Note: the pipelines WILL NOT run automatically for contributors outside of the GoodData organization. Please ping maintainers
-> to trigger the pipeline execution.
 
 ## Troubleshooting
 

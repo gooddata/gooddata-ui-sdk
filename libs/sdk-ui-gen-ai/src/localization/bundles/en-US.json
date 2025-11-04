@@ -234,5 +234,17 @@
     "gd.gen-ai.skip-navigation": {
         "value": "Skip navigation",
         "comment": "Accessibility link to skip past navigation elements in the interface"
+    },
+    "gd.gen-ai.changeAnalysis.default_message": {
+        "value": "Here’s the change analysis for <metric>{title}</metric> between <b>{range}</b>.",
+        "comment": "Default message for change analysis"
+    },
+    "gd.gen-ai.changeAnalysis.splitter": {
+        "value": "and",
+        "comment": "Splitter for date range in change analysis"
+    },
+    "gd.gen-ai.changeAnalysis.explain_the_change": {
+        "value": "Open the analysis",
+        "comment": "Button label to explain the change"
     }
 }

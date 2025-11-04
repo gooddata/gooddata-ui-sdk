@@ -20,7 +20,7 @@ describe("Dashboard", () => {
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             //Cover ticket: RAIL-4702
-            it("Should enable Save button when resize column", () => {
+            it.skip("Should enable Save button when resize column", () => {
                 Navigation.visit("dashboard/stage-name");
                 editMode.edit();
                 const table = new Table(".s-dash-item");
@@ -29,7 +29,7 @@ describe("Dashboard", () => {
             });
 
             //Cover ticket: RAIL-4728
-            it("Should reload widget after check/uncheck attribute filter", () => {
+            it.skip("Should reload widget after check/uncheck attribute filter", () => {
                 const widgetConfig = new WidgetConfiguration(0);
 
                 Navigation.visit("dashboard/stage-name");

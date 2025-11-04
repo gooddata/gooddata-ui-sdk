@@ -270,7 +270,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
     enableMotherDuckDataSource: false,
-    enableMongoDbDataSource: false,
+    enableMongoDbDataSource: true,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
@@ -348,7 +348,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePreAggregationDatasets: false,
     enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
-    enableNewPivotTable: false,
+    enableNewPivotTable: true,
     enableNewGeoPushpin: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: false,
@@ -356,7 +356,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
     enableDashboardTabs: false,
-    enablePivotTableAutoSizeReset: false,
+    enablePivotTableAutoSizeReset: true,
     enablePreserveFilterSelectionDuringInit: false,
 };
 

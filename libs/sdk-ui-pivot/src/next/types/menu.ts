@@ -3,7 +3,7 @@
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export type PivotTableNextMenuConfig = {
     /**
@@ -15,7 +15,7 @@ export type PivotTableNextMenuConfig = {
 /**
  * Configuration for the aggregations menu.
  *
- * @alpha
+ * @public
  */
 export interface IMenu {
     /**

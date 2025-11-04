@@ -15,11 +15,13 @@ describe("StaticFilter", () => {
         render(
             <StaticFilter
                 dataTestId={dataTestId}
+                label="Test Filter"
                 options={[]}
-                onChange={vi.fn()}
+                selection={[]}
+                isSelectionInverted={false}
+                onSelectionChange={vi.fn()}
                 getItemKey={vi.fn()}
                 getItemTitle={vi.fn()}
-                header={null}
                 noDataMessage={null}
             />,
             { wrapper },

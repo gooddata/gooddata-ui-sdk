@@ -33,8 +33,11 @@ export class Widget {
     }
 
     waitTableLoaded() {
+        // Wait for loading to complete and table content to be present
         this.getElement().find(".s-loading").should("not.exist");
-        this.getElement().find(".s-loading-done").should("exist");
+        this.getElement().find("[data-testid='pivot-table-next']").should("exist");
+        // Wait for actual data cells to appear (not just the container)
+        this.getElement().find("[data-testid*='pivot-cell']").should("exist");
         return this;
     }
 

@@ -206,6 +206,25 @@
     color: kit-variables.$gd-palette-error-base;
 }
 
+.gd-gen-ai-chat__messages__content--changeAnalysis {
+    &__button {
+        margin-top: 15px;
+    }
+
+    &__metric {
+        display: inline-flex;
+        align-items: baseline;
+        flex-direction: row;
+        gap: 5px;
+        color: #00c18d;
+
+        svg {
+            position: relative;
+            bottom: -4px;
+        }
+    }
+}
+
 .gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content {
     &,
     & p,

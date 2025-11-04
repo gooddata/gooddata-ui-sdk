@@ -2878,5 +2878,13 @@
     "drill.kda.year_to_year": {
         "value": "Year over year change",
         "comment": "Key driver analysis drill year to year label"
+    },
+    "dashboard.tabs.default.label": {
+        "value": "Untitled",
+        "comment": "Default label for dashboard tab"
+    },
+    "dashboard.tabs.accessibility.label": {
+        "value": "Dashboard tabs",
+        "comment": "Accessibility label for dashboard tabs"
     }
 }

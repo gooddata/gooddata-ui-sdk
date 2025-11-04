@@ -3,7 +3,7 @@
 import type { PropsWithChildren } from "react";
 
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -31,36 +31,20 @@ function wrapper({
     );
 }
 
-const createMockedBackend = () => {
-    const backend = dummyBackend();
-    // Mock the genAI functionality
-    vi.spyOn(backend, "workspace").mockReturnValue({
-        ...backend.workspace("test-workspace"),
-        genAI: () => ({
-            getAnalyticsCatalog: () => ({
-                getTags: vi.fn().mockResolvedValue({ tags: [] }),
-            }),
-        }),
-    } as unknown as ReturnType<typeof backend.workspace>);
-    return backend;
-};
-
 const props = {
-    backend: createMockedBackend(),
+    backend: dummyBackend(),
     workspace: "test-workspace",
 };
 
 describe("Catalog", () => {
     it("renders with proper data-testid", () => {
-        const testProps = { ...props, backend: createMockedBackend() };
-        render(<Catalog {...testProps} />, { wrapper });
+        render(<Catalog {...props} />, { wrapper });
 
         expect(screen.getByTestId(testIds.catalog)).toBeVisible();
     });
 
     it("renders with header title", () => {
-        const testProps = { ...props, backend: createMockedBackend() };
-        render(<Catalog {...testProps} />, { wrapper });
+        render(<Catalog {...props} />, { wrapper });
 
         expect(screen.getByText("Analytics catalog")).toBeVisible();
     });

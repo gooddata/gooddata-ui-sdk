@@ -7,6 +7,7 @@ import {
     Contents,
     Message,
     makeAssistantMessage,
+    makeChangeAnalysisContents,
     makeErrorContents,
     makeRoutingContents,
     makeSearchContents,
@@ -76,6 +77,10 @@ export const processContents = (
                 })),
             ),
         );
+    }
+
+    if (item.changeAnalysisParams) {
+        contents.push(makeChangeAnalysisContents(item.changeAnalysisParams));
     }
 
     if (item.errorResponse) {

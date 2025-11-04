@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
+import { ChangeAnalysisContentsComponent } from "./contents/ChangeAnalysisContentsComponent.js";
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";
 import { SearchContentsComponent } from "./contents/SearchContents.js";
@@ -54,6 +55,15 @@ export function MessageContents({
                                 content={item}
                                 key={index}
                                 showSuggestions={isLastMessage}
+                                messageId={messageId}
+                            />
+                        );
+                    case "changeAnalysis":
+                        return (
+                            <ChangeAnalysisContentsComponent
+                                useMarkdown={useMarkdown}
+                                content={item}
+                                key={index}
                                 messageId={messageId}
                             />
                         );

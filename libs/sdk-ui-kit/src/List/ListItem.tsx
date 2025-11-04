@@ -33,6 +33,11 @@ export interface ISingleSelectListItemProps {
     accessibilityConfig?: IMenuAccessibilityConfig;
     tabIndex?: number;
     elementType?: "div" | "button";
+    /**
+     * Visual variant to indicate special emphasis, e.g. "delete".
+     * Example: "default" | "delete"
+     */
+    variant?: "default" | "delete";
 
     iconRenderer?: (icon: string | ReactNode | FC) => ReactNode;
     infoRenderer?: (info: string | ReactNode | FC) => ReactNode;
@@ -113,6 +118,7 @@ export const SingleSelectListItem = forwardRef<
         type,
         className,
         info,
+        variant = "default",
         eventsOnBubble = false,
         hideDelayBubble,
         isSelected,
@@ -158,6 +164,7 @@ export const SingleSelectListItem = forwardRef<
             "is-selected": isSelected,
             "is-submenu": isMenu,
             "is-focused": isFocused,
+            [`variant-${variant}`]: variant !== "default",
         });
     };
 

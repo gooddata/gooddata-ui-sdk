@@ -37,7 +37,7 @@ export function useAutoSizeReset(): IAutoSizeResetResult {
     const { containerWidth, autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
     const { columnDefsFlat } = useColumnDefs();
 
-    const enablePivotTableAutoSizeReset = config.enablePivotTableAutoSizeReset ?? false;
+    const enablePivotTableAutoSizeReset = config.enablePivotTableAutoSizeReset ?? true;
     const prevContainerWidthRef = useRef(containerWidth);
 
     // Always reset when column structure changes (original behavior)

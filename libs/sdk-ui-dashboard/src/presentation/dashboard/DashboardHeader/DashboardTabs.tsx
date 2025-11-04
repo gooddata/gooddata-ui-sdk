@@ -1,29 +1,33 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo } from "react";
+import { ReactElement, useCallback, useMemo, useRef } from "react";
+
+import { useIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
 
 import { UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import {
     selectActiveTabId,
     selectEnableDashboardTabs,
+    selectIsInEditMode,
     selectTabs,
     switchDashboardTab,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
 
-const ACCESSIBILITY_CONFIG = {
-    role: "tablist",
-    tabRole: "tab",
-    ariaLabel: "Dashboard tabs",
-} as const;
-
 export function useDashboardTabsProps(): IDashboardTabsProps {
+    const intl = useIntl();
+
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
     const tabs = useDashboardSelector(selectTabs);
     const activeTabId = useDashboardSelector(selectActiveTabId);
     const dispatch = useDashboardDispatch();
+
+    // Generate a stable unique ID for the default tab
+    const defaultTabIdRef = useRef<string>(uuid());
 
     const handleTabSelect = useCallback(
         (tab: UiTab) => {
@@ -34,17 +38,37 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         [activeTabId, dispatch],
     );
 
-    const uiTabs: UiTab[] = useMemo(
-        () =>
+    const uiTabs: UiTab[] = useMemo(() => {
+        const mappedTabs =
             tabs?.map((tab) => ({
                 id: tab.identifier,
-                label: tab.title || tab.identifier, // Fallback to identifier if title is empty
-            })) ?? [],
-        [tabs],
-    );
+                label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
+            })) ?? [];
+
+        // In edit mode, if tabs feature is enabled but no tabs exist, create a default "Untitled" tab
+        if (isEditMode && enableDashboardTabs && mappedTabs.length === 0) {
+            return [
+                {
+                    id: defaultTabIdRef.current,
+                    label: intl.formatMessage({ id: "dashboard.tabs.default.label" }),
+                },
+            ];
+        }
+
+        return mappedTabs;
+    }, [tabs, isEditMode, enableDashboardTabs, intl]);
+
+    // Use the default tab ID as activeTabId if we created a default tab and no activeTabId is set
+    const effectiveActiveTabId = useMemo(() => {
+        if (isEditMode && enableDashboardTabs && (!tabs || tabs.length === 0) && !activeTabId) {
+            return defaultTabIdRef.current;
+        }
+        return activeTabId;
+    }, [isEditMode, enableDashboardTabs, tabs, activeTabId]);
+
     return {
         enableDashboardTabs,
-        activeTabId,
+        activeTabId: effectiveActiveTabId,
         uiTabs,
         handleTabSelect: handleTabSelect,
     };
@@ -65,11 +89,26 @@ export function DashboardTabs({
     uiTabs,
     handleTabSelect,
 }: IDashboardTabsProps): ReactElement | null {
-    if (!enableDashboardTabs || !uiTabs || uiTabs.length === 0) {
-        return null;
-    }
+    const intl = useIntl();
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
 
-    if (!activeTabId) {
+    const ACCESSIBILITY_CONFIG = useMemo(
+        () => ({
+            role: "tablist",
+            tabRole: "tab",
+            ariaLabel: intl.formatMessage({ id: "dashboard.tabs.accessibility.label" }),
+        }),
+        [intl],
+    );
+
+    const shouldHideTabs = useMemo(() => {
+        if (!enableDashboardTabs || !uiTabs || activeTabId === undefined) {
+            return true;
+        }
+        return isEditMode ? uiTabs.length < 1 : uiTabs.length <= 1;
+    }, [isEditMode, enableDashboardTabs, uiTabs, activeTabId]);
+
+    if (shouldHideTabs) {
         return null;
     }
 
