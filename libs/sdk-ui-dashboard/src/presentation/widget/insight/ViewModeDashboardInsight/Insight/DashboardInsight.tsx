@@ -23,7 +23,7 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { IconInsight } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
@@ -55,8 +55,6 @@ import { IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
-
-const { Insight: InsightIcon } = Icon;
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -367,7 +365,7 @@ export function DashboardInsight({
         >
             {isTooSmall ? (
                 <div className="visualization-small-content">
-                    <InsightIcon />
+                    <IconInsight />
                     <div
                         className="visualization-small-content-description"
                         style={{ fontSize: `${fontSize}em` }}

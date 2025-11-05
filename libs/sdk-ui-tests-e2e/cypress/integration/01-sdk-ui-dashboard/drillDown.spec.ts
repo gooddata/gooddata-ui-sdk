@@ -5,7 +5,7 @@ import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DrillToModal } from "../../tools/drillToModal";
 import { DateFilterValue } from "../../tools/enum/DateFilterValue";
 import * as Navigation from "../../tools/navigation";
-import { Table } from "../../tools/table";
+import { TableNew } from "../../tools/tableNew";
 import { Widget } from "../../tools/widget";
 
 const drillModal = new DrillToModal();
@@ -488,7 +488,7 @@ describe("Drilling", () => {
         });
 
         it.skip("should drill to correct url after clicking on attribute", () => {
-            const table = new Table(".s-dash-item");
+            const table = new TableNew(".s-dash-item");
 
             table.click(0, 0);
 
@@ -499,11 +499,11 @@ describe("Drilling", () => {
         });
 
         it.skip("should drill to correct url after clicking on attribute in drill modal", () => {
-            const table = new Table(".s-dash-item");
+            const table = new TableNew(".s-dash-item");
 
             table.click(0, 1);
 
-            const drillModalTable = new Table(".s-drill-modal-dialog");
+            const drillModalTable = new TableNew(".s-drill-modal-dialog");
 
             drillModalTable.click(0, 0);
 

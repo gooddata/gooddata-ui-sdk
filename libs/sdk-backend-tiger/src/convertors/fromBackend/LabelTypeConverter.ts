@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
 import { AttributeDisplayFormType } from "@gooddata/sdk-model";
@@ -28,6 +28,9 @@ export function convertLabelType(
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE:
             return "GDC.geo.pin_longitude";
+
+        case JsonApiLabelOutAttributesValueTypeEnum.GEO_AREA:
+            return "GDC.geo.area";
 
         default:
             return undefined;

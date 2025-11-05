@@ -13,7 +13,7 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useKdaState } from "../../providers/KdaState.js";
-import { createNewAttributeFilter, updateExistingAttributeFilter } from "../../utils.js";
+import { clearSummaryValue, createNewAttributeFilter, updateExistingAttributeFilter } from "../../utils.js";
 
 export function useDrillAttributeHandler() {
     const { state, setState } = useKdaState();
@@ -61,6 +61,7 @@ export function useDrillAttributeHandler() {
                 });
                 setState({
                     attributeFilters: newFilters,
+                    ...clearSummaryValue(state.definition),
                 });
             } else {
                 setState({
@@ -68,10 +69,11 @@ export function useDrillAttributeHandler() {
                         ...state.attributeFilters,
                         createNewAttributeFilter(catalogAttribute, attribute.attributeHeader.ref, id, value),
                     ],
+                    ...clearSummaryValue(state.definition),
                 });
             }
         },
-        [attributeFinder, id, setState, state.attributeFilters],
+        [attributeFinder, id, setState, state.attributeFilters, state.definition],
     );
 
     return {

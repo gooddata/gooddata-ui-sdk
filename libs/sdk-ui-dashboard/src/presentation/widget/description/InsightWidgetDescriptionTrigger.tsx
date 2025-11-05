@@ -6,7 +6,7 @@ import { stringUtils } from "@gooddata/util";
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     DescriptionTooltipOpenedData,
     selectEnableRichTextDynamicReferences,
@@ -25,7 +25,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
 
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
-    const { filters } = useRichTextFilters(widget);
+    const { filters } = useRichTextWidgetFilters(widget);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     const eventPayload: DescriptionTooltipOpenedData = {

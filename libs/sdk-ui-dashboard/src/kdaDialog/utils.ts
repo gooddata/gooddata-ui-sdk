@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
-import { KdaDateOptions } from "./internalTypes.js";
+import { KdaDateOptions, KdaState } from "./internalTypes.js";
 import { IKdaDefinition } from "./types.js";
 import { DEFAULT_MEASURE_FORMAT } from "../presentation/alerting/DefaultAlertingDialog/constants.js";
 
@@ -107,4 +107,20 @@ export function updateExistingAttributeFilter(f: IDashboardAttributeFilter, val:
             },
         },
     } as IDashboardAttributeFilter;
+}
+
+export function clearSummaryValue(definition: IKdaDefinition | null): Partial<KdaState> {
+    return {
+        ...(definition
+            ? {
+                  definition: {
+                      ...definition,
+                      range: [
+                          { ...definition.range[0], value: undefined },
+                          { ...definition.range[1], value: undefined },
+                      ],
+                  },
+              }
+            : {}),
+    };
 }

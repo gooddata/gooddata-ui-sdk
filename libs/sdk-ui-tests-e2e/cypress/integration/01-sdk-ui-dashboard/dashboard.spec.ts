@@ -4,7 +4,7 @@ import { DashboardHeader } from "../../tools/dashboardHeader";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import * as Navigation from "../../tools/navigation";
-import { Table } from "../../tools/table";
+import { TableNew } from "../../tools/tableNew";
 
 const topBar = new TopBar();
 const dashboardHeader = new DashboardHeader();
@@ -132,7 +132,7 @@ describe("Dashboard actions", () => {
         "should able to scroll vertical/ horizontal on widget",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
-            const table = new Table(".s-dash-item-0_0");
+            const table = new TableNew(".s-dash-item-0_0");
 
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             editMode.edit();

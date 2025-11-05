@@ -350,7 +350,7 @@ item: IUiMenuContentItem<T>;
 }) => ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuContentItemProps<T>): ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, size, }: IUiMenuContentItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContentItemWrapper: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuContentItemWrapperProps<T>) => ReactElement)>;
@@ -1282,6 +1282,135 @@ export interface IComponentTableProps<TProps extends object> {
 export const Icon: Record<string, FC<IIconProps>>;
 
 // @internal (undocumented)
+export function IconAborted({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconAlert({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconAlertPaused({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconArrowDown({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconArrowLeft({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconArrowRight({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconArrowUp({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconAttachmentClip({ className, width, height, color }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconAttribute({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconAttributeFilter({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBar({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBoldHyperlink({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBook({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBubble({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBullet({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconBurgerMenu({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconChatBubble({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconClose({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconColumn({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconColumnContainer({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconColumns({ colorPalette, className, width, height }: IColumnsIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconCombo({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconContract({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconCopy({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDashboard({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDataset({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDataSource({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDate({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDependencyWheel({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDonut({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDragHandle({ className, color, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDrillDown({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDrillToDashboard({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconDrillToInsight({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconEdit({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconEllipsis({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconEmail({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconEmbedCode({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconError({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconExpand({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconExplore({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconExternalLink({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconFact({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
 export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessibilityConfig"> {
     // (undocumented)
     accessibilityConfig?: {
@@ -1331,10 +1460,205 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 }
 
 // @internal (undocumented)
+export function IconFunction({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconFunnel({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconGenAI({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconGenAI2({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconGeo({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHash({ color, backgroundColor, className, width, height }: IHashIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHeader({ className, color, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHeadlineChart({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHeatMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHistoryBack({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHome({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconHyperlink({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconImage({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconInsight({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconInteraction({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconInvite({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconKeyword({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLabel({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLeave({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLegendMenu({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLine({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLock({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconLogout({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconMagic({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconMany({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconMetric({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconMinimize({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconNewVisualization({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconOrigin({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
 export const iconPaths: Record<IconType, ReactNode>;
 
 // @internal (undocumented)
+export function IconPdf({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconPie({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconProgress({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconPyramid({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconQuestionMark({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRefresh({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRepeater({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconReset({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRichText({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRows({ colorPalette, className, width, height }: IRowsIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRun({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSankey({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSave({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconScatterPlot({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSchedule({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSearch({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSettingsGear({ className, width, height, color }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSimplifiedDashboard({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSmallDragHandle({ className, color, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconStackedArea({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconSuccess({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconTable({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconThumbsDown({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconThumbsUp({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconToken({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconTrash({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
 export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
+
+// @internal (undocumented)
+export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconUser({ color, backgroundColor, className, width, height, }: IUserIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconUserGroup({ color, backgroundColor, className, width, height, }: IUserGroupIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconVisualizationSwitcher({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconWarning({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconWaterfall({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconWebhook({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconWebsite({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconWidget({ color, className, width, height }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -2233,6 +2557,12 @@ export interface IHandleActionOptions {
     shouldPreventDefault?: boolean;
     // (undocumented)
     shouldStopPropagation?: boolean;
+}
+
+// @internal (undocumented)
+export interface IHashIconProps extends IIconProps {
+    // (undocumented)
+    backgroundColor?: string;
 }
 
 // @internal (undocumented)
@@ -4970,6 +5300,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     showComponentOnly?: boolean;
+    iconLeft?: ReactNode;
     data: T["content"];
     Component: ComponentType<{
         onBack: () => void;
@@ -4983,6 +5314,8 @@ export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     isFocused: boolean;
     // (undocumented)
     item: IUiMenuContentItem<T>;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)
@@ -5317,6 +5650,18 @@ export interface IUseKeyboardNavigationTargetProps {
     onFocus?: () => void;
     // (undocumented)
     tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IUserGroupIconProps extends IIconProps {
+    // (undocumented)
+    backgroundColor?: string;
+}
+
+// @internal (undocumented)
+export interface IUserIconProps extends IIconProps {
+    // (undocumented)
+    backgroundColor?: string;
 }
 
 // @internal (undocumented)

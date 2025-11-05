@@ -6,6 +6,7 @@ import { render, screen } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+// eslint-disable-next-line no-restricted-imports
 import * as uiKit from "@gooddata/sdk-ui-kit";
 
 import ColorOverlay, { DropdownVersionType, IColorOverlayProps } from "../ColorOverlay.js";

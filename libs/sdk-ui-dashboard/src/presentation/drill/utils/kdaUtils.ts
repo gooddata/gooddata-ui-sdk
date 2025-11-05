@@ -57,9 +57,15 @@ export function getKdaKeyDriverCombinations(
     const exactColumn = filterExactColumn(filteredColumns, dimScopedValues[1]);
     const exactRow = filterExactRow(filteredRows, dimScopedValues[0]);
 
+    const isFirstColumn = exactColumn === filteredColumns[0];
+    const isFirstRow = exactRow === filteredRows[0];
+
+    const isLastColumn = exactColumn === filteredColumns[filteredColumns.length - 1];
+    const isLastRow = exactRow === filteredRows[filteredRows.length - 1];
+
     const current = getCurrentValue(table.data, dateId, exactRow, exactColumn);
-    const previous = getDirectionValue(table.data, dateId, current, -1);
-    const next = getDirectionValue(table.data, dateId, current, 1);
+    const previous = getDirectionValue(table.data, dateId, current, -1, isFirstColumn, isFirstRow);
+    const next = getDirectionValue(table.data, dateId, current, 1, isLastColumn, isLastRow);
 
     const res: DashboardKeyDriverCombinationItem[] = [];
 
@@ -248,17 +254,25 @@ function getDirectionValue(
     dateId: string,
     current: CurrentValue | null,
     direction: -1 | 1,
+    isColumnOnBorder: boolean,
+    isRowOnBorder: boolean,
 ) {
     if (!current) {
         return null;
     }
 
     if (current.direction === "row") {
+        if (isRowOnBorder) {
+            return null;
+        }
         const res = data[current.row + direction]?.[current.column];
         return mapToCurrentValue(res, dateId, current.row + direction, current.column);
     }
 
     if (current.direction === "column") {
+        if (isColumnOnBorder) {
+            return null;
+        }
         const res = data[current.row]?.[current.column + direction];
         return mapToCurrentValue(res, dateId, current.row, current.column + direction);
     }

@@ -4,13 +4,11 @@ import { ReactElement, ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IconLock } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ILockedStatusProps } from "./types.js";
 import { gdColorStateBlank } from "../../../constants/colors.js";
-
-const { Lock } = Icon;
 
 /**
  * @alpha
@@ -23,7 +21,7 @@ export function LockedStatusIndicator(props: ILockedStatusProps): ReactElement |
     return (
         <div className="s-locked-status gd-locked-status">
             <BubbleHoverTrigger>
-                <Lock
+                <IconLock
                     className="gd-icon-locked"
                     width={25}
                     height={24}

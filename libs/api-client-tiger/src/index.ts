@@ -236,6 +236,7 @@ export type {
     ActionsApiGetQualityIssuesCalculationStatusRequest as AfmActionsApiGetQualityIssuesCalculationStatusRequest,
     QualityIssuesCalculationStatusResponse as AfmQualityIssuesCalculationStatusResponse,
     QualityIssuesCalculationStatusResponseStatusEnum as AfmQualityIssuesCalculationStatusResponseStatusEnum,
+    ChangeAnalysisRequest as AfmChangeAnalysisRequest,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

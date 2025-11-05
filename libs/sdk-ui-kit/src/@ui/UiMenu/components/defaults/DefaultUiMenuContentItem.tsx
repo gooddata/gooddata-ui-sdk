@@ -100,14 +100,17 @@ export const DefaultUiMenuContentItemWrapper = memo(function DefaultUiMenuConten
 export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
+    size = "medium",
 }: IUiMenuContentItemProps<T>): ReactNode {
     return (
         <div
             className={e("item", {
                 isFocused,
                 isDisabled: !!item.isDisabled,
+                size,
             })}
         >
+            {item.iconLeft ? item.iconLeft : null}
             <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
                 {item.stringTitle}
             </ShortenedText>

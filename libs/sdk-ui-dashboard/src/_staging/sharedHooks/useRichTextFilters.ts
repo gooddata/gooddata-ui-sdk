@@ -4,8 +4,10 @@ import { useEffect, useMemo } from "react";
 
 import {
     ICatalogDateDataset,
+    IFilter,
     IInsightWidget,
     IRichTextWidget,
+    areObjRefsEqual,
     idRef,
     isAbsoluteDateFilter,
     isObjRef,
@@ -16,19 +18,79 @@ import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../conv
 import {
     InsightDateDatasets,
     QueryInsightDateDatasets,
-    insightSelectDateDataset,
     queryDateDatasetsForInsight,
     selectFilterContextFilters,
+    selectSectionHeadersDateDataSet,
     useDashboardQueryProcessing,
     useDashboardSelector,
+    useWidgetFilters,
 } from "../../model/index.js";
 
-export function useRichTextFilters(widget: IRichTextWidget | IInsightWidget | false) {
+/**
+ * Result of {@link useRichTextWidgetFilters} and {@link useSectionDescriptionFilters} hooks.
+ */
+interface IRichTextFiltersResult {
+    /**
+     * Filters to apply to Rich Text content.
+     */
+    filters: IFilter[];
+
+    /**
+     * Whether the filters are still loading.
+     */
+    loading: boolean;
+
+    /**
+     * Error that occurred while loading filters, if any.
+     */
+    error?: Error;
+}
+
+/**
+ * Hook for obtaining effective filters for Rich Text widgets.
+ *
+ * Uses the same sophisticated filter resolution as Insight widgets, which:
+ * - Respects widget's `ignoreDashboardFilters` configuration
+ * - Re-computes when filter settings change
+ * - Validates filters against backend
+ *
+ * @param widget - Rich Text or Insight widget to get filters for
+ * @returns filters, loading state, and error
+ *
+ * @internal
+ */
+export function useRichTextWidgetFilters(widget: IRichTextWidget | IInsightWidget): IRichTextFiltersResult {
+    const widgetFiltersQuery = useWidgetFilters(widget);
+
+    return useMemo(
+        () => ({
+            filters: widgetFiltersQuery.result ?? [],
+            loading: widgetFiltersQuery.status === "pending" || widgetFiltersQuery.status === "running",
+            error: widgetFiltersQuery.error,
+        }),
+        [widgetFiltersQuery.result, widgetFiltersQuery.status, widgetFiltersQuery.error],
+    );
+}
+
+/**
+ * Hook for obtaining filters for section descriptions with Rich Text content.
+ *
+ * Section descriptions always receive all dashboard filters (no ignoring),
+ * and use the dashboard-level date dataset configuration.
+ *
+ * @returns filters, loading state, and error
+ *
+ * @internal
+ */
+export function useSectionDescriptionFilters(): IRichTextFiltersResult {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet);
+
     const {
         run: queryDateDatasets,
         result,
         status,
+        error,
     } = useDashboardQueryProcessing<
         QueryInsightDateDatasets,
         InsightDateDatasets,
@@ -38,30 +100,31 @@ export function useRichTextFilters(widget: IRichTextWidget | IInsightWidget | fa
     });
 
     useEffect(() => {
-        if (!widget) {
-            queryDateDatasets();
+        queryDateDatasets();
+    }, [queryDateDatasets]);
+
+    const tempWidget = useMemo(() => {
+        let dateDataset: ICatalogDateDataset | undefined;
+        if (sectionHeadersDateDataSet && result) {
+            dateDataset = result.dateDatasets.find((ds) =>
+                areObjRefsEqual(ds.dataSet.ref, sectionHeadersDateDataSet),
+            );
         }
-    }, [queryDateDatasets, widget]);
-
-    return useMemo(() => {
-        let currentWidget: IRichTextWidget | IInsightWidget;
-
-        // If there is no widget, we need to add default date dataset filter
-        if (widget === false) {
-            const dateDataset = result ? insightSelectDateDataset(result) : undefined;
-            currentWidget = createTempRichText(dateDataset);
-        } else {
-            currentWidget = widget;
+        if (!dateDataset && result) {
+            dateDataset = result.dateDatasetsOrdered?.[0];
         }
+        return createTempRichText(dateDataset);
+    }, [result, sectionHeadersDateDataSet]);
 
-        //NOTE: This needs to be rework in future into query to be able used ignored filters
-        // and other stuff similar to insight widget, this is basically simple select related
-        // filters
-        let filters = filterContextItemsToDashboardFiltersByRichTextWidget(dashboardFilters, currentWidget);
+    const filters = useMemo(() => {
+        let convertedFilters = filterContextItemsToDashboardFiltersByRichTextWidget(
+            dashboardFilters,
+            tempWidget,
+        );
 
-        // Do not filter by common date filter
-        if (!currentWidget?.dateDataSet) {
-            filters = filters.filter((f) => {
+        // Do not filter by common date filter if no date dataset is configured
+        if (!tempWidget.dateDataSet) {
+            convertedFilters = convertedFilters.filter((f) => {
                 if (isRelativeDateFilter(f)) {
                     return isObjRef(f.relativeDateFilter.dataSet);
                 }
@@ -72,12 +135,17 @@ export function useRichTextFilters(widget: IRichTextWidget | IInsightWidget | fa
             });
         }
 
-        return {
+        return convertedFilters;
+    }, [dashboardFilters, tempWidget]);
+
+    return useMemo(
+        () => ({
             filters,
-            // without pending, the query would report false before it starts, causing errors downstream
             loading: status === "pending" || status === "running",
-        };
-    }, [dashboardFilters, result, widget, status]);
+            error,
+        }),
+        [filters, status, error],
+    );
 }
 
 function createTempRichText(dateDataset: ICatalogDateDataset | undefined): IRichTextWidget {

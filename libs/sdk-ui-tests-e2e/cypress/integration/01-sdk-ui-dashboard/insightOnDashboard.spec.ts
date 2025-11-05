@@ -92,7 +92,7 @@ describe("Date filtering on insight", () => {
         editMode.isInEditMode(false).edit().isInEditMode();
     });
 
-    it.skip(
+    it(
         "remember last setting after selecting another insight",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {

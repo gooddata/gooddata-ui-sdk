@@ -116,6 +116,7 @@ export enum TigerFeaturesNames {
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
+    EnableGeoArea = "enableGeoArea",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -124,6 +125,8 @@ export enum TigerFeaturesNames {
     EnableDashboardTabs = "enableDashboardTabs",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnablePreserveFilterSelectionDuringInit = "enablePreserveFilterSelectionDuringInit",
+    EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
+    EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
 }
 
 export type ITigerFeatureFlags = {
@@ -233,6 +236,7 @@ export type ITigerFeatureFlags = {
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
+    enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -241,6 +245,8 @@ export type ITigerFeatureFlags = {
     enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enablePreserveFilterSelectionDuringInit: (typeof FeatureFlagsValues)["enablePreserveFilterSelectionDuringInit"][number];
+    enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
+    enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -350,14 +356,17 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: true,
     enableNewGeoPushpin: false,
+    enableGeoArea: false,
     enableAutomationManagement: true,
-    enableNewPdfTabularExport: false,
+    enableNewPdfTabularExport: true,
     enableFilterAccessibility: false,
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
     enableDashboardTabs: false,
     enablePivotTableAutoSizeReset: true,
     enablePreserveFilterSelectionDuringInit: false,
+    enableRichTextWidgetFilterConfiguration: false,
+    enableDashboardSectionHeadersDateDataSet: false,
 };
 
 export const FeatureFlagsValues = {
@@ -468,6 +477,7 @@ export const FeatureFlagsValues = {
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
+    enableGeoArea: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
@@ -476,4 +486,6 @@ export const FeatureFlagsValues = {
     enableDashboardTabs: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
     enablePreserveFilterSelectionDuringInit: [true, false] as const,
+    enableRichTextWidgetFilterConfiguration: [true, false] as const,
+    enableDashboardSectionHeadersDateDataSet: [true, false] as const,
 };

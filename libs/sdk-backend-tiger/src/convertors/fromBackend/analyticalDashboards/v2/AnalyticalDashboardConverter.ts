@@ -123,6 +123,7 @@ interface IAnalyticalDashboardContent {
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
     evaluationFrequency?: string;
+    sectionHeadersDateDataSet?: IdentifierRef;
     tabs?: IDashboardTab[];
     activeTabId?: string;
 }
@@ -218,6 +219,7 @@ function getConvertedAnalyticalDashboardContent(
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
         disableFilterViews: analyticalDashboard.disableFilterViews,
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
+        sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
         tabs: analyticalDashboard.tabs?.map((tab) => {
             return convertDashboardTab(tab, filterContextsList);
         }),
@@ -246,6 +248,7 @@ export function convertDashboard(
         disableUserFilterSave,
         disableFilterViews,
         evaluationFrequency,
+        sectionHeadersDateDataSet,
         tabs,
         activeTabId,
     } = getConvertedAnalyticalDashboardContent(
@@ -280,6 +283,7 @@ export function convertDashboard(
         disableUserFilterSave,
         disableFilterViews,
         evaluationFrequency,
+        sectionHeadersDateDataSet,
         tabs,
         activeTabId,
         dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],

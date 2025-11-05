@@ -7,6 +7,14 @@ import { DateAttributeGranularity, IAttribute, IFilter, IMeasure, ObjRef } from 
  */
 export interface IChangeAnalysisResults {
     /**
+     * To period metric value
+     */
+    toValue?: number;
+    /**
+     * From period metric value
+     */
+    fromValue?: number;
+    /**
      * List of all key drivers
      */
     keyDrivers: IKeyDriver[];

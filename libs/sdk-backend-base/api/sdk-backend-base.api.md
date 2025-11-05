@@ -737,7 +737,7 @@ export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
     saveRenderVisualisationStatus(_interactionId: string, _status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS"): Promise<void>;
     // (undocumented)
-    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback, _userTextFeedback?: string): Promise<void>;
     // (undocumented)
     saveUserVisualisation(_interactionId: string, _visualization: GenAIChatInteractionUserVisualisation): Promise<void>;
 }

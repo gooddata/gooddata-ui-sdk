@@ -1696,7 +1696,7 @@ export interface DashboardDeletedPayload {
 }
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "evaluationFrequency"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "evaluationFrequency" | "sectionHeadersDateDataSet"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -3572,6 +3572,9 @@ export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: stri
 export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha
+export function disableRichTextWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeRichTextWidgetFilterSettings;
+
+// @alpha
 export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(dispatch: DashboardDispatch, command: TCommand): Promise<TResult>;
 
 // @internal
@@ -4203,7 +4206,7 @@ export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, d
 export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch }: RichTextMenuItemDependencies): IRichTextMenuItem[];
+export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch, enableRichTextWidgetFilterConfiguration }: RichTextMenuItemDependencies): IRichTextMenuItem[];
 
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
@@ -5046,6 +5049,8 @@ export interface IDashboardSettingsApplyPayload {
     disableUserFilterSave: boolean;
     // (undocumented)
     evaluationFrequency: string | undefined;
+    // (undocumented)
+    sectionHeadersDateDataSet: ObjRef | undefined;
 }
 
 // @alpha (undocumented)
@@ -5355,6 +5360,9 @@ export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: 
 
 // @beta
 export function ignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+
+// @alpha
+export function ignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
 
 // @internal (undocumented)
 export interface IImplicitDrillWithPredicates {
@@ -7063,6 +7071,7 @@ export const metaActions: {
     setDisableUserFilterSave: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterSave">;
     setDisableFilterViews: ActionCreatorWithPayload<boolean, "meta/setDisableFilterViews">;
     setEvaluationFrequency: ActionCreatorWithOptionalPayload<string | undefined, "meta/setEvaluationFrequency">;
+    setSectionHeadersDateDataSet: ActionCreatorWithOptionalPayload<ObjRef | undefined, "meta/setSectionHeadersDateDataSet">;
 };
 
 // @alpha
@@ -8232,6 +8241,7 @@ export type RichTextMenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
+    enableRichTextWidgetFilterConfiguration?: boolean;
 };
 
 // @alpha (undocumented)
@@ -8913,6 +8923,9 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 // @internal
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
+// @alpha
+export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
 
@@ -8990,6 +9003,9 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectEnableScheduling: DashboardSelector<boolean>;
@@ -9476,6 +9492,9 @@ export const selectScheduleEmailDialogReturnFocusTo: DashboardSelector<string | 
 
 // @public
 export const selectScreen: DashboardSelector<ScreenSize | undefined>;
+
+// @alpha
+export const selectSectionHeadersDateDataSet: DashboardSelector<ObjRef | undefined>;
 
 // @internal (undocumented)
 export const selectSectionModification: (refs: (ObjRef | undefined)[]) => DashboardSelector<("insertedByPlugin" | "modifiedByPlugin")[]>;
@@ -10377,6 +10396,9 @@ export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms
 
 // @beta
 export function unignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+
+// @alpha
+export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
 
 // @beta
 export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): UpdateVisualizationsFromVisualizationSwitcherWidgetContent;

@@ -4,19 +4,17 @@ import { ReactElement } from "react";
 
 import cx from "classnames";
 
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { IconDataSource } from "@gooddata/sdk-ui-kit";
 
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
 
 function DataSourceIcon() {
-    const DataSourceIcon = Icon["DataSource"];
-
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-item-icon-left">
-                <DataSourceIcon />
+                <IconDataSource />
             </span>
         </div>
     );

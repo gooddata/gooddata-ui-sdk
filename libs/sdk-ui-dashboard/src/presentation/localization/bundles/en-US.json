@@ -467,6 +467,22 @@
         "value": "<p>Allows users to save filters state as a personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
         "comment": "Tooltip explaining saved views functionality when hovering over the toggle"
     },
+    "settingsDashboardDialog.sectionHeaders.dateDataset": {
+        "value": "Date range in descriptions",
+        "comment": "Label for dropdown to select date dataset for section header Rich Text"
+    },
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": {
+        "value": "Date dataset used by the Date range filter for metric references in section descriptions.",
+        "comment": "Tooltip explaining date dataset configuration for section headers"
+    },
+    "dateDataset.autoSelect": {
+        "value": "Auto-select",
+        "comment": "Label shown when no specific date dataset is selected and system auto-selects"
+    },
+    "dateDataset.notFound": {
+        "value": "Not found",
+        "comment": "Label shown when configured date dataset is not found"
+    },
     "dialogs.schedule.email.attachments.label": {
         "value": "Attachments",
         "comment": "Attachments of the scheduled email."
@@ -570,6 +586,14 @@
     "dialogs.schedule.email.filters": {
         "value": "Filters ({count})",
         "comment": "Label for filters selection in scheduled email form, with count of active filters"
+    },
+    "dialogs.schedule.email.tabs.general": {
+        "value": "General",
+        "comment": "Label for the General tab in scheduled email dialog"
+    },
+    "dialogs.schedule.email.tabs.filters": {
+        "value": "Filters",
+        "comment": "Label for the Filters tab in scheduled email dialog"
     },
     "dialogs.schedule.email.destination": {
         "value": "Destination",
@@ -2880,7 +2904,7 @@
         "comment": "Key driver analysis drill year to year label"
     },
     "dashboard.tabs.default.label": {
-        "value": "Untitled",
+        "value": "Untitled tab",
         "comment": "Default label for dashboard tab"
     },
     "dashboard.tabs.accessibility.label": {

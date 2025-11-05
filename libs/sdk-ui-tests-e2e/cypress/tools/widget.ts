@@ -5,6 +5,7 @@ import { InsightTitle, InsightsCatalog } from "./insightsCatalog";
 import { Kpi } from "./kpi";
 import { RichText } from "./richText";
 import { Table } from "./table";
+import { TableNew } from "./tableNew";
 
 export class Widget {
     constructor(
@@ -62,6 +63,10 @@ export class Widget {
 
     getTable() {
         return new Table(this.getElementSelector());
+    }
+
+    getTableNew() {
+        return new TableNew(this.getElementSelector());
     }
 
     getKPI() {

@@ -15,6 +15,7 @@ export type DashboardDescriptor = Pick<
     | "disableUserFilterSave"
     | "disableFilterViews"
     | "evaluationFrequency"
+    | "sectionHeadersDateDataSet"
 > &
     IAccessControlAware;
 

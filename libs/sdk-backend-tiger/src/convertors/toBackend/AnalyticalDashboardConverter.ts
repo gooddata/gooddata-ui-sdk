@@ -109,6 +109,7 @@ export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
     useWidgetLocalIdentifiers?: boolean,
+    enableDashboardSectionHeadersDateDataSet?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
     // For backward compatibility, if dashboard has tabs, fill root-level properties
     // with active/first tab's content so older SDK versions can still read the dashboard
@@ -135,7 +136,7 @@ export function convertAnalyticalDashboard(
         removeWidgetIdentifiersInLayout(effectiveLayout, useWidgetLocalIdentifiers),
     );
 
-    return {
+    const result: AnalyticalDashboardModelV2.IAnalyticalDashboard = {
         dateFilterConfig: cloneWithSanitizedIds(effectiveDateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(effectiveDateFilterConfigs),
         attributeFilterConfigs: cloneWithSanitizedIds(effectiveAttributeFilterConfigs),
@@ -153,6 +154,12 @@ export function convertAnalyticalDashboard(
         activeTabId: dashboard.activeTabId,
         version: "2",
     };
+
+    if (enableDashboardSectionHeadersDateDataSet) {
+        result.sectionHeadersDateDataSet = cloneWithSanitizedIds(dashboard.sectionHeadersDateDataSet);
+    }
+
+    return result;
 }
 
 export function convertFilterContextToBackend(

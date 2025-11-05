@@ -64,6 +64,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     showComponentOnly?: boolean;
+    iconLeft?: ReactNode;
     data: T["content"];
     Component: ComponentType<{
         onBack: () => void;
@@ -139,6 +140,7 @@ export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
 export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
     isFocused: boolean;
+    size?: SizeSmall | SizeMedium;
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { IChartConfigurationItemSnippet, IChartConfigurationSnippet } from "./snippets.js";
@@ -10,13 +10,11 @@ const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [{ align: "cr cl", offset: { x: 10, 
 function DescriptionIconWithTooltip({ snippet }: { snippet: IChartConfigurationItemSnippet }) {
     const theme = useTheme();
 
-    const QuestionMarkIcon = Icon["QuestionMark"];
-
     return (
         <span>
             <span className="gd-bubble-trigger-wrapper">
                 <BubbleHoverTrigger>
-                    <QuestionMarkIcon
+                    <IconQuestionMark
                         color={theme?.palette?.complementary?.c7 ?? "#B0BECA"}
                         width={16}
                         height={16}

@@ -1,15 +1,26 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
-import { ICatalogDateDataset, IWidget, ObjRef, idRef, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
+import {
+    ICatalogDateDataset,
+    IWidget,
+    ObjRef,
+    idRef,
+    isInsightWidget,
+    isRichTextWidget,
+    widgetRef,
+} from "@gooddata/sdk-model";
 
 import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     disableInsightWidgetDateFilter,
     disableKpiWidgetDateFilter,
+    disableRichTextWidgetDateFilter,
     enableInsightWidgetDateFilter,
     enableKpiWidgetDateFilter,
+    enableRichTextWidgetDateFilter,
     ignoreDateFilterOnInsightWidget,
     unignoreDateFilterOnInsightWidget,
     useDashboardCommandProcessing,
@@ -75,6 +86,31 @@ export function useDateFilterConfigurationHandling(
         },
     });
 
+    const { run: disableRichTextDateFilter } = useDashboardCommandProcessing({
+        commandCreator: disableRichTextWidgetDateFilter,
+        successEvent: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(false);
+        },
+    });
+
+    const { run: enableRichTextDateFilter } = useDashboardCommandProcessing({
+        commandCreator: enableRichTextWidgetDateFilter,
+        successEvent: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(true);
+            setStatus("loading");
+        },
+        onError: () => {
+            setStatus("error");
+        },
+        onSuccess: (_command) => {
+            setStatus("ok");
+        },
+    });
+
     const handleDateFilterEnabled = useCallback(
         (enabled: boolean, dateDatasetRef: ObjRef | undefined) => {
             const getPreselectedDateDataset = () => {
@@ -91,8 +127,16 @@ export function useDateFilterConfigurationHandling(
                     : firstDataSet!.dataSet.ref;
             };
 
-            const enable = isInsightWidget(widget) ? enableInsightDateFilter : enableKpiDateFilter;
-            const disable = isInsightWidget(widget) ? disableInsightDateFilter : disableKpiDateFilter;
+            const enable = isInsightWidget(widget)
+                ? enableInsightDateFilter
+                : isRichTextWidget(widget)
+                  ? enableRichTextDateFilter
+                  : enableKpiDateFilter;
+            const disable = isInsightWidget(widget)
+                ? disableInsightDateFilter
+                : isRichTextWidget(widget)
+                  ? disableRichTextDateFilter
+                  : disableKpiDateFilter;
 
             if (enabled) {
                 if (dateDatasetRef) {
@@ -110,11 +154,15 @@ export function useDateFilterConfigurationHandling(
             // eslint-disable-next-line react-hooks/exhaustive-deps
             isInsightWidget(widget),
             // eslint-disable-next-line react-hooks/exhaustive-deps
+            isRichTextWidget(widget),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             safeSerializeObjRef(ref),
             enableInsightDateFilter,
             disableInsightDateFilter,
             enableKpiDateFilter,
             disableKpiDateFilter,
+            enableRichTextDateFilter,
+            disableRichTextDateFilter,
             relatedDateDatasets,
         ],
     );
@@ -161,12 +209,14 @@ export function useDateFilterConfigurationHandling(
         (id: string) => {
             if (isInsightWidget(widget)) {
                 enableInsightDateFilter(ref, idRef(id, "dataSet"));
+            } else if (isRichTextWidget(widget)) {
+                enableRichTextDateFilter(ref, idRef(id, "dataSet"));
             } else {
                 enableKpiDateFilter(ref, idRef(id, "dataSet"));
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [isInsightWidget(widget), safeSerializeObjRef(ref)],
+        [isInsightWidget(widget), isRichTextWidget(widget), safeSerializeObjRef(ref)],
     );
 
     return {

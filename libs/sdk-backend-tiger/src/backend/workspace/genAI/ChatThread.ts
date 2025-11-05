@@ -77,6 +77,7 @@ export class ChatThreadService implements IChatThread {
     async saveUserFeedback(
         chatHistoryInteractionId: string,
         userFeedback: GenAIChatInteractionUserFeedback,
+        userTextFeedback?: string,
     ): Promise<void> {
         await this.authCall((client) => {
             return client.genAI.aiChatHistory({
@@ -84,6 +85,7 @@ export class ChatThreadService implements IChatThread {
                 chatHistoryRequest: {
                     chatHistoryInteractionId,
                     userFeedback,
+                    userTextFeedback,
                 },
             });
         });

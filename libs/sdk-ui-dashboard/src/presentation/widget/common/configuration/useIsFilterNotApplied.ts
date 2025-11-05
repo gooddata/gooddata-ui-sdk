@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import { IWidget, ObjRef, areObjRefsEqual, isObjRef, widgetRef } from "@gooddata/sdk-model";
+
+import { IWidget, ObjRef, areObjRefsEqual, isObjRef, isRichTextWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
     selectAttributeFilterDisplayFormsMap,
@@ -10,10 +11,17 @@ import {
 const WARNING_FILTER_NOT_APPLIED = "gdc.aqe.not_applied_filter.report";
 
 export function useIsFilterNotApplied(widget: IWidget, displayFormRef: ObjRef): boolean {
+    // Call hooks unconditionally (React Hooks rules)
     const execResult = useDashboardSelector(selectExecutionResultByRef(widgetRef(widget)));
-    const allWarnings = execResult?.warnings;
-
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+
+    // Rich Text widgets don't have execution results, but their embedded metrics
+    // can still be filtered. Skip validation for Rich Text widgets.
+    if (isRichTextWidget(widget)) {
+        return false;
+    }
+
+    const allWarnings = execResult?.warnings;
     const df = dfMap.get(displayFormRef);
 
     if (!df) {

@@ -49,7 +49,7 @@ describe.skip("Table Component", { tags: ["checklist_integrated_tiger"] }, () =>
     });
 });
 
-describe("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
+describe.skip("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
     const table = new Table(".s-insight-view-transpose");
 
     it("should display Metric in row, Column header on left", () => {

@@ -113,3 +113,108 @@ export function enableRichTextWidgetDateFilter(
         },
     };
 }
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of Rich Text widget's date filter setting. The date filtering will
+ * be disabled.
+ *
+ * @param ref - reference of the Rich Text widget to modify
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function disableRichTextWidgetDateFilter(
+    ref: ObjRef,
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "disableDateFilter",
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in addition of one or more filters into Rich Text widget's attribute filter ignore-list.
+ * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
+ * other filters that are already ignored.
+ *
+ * Ignored attribute filters are not passed down to the metrics and will not be used to filter those metrics.
+ *
+ * The operation is idempotent - trying to ignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the rich text widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be added to the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function ignoreFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    const displayFormRefs = Array.isArray(oneOrMoreDisplayForms)
+        ? oneOrMoreDisplayForms
+        : [oneOrMoreDisplayForms];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreAttributeFilter",
+                displayFormRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ *
+ * Dispatching this command will result in removal of one or more filters from Rich Text widget's attribute filter ignore-list.
+ * Ignored attribute filters are not passed down to the metrics and will not be used to filter those metrics.
+ *
+ * The operation is idempotent - trying to unignore an attribute filter multiple times will have no effect.
+ *
+ * @param ref - reference of the rich text widget to modify
+ * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be removed from the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function unignoreFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreDisplayForms: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    const displayFormRefs = Array.isArray(oneOrMoreDisplayForms)
+        ? oneOrMoreDisplayForms
+        : [oneOrMoreDisplayForms];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreAttributeFilter",
+                displayFormRefs,
+            },
+        },
+    };
+}

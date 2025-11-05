@@ -3,6 +3,9 @@
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
+/**
+ * @internal
+ */
 export function Magic({ color = "#b1c1d1", className, width, height, ariaHidden }: IIconProps) {
     return (
         <svg

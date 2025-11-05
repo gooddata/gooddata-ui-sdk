@@ -3,9 +3,13 @@
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
+/**
+ * @internal
+ */
 export interface IHashIconProps extends IIconProps {
     backgroundColor?: string;
 }
+
 /**
  * @internal
  */

@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { AgentIcon } from "./AgentIcon.js";
+import { FeedbackPopup } from "./FeedbackPopup.js";
 import { MessageContents } from "./MessageContents.js";
+import { useUserFeedback } from "./useUserFeedback.js";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
 
@@ -19,6 +21,9 @@ type AssistantMessageProps = {
 
 function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: AssistantMessageProps) {
     const intl = useIntl();
+
+    const { handlePositiveFeedbackClick, handleNegativeFeedbackClick, handleFeedbackSubmit } =
+        useUserFeedback({ message, setUserFeedback });
 
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
@@ -65,12 +70,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                     icon="thumbsUp"
                                     variant="tertiary"
                                     isActive={message.feedback === "POSITIVE"}
-                                    onClick={() =>
-                                        setUserFeedback({
-                                            assistantMessageId: message.localId,
-                                            feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
-                                        })
-                                    }
+                                    onClick={handlePositiveFeedbackClick}
                                     accessibilityConfig={{
                                         ariaLabel: thumbsUpLabel,
                                     }}
@@ -78,26 +78,19 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                             }
                             content={thumbsUpLabel}
                         />
-                        <UiTooltip
-                            triggerBy={["focus", "hover"]}
-                            arrowPlacement="bottom"
+                        <FeedbackPopup
                             anchor={
                                 <UiIconButton
                                     icon="thumbsDown"
                                     variant="tertiary"
                                     isActive={message.feedback === "NEGATIVE"}
-                                    onClick={() =>
-                                        setUserFeedback({
-                                            assistantMessageId: message.localId,
-                                            feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
-                                        })
-                                    }
+                                    onClick={handleNegativeFeedbackClick}
                                     accessibilityConfig={{
                                         ariaLabel: thumbsDownLabel,
                                     }}
                                 />
                             }
-                            content={thumbsDownLabel}
+                            onSubmit={handleFeedbackSubmit}
                         />
                     </div>
                 ) : null}

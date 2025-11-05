@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { Icon, withBubble } from "@gooddata/sdk-ui-kit";
+import { IconQuestionMark, withBubble } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IColoredIconProps {
@@ -11,10 +11,8 @@ interface IColoredIconProps {
 function ColoredIcon({ width, height }: IColoredIconProps) {
     const theme = useTheme();
 
-    const QuestionMarkIcon = Icon["QuestionMark"];
-
     return (
-        <QuestionMarkIcon
+        <IconQuestionMark
             color={theme?.palette?.complementary?.c7 ?? "#B0BECA"}
             width={width}
             height={height}

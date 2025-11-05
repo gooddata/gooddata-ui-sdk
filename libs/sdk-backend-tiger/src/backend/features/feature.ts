@@ -760,6 +760,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGeoArea,
+            "enableGeoArea",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGeoArea,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAutomationManagement,
             "enableAutomationManagement",
             "BOOLEAN",
@@ -813,6 +820,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enablePreserveFilterSelectionDuringInit",
             "BOOLEAN",
             FeatureFlagsValues.enablePreserveFilterSelectionDuringInit,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableRichTextWidgetFilterConfiguration,
+            "enableRichTextWidgetFilterConfiguration",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRichTextWidgetFilterConfiguration,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardSectionHeadersDateDataSet,
+            "enableDashboardSectionHeadersDateDataSet",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardSectionHeadersDateDataSet,
         ),
     };
 }
