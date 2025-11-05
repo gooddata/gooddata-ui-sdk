@@ -234,6 +234,7 @@ export const makeUserMessage = (content: Contents[]): UserMessage => ({
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
     feedback: GenAIChatInteractionUserFeedback;
+    feedbackError?: string;
 };
 
 /**

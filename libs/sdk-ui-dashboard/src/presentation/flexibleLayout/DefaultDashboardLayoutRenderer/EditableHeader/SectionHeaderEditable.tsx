@@ -18,7 +18,7 @@ import {
 } from "./sectionHeaderHelper.js";
 import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
-import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useSectionDescriptionFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
@@ -48,7 +48,7 @@ export function SectionHeaderEditable({
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
 
     const { LoadingComponent } = useDashboardComponentsContext();
-    const { filters, loading } = useRichTextFilters(false);
+    const { filters, loading } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
 
     const description = useRichText ? rawDescription : getDescription(rawDescription);

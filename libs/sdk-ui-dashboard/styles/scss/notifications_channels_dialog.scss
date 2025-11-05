@@ -714,6 +714,10 @@ $min-content-height: 110px;
     padding: 0 $dialog-padding;
     border-top: 1px solid kit-variables.$gd-border-color;
     border-bottom: 1px solid kit-variables.$gd-border-color;
+
+    .gd-ui-kit-tabs {
+        margin: $vertical-space-small 0 $vertical-space;
+    }
 }
 
 .gd-notification-channel-dialog-with-automation-filters {
@@ -727,6 +731,14 @@ $min-content-height: 110px;
 
     @media #{kit-variables.$small-only} {
         height: inherit;
+    }
+}
+
+.gd-notification-channel-dialog-with-tabs {
+    .gd-schedule-dialog-tab-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
     }
 }
 

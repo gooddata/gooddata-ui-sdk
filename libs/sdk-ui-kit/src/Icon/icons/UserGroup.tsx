@@ -3,7 +3,10 @@
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
-export interface IUserIconProps extends IIconProps {
+/**
+ * @internal
+ */
+export interface IUserGroupIconProps extends IIconProps {
     backgroundColor?: string;
 }
 
@@ -16,7 +19,7 @@ export function UserGroup({
     className,
     width,
     height,
-}: IUserIconProps) {
+}: IUserGroupIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}

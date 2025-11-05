@@ -4,7 +4,7 @@ import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
@@ -22,7 +22,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
     const { exportData, widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const { filters } = useRichTextFilters(widget);
+    const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { LoadingComponent } = useDashboardComponentsContext();

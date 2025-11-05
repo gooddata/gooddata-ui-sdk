@@ -5,7 +5,7 @@ import { FC } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Button, IconChatBubble, IconNewVisualization, IconSearch } from "@gooddata/sdk-ui-kit";
 
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
 import { setMessagesAction } from "../store/index.js";
@@ -15,19 +15,19 @@ const quickOptions = [
         title: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-1.answer" }),
-        Icon: Icon["Search"],
+        Icon: IconSearch,
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-2.answer" }),
-        Icon: Icon["NewVisualization"],
+        Icon: IconNewVisualization,
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-3.answer" }),
-        Icon: Icon["ChatBubble"],
+        Icon: IconChatBubble,
     },
 ];
 

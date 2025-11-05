@@ -4,7 +4,7 @@ import { Dashboard, TopBar } from "../../tools/dashboards";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
 import * as Navigation from "../../tools/navigation";
-import { Table } from "../../tools/table";
+import { TableNew } from "../../tools/tableNew";
 import { Widget } from "../../tools/widget";
 
 const regionFilter = new AttributeFilter("Region");
@@ -12,7 +12,7 @@ const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
 const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
-const table = new Table(".s-dash-item-0_0");
+const table = new TableNew(".s-dash-item-0_0");
 const topBar = new TopBar();
 const filterBar = new FilterBar();
 
@@ -21,7 +21,7 @@ describe("Dependent filter", () => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
     });
 
-    it.skip(
+    it(
         "should test parent - child interaction in view mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
@@ -117,7 +117,7 @@ describe("Dependent filter", () => {
 
             stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
 
-            table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+            table.waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
 
             cityFilter
                 .open()
@@ -127,7 +127,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it.skip(
+    it(
         "should test parent - child interaction in edit mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
@@ -137,11 +137,11 @@ describe("Dependent filter", () => {
                 .getColumnValues(1)
                 .should("deep.equal", [
                     "Connecticut",
-                    "Connecticut",
+                    "",
                     "Massachusetts",
                     "New Hampshire",
                     "New York",
-                    "New York",
+                    "",
                     "Oregon",
                     "Pennsylvania",
                     "Rhode Island",
@@ -169,18 +169,18 @@ describe("Dependent filter", () => {
                 .getColumnValues(1)
                 .should("deep.equal", [
                     "Connecticut",
-                    "Connecticut",
+                    "",
                     "Massachusetts",
                     "New Hampshire",
                     "New York",
-                    "New York",
+                    "",
                     "Oregon",
                     "Pennsylvania",
                     "Rhode Island",
                 ]);
 
             regionFilter.open().selectAttribute(["West Coast"]).apply();
-            table.waitLoadStarted().waitLoaded();
+            table.waitLoaded();
 
             stateFilter
                 .open()
@@ -193,6 +193,7 @@ describe("Dependent filter", () => {
                 .isLoaded()
                 .hasSubtitle("California");
 
+            //eslint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(1000);
 
             cityFilter
@@ -207,7 +208,6 @@ describe("Dependent filter", () => {
             table.waitLoadStarted().waitLoaded();
 
             cityFilter.isLoaded().hasSubtitle("Sacramento");
-
             table.getColumnValues(0).should("deep.equal", ["West Coast"]);
             table.getColumnValues(1).should("deep.equal", ["California"]);
             table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
@@ -219,8 +219,6 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(false)
                 .selectAttribute(["East Coast"])
                 .apply();
-
-            cy.wait(1000);
 
             stateFilter
                 .open()
@@ -240,7 +238,7 @@ describe("Dependent filter", () => {
                 .selectAttribute(["West Coast"])
                 .apply();
 
-            cy.wait(1000);
+            table.waitLoadStarted().waitLoaded();
 
             stateFilter
                 .open()
@@ -254,8 +252,8 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true);
 
             topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
-
-            table.waitLoaded();
+            //eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(2000);
 
             regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
             stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
@@ -383,11 +381,11 @@ describe("Dependent filter", () => {
                 .getColumnValues(1)
                 .should("deep.equal", [
                     "Connecticut",
-                    "Connecticut",
+                    "",
                     "Massachusetts",
                     "New Hampshire",
                     "New York",
-                    "New York",
+                    "",
                     "Oregon",
                     "Pennsylvania",
                     "Rhode Island",
@@ -417,11 +415,11 @@ describe("Dependent filter", () => {
                 .getColumnValues(1)
                 .should("deep.equal", [
                     "Connecticut",
-                    "Connecticut",
+                    "",
                     "Massachusetts",
                     "New Hampshire",
                     "New York",
-                    "New York",
+                    "",
                     "Oregon",
                     "Pennsylvania",
                     "Rhode Island",
@@ -559,7 +557,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it.skip(
+    it(
         "should test a circle parent - child filter in edit mode",
         { tags: "checklist_integrated_tiger" },
         () => {
@@ -595,7 +593,7 @@ describe("Dependent filter", () => {
     );
 
     //This test script cover the bug LX-1123
-    it.skip(
+    it(
         "should not appear blank page after resetting dependent filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {

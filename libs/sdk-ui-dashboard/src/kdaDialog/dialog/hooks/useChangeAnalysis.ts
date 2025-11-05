@@ -113,7 +113,7 @@ function useKdaStateWithList(
     const from = definition?.range[0].date;
     const to = definition?.range[1].date;
 
-    const { items, attributes } = useMemo(() => {
+    const { items, attributes, toValue, fromValue } = useMemo(() => {
         const attributes: ICatalogAttribute[] = [];
 
         function mapKeyDrive(keyDriver: IKeyDriver, i: number) {
@@ -129,24 +129,51 @@ function useKdaStateWithList(
             return null;
         }
 
+        const toValue = result?.toValue;
+        const fromValue = result?.fromValue;
         const list = result?.keyDrivers.map(mapKeyDrive) ?? [];
         const items = list.filter(Boolean) as IUiListboxInteractiveItem<KdaItem>[];
 
         return {
             items,
             attributes,
+            toValue,
+            fromValue,
         };
-    }, [attributeFinder, from, metric, result?.keyDrivers, separators, to]);
+    }, [
+        attributeFinder,
+        from,
+        metric,
+        result?.toValue,
+        result?.keyDrivers,
+        result?.fromValue,
+        separators,
+        to,
+    ]);
 
     return useMemo(() => {
+        const currentFrom = state.definition?.range[0].value;
+        const currentTo = state.definition?.range[1].value;
+
+        const definition = state.definition;
+        // update from
+        if (definition && currentFrom === undefined && fromValue !== undefined) {
+            definition.range[0].value = fromValue;
+        }
+        // update to
+        if (definition && currentTo === undefined && toValue !== undefined) {
+            definition.range[1].value = toValue;
+        }
+
         return {
             items,
+            definition,
             selectedItem: "summary",
             itemsStatus: loadingStatus,
             selectedStatus: loadingStatus,
             selectedAttributes: attributes.map((a) => a.defaultDisplayForm.ref),
         };
-    }, [items, loadingStatus, attributes]);
+    }, [state.definition, fromValue, toValue, items, loadingStatus, attributes]);
 }
 
 function createKdaItem(

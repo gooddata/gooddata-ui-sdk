@@ -6,12 +6,10 @@ import { action } from "storybook/actions";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Button, IconAttribute } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
-
-const { Attribute: AttributeIconComponent } = Icon;
 
 const attributeTitle = "Product";
 
@@ -20,7 +18,7 @@ interface AttributeFilterDropdownButtonExamplesProps {
     icon?: ReactNode;
 }
 
-const AttributeIcon = <AttributeIconComponent />;
+const AttributeIcon = <IconAttribute />;
 
 function TooltipContentComponent() {
     return (

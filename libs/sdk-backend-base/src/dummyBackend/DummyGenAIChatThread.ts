@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import {
     IChatThread,
     IChatThreadHistory,
@@ -32,6 +33,7 @@ export class DummyGenAIChatThread implements IChatThread {
     async saveUserFeedback(
         _interactionId: string,
         _feedback: GenAIChatInteractionUserFeedback,
+        _userTextFeedback?: string,
     ): Promise<void> {}
     async saveRenderVisualisationStatus(
         _interactionId: string,

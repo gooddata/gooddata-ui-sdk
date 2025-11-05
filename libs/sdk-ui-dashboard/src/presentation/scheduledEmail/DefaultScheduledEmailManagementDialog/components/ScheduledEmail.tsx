@@ -10,7 +10,15 @@ import {
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Icon, SELECT_ITEM_ACTION, ShortenedText } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    IconInsight,
+    IconSimplifiedDashboard,
+    IconWarning,
+    SELECT_ITEM_ACTION,
+    ShortenedText,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { isVisualisationAutomation } from "../../../../_staging/automation/index.js";
@@ -21,8 +29,6 @@ import {
 } from "../../../../model/index.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
-
-const { Insight: InsightIcon, SimplifiedDashboard: SimplifiedDashboardIcon, Warning: WarningIcon } = Icon;
 
 type IAction = "scheduleEmail" | "delete" | typeof SELECT_ITEM_ACTION;
 
@@ -71,12 +77,12 @@ export function ScheduledEmail({
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
     const iconComponent = isValid ? (
         isWidget ? (
-            <InsightIcon width={16} height={16} color={iconColor} />
+            <IconInsight width={16} height={16} color={iconColor} />
         ) : (
-            <SimplifiedDashboardIcon width={19} height={19} color={iconColor} />
+            <IconSimplifiedDashboard width={19} height={19} color={iconColor} />
         )
     ) : (
-        <WarningIcon width={16} height={16} color={iconColorError} />
+        <IconWarning width={16} height={16} color={iconColorError} />
     );
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");

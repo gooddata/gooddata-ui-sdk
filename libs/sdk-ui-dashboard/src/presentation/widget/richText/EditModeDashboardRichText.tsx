@@ -9,7 +9,7 @@ import { usePrevious } from "@gooddata/sdk-ui";
 import {
     Button,
     ConfirmDialog,
-    Icon,
+    IconRichText,
     OverlayController,
     OverlayControllerProvider,
     RichText,
@@ -19,7 +19,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { IDashboardRichTextProps } from "./types.js";
 import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
@@ -37,8 +37,6 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
-const { RichText: RichTextIcon } = Icon;
-
 /**
  * @internal
  */
@@ -53,7 +51,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const { filters } = useRichTextFilters(widget);
+    const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
 
     const dispatch = useDashboardDispatch();
@@ -68,7 +66,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const EmptyElement = useMemo(() => {
         return (
             <div className="gd-rich-text-widget-empty-content">
-                <RichTextIcon width={28} height={34} color={emptyContentIconColor} />
+                <IconRichText width={28} height={34} color={emptyContentIconColor} />
                 <Typography tagName="p">{intl.formatMessage({ id: "richText.emptyContent" })}</Typography>
             </div>
         );

@@ -5,7 +5,7 @@ import { MouseEventHandler, useCallback, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Button, IconLegendMenu } from "@gooddata/sdk-ui-kit";
 
 import { ChartFillType } from "../../coloring/types.js";
 import { LegendLabelItem } from "../LegendLabelItem.js";
@@ -70,8 +70,6 @@ export function RowLegendIcoButton({
         "legend-popup-icon-active": isActive,
     });
 
-    const LegendMenuIcon = Icon["LegendMenu"];
-
     return (
         <div className="legend-popup-button">
             <Button
@@ -86,7 +84,7 @@ export function RowLegendIcoButton({
                 id={triggerId}
             >
                 <div role={"presentation"}>
-                    <LegendMenuIcon />
+                    <IconLegendMenu />
                 </div>
             </Button>
         </div>

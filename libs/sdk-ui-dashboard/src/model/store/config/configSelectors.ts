@@ -689,6 +689,30 @@ export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> =
 );
 
 /**
+ * Returns whether rich text widget filter configuration is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableRichTextWidgetFilterConfiguration ?? false;
+    },
+);
+
+/**
+ * Returns whether dashboard-level date dataset configuration for section headers is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardSectionHeadersDateDataSet ?? false;
+    },
+);
+
+/**
  * Feature flag
  * @internal
  */
@@ -814,7 +838,7 @@ export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = crea
 export const selectEnableExportToPdfTabular: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableNewPdfTabularExport) ?? false;
+        return state.settings?.enableNewPdfTabularExport ?? true;
     },
 );
 

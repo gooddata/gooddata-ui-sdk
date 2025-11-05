@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { IconSmallDragHandle } from "@gooddata/sdk-ui-kit";
 
 import { Toolbar } from "./Toolbar.js";
 import {
@@ -21,8 +21,6 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
-
-const { SmallDragHandle: SmallDragHandleIcon } = Icon;
 
 /**
  * @internal
@@ -103,7 +101,7 @@ export function EditableDashboardNestedLayoutWidget({
                                     "is-selected": isSelected,
                                 })}
                             >
-                                <SmallDragHandleIcon className="gd-dashboard-nested-layout-tab__icon" />
+                                <IconSmallDragHandle className="gd-dashboard-nested-layout-tab__icon" />
                                 <div className="gd-dashboard-nested-layout-tab__text">
                                     <FormattedMessage id="nestedLayout.tab.title" />
                                 </div>

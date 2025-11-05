@@ -22,6 +22,7 @@ import { SdkErrorType } from '@gooddata/sdk-ui';
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
     feedback: GenAIChatInteractionUserFeedback;
+    feedbackError?: string;
 };
 
 // @public

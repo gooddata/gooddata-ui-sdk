@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, getContext, select } from "redux-saga/effects";
+import { getContext, put, select } from "redux-saga/effects";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
@@ -9,6 +9,7 @@ import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { extractError } from "./utils.js";
 import { Message } from "../../model.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
+import { setUserFeedbackError } from "../messages/messagesSlice.js";
 
 /**
  * Save user feedback to server.
@@ -20,6 +21,7 @@ export function* onUserFeedback({
 }: PayloadAction<{
     assistantMessageId: string;
     feedback: GenAIChatInteractionUserFeedback;
+    userTextFeedback?: string;
 }>) {
     try {
         // Retrieve backend from context
@@ -34,8 +36,16 @@ export function* onUserFeedback({
 
         const chatThread = backend.workspace(workspace).genAI().getChatThread();
 
-        yield call([chatThread, chatThread.saveUserFeedback], message.id, payload.feedback);
+        yield chatThread.saveUserFeedback(message.id, payload.feedback, payload.userTextFeedback);
     } catch (e) {
         console.warn(`Failed to save user feedback: ${extractError(e)}`);
+
+        // Dispatch error action to notify UI
+        yield put(
+            setUserFeedbackError({
+                assistantMessageId: payload.assistantMessageId,
+                error: extractError(e),
+            }),
+        );
     }
 }

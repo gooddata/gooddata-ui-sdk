@@ -420,6 +420,20 @@ export interface ISettings {
     enableDashboardFiltersApplyModes?: boolean;
 
     /**
+     * Enable rich text widget filter configuration.
+     * Allows users to configure date and attribute filter settings for rich text widgets.
+     * @alpha
+     */
+    enableRichTextWidgetFilterConfiguration?: boolean;
+
+    /**
+     * Enable dashboard-level date dataset configuration for section headers.
+     * Allows users to select which date dataset to use for filtering metrics in section header rich text.
+     * @alpha
+     */
+    enableDashboardSectionHeadersDateDataSet?: boolean;
+
+    /**
      * Date filter configuration.
      * @alpha
      */
@@ -546,6 +560,11 @@ export interface ISettings {
      * Enable new geo pushpin chart
      */
     enableNewGeoPushpin?: boolean;
+
+    /**
+     * Enable geo area labels.
+     */
+    enableGeoArea?: boolean;
 
     /**
      * Enable automation management in dashboards

@@ -588,6 +588,26 @@ const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (st
 });
 
 /**
+ * Selects the date dataset to use for filtering metrics in section header rich text.
+ *
+ * @alpha
+ */
+export const selectSectionHeadersDateDataSet: DashboardSelector<ObjRef | undefined> = createSelector(
+    selectDashboardDescriptor,
+    (descriptor) => {
+        return descriptor.sectionHeadersDateDataSet;
+    },
+);
+
+/**
+ * Selects persisted section headers date dataset - that is the value that was used to initialize
+ * the dashboard state during the initial load of the dashboard.
+ */
+const selectPersistedDashboardSectionHeadersDateDataSet = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.sectionHeadersDateDataSet;
+});
+
+/**
  * Selects persisted tabs - that is the tabs array that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
@@ -759,6 +779,19 @@ export const selectEvaluationFrequencyChanged: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selects a boolean indication if the dashboard has any changes to the section headers date dataset compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsSectionHeadersDateDataSetChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardSectionHeadersDateDataSet,
+    selectSectionHeadersDateDataSet,
+    (persistedDateDataSet, currentDateDataSet) => {
+        return !isEqual(persistedDateDataSet, currentDateDataSet);
+    },
+);
+
+/**
  * Selects a boolean indication if the dashboard has any changes to the tabs compared to the persisted version (if any)
  *
  * @internal
@@ -822,6 +855,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableUserFilterSaveChanged,
     selectIsDisableFilterViewsChanged,
     selectEvaluationFrequencyChanged,
+    selectIsSectionHeadersDateDataSetChanged,
     selectIsTabsChanged,
     (
         isNew,
@@ -835,6 +869,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableUserFilterSaveChanged,
         isDisableFilterViewsChanged,
         isEvaluationFrequencyChanged,
+        isSectionHeadersDateDataSetChanged,
         isTabsChanged,
     ) => {
         if (isNew) {
@@ -851,6 +886,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableUserFilterSaveChanged,
             isDisableFilterViewsChanged,
             isEvaluationFrequencyChanged,
+            isSectionHeadersDateDataSetChanged,
             isTabsChanged,
         ].some(Boolean);
     },

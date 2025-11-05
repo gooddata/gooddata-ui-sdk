@@ -5,18 +5,20 @@ import {
     type ISemanticSearchResultItem,
     isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
-import { IIconProps, Icon, type IconType, InsightIcon, UiIcon } from "@gooddata/sdk-ui-kit";
+import {
+    IIconProps,
+    IconAttribute,
+    IconDashboard,
+    IconDataset,
+    IconDate,
+    IconFact,
+    IconLabel,
+    IconMetric,
+    type IconType,
+    InsightIcon,
+    UiIcon,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-
-const {
-    Dashboard: DashboardIcon,
-    Dataset: DatasetIcon,
-    Attribute: AttributeIcon,
-    Label: LabelIcon,
-    Fact: FactIcon,
-    Metric: MetricIcon,
-    Date: DateIcon,
-} = Icon;
 
 type Props = {
     item: ISemanticSearchResultItem | ISemanticSearchRelationship;
@@ -45,21 +47,21 @@ export function SearchItemIcon({ item, icon }: Props) {
             {(() => {
                 switch (type) {
                     case "dashboard":
-                        return <DashboardIcon {...props} />;
+                        return <IconDashboard {...props} />;
                     case "visualization":
                         return <InsightIcon visualizationUrl={visualizationUrl} iconProps={props} />;
                     case "dataset":
-                        return <DatasetIcon {...props} />;
+                        return <IconDataset {...props} />;
                     case "attribute":
-                        return <AttributeIcon {...props} />;
+                        return <IconAttribute {...props} />;
                     case "label":
-                        return <LabelIcon {...props} />;
+                        return <IconLabel {...props} />;
                     case "fact":
-                        return <FactIcon {...props} />;
+                        return <IconFact {...props} />;
                     case "metric":
-                        return <MetricIcon {...props} />;
+                        return <IconMetric {...props} />;
                     case "date":
-                        return <DateIcon {...props} />;
+                        return <IconDate {...props} />;
                     default:
                         return exhaustiveCheck(type);
                 }

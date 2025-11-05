@@ -80,6 +80,7 @@ export interface IAnalyticalDashboard {
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
     evaluationFrequency?: string;
+    sectionHeadersDateDataSet?: ObjRef;
 
     /**
      * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.

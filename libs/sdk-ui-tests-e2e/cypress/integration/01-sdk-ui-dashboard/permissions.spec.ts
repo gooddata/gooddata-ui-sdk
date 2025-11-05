@@ -21,7 +21,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger"] }, () => {
             Navigation.visit("dashboard/dashboard-tiger-permissions");
         });
 
-        it.skip("should render topBar with share button", () => {
+        it("should render topBar with share button", () => {
             new TopBar().enterSharing();
             new ShareDialog().dialogExists(true).addButtonIsActive();
         });

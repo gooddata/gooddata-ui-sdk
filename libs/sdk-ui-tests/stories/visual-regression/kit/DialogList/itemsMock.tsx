@@ -1,11 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IDialogListItem, Icon } from "@gooddata/sdk-ui-kit";
-
-const { QuestionMark: QuestionMarkIcon } = Icon;
+import { IDialogListItem, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 
 const deleteTooltipText = "Delete me";
-const icon = <QuestionMarkIcon color="red" />;
+const icon = <IconQuestionMark color="red" />;
 
 export const itemsMock: IDialogListItem[] = [
     {

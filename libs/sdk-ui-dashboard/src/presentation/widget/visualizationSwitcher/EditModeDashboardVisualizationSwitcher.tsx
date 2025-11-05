@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
-import { Icon, Typography } from "@gooddata/sdk-ui-kit";
+import { IconVisualizationSwitcher, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
@@ -18,8 +18,6 @@ import {
     getVisTypeCssClass,
 } from "../../../presentation/presentationComponents/index.js";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
-
-const { VisualizationSwitcher: VisualizationSwitcherIcon } = Icon;
 
 /**
  * @internal
@@ -48,7 +46,7 @@ export function EditModeDashboardVisualizationSwitcher({
     if (!activeVisualization || !insight) {
         return (
             <div className="gd-visualization-switcher-widget-empty-content">
-                <VisualizationSwitcherIcon width={32} height={38} color={emptyContentIconColor} />
+                <IconVisualizationSwitcher width={32} height={38} color={emptyContentIconColor} />
                 <Typography tagName="p">
                     {intl.formatMessage({ id: "visualizationSwitcher.emptyContent" })}
                 </Typography>

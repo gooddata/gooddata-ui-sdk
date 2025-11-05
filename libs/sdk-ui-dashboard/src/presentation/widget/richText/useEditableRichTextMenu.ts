@@ -1,11 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import { IRichTextWidget } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, useDashboardEventDispatch } from "../../../model/index.js";
+import {
+    selectEnableRichTextWidgetFilterConfiguration,
+    useDashboardDispatch,
+    useDashboardEventDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { useDashboardCustomizationsContext } from "../../dashboardContexts/index.js";
 import { IRichTextMenuItem, getDefaultRichTextEditMode } from "../richTextMenu/index.js";
 
@@ -22,6 +28,9 @@ export const useEditableRichTextMenu = (
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
     const eventDispatch = useDashboardEventDispatch();
+    const enableRichTextWidgetFilterConfiguration = useDashboardSelector(
+        selectEnableRichTextWidgetFilterConfiguration,
+    );
 
     const { richTextMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IRichTextMenuItem[]>(() => {
@@ -29,8 +38,9 @@ export const useEditableRichTextMenu = (
             intl,
             dispatch,
             eventDispatch,
+            enableRichTextWidgetFilterConfiguration,
         });
-    }, [dispatch, eventDispatch, intl, widget]);
+    }, [dispatch, eventDispatch, intl, widget, enableRichTextWidgetFilterConfiguration]);
 
     const menuItems = useMemo<IRichTextMenuItem[]>(() => {
         return richTextMenuItemsProvider

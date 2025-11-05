@@ -26,7 +26,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { IconImage } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
@@ -214,11 +214,9 @@ function RepeaterImage({ src }: IRepeaterImageProps) {
     const [imageLoadError, setImageLoadError] = useState(false);
 
     if (!src || imageLoadError) {
-        const ImageIcon = Icon["Image"];
-
         return (
             <div className="gd-repeater-image-empty">
-                <ImageIcon />
+                <IconImage />
             </div>
         );
     }

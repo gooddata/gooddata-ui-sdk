@@ -73,6 +73,74 @@ export interface IAutomationFiltersSelectProps {
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
     overlayPositionType?: OverlayPositionType;
+    hideTitle?: boolean;
+    showAllFilters?: boolean;
+}
+
+interface IAutomationCheckboxOrNoteProps {
+    isDashboardAutomation?: boolean;
+    storeFilters: boolean;
+    handleStoreFiltersChange: (value: boolean) => void;
+    handleKeyDown: (e: KeyboardEvent) => void;
+    automationFilterSelectTooltipId: string;
+}
+
+function AutomationCheckboxOrNote({
+    isDashboardAutomation,
+    storeFilters,
+    handleStoreFiltersChange,
+    handleKeyDown,
+    automationFilterSelectTooltipId,
+}: IAutomationCheckboxOrNoteProps) {
+    const intl = useIntl();
+    return isDashboardAutomation ? (
+        <label className="input-checkbox-label gd-automation-filters__use-filters-checkbox s-automation-filters-use-filters-checkbox">
+            <input
+                type="checkbox"
+                className="input-checkbox s-checkbox"
+                checked={storeFilters}
+                onChange={(e) => handleStoreFiltersChange(e.target.checked)}
+                onKeyDown={handleKeyDown}
+                aria-label={intl.formatMessage({
+                    id: "dialogs.automation.filters.useFiltersMessage",
+                })}
+            />
+            <span className="input-label-text gd-automation-filters__use-filters-message">
+                <div id={automationFilterSelectTooltipId} className="sr-only">
+                    <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
+                </div>
+                <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
+                <UiTooltip
+                    arrowPlacement="left"
+                    triggerBy={["hover", "focus"]}
+                    optimalPlacement
+                    width={300}
+                    content={<FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />}
+                    anchor={
+                        <UiIconButton
+                            icon="question"
+                            variant="tertiary"
+                            size="xsmall"
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({
+                                    id: "dialogs.automation.filters.schedule.ariaLabel",
+                                }),
+                                ariaDescribedBy: automationFilterSelectTooltipId,
+                            }}
+                        />
+                    }
+                />
+            </span>
+        </label>
+    ) : (
+        <div className="gd-automation-filters__message">
+            <FormattedMessage id="dialogs.automation.filters.activeFilters" />
+        </div>
+    );
+}
+
+function Divider() {
+    return <div className="gd-automation-filters__divider" style={{ height: "20px" }} />;
 }
 
 export function AutomationFiltersSelect({
@@ -84,6 +152,8 @@ export function AutomationFiltersSelect({
     onStoreFiltersChange,
     areFiltersMissing,
     overlayPositionType,
+    hideTitle = false,
+    showAllFilters = false,
 }: IAutomationFiltersSelectProps) {
     const {
         commonDateFilterId,
@@ -109,8 +179,8 @@ export function AutomationFiltersSelect({
     });
 
     const intl = useIntl();
-    const [isExpanded, setIsExpanded] = useState(false);
-    const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
+    const [isExpanded, setIsExpanded] = useState(showAllFilters);
+    const isExpandable = !showAllFilters && filters.length > COLLAPSED_FILTERS_COUNT;
 
     const handleKeyDown = (e: KeyboardEvent) => {
         if (isActionKey(e)) {
@@ -130,45 +200,66 @@ export function AutomationFiltersSelect({
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
-            <div className="gd-label" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
-                {isExpandable ? (
-                    <BubbleHoverTrigger showDelay={500} hideDelay={0}>
-                        <UiButton
-                            label={intl.formatMessage(
-                                { id: "dialogs.schedule.email.filters" },
-                                { count: filters.length },
-                            )}
-                            variant="tertiary"
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            iconAfter={isExpanded ? "navigateUp" : "navigateDown"}
-                            accessibilityConfig={{
-                                ariaExpanded: isExpanded,
-                                ariaDescription: isExpanded
-                                    ? intl.formatMessage({
-                                          id: "dialogs.automation.filters.showLess.ariaDescription",
-                                      })
-                                    : intl.formatMessage({
-                                          id: "dialogs.automation.filters.showAll.ariaDescription",
-                                      }),
-                                iconAriaHidden: true,
-                            }}
-                        />
-                        <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
-                            {isExpanded ? (
-                                <FormattedMessage id="dialogs.automation.filters.showLess" />
-                            ) : (
-                                <FormattedMessage id="dialogs.automation.filters.showAll" />
-                            )}
-                        </Bubble>
-                    </BubbleHoverTrigger>
-                ) : (
+            {hideTitle ? (
+                <div className="sr-only" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
                     <FormattedMessage
                         id="dialogs.schedule.email.filters"
                         values={{ count: filters.length }}
                     />
-                )}
-            </div>
+                </div>
+            ) : (
+                <div className="gd-label" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
+                    {isExpandable ? (
+                        <BubbleHoverTrigger showDelay={500} hideDelay={0}>
+                            <UiButton
+                                label={intl.formatMessage(
+                                    { id: "dialogs.schedule.email.filters" },
+                                    { count: filters.length },
+                                )}
+                                variant="tertiary"
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                iconAfter={isExpanded ? "navigateUp" : "navigateDown"}
+                                accessibilityConfig={{
+                                    ariaExpanded: isExpanded,
+                                    ariaDescription: isExpanded
+                                        ? intl.formatMessage({
+                                              id: "dialogs.automation.filters.showLess.ariaDescription",
+                                          })
+                                        : intl.formatMessage({
+                                              id: "dialogs.automation.filters.showAll.ariaDescription",
+                                          }),
+                                    iconAriaHidden: true,
+                                }}
+                            />
+                            <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                                {isExpanded ? (
+                                    <FormattedMessage id="dialogs.automation.filters.showLess" />
+                                ) : (
+                                    <FormattedMessage id="dialogs.automation.filters.showAll" />
+                                )}
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    ) : (
+                        <FormattedMessage
+                            id="dialogs.schedule.email.filters"
+                            values={{ count: filters.length }}
+                        />
+                    )}
+                </div>
+            )}
             <div className="gd-automation-filters">
+                {showAllFilters ? (
+                    <>
+                        <AutomationCheckboxOrNote
+                            isDashboardAutomation={isDashboardAutomation}
+                            storeFilters={storeFilters}
+                            handleStoreFiltersChange={handleStoreFiltersChange}
+                            handleKeyDown={handleKeyDown}
+                            automationFilterSelectTooltipId={automationFilterSelectTooltipId}
+                        />
+                        <Divider />
+                    </>
+                ) : null}
                 <div
                     className="gd-automation-filters__list"
                     role="group"
@@ -176,29 +267,31 @@ export function AutomationFiltersSelect({
                     ref={filterGroupRef}
                     onBlur={makeFilterGroupUnfocusable}
                 >
-                    {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => {
-                        const isCommonDateFilter =
-                            isDashboardCommonDateFilter(filter) ||
-                            (isDashboardDateFilter(filter) &&
-                                commonDateFilterId === filter.dateFilter.localIdentifier);
+                    {filters
+                        .slice(0, showAllFilters || isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT)
+                        .map((filter) => {
+                            const isCommonDateFilter =
+                                isDashboardCommonDateFilter(filter) ||
+                                (isDashboardDateFilter(filter) &&
+                                    commonDateFilterId === filter.dateFilter.localIdentifier);
 
-                        return (
-                            <AutomationFilter
-                                key={
-                                    isDashboardAttributeFilter(filter)
-                                        ? filter.attributeFilter.localIdentifier
-                                        : filter.dateFilter.localIdentifier
-                                }
-                                filter={filter}
-                                attributeConfigs={attributeConfigs}
-                                onChange={handleChangeFilter}
-                                onDelete={handleDeleteFilter}
-                                isCommonDateFilter={isCommonDateFilter}
-                                overlayPositionType={overlayPositionType}
-                                lockedFilters={lockedFilters}
-                            />
-                        );
-                    })}
+                            return (
+                                <AutomationFilter
+                                    key={
+                                        isDashboardAttributeFilter(filter)
+                                            ? filter.attributeFilter.localIdentifier
+                                            : filter.dateFilter.localIdentifier
+                                    }
+                                    filter={filter}
+                                    attributeConfigs={attributeConfigs}
+                                    onChange={handleChangeFilter}
+                                    onDelete={handleDeleteFilter}
+                                    isCommonDateFilter={isCommonDateFilter}
+                                    overlayPositionType={overlayPositionType}
+                                    lockedFilters={lockedFilters}
+                                />
+                            );
+                        })}
                     {isExpanded || !isExpandable ? (
                         <AttributesDropdown
                             id={AUTOMATION_FILTERS_DIALOG_ID}
@@ -268,51 +361,17 @@ export function AutomationFiltersSelect({
                         />
                     ) : null}
                 </div>
-                {isDashboardAutomation ? (
-                    <label className="input-checkbox-label gd-automation-filters__use-filters-checkbox s-automation-filters-use-filters-checkbox">
-                        <input
-                            type="checkbox"
-                            className="input-checkbox s-checkbox"
-                            checked={storeFilters}
-                            onChange={(e) => handleStoreFiltersChange(e.target.checked)}
-                            onKeyDown={handleKeyDown}
-                            aria-label={intl.formatMessage({
-                                id: "dialogs.automation.filters.useFiltersMessage",
-                            })}
+                {showAllFilters ? null : (
+                    <>
+                        <Divider />
+                        <AutomationCheckboxOrNote
+                            isDashboardAutomation={isDashboardAutomation}
+                            storeFilters={storeFilters}
+                            handleStoreFiltersChange={handleStoreFiltersChange}
+                            handleKeyDown={handleKeyDown}
+                            automationFilterSelectTooltipId={automationFilterSelectTooltipId}
                         />
-                        <span className="input-label-text gd-automation-filters__use-filters-message">
-                            <div id={automationFilterSelectTooltipId} className="sr-only">
-                                <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
-                            </div>
-                            <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
-                            <UiTooltip
-                                arrowPlacement="left"
-                                triggerBy={["hover", "focus"]}
-                                optimalPlacement
-                                width={300}
-                                content={
-                                    <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
-                                }
-                                anchor={
-                                    <UiIconButton
-                                        icon="question"
-                                        variant="tertiary"
-                                        size="xsmall"
-                                        accessibilityConfig={{
-                                            ariaLabel: intl.formatMessage({
-                                                id: "dialogs.automation.filters.schedule.ariaLabel",
-                                            }),
-                                            ariaDescribedBy: automationFilterSelectTooltipId,
-                                        }}
-                                    />
-                                }
-                            />
-                        </span>
-                    </label>
-                ) : (
-                    <div className="gd-automation-filters__message">
-                        <FormattedMessage id="dialogs.automation.filters.activeFilters" />
-                    </div>
+                    </>
                 )}
                 {areFiltersMissing ? (
                     <div className="gd-automation-filters__warning-message">

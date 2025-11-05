@@ -161,6 +161,7 @@ export class WidgetConfiguration {
     selectFilterCheckbox(text: string) {
         this.getElement().scrollIntoView();
 
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.get(`.s-attribute-filter-configuration ${text}`)
             .should("exist")
             .scrollIntoView()

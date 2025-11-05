@@ -3,7 +3,7 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IDashboard } from "@gooddata/sdk-model";
+import { IDashboard, ObjRef } from "@gooddata/sdk-model";
 
 import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
 
@@ -30,6 +30,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               disableUserFilterReset: dashboard.disableUserFilterReset,
               disableUserFilterSave: dashboard.disableUserFilterSave,
               disableFilterViews: dashboard.disableFilterViews,
+              sectionHeadersDateDataSet: dashboard.sectionHeadersDateDataSet,
           }
         : { ...EmptyDashboardDescriptor };
     state.initialContent = initialContent;
@@ -71,6 +72,12 @@ const setEvaluationFrequency: MetaReducer<PayloadAction<string | undefined>> = (
     state.descriptor.evaluationFrequency = action.payload || undefined;
 };
 
+const setSectionHeadersDateDataSet: MetaReducer<PayloadAction<ObjRef | undefined>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.sectionHeadersDateDataSet = action.payload;
+};
+
 export const metaReducers = {
     setMeta,
     setDashboardTitle,
@@ -79,4 +86,5 @@ export const metaReducers = {
     setDisableUserFilterSave,
     setDisableFilterViews,
     setEvaluationFrequency,
+    setSectionHeadersDateDataSet,
 };

@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { IconAlert, IconAlertPaused, IconWarning, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AlertDropdown } from "./AlertDropdown.js";
@@ -20,8 +20,6 @@ import {
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
-
-const { Alert: AlertIcon, AlertPaused: AlertPausedIcon, Warning: WarningIcon } = Icon;
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
@@ -48,9 +46,9 @@ export function AlertOld({ alert, onDelete, onEdit, onPause }: IAlertProps) {
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
-    const iconActive = <AlertIcon width={16} height={16} color={iconColor} />;
-    const iconPaused = <AlertPausedIcon width={16} height={16} color={iconColor} />;
-    const iconError = <WarningIcon width={16} height={16} color={iconColorError} />;
+    const iconActive = <IconAlert width={16} height={16} color={iconColor} />;
+    const iconPaused = <IconAlertPaused width={16} height={16} color={iconColor} />;
+    const iconError = <IconWarning width={16} height={16} color={iconColorError} />;
 
     const paused = alert.alert?.trigger.state === "PAUSED";
 

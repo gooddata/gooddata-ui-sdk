@@ -10,7 +10,10 @@ import {
     Button,
     Dropdown,
     IUiListboxItem,
-    Icon,
+    IconAlert,
+    IconAlertPaused,
+    IconEllipsis,
+    IconWarning,
     SELECT_ITEM_ACTION,
     ShortenedText,
     UiListbox,
@@ -29,8 +32,6 @@ import {
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
-
-const { Alert: AlertIcon, AlertPaused: AlertPausedIcon, Warning: WarningIcon, Ellipsis: EllipsisIcon } = Icon;
 
 interface IAlertProps {
     onDelete: () => void;
@@ -79,9 +80,9 @@ export function Alert({
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
-    const iconActive = <AlertIcon color={iconColor} />;
-    const iconPaused = <AlertPausedIcon color={iconColor} />;
-    const iconError = <WarningIcon color={iconColorError} />;
+    const iconActive = <IconAlert color={iconColor} />;
+    const iconPaused = <IconAlertPaused color={iconColor} />;
+    const iconError = <IconWarning color={iconColorError} />;
 
     const isPaused = alert.alert?.trigger.state === "PAUSED";
 
@@ -210,7 +211,7 @@ export function Alert({
                             onClick={toggleDropdown}
                             accessibilityConfig={accessibilityConfig}
                         >
-                            <EllipsisIcon />
+                            <IconEllipsis />
                         </Button>
                     );
                 }}

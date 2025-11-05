@@ -10,7 +10,7 @@ import { v4 } from "uuid";
 
 import { ITheme } from "@gooddata/sdk-model";
 import { LoadingComponent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IconUndo } from "@gooddata/sdk-ui-kit";
 import {
     ILegendDetailOptions,
     ILegendOptions,
@@ -401,8 +401,6 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             resetZoomButtonTooltip,
         } = this.props;
 
-        const UndoIcon = Icon["Undo"];
-
         if (chart?.zooming?.type) {
             return (
                 <BubbleHoverTrigger
@@ -416,7 +414,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
                         onClick={this.onZoomOutButtonClick}
                         style={{ display: "none" }}
                     >
-                        <UndoIcon width={20} height={20} color={theme?.palette?.complementary?.c7} />
+                        <IconUndo width={20} height={20} color={theme?.palette?.complementary?.c7} />
                     </button>
                     <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
                         {resetZoomButtonTooltip}

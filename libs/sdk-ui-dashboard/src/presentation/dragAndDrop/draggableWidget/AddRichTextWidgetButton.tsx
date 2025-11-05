@@ -2,14 +2,12 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { Icon } from "@gooddata/sdk-ui-kit";
-
-const { RichText } = Icon;
+import { IconRichText } from "@gooddata/sdk-ui-kit";
 
 export function AddRichTextWidgetButton() {
     return (
         <div className="add-item-placeholder add-panel-item s-add-rich-text">
-            <RichText />
+            <IconRichText />
             <FormattedMessage id="addPanel.richText" />
         </div>
     );

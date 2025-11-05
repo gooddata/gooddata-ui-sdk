@@ -516,7 +516,9 @@ export interface IChangeAnalysisPeriod {
 
 // @internal (undocumented)
 export interface IChangeAnalysisResults {
+    fromValue?: number;
     keyDrivers: IKeyDriver[];
+    toValue?: number;
 }
 
 // @beta
@@ -527,7 +529,7 @@ export interface IChatThread {
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
     saveRenderVisualisationStatus(interactionId: string, status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS"): Promise<void>;
-    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
     saveUserVisualisation(interactionId: string, visualization: GenAIChatInteractionUserVisualisation): Promise<void>;
 }
 

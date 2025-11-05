@@ -7,7 +7,7 @@ import cx from "classnames";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
@@ -37,7 +37,7 @@ export function DashboardLayoutSectionHeaderDescription({
 }: IDashboardLayoutSectionHeaderDescriptionProps) {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const { loading, filters } = useRichTextFilters(false);
+    const { loading, filters } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 

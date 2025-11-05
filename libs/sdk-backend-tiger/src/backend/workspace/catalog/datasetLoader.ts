@@ -73,7 +73,8 @@ function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     return (
         type === JsonApiLabelOutAttributesValueTypeEnum.GEO ||
         type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE ||
-        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE ||
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_AREA
     );
 }
 

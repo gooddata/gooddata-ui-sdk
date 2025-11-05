@@ -120,7 +120,11 @@ export interface IChatThread {
     /**
      * Save user feedback for the interaction.
      */
-    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(
+        interactionId: string,
+        feedback: GenAIChatInteractionUserFeedback,
+        userTextFeedback?: string,
+    ): Promise<void>;
     /**
      * Save user feedback for the interaction.
      */

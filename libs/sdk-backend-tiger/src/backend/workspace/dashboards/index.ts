@@ -334,11 +334,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
+        const enableDashboardSectionHeadersDateDataSet =
+            userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
 
         const dashboardContent = convertAnalyticalDashboard(
             dashboard,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
+            enableDashboardSectionHeadersDateDataSet,
         );
         const result = await this.authCall((client) => {
             return client.entities.createEntityAnalyticalDashboards(
@@ -390,10 +393,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
+        const enableDashboardSectionHeadersDateDataSet =
+            userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const dashboardContent = convertAnalyticalDashboard(
             updatedDashboard,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
+            enableDashboardSectionHeadersDateDataSet,
         );
 
         const result = await this.authCall((client) => {

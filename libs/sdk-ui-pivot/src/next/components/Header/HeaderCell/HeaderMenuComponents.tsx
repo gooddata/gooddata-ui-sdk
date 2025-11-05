@@ -10,7 +10,8 @@ import {
     DefaultUiMenuInteractiveItem,
     IUiMenuInteractiveItemProps,
     IUiMenuItem,
-    Icon,
+    IconColumns,
+    IconRows,
     separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -23,8 +24,6 @@ import {
     ISortingMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
-
-const { Rows: RowsIcon, Columns: ColumnsIcon } = Icon;
 
 function TopMenuHeader() {
     const intl = useIntl();
@@ -41,7 +40,7 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
 
     const icon =
         variant === "rows" ? (
-            <RowsIcon
+            <IconRows
                 width={12}
                 height={11}
                 colorPalette={{
@@ -50,7 +49,7 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
                 }}
             />
         ) : (
-            <ColumnsIcon
+            <IconColumns
                 width={12}
                 height={11}
                 colorPalette={{

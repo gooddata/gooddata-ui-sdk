@@ -55,6 +55,50 @@
         "value": "Mark this message as not helpful",
         "comment": "Button label to mark a message as not helpful in the AI chatbot"
     },
+    "gd.gen-ai.feedback.popup.title": {
+        "value": "We've got your feedback",
+        "comment": "Title of the feedback popup dialog"
+    },
+    "gd.gen-ai.feedback.popup.reasons-label": {
+        "value": "Tell us what went wrong",
+        "comment": "Label for the feedback reasons section in the popup"
+    },
+    "gd.gen-ai.feedback.popup.description-label": {
+        "value": "Please, describe what happened",
+        "comment": "Label for the description text area in the feedback popup"
+    },
+    "gd.gen-ai.feedback.popup.description-placeholder": {
+        "value": " ",
+        "comment": "Placeholder text for the description text area in the feedback popup"
+    },
+    "gd.gen-ai.feedback.popup.cancel": {
+        "value": "Cancel",
+        "comment": "Cancel button label in the feedback popup"
+    },
+    "gd.gen-ai.feedback.popup.send": {
+        "value": "Send",
+        "comment": "Send button label in the feedback popup"
+    },
+    "gd.gen-ai.feedback.popup.close": {
+        "value": "Close feedback dialog",
+        "comment": "Close button aria label in the feedback popup"
+    },
+    "gd.gen-ai.feedback.reason.forgot-context": {
+        "value": "Forgot previous context",
+        "comment": "Feedback reason option: AI forgot previous context"
+    },
+    "gd.gen-ai.feedback.reason.ignored-instructions": {
+        "value": "Ignored or refused instructions",
+        "comment": "Feedback reason option: AI ignored or refused instructions"
+    },
+    "gd.gen-ai.feedback.reason.factually-incorrect": {
+        "value": "Factually incorrect",
+        "comment": "Feedback reason option: AI provided factually incorrect information"
+    },
+    "gd.gen-ai.feedback.reason.other": {
+        "value": "Other",
+        "comment": "Feedback reason option: Other reason not listed"
+    },
     "gd.gen-ai.disclaimer": {
         "value": "AI assistants can make mistakes. Check before relying on these answers.",
         "comment": "Warning disclaimer about AI response accuracy shown to users"

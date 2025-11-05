@@ -1,30 +1,40 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useCallback, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
     ConfirmDialog,
     DialogListHeader,
+    Dropdown,
     IAlignPoint,
     RecurrenceForm,
+    SingleSelectListItem,
+    UiButton,
+    UiListbox,
     simpleRecurrenceTypeMappingFn,
 } from "@gooddata/sdk-ui-kit";
 
 import { IDashboardSettingsDialogProps } from "./types.js";
 import { useDialogData } from "./useDialogData.js";
 import {
+    InsightDateDatasets,
+    QueryInsightDateDatasets,
+    queryDateDatasetsForInsight,
     selectCrossFilteringEnabledAndSupported,
     selectDateFormat,
     selectEnableAlertsEvaluationFrequencySetup,
+    selectEnableDashboardSectionHeadersDateDataSet,
     selectEnableFilterViews,
     selectIsWhiteLabeled,
     selectLocale,
     selectSettings,
     selectWeekStart,
+    useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../model/index.js";
 
@@ -51,6 +61,27 @@ export function DefaultDashboardSettingsDialog({
     const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
     const settings = useDashboardSelector(selectSettings);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const enableDashboardSectionHeadersDateDataSet = useDashboardSelector(
+        selectEnableDashboardSectionHeadersDateDataSet,
+    );
+
+    const {
+        run: queryDateDatasets,
+        result,
+        status,
+    } = useDashboardQueryProcessing<
+        QueryInsightDateDatasets,
+        InsightDateDatasets,
+        Parameters<typeof queryDateDatasetsForInsight>
+    >({
+        queryCreator: queryDateDatasetsForInsight,
+    });
+
+    useEffect(() => {
+        if (isVisible && enableDashboardSectionHeadersDateDataSet) {
+            queryDateDatasets();
+        }
+    }, [queryDateDatasets, isVisible, enableDashboardSectionHeadersDateDataSet]);
 
     const onApplyHandler = useCallback(() => {
         onApply(currentData);
@@ -144,6 +175,25 @@ export function DefaultDashboardSettingsDialog({
                             });
                         }}
                     />
+                    {enableDashboardSectionHeadersDateDataSet ? (
+                        <DateDatasetDropdown
+                            label={intl.formatMessage({
+                                id: "settingsDashboardDialog.sectionHeaders.dateDataset",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip",
+                            })}
+                            dateDatasets={result?.dateDatasetsOrdered ?? []}
+                            selectedDataSet={currentData.sectionHeadersDateDataSet}
+                            isLoading={status === "pending" || status === "running"}
+                            onChange={(dateDataSet: ObjRef | undefined) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    sectionHeadersDateDataSet: dateDataSet,
+                                });
+                            }}
+                        />
+                    ) : null}
                 </div>
                 {enableAlertsEvaluationFrequencySetup ? (
                     <div className="gd-dashboard-settings-dialog-section">
@@ -229,6 +279,110 @@ function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigura
                     </BubbleHoverTrigger>
                 </span>
             </label>
+        </div>
+    );
+}
+
+interface IDateDatasetDropdownProps {
+    label: ReactNode;
+    tooltip: ReactNode;
+    dateDatasets: readonly ICatalogDateDataset[];
+    selectedDataSet: ObjRef | undefined;
+    isLoading: boolean;
+    onChange: (dateDataSet: ObjRef | undefined) => void;
+}
+
+function DateDatasetDropdown({
+    label,
+    tooltip,
+    dateDatasets,
+    selectedDataSet,
+    isLoading,
+    onChange,
+}: IDateDatasetDropdownProps) {
+    const intl = useIntl();
+
+    const selectedDatasetTitle = isLoading
+        ? intl.formatMessage({ id: "loading" })
+        : selectedDataSet
+          ? (dateDatasets.find((ds) => objRefToString(ds.dataSet.ref) === objRefToString(selectedDataSet))
+                ?.dataSet.title ?? intl.formatMessage({ id: "dateDataset.notFound" }))
+          : intl.formatMessage({ id: "dateDataset.autoSelect" });
+
+    return (
+        <div className="configuration-category-item">
+            <span className="input-label-text">
+                {label}
+                <BubbleHoverTrigger
+                    showDelay={0}
+                    hideDelay={0}
+                    eventsOnBubble
+                    className="configuration-category-item-tooltip-icon"
+                >
+                    <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />
+                    <Bubble alignPoints={BUBBLE_ALIGN_POINTS}>
+                        <div className="gd-filter-configuration__help-tooltip">{tooltip}</div>
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </span>
+            <Dropdown
+                closeOnParentScroll
+                autofocusOnOpen
+                alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
+                className="gd-dashboard-settings-date-dataset-dropdown"
+                renderButton={({ isOpen, toggleDropdown }) => (
+                    <UiButton
+                        label={selectedDatasetTitle}
+                        onClick={toggleDropdown}
+                        isDisabled={isLoading}
+                        iconAfter={isOpen ? "navigateUp" : "navigateDown"}
+                        size="small"
+                    />
+                )}
+                renderBody={({ closeDropdown, ariaAttributes }) => {
+                    const autoSelectItem = {
+                        type: "interactive" as const,
+                        id: "__auto__",
+                        stringTitle: intl.formatMessage({ id: "dateDataset.autoSelect" }),
+                        data: undefined,
+                    };
+
+                    const datasetItems = dateDatasets.map((ds) => ({
+                        type: "interactive" as const,
+                        id: objRefToString(ds.dataSet.ref),
+                        stringTitle: ds.dataSet.title,
+                        data: ds.dataSet.ref,
+                    }));
+
+                    const items = [autoSelectItem, ...datasetItems];
+
+                    const selectedItemId = selectedDataSet ? objRefToString(selectedDataSet) : "__auto__";
+
+                    return (
+                        <UiListbox
+                            maxWidth={300}
+                            items={items}
+                            selectedItemId={selectedItemId}
+                            onSelect={(item) => {
+                                onChange(item.data as ObjRef | undefined);
+                                closeDropdown();
+                            }}
+                            onClose={closeDropdown}
+                            ariaAttributes={ariaAttributes}
+                            InteractiveItemComponent={({ item, isSelected, isFocused, onSelect }) => (
+                                <SingleSelectListItem
+                                    className="gd-dashboard-settings-dialog-date-dataset-dropdown-list-item"
+                                    title={item.stringTitle}
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                />
+                            )}
+                        />
+                    );
+                }}
+                overlayPositionType="sameAsTarget"
+            />
         </div>
     );
 }

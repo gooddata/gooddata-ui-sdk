@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
@@ -234,11 +235,38 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 assistantMessageId: string;
                 feedback: GenAIChatInteractionUserFeedback;
+                userTextFeedback?: string;
             }>,
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
             assistantMessage.feedback = payload.feedback;
+        },
+        setUserFeedbackError: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+                error: string;
+            }>,
+        ) => {
+            // Reset feedback to NONE and set error when submission fails
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            assistantMessage.feedback = "NONE";
+            assistantMessage.feedbackError = payload.error;
+        },
+        clearUserFeedbackError: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+            }>,
+        ) => {
+            // Clear feedback error after showing toast
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            delete assistantMessage.feedbackError;
         },
         saveVisualizationAction: (
             state,
@@ -364,6 +392,8 @@ export const {
     setGlobalErrorAction,
     cancelAsyncAction,
     setUserFeedback,
+    setUserFeedbackError,
+    clearUserFeedbackError,
     saveVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,

@@ -20,7 +20,7 @@ import {
     BubbleHoverTrigger,
     Header,
     IOnOpenedChangeParams,
-    Icon,
+    IconBurgerMenu,
     Item,
     ItemsWrapper,
     Menu,
@@ -68,11 +68,9 @@ export interface IAggregationsMenuProps {
 function MenuToggler() {
     const theme = useTheme();
 
-    const BurgerMenuIcon = Icon["BurgerMenu"];
-
     return (
         <div className="menu-icon">
-            <BurgerMenuIcon color={theme?.palette?.complementary?.c8} />
+            <IconBurgerMenu color={theme?.palette?.complementary?.c8} />
         </div>
     );
 }

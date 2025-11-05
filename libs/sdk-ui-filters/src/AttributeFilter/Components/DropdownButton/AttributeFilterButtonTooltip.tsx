@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 50 } }];
 
@@ -16,12 +16,10 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  * @beta
  */
 export function AttributeFilterButtonTooltip({ children }: { children?: ReactNode }) {
-    const QuestionMarkIcon = Icon["QuestionMark"];
-
     return (
         <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
-                <QuestionMarkIcon height={16} width={14} className={"s-attribute-filter-tooltip-icon"} />
+                <IconQuestionMark height={16} width={14} className={"s-attribute-filter-tooltip-icon"} />
                 <Bubble
                     className="gd-attribute-filter-details s-attribute-filter-details-bubble"
                     alignPoints={bubbleAlignPoints}

@@ -20,6 +20,8 @@ export {
     setGlobalErrorAction,
     cancelAsyncAction,
     setUserFeedback,
+    setUserFeedbackError,
+    clearUserFeedbackError,
     saveVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,

@@ -5,7 +5,7 @@ import { Ref } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IconAttributeFilter } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { messages } from "../../../locales.js";
@@ -17,8 +17,6 @@ import {
 } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
-
-const { AttributeFilter: AttributeFilterIcon } = Icon;
 
 export type DraggableFilterDropZoneProps = {
     targetIndex: number;
@@ -82,7 +80,7 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
                                 id="filterBar.filter.addFilterPlaceholder"
                                 values={{
                                     icon: (
-                                        <AttributeFilterIcon
+                                        <IconAttributeFilter
                                             className="attribute-filter-icon"
                                             width={14}
                                             height={14}

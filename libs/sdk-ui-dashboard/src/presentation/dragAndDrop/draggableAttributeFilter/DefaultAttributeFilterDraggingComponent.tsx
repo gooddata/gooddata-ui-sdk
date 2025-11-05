@@ -10,13 +10,11 @@ import {
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
 import { IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
-
-const { DragHandle: DragHandleIcon } = Icon;
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (
@@ -43,7 +41,7 @@ export function DefaultAttributeFilterDraggingComponent({ item }: IAttributeFilt
 
     return (
         <div className="attribute-filter-button is-dragging">
-            <DragHandleIcon
+            <IconDragHandle
                 width={7}
                 height={26}
                 className="drag-handle-icon"

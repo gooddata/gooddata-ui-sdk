@@ -511,7 +511,13 @@ export type {
     ChangeRichTextWidgetFilterSettings,
     ChangeRichTextWidgetFilterSettingsPayload,
 } from "./richText.js";
-export { changeRichTextWidgetContent, enableRichTextWidgetDateFilter } from "./richText.js";
+export {
+    changeRichTextWidgetContent,
+    enableRichTextWidgetDateFilter,
+    disableRichTextWidgetDateFilter,
+    ignoreFilterOnRichTextWidget,
+    unignoreFilterOnRichTextWidget,
+} from "./richText.js";
 
 export type {
     AddVisualizationToVisualizationSwitcherWidgetContent,

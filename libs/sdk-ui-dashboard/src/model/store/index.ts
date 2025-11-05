@@ -84,6 +84,8 @@ export {
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableSlideshowExports,
     selectEnableRichTextDynamicReferences,
+    selectEnableRichTextWidgetFilterConfiguration,
+    selectEnableDashboardSectionHeadersDateDataSet,
     selectEnableDashboardFiltersApplyModes,
     selectEnableAttributeFilterVirtualisedList,
     selectDashboardFiltersApplyMode,
@@ -370,6 +372,7 @@ export {
     selectDashboardDescriptor,
     selectEvaluationFrequency,
     selectPersistedDashboardFilterContextDateFilterConfig,
+    selectSectionHeadersDateDataSet,
 } from "./meta/metaSelectors.js";
 export { metaActions } from "./meta/index.js";
 export {

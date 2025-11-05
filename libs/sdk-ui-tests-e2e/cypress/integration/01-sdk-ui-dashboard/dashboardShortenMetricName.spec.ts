@@ -17,9 +17,9 @@ describe(
             dashboard.isLoaded();
         });
 
-        it.skip("Table should shorten metric name", () => {
+        it("Table should shorten metric name", () => {
             const table = new Widget(0).waitTableLoaded();
-            table.getTable().assertShortenMetricName(504);
+            table.getTableNew().assertShortenMetricName(526.328125);
         });
 
         it("Column chart should shorten metric name in legend", () => {

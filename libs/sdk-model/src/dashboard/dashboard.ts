@@ -362,6 +362,12 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 
     /**
+     * Date dataset to use for filtering metrics in section header rich text.
+     * @alpha
+     */
+    readonly sectionHeadersDateDataSet?: ObjRef;
+
+    /**
      * Plugins used on this dashboard.
      */
     readonly plugins?: IDashboardPluginLink[];
@@ -447,6 +453,12 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Dashboard extended attribute filter configs
      */
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
+     * Date dataset to use for filtering metrics in section header rich text.
+     * @alpha
+     */
+    readonly sectionHeadersDateDataSet?: ObjRef;
 
     /**
      * Plugins to use on this dashboard.

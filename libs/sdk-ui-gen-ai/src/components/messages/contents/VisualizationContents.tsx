@@ -26,7 +26,9 @@ import {
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import {
     IAlignPoint,
-    Icon,
+    IconCopy,
+    IconExternalLink,
+    IconSave,
     Overlay,
     UiButton,
     UiFocusManager,
@@ -54,8 +56,6 @@ import {
 } from "../../../store/index.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
-
-const { Save: SaveIcon, ExternalLink: ExternalLinkIcon, Copy: CopyIcon } = Icon;
 
 const VIS_HEIGHT = 250;
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
@@ -129,7 +129,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} ariaHidden color="currentColor" />,
+                          icon: <IconSave width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-haspopup": "dialog",
                           },
@@ -139,7 +139,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden color="currentColor" />,
+                          icon: <IconExternalLink width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-description": intl.formatMessage({
                                   id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
@@ -151,7 +151,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
                           }),
-                          icon: <CopyIcon width={16} height={16} ariaHidden color="currentColor" />,
+                          icon: <IconCopy width={16} height={16} ariaHidden color="currentColor" />,
                       },
                   ] as IMenuButtonItem[])
                 : ([
@@ -160,7 +160,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
                           }),
-                          icon: <SaveIcon width={16} height={16} ariaHidden color="currentColor" />,
+                          icon: <IconSave width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-haspopup": "dialog",
                           },
@@ -170,7 +170,7 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <ExternalLinkIcon width={16} height={16} ariaHidden color="currentColor" />,
+                          icon: <IconExternalLink width={16} height={16} ariaHidden color="currentColor" />,
                           ariaAttributes: {
                               "aria-description": intl.formatMessage({
                                   id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",

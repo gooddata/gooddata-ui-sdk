@@ -40,6 +40,7 @@ const useShareDialogDashboardHeader = () => {
             dispatch(metaActions.setDisableFilterViews(payload.disableFilterViews));
             dispatch(metaActions.setDisableUserFilterSave(payload.disableUserFilterSave));
             dispatch(metaActions.setEvaluationFrequency(payload.evaluationFrequency));
+            dispatch(metaActions.setSectionHeadersDateDataSet(payload.sectionHeadersDateDataSet));
         },
         [closeSettingsDialog, dispatch],
     );

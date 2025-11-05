@@ -153,7 +153,11 @@ export type AttributeDisplayFormType =
 /**
 * Display form representing geo pin longitude.
 */
-| "GDC.geo.pin_longitude";
+| "GDC.geo.pin_longitude"
+/**
+* Display form representing geo area.
+*/
+| "GDC.geo.area";
 
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
@@ -1328,6 +1332,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
     // (undocumented)
     readonly type: "IDashboard";
@@ -1448,6 +1453,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
+    readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
     // (undocumented)
     readonly type: "IDashboard";
@@ -3610,6 +3616,8 @@ export interface ISettings {
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
+    // @alpha
+    enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
     enableDashboardTabs?: boolean;
@@ -3632,6 +3640,7 @@ export interface ISettings {
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
+    enableGeoArea?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
@@ -3670,6 +3679,8 @@ export interface ISettings {
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;
+    // @alpha
+    enableRichTextWidgetFilterConfiguration?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;

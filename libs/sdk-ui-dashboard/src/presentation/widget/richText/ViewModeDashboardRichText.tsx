@@ -3,7 +3,7 @@
 import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { IDashboardRichTextProps } from "./types.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
@@ -22,7 +22,7 @@ export function ViewModeDashboardRichText({
     onError,
 }: IDashboardRichTextProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const { filters } = useRichTextFilters(widget);
+    const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 

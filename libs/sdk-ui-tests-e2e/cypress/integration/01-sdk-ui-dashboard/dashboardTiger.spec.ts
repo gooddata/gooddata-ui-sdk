@@ -3,7 +3,7 @@
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import * as Navigation from "../../tools/navigation";
-import { Table } from "../../tools/table";
+import { TableNew } from "../../tools/tableNew";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -20,25 +20,25 @@ describe("Dashboard", () => {
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             //Cover ticket: RAIL-4702
-            it.skip("Should enable Save button when resize column", () => {
+            it("Should enable Save button when resize column", () => {
                 Navigation.visit("dashboard/stage-name");
                 editMode.edit();
-                const table = new Table(".s-dash-item");
+                const table = new TableNew(".s-dash-item");
                 table.waitLoaded().resizeColumn(0, 1, 500, true);
                 editMode.saveButtonEnabled(true);
             });
 
             //Cover ticket: RAIL-4728
-            it.skip("Should reload widget after check/uncheck attribute filter", () => {
+            it("Should reload widget after check/uncheck attribute filter", () => {
                 const widgetConfig = new WidgetConfiguration(0);
 
                 Navigation.visit("dashboard/stage-name");
                 editMode.edit();
                 widget.waitTableLoaded().focus();
                 widgetConfig.openConfiguration().selectFilterCheckbox(STAGE_NAME_CHECKBOX);
-                widget.isLoading(true);
+                widget.waitTableLoaded();
                 widgetConfig.selectFilterCheckbox(STAGE_NAME_CHECKBOX);
-                widget.isLoading(true);
+                widget.waitTableLoaded();
             });
         },
     );

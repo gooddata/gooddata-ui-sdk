@@ -30,6 +30,8 @@ import {
     RecurrenceForm,
     ScrollablePanel,
     UiIcon,
+    UiTab,
+    UiTabs,
     isEnterKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
@@ -55,6 +57,7 @@ import {
     selectDateFormat,
     selectEnableAutomationFilterContext,
     selectEnableAutomationManagement,
+    selectEnableDashboardTabs,
     selectEnableNewScheduledExport,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
@@ -149,15 +152,21 @@ export function ScheduledMailDialogRenderer({
     const intl = useIntl();
 
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
+    const generalTabContentRef = useRef<HTMLDivElement | null>(null);
+    const filtersTabContentRef = useRef<HTMLDivElement | null>(null);
 
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
 
+    const [selectedTabId, setSelectedTabId] = useState<"general" | "filters">("general");
+    const [tabContentHeight, setTabContentHeight] = useState<number | undefined>(undefined);
+
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -313,6 +322,54 @@ export function ScheduledMailDialogRenderer({
         };
     }, [widget, dashboardTitle]);
 
+    const tabs: UiTab[] = useMemo(() => {
+        const tabsList: UiTab[] = [
+            {
+                id: "general",
+                label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.general" }),
+            },
+        ];
+
+        // Only show Filters tab when both automation filter context and dashboard tabs are enabled
+        if (enableAutomationFilterContext && enableDashboardTabs) {
+            tabsList.push({
+                id: "filters",
+                label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.filters" }),
+            });
+        }
+
+        return tabsList;
+    }, [intl, enableAutomationFilterContext, enableDashboardTabs]);
+
+    const handleTabSelect = useCallback((tab: UiTab) => {
+        setSelectedTabId(tab.id as "filters" | "general");
+    }, []);
+
+    // Reset to General tab if Filters tab is not available
+    useEffect(() => {
+        if (!(enableAutomationFilterContext && enableDashboardTabs) && selectedTabId === "filters") {
+            setSelectedTabId("general");
+        }
+    }, [enableAutomationFilterContext, enableDashboardTabs, selectedTabId]);
+
+    // Measure General tab content height to maintain consistent dialog size
+    useEffect(() => {
+        if (
+            enableDashboardTabs &&
+            enableAutomationFilterContext &&
+            generalTabContentRef.current &&
+            selectedTabId === "general"
+        ) {
+            // Use requestAnimationFrame to ensure DOM is fully rendered
+            requestAnimationFrame(() => {
+                if (generalTabContentRef.current) {
+                    const height = generalTabContentRef.current.scrollHeight;
+                    setTabContentHeight(height);
+                }
+            });
+        }
+    }, [enableDashboardTabs, enableAutomationFilterContext, selectedTabId]);
+
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (
@@ -410,15 +467,42 @@ export function ScheduledMailDialogRenderer({
                             <h2 className={"sr-only"} id={titleElementId}>
                                 {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                             </h2>
+                            {tabs.length > 1 && enableDashboardTabs ? (
+                                <UiTabs
+                                    tabs={tabs}
+                                    selectedTabId={selectedTabId}
+                                    onTabSelect={handleTabSelect}
+                                    size="medium"
+                                    accessibilityConfig={{
+                                        role: "tablist",
+                                        tabRole: "tab",
+                                        ariaLabel: intl.formatMessage({
+                                            id: "dialogs.schedule.email.accessibilityTitle",
+                                        }),
+                                    }}
+                                />
+                            ) : null}
                             <ScrollablePanel
                                 className={cx("gd-notifications-channel-dialog-content-wrapper", {
                                     "gd-notification-channel-dialog-with-automation-filters":
                                         enableAutomationFilterContext,
+                                    "gd-notification-channel-dialog-with-tabs":
+                                        tabs.length > 1 && enableDashboardTabs,
                                 })}
                             >
                                 <div className="gd-divider-with-margin" />
-                                {enableAutomationFilterContext ? (
-                                    <>
+                                {enableDashboardTabs &&
+                                enableAutomationFilterContext &&
+                                selectedTabId === "filters" ? (
+                                    <div
+                                        ref={filtersTabContentRef}
+                                        className="gd-schedule-dialog-tab-content"
+                                        style={
+                                            tabContentHeight
+                                                ? { minHeight: `${tabContentHeight}px` }
+                                                : undefined
+                                        }
+                                    >
                                         <AutomationFiltersSelect
                                             availableFilters={availableFilters}
                                             selectedFilters={editedAutomationFilters}
@@ -427,139 +511,170 @@ export function ScheduledMailDialogRenderer({
                                             onStoreFiltersChange={onStoreFiltersChange}
                                             isDashboardAutomation={isDashboardExportSelected}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
+                                            hideTitle
+                                            showAllFilters
+                                        />
+                                    </div>
+                                ) : (
+                                    <div
+                                        ref={generalTabContentRef}
+                                        className="gd-schedule-dialog-tab-content"
+                                    >
+                                        {enableAutomationFilterContext && !enableDashboardTabs ? (
+                                            <>
+                                                <AutomationFiltersSelect
+                                                    availableFilters={availableFilters}
+                                                    selectedFilters={editedAutomationFilters}
+                                                    onFiltersChange={onFiltersChange}
+                                                    storeFilters={storeFilters}
+                                                    onStoreFiltersChange={onStoreFiltersChange}
+                                                    isDashboardAutomation={isDashboardExportSelected}
+                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                />
+                                                <ContentDivider className="gd-divider-with-margin" />
+                                            </>
+                                        ) : null}
+                                        <RecurrenceForm
+                                            startDate={startDate}
+                                            cronExpression={
+                                                editedAutomation.schedule?.cron ??
+                                                getDefaultCronExpression(startDate)
+                                            }
+                                            cronDescription={editedAutomation.schedule?.cronDescription}
+                                            timezone={
+                                                editedAutomation.schedule?.timezone ??
+                                                TIMEZONE_DEFAULT.identifier
+                                            }
+                                            dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                                            locale={locale}
+                                            weekStart={weekStart}
+                                            onChange={onRecurrenceChange}
+                                            allowHourlyRecurrence={allowHourlyRecurrence}
+                                            isWhiteLabeled={isWhiteLabeled}
+                                            closeDropdownsOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                            onKeyDownSubmit={handleSubmitForm}
                                         />
                                         <ContentDivider className="gd-divider-with-margin" />
-                                    </>
-                                ) : null}
-                                <RecurrenceForm
-                                    startDate={startDate}
-                                    cronExpression={
-                                        editedAutomation.schedule?.cron ?? getDefaultCronExpression(startDate)
-                                    }
-                                    cronDescription={editedAutomation.schedule?.cronDescription}
-                                    timezone={
-                                        editedAutomation.schedule?.timezone ?? TIMEZONE_DEFAULT.identifier
-                                    }
-                                    dateFormat={dateFormat ?? "MM/dd/yyyy"}
-                                    locale={locale}
-                                    weekStart={weekStart}
-                                    onChange={onRecurrenceChange}
-                                    allowHourlyRecurrence={allowHourlyRecurrence}
-                                    isWhiteLabeled={isWhiteLabeled}
-                                    closeDropdownsOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    onKeyDownSubmit={handleSubmitForm}
-                                />
-                                <ContentDivider className="gd-divider-with-margin" />
-                                <DestinationSelect
-                                    notificationChannels={notificationChannels}
-                                    selectedItemId={editedAutomation.notificationChannel}
-                                    onChange={onDestinationChange}
-                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                    overlayPositionType={OVERLAY_POSITION_TYPE}
-                                />
-                                <ContentDivider className="gd-divider-with-margin" />
-                                <RecipientsSelect
-                                    id="schedule.email.recipients"
-                                    loggedUser={defaultUser}
-                                    users={users}
-                                    usersError={usersError}
-                                    value={editedAutomation.recipients ?? []}
-                                    originalValue={originalAutomation.recipients || []}
-                                    onChange={onRecipientsChange}
-                                    allowEmptySelection
-                                    allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
-                                    allowExternalRecipients={allowExternalRecipients}
-                                    maxRecipients={maxAutomationsRecipients}
-                                    notificationChannels={notificationChannels}
-                                    notificationChannelId={editedAutomation.notificationChannel}
-                                    onKeyDownSubmit={handleSubmitForm}
-                                    externalRecipientOverride={externalRecipientOverride}
-                                />
-                                {isInPlatformChannel ? null : (
-                                    <>
-                                        <SubjectForm
-                                            dashboardTitle={dashboardTitle}
-                                            editedAutomation={editedAutomation}
-                                            onChange={onSubjectChange}
-                                            onKeyDownSubmit={handleSaveScheduledEmail}
-                                            isSubmitDisabled={isSubmitDisabled}
-                                        />
-                                        <MessageForm
-                                            onChange={onMessageChange}
-                                            value={editedAutomation.details?.message ?? ""}
-                                        />
-                                    </>
-                                )}
-                                {widget ? (
-                                    enableNewScheduledExport ? (
-                                        <WidgetAttachments
-                                            selectedAttachments={
-                                                selectedAttachments as WidgetAttachmentType[]
-                                            }
-                                            onWidgetAttachmentsChange={onWidgetAttachmentsChange}
-                                            xlsxSettings={settings}
-                                            onXlsxSettingsChange={onAttachmentsSettingsChange}
-                                        />
-                                    ) : (
-                                        <WidgetAttachmentsOld
-                                            widgetFilters={widgetFilters}
-                                            areDashboardFiltersChanged={areDashboardFiltersChanged}
-                                            isCrossFiltering={isCrossFiltering}
-                                            scheduledExportToEdit={scheduledExportToEdit}
-                                            csvSelected={isCsvExportSelected}
-                                            xlsxSelected={isXlsxExportSelected}
-                                            settings={settings}
-                                            onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChangeOld}
-                                            onAttachmentsSettingsChange={onAttachmentsSettingsChange}
-                                            enableAutomationFilterContext={enableAutomationFilterContext}
+                                        <DestinationSelect
+                                            notificationChannels={notificationChannels}
+                                            selectedItemId={editedAutomation.notificationChannel}
+                                            onChange={onDestinationChange}
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                         />
-                                    )
-                                ) : enableNewScheduledExport ? (
-                                    <DashboardAttachments
-                                        selectedAttachments={selectedAttachments as DashboardAttachmentType[]}
-                                        dashboardFilters={dashboardFilters}
-                                        isCrossFiltering={isCrossFiltering}
-                                        onDashboardAttachmentsChange={onDashboardAttachmentsChange}
-                                        xlsxSettings={settings}
-                                        onXlsxSettingsChange={onAttachmentsSettingsChange}
-                                    />
-                                ) : (
-                                    <DashboardAttachmentsOld
-                                        dashboardSelected={isDashboardExportSelected}
-                                        scheduledExportToEdit={scheduledExportToEdit}
-                                        areDashboardFiltersChanged={areDashboardFiltersChanged}
-                                        dashboardFilters={dashboardFilters}
-                                        isCrossFiltering={isCrossFiltering}
-                                        filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
-                                        onDashboardAttachmentsSelectionChange={
-                                            onDashboardAttachmentsChangeOld
-                                        }
-                                        enableAutomationFilterContext={enableAutomationFilterContext}
-                                    />
+                                        <ContentDivider className="gd-divider-with-margin" />
+                                        <RecipientsSelect
+                                            id="schedule.email.recipients"
+                                            loggedUser={defaultUser}
+                                            users={users}
+                                            usersError={usersError}
+                                            value={editedAutomation.recipients ?? []}
+                                            originalValue={originalAutomation.recipients || []}
+                                            onChange={onRecipientsChange}
+                                            allowEmptySelection
+                                            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
+                                            allowExternalRecipients={allowExternalRecipients}
+                                            maxRecipients={maxAutomationsRecipients}
+                                            notificationChannels={notificationChannels}
+                                            notificationChannelId={editedAutomation.notificationChannel}
+                                            onKeyDownSubmit={handleSubmitForm}
+                                            externalRecipientOverride={externalRecipientOverride}
+                                        />
+                                        {isInPlatformChannel ? null : (
+                                            <>
+                                                <SubjectForm
+                                                    dashboardTitle={dashboardTitle}
+                                                    editedAutomation={editedAutomation}
+                                                    onChange={onSubjectChange}
+                                                    onKeyDownSubmit={handleSaveScheduledEmail}
+                                                    isSubmitDisabled={isSubmitDisabled}
+                                                />
+                                                <MessageForm
+                                                    onChange={onMessageChange}
+                                                    value={editedAutomation.details?.message ?? ""}
+                                                />
+                                            </>
+                                        )}
+                                        {widget ? (
+                                            enableNewScheduledExport ? (
+                                                <WidgetAttachments
+                                                    selectedAttachments={
+                                                        selectedAttachments as WidgetAttachmentType[]
+                                                    }
+                                                    onWidgetAttachmentsChange={onWidgetAttachmentsChange}
+                                                    xlsxSettings={settings}
+                                                    onXlsxSettingsChange={onAttachmentsSettingsChange}
+                                                />
+                                            ) : (
+                                                <WidgetAttachmentsOld
+                                                    widgetFilters={widgetFilters}
+                                                    areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                                    isCrossFiltering={isCrossFiltering}
+                                                    scheduledExportToEdit={scheduledExportToEdit}
+                                                    csvSelected={isCsvExportSelected}
+                                                    xlsxSelected={isXlsxExportSelected}
+                                                    settings={settings}
+                                                    onWidgetAttachmentsSelectionChange={
+                                                        onWidgetAttachmentsChangeOld
+                                                    }
+                                                    onAttachmentsSettingsChange={onAttachmentsSettingsChange}
+                                                    enableAutomationFilterContext={
+                                                        enableAutomationFilterContext
+                                                    }
+                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                />
+                                            )
+                                        ) : enableNewScheduledExport ? (
+                                            <DashboardAttachments
+                                                selectedAttachments={
+                                                    selectedAttachments as DashboardAttachmentType[]
+                                                }
+                                                dashboardFilters={dashboardFilters}
+                                                isCrossFiltering={isCrossFiltering}
+                                                onDashboardAttachmentsChange={onDashboardAttachmentsChange}
+                                                xlsxSettings={settings}
+                                                onXlsxSettingsChange={onAttachmentsSettingsChange}
+                                            />
+                                        ) : (
+                                            <DashboardAttachmentsOld
+                                                dashboardSelected={isDashboardExportSelected}
+                                                scheduledExportToEdit={scheduledExportToEdit}
+                                                areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                                dashboardFilters={dashboardFilters}
+                                                isCrossFiltering={isCrossFiltering}
+                                                filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
+                                                onDashboardAttachmentsSelectionChange={
+                                                    onDashboardAttachmentsChangeOld
+                                                }
+                                                enableAutomationFilterContext={enableAutomationFilterContext}
+                                            />
+                                        )}
+                                        {enableAutomationEvaluationMode ? (
+                                            <EvaluationModeCheckbox
+                                                isShared={editedAutomation.evaluationMode === "SHARED"}
+                                                onChange={onEvaluationModeChange}
+                                            />
+                                        ) : null}
+                                        {getInvalidDatapoints({ recursive: true })
+                                            .filter(
+                                                (invalidDatapoint) => invalidDatapoint.severity === "error",
+                                            )
+                                            .map((invalidDatapoint) => (
+                                                <Message
+                                                    key={invalidDatapoint.id}
+                                                    id={invalidDatapoint.id}
+                                                    type="error"
+                                                    className={cx("gd-notifications-channels-dialog-error", {
+                                                        "gd-notifications-channels-dialog-error-scrollable":
+                                                            enableAutomationFilterContext,
+                                                    })}
+                                                >
+                                                    {invalidDatapoint.message}
+                                                </Message>
+                                            ))}
+                                    </div>
                                 )}
-                                {enableAutomationEvaluationMode ? (
-                                    <EvaluationModeCheckbox
-                                        isShared={editedAutomation.evaluationMode === "SHARED"}
-                                        onChange={onEvaluationModeChange}
-                                    />
-                                ) : null}
-                                {getInvalidDatapoints({ recursive: true })
-                                    .filter((invalidDatapoint) => invalidDatapoint.severity === "error")
-                                    .map((invalidDatapoint) => (
-                                        <Message
-                                            key={invalidDatapoint.id}
-                                            id={invalidDatapoint.id}
-                                            type="error"
-                                            className={cx("gd-notifications-channels-dialog-error", {
-                                                "gd-notifications-channels-dialog-error-scrollable":
-                                                    enableAutomationFilterContext,
-                                            })}
-                                        >
-                                            {invalidDatapoint.message}
-                                        </Message>
-                                    ))}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>

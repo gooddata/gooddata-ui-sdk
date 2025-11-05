@@ -16,6 +16,11 @@ const configuration: IConfiguration = {
                         importNames: ["default"],
                         message: "Default import from React is not allowed. Use named imports instead.",
                     },
+                    {
+                        name: "@gooddata/sdk-ui-kit",
+                        importNames: ["Icon"],
+                        message: "The Icon export cannot be tree-shaken, use {IconName}Icon imports instead.",
+                    },
                 ],
                 patterns: [
                     {

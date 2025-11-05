@@ -12,14 +12,14 @@ import {
     Button,
     Dropdown,
     IIconProps,
-    Icon,
+    IconAttribute,
+    IconDate,
+    IconQuestionMark,
     InvertableSelect,
     InvertableSelectItem,
 } from "@gooddata/sdk-ui-kit";
 
 import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
-
-const { Date: DateIcon, Attribute: AttributeIcon, QuestionMark: QuestionMarkIcon } = Icon;
 
 const ALIGN_POINTS = [
     { align: "cr tl", offset: { x: 3, y: 0 } },
@@ -92,9 +92,9 @@ export function DrillIntersectionIgnoredAttributesSelect({
 
                             let iconComponent: ComponentType<IIconProps> = () => null;
                             if (item.type === "date") {
-                                iconComponent = DateIcon;
+                                iconComponent = IconDate;
                             } else if (item.type === "attribute") {
-                                iconComponent = AttributeIcon;
+                                iconComponent = IconAttribute;
                             }
                             const IconComponent = iconComponent;
                             return (
@@ -129,7 +129,7 @@ export function DrillIntersectionIgnoredAttributesSelect({
                             <div className="gd-drill-intersection-ignored-attributes-select-title">
                                 <FormattedMessage id="configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.title" />
                                 <BubbleHoverTrigger>
-                                    <QuestionMarkIcon
+                                    <IconQuestionMark
                                         className="gd-drill-intersection-ignored-attributes-select-title-tooltip"
                                         width={12}
                                         height={12}

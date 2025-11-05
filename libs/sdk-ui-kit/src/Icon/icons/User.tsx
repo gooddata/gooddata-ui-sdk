@@ -3,6 +3,9 @@
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
+/**
+ * @internal
+ */
 export interface IUserIconProps extends IIconProps {
     backgroundColor?: string;
 }

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { ObjRef } from "../../../objRef/index.js";
@@ -30,7 +31,11 @@ export type AttributeDisplayFormType =
     /**
      * Display form representing geo pin longitude.
      */
-    | "GDC.geo.pin_longitude";
+    | "GDC.geo.pin_longitude"
+    /**
+     * Display form representing geo area.
+     */
+    | "GDC.geo.area";
 
 /**
  * Attribute display form metadata object

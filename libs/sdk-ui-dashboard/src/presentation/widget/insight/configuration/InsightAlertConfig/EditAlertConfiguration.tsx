@@ -5,13 +5,17 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Icon, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    Button,
+    IconQuestionMark,
+    OverlayPositionType,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AlertTriggerModeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
 import { gdColorStateBlank } from "../../../../constants/index.js";
-
-const { QuestionMark: QuestionMarkIcon } = Icon;
 
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: -1 } },
@@ -43,7 +47,7 @@ export function EditAlertConfiguration({
                 <label htmlFor={accessibilityValue} className="gd-edit-alert-configuration__trigger-label">
                     <FormattedMessage id="insightAlert.config.trigger" />
                     <BubbleHoverTrigger>
-                        <QuestionMarkIcon
+                        <IconQuestionMark
                             className="gd-edit-alert-configuration__trigger-label-icon"
                             color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                             width={14}
