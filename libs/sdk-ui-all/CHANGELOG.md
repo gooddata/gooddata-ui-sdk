@@ -1,6 +1,66 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 30 Oct 2025 08:25:43 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Nov 2025 08:32:11 GMT and should not be manually modified.
+
+## 11.8.0
+
+Thu, 06 Nov 2025 08:32:11 GMT
+
+### Updates
+
+- sdk-ui-dashboard: filters config and date dataset selection for rich text
+- sdk-model: Add `isHidden` property to metadata objects.
+- sdk-backend-tiger: Added support for reading and writing the `isHidden` property on metadata objects.
+- sdk-ui-catalog: Introduce UI toggle for hiding objects from AI results
+- api-client-tiger: Update generated client.
+- sdk-ui-gen-ai: Do not show hidden objects in AI chat suggestions.
+- sdk-model: Extend quality issue types with `attributeName` and `title`.
+- sdk-ui-kit: Update `UiCard` and `UiDrawer` styles to match the latest design.
+- sdk-ui-catalog: Implement catalog detail validations tab redesign with new interactions.
+- sdk-ui-catalog: Redesign the filters.
+- sdk-backend: Enhance `IFilterBaseOptions` with exclusion fields.
+- sdk-ui-catalog: Filter queries now support excluding filter values when 'All except ...' option is selected.
+- sdk-ui-catalog: Implement filter reset button allowing users to clear all applied filters with a single action.
+- sdk-model: Add `status` field to `ISemanticQualityReport` in order to track the status of the quality report calculation.
+- sdk-backend-tiger: Add `AbortSignal` support to semantic quality service `getQualityReport` method.
+- sdk-ui-catalog: Tweak the quality score card date display to show only the year, month, and day to prevent overly long date strings.
+- sdk-ui-kit: Add new `hiddenForAi` icon.
+- sdk-backend: Add `isHidden` filter support to backend metadata queries.
+- sdk-ui-catalog: Add support for AI visibility filtering.
+- turn on Date Filter Accessibility
+- adding data-testid for some elements
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-dashboard]: Use filters from dashboard and also drill (apply filter) on graph click
+- [sdk-ui-dashboard]: fix error that appears when drilling into some drivers
+- [sdk-ui-dashboard]: Cannot trigger KDA option from drill menu on certain charts.
+- [sdk-ui-dashboard]: Cannot add filter via "Plus" button.
+- [sdk-ui-dashboard]: Filter when drilling into driver is not behaving correctly
+- [sdk-ui-dashboar]: update key drivers chart to show only attributes with same trend, support char single bar color to differentiate driver
+- [api-client-tiger]: update client for new definition in ai chat bot
+- [sdk-ui-gen-ai]: support key driver analysis in chatbot
+- recalculate metric value when is not provided to key driver analysis dialog
+- [sdk-ui-dashboard]: remove filters with ALL from KDA initial run
+- [sdk-ui-dashboard]: blank page appears when clicking on certain data points
+- fix: Make menu items properly selectable to align with ARIA
+- fix: Display focus outline on the "Only" filter option in Safari
+- Modularize UiTabs component
+- fix: Do not leak arrow key event from new filter creation popup
+- feat: Ability to reorder dashboard tabs
+- Cleanup filter accessibility feature flag
+- Redesign schedule dialog to support dashboard tabs
+- sdk-ui-pivot: PivotTableNext is now enabled by default and promoted from @alpha to @public. This new pivot table component, built on AG Grid Enterprise, offers better performance, text wrapping, and cell selection capabilities. PivotTableNext will be exported as PivotTable in the next major release and thus replace the legacy PivotTable component. To try out new features, users should use PivotTableNext instead of PivotTable.
+- sdk-ui-gen-ai: Fix AG grid token propagation for the new pivot table
+- sdk-ui-pivot: Fix initial grow to fit behaviour in new pivot tables
+- Add @alpha support for geo area labels in sdk-model, sdk-backend-tiger and data modeler app.
+- Fixed: Do not count "invisible" styling metrics in bucket item rules to not disable various chart controls that works only for limited number of rendered metrics.
+- fix: prevent overriding selected dashboard filters with empty default value
+- [home-ui]: Improving AI Memory UI
+- [sdk-ui-kit] Add variant-delete class to ListItem component
+- [api-client-tiger] Updating OpenAPI client.
+- [sdk-ui-kit] Ability to specify to the header menu item use the starting path to check if the item is active.
+- add chat feedback popup
 
 ## 11.7.1
 
