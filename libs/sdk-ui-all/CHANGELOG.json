@@ -2,6 +2,174 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.8.0",
+            "tag": "@gooddata/sdk-ui-all_v11.8.0",
+            "date": "Thu, 06 Nov 2025 08:32:11 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: filters config and date dataset selection for rich text"
+                    },
+                    {
+                        "comment": "sdk-model: Add `isHidden` property to metadata objects."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Added support for reading and writing the `isHidden` property on metadata objects."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce UI toggle for hiding objects from AI results"
+                    },
+                    {
+                        "comment": "api-client-tiger: Update generated client."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Do not show hidden objects in AI chat suggestions."
+                    },
+                    {
+                        "comment": "sdk-model: Extend quality issue types with `attributeName` and `title`."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Update `UiCard` and `UiDrawer` styles to match the latest design."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Implement catalog detail validations tab redesign with new interactions."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Redesign the filters."
+                    },
+                    {
+                        "comment": "sdk-backend: Enhance `IFilterBaseOptions` with exclusion fields."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Filter queries now support excluding filter values when 'All except ...' option is selected."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Implement filter reset button allowing users to clear all applied filters with a single action."
+                    },
+                    {
+                        "comment": "sdk-model: Add `status` field to `ISemanticQualityReport` in order to track the status of the quality report calculation."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add `AbortSignal` support to semantic quality service `getQualityReport` method."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Tweak the quality score card date display to show only the year, month, and day to prevent overly long date strings."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add new `hiddenForAi` icon."
+                    },
+                    {
+                        "comment": "sdk-backend: Add `isHidden` filter support to backend metadata queries."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for AI visibility filtering."
+                    },
+                    {
+                        "comment": "turn on Date Filter Accessibility"
+                    },
+                    {
+                        "comment": "adding data-testid for some elements"
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Use filters from dashboard and also drill (apply filter) on graph click"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: fix error that appears when drilling into some drivers"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Cannot trigger KDA option from drill menu on certain charts."
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Cannot add filter via \"Plus\" button."
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: Filter when drilling into driver is not behaving correctly"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboar]: update key drivers chart to show only attributes with same trend, support char single bar color to differentiate driver"
+                    },
+                    {
+                        "comment": "[api-client-tiger]: update client for new definition in ai chat bot"
+                    },
+                    {
+                        "comment": "[sdk-ui-gen-ai]: support key driver analysis in chatbot"
+                    },
+                    {
+                        "comment": "recalculate metric value when is not provided to key driver analysis dialog"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: remove filters with ALL from KDA initial run"
+                    },
+                    {
+                        "comment": "[sdk-ui-dashboard]: blank page appears when clicking on certain data points"
+                    },
+                    {
+                        "comment": "fix: Make menu items properly selectable to align with ARIA"
+                    },
+                    {
+                        "comment": "fix: Display focus outline on the \"Only\" filter option in Safari"
+                    },
+                    {
+                        "comment": "Modularize UiTabs component"
+                    },
+                    {
+                        "comment": "fix: Do not leak arrow key event from new filter creation popup"
+                    },
+                    {
+                        "comment": "feat: Ability to reorder dashboard tabs"
+                    },
+                    {
+                        "comment": "Cleanup filter accessibility feature flag"
+                    },
+                    {
+                        "comment": "Redesign schedule dialog to support dashboard tabs"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: PivotTableNext is now enabled by default and promoted from @alpha to @public. This new pivot table component, built on AG Grid Enterprise, offers better performance, text wrapping, and cell selection capabilities. PivotTableNext will be exported as PivotTable in the next major release and thus replace the legacy PivotTable component. To try out new features, users should use PivotTableNext instead of PivotTable."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Fix AG grid token propagation for the new pivot table"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix initial grow to fit behaviour in new pivot tables"
+                    },
+                    {
+                        "comment": "Add @alpha support for geo area labels in sdk-model, sdk-backend-tiger and data modeler app."
+                    },
+                    {
+                        "comment": "Fixed: Do not count \"invisible\" styling metrics in bucket item rules to not disable various chart controls that works only for limited number of rendered metrics."
+                    },
+                    {
+                        "comment": "fix: prevent overriding selected dashboard filters with empty default value"
+                    },
+                    {
+                        "comment": "[home-ui]: Improving AI Memory UI"
+                    },
+                    {
+                        "comment": "[sdk-ui-kit] Add variant-delete class to ListItem component"
+                    },
+                    {
+                        "comment": "[api-client-tiger] Updating OpenAPI client."
+                    },
+                    {
+                        "comment": "[sdk-ui-kit] Ability to specify to the header menu item use the starting path to check if the item is active."
+                    },
+                    {
+                        "comment": "add chat feedback popup"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.7.1",
             "tag": "@gooddata/sdk-ui-all_v11.7.1",
             "date": "Mon, 03 Nov 2025 08:30:02 GMT",
