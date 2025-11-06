@@ -860,5 +860,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Usuń {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Różnica",
     "kdaDialog.dialog.keyDrives.empty": "Brak kluczowych czynników",
-    "kdaDialog.dialog.keyDriver.chart.std": "Zmień Próg Istotności"
+    "kdaDialog.dialog.keyDriver.chart.std": "Zmień Próg Istotności",
+    "kdaDialog.dialog.filters.title": "Filtry",
+    "kdaDialog.dialog.filters.noFilters": "Brak filtrów",
+    "kdaDialog.dialog.filters.add.tooltip": "Dodaj filtr",
+    "kdaDialog.dialog.filters.search": "Szukaj",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Zakres dat w opisach",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Zbiór danych dat używany przez filtr zakresu dat dla odniesień do metryk w opisach sekcji.",
+    "dateDataset.autoSelect": "Automatyczny wybór",
+    "dateDataset.notFound": "Nie znaleziono",
+    "dialogs.schedule.email.tabs.general": "Ogólne",
+    "dialogs.schedule.email.tabs.filters": "Filtry",
+    "dashboard.tabs.default.label": "Nieoznakowana karta",
+    "dashboard.tabs.accessibility.label": "Karty pulpitu"
 }

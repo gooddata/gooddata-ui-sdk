@@ -300,24 +300,28 @@
         "comment": "Title for quality issue when a catalog item contains unknown abbreviation."
     },
     "analyticsCatalog.quality.description.identicalTitle": {
-        "value": "The title is already used by {objects} <u>Rename</u> it to prevent confusion.",
+        "value": "Same title is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} title to avoid confusion.",
         "comment": "Description for quality issue when multiple catalog items have identical titles."
     },
     "analyticsCatalog.quality.description.identicalDescription": {
-        "value": "The description is already used by {objects} <u>Rename</u> it to prevent confusion.",
+        "value": "Same description is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} description to avoid confusion.",
         "comment": "Description for quality issue when multiple catalog items have identical descriptions."
     },
     "analyticsCatalog.quality.description.similarTitle": {
-        "value": "The title is similar to {objects} Distinguish it in its <u>description</u> to improve AI accuracy.",
+        "value": "The title is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its description to improve AI accuracy.",
         "comment": "Description for quality issue when multiple catalog items have similar titles."
     },
     "analyticsCatalog.quality.description.similarDescription": {
-        "value": "The description is similar to {objects} Distinguish it in its <u>title</u> to improve AI accuracy.",
+        "value": "The description is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its title to improve AI accuracy.",
         "comment": "Description for quality issue when multiple catalog items have similar descriptions."
     },
     "analyticsCatalog.quality.description.unknownAbbreviation": {
-        "value": "The abbreviation <u>{abbreviation}</u> is not recognized. <u>Replace</u> it with the full form to improve AI accuracy.",
+        "value": "The abbreviation <u>{abbreviation}</u> is not recognized. Replace it with the full form to improve AI accuracy.",
         "comment": "Description for quality issue when a catalog item contains unknown abbreviation."
+    },
+    "analyticsCatalog.quality.issue.edit": {
+        "value": "Edit{attributeName, select, TITLE { title} DESCRIPTION { description} other {}}",
+        "comment": "Label for the edit button in quality issue component. The button allows users to edit either the title or description field of a catalog item based on the quality issue. Example output: if attributeName is 'TITLE', output is 'Edit title'; if attributeName is 'DESCRIPTION', output is 'Edit description'."
     },
     "analyticsCatalog.quality.scoreCard.title": {
         "value": "Semantic quality",

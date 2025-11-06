@@ -3518,12 +3518,16 @@ export interface ISemanticQualityIssue {
 export interface ISemanticQualityIssueDetail {
     // (undocumented)
     abbreviation?: string;
+    // (undocumented)
+    attributeName?: SemanticQualityIssueAttributeName;
 }
 
 // @internal
 export interface ISemanticQualityIssueObject {
     // (undocumented)
     identifier: Identifier;
+    // (undocumented)
+    title: string;
     // (undocumented)
     type: GenAIObjectType;
 }
@@ -3602,7 +3606,6 @@ export interface ISettings {
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
-    enableAttributeFilterVirtualised?: boolean;
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
@@ -5177,6 +5180,9 @@ export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+
+// @internal
+export type SemanticQualityIssueAttributeName = "TITLE" | "DESCRIPTION";
 
 // @internal
 export type SemanticQualityIssueCode = (typeof SemanticQualityIssueCodeValues)[keyof typeof SemanticQualityIssueCodeValues];

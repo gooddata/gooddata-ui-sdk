@@ -99,7 +99,6 @@ export const useAttributeFilterController = (
         selectionMode = "multi",
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
-        enableAttributeFilterVirtualised = false,
         withoutApply: withoutApplyProp = false,
         enableDashboardFiltersApplyModes = false,
         enableDashboardFiltersApplyWithoutLoading = false,
@@ -166,7 +165,6 @@ export const useAttributeFilterController = (
         handler,
         supportsShowingFilteredElements,
         shouldIncludeLimitingFilters,
-        enableAttributeFilterVirtualised,
     );
 
     useOnError(handler, { onError });

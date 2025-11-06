@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "Kopfzeile",
     "table.header.checkbox.ariaLabel": "Aktion auswählen",
     "table.header.menu.ariaLabel": "Aktionen",
-    "gs.header.mainMenu.ariaLabel": "Hauptmenü"
+    "gs.header.mainMenu.ariaLabel": "Hauptmenü",
+    "tabs.all": "Alle",
+    "tabs.showAllTabs": "Alle Registerkarten anzeigen"
 }

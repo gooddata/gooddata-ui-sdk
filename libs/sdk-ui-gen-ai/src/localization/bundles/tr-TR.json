@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Sohbet mesajları",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Bunu açmadan önce görselleştirmeyi kaydetmenizi isteyecektir.",
     "gd.gen-ai.visualisation.toggle.table": "Tabloyu göster",
-    "gd.gen-ai.visualisation.toggle.original": "Orijinali Göster"
+    "gd.gen-ai.visualisation.toggle.original": "Orijinali Göster",
+    "gd.gen-ai.feedback.popup.title": "Görüşlerinizi aldık",
+    "gd.gen-ai.feedback.popup.reasons-label": "Ne yanlış gittiğini bize söyleyin",
+    "gd.gen-ai.feedback.popup.description-label": "Lütfen, ne olduğunu açıklayın",
+    "gd.gen-ai.feedback.popup.cancel": "İptal",
+    "gd.gen-ai.feedback.popup.send": "Gönder",
+    "gd.gen-ai.feedback.popup.close": "Geri bildirim penceresini kapat",
+    "gd.gen-ai.feedback.reason.forgot-context": "Önceki bağlamı unuttum",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Yoksayılan veya reddedilen talimatlar",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Gerçeklere dayanmayan",
+    "gd.gen-ai.feedback.reason.other": "Diğer",
+    "gd.gen-ai.changeAnalysis.default_message": "İşte <metric>{title}</metric> ile <b>{range}</b> arasındaki değişim analizi.",
+    "gd.gen-ai.changeAnalysis.splitter": "ve",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Analizi aç"
 }

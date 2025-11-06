@@ -2,6 +2,7 @@
 
 import { FC, ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
 
+import { pick } from "lodash-es";
 import isEqual from "react-fast-compare";
 
 type Subscriber<T> = (state: T, prevState: T) => void;
@@ -61,6 +62,14 @@ export type IUseContextStore<T, IsOptional = false> = <SelectorResult>(
 export type IContextStore<T> = IContextStoreProvider<T> & {
     useContextStore: IUseContextStore<T>;
     useContextStoreOptional: IUseContextStore<T, true>;
+    useContextStoreValues: <K extends readonly (keyof T)[]>(
+        keys: K,
+        equalityFn?: (a: Pick<T, K[number]>, b: Pick<T, K[number]>) => boolean,
+    ) => Pick<T, K[number]>;
+    useContextStoreValuesOptional: <K extends readonly (keyof T)[]>(
+        keys: K,
+        equalityFn?: (a: Pick<T, K[number]>, b: Pick<T, K[number]>) => boolean,
+    ) => Pick<T, K[number]> | undefined;
     createSelector: <SelectorResult>(
         selector: IContextStoreSelector<T, SelectorResult>,
     ) => IContextStoreSelector<T, SelectorResult>;
@@ -131,11 +140,27 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
         return useContextStoreOptional(selector, equalityFn)!;
     };
 
+    const useContextStoreValuesOptional: IContextStore<T>["useContextStoreValuesOptional"] = (
+        keys,
+        equalityFn = isEqual,
+    ) => {
+        return useContextStoreOptional(
+            (state: T) => pick(state, keys) as Pick<T, (typeof keys)[number]>,
+            equalityFn,
+        );
+    };
+
+    const useContextStoreValues: IContextStore<T>["useContextStoreValues"] = (keys, equalityFn = isEqual) => {
+        return useContextStore((state: T) => pick(state, keys) as Pick<T, (typeof keys)[number]>, equalityFn);
+    };
+
     const createSelector: IContextStore<T>["createSelector"] = (selector) => selector;
 
     return Object.assign(Provider, {
         useContextStore,
         useContextStoreOptional,
+        useContextStoreValues,
+        useContextStoreValuesOptional,
         createSelector,
     });
 };

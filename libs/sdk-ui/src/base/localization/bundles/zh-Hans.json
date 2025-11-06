@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "标题",
     "table.header.checkbox.ariaLabel": "选择操作",
     "table.header.menu.ariaLabel": "操作",
-    "gs.header.mainMenu.ariaLabel": "主菜单"
+    "gs.header.mainMenu.ariaLabel": "主菜单",
+    "tabs.all": "全部",
+    "tabs.showAllTabs": "显示所有标签页"
 }

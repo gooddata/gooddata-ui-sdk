@@ -810,5 +810,7 @@
     "table.header.ariaLabel": "En-tête",
     "table.header.checkbox.ariaLabel": "Sélectionner une action",
     "table.header.menu.ariaLabel": "Actions",
-    "gs.header.mainMenu.ariaLabel": "Menu principal"
+    "gs.header.mainMenu.ariaLabel": "Menu principal",
+    "tabs.all": "Tout",
+    "tabs.showAllTabs": "Afficher tous les onglets"
 }

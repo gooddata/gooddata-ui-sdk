@@ -683,13 +683,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAttributeFilterVirtualised,
-            "enableAttributeFilterVirtualised",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAttributeFilterVirtualised,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableNotificationChannelIdentifiers,
             "enableNotificationChannelIdentifiers",
             "BOOLEAN",

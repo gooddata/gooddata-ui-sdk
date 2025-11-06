@@ -244,7 +244,19 @@ export type {
     IUiMenuItemData,
 } from "./@ui/UiMenu/types.js";
 export { UiTabs } from "./@ui/UiTabs/UiTabs.js";
-export type { UiTabsProps, UiTab, UiTabsAccessibilityConfig } from "./@ui/UiTabs/UiTabs.js";
+export type {
+    IUiTabsAccessibilityConfig,
+    IUiTabComponents,
+    IUiTabsProps,
+    IUiTabContext,
+    IUiTab,
+    IUiTabAction,
+    IUiTabComponentProps,
+    IUiTabActionEventContext,
+} from "./@ui/UiTabs/types.js";
+export * from "./@ui/UiTabs/defaultComponents/index.js";
+export { getTypedUiTabsContextStore } from "./@ui/UiTabs/context.js";
+export { useUiTabsContextStoreValue } from "./@ui/UiTabs/useUiTabsContextStoreValue.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
 export type { UiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
 export { UiDropdownIconButton } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";

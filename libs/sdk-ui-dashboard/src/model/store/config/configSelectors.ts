@@ -724,17 +724,6 @@ export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> 
 );
 
 /**
- * Feature flag
- * @internal
- */
-export const selectEnableAttributeFilterVirtualisedList: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAttributeFilterVirtualised ?? false;
-    },
-);
-
-/**
  * Setting of dashboard filters apply mode. The value is resolved in the following order:
  * If set on workspace level, workspace setting is used.
  * If not set on workspace level, organization setting is used.

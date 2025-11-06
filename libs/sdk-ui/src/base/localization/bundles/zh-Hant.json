@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "標題",
     "table.header.checkbox.ariaLabel": "選擇操作",
     "table.header.menu.ariaLabel": "行動",
-    "gs.header.mainMenu.ariaLabel": "主選單"
+    "gs.header.mainMenu.ariaLabel": "主選單",
+    "tabs.all": "全部",
+    "tabs.showAllTabs": "顯示所有標籤頁"
 }

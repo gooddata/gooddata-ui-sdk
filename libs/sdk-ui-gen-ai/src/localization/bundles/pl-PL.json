@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Wiadomości czatu",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Zostaniesz poproszony o zapisanie wizualizacji przed jej otwarciem.",
     "gd.gen-ai.visualisation.toggle.table": "Pokaż tabelę",
-    "gd.gen-ai.visualisation.toggle.original": "Pokaż oryginał"
+    "gd.gen-ai.visualisation.toggle.original": "Pokaż oryginał",
+    "gd.gen-ai.feedback.popup.title": "Otrzymaliśmy Twoją opinię",
+    "gd.gen-ai.feedback.popup.reasons-label": "Powiedz nam, co poszło nie tak",
+    "gd.gen-ai.feedback.popup.description-label": "Proszę opisać, co się stało",
+    "gd.gen-ai.feedback.popup.cancel": "Anuluj",
+    "gd.gen-ai.feedback.popup.send": "Wyślij",
+    "gd.gen-ai.feedback.popup.close": "Zamknij okno opinii",
+    "gd.gen-ai.feedback.reason.forgot-context": "Zapomnij poprzedni kontekst",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Zignorowane lub odrzucone instrukcje",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Niepoprawne faktycznie",
+    "gd.gen-ai.feedback.reason.other": "Inne",
+    "gd.gen-ai.changeAnalysis.default_message": "Oto analiza zmian dla <metric>{title}</metric> pomiędzy <b>{range}</b>.",
+    "gd.gen-ai.changeAnalysis.splitter": "i",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Otwórz analizę"
 }

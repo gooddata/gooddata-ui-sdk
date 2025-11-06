@@ -801,5 +801,7 @@
     "table.header.ariaLabel": "Cabecera",
     "table.header.checkbox.ariaLabel": "Seleccionar acción",
     "table.header.menu.ariaLabel": "Acciones",
-    "gs.header.mainMenu.ariaLabel": "Menú principal"
+    "gs.header.mainMenu.ariaLabel": "Menú principal",
+    "tabs.all": "Todo",
+    "tabs.showAllTabs": "Mostrar todas las pestañas"
 }

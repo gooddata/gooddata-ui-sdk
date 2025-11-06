@@ -45,6 +45,11 @@ export interface IAnalyticsCatalogProps {
     onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
 
     /**
+     * Handler for navigating to a catalog item. Consumers can handle route changes.
+     */
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
+
+    /**
      * Handler when opening catalog detail.
      */
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
@@ -80,6 +85,7 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
                                                 onCatalogItemOpenClick={props.onCatalogItemOpenClick}
                                                 onCatalogDetailOpened={props.onCatalogDetailOpened}
                                                 onCatalogDetailClosed={props.onCatalogDetailClosed}
+                                                onCatalogItemNavigation={props.onCatalogItemNavigation}
                                             />
                                         </QualityProvider>
                                     </ObjectTypeProvider>

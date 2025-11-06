@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Supprimer {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Différence",
     "kdaDialog.dialog.keyDrives.empty": "Pas de facteurs clés",
-    "kdaDialog.dialog.keyDriver.chart.std": "Changement Seuil de signification"
+    "kdaDialog.dialog.keyDriver.chart.std": "Changement Seuil de signification",
+    "kdaDialog.dialog.filters.title": "Filtres",
+    "kdaDialog.dialog.filters.noFilters": "Aucun filtre",
+    "kdaDialog.dialog.filters.add.tooltip": "Ajouter un filtre",
+    "kdaDialog.dialog.filters.search": "Recherche",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Fourchette de dates dans les descriptions",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Ensemble de données de date utilisé par le filtre Date range pour les références métriques dans les descriptions de section.",
+    "dateDataset.autoSelect": "Sélection automatique",
+    "dateDataset.notFound": "Non trouvé",
+    "dialogs.schedule.email.tabs.general": "Général",
+    "dialogs.schedule.email.tabs.filters": "Filtres",
+    "dashboard.tabs.default.label": "Onglet sans titre",
+    "dashboard.tabs.accessibility.label": "Onglets du tableau de bord"
 }

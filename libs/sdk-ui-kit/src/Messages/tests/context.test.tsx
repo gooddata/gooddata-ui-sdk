@@ -27,11 +27,11 @@ function PlainToastsProvider(props: { onDismiss?: (id: IMessage["id"]) => void; 
 }
 
 function Inspector(props: { testId: string }) {
-    const { messages, latestMessage, hasParentContext } = ToastsCenterContext.useContextStore((c) => ({
-        messages: c.messages,
-        latestMessage: c.latestMessage,
-        hasParentContext: c.hasParentContext,
-    }));
+    const { messages, latestMessage, hasParentContext } = ToastsCenterContext.useContextStoreValues([
+        "messages",
+        "latestMessage",
+        "hasParentContext",
+    ]);
 
     return (
         <div>

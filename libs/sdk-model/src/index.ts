@@ -1146,6 +1146,7 @@ export {
     type ISemanticQualityIssueObject,
     type ISemanticQualityIssueDetail,
     type ISemanticQualityIssuesCalculation,
+    type SemanticQualityIssueAttributeName,
     type SemanticQualityIssueSeverity,
     type SemanticQualityIssueCode,
     type SemanticQualityIssuesCalculationStatus,

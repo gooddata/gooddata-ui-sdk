@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Чат-сообщения",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Это потребует от вас сохранить визуализацию перед тем, как вы сможете её открыть.",
     "gd.gen-ai.visualisation.toggle.table": "Показать таблицу",
-    "gd.gen-ai.visualisation.toggle.original": "Показать оригинал"
+    "gd.gen-ai.visualisation.toggle.original": "Показать оригинал",
+    "gd.gen-ai.feedback.popup.title": "Мы получили ваш отзыв",
+    "gd.gen-ai.feedback.popup.reasons-label": "Сообщите нам, что пошло не так",
+    "gd.gen-ai.feedback.popup.description-label": "Пожалуйста, опишите, что произошло",
+    "gd.gen-ai.feedback.popup.cancel": "Отмена",
+    "gd.gen-ai.feedback.popup.send": "Отправить",
+    "gd.gen-ai.feedback.popup.close": "Закрыть окно обратной связи",
+    "gd.gen-ai.feedback.reason.forgot-context": "Забыть предыдущий контекст",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Игнорируемые или отклоненные инструкции",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Фактически неверно",
+    "gd.gen-ai.feedback.reason.other": "Прочие",
+    "gd.gen-ai.changeAnalysis.default_message": "Вот анализ изменений для <metric>{title}</metric> между <b>{range}</b>",
+    "gd.gen-ai.changeAnalysis.splitter": "и",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Открыть анализ"
 }

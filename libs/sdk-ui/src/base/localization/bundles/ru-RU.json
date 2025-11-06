@@ -808,5 +808,7 @@
     "table.header.ariaLabel": "Заголовок",
     "table.header.checkbox.ariaLabel": "Выберите действие",
     "table.header.menu.ariaLabel": "Действия",
-    "gs.header.mainMenu.ariaLabel": "Главное меню"
+    "gs.header.mainMenu.ariaLabel": "Главное меню",
+    "tabs.all": "Все",
+    "tabs.showAllTabs": "Показать все вкладки"
 }

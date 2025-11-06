@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "頭波",
     "table.header.checkbox.ariaLabel": "選動",
     "table.header.menu.ariaLabel": "所作所為",
-    "gs.header.mainMenu.ariaLabel": "主餐"
+    "gs.header.mainMenu.ariaLabel": "主餐",
+    "tabs.all": "所有",
+    "tabs.showAllTabs": "顯示所有標籤"
 }

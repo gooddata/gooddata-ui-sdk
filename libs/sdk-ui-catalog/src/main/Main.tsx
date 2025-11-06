@@ -30,7 +30,8 @@ type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
     openCatalogItemRef?: ICatalogItemRef;
-    onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemOpenClick?: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogDetailClosed?: () => void;
 };
@@ -48,6 +49,7 @@ export function Main({
     onCatalogItemOpenClick,
     onCatalogDetailOpened,
     onCatalogDetailClosed,
+    onCatalogItemNavigation,
 }: Props) {
     const intl = useIntl();
     const { addError } = useToastMessage();
@@ -93,6 +95,10 @@ export function Main({
                             objectDefinition={openedItem}
                             onClose={onCloseDetail}
                             onOpenClick={onOpenClick}
+                            onCatalogItemNavigation={(event, ref) => {
+                                setItemOpened(ref);
+                                onCatalogItemNavigation?.(event, ref);
+                            }}
                             onCatalogItemUpdate={(item, changes) => {
                                 setItemOpened(item);
                                 updateItem(changes);

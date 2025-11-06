@@ -23,6 +23,7 @@ import {
     ConfirmDialogBase,
     ContentDivider,
     Hyperlink,
+    IUiTab,
     Message,
     Overlay,
     OverlayController,
@@ -30,7 +31,6 @@ import {
     RecurrenceForm,
     ScrollablePanel,
     UiIcon,
-    UiTab,
     UiTabs,
     isEnterKey,
     useIdPrefixed,
@@ -322,8 +322,8 @@ export function ScheduledMailDialogRenderer({
         };
     }, [widget, dashboardTitle]);
 
-    const tabs: UiTab[] = useMemo(() => {
-        const tabsList: UiTab[] = [
+    const tabs: IUiTab[] = useMemo(() => {
+        const tabsList: IUiTab[] = [
             {
                 id: "general",
                 label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.general" }),
@@ -341,7 +341,7 @@ export function ScheduledMailDialogRenderer({
         return tabsList;
     }, [intl, enableAutomationFilterContext, enableDashboardTabs]);
 
-    const handleTabSelect = useCallback((tab: UiTab) => {
+    const handleTabSelect = useCallback((tab: IUiTab) => {
         setSelectedTabId(tab.id as "filters" | "general");
     }, []);
 

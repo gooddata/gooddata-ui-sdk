@@ -7,13 +7,12 @@ import { IUiMenuItemData, IUiMenuItemProps } from "../types.js";
 
 export const Item = memo(function Item<T extends IUiMenuItemData = object>({ item }: IUiMenuItemProps<T>) {
     const { InteractiveItemWrapper, StaticItem, GroupItem, ContentItemWrapper } =
-        typedUiMenuContextStore<T>().useContextStore((ctx) => ({
-            InteractiveItemWrapper: ctx.InteractiveItemWrapper,
-            StaticItem: ctx.StaticItem,
-            GroupItem: ctx.GroupItem,
-            ContentItem: ctx.ContentItem,
-            ContentItemWrapper: ctx.ContentItemWrapper,
-        }));
+        typedUiMenuContextStore<T>().useContextStoreValues([
+            "InteractiveItemWrapper",
+            "StaticItem",
+            "GroupItem",
+            "ContentItemWrapper",
+        ]);
 
     if (item.type === "interactive") {
         return <InteractiveItemWrapper item={item} />;

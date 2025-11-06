@@ -309,4 +309,103 @@ describe("contextStore", () => {
         expect(validatorResult.current("test")).toBe(true);
         expect(validatorResult.current("")).toBe(false);
     });
+
+    it("should select multiple values using useContextStoreValues", () => {
+        const TestStore = createContextStore<TestState>("TestStore");
+
+        const wrapper = ({ children }: { children: ReactNode }) => (
+            <TestStore value={initialState}>{children}</TestStore>
+        );
+
+        const { result } = renderHook(() => TestStore.useContextStoreValues(["count", "name"]), {
+            wrapper,
+        });
+
+        expect(result.current).toEqual({ count: 0, name: "test" });
+    });
+
+    it("should return undefined outside provider when using useContextStoreValuesOptional", () => {
+        const TestStore = createContextStore<TestState>("TestStore");
+
+        const { result } = renderHook(() => TestStore.useContextStoreValuesOptional(["count", "name"]));
+
+        expect(result.current).toBeUndefined();
+    });
+
+    it("should only rerender when any of selected keys changes (useContextStoreValues)", () => {
+        const TestStore = createContextStore<TestState>("TestStore");
+        const renderSpy = vi.fn();
+
+        function TestComponent() {
+            const slice = TestStore.useContextStoreValues(["count", "name"]);
+            renderSpy();
+            return <div data-testid="values">{`${slice.count}-${slice.name}`}</div>;
+        }
+
+        function Wrapper({ state }: { state: TestState }) {
+            return (
+                <TestStore value={state}>
+                    <TestComponent />
+                </TestStore>
+            );
+        }
+
+        const { rerender, getByTestId } = render(<Wrapper state={initialState} />);
+        renderSpy.mockClear();
+        expect(getByTestId("values")).toHaveTextContent("0-test");
+
+        // Change unrelated nested value -> no rerender expected
+        const newState1 = { ...initialState, nested: { ...initialState.nested, value: "changed" } };
+        rerender(<Wrapper state={newState1} />);
+        const rendersAfterUnrelatedChange = renderSpy.mock.calls.length;
+
+        // Change one of selected keys -> rerender expected
+        const newState2 = { ...newState1, count: 10 };
+        rerender(<Wrapper state={newState2} />);
+
+        expect(renderSpy.mock.calls.length).toBeGreaterThan(rendersAfterUnrelatedChange);
+        expect(getByTestId("values")).toHaveTextContent("10-test");
+    });
+
+    it("should respect custom equality function in useContextStoreValues", () => {
+        const TestStore = createContextStore<TestState>("TestStore");
+        const wrapper = ({ children }: { children: ReactNode }) => (
+            <TestStore value={initialState}>{children}</TestStore>
+        );
+
+        const alwaysEqual = () => true;
+        const { result } = renderHook(() => TestStore.useContextStoreValues(["count", "name"], alwaysEqual), {
+            wrapper,
+        });
+
+        expect(result.current).toEqual({ count: 0, name: "test" });
+    });
+
+    it("should update when a selected function reference changes", () => {
+        const TestStore = createContextStore<TestState>("TestStore");
+        const renderSpy = vi.fn();
+
+        function TestComponent() {
+            const { callback } = TestStore.useContextStoreValues(["callback"]);
+            renderSpy();
+            return <div data-testid="cb">{typeof callback}</div>;
+        }
+
+        function Wrapper({ state }: { state: TestState }) {
+            return (
+                <TestStore value={state}>
+                    <TestComponent />
+                </TestStore>
+            );
+        }
+
+        const { rerender, getByTestId } = render(<Wrapper state={initialState} />);
+        renderSpy.mockClear();
+        expect(getByTestId("cb")).toHaveTextContent("function");
+
+        const newState = { ...initialState, callback: vi.fn() };
+        rerender(<Wrapper state={newState} />);
+
+        expect(renderSpy.mock.calls.length).toBeGreaterThan(0);
+    });
 });

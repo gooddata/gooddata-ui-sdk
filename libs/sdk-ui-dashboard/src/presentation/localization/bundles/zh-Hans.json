@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "消除 {name} （{email}）",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "差异",
     "kdaDialog.dialog.keyDrives.empty": "没有关键驱动因素",
-    "kdaDialog.dialog.keyDriver.chart.std": "变化重要性阈值"
+    "kdaDialog.dialog.keyDriver.chart.std": "变化重要性阈值",
+    "kdaDialog.dialog.filters.title": "筛选器",
+    "kdaDialog.dialog.filters.noFilters": "没有筛选器",
+    "kdaDialog.dialog.filters.add.tooltip": "添加筛选器",
+    "kdaDialog.dialog.filters.search": "搜索",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "描述中的日期范围",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日期范围筛选器用于章节描述中的指标引用的日期数据集。",
+    "dateDataset.autoSelect": "自动选择",
+    "dateDataset.notFound": "未找到",
+    "dialogs.schedule.email.tabs.general": "一般的",
+    "dialogs.schedule.email.tabs.filters": "筛选器",
+    "dashboard.tabs.default.label": "无标题标签页",
+    "dashboard.tabs.accessibility.label": "仪表盘标签"
 }

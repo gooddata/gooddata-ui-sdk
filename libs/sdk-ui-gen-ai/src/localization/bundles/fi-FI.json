@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Chat-viestit",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Tämä pyytää sinua tallentamaan visualisoinnin ennen kuin voit avata sen.",
     "gd.gen-ai.visualisation.toggle.table": "Näytä taulukko",
-    "gd.gen-ai.visualisation.toggle.original": "Näytä alkuperäinen"
+    "gd.gen-ai.visualisation.toggle.original": "Näytä alkuperäinen",
+    "gd.gen-ai.feedback.popup.title": "Olemme saaneet palautteesi",
+    "gd.gen-ai.feedback.popup.reasons-label": "Kerro meille, mikä meni pieleen",
+    "gd.gen-ai.feedback.popup.description-label": "Kuvaile, mitä tapahtui",
+    "gd.gen-ai.feedback.popup.cancel": "Peruuta",
+    "gd.gen-ai.feedback.popup.send": "Lähetä",
+    "gd.gen-ai.feedback.popup.close": "Sulje palauteikkuna",
+    "gd.gen-ai.feedback.reason.forgot-context": "Aiempi konteksti unohtui",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Ohjeet jätetty huomiotta tai hylätty",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Tosiasiallisesti virheellinen",
+    "gd.gen-ai.feedback.reason.other": "Muut",
+    "gd.gen-ai.changeAnalysis.default_message": "Tässä on muutosanalyysi <metric>{title}</metric>ajalle  <b>{range}</b>välillä.",
+    "gd.gen-ai.changeAnalysis.splitter": "ja",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Avaa analyysi"
 }

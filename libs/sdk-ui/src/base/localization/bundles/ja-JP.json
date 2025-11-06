@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "ヘッダー",
     "table.header.checkbox.ariaLabel": "アクションを選択",
     "table.header.menu.ariaLabel": "アクション",
-    "gs.header.mainMenu.ariaLabel": "メインメニュー"
+    "gs.header.mainMenu.ariaLabel": "メインメニュー",
+    "tabs.all": "すべて",
+    "tabs.showAllTabs": "すべてのタブを表示する"
 }

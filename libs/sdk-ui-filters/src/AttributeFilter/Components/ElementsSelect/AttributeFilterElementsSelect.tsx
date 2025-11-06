@@ -1,23 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
-import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterVirtualisedElementsSelect } from "./AttributeFilterVirtualisedElementsSelect.js";
 import { IAttributeFilterElementsSelectProps } from "./types.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
-import { getElementKey, getElementTitle } from "../../utils.js";
+import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
 const VISIBLE_ITEMS_COUNT = 10;
+const MIN_LOADING_HEIGHT = 20;
+const LOADING_PADDING = 32;
 
 /**
  * This component allows users to search Attribute Filter elements.
@@ -62,7 +63,6 @@ export function AttributeFilterElementsSelect({
 
     isFilteredByDependentDateFilters,
     isFilteredByLimitingValidationItems,
-    enableAttributeFilterVirtualised,
     withoutApply,
 }: IAttributeFilterElementsSelectProps) {
     const intl = useIntl();
@@ -78,12 +78,19 @@ export function AttributeFilterElementsSelect({
         StatusBarComponent,
     } = useAttributeFilterComponentsContext();
 
+    const [refocusKey, setRefocusKey] = useState<string | undefined>(undefined);
+
     const itemHeight = fullscreenOnMobile && isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
     const isAdaptiveHeight = isMobile && fullscreenOnMobile;
 
     const previousItemsCount = usePrevious(totalItemsCountWithCurrentSettings);
     const loadingHeight = useMemo(() => {
-        return Math.max((Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight, 20) + 32;
+        return (
+            Math.max(
+                (Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight,
+                MIN_LOADING_HEIGHT,
+            ) + LOADING_PADDING
+        );
     }, [previousItemsCount, itemHeight]);
 
     const primaryLabelTitle = useMemo(() => {
@@ -94,144 +101,110 @@ export function AttributeFilterElementsSelect({
         return primaryLabel?.title;
     }, [attribute]);
 
+    const handleShowFilteredElements = useCallback(() => {
+        setRefocusKey("show");
+        onShowFilteredElements();
+    }, [onShowFilteredElements, setRefocusKey]);
+
     return (
-        <>
-            {enableAttributeFilterVirtualised ? (
-                <AttributeFilterVirtualisedElementsSelect
-                    items={items}
-                    totalItemsCount={totalItemsCount}
-                    totalItemsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
-                    isInverted={isInverted}
-                    selectedItems={selectedItems}
-                    onSelect={onSelect}
-                    searchString={searchString}
-                    onSearch={onSearch}
-                    isLoading={isLoading}
-                    isLoadingNextPage={isLoadingNextPage}
-                    nextPageSize={nextPageSize}
-                    onLoadNextPage={onLoadNextPage}
-                    error={error}
-                    attributeTitle={attributeTitle}
-                    isFilteredByParentFilters={isFilteredByParentFilters}
-                    parentFilterTitles={parentFilterTitles}
-                    enableShowingFilteredElements={enableShowingFilteredElements}
-                    onShowFilteredElements={onShowFilteredElements}
-                    irrelevantSelection={irrelevantSelection}
-                    onClearIrrelevantSelection={onClearIrrelevantSelection}
-                    onApplyButtonClick={onApplyButtonClick}
-                    isApplyDisabled={isApplyDisabled}
-                    isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
-                    isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
-                    withoutApply={withoutApply}
-                />
-            ) : (
-                <InvertableSelect<IAttributeElement>
-                    className="gd-attribute-filter-elements-select__next"
-                    adaptiveWidth
-                    adaptiveHeight={isAdaptiveHeight}
-                    isSingleSelect={selectionMode === "single"}
-                    items={items}
-                    totalItemsCount={totalItemsCountWithCurrentSettings}
-                    itemHeight={itemHeight}
-                    getItemKey={getElementKey}
-                    getItemTitle={(item) => {
-                        return getElementTitle(item, intl);
-                    }}
-                    isInverted={isInverted}
-                    selectedItems={selectedItems}
-                    selectedItemsLimit={MAX_SELECTION_SIZE}
-                    onSelect={onSelect}
-                    searchString={searchString}
-                    onSearch={onSearch}
-                    isLoading={isLoading}
-                    error={error}
-                    isLoadingNextPage={isLoadingNextPage}
-                    nextPageItemPlaceholdersCount={nextPageSize}
-                    onLoadNextPage={onLoadNextPage}
-                    numberOfHiddenSelectedItems={irrelevantSelection.length}
-                    renderItem={(props) => {
-                        return (
-                            <ElementsSelectItemComponent
-                                {...props}
-                                primaryLabelTitle={primaryLabelTitle}
-                                fullscreenOnMobile={fullscreenOnMobile}
-                            />
-                        );
-                    }}
-                    renderError={() => {
-                        return <ElementsSelectErrorComponent error={error} />;
-                    }}
-                    renderLoading={() => {
-                        return <ElementsSelectLoadingComponent height={loadingHeight} />;
-                    }}
-                    renderNoData={({ height }) => {
-                        return (
-                            <EmptyResultComponent
-                                height={height}
-                                isFilteredByParentFilters={isFilteredByParentFilters}
-                                isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
-                                searchString={searchString}
-                                totalItemsCount={totalItemsCount}
-                                parentFilterTitles={parentFilterTitles}
-                                enableShowingFilteredElements={enableShowingFilteredElements}
-                            />
-                        );
-                    }}
-                    renderSearchBar={({ onSearch, searchString }) => {
-                        return (
-                            <ElementsSearchBarComponent
-                                onSearch={onSearch}
-                                searchString={searchString}
-                                isSmall={!(isMobile && fullscreenOnMobile)}
-                            />
-                        );
-                    }}
-                    renderStatusBar={({ getItemTitle, isInverted, selectedItems, selectedItemsLimit }) => {
-                        return (
-                            <StatusBarComponent
-                                getItemTitle={getItemTitle}
-                                isFilteredByParentFilters={isFilteredByParentFilters}
-                                isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
-                                isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
-                                isInverted={isInverted}
-                                parentFilterTitles={parentFilterTitles}
-                                selectedItems={selectedItems}
-                                totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
-                                selectedItemsLimit={selectedItemsLimit}
-                                attributeTitle={attributeTitle}
-                                enableShowingFilteredElements={enableShowingFilteredElements}
-                                onShowFilteredElements={onShowFilteredElements}
-                                irrelevantSelection={irrelevantSelection}
-                                onClearIrrelevantSelection={onClearIrrelevantSelection}
-                                withoutApply={withoutApply}
-                            />
-                        );
-                    }}
-                    renderActions={({
-                        checked,
-                        onChange,
-                        onToggle,
-                        isFiltered,
-                        totalItemsCount,
-                        isPartialSelection,
-                        isVisible,
-                    }) => {
-                        return (
-                            <ElementsSelectActionsComponent
-                                isVisible={isVisible}
-                                checked={checked}
-                                onChange={onChange}
-                                onToggle={onToggle}
-                                isFiltered={isFiltered}
-                                totalItemsCount={totalItemsCount}
-                                isPartialSelection={isPartialSelection}
-                                isApplyDisabled={isApplyDisabled}
-                                onApplyButtonClick={onApplyButtonClick}
-                            />
-                        );
-                    }}
-                />
-            )}
-        </>
+        <UiAutofocus refocusKey={refocusKey}>
+            <InvertableSelectVirtualised<IAttributeElement>
+                className="gd-attribute-filter-elements-select__next"
+                adaptiveWidth
+                adaptiveHeight={isAdaptiveHeight}
+                isSingleSelect={selectionMode === "single"}
+                items={items}
+                totalItemsCount={totalItemsCountWithCurrentSettings}
+                itemHeight={itemHeight}
+                getItemKey={getElementKey}
+                getItemTitle={(item) => getElementTitle(item, intl)}
+                isItemQuestionMarkEnabled={(item) => !!getElementPrimaryTitle(item)}
+                isInverted={isInverted}
+                selectedItems={selectedItems}
+                selectedItemsLimit={MAX_SELECTION_SIZE}
+                onSelect={onSelect}
+                onApplyButtonClick={onApplyButtonClick}
+                searchString={searchString}
+                onSearch={onSearch}
+                canSubmitOnKeyDown={!isApplyDisabled}
+                isLoading={isLoading}
+                error={error}
+                isLoadingNextPage={isLoadingNextPage}
+                nextPageItemPlaceholdersCount={nextPageSize}
+                onLoadNextPage={onLoadNextPage}
+                numberOfHiddenSelectedItems={irrelevantSelection.length}
+                renderItem={(props) => (
+                    <ElementsSelectItemComponent
+                        {...props}
+                        primaryLabelTitle={primaryLabelTitle}
+                        fullscreenOnMobile={fullscreenOnMobile}
+                    />
+                )}
+                renderError={() => {
+                    return <ElementsSelectErrorComponent error={error} />;
+                }}
+                renderLoading={() => {
+                    return <ElementsSelectLoadingComponent height={loadingHeight} />;
+                }}
+                renderNoData={({ height }) => (
+                    <EmptyResultComponent
+                        height={height}
+                        isFilteredByParentFilters={isFilteredByParentFilters}
+                        isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
+                        searchString={searchString}
+                        totalItemsCount={totalItemsCount}
+                        parentFilterTitles={parentFilterTitles}
+                        enableShowingFilteredElements={enableShowingFilteredElements}
+                    />
+                )}
+                renderSearchBar={({ onSearch, searchString }) => (
+                    <ElementsSearchBarComponent
+                        onSearch={onSearch}
+                        searchString={searchString}
+                        isSmall={!(isMobile && fullscreenOnMobile)}
+                    />
+                )}
+                renderStatusBar={({ getItemTitle, isInverted, selectedItems, selectedItemsLimit }) => (
+                    <StatusBarComponent
+                        getItemTitle={getItemTitle}
+                        isFilteredByParentFilters={isFilteredByParentFilters}
+                        isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
+                        isInverted={isInverted}
+                        parentFilterTitles={parentFilterTitles}
+                        selectedItems={selectedItems}
+                        totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
+                        selectedItemsLimit={selectedItemsLimit}
+                        attributeTitle={attributeTitle}
+                        enableShowingFilteredElements={enableShowingFilteredElements}
+                        onShowFilteredElements={handleShowFilteredElements}
+                        irrelevantSelection={irrelevantSelection}
+                        onClearIrrelevantSelection={onClearIrrelevantSelection}
+                        withoutApply={withoutApply}
+                    />
+                )}
+                renderActions={({
+                    checked,
+                    onChange,
+                    onToggle,
+                    isFiltered,
+                    totalItemsCount,
+                    isPartialSelection,
+                    isVisible,
+                }) => (
+                    <ElementsSelectActionsComponent
+                        isVisible={isVisible}
+                        checked={checked}
+                        onChange={onChange}
+                        onToggle={onToggle}
+                        isFiltered={isFiltered}
+                        totalItemsCount={totalItemsCount}
+                        isPartialSelection={isPartialSelection}
+                        isApplyDisabled={isApplyDisabled}
+                        onApplyButtonClick={onApplyButtonClick}
+                    />
+                )}
+            />
+        </UiAutofocus>
     );
 }

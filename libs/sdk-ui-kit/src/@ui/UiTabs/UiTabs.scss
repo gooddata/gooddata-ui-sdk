@@ -3,31 +3,38 @@
 .gd-ui-kit-tabs {
     $root: &;
 
-    border-bottom: 1px solid var(--gd-palette-complementary-3);
     font-family: var(--gd-font-family);
     display: flex;
     align-items: flex-end;
     position: relative;
+    isolation: isolate;
+
+    &::after {
+        // We need to set the bottom border this way, so the selected item can render on top of it
+        content: " ";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--gd-palette-complementary-3);
+        bottom: 0;
+    }
 
     &__container {
         display: flex;
         flex: 1;
         min-width: 0;
-    }
 
-    &--overflow {
-        #{$root}__container {
-            overflow-x: auto;
-            overflow-y: hidden;
-            // Hide scrollbar for Firefox
-            scrollbar-width: none;
-            // Hide scrollbar for IE and Edge (legacy)
-            -ms-overflow-style: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        // Hide scrollbar for Firefox
+        scrollbar-width: none;
+        // Hide scrollbar for IE and Edge (legacy)
+        -ms-overflow-style: none;
 
-            // Hide scrollbar for Chrome, Safari, and Opera
-            &::-webkit-scrollbar {
-                display: none;
-            }
+        // Hide scrollbar for Chrome, Safari, and Opera
+        &::-webkit-scrollbar {
+            display: none;
         }
     }
 
@@ -47,6 +54,22 @@
         margin: 0 0 -1px 0;
     }
 
+    &__tab-wrapper {
+        display: flex;
+        align-items: center;
+        gap: var(--gd-spacing-10px);
+        border-bottom: 3px solid transparent;
+        box-sizing: border-box;
+        min-width: 0;
+        flex-shrink: 0;
+        z-index: 10;
+        transition: border-color 0.1s;
+
+        &--selected {
+            border-bottom: 3px solid var(--gd-palette-primary-base);
+        }
+    }
+
     &__item {
         appearance: none;
         background: none;
@@ -60,38 +83,73 @@
         gap: var(--gd-spacing-5px);
         flex-shrink: 0;
         box-sizing: border-box;
-        border-bottom: 3px solid transparent;
-        margin: 0 0 -1px 0;
-        color: var(--gd-palette-complementary-7);
+    }
+
+    &__tab-list-item {
+        display: flex;
+        gap: var(--gd-spacing-5px);
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
+        cursor: pointer;
+        align-items: center;
+        transition: background-color 0.2s;
 
         &:hover {
-            border-bottom: 3px solid var(--gd-palette-complementary-3);
-            color: var(--gd-palette-complementary-8);
+            background-color: var(--gd-palette-complementary-2);
         }
 
-        &--selected {
-            border-bottom: 3px solid var(--gd-palette-primary-base);
-            color: var(--gd-palette-complementary-8);
-            font-weight: 700;
-
-            &:hover {
-                border-bottom: 3px solid var(--gd-palette-primary-base);
-            }
+        &:hover #{$root}__label {
+            transition: color 0.2s;
+            color: var(--gd-palette-complementary-9);
         }
+    }
+
+    &__tab-list-item-value {
+        flex-grow: 1;
+        flex-shrink: 0;
+    }
+
+    &__tab-list-item-actions {
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin-right: calc(-0.5 * var(--gd-spacing-10px));
+    }
+
+    &__tab-list {
+        width: 250px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    &__actions-wrapper {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &__item:hover &__label {
+        color: var(--gd-palette-complementary-8);
     }
 
     &__label {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: var(--gd-palette-complementary-7);
+
+        &--selected {
+            color: var(--gd-palette-complementary-8);
+            font-weight: 700;
+        }
     }
 
     &--size {
         &-large {
-            #{$root}__item {
+            #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-L, 56px);
                 padding: var(--gd-spacing-16px) var(--gd-spacing-10px) var(--gd-spacing-14px)
                     var(--gd-spacing-10px);
+            }
+            #{$root}__actions-wrapper {
+                margin-right: calc(-0.5 * var(--gd-spacing-10px));
             }
             #{$root}__label {
                 font-size: 14px;
@@ -100,7 +158,7 @@
         }
 
         &-medium {
-            #{$root}__item {
+            #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-M, 27px);
                 padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)
                     var(--gd-spacing-6px);
@@ -112,7 +170,7 @@
         }
 
         &-small {
-            #{$root}__item {
+            #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-S, 23px);
                 padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)
                     var(--gd-spacing-6px);

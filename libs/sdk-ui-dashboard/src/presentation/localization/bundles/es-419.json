@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Eliminar {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Dif",
     "kdaDialog.dialog.keyDrives.empty": "No hay impulsores clave",
-    "kdaDialog.dialog.keyDriver.chart.std": "Cambio Umbral de significación"
+    "kdaDialog.dialog.keyDriver.chart.std": "Cambio Umbral de significación",
+    "kdaDialog.dialog.filters.title": "Filtros",
+    "kdaDialog.dialog.filters.noFilters": "No hay filtros",
+    "kdaDialog.dialog.filters.add.tooltip": "Agregar filtro",
+    "kdaDialog.dialog.filters.search": "Buscar",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Rango de fechas en las descripciones",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Conjunto de datos de fechas utilizado por el filtro Intervalo de fechas para las referencias métricas en las descripciones de las secciones.",
+    "dateDataset.autoSelect": "Autoselección",
+    "dateDataset.notFound": "No se ha encontrado",
+    "dialogs.schedule.email.tabs.general": "General",
+    "dialogs.schedule.email.tabs.filters": "Filtros",
+    "dashboard.tabs.default.label": "Ficha Sin título",
+    "dashboard.tabs.accessibility.label": "Pestañas del salpicadero"
 }

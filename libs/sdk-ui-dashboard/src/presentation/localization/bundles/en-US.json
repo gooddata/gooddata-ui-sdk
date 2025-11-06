@@ -2907,6 +2907,14 @@
         "value": "Untitled tab",
         "comment": "Default label for dashboard tab"
     },
+    "dashboard.tabs.move.left": {
+        "value": "Move left",
+        "comment": "Label for the action that moves the tab to the left"
+    },
+    "dashboard.tabs.move.right": {
+        "value": "Move right",
+        "comment": "Label for the action that moves the tab to the right"
+    },
     "dashboard.tabs.accessibility.label": {
         "value": "Dashboard tabs",
         "comment": "Accessibility label for dashboard tabs"

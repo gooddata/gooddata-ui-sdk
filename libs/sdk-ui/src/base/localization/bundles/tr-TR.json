@@ -808,5 +808,7 @@
     "table.header.ariaLabel": "Başlık",
     "table.header.checkbox.ariaLabel": "Eylem seç",
     "table.header.menu.ariaLabel": "Eylemler",
-    "gs.header.mainMenu.ariaLabel": "Ana menü"
+    "gs.header.mainMenu.ariaLabel": "Ana menü",
+    "tabs.all": "Tümü",
+    "tabs.showAllTabs": "Tüm sekmeleri göster"
 }

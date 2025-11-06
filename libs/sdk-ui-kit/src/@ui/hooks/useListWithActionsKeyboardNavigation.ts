@@ -133,6 +133,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
         focusedAction,
         focusedItem,
         setFocusedAction,
+        setFocusedIndex,
     };
 }
 

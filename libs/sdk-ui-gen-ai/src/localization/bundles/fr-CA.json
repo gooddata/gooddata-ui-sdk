@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Messages de chat",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Il vous sera demandé d'enregistrer la visualisation avant de pouvoir l'ouvrir.",
     "gd.gen-ai.visualisation.toggle.table": "Afficher le tableau",
-    "gd.gen-ai.visualisation.toggle.original": "Montrer l'original"
+    "gd.gen-ai.visualisation.toggle.original": "Montrer l'original",
+    "gd.gen-ai.feedback.popup.title": "Votre avis nous intéresse",
+    "gd.gen-ai.feedback.popup.reasons-label": "Dites-nous ce qui n'a pas fonctionné",
+    "gd.gen-ai.feedback.popup.description-label": "Veuillez décrire ce qui s'est passé",
+    "gd.gen-ai.feedback.popup.cancel": "Annuler",
+    "gd.gen-ai.feedback.popup.send": "Envoyer",
+    "gd.gen-ai.feedback.popup.close": "Fermer la boîte de dialogue de retour d'information",
+    "gd.gen-ai.feedback.reason.forgot-context": "Oublié le contexte précédent",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Ignorer ou refuser des instructions",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Faits incorrects",
+    "gd.gen-ai.feedback.reason.other": "Autre",
+    "gd.gen-ai.changeAnalysis.default_message": "Voici l'analyse des variations pour <metric>{title}</metric> entre <b>{range}</b>.",
+    "gd.gen-ai.changeAnalysis.splitter": "et",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Ouvrir l'analyse"
 }

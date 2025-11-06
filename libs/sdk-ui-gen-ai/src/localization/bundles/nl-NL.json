@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Chatberichten",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen.",
     "gd.gen-ai.visualisation.toggle.table": "Tabel weergeven",
-    "gd.gen-ai.visualisation.toggle.original": "Origineel weergeven"
+    "gd.gen-ai.visualisation.toggle.original": "Origineel weergeven",
+    "gd.gen-ai.feedback.popup.title": "We hebben uw feedback",
+    "gd.gen-ai.feedback.popup.reasons-label": "Vertel ons wat er fout ging",
+    "gd.gen-ai.feedback.popup.description-label": "Beschrijf wat er is gebeurd",
+    "gd.gen-ai.feedback.popup.cancel": "Annuleren",
+    "gd.gen-ai.feedback.popup.send": "Sturen",
+    "gd.gen-ai.feedback.popup.close": "Feedbackvenster sluiten",
+    "gd.gen-ai.feedback.reason.forgot-context": "Vorige context vergeten",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Negeren of weigeren van instructies",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "Feitelijk onjuist",
+    "gd.gen-ai.feedback.reason.other": "Overige",
+    "gd.gen-ai.changeAnalysis.default_message": "Hier is de analyse van de verandering voor <metric>{title}</metric> tussen <b>{range}</b>.",
+    "gd.gen-ai.changeAnalysis.splitter": "en",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Open de analyse"
 }

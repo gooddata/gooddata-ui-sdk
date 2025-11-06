@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, type RefObject, useImperativeHandle, useRef } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -9,12 +9,18 @@ import { EditableLabel, UiCard } from "@gooddata/sdk-ui-kit";
 import { CatalogItemLockMemo, type ICatalogItem } from "../catalogItem/index.js";
 import { ObjectTypeIconMemo } from "../objectType/index.js";
 
-export interface Props {
+export interface CatalogDetailHeaderRef {
+    focusTitle: () => void;
+    focusDescription: () => void;
+}
+
+interface Props {
     item: ICatalogItem;
     canEdit: boolean;
     actions: ReactNode;
     updateItemTitle: (title: string) => void;
     updateItemDescription: (description: string) => void;
+    headerRef: RefObject<CatalogDetailHeaderRef | null>;
 }
 
 export function CatalogDetailHeader({
@@ -23,8 +29,25 @@ export function CatalogDetailHeader({
     actions,
     updateItemTitle,
     updateItemDescription,
+    headerRef,
 }: Props) {
     const intl = useIntl();
+
+    const titleRef = useRef<HTMLDivElement>(null);
+    const descriptionRef = useRef<HTMLDivElement>(null);
+
+    useImperativeHandle(
+        headerRef,
+        () => ({
+            focusTitle: () => {
+                titleRef.current?.click();
+            },
+            focusDescription: () => {
+                descriptionRef.current?.click();
+            },
+        }),
+        [],
+    );
 
     return (
         <UiCard elevation="1">
@@ -40,6 +63,7 @@ export function CatalogDetailHeader({
                         <div className="gd-analytics-catalog-detail__card__header__title__name">
                             {canEdit ? (
                                 <EditableLabel
+                                    ref={titleRef}
                                     isEditableLabelWidthBasedOnText
                                     placeholder={intl.formatMessage({
                                         id: "analyticsCatalog.catalogItem.title.add",
@@ -66,6 +90,7 @@ export function CatalogDetailHeader({
                             </div>
                             <div className="gd-analytics-catalog-detail__card__header__row__content">
                                 <EditableLabel
+                                    ref={descriptionRef}
                                     maxRows={9999}
                                     placeholder={intl.formatMessage({
                                         id: "analyticsCatalog.catalogItem.description.add",

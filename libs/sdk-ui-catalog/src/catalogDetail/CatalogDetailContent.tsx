@@ -1,13 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { type MouseEvent, type RefObject, useMemo, useState } from "react";
+import { type MouseEvent, type RefObject, useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { UiButton, UiSkeleton, type UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
+import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
+import { useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailHeader } from "./CatalogDetailHeader.js";
+import { CatalogDetailHeader, type CatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
@@ -69,6 +70,10 @@ export interface CatalogDetailContentProps {
      */
     onTagClick?: (tag: string) => void;
     /**
+     * Handler for navigating to a catalog item. Consumers can handle route changes.
+     */
+    onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
+    /**
      * Handler for catalog item update.
      */
     onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
@@ -94,6 +99,7 @@ export function CatalogDetailContent({
     onTagClick,
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
+    onCatalogItemNavigation,
 }: Props) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -129,9 +135,20 @@ export function CatalogDetailContent({
     const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];
     const issueCount = issues.length > 0 ? `(${issues.length})` : "";
 
+    const headerRef = useRef<CatalogDetailHeaderRef>(null);
+
+    const handleEditClick = useCallback((attributeName: SemanticQualityIssueAttributeName) => {
+        if (attributeName === "TITLE") {
+            headerRef.current?.focusTitle();
+        }
+        if (attributeName === "DESCRIPTION") {
+            headerRef.current?.focusDescription();
+        }
+    }, []);
+
     // Tabs
-    const tabs: UiTab[] = useMemo(() => {
-        const tabs: UiTab[] = [
+    const tabs: IUiTab[] = useMemo(() => {
+        const tabs: IUiTab[] = [
             {
                 id: Tabs.METADATA,
                 label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.details" }),
@@ -148,7 +165,8 @@ export function CatalogDetailContent({
         }
         return tabs;
     }, [intl, isQualityVisible, issueCount]);
-    const [selectedTabId, setSelectedTabId] = useState<UiTab["id"]>(Tabs.METADATA);
+
+    const [selectedTabId, setSelectedTabId] = useSelectedTabId(tabs);
 
     return (
         <div className="gd-analytics-catalog-detail">
@@ -160,6 +178,7 @@ export function CatalogDetailContent({
                             canEdit={canEdit}
                             updateItemTitle={updateItemTitle}
                             updateItemDescription={updateItemDescription}
+                            headerRef={headerRef}
                             actions={
                                 <UiButton
                                     label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
@@ -204,11 +223,29 @@ export function CatalogDetailContent({
                             (isQualityLoading ? (
                                 <UiSkeleton itemsCount={2} itemHeight={65} itemsGap={10} />
                             ) : (
-                                <CatalogDetailTabQuality item={item} issues={issues} />
+                                <CatalogDetailTabQuality
+                                    item={item}
+                                    issues={issues}
+                                    canEdit={canEdit}
+                                    onEditClick={handleEditClick}
+                                    onCatalogItemNavigation={onCatalogItemNavigation}
+                                />
                             ))}
                     </div>
                 ) : null}
             </CatalogDetailStatus>
         </div>
     );
+}
+
+/**
+ * Hook for managing the currently selected tab ID with persistent storage.
+ */
+function useSelectedTabId(tabs: IUiTab[]): [IUiTab["id"], (tabId: IUiTab["id"]) => void] {
+    const [storedTabId, setStoredTabId] = useLocalStorage<IUiTab["id"]>(
+        "gd.analyticsCatalog.catalogDetail.tabId",
+        Tabs.METADATA,
+    );
+    const selectedTabId = tabs.some((tab) => tab.id === storedTabId) ? storedTabId : Tabs.METADATA;
+    return [selectedTabId, setStoredTabId];
 }

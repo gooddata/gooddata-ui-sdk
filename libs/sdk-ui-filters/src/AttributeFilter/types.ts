@@ -314,11 +314,6 @@ export interface IAttributeFilterCoreProps {
     enableDashboardFiltersApplyModes?: boolean;
 
     /**
-     * Enables usage of new dropdown list replacing fixed-data-table
-     */
-    enableAttributeFilterVirtualised?: boolean;
-
-    /**
      * Enables preserving existing filter selection during initialization.
      * Prevents race condition where restored filters get cleared by SDK init process.
      *

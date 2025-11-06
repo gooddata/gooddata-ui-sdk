@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Rimuovere {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Diff",
     "kdaDialog.dialog.keyDrives.empty": "Nessun driver chiave",
-    "kdaDialog.dialog.keyDriver.chart.std": "Modifica Soglia di significatività"
+    "kdaDialog.dialog.keyDriver.chart.std": "Modifica Soglia di significatività",
+    "kdaDialog.dialog.filters.title": "Filtri",
+    "kdaDialog.dialog.filters.noFilters": "Nessun filtro",
+    "kdaDialog.dialog.filters.add.tooltip": "Aggiungi filtro",
+    "kdaDialog.dialog.filters.search": "Cerca",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Intervallo di date nelle descrizioni",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Set di dati utilizzati dal filtro Intervallo di date per i riferimenti metrici nelle descrizioni delle sezioni.",
+    "dateDataset.autoSelect": "Selezione automatica",
+    "dateDataset.notFound": "Non trovato",
+    "dialogs.schedule.email.tabs.general": "Generale",
+    "dialogs.schedule.email.tabs.filters": "Filtri",
+    "dashboard.tabs.default.label": "Scheda senza titolo",
+    "dashboard.tabs.accessibility.label": "Schede del cruscotto"
 }

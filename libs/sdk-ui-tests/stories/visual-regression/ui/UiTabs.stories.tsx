@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ComponentTable, UiTab, UiTabs, UiTabsProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, IUiTab, IUiTabsProps, UiTabs, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -12,18 +12,18 @@ const tabs = [
     { id: "tab2", label: "Tab 2" },
     { id: "tab3", label: "Tab 3" },
     { id: "tab4", label: "Tab 4" },
-] as UiTab[];
+] satisfies IUiTab[];
 
-const propCombination = propCombinationsFor({
+const propCombination = propCombinationsFor<IUiTabsProps>({
     tabs,
     selectedTabId: "tab1",
     onTabSelect: () => {},
     accessibilityConfig: {
         ariaLabel: "Tabs",
-        ariaRole: "tablist",
+        role: "tablist",
         tabRole: "tab",
     },
-} as UiTabsProps);
+});
 
 const allSizes = propCombination("size", ["large", "medium", "small"]);
 
@@ -56,15 +56,49 @@ function InteractiveUiTabsTest() {
 const manyTabs = Array.from({ length: 20 }, (_, i) => ({
     id: `tab${i + 1}`,
     label: `Tab ${i + 1}`,
-})) as UiTab[];
+})) satisfies IUiTab[];
 
-const manyTabsWithLongLabels = Array.from({ length: 15 }, (_, i) => ({
+const manyTabsWithLongLabels = Array.from({ length: 20 }, (_, i) => ({
     id: `tab${i + 1}`,
     label: `This is a very long tab label for Tab ${i + 1}`,
-})) as UiTab[];
+}));
 
 function UiTabsWithOverflowTest() {
     const [selectedTabId, setSelectedTabId] = useState<string>("tab1");
+
+    const setApproved = useCallback((tabId: string, isApproved: boolean) => {
+        setTabs((tabs) => {
+            return tabs.map((tab) => {
+                if (tab.id === tabId) {
+                    return {
+                        ...tab,
+                        isApproved,
+                    };
+                }
+                return tab;
+            });
+        });
+    }, []);
+
+    const [customTabs, setTabs] = useState<IUiTab<{ isApproved?: boolean }>[]>(
+        Array.from({ length: 20 }, (_, i) => ({
+            id: `tab${i + 1}`,
+            label: `Tab ${i + 1}`,
+            actions: [
+                {
+                    id: `approve`,
+                    label: `Approve`,
+                    onSelect: () => setApproved(`tab${i + 1}`, true),
+                },
+                {
+                    id: `disapprove`,
+                    label: `Disapprove`,
+                    onSelect: () => setApproved(`tab${i + 1}`, false),
+                },
+            ],
+        })),
+    );
+
     return (
         <IntlWrapper locale="en-US">
             <div>
@@ -75,7 +109,6 @@ function UiTabsWithOverflowTest() {
                         onTabSelect={(tab) => setSelectedTabId(tab.id)}
                         selectedTabId={selectedTabId}
                         size="large"
-                        enableOverflowDropdown
                     />
                 </div>
 
@@ -86,7 +119,6 @@ function UiTabsWithOverflowTest() {
                         onTabSelect={(tab) => setSelectedTabId(tab.id)}
                         selectedTabId={selectedTabId}
                         size="large"
-                        enableOverflowDropdown
                         maxLabelLength={20}
                     />
                 </div>
@@ -98,7 +130,45 @@ function UiTabsWithOverflowTest() {
                         onTabSelect={(tab) => setSelectedTabId(tab.id)}
                         selectedTabId={selectedTabId}
                         size="medium"
-                        enableOverflowDropdown
+                    />
+                </div>
+
+                <h3 style={{ marginTop: "40px" }}>
+                    With actions and custom value and all tabs button renderer
+                </h3>
+                <div style={{ width: "500px", border: "1px dashed #ccc", padding: "10px" }}>
+                    <UiTabs
+                        tabs={customTabs}
+                        onTabSelect={(tab) => setSelectedTabId(tab.id)}
+                        selectedTabId={selectedTabId}
+                        size="large"
+                        AllTabsButton={({ isOpen, onClick }) => (
+                            <button onClick={onClick}>{isOpen ? "open" : "closed"}</button>
+                        )}
+                        TabValue={({ tab, isSelected, location }) =>
+                            location === "tabs" ? (
+                                <>
+                                    <span style={isSelected ? { fontWeight: "bold" } : undefined}>
+                                        {tab.label}
+                                    </span>{" "}
+                                    {tab.isApproved === undefined ? "" : tab.isApproved ? "✅" : "❌"}
+                                </>
+                            ) : (
+                                <span
+                                    style={{
+                                        fontWeight: isSelected ? "bold" : "inherit",
+                                        color:
+                                            tab.isApproved === undefined
+                                                ? "inherit"
+                                                : tab.isApproved
+                                                  ? "green"
+                                                  : "red",
+                                    }}
+                                >
+                                    {tab.label}
+                                </span>
+                            )
+                        }
                     />
                 </div>
 
@@ -109,7 +179,6 @@ function UiTabsWithOverflowTest() {
                         onTabSelect={(tab) => setSelectedTabId(tab.id)}
                         selectedTabId={selectedTabId}
                         size="small"
-                        enableOverflowDropdown
                     />
                 </div>
             </div>

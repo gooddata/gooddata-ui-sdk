@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "Cabeçalho",
     "table.header.checkbox.ariaLabel": "Selecione a ação",
     "table.header.menu.ariaLabel": "Ações",
-    "gs.header.mainMenu.ariaLabel": "Menu principal"
+    "gs.header.mainMenu.ariaLabel": "Menu principal",
+    "tabs.all": "Todos",
+    "tabs.showAllTabs": "Mostrar todas as guias"
 }

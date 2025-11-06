@@ -12,6 +12,7 @@ import {
     type ISemanticQualityIssuesCalculation,
     type ISemanticQualityReport,
     type Identifier,
+    type SemanticQualityIssueAttributeName,
     type SemanticQualityIssueCode,
     type SemanticQualityIssueSeverity,
     type SemanticQualityIssuesCalculationStatus,
@@ -48,9 +49,11 @@ export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIss
         objects: issue.objects.map((obj) => ({
             type: obj.type as GenAIObjectType,
             identifier: obj.id as Identifier,
+            title: obj.title,
         })),
         detail: {
             abbreviation: typeof detail["abbreviation"] === "string" ? detail["abbreviation"] : undefined,
+            attributeName: convertQualityIssueAttributeName(detail["field_name"]),
         },
     };
 }
@@ -97,4 +100,22 @@ function convertQualityIssuesCalculationStatus(
         return "FAILED";
     }
     return "NOT_FOUND";
+}
+
+/**
+ * Converts a quality issue attribute name from backend format to SDK model format.
+ */
+function convertQualityIssueAttributeName(
+    attributeName: unknown,
+): SemanticQualityIssueAttributeName | undefined {
+    if (typeof attributeName !== "string") {
+        return undefined;
+    }
+    if (attributeName === "title") {
+        return "TITLE";
+    }
+    if (attributeName === "description") {
+        return "DESCRIPTION";
+    }
+    return undefined;
 }

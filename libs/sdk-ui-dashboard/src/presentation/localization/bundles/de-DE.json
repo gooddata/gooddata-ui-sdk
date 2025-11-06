@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Entfernen {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Diff",
     "kdaDialog.dialog.keyDrives.empty": "Keine Schlüsselfaktoren",
-    "kdaDialog.dialog.keyDriver.chart.std": "Signifikanzschwelle ändern"
+    "kdaDialog.dialog.keyDriver.chart.std": "Signifikanzschwelle ändern",
+    "kdaDialog.dialog.filters.title": "Filter",
+    "kdaDialog.dialog.filters.noFilters": "Keine Filter",
+    "kdaDialog.dialog.filters.add.tooltip": "Filter hinzufügen",
+    "kdaDialog.dialog.filters.search": "Suche",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Datumsbereich in Beschreibungen",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Datumsdatensatz, der vom Datumsbereichsfilter für Metrikreferenzen in Abschnittsbeschreibungen verwendet wird.",
+    "dateDataset.autoSelect": "Automatische Auswahl",
+    "dateDataset.notFound": "Nicht gefunden",
+    "dialogs.schedule.email.tabs.general": "Allgemein",
+    "dialogs.schedule.email.tabs.filters": "Filter",
+    "dashboard.tabs.default.label": "Registerkarte \"Unbenannt\"",
+    "dashboard.tabs.accessibility.label": "Dashboard-Registerkarten"
 }

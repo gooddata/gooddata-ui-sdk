@@ -808,5 +808,7 @@
     "table.header.ariaLabel": "Header",
     "table.header.checkbox.ariaLabel": "Select action",
     "table.header.menu.ariaLabel": "Actions",
-    "gs.header.mainMenu.ariaLabel": "Main menu"
+    "gs.header.mainMenu.ariaLabel": "Main menu",
+    "tabs.all": "All",
+    "tabs.showAllTabs": "Display all tabs"
 }

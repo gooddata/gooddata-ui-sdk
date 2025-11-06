@@ -95,14 +95,14 @@ describe("Available value filter", () => {
                 topBar.enterEditMode().editButtonIsVisible(false);
                 new InsightsCatalog().waitForCatalogLoad();
 
-                dateFilter.openAndSelectOption(".s-absolute-form");
+                dateFilter.openAndSelectOption(".s-absolute-form-button");
                 dateFilterAbsoluteForm.typeIntoFromRangePickerInput("4/3/2010");
-                dateFilter.openAndSelectOption(".s-absolute-form");
+                dateFilter.openAndSelectOption(".s-absolute-form-button");
                 dateFilterAbsoluteForm.typeIntoToRangePickerInput("4/3/2018");
 
-                dateFilterActivity.openAndSelectOption(".s-absolute-form");
+                dateFilterActivity.openAndSelectOption(".s-absolute-form-button");
                 dateFilterAbsoluteForm.typeIntoFromRangePickerInput("4/3/2010");
-                dateFilterActivity.openAndSelectOption(".s-absolute-form");
+                dateFilterActivity.openAndSelectOption(".s-absolute-form-button");
                 dateFilterAbsoluteForm.typeIntoToRangePickerInput("4/3/2018");
             });
 
