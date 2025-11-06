@@ -9,7 +9,6 @@ import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { KdaDialogSections } from "./KdaDialogSections.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../presentation/constants/index.js";
 import { KdaContent } from "../components/KdaContent.js";
 import { KdaFooter } from "../components/KdaFooter.js";
 import { KdaHeader } from "../components/KdaHeader.js";
@@ -18,13 +17,14 @@ import { KeyDriversFooter } from "../composition/KeyDriversFooter.js";
 import { KeyDriversOverview } from "../composition/KeyDriversOverview.js";
 import { KeyDriversPanel } from "../composition/KeyDriversPanel.js";
 import { MetricsBar } from "../composition/MetricsBar.js";
+import { KDA_DIALOG_OVERS_Z_INDEX } from "../const.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
 
-const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
+const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
 
 /**
  * @internal

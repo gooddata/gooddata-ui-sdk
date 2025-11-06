@@ -101,6 +101,7 @@ export const SemanticQualityIssueSeverityOrder = {
 export interface ISemanticQualityIssueObject {
     type: GenAIObjectType;
     identifier: Identifier;
+    title: string;
 }
 
 /**
@@ -109,8 +110,14 @@ export interface ISemanticQualityIssueObject {
  */
 export interface ISemanticQualityIssueDetail {
     abbreviation?: string;
+    attributeName?: SemanticQualityIssueAttributeName;
 }
 
+/**
+ * Represents the name of the attribute that caused the semantic quality issue.
+ * @internal
+ */
+export type SemanticQualityIssueAttributeName = "TITLE" | "DESCRIPTION";
 /**
  * Represents the state of a semantic quality issues calculation.
  * @internal

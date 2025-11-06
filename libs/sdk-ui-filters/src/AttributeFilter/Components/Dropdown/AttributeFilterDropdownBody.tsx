@@ -56,7 +56,6 @@ export function AttributeFilterDropdownBody({
         onShowFilteredElements,
         irrelevantSelection,
         onClearIrrelevantSelection,
-        enableAttributeFilterVirtualised,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
@@ -114,7 +113,6 @@ export function AttributeFilterDropdownBody({
                 irrelevantSelection={irrelevantSelection}
                 onClearIrrelevantSelection={onClearIrrelevantSelection}
                 withoutApply={withoutApply}
-                enableAttributeFilterVirtualised={enableAttributeFilterVirtualised}
             />
             <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}

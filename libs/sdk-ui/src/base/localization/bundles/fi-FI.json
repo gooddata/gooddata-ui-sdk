@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "Ylätunniste",
     "table.header.checkbox.ariaLabel": "Valitse toiminto",
     "table.header.menu.ariaLabel": "Toiminnot",
-    "gs.header.mainMenu.ariaLabel": "Päävalikko"
+    "gs.header.mainMenu.ariaLabel": "Päävalikko",
+    "tabs.all": "Kaikki",
+    "tabs.showAllTabs": "Näytä kaikki välilehdet"
 }

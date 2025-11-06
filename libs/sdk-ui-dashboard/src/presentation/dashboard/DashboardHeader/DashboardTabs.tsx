@@ -5,9 +5,12 @@ import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { UiTab, UiTabs } from "@gooddata/sdk-ui-kit";
+import { IDashboardTab } from "@gooddata/sdk-model";
+import { IUiTab, UiIcon, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import {
+    ExtendedDashboardWidget,
+    repositionDashboardTab,
     selectActiveTabId,
     selectEnableDashboardTabs,
     selectIsInEditMode,
@@ -17,12 +20,14 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 
+const EMPTY_TABS: IDashboardTab<ExtendedDashboardWidget>[] = [];
+
 export function useDashboardTabsProps(): IDashboardTabsProps {
     const intl = useIntl();
 
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const tabs = useDashboardSelector(selectTabs);
+    const tabs = useDashboardSelector(selectTabs) ?? EMPTY_TABS;
     const activeTabId = useDashboardSelector(selectActiveTabId);
     const dispatch = useDashboardDispatch();
 
@@ -30,7 +35,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     const defaultTabIdRef = useRef<string>(uuid());
 
     const handleTabSelect = useCallback(
-        (tab: UiTab) => {
+        (tab: IUiTab) => {
             if (tab.id !== activeTabId) {
                 dispatch(switchDashboardTab(tab.id));
             }
@@ -38,12 +43,43 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         [activeTabId, dispatch],
     );
 
-    const uiTabs: UiTab[] = useMemo(() => {
-        const mappedTabs =
-            tabs?.map((tab) => ({
-                id: tab.identifier,
-                label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
-            })) ?? [];
+    const uiTabs = useMemo<IUiTab[]>(() => {
+        const mappedTabs = (tabs.map((tab, index) => ({
+            id: tab.identifier,
+            label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
+            actions: isEditMode
+                ? [
+                      {
+                          id: "moveLeft",
+                          label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
+                          iconLeft: <UiIcon type={"arrowLeft"} ariaHidden size={12} />,
+                          onSelect: () => {
+                              if (index <= 0) {
+                                  return;
+                              }
+
+                              dispatch(repositionDashboardTab(index, index - 1));
+                          },
+                          isDisabled: index === 0,
+                          closeOnSelect: false,
+                      },
+                      {
+                          id: "moveRight",
+                          label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
+                          iconLeft: <UiIcon type={"arrowRight"} ariaHidden size={12} />,
+                          onSelect: () => {
+                              if (index >= tabs.length - 1) {
+                                  return;
+                              }
+
+                              dispatch(repositionDashboardTab(index, index + 1));
+                          },
+                          isDisabled: index === tabs.length - 1,
+                          closeOnSelect: false,
+                      },
+                  ]
+                : [],
+        })) ?? []) satisfies IUiTab[];
 
         // In edit mode, if tabs feature is enabled but no tabs exist, create a default "Untitled" tab
         if (isEditMode && enableDashboardTabs && mappedTabs.length === 0) {
@@ -56,11 +92,11 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         }
 
         return mappedTabs;
-    }, [tabs, isEditMode, enableDashboardTabs, intl]);
+    }, [tabs, isEditMode, enableDashboardTabs, intl, dispatch]);
 
     // Use the default tab ID as activeTabId if we created a default tab and no activeTabId is set
     const effectiveActiveTabId = useMemo(() => {
-        if (isEditMode && enableDashboardTabs && (!tabs || tabs.length === 0) && !activeTabId) {
+        if (isEditMode && enableDashboardTabs && tabs.length === 0 && !activeTabId) {
             return defaultTabIdRef.current;
         }
         return activeTabId;
@@ -70,15 +106,15 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         enableDashboardTabs,
         activeTabId: effectiveActiveTabId,
         uiTabs,
-        handleTabSelect: handleTabSelect,
+        handleTabSelect,
     };
 }
 
 interface IDashboardTabsProps {
     enableDashboardTabs: boolean;
     activeTabId?: string;
-    uiTabs: UiTab[];
-    handleTabSelect: (tab: UiTab) => void;
+    uiTabs: IUiTab[];
+    handleTabSelect: (tab: IUiTab) => void;
 }
 /**
  * @internal
@@ -120,7 +156,6 @@ export function DashboardTabs({
                 onTabSelect={handleTabSelect}
                 selectedTabId={activeTabId ?? uiTabs[0].id}
                 accessibilityConfig={ACCESSIBILITY_CONFIG}
-                enableOverflowDropdown
                 maxLabelLength={255}
             />
         </div>

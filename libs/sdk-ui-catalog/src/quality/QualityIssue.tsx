@@ -1,23 +1,21 @@
 // (C) 2025 GoodData Corporation
 
-import cx from "classnames";
-import { FormattedMessage, type MessageDescriptor, defineMessages } from "react-intl";
+import { type MouseEvent } from "react";
+
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import {
     type ISemanticQualityIssue,
     type Identifier,
+    type SemanticQualityIssueAttributeName,
     type SemanticQualityIssueCode,
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
+import { UiButton } from "@gooddata/sdk-ui-kit";
 
+import { QualityIssueObjects } from "./QualityIssueObjects.js";
 import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
-import { ObjectTypeIconMemo, mapObjectType } from "../objectType/index.js";
-
-type Props = {
-    issue: ISemanticQualityIssue;
-    objectId: Identifier;
-    objectTitle: string;
-};
+import { type ICatalogItemRef } from "../catalogItem/index.js";
 
 const titleMessages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } = defineMessages({
     [SemanticQualityIssueCodeValues.IDENTICAL_TITLE]: {
@@ -55,7 +53,16 @@ const descriptionMessages: { [key in SemanticQualityIssueCode]?: MessageDescript
     },
 });
 
-export function QualityIssue({ issue, objectId, objectTitle }: Props) {
+type Props = {
+    issue: ISemanticQualityIssue;
+    objectId: Identifier;
+    canEdit: boolean;
+    onEditClick?: (attributeName: SemanticQualityIssueAttributeName) => void;
+    onObjectClick?: (event: MouseEvent, ref: ICatalogItemRef) => void;
+};
+
+export function QualityIssue({ issue, objectId, canEdit, onEditClick, onObjectClick }: Props) {
+    const intl = useIntl();
     const titleMessage = titleMessages[issue.code];
     const descriptionMessage = descriptionMessages[issue.code];
 
@@ -66,43 +73,42 @@ export function QualityIssue({ issue, objectId, objectTitle }: Props) {
     // Exclude the current object from the list
     const objects = issue.objects.filter((obj) => obj.identifier !== objectId);
 
+    // Do not show objects for unknown abbreviation issue
+    const showObjects = issue.code !== SemanticQualityIssueCodeValues.UNKNOWN_ABBREVIATION;
+
+    function handleEditClick() {
+        if (canEdit && onEditClick && issue.detail.attributeName) {
+            onEditClick(issue.detail.attributeName);
+        }
+    }
+
     return (
         <div className="gd-analytics-catalog__quality-issue">
-            <QualitySeverityIcon severity={issue.severity} size={20} backgroundColor="complementary-0" />
+            <QualitySeverityIcon severity={issue.severity} size={14} backgroundColor="complementary-0" />
             <div className="gd-analytics-catalog__quality-issue__title">
                 <FormattedMessage {...titleMessage} />
             </div>
+            {canEdit ? (
+                <UiButton
+                    label={intl.formatMessage(
+                        { id: "analyticsCatalog.quality.issue.edit" },
+                        { attributeName: issue.detail.attributeName },
+                    )}
+                    onClick={handleEditClick}
+                />
+            ) : null}
+            <div className="gd-analytics-catalog__quality-issue__separator" />
             <div className="gd-analytics-catalog__quality-issue__description">
                 <FormattedMessage
                     {...descriptionMessage}
                     values={{
-                        title: objectTitle,
                         abbreviation: issue.detail.abbreviation,
-                        objects: objects.map((obj, idx) => {
-                            const type = obj.type ? mapObjectType(obj.type) : undefined;
-                            return (
-                                <span
-                                    key={idx}
-                                    className="gd-analytics-catalog__quality-issue__description__object"
-                                >
-                                    {type ? <ObjectTypeIconMemo type={type} size={18} /> : null}
-                                    <span
-                                        className={cx(
-                                            "gd-analytics-catalog__object-type",
-                                            "gd-analytics-catalog__quality-issue__description__object__identifier",
-                                        )}
-                                        data-object-type={type}
-                                    >
-                                        {obj.identifier}
-                                    </span>
-                                    {idx === objects.length - 1 ? "." : ", "}
-                                </span>
-                            );
-                        }),
                         u: (chunks) => <u>{chunks}</u>,
+                        count: objects.length,
                     }}
                 />
             </div>
+            {showObjects ? <QualityIssueObjects objects={objects} onObjectClick={onObjectClick} /> : null}
         </div>
     );
 }

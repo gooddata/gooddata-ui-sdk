@@ -16,11 +16,11 @@ import { IMessage } from "../typings.js";
  * @internal
  */
 export function ToastsCenter() {
-    const { messages, removeMessage, hasParentContext } = ToastsCenterContext.useContextStore((ctx) => ({
-        messages: ctx.messages,
-        removeMessage: ctx.removeMessage,
-        hasParentContext: ctx.hasParentContext,
-    }));
+    const { messages, removeMessage, hasParentContext } = ToastsCenterContext.useContextStoreValues([
+        "messages",
+        "removeMessage",
+        "hasParentContext",
+    ]);
 
     const sortedMessages = useMemo(() => [...messages].sort((a, b) => b.createdAt - a.createdAt), [messages]);
 

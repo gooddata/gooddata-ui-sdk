@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Poista {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Ero",
     "kdaDialog.dialog.keyDrives.empty": "Ei keskeisiä tekijöitä",
-    "kdaDialog.dialog.keyDriver.chart.std": "Muutoksen merkittävyyden kynnysarvo"
+    "kdaDialog.dialog.keyDriver.chart.std": "Muutoksen merkittävyyden kynnysarvo",
+    "kdaDialog.dialog.filters.title": "Suodattimet",
+    "kdaDialog.dialog.filters.noFilters": "Ei suodattimia",
+    "kdaDialog.dialog.filters.add.tooltip": "Lisää suodatin",
+    "kdaDialog.dialog.filters.search": "Hae",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Ajanjakso kuvauksissa",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Päivämäärätietojoukko, jota Ajanjaksosuodatin käyttää osion kuvausten metristen viittausten osalta.",
+    "dateDataset.autoSelect": "Automaattinen valinta",
+    "dateDataset.notFound": "Ei löytynyt",
+    "dialogs.schedule.email.tabs.general": "Yleistä",
+    "dialogs.schedule.email.tabs.filters": "Suodattimet",
+    "dashboard.tabs.default.label": "Nimetön välilehti",
+    "dashboard.tabs.accessibility.label": "Koontinäytön välilehdet"
 }

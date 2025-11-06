@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "Intestazione",
     "table.header.checkbox.ariaLabel": "Selezionare l'azione",
     "table.header.menu.ariaLabel": "Azioni",
-    "gs.header.mainMenu.ariaLabel": "Menu principale"
+    "gs.header.mainMenu.ariaLabel": "Menu principale",
+    "tabs.all": "Tutto",
+    "tabs.showAllTabs": "Mostra tutte le schede"
 }

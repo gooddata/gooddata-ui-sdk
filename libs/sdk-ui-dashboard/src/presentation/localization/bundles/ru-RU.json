@@ -864,5 +864,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Удалить {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Разница",
     "kdaDialog.dialog.keyDrives.empty": "Нет ключевых факторов",
-    "kdaDialog.dialog.keyDriver.chart.std": "Изменить порог значимости"
+    "kdaDialog.dialog.keyDriver.chart.std": "Изменить порог значимости",
+    "kdaDialog.dialog.filters.title": "Фильтры",
+    "kdaDialog.dialog.filters.noFilters": "Нет фильтров",
+    "kdaDialog.dialog.filters.add.tooltip": "Добавить фильтр",
+    "kdaDialog.dialog.filters.search": "Поиск",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Диапазон дат в описаниях",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Набор данных даты, используемый фильтром диапазона дат для ссылок на метрики в описаниях разделов.",
+    "dateDataset.autoSelect": "Автовыбор",
+    "dateDataset.notFound": "Не найдено",
+    "dialogs.schedule.email.tabs.general": "Общие",
+    "dialogs.schedule.email.tabs.filters": "Фильтры",
+    "dashboard.tabs.default.label": "Безымянная вкладка",
+    "dashboard.tabs.accessibility.label": "Вкладки панели управления"
 }

@@ -3083,6 +3083,10 @@
         "value": "All",
         "comment": "Label for the overflow dropdown button in tabs component. When clicked, shows all available tabs in a dropdown list."
     },
+    "tabs.actions": {
+        "value": "Actions for the current tab",
+        "comment": "Label for the button that opens a menu of actions for a specific tab"
+    },
     "tabs.showAllTabs": {
         "value": "Show all tabs",
         "comment": "Accessibility label for the overflow dropdown button in tabs component. Used by screen readers to describe the action of opening a dropdown with all available tabs."

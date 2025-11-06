@@ -12,10 +12,10 @@ interface HoverDetectorProps {
 }
 
 export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
-    const { addHoveredWidget, removeHoveredWidget } = HoveredWidgetContext.useContextStore((ctx) => ({
-        addHoveredWidget: ctx.addHoveredWidget,
-        removeHoveredWidget: ctx.removeHoveredWidget,
-    }));
+    const { addHoveredWidget, removeHoveredWidget } = HoveredWidgetContext.useContextStoreValues([
+        "addHoveredWidget",
+        "removeHoveredWidget",
+    ]);
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

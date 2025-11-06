@@ -808,5 +808,7 @@
     "table.header.ariaLabel": "Nagłówek",
     "table.header.checkbox.ariaLabel": "Wybierz akcję",
     "table.header.menu.ariaLabel": "Akcje",
-    "gs.header.mainMenu.ariaLabel": "Główne menu"
+    "gs.header.mainMenu.ariaLabel": "Główne menu",
+    "tabs.all": "Wszystko",
+    "tabs.showAllTabs": "Pokaż wszystkie karty"
 }

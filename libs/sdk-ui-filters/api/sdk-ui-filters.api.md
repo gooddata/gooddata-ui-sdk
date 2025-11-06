@@ -131,7 +131,6 @@ export type AttributeFilterControllerData = {
     limitingValidationItems?: ObjRef[];
     isFilteredByLimitingValidationItems?: boolean;
     isFilteredByDependentDateFilters?: boolean;
-    enableAttributeFilterVirtualised?: boolean;
     isWorkingSelectionChanged?: boolean;
 };
 
@@ -157,7 +156,7 @@ export function AttributeFilterElementsActions(props: IAttributeFilterElementsAc
 export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelect({ items, totalItemsCount, totalItemsCountWithCurrentSettings, isInverted, selectedItems, onSelect, searchString, onSearch, isLoading, isLoadingNextPage, nextPageSize, onLoadNextPage, error, attributeTitle, isFilteredByParentFilters, parentFilterTitles, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, onApplyButtonClick, isApplyDisabled, isFilteredByDependentDateFilters, isFilteredByLimitingValidationItems, enableAttributeFilterVirtualised, withoutApply, }: IAttributeFilterElementsSelectProps): JSX.Element;
+export function AttributeFilterElementsSelect({ items, totalItemsCount, totalItemsCountWithCurrentSettings, isInverted, selectedItems, onSelect, searchString, onSearch, isLoading, isLoadingNextPage, nextPageSize, onLoadNextPage, error, attributeTitle, isFilteredByParentFilters, parentFilterTitles, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, onApplyButtonClick, isApplyDisabled, isFilteredByDependentDateFilters, isFilteredByLimitingValidationItems, withoutApply, }: IAttributeFilterElementsSelectProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsSelectError(): JSX.Element;
@@ -408,7 +407,6 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
-    enableAttributeFilterVirtualised?: boolean;
     // @deprecated
     enableDashboardFiltersApplyModes?: boolean;
     // @deprecated
@@ -578,8 +576,6 @@ export interface IAttributeFilterElementsSelectLoadingProps {
 // @beta
 export interface IAttributeFilterElementsSelectProps {
     attributeTitle?: string;
-    // @internal (undocumented)
-    enableAttributeFilterVirtualised?: boolean;
     enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
     irrelevantSelection?: IAttributeElement[];

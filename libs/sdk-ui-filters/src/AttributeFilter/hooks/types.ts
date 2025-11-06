@@ -174,8 +174,6 @@ export type AttributeFilterControllerData = {
      */
     isFilteredByDependentDateFilters?: boolean;
 
-    enableAttributeFilterVirtualised?: boolean;
-
     /**
      * Indicates whether the working selection has changed since the last commit.
      */

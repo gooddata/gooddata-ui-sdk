@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * @internal
@@ -18,3 +18,8 @@ export function combineGuards<T extends ((x: unknown) => x is unknown)[]>(
         x: unknown,
     ) => x is GuardType<T[number]>;
 }
+
+/**
+ * @internal
+ */
+export type EmptyObject = Record<never, never>;

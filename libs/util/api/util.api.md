@@ -23,6 +23,9 @@ export type ConsoleType = "error" | "warn" | "log" | "debug" | "info";
 // @internal
 export function delay(timeout?: number): Promise<void>;
 
+// @internal (undocumented)
+export type EmptyObject = Record<never, never>;
+
 // @internal
 function escapeRegExp(value: string): string;
 
@@ -114,7 +117,8 @@ export { translationUtils }
 declare namespace typesUtils {
     export {
         combineGuards,
-        GuardType
+        GuardType,
+        EmptyObject
     }
 }
 export { typesUtils }

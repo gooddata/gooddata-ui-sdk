@@ -808,5 +808,7 @@
     "table.header.ariaLabel": "헤더",
     "table.header.checkbox.ariaLabel": "작업 선택",
     "table.header.menu.ariaLabel": "작업",
-    "gs.header.mainMenu.ariaLabel": "메인 메뉴"
+    "gs.header.mainMenu.ariaLabel": "메인 메뉴",
+    "tabs.all": "모두",
+    "tabs.showAllTabs": "모든 탭 표시"
 }

@@ -12,10 +12,10 @@ import { IUiMenuItemData, IUiMenuStaticItemProps } from "../../types.js";
 export const DefaultUiMenuStaticItem = memo(function DefaultUiMenuStaticItem<
     T extends IUiMenuItemData = object,
 >({ item }: IUiMenuStaticItemProps<T>): ReactElement {
-    const { itemClassName, itemDataTestId } = typedUiMenuContextStore<T>().useContextStore((ctx) => ({
-        itemClassName: ctx.itemClassName,
-        itemDataTestId: ctx.itemDataTestId,
-    }));
+    const { itemClassName, itemDataTestId } = typedUiMenuContextStore<T>().useContextStoreValues([
+        "itemClassName",
+        "itemDataTestId",
+    ]);
 
     return (
         <li

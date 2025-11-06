@@ -47,6 +47,7 @@ export interface UiIconButtonPublicProps {
     ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
     tabIndex?: number;
+    id?: string;
 }
 
 export interface UiIconButtonInternalProps {
@@ -76,6 +77,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
             ariaAttributes,
             accessibilityConfig,
             tabIndex,
+            id,
         },
         ref,
     ) => {
@@ -90,6 +92,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                     variant,
                     active: isActive,
                 })}
+                id={id}
                 disabled={isDisabled}
                 onClick={onClick}
                 onKeyDown={onKeyDown}
@@ -98,8 +101,8 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 aria-disabled={isDisabled}
                 aria-label={label}
                 tabIndex={tabIndex}
-                {...ariaAttributes}
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
+                {...ariaAttributes}
             >
                 <UiIcon type={icon} size={iconSize} ariaHidden />
                 {iconAfter ? (

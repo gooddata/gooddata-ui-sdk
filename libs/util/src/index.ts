@@ -17,3 +17,4 @@ import * as typesUtils from "./typesUtils.js";
 
 export * from "./testUtils.js";
 export { stringUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
+export type { EmptyObject } from "./typesUtils.js";

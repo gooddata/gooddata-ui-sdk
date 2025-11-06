@@ -799,5 +799,7 @@
     "table.header.ariaLabel": "Kop",
     "table.header.checkbox.ariaLabel": "Actie kiezen",
     "table.header.menu.ariaLabel": "Acties",
-    "gs.header.mainMenu.ariaLabel": "Hoofdmenu"
+    "gs.header.mainMenu.ariaLabel": "Hoofdmenu",
+    "tabs.all": "Alle",
+    "tabs.showAllTabs": "Alle tabbladen weergeven"
 }

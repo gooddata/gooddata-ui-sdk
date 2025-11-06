@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "刪去 {name} （{email}）",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "差異",
     "kdaDialog.dialog.keyDrives.empty": "冇關鍵驅動力",
-    "kdaDialog.dialog.keyDriver.chart.std": "改變顯著性閾值"
+    "kdaDialog.dialog.keyDriver.chart.std": "改變顯著性閾值",
+    "kdaDialog.dialog.filters.title": "篩選器",
+    "kdaDialog.dialog.filters.noFilters": "冇濾網",
+    "kdaDialog.dialog.filters.add.tooltip": "添加篩選器",
+    "kdaDialog.dialog.filters.search": "搜尋",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "描述中的日期範圍",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日期範圍過濾器用於章節描述中指標參考的日期數據集。",
+    "dateDataset.autoSelect": "自動選擇",
+    "dateDataset.notFound": "搵唔到",
+    "dialogs.schedule.email.tabs.general": "將軍",
+    "dialogs.schedule.email.tabs.filters": "篩選器",
+    "dashboard.tabs.default.label": "無題標籤",
+    "dashboard.tabs.accessibility.label": "儀表板標籤"
 }

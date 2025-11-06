@@ -22,6 +22,7 @@ type Props = {
     workspace: string;
     openCatalogItemRef?: ICatalogItemRef;
     onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemNavigation?: (event: MouseEvent, target: ICatalogItemRef) => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogDetailClosed?: () => void;
 };
@@ -31,6 +32,7 @@ export function Catalog({
     backend,
     workspace,
     onCatalogItemOpenClick,
+    onCatalogItemNavigation,
     onCatalogDetailOpened,
     onCatalogDetailClosed,
 }: Props) {
@@ -68,6 +70,7 @@ export function Catalog({
                     onCatalogItemOpenClick={onCatalogItemOpenClick}
                     onCatalogDetailOpened={onCatalogDetailOpened}
                     onCatalogDetailClosed={onCatalogDetailClosed}
+                    onCatalogItemNavigation={onCatalogItemNavigation}
                 />
             </PermissionsGate>
         </Layout>

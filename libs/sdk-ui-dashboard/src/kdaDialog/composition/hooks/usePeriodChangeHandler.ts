@@ -8,6 +8,7 @@ import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { KdaDateOptions } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition, KdaPeriodType } from "../../types.js";
+import { clearSummaryValue } from "../../utils.js";
 
 export function usePeriodChangeHandler() {
     const dateAttributeFinder = useDateAttribute();
@@ -37,7 +38,7 @@ export function usePeriodChangeHandler() {
 
             const definition = updateDefinitionPeriod(def, dateAttribute, type);
             setState({
-                definition,
+                ...clearSummaryValue(definition),
             });
         },
         [dateAttribute, setState, state.definition],

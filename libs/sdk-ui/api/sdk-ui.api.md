@@ -718,6 +718,8 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
 export type IContextStore<T> = IContextStoreProvider<T> & {
     useContextStore: IUseContextStore<T>;
     useContextStoreOptional: IUseContextStore<T, true>;
+    useContextStoreValues: <K extends readonly (keyof T)[]>(keys: K, equalityFn?: (a: Pick<T, K[number]>, b: Pick<T, K[number]>) => boolean) => Pick<T, K[number]>;
+    useContextStoreValuesOptional: <K extends readonly (keyof T)[]>(keys: K, equalityFn?: (a: Pick<T, K[number]>, b: Pick<T, K[number]>) => boolean) => Pick<T, K[number]> | undefined;
     createSelector: <SelectorResult>(selector: IContextStoreSelector<T, SelectorResult>) => IContextStoreSelector<T, SelectorResult>;
 };
 

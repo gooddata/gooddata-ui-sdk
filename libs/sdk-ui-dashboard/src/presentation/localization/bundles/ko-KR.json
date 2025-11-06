@@ -860,5 +860,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "{name} 제거 ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "차이점",
     "kdaDialog.dialog.keyDrives.empty": "주요 요인 없음",
-    "kdaDialog.dialog.keyDriver.chart.std": "유의성 임계값 변경"
+    "kdaDialog.dialog.keyDriver.chart.std": "유의성 임계값 변경",
+    "kdaDialog.dialog.filters.title": "필터(들)",
+    "kdaDialog.dialog.filters.noFilters": "필터 없음",
+    "kdaDialog.dialog.filters.add.tooltip": "필터 추가",
+    "kdaDialog.dialog.filters.search": "검색",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "설명에서 날짜 범위",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "섹션 설명에서 메트릭 참조를 위한 날짜 범위 필터에 사용된 날짜 데이터셋.",
+    "dateDataset.autoSelect": "자동 선택",
+    "dateDataset.notFound": "찾을 수 없음",
+    "dialogs.schedule.email.tabs.general": "일반",
+    "dialogs.schedule.email.tabs.filters": "필터(들)",
+    "dashboard.tabs.default.label": "제목 없는 탭",
+    "dashboard.tabs.accessibility.label": "대시보드 탭"
 }

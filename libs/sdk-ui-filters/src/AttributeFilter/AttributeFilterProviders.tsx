@@ -53,7 +53,6 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
-        enableAttributeFilterVirtualised,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         enableDashboardFiltersApplyWithoutLoading = false,
         enableDashboardFiltersApplyModes = false,
@@ -117,7 +116,6 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     enableImmediateAttributeFilterDisplayAsLabelMigration={
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
-                    enableAttributeFilterVirtualised={enableAttributeFilterVirtualised}
                     withoutApply={withoutApply ?? enableDashboardFiltersApplyModes}
                     overlayPositionType={overlayPositionType}
                     enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}

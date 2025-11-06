@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "Messaggi di chat",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Questo chiederà di salvare la visualizzazione prima di poterla aprire.",
     "gd.gen-ai.visualisation.toggle.table": "Mostra tabella",
-    "gd.gen-ai.visualisation.toggle.original": "Mostra l'originale"
+    "gd.gen-ai.visualisation.toggle.original": "Mostra l'originale",
+    "gd.gen-ai.feedback.popup.title": "Abbiamo il vostro feedback",
+    "gd.gen-ai.feedback.popup.reasons-label": "Diteci cosa è andato storto",
+    "gd.gen-ai.feedback.popup.description-label": "Per favore, descrivete cosa è successo",
+    "gd.gen-ai.feedback.popup.cancel": "Annulla",
+    "gd.gen-ai.feedback.popup.send": "Inviare",
+    "gd.gen-ai.feedback.popup.close": "Chiudere la finestra di dialogo del feedback",
+    "gd.gen-ai.feedback.reason.forgot-context": "Ho dimenticato il contesto precedente",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "Ignorare o rifiutare le istruzioni",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "In realtà non è corretto",
+    "gd.gen-ai.feedback.reason.other": "Altro",
+    "gd.gen-ai.changeAnalysis.default_message": "Ecco l'analisi dei cambiamenti per <metric>{title}</metric> tra <b>{range}</b>.",
+    "gd.gen-ai.changeAnalysis.splitter": "e",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Aprire l'analisi"
 }

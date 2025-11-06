@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "Verwijder {name} ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "Verschil",
     "kdaDialog.dialog.keyDrives.empty": "Geen belangrijke drijfveren",
-    "kdaDialog.dialog.keyDriver.chart.std": "Verandering Significantiedrempel"
+    "kdaDialog.dialog.keyDriver.chart.std": "Verandering Significantiedrempel",
+    "kdaDialog.dialog.filters.title": "Filters",
+    "kdaDialog.dialog.filters.noFilters": "Geen filters",
+    "kdaDialog.dialog.filters.add.tooltip": "Filter toevoegen",
+    "kdaDialog.dialog.filters.search": "Zoeken",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "Datumbereik in beschrijvingen",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Datumdataset gebruikt door het Datumbereikfilter voor metrische verwijzingen in sectiebeschrijvingen.",
+    "dateDataset.autoSelect": "Automatisch selecteren",
+    "dateDataset.notFound": "Niet gevonden",
+    "dialogs.schedule.email.tabs.general": "Algemeen",
+    "dialogs.schedule.email.tabs.filters": "Filters",
+    "dashboard.tabs.default.label": "Tab zonder titel",
+    "dashboard.tabs.accessibility.label": "Tabbladen dashboard"
 }

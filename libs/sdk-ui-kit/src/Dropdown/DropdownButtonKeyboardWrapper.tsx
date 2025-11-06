@@ -22,18 +22,22 @@ export const DropdownButtonKeyboardWrapper = forwardRef<HTMLElement, IDropdownBu
                 if (event.code === "Enter" || (event.code === "Space" && !isInputFocused)) {
                     onToggle();
                     event.preventDefault();
+                    event.stopPropagation();
                 }
                 if (event.code === "Escape" && isOpen && closeOnEscape) {
                     onToggle(false);
                     event.preventDefault();
+                    event.stopPropagation();
                 }
                 if (event.code === "ArrowUp" && isOpen) {
                     onToggle(false);
                     event.preventDefault();
+                    event.stopPropagation();
                 }
                 if (event.code === "ArrowDown" && !isOpen) {
                     onToggle(true);
                     event.preventDefault();
+                    event.stopPropagation();
                 }
             },
             [isOpen, onToggle, closeOnEscape],

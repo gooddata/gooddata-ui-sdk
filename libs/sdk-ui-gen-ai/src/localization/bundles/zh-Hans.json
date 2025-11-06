@@ -63,5 +63,18 @@
     "gd.gen-ai.messages.label": "聊天消息",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "这将要求您先保存可视化内容，然后才能打开它。",
     "gd.gen-ai.visualisation.toggle.table": "显示表",
-    "gd.gen-ai.visualisation.toggle.original": "显示原文"
+    "gd.gen-ai.visualisation.toggle.original": "显示原文",
+    "gd.gen-ai.feedback.popup.title": "我们已收到您的反馈",
+    "gd.gen-ai.feedback.popup.reasons-label": "请告诉我们哪里出了问题。",
+    "gd.gen-ai.feedback.popup.description-label": "请描述一下发生了什么事。",
+    "gd.gen-ai.feedback.popup.cancel": "取消",
+    "gd.gen-ai.feedback.popup.send": "发送",
+    "gd.gen-ai.feedback.popup.close": "关闭反馈对话框",
+    "gd.gen-ai.feedback.reason.forgot-context": "忘记了前面的上下文",
+    "gd.gen-ai.feedback.reason.ignored-instructions": "忽略或拒绝指示",
+    "gd.gen-ai.feedback.reason.factually-incorrect": "事实错误",
+    "gd.gen-ai.feedback.reason.other": "其他",
+    "gd.gen-ai.changeAnalysis.default_message": "以下是变更分析 <metric>{title}</metric> 之间 <b>{range}</b>。",
+    "gd.gen-ai.changeAnalysis.splitter": "和",
+    "gd.gen-ai.changeAnalysis.explain_the_change": "打开分析"
 }

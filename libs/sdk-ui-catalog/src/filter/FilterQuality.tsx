@@ -47,7 +47,7 @@ export function FilterQuality() {
         [intl],
     );
 
-    if (status === "loading" || status === "pending") {
+    if (status === "pending") {
         return <UiSkeleton itemsCount={1} itemWidth={98} itemHeight={27} itemBorderRadius={4} />;
     }
 

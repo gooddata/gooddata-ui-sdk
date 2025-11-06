@@ -11,6 +11,7 @@ import { ChangeEvent } from 'react';
 import { ColorFormats } from 'tinycolor2';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Component } from 'react';
+import { ComponentProps } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { Context } from 'react';
@@ -20,6 +21,7 @@ import { DebouncedFunc } from 'lodash-es';
 import { Dispatch } from 'react';
 import { EditorView } from '@codemirror/view';
 import { ElementType } from 'react';
+import { EmptyObject } from '@gooddata/util';
 import { Extension } from '@codemirror/state';
 import { FC } from 'react';
 import { FilterContextItem } from '@gooddata/sdk-model';
@@ -73,6 +75,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { Ref } from 'react';
 import { RefAttributes } from 'react';
+import { RefCallback } from 'react';
 import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
@@ -371,6 +374,27 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => ReactElement)>;
 
 // @internal (undocumented)
+export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"AllTabs", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsAllTabsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ isOpen, onClick, ref }: IUiTabComponentProps<"AllTabsButton", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"Container", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, focusedAction }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, isOpen, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
+export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected }: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
+
+// @internal (undocumented)
 export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, ariaAttributes, }: IUiTreeviewItemProps<Level>): ReactNode;
 
 // @internal (undocumented)
@@ -656,6 +680,9 @@ export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>
 
 // @internal
 export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[] | undefined;
+
+// @internal (undocumented)
+export function getTypedUiTabsContextStore<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(): IContextStore<IUiTabContext<TTabProps, TTabActionProps>>;
 
 // @internal (undocumented)
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
@@ -5521,6 +5548,98 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
 }
 
 // @internal (undocumented)
+export type IUiTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
+    id: string;
+    label: string;
+    actions?: IUiTabAction<TTabProps, TTabActionProps>[];
+} & TTabProps;
+
+// @internal (undocumented)
+export type IUiTabAction<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
+    id: string;
+    label: string;
+    isDisabled?: boolean;
+    onSelect?: (context: {
+        tab: IUiTab<TTabProps, TTabActionProps>;
+    }) => void;
+    closeOnSelect?: "actions" | "all" | false;
+    iconRight?: ReactNode;
+    iconLeft?: ReactNode;
+} & TTabActionProps;
+
+// @internal (undocumented)
+export type IUiTabActionEventContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
+    action: IUiTabAction<TTabProps, TTabActionProps>;
+    tab: IUiTab<TTabProps, TTabActionProps>;
+    location: "tabs" | "allList";
+};
+
+// @internal (undocumented)
+export type IUiTabComponentProps<TComponent extends keyof IUiTabComponents<TTabProps, TTabActionProps>, TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = ComponentProps<IUiTabComponents<TTabProps, TTabActionProps>[TComponent]>;
+
+// @internal (undocumented)
+export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
+    Container: ComponentType;
+    Tab: ComponentType<{
+        tab: IUiTab<TTabProps, TTabActionProps>;
+        isSelected: boolean;
+        onSelect: () => void;
+        focusedAction?: typeof SELECT_ITEM_ACTION | "selectTabActions";
+    }>;
+    TabValue: ComponentType<{
+        tab: IUiTab<TTabProps, TTabActionProps>;
+        isSelected: boolean;
+        location: "tabs" | "allList";
+    }>;
+    TabActions: ComponentType<{
+        tab: IUiTab<TTabProps, TTabActionProps>;
+        location: "tabs" | "allList";
+        tabIndex?: number;
+        id?: string;
+    }>;
+    TabActionsButton: ComponentType<{
+        tab: IUiTab<TTabProps, TTabActionProps>;
+        isOpen: boolean;
+        onClick: () => void;
+        location: "tabs" | "allList";
+        ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+        tabIndex?: number;
+        id?: string;
+    }>;
+    AllTabs: ComponentType;
+    AllTabsButton: ComponentType<{
+        isOpen: boolean;
+        onClick: () => void;
+        ref?: RefObject<HTMLElement>;
+        ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+    }>;
+};
+
+// @internal (undocumented)
+export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = Pick<IUiTabsProps<TTabProps, TTabActionProps>, "tabs" | "selectedTabId" | "onTabSelect" | "size" | "accessibilityConfig" | "maxLabelLength"> & {
+    isOverflowing: boolean;
+    containerRef: RefCallback<Element>;
+    onActionTriggered: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void;
+    useActionListener: (callback: (context: IUiTabActionEventContext) => void) => void;
+} & IUiTabComponents<TTabProps, TTabActionProps>;
+
+// @internal (undocumented)
+export interface IUiTabsAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    tabRole?: HTMLAttributes<HTMLElement>["role"];
+}
+
+// @internal (undocumented)
+export type IUiTabsProps<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
+    tabs: IUiTab<TTabProps, TTabActionProps>[];
+    selectedTabId: string;
+    onTabSelect: (tab: IUiTab<TTabProps, TTabActionProps>) => void;
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    maxLabelLength?: number;
+    accessibilityConfig?: IUiTabsAccessibilityConfig;
+} & Partial<IUiTabComponents<TTabProps, TTabActionProps>>;
+
+// @internal (undocumented)
 export interface IUiTagAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     deleteAriaLabel?: string;
@@ -6750,6 +6869,8 @@ export interface UiIconButtonPublicProps {
     // (undocumented)
     icon: IconType;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isActive?: boolean;
     // (undocumented)
     isDisabled?: boolean;
@@ -7085,43 +7206,13 @@ export interface UiSubmenuHeaderProps {
 }
 
 // @internal (undocumented)
-export interface UiTab {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    label: string;
-}
-
-// @internal (undocumented)
 export function UiTabOutHandler({ onTabOut, children }: {
     onTabOut: () => void;
     children: ReactNode;
 }): JSX.Element;
 
 // @internal (undocumented)
-export function UiTabs({ size, tabs, onTabSelect, selectedTabId, accessibilityConfig, maxLabelLength, enableOverflowDropdown, }: UiTabsProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
-    // (undocumented)
-    tabRole?: HTMLAttributes<HTMLElement>["role"];
-}
-
-// @internal (undocumented)
-export interface UiTabsProps {
-    // (undocumented)
-    accessibilityConfig?: UiTabsAccessibilityConfig;
-    enableOverflowDropdown?: boolean;
-    maxLabelLength?: number;
-    // (undocumented)
-    onTabSelect: (tab: UiTab) => void;
-    // (undocumented)
-    selectedTabId: string;
-    // (undocumented)
-    size?: SizeSmall | SizeMedium | SizeLarge;
-    // (undocumented)
-    tabs: Array<UiTab>;
-}
+export function UiTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(props: IUiTabsProps<TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
 export const UiTag: ForwardRefExoticComponent<UiTagProps & RefAttributes<HTMLButtonElement>>;
@@ -7340,6 +7431,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     focusedAction: "selectItem" | Action;
     focusedItem: Item;
     setFocusedAction: Dispatch<SetStateAction<"selectItem" | Action>>;
+    setFocusedIndex: Dispatch<SetStateAction<number>>;
 };
 
 // @internal
@@ -7398,6 +7490,9 @@ export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLE
 
 // @internal (undocumented)
 export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: KeyboardEvent_2) => void) => IUiFocusHelperConnectors<T>;
+
+// @internal (undocumented)
+export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton, }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
 
 // @internal (undocumented)
 export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;

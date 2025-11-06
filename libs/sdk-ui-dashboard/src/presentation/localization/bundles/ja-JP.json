@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "{name} を削除 ({email})",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "拡散",
     "kdaDialog.dialog.keyDrives.empty": "キードライバーなし",
-    "kdaDialog.dialog.keyDriver.chart.std": "重大性の閾値"
+    "kdaDialog.dialog.keyDriver.chart.std": "重大性の閾値",
+    "kdaDialog.dialog.filters.title": "フィルター",
+    "kdaDialog.dialog.filters.noFilters": "フィルターはありません",
+    "kdaDialog.dialog.filters.add.tooltip": "フィルタを追加",
+    "kdaDialog.dialog.filters.search": "検索",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "記述の日付範囲",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日付範囲フィルターがセクションの説明でメトリック参照に使用する日付データセット。",
+    "dateDataset.autoSelect": "自動選択",
+    "dateDataset.notFound": "見つからない",
+    "dialogs.schedule.email.tabs.general": "一般",
+    "dialogs.schedule.email.tabs.filters": "フィルター",
+    "dashboard.tabs.default.label": "無題タブ",
+    "dashboard.tabs.accessibility.label": "ダッシュボードタブ"
 }

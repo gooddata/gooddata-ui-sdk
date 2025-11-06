@@ -14,9 +14,9 @@ import {
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
+import { DEFAULT_MEASURE_FORMAT } from "./const.js";
 import { KdaDateOptions, KdaState } from "./internalTypes.js";
 import { IKdaDefinition } from "./types.js";
-import { DEFAULT_MEASURE_FORMAT } from "../presentation/alerting/DefaultAlertingDialog/constants.js";
 
 //Format value
 

@@ -27,7 +27,7 @@ $content-font-size: 14px;
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
     }
 
     &__card {
@@ -52,6 +52,14 @@ $content-font-size: 14px;
                 line-height: $title-font-line-height;
                 font-style: normal;
                 font-weight: 700;
+
+                .gd-ui-kit-icon-background {
+                    background-color: color-mix(
+                        in sRGB,
+                        var(--catalog-object-type-icon-color) 10%,
+                        transparent
+                    );
+                }
 
                 &__name {
                     overflow: hidden;
@@ -181,33 +189,83 @@ $content-font-size: 14px;
 
 .gd-analytics-catalog {
     &__quality-issue {
-        padding: 10px 0;
+        padding: 10px 10px 15px 10px;
         display: grid;
-        gap: 5px 10px;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto auto;
-
-        > :first-child {
-            grid-row: 1 / -1;
-        }
+        gap: 10px;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto auto auto;
+        align-items: center;
+        background-color: kit-variables.$default-gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
 
         &__title {
             font-weight: 700;
         }
 
-        &__description__object {
-            .gd-analytics-catalog__object-type {
-                color: var(--catalog-object-type-icon-color);
+        &__separator {
+            border-top: 1px solid kit-variables.$gd-border-color;
+            grid-column: 1 / -1;
+        }
 
+        &__description {
+            grid-column: 2 / -1;
+        }
+
+        &__objects {
+            grid-column: 2 / -1;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        &__object {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gd-palette-complementary-7);
+
+            .gd-analytics-catalog__object-type {
                 .gd-ui-kit-icon {
-                    vertical-align: middle;
-                    margin-right: 3px;
+                    display: flex;
                     fill: var(--catalog-object-type-icon-color);
                 }
             }
 
             &__identifier {
                 text-decoration: underline;
+            }
+
+            .gd-ui-kit-tooltip__anchor {
+                display: flex;
+            }
+        }
+
+        &__object-detail {
+            margin: -7px -10px;
+            padding: 12px;
+            background-color: kit-variables.$gd-color-white;
+            border-radius: 3px;
+            border: 1px solid kit-variables.$gd-border-color;
+            color: kit-variables.$gd-color-text;
+
+            &__title {
+                font-weight: 700;
+                font-size: 14px;
+                margin-bottom: 14px;
+            }
+
+            dl {
+                margin: 8px 4px 0 0;
+            }
+
+            dt {
+                color: var(--gd-palette-complementary-6);
+                margin-bottom: 2px;
+            }
+
+            dd {
+                margin-left: 0;
             }
         }
     }

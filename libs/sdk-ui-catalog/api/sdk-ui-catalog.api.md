@@ -44,6 +44,7 @@ export interface CatalogDetailContentProps {
     objectDefinition?: Partial<ICatalogItem> | null;
     objectId?: string | null;
     objectType?: ObjectType | null;
+    onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
     onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
     onCatalogItemUpdateError?: (error: Error) => void;
     onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
@@ -65,6 +66,7 @@ export interface IAnalyticsCatalogProps {
     locale?: string;
     onCatalogDetailClosed?: () => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
+    onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
     onCatalogItemOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;

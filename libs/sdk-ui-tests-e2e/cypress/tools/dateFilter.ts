@@ -47,7 +47,7 @@ export class DateFilter {
     }
 
     selectAbsoluteForm(): this {
-        this.getElement(".s-absolute-form").click();
+        this.getElement(".s-absolute-form-button").click();
         return this;
     }
 
@@ -57,12 +57,12 @@ export class DateFilter {
     }
 
     selectRelativeForm(): this {
-        this.getElement(".s-relative-form").click();
+        this.getElement(".s-relative-form-button").click();
         return this;
     }
 
     selectFloatingRange() {
-        this.getOption(".s-relative-form").click();
+        this.getOption(".s-relative-form-button").click();
         return this;
     }
 

@@ -859,5 +859,17 @@
     "dialogs.schedule.email.userAndEmail.remove": "消除 {name} （{email}）",
     "kdaDialog.dialog.keyDrives.overview.diff.title": "差異",
     "kdaDialog.dialog.keyDrives.empty": "沒有關鍵驅動因素",
-    "kdaDialog.dialog.keyDriver.chart.std": "變化重要性閾值"
+    "kdaDialog.dialog.keyDriver.chart.std": "變化重要性閾值",
+    "kdaDialog.dialog.filters.title": "過濾器",
+    "kdaDialog.dialog.filters.noFilters": "無濾鏡",
+    "kdaDialog.dialog.filters.add.tooltip": "新增過濾器",
+    "kdaDialog.dialog.filters.search": "搜尋",
+    "settingsDashboardDialog.sectionHeaders.dateDataset": "描述中的日期範圍",
+    "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日期範圍篩選器用於章節描述中的指標所引用的日期資料集。",
+    "dateDataset.autoSelect": "自動選擇",
+    "dateDataset.notFound": "未找到",
+    "dialogs.schedule.email.tabs.general": "一般的",
+    "dialogs.schedule.email.tabs.filters": "過濾器",
+    "dashboard.tabs.default.label": "無標題標籤頁",
+    "dashboard.tabs.accessibility.label": "儀錶板標籤"
 }

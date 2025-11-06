@@ -2,7 +2,7 @@
 
 import { ReactNode, useMemo } from "react";
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { KdaStateProvider } from "./KdaState.js";
 import { KdaState } from "../internalTypes.js";
@@ -20,7 +20,9 @@ export function KdaProvider({ children, definition, separators }: KdaProps) {
             separators,
             definition,
             definitionStatus: "success",
-            attributeFilters: definition.filters?.slice() ?? [],
+            attributeFilters: (definition.filters?.slice() ?? []).filter(
+                (f) => !isAllValuesDashboardAttributeFilter(f),
+            ),
         };
     }, [definition, separators]);
 

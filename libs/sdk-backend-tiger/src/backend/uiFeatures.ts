@@ -105,7 +105,6 @@ export enum TigerFeaturesNames {
     EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
     EnableWidgetExportPngImage = "enableWidgetExportPngImage",
     EnableExportToDocumentStorage = "enableExportToDocumentStorage",
-    EnableAttributeFilterVirtualised = "enableAttributeFilterVirtualised",
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
     ProductionFeatures = "productionFeatures",
@@ -225,7 +224,6 @@ export type ITigerFeatureFlags = {
     enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
     enableWidgetExportPngImage: (typeof FeatureFlagsValues)["enableWidgetExportPngImage"][number];
     enableExportToDocumentStorage: (typeof FeatureFlagsValues)["enableExportToDocumentStorage"][number];
-    enableAttributeFilterVirtualised: (typeof FeatureFlagsValues)["enableAttributeFilterVirtualised"][number];
     enableNotificationChannelIdentifiers: (typeof FeatureFlagsValues)["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
     productionFeatures: (typeof FeatureFlagsValues)["productionFeatures"][number];
@@ -345,7 +343,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSnapshotExportAccessibility: false,
     enableWidgetExportPngImage: true,
     enableExportToDocumentStorage: false,
-    enableAttributeFilterVirtualised: true,
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
     productionFeatures: undefined,
@@ -359,7 +356,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoArea: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
-    enableFilterAccessibility: false,
+    enableFilterAccessibility: true,
     enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
     enableDashboardTabs: false,
@@ -466,7 +463,6 @@ export const FeatureFlagsValues = {
     enableSnapshotExportAccessibility: [true, false] as const,
     enableWidgetExportPngImage: [true, false] as const,
     enableExportToDocumentStorage: [true, false] as const,
-    enableAttributeFilterVirtualised: [true, false] as const,
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,

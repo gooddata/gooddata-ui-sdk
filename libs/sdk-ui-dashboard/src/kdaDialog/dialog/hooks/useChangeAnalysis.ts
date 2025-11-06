@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo } from "react";
 
+import stringify from "json-stable-stringify";
+
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IChangeAnalysisResults, IKeyDriver } from "@gooddata/sdk-backend-spi";
 import {
@@ -11,6 +13,7 @@ import {
     IMeasure,
     ISeparators,
     ObjRef,
+    isAllValuesDashboardAttributeFilter,
     newAttribute,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -58,6 +61,13 @@ function useChangeAnalysisResults(
     const dateAttributeFinder = useDateAttribute();
     const attributeFinder = useAttribute();
 
+    const attributeFiltersFingerprint = useMemo(() => {
+        return attrFilters
+            .filter((f) => !isAllValuesDashboardAttributeFilter(f))
+            .map((f) => stringify(f))
+            .join();
+    }, [attrFilters]);
+
     return useCancelablePromise<IChangeAnalysisResults | undefined>(
         {
             promise: () => {
@@ -74,7 +84,9 @@ function useChangeAnalysisResults(
                         return attr ? newAttribute(ref) : null;
                     })
                     .filter(Boolean) as IAttribute[];
-                const filters = attrFilters.map(dashboardAttributeFilterToAttributeFilter);
+                const filters = attrFilters
+                    .filter((f) => !isAllValuesDashboardAttributeFilter(f))
+                    .map(dashboardAttributeFilterToAttributeFilter);
 
                 return backend
                     .workspace(workspace)
@@ -95,7 +107,7 @@ function useChangeAnalysisResults(
                     );
             },
         },
-        [backend, definition, attrs, workspace, from, to, loading, attrFilters],
+        [backend, definition, attrs, workspace, from, to, loading, attributeFiltersFingerprint],
     );
 }
 

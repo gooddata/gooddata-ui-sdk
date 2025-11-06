@@ -45,7 +45,6 @@ import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import {
     selectAttributeFilterConfigsModeMap,
     selectBackendCapabilities,
-    selectEnableAttributeFilterVirtualisedList,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectEnablePreserveFilterSelectionDuringInit,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
@@ -116,9 +115,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const enableAttributeFilterVirtualisedList = useDashboardSelector(
-        selectEnableAttributeFilterVirtualisedList,
-    );
     const enablePreserveSelectionDuringInit = useDashboardSelector(
         selectEnablePreserveFilterSelectionDuringInit,
     );
@@ -546,7 +542,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 enableImmediateAttributeFilterDisplayAsLabelMigration={
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
-                enableAttributeFilterVirtualised={enableAttributeFilterVirtualisedList}
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
                 enableDashboardFiltersApplyWithoutLoading
                 enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}

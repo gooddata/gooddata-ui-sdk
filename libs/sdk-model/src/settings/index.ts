@@ -510,11 +510,6 @@ export interface ISettings {
     enableExportToDocumentStorage?: boolean;
 
     /**
-     * Enable usage of new dropdown list replacing fixed-data-table
-     */
-    enableAttributeFilterVirtualised?: boolean;
-
-    /**
      * Enable notification channel identifiers
      */
     enableNotificationChannelIdentifiers?: boolean;

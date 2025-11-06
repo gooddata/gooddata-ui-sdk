@@ -34,11 +34,11 @@ export interface UseToastMessageType {
  * @internal
  */
 export const useToastMessage = (): UseToastMessageType => {
-    const { addMessage, removeMessage, removeAllMessages } = ToastsCenterContext.useContextStore((ctx) => ({
-        addMessage: ctx.addMessage,
-        removeMessage: ctx.removeMessage,
-        removeAllMessages: ctx.removeAllMessages,
-    }));
+    const { addMessage, removeMessage, removeAllMessages } = ToastsCenterContext.useContextStoreValues([
+        "addMessage",
+        "removeMessage",
+        "removeAllMessages",
+    ]);
     const intl = useIntl();
 
     const addMessageBase =
