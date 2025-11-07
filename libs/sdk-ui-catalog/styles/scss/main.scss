@@ -83,6 +83,12 @@ $content-font-size: 14px;
             border-top-right-radius: 3px;
         }
 
+        &__select-list {
+            .s-without_issues .input-label-text {
+                color: var(--gd-palette-complementary-7);
+            }
+        }
+
         &__reset {
             .gd-ui-kit-icon-button {
                 --gd-icon-fill-color: var(--gd-palette-complementary-6);

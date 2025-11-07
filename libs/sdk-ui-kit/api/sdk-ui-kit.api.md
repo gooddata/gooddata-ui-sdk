@@ -6595,7 +6595,7 @@ export interface UiAsyncTableProps<T extends {
 export const UiAsyncTableRowHeightLarge = 55;
 
 // @internal (undocumented)
-export const UiAsyncTableRowHeightNormal = 43;
+export const UiAsyncTableRowHeightNormal = 45;
 
 // @internal (undocumented)
 export const UiAsyncTableScrollbarWidth = 10;

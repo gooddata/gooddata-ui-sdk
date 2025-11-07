@@ -299,6 +299,10 @@
         "value": "Unknown abbreviation",
         "comment": "Title for quality issue when a catalog item contains unknown abbreviation."
     },
+    "analyticsCatalog.quality.title.none": {
+        "value": "Without issues",
+        "comment": "Title for the filter option that shows catalog items without quality issues."
+    },
     "analyticsCatalog.quality.description.identicalTitle": {
         "value": "Same title is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} title to avoid confusion.",
         "comment": "Description for quality issue when multiple catalog items have identical titles."

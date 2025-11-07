@@ -108,6 +108,7 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
                         <>
                             <Header>{label}</Header>
                             <InvertableSelect
+                                className="gd-analytics-catalog__filter__select-list"
                                 width={240}
                                 items={filteredOptions}
                                 selectedItems={localSelection}

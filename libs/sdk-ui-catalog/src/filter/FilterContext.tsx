@@ -4,7 +4,12 @@ import { type PropsWithChildren, createContext, useContext, useMemo, useReducer 
 
 import { isEqual } from "lodash-es";
 
-import type { Identifier, ObjectOrigin, SemanticQualityIssueCode } from "@gooddata/sdk-model";
+import {
+    type Identifier,
+    type ObjectOrigin,
+    type SemanticQualityIssueCode,
+    SemanticQualityIssueCodeValues,
+} from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/index.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
@@ -187,6 +192,15 @@ export function useQualityFilter(): IFilterParams<Identifier[]> | undefined {
         if (values.length === 0 || issues.length === 0) {
             return undefined;
         }
+
+        // Special handling for the artificial NONE option
+        if (values.includes(SemanticQualityIssueCodeValues.NONE)) {
+            const includedIds = getQualityIssueIdsByCodes(issues, values, "included");
+            const excludedIds = getQualityIssueIdsByCodes(issues, values, "excluded");
+            const ids = excludedIds.filter((id) => !includedIds.includes(id));
+            return { values: ids, isInverted: !isInverted };
+        }
+
         const ids = getQualityIssueIdsByCodes(issues, values, isInverted ? "excluded" : "included");
         return { values: ids, isInverted };
     }, [isInverted, values, issues]);

@@ -385,7 +385,7 @@ function createYearToYear(
 
     const attribute = current.scope.descriptor.attributeHeader;
     const attributeItem = current.scope.header.attributeHeaderItem;
-    const isYear = attribute.granularity === "GDC.time.year";
+    const isYear = attribute.granularity === "GDC.time.year" || attribute.granularity === "YEAR";
 
     // Year to year is not available for year granularity, it not makes sense
     if (isYear) {
