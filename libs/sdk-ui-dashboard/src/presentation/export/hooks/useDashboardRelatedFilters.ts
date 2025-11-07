@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     DashboardAttributeFilterConfigMode,
@@ -17,6 +18,7 @@ import {
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigOverrides,
     selectDateFilterConfigsOverrides,
+    selectEnablePreserveFilterSelectionDuringInit,
     selectFilterContextFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -48,6 +50,9 @@ export function useDashboardRelatedFilters(run: boolean): {
     const dateFilterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigsOverrides);
     const attributeFiltersConfig = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const enablePreserveFilterSelectionDuringInit = useDashboardSelector(
+        selectEnablePreserveFilterSelectionDuringInit,
+    );
 
     const { result, status } = useCancelablePromise(
         {
@@ -57,7 +62,13 @@ export function useDashboardRelatedFilters(run: boolean): {
                 }
                 return Promise.all(
                     dashboardFilters.map((f) =>
-                        updateLabelElements(backend, workspaceId, attributeFiltersConfig, f),
+                        updateLabelElements(
+                            backend,
+                            workspaceId,
+                            attributeFiltersConfig,
+                            f,
+                            enablePreserveFilterSelectionDuringInit,
+                        ),
                     ),
                 );
             },
@@ -99,6 +110,7 @@ async function updateLabelElements(
     workspaceId: string,
     attributeFiltersConfig: IDashboardAttributeFilterConfig[],
     dashboardFilter: FilterContextItem,
+    enablePreserveFilterSelectionDuringInit: boolean,
 ): Promise<FilterContextItem> {
     // Skip filters that are not attribute filters
     if (isDashboardAttributeFilter(dashboardFilter)) {
@@ -120,6 +132,10 @@ async function updateLabelElements(
 
         const data = await query.query();
         const all: IAttributeElement[] = await data.all();
+
+        if (!all.length && enablePreserveFilterSelectionDuringInit) {
+            return dashboardFilter;
+        }
 
         return {
             ...dashboardFilter,

@@ -5194,6 +5194,7 @@ export const SemanticQualityIssueCodeValues: {
     readonly SIMILAR_TITLE: "SIMILAR_TITLE";
     readonly SIMILAR_DESCRIPTION: "SIMILAR_DESCRIPTION";
     readonly UNKNOWN_ABBREVIATION: "UNKNOWN_ABBREVIATION";
+    readonly NONE: "NONE";
 };
 
 // @internal

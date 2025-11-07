@@ -72,6 +72,7 @@ export const SemanticQualityIssueCodeValues = {
     SIMILAR_TITLE: "SIMILAR_TITLE",
     SIMILAR_DESCRIPTION: "SIMILAR_DESCRIPTION",
     UNKNOWN_ABBREVIATION: "UNKNOWN_ABBREVIATION",
+    NONE: "NONE", // Artificial code for frontend filtering purposes
 } as const;
 
 /**

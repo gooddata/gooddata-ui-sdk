@@ -19,13 +19,13 @@ import {
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
 import { KdaItem, KdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition } from "../../types.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
 
 export function useChangeAnalysis() {
     const { state, setState } = useKdaState();
@@ -107,7 +107,17 @@ function useChangeAnalysisResults(
                     );
             },
         },
-        [backend, definition, attrs, workspace, from, to, loading, attributeFiltersFingerprint],
+        [
+            backend,
+            definition,
+            attrs,
+            workspace,
+            from,
+            to,
+            loading,
+            dateAttributeFinder,
+            attributeFiltersFingerprint,
+        ],
     );
 }
 

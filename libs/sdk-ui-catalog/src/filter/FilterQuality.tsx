@@ -29,6 +29,9 @@ const titleMessages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } =
     [SemanticQualityIssueCodeValues.UNKNOWN_ABBREVIATION]: {
         id: "analyticsCatalog.quality.title.unknownAbbreviation",
     },
+    [SemanticQualityIssueCodeValues.NONE]: {
+        id: "analyticsCatalog.quality.title.none",
+    },
 });
 
 export function FilterQuality() {
@@ -37,7 +40,10 @@ export function FilterQuality() {
     const { qualityCodes } = useFilterState();
     const { setQualityCodes } = useFilterActions();
 
-    const options = useMemo(() => getQualityIssueCodes(issues), [issues]);
+    const options = useMemo(() => {
+        const codes = getQualityIssueCodes(issues);
+        return [SemanticQualityIssueCodeValues.NONE, ...codes];
+    }, [issues]);
 
     const getItemTitle = useCallback(
         (code: SemanticQualityIssueCode) => {

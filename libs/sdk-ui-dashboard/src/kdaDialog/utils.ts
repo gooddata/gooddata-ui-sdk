@@ -4,12 +4,15 @@ import { invariant } from "ts-invariant";
 
 import { ClientFormatterFacade, ISeparators } from "@gooddata/number-formatter";
 import {
+    IAttributeFilter,
     ICatalogAttribute,
     IDashboardAttributeFilter,
     ObjRef,
     areObjRefsEqual,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
@@ -123,4 +126,15 @@ export function clearSummaryValue(definition: IKdaDefinition | null): Partial<Kd
               }
             : {}),
     };
+}
+
+export function dashboardAttributeFilterToAttributeFilter(
+    dashboardFilter: IDashboardAttributeFilter,
+): IAttributeFilter {
+    const { attributeElements, displayForm, negativeSelection } = dashboardFilter.attributeFilter;
+    if (negativeSelection) {
+        return newNegativeAttributeFilter(displayForm, attributeElements);
+    } else {
+        return newPositiveAttributeFilter(displayForm, attributeElements);
+    }
 }
