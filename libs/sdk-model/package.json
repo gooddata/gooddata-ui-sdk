@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.9.0-alpha.1",
+    "version": "11.9.0-alpha.2",
     "description": "GoodData Model definitions used by UI components and Backend SPI",
     "repository": {
         "type": "git",
@@ -61,7 +61,7 @@
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "8.46.0",
         "@typescript-eslint/parser": "8.46.0",
-        "dependency-cruiser": "^13.0.3",
+        "dependency-cruiser": "^14.1.2",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-eslint-comments": "3.2.0",

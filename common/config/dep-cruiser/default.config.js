@@ -207,7 +207,7 @@ const DefaultOptions = {
     },
 
     exclude: {
-        path: "((.*(__mocks__|test|tests).*)|../(api-|sdk-|util/).*)",
+        path: "((.*(__mocks__|test|tests).*)|../(api-|sdk-|util/).*|\\.scss\\.js$)",
         //, dynamic: true
     },
 

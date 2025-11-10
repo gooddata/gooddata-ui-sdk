@@ -1,8 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { resolve } from "path";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
 import { mergeConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const packagesWithoutStyles = [
     "@gooddata/sdk-model",

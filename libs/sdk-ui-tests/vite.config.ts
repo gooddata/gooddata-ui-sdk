@@ -1,4 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
+
+import { dirname, resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -6,10 +8,14 @@ export default defineConfig({
         {
             name: "mock-css-modules",
             enforce: "pre",
-            transform(code, id) {
-                if (id.match(/\.module\.(css|scss)$/)) {
-                    return { code: "export default {};", map: null };
+            // new hook to rewrite .scss.js → .scss
+            resolveId(source, importer) {
+                if (source.endsWith(".scss.js")) {
+                    // convert import path to .scss
+                    return resolve(dirname(importer!), source.replace(/\.scss\.js$/, ".scss"));
                 }
+                // fall back to default Vite resolver
+                return null;
             },
         },
     ],

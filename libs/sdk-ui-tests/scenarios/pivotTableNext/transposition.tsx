@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-// import { action } from "@storybook/addon-actions";
-import { action } from "storybook/internal/actions";
+import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
