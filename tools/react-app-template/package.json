@@ -68,7 +68,7 @@
         "@typescript-eslint/parser": "8.46.0",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "css-loader": "^6.7.1",
-        "dependency-cruiser": "^13.0.3",
+        "dependency-cruiser": "^14.1.2",
         "dotenv": "16.0.3",
         "esbuild-loader": "^4.0.2",
         "eslint": "^8.57.1",
