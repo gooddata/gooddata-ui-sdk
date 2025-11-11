@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 module.exports = {
     paths: ["./src/localization/bundles"],
@@ -18,6 +18,11 @@ module.exports = {
         {
             dir: /src\/localization\/bundles/,
             pattern: /^(gs\.date\.(today|tomorrow|yesterday))$/,
+            ignore: true,
+        },
+        {
+            dir: /src\/localization\/bundles/,
+            pattern: /^(drill\.)/,
             ignore: true,
         },
     ],

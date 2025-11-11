@@ -126,9 +126,9 @@ function getCategory(item: IUiListboxInteractiveItem<KdaItem> | string) {
 
 function getSummaryLoading(state: KdaState, globalLoading?: boolean) {
     if (state.definition) {
-        const from = state.definition.range[0];
-        const to = state.definition.range[1];
-        return from.value === undefined || to.value === undefined;
+        const from = state.fromValue;
+        const to = state.toValue;
+        return from?.value === undefined || to?.value === undefined;
     }
     return globalLoading ?? false;
 }

@@ -2,8 +2,10 @@
 
 import { useEffect } from "react";
 
+import { IMeasure } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import { DeepReadonly } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition } from "../../types.js";
 
@@ -21,7 +23,7 @@ export function useValidAttributes() {
     }, [result, setState, status]);
 }
 
-function useValidObjectsResults(definition: IKdaDefinition | null) {
+function useValidObjectsResults(definition: DeepReadonly<IKdaDefinition> | null) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -34,7 +36,10 @@ function useValidObjectsResults(definition: IKdaDefinition | null) {
                 if (!metric) {
                     return Promise.resolve(undefined);
                 }
-                return backend.workspace(workspace).measures().getConnectedAttributes(metric, metrics);
+                return backend
+                    .workspace(workspace)
+                    .measures()
+                    .getConnectedAttributes(metric as IMeasure, metrics as IMeasure[]);
             },
         },
         [],

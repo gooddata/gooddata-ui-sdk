@@ -5,6 +5,8 @@ import { FormattedMessage } from "react-intl";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
+import * as styles from "../GroupResultCounterStyles.module.scss.js";
+
 type Props = {
     count: number;
     isExpanded: boolean;
@@ -15,14 +17,9 @@ export function GroupResultCounter({ count, isExpanded }: Props) {
         return null;
     }
     return (
-        <div className="gd-semantic-search__results-item__counter">
+        <div className={styles.counter}>
             <FormattedMessage tagName="span" id="semantic-search.results.count" values={{ count }} />
-            <div
-                className={cx(
-                    "gd-semantic-search__results-item__counter__icon",
-                    isExpanded && "gd-semantic-search__results-item__counter__icon--expanded",
-                )}
-            >
+            <div className={cx(styles.counterIcon, isExpanded && styles.counterIconExpanded)}>
                 <UiIcon type="navigateRight" size={16} color="complementary-6" ariaHidden />
             </div>
         </div>

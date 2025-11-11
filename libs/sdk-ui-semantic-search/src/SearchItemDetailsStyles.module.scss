@@ -1,0 +1,55 @@
+// (C) 2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// Original: .gd-semantic-search__results-item__details
+.details {
+    width: 16px;
+    height: 16px;
+    align-self: center;
+    align-items: center;
+}
+
+// Original: .gd-semantic-search__results-item__details__contents
+.detailsContents {
+    width: 190px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    // Note: EllipsisText component from UI kit handles its own sizing
+
+    h4 {
+        margin: 10px 0 0;
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 400;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    hr {
+        margin: 10px 0;
+        border: 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+}
+
+// Original: .gd-semantic-search__results-item__details__match h4
+.detailsMatch h4 {
+    text-transform: none;
+    font-size: 12px;
+}
+
+// Original: .gd-semantic-search__bubble.bubble.bubble-light
+// Note: bubble-light from UI kit already provides white background, so this override is not needed
+
+// Original: .gd-semantic-search__bubble_trigger
+.bubbleTrigger {
+    display: flex;
+}

@@ -4,6 +4,8 @@ import { AriaAttributes, AriaRole, MouseEvent, ReactNode } from "react";
 
 import classnames from "classnames";
 
+import * as styles from "./SearchItem.module.scss.js";
+
 export type SearchItemProps = {
     className?: string;
     children: ReactNode;
@@ -47,25 +49,22 @@ export function SearchItem({
 
     const Tag = href ? "a" : "div";
     const tabIndex = href ? -1 : undefined;
-    const wrapperClassName = classnames(className, {
-        "gd-semantic-search__results-item": true,
-        "gd-semantic-search__results-item--active": isFocused,
-    });
+    const wrapperClassName = classnames(className, styles.resultsItem, isFocused && styles.resultsItemActive);
 
     return (
-        <div className={wrapperClassName} data-level={level}>
+        <div className={wrapperClassName} data-level={level} data-testid="semantic-search-results-item">
             <Tag
                 {...ariaAttributes}
                 href={href}
                 tabIndex={tabIndex}
-                className="gd-semantic-search__results-item__content"
+                className={styles.content}
                 onClick={handleClick}
                 onAuxClick={handleClick}
                 onMouseEnter={onHover}
             >
-                <span className="gd-semantic-search__results-item__icon">{icon}</span>
-                <span className="gd-semantic-search__results-item__text">{children}</span>
-                <div className="gd-semantic-search__results-item__details-container">
+                <span className={styles.icon}>{icon}</span>
+                <span className={styles.text}>{children}</span>
+                <div className={styles.detailsContainer}>
                     {!!isFocused && level === 1 && details}
                     {resultCounter}
                 </div>

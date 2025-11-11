@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Changed: Feature flag enableDashboardFiltersApplyModes has been removed. The \"Apply all dashboard filter changes at once\" is available to everyone by default. ",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -16,8 +16,9 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
  *
  * In the old implementation, all items start visible. When you click an item,
  * it toggles its visibility. The same behavior is replicated here:
- * - Empty enabledLegendItems array = all items visible (initial state)
- * - Items in enabledLegendItems array = those items are visible
+ * - `enabledLegendItems === null`: all items visible (initial state)
+ * - `enabledLegendItems.length === 0`: user disabled every item (legend greyed out)
+ * - items listed in `enabledLegendItems`: only those stay visible
  *
  * @param baseLegendItems - Base legend items from data transformation
  * @returns Legend items with updated isVisible state
@@ -34,11 +35,19 @@ export function useLegendItemsWithState(
             return [];
         }
 
-        // If no items are explicitly tracked, all are visible (initial state)
-        if (enabledLegendItems.length === 0) {
+        // No explicit state recorded means everything stays visible (initial state).
+        if (enabledLegendItems === null) {
             return baseLegendItems.map((item) => ({
                 ...item,
                 isVisible: true,
+            }));
+        }
+
+        // Explicitly tracking an empty list means all items are disabled (legacy behavior).
+        if (enabledLegendItems.length === 0) {
+            return baseLegendItems.map((item) => ({
+                ...item,
+                isVisible: false,
             }));
         }
 

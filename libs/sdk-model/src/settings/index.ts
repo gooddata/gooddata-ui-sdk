@@ -415,11 +415,6 @@ export interface ISettings {
     enableNewPdfTabularExport?: boolean;
 
     /**
-     * Enable config for a single global "Apply" button on the dashboard, replacing individual apply buttons next to each filter.
-     */
-    enableDashboardFiltersApplyModes?: boolean;
-
-    /**
      * Enable rich text widget filter configuration.
      * Allows users to configure date and attribute filter settings for rich text widgets.
      * @alpha

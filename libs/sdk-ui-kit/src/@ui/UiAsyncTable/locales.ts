@@ -12,6 +12,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     chooseAction: { id: "table.bulkActions.chooseAction" },
     selectedCount: { id: "table.bulkActions.selectedCount" },
     selectedCountShort: { id: "table.bulkActions.selectedCountShort" },
+    selectAll: { id: "table.bulkActions.selectAll" },
     noMatchFound: { id: "table.emptyState.noMatch" },
     tryAdjustingFilters: { id: "table.emptyState.tryAdjustingFilters" },
     selectedFiltersCount: { id: "table.bulkActions.selectedFiltersCount" },

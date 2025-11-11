@@ -38,6 +38,7 @@ import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearc
 import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
+import * as styles from "./SearchOverlay.module.scss.js";
 import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -294,10 +295,10 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     }, [searchStatus, searchError]);
 
     return (
-        <div className={classnames("gd-semantic-search__overlay", className)}>
+        <div className={classnames(styles.overlay, "gd-semantic-search__overlay", className)}>
             <Input
                 ref={inputRef}
-                className="gd-semantic-search__overlay-input"
+                className={classnames(styles.overlayInput, "gd-semantic-search__overlay-input")}
                 id={inputId}
                 type="search"
                 autofocus
@@ -317,7 +318,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
 
                 if (searchStatus === "error") {
                     return (
-                        <div className="gd-semantic-search__overlay-error">
+                        <div className={styles.overlayError}>
                             <Message type="error">
                                 <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
                                 <FormattedMessage id="semantic-search.error.text" />

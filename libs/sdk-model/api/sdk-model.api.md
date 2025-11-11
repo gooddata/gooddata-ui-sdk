@@ -3617,7 +3617,6 @@ export interface ISettings {
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
-    enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;

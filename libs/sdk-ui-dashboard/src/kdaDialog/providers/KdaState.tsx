@@ -16,6 +16,8 @@ import { KdaState } from "../internalTypes.js";
 const defaultState: KdaState = {
     //main items
     definition: null,
+    toValue: undefined,
+    fromValue: undefined,
     definitionStatus: "pending",
     items: [],
     itemsStatus: "pending",

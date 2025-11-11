@@ -1,0 +1,24 @@
+// (C) 2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// Shared text styles used by multiple search item components
+// Original: .gd-semantic-search__results-item__text__row
+.textRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    &:not(:first-child) {
+        color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+// Original: .gd-semantic-search__results-item__text__ellipsis
+.textEllipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}

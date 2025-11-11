@@ -4,10 +4,11 @@ import cx from "classnames";
 
 import { UiChip, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { DeepReadonly } from "../../internalTypes.js";
 import { IKdaDefinition } from "../../types.js";
 
 interface IMetricBarProps {
-    definition: IKdaDefinition;
+    definition: DeepReadonly<IKdaDefinition>;
 }
 
 export function MetricBar(props: IMetricBarProps) {

@@ -23,6 +23,7 @@ import {
     loadThreadAction,
 } from "../store/index.js";
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
+import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
 
 export type GenAIChatOwnProps = {
     autofocus?: boolean;
@@ -129,6 +130,7 @@ function GenAIChatWrapperComponent({
                 <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
                     <FormattedMessage id="gd.gen-ai.disclaimer" />
                 </Typography>
+                <KeyDriverAnalysis />
             </div>
         </ErrorBoundary>
     );

@@ -39,7 +39,12 @@ export {
     loadedSelector,
 } from "./messages/messagesSelectors.js";
 
-export { setOpenAction, setFullscreenAction, copyToClipboardAction } from "./chatWindow/chatWindowSlice.js";
+export {
+    setOpenAction,
+    setFullscreenAction,
+    copyToClipboardAction,
+    setKeyDriverAnalysisAction,
+} from "./chatWindow/chatWindowSlice.js";
 
 export {
     isOpenSelector,

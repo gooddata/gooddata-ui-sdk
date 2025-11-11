@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { KdaItem, KdaItemGroup } from "../../internalTypes.js";
+import { DeepReadonly, KdaItem, KdaItemGroup } from "../../internalTypes.js";
 import { IKdaDefinition } from "../../types.js";
 
 const DEFAULT_MEASURE_FORMAT = "#,##0.00";
@@ -26,7 +26,7 @@ const LIMIT_KDA = 20;
 
 export function createDataView(
     workspace: string,
-    def: IKdaDefinition | null,
+    def: DeepReadonly<IKdaDefinition> | null,
     group: KdaItemGroup,
     item: KdaItem,
     title: string,
@@ -204,7 +204,9 @@ function createExecutionResults(
     return res;
 }
 
-function createTempMeasure(metric: IMeasure): [IMeasure, IResultMeasureHeader, IMeasureDescriptor] {
+function createTempMeasure(
+    metric: DeepReadonly<IMeasure>,
+): [IMeasure, IResultMeasureHeader, IMeasureDescriptor] {
     const maql = `SELECT 0`;
     const localId = `${metric.measure.localIdentifier}_vak`;
     const title = metric.measure.alias ?? metric.measure.title ?? "";
@@ -229,7 +231,7 @@ function createTempMeasure(metric: IMeasure): [IMeasure, IResultMeasureHeader, I
 }
 
 function createStandardDeviationMeasure(
-    metric: IMeasure,
+    metric: DeepReadonly<IMeasure>,
     title: string,
     deviation: number,
 ): [IMeasure, IResultMeasureHeader, IMeasureDescriptor] {

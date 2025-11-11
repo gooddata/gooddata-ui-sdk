@@ -1,7 +1,27 @@
 // (C) 2023-2025 GoodData Corporation
 import { defineConfig } from "vitest/config";
 
+// Plugin to handle CSS module imports
+const cssModulesPlugin = {
+    name: "css-modules",
+    resolveId(id) {
+        if (id.endsWith(".module.scss.js")) {
+            // Return a virtual module ID
+            return "\0" + id;
+        }
+    },
+    load(id) {
+        if (id.startsWith("\0") && id.endsWith(".module.scss.js")) {
+            // Return a Proxy that returns the property name as the value
+            return `export default new Proxy({}, {
+                get: (target, prop) => String(prop),
+            })`;
+        }
+    },
+};
+
 export default defineConfig({
+    plugins: [cssModulesPlugin],
     test: {
         environment: "happy-dom",
         setupFiles: "./vitest.setup.ts",

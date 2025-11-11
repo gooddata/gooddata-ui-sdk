@@ -11,6 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, EllipsisText, Typography, UiIcon } from "@gooddata/sdk-ui-kit";
 
+import * as styles from "../SearchItemDetailsStyles.module.scss.js";
+
 /**
  * Maximum number of lines for the description before ellipsis.
  */
@@ -45,19 +47,15 @@ export function SearchItemDetails({ item }: Props) {
     return (
         <div
             aria-hidden
-            className="gd-semantic-search__results-item__details"
+            className={styles.details}
             onPointerEnter={() => setIsHovered(true)}
             onPointerLeave={() => setIsHovered(false)}
         >
-            <BubbleHoverTrigger eventsOnBubble className="gd-semantic-search__bubble_trigger">
+            <BubbleHoverTrigger eventsOnBubble className={styles.bubbleTrigger}>
                 <UiIcon type="question" size={16} color={isHovered ? "complementary-7" : "complementary-6"} />
-                <Bubble
-                    className="bubble-light gd-semantic-search__bubble"
-                    alignPoints={BUBBLE_ALIGN_POINTS}
-                    arrowStyle={ARROW_STYLE}
-                >
+                <Bubble className="bubble-light" alignPoints={BUBBLE_ALIGN_POINTS} arrowStyle={ARROW_STYLE}>
                     {/* It's OK to have div inline, as this chunk is rendered through portal */}
-                    <div className="gd-semantic-search__results-item__details__contents">
+                    <div className={styles.detailsContents}>
                         <Typography tagName="h3">{item.title}</Typography>
                         <Description item={item} />
                         <FormattedMessage tagName="h4" id="semantic-search.id" />
@@ -102,7 +100,7 @@ function Score({ item }: { item: ISemanticSearchResultItem }) {
     const score = item.score ? Math.round(Math.min(1, Math.max(0, item.score)) * 100) : 0;
 
     return (
-        <div className="gd-semantic-search__results-item__details__contents__match">
+        <div className={styles.detailsMatch}>
             <hr />
             <FormattedMessage id="semantic-search.match" tagName="h4" values={{ score }} />
         </div>

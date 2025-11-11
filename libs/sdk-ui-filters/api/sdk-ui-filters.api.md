@@ -407,10 +407,6 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
-    // @deprecated
-    enableDashboardFiltersApplyModes?: boolean;
-    // @deprecated
-    enableDashboardFiltersApplyWithoutLoading?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     // @internal
     enablePreserveSelectionDuringInit?: boolean;
@@ -800,8 +796,6 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
-    // @deprecated
-    enableDashboardFiltersApplyModes?: boolean;
     // @alpha
     FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
     // (undocumented)

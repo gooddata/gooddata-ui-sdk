@@ -163,6 +163,7 @@ const chartClickDebounced = debounce(
         chartId: string,
         chartType: ChartType,
     ) => {
+        const originalEvent = event.originalEvent as PointerEvent | undefined;
         const { dataView, onDrill } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
@@ -190,6 +191,9 @@ const chartClickDebounced = debounce(
         const data: IDrillEvent = {
             dataView,
             drillContext,
+            chartX: originalEvent?.offsetX,
+            chartY: originalEvent?.offsetY,
+            target: event.target?.container,
         };
 
         fireEvent(onDrill, data, target);

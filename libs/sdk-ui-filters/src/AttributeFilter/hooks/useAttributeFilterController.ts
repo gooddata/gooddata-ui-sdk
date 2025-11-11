@@ -99,13 +99,9 @@ export const useAttributeFilterController = (
         selectionMode = "multi",
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
-        withoutApply: withoutApplyProp = false,
-        enableDashboardFiltersApplyModes = false,
-        enableDashboardFiltersApplyWithoutLoading = false,
+        withoutApply,
         enablePreserveSelectionDuringInit,
     } = props;
-
-    const withoutApply = withoutApplyProp ?? enableDashboardFiltersApplyModes;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
@@ -190,7 +186,6 @@ export const useAttributeFilterController = (
         },
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
-        enableDashboardFiltersApplyWithoutLoading,
     );
     const callbacks = useCallbacks(
         handler,
@@ -318,7 +313,6 @@ function useInitOrReload(
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
-    enableDashboardFiltersApplyWithoutLoading: boolean,
 ) {
     const {
         filter,
@@ -405,12 +399,7 @@ function useInitOrReload(
 
         const change = resetOnParentFilterChange
             ? updateAutomaticResettingFilter(handler, props, supportsCircularDependencyInFilters)
-            : updateNonResettingFilter(
-                  handler,
-                  props,
-                  supportsKeepingDependentFiltersSelection,
-                  enableDashboardFiltersApplyWithoutLoading,
-              );
+            : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
         refreshByType(
             handler,
             change,
@@ -435,7 +424,6 @@ function useInitOrReload(
         displayAsLabel,
         shouldReloadElements,
         withoutApply,
-        enableDashboardFiltersApplyWithoutLoading,
         shouldIncludeLimitingFilters,
         isSelectionInvalid,
     ]);
@@ -528,7 +516,6 @@ function updateNonResettingFilter(
         withoutApply,
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
-    enableDashboardFiltersApplyWithoutLoading: boolean,
 ): UpdateFilterType {
     if (
         limitingAttributesChanged ||
@@ -588,8 +575,7 @@ function updateNonResettingFilter(
 
         // If the filter changes are commited without apply, we want to avoid loading based on FF.
         // This is experimental and will be removed after the feature is fully tested and released.
-        // enableDashboardFiltersApplyWithoutLoading should default to true in the future.
-        if (enableDashboardFiltersApplyWithoutLoading && withoutApply) {
+        if (withoutApply) {
             const needsInitialization = isEmpty(handler.getAllElements()) && filterChanged;
 
             if (!needsInitialization) {

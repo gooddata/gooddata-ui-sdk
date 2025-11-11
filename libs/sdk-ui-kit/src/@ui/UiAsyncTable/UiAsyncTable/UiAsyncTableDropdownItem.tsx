@@ -15,6 +15,8 @@ function UiAsyncTableDropdownItem({
         <div
             className={e("dropdown-item", { selected: isSelected, "multi-select": isMultiSelect })}
             onClick={onClick}
+            role="menuitem"
+            aria-disabled={false}
         >
             {isMultiSelect ? (
                 <div className={e("dropdown-item-checkbox")}>

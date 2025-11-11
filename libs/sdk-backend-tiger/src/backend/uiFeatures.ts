@@ -86,7 +86,6 @@ export enum TigerFeaturesNames {
     EnableSlideshowExports = "enableSlideshowExports",
     EnableRawExports = "enableRawExports",
     EnableChartAccessibilityFeatures = "enableChartAccessibilityFeatures",
-    EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
@@ -204,7 +203,6 @@ export type ITigerFeatureFlags = {
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableSlideshowExports: (typeof FeatureFlagsValues)["enableSlideshowExports"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
-    enableDashboardFiltersApplyModes: (typeof FeatureFlagsValues)["enableDashboardFiltersApplyModes"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableRichTextDynamicReferences: (typeof FeatureFlagsValues)["enableRichTextDynamicReferences"][number];
@@ -323,7 +321,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAmplitudeTracker: false,
     enableSlideshowExports: true,
     enableRawExports: false,
-    enableDashboardFiltersApplyModes: true,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: true,
@@ -446,7 +443,6 @@ export const FeatureFlagsValues = {
     enableHighchartsAccessibility: [true, false] as const,
     enableChartAccessibilityFeatures: [true, false] as const,
     enableAccessibleChartTooltip: [true, false] as const,
-    enableDashboardFiltersApplyModes: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableRichTextDynamicReferences: [true, false] as const,

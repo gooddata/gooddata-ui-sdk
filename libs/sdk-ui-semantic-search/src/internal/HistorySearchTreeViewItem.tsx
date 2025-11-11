@@ -6,6 +6,7 @@ import { type IUiTreeviewItemProps, IconHistoryBack } from "@gooddata/sdk-ui-kit
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { SearchItem } from "../SearchItem.js";
+import * as styles from "../SearchItemText.module.scss.js";
 
 /**
  * @internal
@@ -37,8 +38,8 @@ export function HistorySearchTreeViewItem({
             isFocused={isFocused}
             icon={<IconHistoryBack color={theme?.palette?.complementary?.c5 ?? "#B0BECA"} />}
         >
-            <span className="gd-semantic-search__results-item__text__row">
-                <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
+            <span className={styles.textRow}>
+                <span className={styles.textEllipsis}>{item.stringTitle}</span>
             </span>
         </SearchItem>
     );

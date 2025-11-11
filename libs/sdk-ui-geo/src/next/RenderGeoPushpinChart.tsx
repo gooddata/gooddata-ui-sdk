@@ -6,6 +6,7 @@ import cx from "classnames";
 import { defaultImport } from "default-import";
 import { useIntl } from "react-intl";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import { v4 } from "uuid";
 
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
 
@@ -31,6 +32,7 @@ import { usePushData } from "./hooks/shared/usePushData.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(ReactMeasure);
 
+const containerBaseId = "geo-pushpin-chart-next";
 /**
  * Rendering layer - displays the map
  *
@@ -48,6 +50,7 @@ export function RenderGeoPushpinChart(): ReactElement {
     const props = useGeoPushpinProps();
     const { initialDataView } = useInitialExecution();
     const mapContainerRef = useRef<HTMLDivElement>(null);
+    const containerId = useMemo(() => `${containerBaseId}-${v4()}`, []);
 
     // Track chart container dimensions for legend responsive behavior
     const [chartContainerRect, setChartContainerRect] = useState<ContentRect | null>(null);
@@ -131,6 +134,8 @@ export function RenderGeoPushpinChart(): ReactElement {
     const containerClass = cx(
         "gd-geo-pushpin-next__container",
         "gd-geo-component",
+        containerBaseId,
+        containerId,
         flexDirection,
         isRow ? "gd-geo-pushpin-next__container--flex-row" : "gd-geo-pushpin-next__container--flex-column",
         {
@@ -143,7 +148,7 @@ export function RenderGeoPushpinChart(): ReactElement {
             colorStrategy={colorStrategy}
             config={props.config}
             categoryItems={legendItems}
-            containerId="geo-pushpin-chart-next"
+            containerId={containerId}
             chartContainerRect={chartContainerRect ?? undefined}
         />
     );
@@ -152,10 +157,8 @@ export function RenderGeoPushpinChart(): ReactElement {
         <Measure client onResize={setChartContainerRect}>
             {({ measureRef }: MeasuredComponentProps) => (
                 <div
-                    id="geo-pushpin-chart-next"
-                    data-testid={
-                        isExportMode ? "geo-pushpin-chart-next-export-mode" : "geo-pushpin-chart-next"
-                    }
+                    id={containerId}
+                    data-testid={isExportMode ? "geo-pushpin-chart-next-export-mode" : containerBaseId}
                     className={containerClass}
                     ref={measureRef}
                 >

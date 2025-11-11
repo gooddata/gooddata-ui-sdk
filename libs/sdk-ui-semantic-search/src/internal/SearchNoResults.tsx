@@ -2,6 +2,8 @@
 
 import { FormattedMessage } from "react-intl";
 
+import * as styles from "./SearchNoResults.module.scss.js";
+
 export interface SearchNoResults {
     searchTerm: string;
     searchMessage?: string;
@@ -9,10 +11,10 @@ export interface SearchNoResults {
 
 export function SearchNoResults({ searchMessage, searchTerm }: SearchNoResults) {
     if (searchMessage) {
-        return <div className="gd-semantic-search__overlay-no-results">{searchMessage}</div>;
+        return <div className={styles.overlayNoResults}>{searchMessage}</div>;
     }
     return (
-        <div className="gd-semantic-search__overlay-no-results">
+        <div className={styles.overlayNoResults}>
             <FormattedMessage id="semantic-search.no-results" values={{ query: searchTerm }} />
         </div>
     );

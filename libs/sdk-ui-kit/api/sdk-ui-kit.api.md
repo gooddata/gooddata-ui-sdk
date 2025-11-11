@@ -3478,11 +3478,15 @@ export interface ILegacySingleSelectListProps<T> {
 // @internal (undocumented)
 export interface IListProps<T> {
     // (undocumented)
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabelledBy" | "role">;
+    // (undocumented)
     className?: string;
     // (undocumented)
     compensateBorder?: boolean;
     // (undocumented)
     height?: number;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     itemHeight?: number;
     // (undocumented)
@@ -5865,7 +5869,7 @@ export function LegacySingleSelectListItem({ source, selected, onSelect, onMouse
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
-export function List<T>({ className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, }: IListProps<T>): ReactElement;
+export function List<T>({ id, className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, accessibilityConfig, }: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const ListWithActionsFocusStore: IContextStore<    {

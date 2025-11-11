@@ -69,8 +69,8 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
         const list = result.data.data;
         const keyDrivers = list.map((item) => convertChangeAnalyzeToKeyDriver(item));
 
-        const toValue = list[0]?.overallMetricValueInAnalyzedPeriod;
-        const fromValue = list[0]?.overallMetricValueInReferencePeriod;
+        const toValue = list[0]?.overallMetricValueInAnalyzedPeriod ?? 0;
+        const fromValue = list[0]?.overallMetricValueInReferencePeriod ?? 0;
 
         return {
             keyDrivers,

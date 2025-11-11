@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-catalog",
-    "version": "11.9.0-alpha.2",
+    "version": "11.9.0-alpha.3",
     "description": "GoodData SDK - Analytics Catalog",
     "repository": {
         "type": "git",
@@ -53,7 +53,7 @@
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",
         "validate": "tsc &&  export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-catalog\"'",
+        "validate-esm": "node --loader ./scripts/validateEsmLoader.mjs --input-type=module --eval 'import \"@gooddata/sdk-ui-catalog\"'",
         "validate-locales": "i18n-toolkit",
         "validate-locales-ci": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js"

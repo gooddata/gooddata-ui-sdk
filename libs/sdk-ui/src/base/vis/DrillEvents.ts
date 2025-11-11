@@ -243,6 +243,9 @@ export interface IDrillEventContext {
 export interface IDrillEvent {
     dataView: IDataView;
     drillContext: IDrillEventContext;
+    chartX?: number;
+    chartY?: number;
+    target?: HTMLElement;
 }
 
 /**

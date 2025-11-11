@@ -11,9 +11,9 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
  *
  * @remarks
  * This hook filters category legend items to only include visible ones,
- * and returns their URIs for use in map filtering. If no legend items are
- * provided or the enabled list is empty (meaning all are enabled), returns
- * an empty array which signals "show all".
+ * and returns their URIs for use in map filtering. If no legend items are provided,
+ * or the state indicates either "all enabled" or "all disabled", returns an empty array
+ * which signals "show all".
  *
  * @param categoryItems - All category legend items
  * @returns Array of URIs for enabled segments (empty array means "show all")
@@ -28,7 +28,12 @@ export function useSelectedSegments(categoryItems: IPushpinCategoryLegendItem[])
             return [];
         }
 
-        // If no items are explicitly enabled, show all
+        // All items enabled (initial state)
+        if (enabledLegendItems === null) {
+            return [];
+        }
+
+        // User explicitly disabled every item -> keep the map unfiltered
         if (enabledLegendItems.length === 0) {
             return [];
         }

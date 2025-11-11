@@ -713,17 +713,6 @@ export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<b
 );
 
 /**
- * Feature flag
- * @internal
- */
-export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDashboardFiltersApplyModes ?? true;
-    },
-);
-
-/**
  * Setting of dashboard filters apply mode. The value is resolved in the following order:
  * If set on workspace level, workspace setting is used.
  * If not set on workspace level, organization setting is used.
@@ -738,14 +727,13 @@ export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFilters
 );
 
 /**
- * Feature flag is enabled and setting set to ALL_AT_ONCE
+ * Setting set to ALL_AT_ONCE
  * @internal
  */
 export const selectIsApplyFiltersAllAtOnceEnabledAndSet: DashboardSelector<boolean> = createSelector(
-    selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
-    (enableDashboardFiltersApplyModes, dashboardFiltersApplyMode) => {
-        return enableDashboardFiltersApplyModes && dashboardFiltersApplyMode.mode === "ALL_AT_ONCE";
+    (dashboardFiltersApplyMode) => {
+        return dashboardFiltersApplyMode.mode === "ALL_AT_ONCE";
     },
 );
 

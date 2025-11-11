@@ -7,6 +7,7 @@ import { isActionKey } from "../../../utils/events.js";
 import { UiCheckbox } from "../../UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableCheckboxProps } from "../types.js";
+import { ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
 
 export function UiAsyncTableCheckbox({
     onChange,
@@ -21,8 +22,9 @@ export function UiAsyncTableCheckbox({
     return (
         <div
             className={e("cell", { checkbox: true, focused: isCellFocused })}
-            role={"gridcell"}
+            role={header ? "undefined" : "gridcell"}
             aria-labelledby={header ? undefined : getColumnHeaderId("checkbox")}
+            aria-describedby={header ? ASYNC_TABLE_SELECTED_COUNT_ID : undefined}
             onClick={(e) => {
                 stopPropagationCallback(e, onChange);
             }}

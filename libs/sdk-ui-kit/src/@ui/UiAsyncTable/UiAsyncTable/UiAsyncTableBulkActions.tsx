@@ -12,6 +12,7 @@ import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableBulkActionsProps } from "../types.js";
+import { ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID, ASYNC_TABLE_BULK_ACTIONS_MENU_ID } from "./constants.js";
 
 export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActionsProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -20,8 +21,9 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
     return (
         <div className={e("bulk-actions")}>
             <Dropdown
-                renderButton={({ toggleDropdown }) => (
+                renderButton={({ toggleDropdown, isOpen }) => (
                     <UiButton
+                        id={ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID}
                         variant="primary"
                         ref={buttonRef}
                         isDisabled={!bulkActions.length}
@@ -29,12 +31,19 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                         onClick={() => toggleDropdown()}
                         size="small"
                         iconAfter="navigateDown"
+                        accessibilityConfig={{
+                            ariaExpanded: isOpen,
+                            ariaHaspopup: true,
+                            ariaControls: ASYNC_TABLE_BULK_ACTIONS_MENU_ID,
+                            iconAriaHidden: true,
+                        }}
                     />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
                         <DropdownList
+                            id={ASYNC_TABLE_BULK_ACTIONS_MENU_ID}
                             items={bulkActions}
                             renderItem={({ item }) => (
                                 <UiAsyncTableDropdownItem
@@ -47,6 +56,10 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                             )}
                             width={200}
                             renderVirtualisedList
+                            accessibilityConfig={{
+                                role: "menu",
+                                ariaLabelledBy: ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID,
+                            }}
                         />
                     </UiAutofocus>
                 )}

@@ -543,7 +543,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
-                enableDashboardFiltersApplyWithoutLoading
                 enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}
             />
         </AttributeFilterParentFilteringProvider>

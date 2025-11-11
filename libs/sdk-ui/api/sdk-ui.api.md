@@ -830,9 +830,15 @@ export interface IDrillConfig {
 // @public (undocumented)
 export interface IDrillEvent {
     // (undocumented)
+    chartX?: number;
+    // (undocumented)
+    chartY?: number;
+    // (undocumented)
     dataView: IDataView;
     // (undocumented)
     drillContext: IDrillEventContext;
+    // (undocumented)
+    target?: HTMLElement;
 }
 
 // @public (undocumented)

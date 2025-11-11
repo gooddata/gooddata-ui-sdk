@@ -6,6 +6,8 @@ import { useIntl } from "react-intl";
 
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
+import * as styles from "./FooterButtonAiAssistant.module.scss.js";
+
 /**
  * @public
  */
@@ -20,7 +22,7 @@ export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProp
     const intl = useIntl();
 
     return (
-        <div className="gd-semantic-search__ai_assistant_button">
+        <div className={styles.aiAssistantButton}>
             <UiButton
                 label={intl.formatMessage({ id: "semantic-search.ask.ai.assistant" })}
                 variant="tertiary"

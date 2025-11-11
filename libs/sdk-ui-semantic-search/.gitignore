@@ -1,2 +1,3 @@
 styles/css
 src/localization/bundles/*.ts
+*.module.scss.d.ts
