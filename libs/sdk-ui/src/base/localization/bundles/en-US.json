@@ -3067,6 +3067,10 @@
         "value": "{selectedCount} selected",
         "comment": "Shows the number of selected items. Example: '5 selected'"
     },
+    "table.bulkActions.selectAll": {
+        "value": "Select all",
+        "comment": "Tooltip content: Select all"
+    },
     "table.bulkActions.selectedFiltersCount": {
         "value": "{selectedCount} selected",
         "comment": "Shows the number of selected filters. Example: '5 selected'"

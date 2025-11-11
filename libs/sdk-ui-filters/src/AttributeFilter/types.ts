@@ -308,12 +308,6 @@ export interface IAttributeFilterCoreProps {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
     /**
-     * Enables the new apply all filters at once mode
-     * @deprecated Use withoutApply instead
-     */
-    enableDashboardFiltersApplyModes?: boolean;
-
-    /**
      * Enables preserving existing filter selection during initialization.
      * Prevents race condition where restored filters get cleared by SDK init process.
      *
@@ -325,17 +319,6 @@ export interface IAttributeFilterCoreProps {
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
-
-    /**
-     * Enables the new apply all filters at once mode without loading on every change
-     *
-     * @remarks
-     * This is a temporary flag to enable the new apply all filters at once mode without loading on every change.
-     * It will be removed after the feature is fully tested and released.
-     *
-     * @deprecated Do not use, this will be removed in future release and turned on by default.
-     */
-    enableDashboardFiltersApplyWithoutLoading?: boolean;
 }
 
 /**

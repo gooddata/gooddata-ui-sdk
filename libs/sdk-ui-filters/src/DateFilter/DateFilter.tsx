@@ -90,12 +90,6 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     workingExcludeCurrentPeriod?: boolean;
 
     /**
-     * If new apply all filters at once mode is enabled
-     * @deprecated dont use. Will be removed in future releases. Use `withoutApply` instead
-     */
-    enableDashboardFiltersApplyModes?: boolean;
-
-    /**
      * Specify custom button component
      *
      * @alpha
@@ -170,9 +164,8 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         nextProps: IDateFilterProps,
         prevState: IDateFilterState,
     ): IDateFilterState {
-        const withoutApply = nextProps.withoutApply ?? nextProps.enableDashboardFiltersApplyModes;
         if (
-            withoutApply &&
+            nextProps.withoutApply &&
             nextProps.workingSelectedFilterOption &&
             nextProps.excludeCurrentPeriod !== undefined &&
             (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
@@ -283,13 +276,11 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             customIcon,
             showDropDownHeaderMessage,
             FilterConfigurationComponent,
-            withoutApply: withoutApplyProp,
-            enableDashboardFiltersApplyModes,
+            withoutApply,
             ButtonComponent,
             overlayPositionType,
             improveAccessibility,
         } = this.props;
-        const withoutApply = withoutApplyProp ?? enableDashboardFiltersApplyModes;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
             <DateFilterCore

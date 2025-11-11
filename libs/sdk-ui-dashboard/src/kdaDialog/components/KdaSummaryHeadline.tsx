@@ -18,7 +18,8 @@ export function KdaSummaryHeadline() {
     const def = state.definition;
     const dateAttributeFinder = useDateAttribute();
 
-    const [from, to] = definition?.range ?? [null, null];
+    const from = state.fromValue;
+    const to = state.toValue;
 
     const fromOpts = useMemo(() => {
         return {
@@ -37,6 +38,11 @@ export function KdaSummaryHeadline() {
     }, [dateAttributeFinder, def?.dateAttribute, def?.type, to]);
 
     if (!definition || from?.value === undefined || to?.value === undefined) {
+        return null;
+    }
+
+    //No items at all
+    if (state.items.length === 0) {
         return null;
     }
 

@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 import { DateAttributeGranularity, ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
-import { KdaDateOptions } from "../../internalTypes.js";
+import { DeepReadonly, KdaDateOptions } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition, KdaPeriodType } from "../../types.js";
 import { clearSummaryValue } from "../../utils.js";
@@ -56,10 +56,10 @@ export function usePeriodChangeHandler() {
 }
 
 function updateDefinitionPeriod(
-    definition: IKdaDefinition,
+    definition: DeepReadonly<IKdaDefinition>,
     dateAttribute: ICatalogDateAttribute,
     type: KdaPeriodType,
-): IKdaDefinition {
+): DeepReadonly<IKdaDefinition> {
     const [from, to] = definition.range;
     const granularity = dateAttribute.granularity;
 

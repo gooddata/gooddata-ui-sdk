@@ -9,7 +9,13 @@ import {
     insightFilters,
     insightHasDataDefined,
 } from "@gooddata/sdk-model";
-import { BucketNames, IAvailableDrillTargets, IPushData, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    GeoLocationMissingSdkError,
+    IAvailableDrillTargets,
+    IPushData,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
 import { getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
 import {
     GeoPushpinChartNextImplementation,
@@ -17,7 +23,7 @@ import {
     IGeoPushpinChartNextConfig,
 } from "@gooddata/sdk-ui-geo/next";
 
-import { extractControls, getLocationProperties } from "./geoAttributeHelper.js";
+import { extractControls, getLocationAttribute, getLocationProperties } from "./geoAttributeHelper.js";
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
 import {
     createConfiguredBuckets,
@@ -202,6 +208,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
      * @throws EmptyAfmSdkError if no data is defined
      */
     protected override checkBeforeRender(insight: IInsightDefinition): boolean {
+        if (!getLocationAttribute(insight)) {
+            throw new GeoLocationMissingSdkError();
+        }
+
         if (!insightHasDataDefined(insight)) {
             throw new EmptyAfmSdkError();
         }

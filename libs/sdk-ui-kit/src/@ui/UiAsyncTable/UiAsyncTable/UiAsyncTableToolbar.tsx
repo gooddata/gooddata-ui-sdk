@@ -4,11 +4,12 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { ASYNC_TABLE_FILTER_LABEL_ID } from "./constants.js";
+import { ASYNC_TABLE_FILTER_LABEL_ID, ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
 import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
 import { Input } from "../../../Form/Input.js";
+import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableToolbarProps } from "../types.js";
@@ -65,29 +66,42 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     const checkboxAriaLabel = accessibilityConfig?.checkboxAllAriaLabel;
 
     const renderBulkActions = useCallback(() => {
-        const message = intl.formatMessage(messages["selectedCount"], {
-            selectedCount: selectedItemIds?.length ?? 0,
+        const selectedCount = selectedItemIds?.length ?? 0;
+
+        const selectedMessage = intl.formatMessage(messages["selectedCount"], {
+            selectedCount,
             totalCount: totalItemsCount,
         });
 
-        const messageShort = intl.formatMessage(messages["selectedCountShort"], {
-            selectedCount: selectedItemIds?.length ?? 0,
+        const selectedMessageShort = intl.formatMessage(messages["selectedCountShort"], {
+            selectedCount,
         });
+
+        const tooltipMessage = intl.formatMessage(messages["selectAll"]);
 
         if (bulkActions) {
             return (
                 <div className={e("toolbar-bulk-actions")}>
                     <div className={e("toolbar-checkbox-section")}>
-                        <UiAsyncTableCheckbox
-                            onChange={handleCheckboxChange}
-                            checked={isCheckboxChecked}
-                            indeterminate={isCheckboxIndeterminate}
-                            disabled={isCheckboxDisabled}
-                            ariaLabel={checkboxAriaLabel}
-                            header
+                        <UiTooltip
+                            anchor={
+                                <UiAsyncTableCheckbox
+                                    onChange={handleCheckboxChange}
+                                    checked={isCheckboxChecked}
+                                    indeterminate={isCheckboxIndeterminate}
+                                    disabled={isCheckboxDisabled}
+                                    ariaLabel={checkboxAriaLabel}
+                                    header
+                                />
+                            }
+                            triggerBy={["hover", "focus"]}
+                            content={tooltipMessage}
                         />
-                        <div className={e("toolbar-selected-count", { short: isSmall })}>
-                            {isSmall ? messageShort : message}
+                        <div
+                            id={ASYNC_TABLE_SELECTED_COUNT_ID}
+                            className={e("toolbar-selected-count", { short: isSmall })}
+                        >
+                            {isSmall ? selectedMessageShort : selectedMessage}
                         </div>
                     </div>
                     {selectedItemIds?.length > 0 ? (

@@ -35,7 +35,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         selectFirst = false,
         disabled,
         customIcon,
-        withoutApply,
+        withoutApply = false,
         overlayPositionType,
         onApply,
         onSelect,
@@ -54,8 +54,6 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         EmptyResultComponent,
         StatusBarComponent,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
-        enableDashboardFiltersApplyWithoutLoading = false,
-        enableDashboardFiltersApplyModes = false,
         enablePreserveSelectionDuringInit,
     } = props;
 
@@ -116,9 +114,8 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     enableImmediateAttributeFilterDisplayAsLabelMigration={
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
-                    withoutApply={withoutApply ?? enableDashboardFiltersApplyModes}
+                    withoutApply={withoutApply}
                     overlayPositionType={overlayPositionType}
-                    enableDashboardFiltersApplyWithoutLoading={enableDashboardFiltersApplyWithoutLoading}
                     enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}
                 >
                     {children}

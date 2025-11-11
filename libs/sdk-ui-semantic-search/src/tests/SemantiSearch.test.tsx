@@ -69,10 +69,11 @@ describe("SemanticSearch component", () => {
     });
 
     it("should let user select item by clicking on it", async () => {
-        const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+        const { callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item__content");
-        fireEvent.click(firstItem!);
+        // Click on the first tree item (the clickable element)
+        const firstItem = screen.getAllByRole("treeitem")[0];
+        fireEvent.click(firstItem);
 
         expect(callback).toHaveBeenCalledOnce();
     });

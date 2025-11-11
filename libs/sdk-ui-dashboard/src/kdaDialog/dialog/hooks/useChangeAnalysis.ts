@@ -22,7 +22,7 @@ import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
-import { KdaItem, KdaState } from "../../internalTypes.js";
+import { DeepReadonly, KdaItem, KdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { IKdaDefinition } from "../../types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
@@ -48,7 +48,7 @@ export function useChangeAnalysis() {
 }
 
 function useChangeAnalysisResults(
-    definition: IKdaDefinition | null,
+    definition: DeepReadonly<IKdaDefinition> | null,
     attrs: ObjRef[],
     attrFilters: IDashboardAttributeFilter[],
     loading: boolean,
@@ -93,8 +93,8 @@ function useChangeAnalysisResults(
                     .keyDriverAnalysis()
                     .computeChangeAnalysis(
                         {
-                            measure: definition.metric,
-                            auxMeasures: definition.metrics,
+                            measure: definition.metric as IMeasure,
+                            auxMeasures: definition.metrics as IMeasure[],
                             attributes,
                             filters,
                         },
@@ -123,7 +123,7 @@ function useChangeAnalysisResults(
 
 function useKdaStateWithList(
     { result, status }: ReturnType<typeof useChangeAnalysisResults>,
-    definition: IKdaDefinition | null,
+    definition: DeepReadonly<IKdaDefinition> | null,
 ): Partial<KdaState> {
     const { state } = useKdaState();
     const loadingStatus = definition ? status : "pending";
@@ -174,32 +174,49 @@ function useKdaStateWithList(
     ]);
 
     return useMemo(() => {
-        const currentFrom = state.definition?.range[0].value;
-        const currentTo = state.definition?.range[1].value;
+        const currentFrom = state.fromValue?.value;
+        const currentTo = state.toValue?.value;
 
         const definition = state.definition;
+        const updatedState: Partial<KdaState> = {};
         // update from
-        if (definition && currentFrom === undefined && fromValue !== undefined) {
-            definition.range[0].value = fromValue;
+        if (state.fromValue && currentFrom === undefined && fromValue !== undefined) {
+            updatedState.fromValue = {
+                ...state.fromValue,
+                value: fromValue,
+            };
         }
         // update to
-        if (definition && currentTo === undefined && toValue !== undefined) {
-            definition.range[1].value = toValue;
+        if (state.toValue && currentTo === undefined && toValue !== undefined) {
+            updatedState.toValue = {
+                ...state.toValue,
+                value: toValue,
+            };
         }
 
         return {
             items,
             definition,
+            ...updatedState,
             selectedItem: "summary",
             itemsStatus: loadingStatus,
             selectedStatus: loadingStatus,
             selectedAttributes: attributes.map((a) => a.defaultDisplayForm.ref),
         };
-    }, [state.definition, fromValue, toValue, items, loadingStatus, attributes]);
+    }, [
+        state.fromValue,
+        state.toValue,
+        state.definition,
+        fromValue,
+        toValue,
+        items,
+        loadingStatus,
+        attributes,
+    ]);
 }
 
 function createKdaItem(
-    metric: IMeasure,
+    metric: DeepReadonly<IMeasure>,
     attribute: ICatalogAttribute,
     displayForm: ObjRef,
     driver: IKeyDriver,

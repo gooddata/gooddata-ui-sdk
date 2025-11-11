@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.9.0-alpha.2",
+    "version": "11.9.0-alpha.3",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "repository": {
         "type": "git",
@@ -52,7 +52,7 @@
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "fast-glob": "3.3.3",
-        "html-validate": "9.5.1",
+        "html-validate": "10.3.1",
         "jsonschema": "^1.2.6",
         "lodash-es": "^4.17.21",
         "tslib": "2.8.1",

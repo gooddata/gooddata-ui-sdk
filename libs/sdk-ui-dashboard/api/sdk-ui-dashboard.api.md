@@ -4214,6 +4214,12 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 // @internal (undocumented)
 export function getFilterIdentifier(filter: FilterContextItem): string;
 
+// @internal (undocumented)
+export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent): DashboardKeyDriverCombinationItem[];
+
+// @internal (undocumented)
+export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: DashboardKeyDriverCombinationItem): string;
+
 // @public
 export function getWidgetTitle(widget?: ExtendedDashboardWidget, fallbackTitle?: string): string;
 
@@ -8933,9 +8939,6 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean>;

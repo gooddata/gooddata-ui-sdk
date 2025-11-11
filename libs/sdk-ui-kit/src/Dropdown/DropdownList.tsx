@@ -255,7 +255,13 @@ export function DropdownList<T>({
                         const effectiveMaxHeight = maxHeight || listHeight || 300;
 
                         return renderVirtualisedList ? (
-                            <div style={{ width: listWidth }} className={listClassNames}>
+                            <div
+                                id={listProps.id}
+                                style={{ width: listWidth }}
+                                className={listClassNames}
+                                role={listProps.accessibilityConfig?.role}
+                                aria-labelledby={listProps.accessibilityConfig?.ariaLabelledBy}
+                            >
                                 <UiPagedVirtualList
                                     maxHeight={effectiveMaxHeight}
                                     items={items}

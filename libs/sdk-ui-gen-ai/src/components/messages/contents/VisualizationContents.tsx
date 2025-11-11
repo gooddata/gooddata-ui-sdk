@@ -1,6 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { AriaAttributes, KeyboardEvent, MouseEvent, ReactNode, useCallback, useMemo, useState } from "react";
+import {
+    AriaAttributes,
+    KeyboardEvent,
+    MouseEvent,
+    ReactNode,
+    useCallback,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import copy from "copy-to-clipboard";
@@ -10,21 +19,28 @@ import { connect, useDispatch } from "react-redux";
 import {
     IAttribute,
     IColorPalette,
+    IDashboardAttributeFilter,
+    IDrillOrigin,
     IFilter,
     IGenAIVisualization,
+    IKeyDriveAnalysis,
     IMeasure,
     ISortItem,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
+    IDrillEvent,
     OnError,
     OnExportReady,
+    OnFiredDrillEvent,
     OnLoadingChanged,
     isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
+import { DashboardKeyDriverCombinationItem, getKdaKeyDriverCombinations } from "@gooddata/sdk-ui-dashboard";
 import {
+    Dropdown,
     IAlignPoint,
     IconCopy,
     IconExternalLink,
@@ -51,11 +67,15 @@ import {
     copyToClipboardAction,
     newMessageAction,
     saveVisualisationRenderStatusAction,
+    setKeyDriverAnalysisAction,
     settingsSelector,
     visualizationErrorAction,
 } from "../../../store/index.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
+import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
+import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
+import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 
 const VIS_HEIGHT = 250;
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
@@ -78,6 +98,7 @@ export type VisualizationContentsProps = {
     enableAccessibleChartTooltip?: boolean;
     agGridToken?: string;
     onCopyToClipboard?: (data: { content: string }) => void;
+    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
 };
 
 function VisualizationContentsComponentCore({
@@ -90,6 +111,7 @@ function VisualizationContentsComponentCore({
     agGridToken,
     showSuggestions = false,
     onCopyToClipboard,
+    setKeyDriverAnalysis,
 }: VisualizationContentsProps) {
     const dispatch = useDispatch();
     // Resolve agGridToken from context if provided via AgGridTokenProvider, otherwise use prop from Redux
@@ -244,6 +266,27 @@ function VisualizationContentsComponentCore({
         );
     }, [dispatch, visualization?.id, messageId]);
 
+    const visualizationContainerRef = useRef<HTMLDivElement>(null);
+    const [drillState, setDrillState] = useState<{
+        keyDriverData: DashboardKeyDriverCombinationItem[];
+        event: IDrillEvent;
+    } | null>(null);
+    const handlerDrill = useCallback((event: IDrillEvent) => {
+        const keyDriverData = getKdaKeyDriverCombinations(
+            {
+                type: "keyDriveAnalysis",
+                transition: "in-place",
+                origin: {} as IDrillOrigin,
+            } as IKeyDriveAnalysis,
+            event,
+        );
+        if (keyDriverData.length === 0) {
+            setDrillState(null);
+        } else {
+            setDrillState({ keyDriverData, event });
+        }
+    }, []);
+
     const handleSdkError = useCallback(
         (error: GoodDataSdkError) => {
             // Ignore NO_DATA error, we still want an option to save the visualization
@@ -337,217 +380,295 @@ function VisualizationContentsComponentCore({
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
-                <div
-                    className={cx(
-                        "gd-gen-ai-chat__visualization",
-                        `gd-gen-ai-chat__visualization--${visualization.visualizationType.toLowerCase()}`,
+                <Dropdown
+                    isOpen={Boolean(drillState)}
+                    onToggle={(state) => {
+                        if (!state) {
+                            setDrillState(null);
+                        }
+                    }}
+                    closeOnEscape
+                    closeOnParentScroll
+                    alignPoints={[
                         {
-                            active: isMenuButtonOpen,
+                            align: "tl tl",
+                            offset: calculateOffset(visualizationContainerRef.current, drillState?.event),
                         },
-                    )}
-                >
-                    {config.canAnalyze && !hasVisError
-                        ? (() => {
-                              return (
-                                  <div className={cx("gd-gen-ai-chat__visualization__buttons")}>
-                                      {visualization.visualizationType === "TABLE" ? null : (
-                                          <div className={cx("gd-gen-ai-chat__visualization__table")}>
-                                              <UiTooltip
-                                                  triggerBy={["focus", "hover"]}
-                                                  arrowPlacement="bottom"
-                                                  anchor={
-                                                      <UiIconButton
-                                                          dataTestId="gen-ai-visualization-toggle-button"
-                                                          onClick={() => {
-                                                              setIsTable(!isTable);
-                                                          }}
-                                                          icon={isTable ? "visualization" : "table"}
-                                                          accessibilityConfig={{
-                                                              role: "button",
-                                                              ariaLabel: isTable
-                                                                  ? toggleButtonOriginalTooltipText
-                                                                  : toggleButtonTableTooltipText,
-                                                          }}
-                                                      />
-                                                  }
-                                                  content={
-                                                      isTable
-                                                          ? toggleButtonOriginalTooltipText
-                                                          : toggleButtonTableTooltipText
-                                                  }
-                                              />
-                                          </div>
-                                      )}
-                                      <div
-                                          id={MORE_MENU_BUTTON_ID}
-                                          className={cx(
-                                              "gd-gen-ai-chat__visualization__save",
-                                              dropdownAnchorClassName,
-                                          )}
-                                      >
-                                          <UiTooltip
-                                              disabled={!moreButtonTooltipText}
-                                              triggerBy={["focus", "hover"]}
-                                              arrowPlacement="bottom"
-                                              anchor={
-                                                  <UiIconButton
-                                                      dataTestId="gen-ai-visualization-menu-button"
-                                                      onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                                      icon="ellipsis"
-                                                      isDisabled={visLoading}
-                                                      accessibilityConfig={{
-                                                          role: "button",
-                                                          ariaLabel: moreButtonTooltipText,
-                                                          ariaDescribedBy: moreButtonDescId,
-                                                          isExpanded: isMenuButtonOpen,
-                                                          popupId: menuId,
-                                                          ariaHaspopup: "menu",
-                                                      }}
-                                                      isActive={isMenuButtonOpen}
-                                                  />
-                                              }
-                                              content={moreButtonTooltipText}
-                                          />
-                                          {isMenuButtonOpen ? renderMenuItems() : null}
-                                      </div>
-                                  </div>
-                              );
-                          })()
-                        : null}
-                    <div className="gd-gen-ai-chat__visualization__title" id={moreButtonDescId}>
-                        <MarkdownComponent allowMarkdown={useMarkdown}>
-                            {visualization.title}
-                        </MarkdownComponent>
-                    </div>
-                    <div
-                        className={cx(
-                            "gd-gen-ai-chat__visualization__wrapper",
-                            `gd-gen-ai-chat__visualization__wrapper--${isTable ? "table" : visualization.visualizationType.toLowerCase()}`,
-                        )}
-                    >
-                        <VisualizationErrorBoundary>
-                            {(() => {
-                                if (isTable) {
-                                    return renderTable(
-                                        intl.locale,
-                                        metrics,
-                                        dimensions,
-                                        filters,
-                                        sorts,
-                                        handleSdkError,
-                                        handleLoadingChanged,
-                                        handleSuccess,
-                                        {
-                                            enableNewPivotTable,
-                                            enableAccessibleChartTooltip,
-                                            agGridToken: resolvedAgGridToken,
-                                        },
-                                    );
-                                }
+                        {
+                            align: "tl tr",
+                            offset: calculateOffset(visualizationContainerRef.current, drillState?.event),
+                        },
+                    ]}
+                    renderBody={() => {
+                        return (
+                            <DrillSelectDropdownMenu
+                                drillState={drillState}
+                                onSelect={(item) => {
+                                    const data = item.data.context as DashboardKeyDriverCombinationItem;
+                                    const event = drillState?.event;
 
-                                switch (visualization.visualizationType) {
-                                    case "BAR":
-                                        return renderBarChart(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            sorts,
-                                            colorPalette,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                            {
-                                                enableAccessibleChartTooltip,
-                                            },
-                                        );
-                                    case "COLUMN":
-                                        return renderColumnChart(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            sorts,
-                                            colorPalette,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                            {
-                                                enableAccessibleChartTooltip,
-                                            },
-                                        );
-                                    case "LINE":
-                                        return renderLineChart(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            sorts,
-                                            colorPalette,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                            {
-                                                enableAccessibleChartTooltip,
-                                            },
-                                        );
-                                    case "PIE":
-                                        return renderPieChart(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            sorts,
-                                            colorPalette,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                            {
-                                                enableAccessibleChartTooltip,
-                                            },
-                                        );
-                                    case "TABLE":
-                                        return renderTable(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            sorts,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                            {
-                                                enableNewPivotTable,
-                                                enableAccessibleChartTooltip,
-                                                agGridToken: resolvedAgGridToken,
-                                            },
-                                        );
-                                    case "HEADLINE":
-                                        return renderHeadline(
-                                            intl.locale,
-                                            metrics,
-                                            dimensions,
-                                            filters,
-                                            colorPalette,
-                                            handleSdkError,
-                                            handleLoadingChanged,
-                                            handleSuccess,
-                                        );
-                                    default:
-                                        return assertNever(visualization.visualizationType);
-                                }
-                            })()}
-                        </VisualizationErrorBoundary>
-                    </div>
-                    {saveDialogOpen ? (
-                        <VisualizationSaveDialog
-                            onClose={() => setSaveDialogOpen(null)}
-                            visualization={visualization}
-                            type={saveDialogOpen}
-                            messageId={messageId}
-                        />
-                    ) : null}
-                </div>
+                                    if (!event) {
+                                        return;
+                                    }
+
+                                    const allFilters = mergeFilters(
+                                        convertIntersectionToAttributeFilters(
+                                            event.drillContext.intersection ?? [],
+                                        ),
+                                        filters
+                                            .map(getDashboardAttributeFilter)
+                                            .filter(Boolean) as IDashboardAttributeFilter[],
+                                    );
+
+                                    const definition = createKdaDefinitionFromDrill(
+                                        intl.locale,
+                                        data,
+                                        event,
+                                        allFilters,
+                                    );
+                                    setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+                                }}
+                                onClose={() => {
+                                    setDrillState(null);
+                                }}
+                            />
+                        );
+                    }}
+                    renderButton={() => {
+                        return (
+                            <div
+                                ref={visualizationContainerRef}
+                                className={cx(
+                                    "gd-gen-ai-chat__visualization",
+                                    `gd-gen-ai-chat__visualization--${visualization.visualizationType.toLowerCase()}`,
+                                    {
+                                        active: isMenuButtonOpen,
+                                    },
+                                )}
+                            >
+                                {config.canAnalyze && !hasVisError
+                                    ? (() => {
+                                          return (
+                                              <div className={cx("gd-gen-ai-chat__visualization__buttons")}>
+                                                  {visualization.visualizationType === "TABLE" ? null : (
+                                                      <div
+                                                          className={cx(
+                                                              "gd-gen-ai-chat__visualization__table",
+                                                          )}
+                                                      >
+                                                          <UiTooltip
+                                                              triggerBy={["focus", "hover"]}
+                                                              arrowPlacement="bottom"
+                                                              anchor={
+                                                                  <UiIconButton
+                                                                      dataTestId="gen-ai-visualization-toggle-button"
+                                                                      onClick={() => {
+                                                                          setIsTable(!isTable);
+                                                                      }}
+                                                                      icon={
+                                                                          isTable ? "visualization" : "table"
+                                                                      }
+                                                                      accessibilityConfig={{
+                                                                          role: "button",
+                                                                          ariaLabel: isTable
+                                                                              ? toggleButtonOriginalTooltipText
+                                                                              : toggleButtonTableTooltipText,
+                                                                      }}
+                                                                  />
+                                                              }
+                                                              content={
+                                                                  isTable
+                                                                      ? toggleButtonOriginalTooltipText
+                                                                      : toggleButtonTableTooltipText
+                                                              }
+                                                          />
+                                                      </div>
+                                                  )}
+                                                  <div
+                                                      id={MORE_MENU_BUTTON_ID}
+                                                      className={cx(
+                                                          "gd-gen-ai-chat__visualization__save",
+                                                          dropdownAnchorClassName,
+                                                      )}
+                                                  >
+                                                      <UiTooltip
+                                                          disabled={!moreButtonTooltipText}
+                                                          triggerBy={["focus", "hover"]}
+                                                          arrowPlacement="bottom"
+                                                          anchor={
+                                                              <UiIconButton
+                                                                  dataTestId="gen-ai-visualization-menu-button"
+                                                                  onClick={() =>
+                                                                      setMenuButtonOpen(!isMenuButtonOpen)
+                                                                  }
+                                                                  icon="ellipsis"
+                                                                  isDisabled={visLoading}
+                                                                  accessibilityConfig={{
+                                                                      role: "button",
+                                                                      ariaLabel: moreButtonTooltipText,
+                                                                      ariaDescribedBy: moreButtonDescId,
+                                                                      isExpanded: isMenuButtonOpen,
+                                                                      popupId: menuId,
+                                                                      ariaHaspopup: "menu",
+                                                                  }}
+                                                                  isActive={isMenuButtonOpen}
+                                                              />
+                                                          }
+                                                          content={moreButtonTooltipText}
+                                                      />
+                                                      {isMenuButtonOpen ? renderMenuItems() : null}
+                                                  </div>
+                                              </div>
+                                          );
+                                      })()
+                                    : null}
+                                <div className="gd-gen-ai-chat__visualization__title" id={moreButtonDescId}>
+                                    <MarkdownComponent allowMarkdown={useMarkdown}>
+                                        {visualization.title}
+                                    </MarkdownComponent>
+                                </div>
+                                <div
+                                    className={cx(
+                                        "gd-gen-ai-chat__visualization__wrapper",
+                                        `gd-gen-ai-chat__visualization__wrapper--${isTable ? "table" : visualization.visualizationType.toLowerCase()}`,
+                                    )}
+                                >
+                                    <VisualizationErrorBoundary>
+                                        {(() => {
+                                            if (isTable) {
+                                                return renderTable(
+                                                    intl.locale,
+                                                    metrics,
+                                                    dimensions,
+                                                    filters,
+                                                    sorts,
+                                                    handleSdkError,
+                                                    handleLoadingChanged,
+                                                    handleSuccess,
+                                                    handlerDrill,
+                                                    {
+                                                        enableNewPivotTable,
+                                                        enableAccessibleChartTooltip,
+                                                        agGridToken: resolvedAgGridToken,
+                                                    },
+                                                );
+                                            }
+
+                                            switch (visualization.visualizationType) {
+                                                case "BAR":
+                                                    return renderBarChart(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        sorts,
+                                                        colorPalette,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                        {
+                                                            enableAccessibleChartTooltip,
+                                                        },
+                                                    );
+                                                case "COLUMN":
+                                                    return renderColumnChart(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        sorts,
+                                                        colorPalette,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                        {
+                                                            enableAccessibleChartTooltip,
+                                                        },
+                                                    );
+                                                case "LINE":
+                                                    return renderLineChart(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        sorts,
+                                                        colorPalette,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                        {
+                                                            enableAccessibleChartTooltip,
+                                                        },
+                                                    );
+                                                case "PIE":
+                                                    return renderPieChart(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        sorts,
+                                                        colorPalette,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                        {
+                                                            enableAccessibleChartTooltip,
+                                                        },
+                                                    );
+                                                case "TABLE":
+                                                    return renderTable(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        sorts,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                        {
+                                                            enableNewPivotTable,
+                                                            enableAccessibleChartTooltip,
+                                                            agGridToken: resolvedAgGridToken,
+                                                        },
+                                                    );
+                                                case "HEADLINE":
+                                                    return renderHeadline(
+                                                        intl.locale,
+                                                        metrics,
+                                                        dimensions,
+                                                        filters,
+                                                        colorPalette,
+                                                        handleSdkError,
+                                                        handleLoadingChanged,
+                                                        handleSuccess,
+                                                        handlerDrill,
+                                                    );
+                                                default:
+                                                    return assertNever(visualization.visualizationType);
+                                            }
+                                        })()}
+                                    </VisualizationErrorBoundary>
+                                </div>
+                                {saveDialogOpen ? (
+                                    <VisualizationSaveDialog
+                                        onClose={() => setSaveDialogOpen(null)}
+                                        visualization={visualization}
+                                        type={saveDialogOpen}
+                                        messageId={messageId}
+                                    />
+                                ) : null}
+                                {drillState ? (
+                                    <div className="gd-gen-ai-chat__visualization__drill_overlay" />
+                                ) : null}
+                            </div>
+                        );
+                    }}
+                />
             ) : null}
             {showSuggestions && visualization?.suggestions?.length ? (
                 <div className="gd-gen-ai-chat__visualization__suggestions">
@@ -598,6 +719,7 @@ const renderBarChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
     },
@@ -617,6 +739,8 @@ const renderBarChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
+        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        onDrill={onDrill}
         filters={filters}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -634,6 +758,7 @@ const renderColumnChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
     },
@@ -653,6 +778,8 @@ const renderColumnChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
+        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        onDrill={onDrill}
         filters={filters}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -670,6 +797,7 @@ const renderLineChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
     },
@@ -688,6 +816,8 @@ const renderLineChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
+        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
@@ -704,6 +834,7 @@ const renderPieChart = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
     },
@@ -720,6 +851,8 @@ const renderPieChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
+        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
@@ -735,6 +868,7 @@ const renderTable = (
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
         enableNewPivotTable?: boolean;
@@ -750,6 +884,10 @@ const renderTable = (
             filters={filters}
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
+            drillableItems={[dimensions[0], dimensions[1]]
+                .filter(Boolean)
+                .map((x) => x.attribute.displayForm)}
+            onDrill={onDrill}
             onError={onError}
             onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
@@ -760,12 +898,13 @@ const renderTable = (
 const renderHeadline = (
     locale: string,
     metrics: IMeasure[],
-    _dimensions: IAttribute[],
+    dimensions: IAttribute[],
     filters: IFilter[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
 ) => (
     <Headline
         locale={locale}
@@ -777,14 +916,39 @@ const renderHeadline = (
             ...getHeadlineComparison(metrics),
             colorPalette,
         }}
+        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
     />
 );
 
+function calculateOffset(container?: HTMLDivElement | null, drillEvent?: IDrillEvent) {
+    const offest = getRelativeOffset(drillEvent?.target, container);
+
+    return {
+        y: offest.y + (drillEvent?.chartY ?? 0),
+        x: offest.x + (drillEvent?.chartX ?? 0),
+    };
+}
+
+function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLDivElement | null) {
+    if (!child || !ancestor) {
+        return { x: 0, y: 0 };
+    }
+
+    const c = child.getBoundingClientRect();
+    const a = ancestor.getBoundingClientRect();
+    return {
+        x: c.left - a.left,
+        y: c.top - a.top,
+    };
+}
+
 const mapDispatchToProps = {
     onCopyToClipboard: copyToClipboardAction,
+    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
 };
 
 const mapStateToProps = (

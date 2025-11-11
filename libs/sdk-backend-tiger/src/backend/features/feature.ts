@@ -550,13 +550,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardFiltersApplyModes,
-            "enableDashboardFiltersApplyModes",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardFiltersApplyModes,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExecutionCancelling,
             "enableExecutionCancelling",
             "BOOLEAN",

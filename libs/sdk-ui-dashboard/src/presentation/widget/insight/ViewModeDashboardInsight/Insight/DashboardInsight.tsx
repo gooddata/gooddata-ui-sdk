@@ -283,7 +283,7 @@ export function DashboardInsight({
 
     const exportDataVis = useVisualizationExportData(
         exportData,
-        isVisualizationInitializing,
+        isVisualizationInitializing || isVisualizationLoading,
         !!effectiveError,
     );
 

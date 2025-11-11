@@ -14,6 +14,7 @@ import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
 import { SearchItem } from "../SearchItem.js";
+import * as styles from "../SearchItemText.module.scss.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
 
 type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRelationship>;
@@ -41,11 +42,11 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
             details={<SearchItemDetails item={item.data} />}
             resultCounter={<GroupResultCounter count={childCount} isExpanded={isExpanded} />}
         >
-            <span className="gd-semantic-search__results-item__text__row">
+            <span className={styles.textRow}>
                 {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} ariaHidden /> : null}
-                <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
+                <span className={styles.textEllipsis}>{item.stringTitle}</span>
             </span>
-            <span className="gd-semantic-search__results-item__text__row">
+            <span className={styles.textRow}>
                 {isSemanticSearchResultItem(item.data) && level === 1 && (
                     <UpdatedDate createdAt={item.data.createdAt} modifiedAt={item.data.modifiedAt} />
                 )}

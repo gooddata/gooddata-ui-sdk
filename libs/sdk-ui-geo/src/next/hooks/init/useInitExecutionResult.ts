@@ -4,6 +4,8 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     UseCancelablePromiseState,
+    createExportErrorFunction,
+    createExportFunction,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
@@ -24,7 +26,16 @@ import { useGeoPushpinProps } from "../../context/GeoPushpinPropsContext.js";
  * @alpha
  */
 export function useInitExecutionResult(): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { onLoadingChanged, onDataView, onError, backend, workspace, execution } = useGeoPushpinProps();
+    const {
+        onLoadingChanged,
+        onDataView,
+        onError,
+        onExportReady,
+        exportTitle,
+        backend,
+        workspace,
+        execution,
+    } = useGeoPushpinProps();
 
     return useExecutionDataView({
         backend,
@@ -37,16 +48,24 @@ export function useInitExecutionResult(): UseCancelablePromiseState<DataViewFaca
             });
         },
         onSuccess: (dataView) => {
+            const executionResult = dataView.result();
+
             onLoadingChanged?.({
                 isLoading: false,
             });
+            if (onExportReady) {
+                onExportReady(createExportFunction(executionResult, exportTitle));
+            }
             onDataView?.(dataView);
         },
         onError: (error) => {
+            onError?.(error);
             onLoadingChanged?.({
                 isLoading: false,
             });
-            onError?.(error);
+            if (onExportReady) {
+                onExportReady(createExportErrorFunction(error));
+            }
         },
     });
 }

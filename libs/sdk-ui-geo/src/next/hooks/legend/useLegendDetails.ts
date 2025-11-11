@@ -4,7 +4,12 @@ import { useMemo } from "react";
 
 import { ContentRect } from "react-measure";
 
-import { ILegendDetails, getLegendDetails } from "@gooddata/sdk-ui-vis-commons";
+import {
+    ILegendDetails,
+    PositionType,
+    SupportedLegendPositions,
+    getLegendDetails,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { IGeoPushpinChartNextConfig } from "../../types/config.js";
 import { IGeoData } from "../../types/shared.js";
@@ -36,17 +41,20 @@ export function useLegendDetails(
     contentRect: ContentRect | undefined,
 ): ILegendDetails | null {
     return useMemo(() => {
-        const position = config?.legend?.position ?? "auto";
+        const rawPosition = config?.legend?.position;
+        const normalizedPosition: PositionType =
+            rawPosition && SupportedLegendPositions.includes(rawPosition) ? rawPosition : "top";
+        const effectivePosition = rawPosition ?? "auto";
         const responsive = config?.legend?.responsive;
         const legendLabel = geoData?.segment?.name;
 
         // Default respectLegendPosition to true when position is explicitly set (not "auto")
         // This prevents autoPositionWithPopup from overriding explicit positions
         const respectLegendPosition =
-            config?.respectLegendPosition ?? (position === "auto" ? undefined : true);
+            config?.respectLegendPosition ?? (effectivePosition === "auto" ? undefined : true);
 
         return getLegendDetails(
-            position,
+            normalizedPosition,
             responsive ?? false,
             { contentRect, legendLabel },
             respectLegendPosition,

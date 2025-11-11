@@ -8,7 +8,7 @@ import { IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
 export interface KdaDateOptions {
     period: KdaPeriodType;
     dateAttribute?: ICatalogDateAttribute | null;
-    range?: [IKdaDataPoint, IKdaDataPoint];
+    range?: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]>;
 }
 
 export interface KdaItem {
@@ -42,7 +42,9 @@ export interface KdaItemGroup {
 
 export interface KdaState {
     //definition
-    definition: IKdaDefinition | null;
+    definition: DeepReadonly<IKdaDefinition> | null;
+    fromValue: IKdaDataPoint | undefined;
+    toValue: IKdaDataPoint | undefined;
     definitionStatus: "loading" | "success" | "error" | "pending";
     //settings
     separators?: ISeparators;
@@ -58,3 +60,16 @@ export interface KdaState {
     relevantAttributes: ObjRef[];
     selectedUpdated: number;
 }
+
+export type DeepReadonly<T> = T extends (infer R)[]
+    ? ReadonlyArray<DeepReadonly<R>>
+    : // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+      T extends Function
+      ? T
+      : T extends object
+        ? DeepReadonlyObject<T>
+        : T;
+
+type DeepReadonlyObject<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+};

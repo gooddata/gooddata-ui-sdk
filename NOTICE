@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-11-9
+Date generated: 2025-11-10
 
-Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
+Revision ID: 0c9a0f517ed69efeba75f370210854089aa48452
 
 ================================================================================
 ================================================================================
@@ -346,7 +346,6 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - body-parser (1.20.3) [MIT]
 - bonjour-service (1.3.0) [MIT]
 - brace-expansion (1.1.12) [MIT]
-- brace-expansion (2.0.2) [MIT]
 - braces (3.0.3) [MIT]
 - browserslist (4.26.2) [MIT]
 - buffer (5.7.1) [MIT]
@@ -525,7 +524,6 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - get-stream (6.0.1) [MIT]
 - gl-matrix (3.4.4) [MIT]
 - glob (11.0.3) [ISC]
-- glob (10.4.5) [ISC]
 - glob (7.2.3) [ISC]
 - glob-parent (5.1.2) [ISC]
 - glob-to-regex.js (1.0.1) [Apache-2.0]
@@ -550,7 +548,7 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - hpack.js (2.1.6) [MIT]
 - html-escaper (2.0.2) [MIT]
 - html-url-attributes (3.0.1) [MIT]
-- html-validate (9.5.1) [MIT]
+- html-validate (10.3.1) [MIT]
 - http-deceiver (1.2.7) [MIT]
 - http-errors (1.6.3) [MIT]
 - http-errors (2.0.0) [MIT]
@@ -612,7 +610,6 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - isexe (2.0.0) [ISC]
 - isexe (3.1.1) [ISC]
 - isobject (3.0.1) [MIT]
-- jackspeak (3.4.3) [blueoak-1.0.0]
 - jackspeak (4.1.1) [blueoak-1.0.0]
 - jest-worker (27.5.1) [MIT]
 - js-tokens (4.0.0) [MIT]
@@ -704,7 +701,6 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - minimalistic-assert (1.0.1) [ISC]
 - minimatch (10.0.3) [MIT]
 - minimatch (3.1.2) [MIT]
-- minimatch (9.0.5) [MIT]
 - minimist (1.2.8) [MIT]
 - minipass (3.3.6) [ISC]
 - minipass (5.0.0) [ISC]
@@ -755,7 +751,6 @@ Revision ID: 67e28a94d36a800a887f1acd58c4fc3c13e15d09
 - path-is-absolute (1.0.1) [MIT]
 - path-key (3.1.1) [MIT]
 - path-parse (1.0.7) [MIT]
-- path-scurry (1.11.1) [blueoak-1.0.0]
 - path-scurry (2.0.0) [blueoak-1.0.0]
 - path-to-regexp (0.1.12) [MIT]
 - path-type (4.0.0) [MIT]
@@ -4900,18 +4895,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: brace-expansion (2.0.2)
-
-Package Locator: npm+brace-expansion$2.0.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: braces (3.0.3)
 
 Package Locator: npm+braces$3.0.3
@@ -7056,18 +7039,6 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: glob (10.4.5)
-
-Package Locator: npm+glob$10.4.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
---------------------------------------------------------------------------------
 Package Title: glob (7.2.3)
 
 Package Locator: npm+glob$7.2.3
@@ -7360,9 +7331,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: html-validate (9.5.1)
+Package Title: html-validate (10.3.1)
 
-Package Locator: npm+html-validate$9.5.1
+Package Locator: npm+html-validate$10.3.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -8101,18 +8072,6 @@ Package Depth: Transitive
 
 * Declared Licenses *
 MIT
-
-
---------------------------------------------------------------------------------
-Package Title: jackspeak (3.4.3)
-
-Package Locator: npm+jackspeak$3.4.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-blueoak-1.0.0
 
 
 --------------------------------------------------------------------------------
@@ -9216,18 +9175,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: minimatch (9.0.5)
-
-Package Locator: npm+minimatch$9.0.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: minimist (1.2.8)
 
 Package Locator: npm+minimist$1.2.8
@@ -9831,18 +9778,6 @@ Package Depth: Transitive
 
 * Declared Licenses *
 MIT
-
-
---------------------------------------------------------------------------------
-Package Title: path-scurry (1.11.1)
-
-Package Locator: npm+path-scurry$1.11.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-blueoak-1.0.0
 
 
 --------------------------------------------------------------------------------
@@ -35526,4 +35461,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-11-9
+Report Generated by FOSSA on 2025-11-10

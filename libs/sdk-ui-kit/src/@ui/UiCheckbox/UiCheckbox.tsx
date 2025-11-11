@@ -43,7 +43,7 @@ export function UiCheckbox({
                 checked={checked}
                 onChange={onChange}
                 disabled={disabled}
-                aria-checked={checked}
+                aria-checked={indeterminate ? "mixed" : checked}
                 onClick={(e) => preventDefault && e.stopPropagation()}
                 tabIndex={tabIndex}
             />

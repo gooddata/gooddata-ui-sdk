@@ -38,7 +38,7 @@ const config: IBackstopScenarioConfig = {
         keyPress: "test",
         selector: "input",
     },
-    postInteractionWait: ".gd-semantic-search__results-item",
+    postInteractionWait: '[data-testid="semantic-search-results-item"]',
 };
 
 export default {

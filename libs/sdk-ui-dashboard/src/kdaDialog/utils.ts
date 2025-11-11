@@ -18,12 +18,16 @@ import {
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 import { DEFAULT_MEASURE_FORMAT } from "./const.js";
-import { KdaDateOptions, KdaState } from "./internalTypes.js";
+import { DeepReadonly, KdaDateOptions, KdaState } from "./internalTypes.js";
 import { IKdaDefinition } from "./types.js";
 
 //Format value
 
-export function formatValue(definition: IKdaDefinition, value: number, separators?: ISeparators) {
+export function formatValue(
+    definition: DeepReadonly<IKdaDefinition>,
+    value: number,
+    separators?: ISeparators,
+) {
     const val = ClientFormatterFacade.formatValue(
         value,
         definition.metric.measure.format ?? DEFAULT_MEASURE_FORMAT,
@@ -112,17 +116,12 @@ export function updateExistingAttributeFilter(f: IDashboardAttributeFilter, val:
     } as IDashboardAttributeFilter;
 }
 
-export function clearSummaryValue(definition: IKdaDefinition | null): Partial<KdaState> {
+export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | null): Partial<KdaState> {
     return {
         ...(definition
             ? {
-                  definition: {
-                      ...definition,
-                      range: [
-                          { ...definition.range[0], value: undefined },
-                          { ...definition.range[1], value: undefined },
-                      ],
-                  },
+                  fromValue: { ...definition?.range[0], value: undefined },
+                  toValue: { ...definition?.range[1], value: undefined },
               }
             : {}),
     };

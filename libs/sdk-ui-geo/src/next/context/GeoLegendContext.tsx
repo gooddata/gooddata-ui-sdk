@@ -15,14 +15,18 @@ import { PositionType } from "@gooddata/sdk-ui-vis-commons";
  */
 interface IGeoLegendContext {
     /**
-     * URIs of enabled legend items (empty array means all enabled)
+     * URIs of enabled legend items.
+     *
+     * @remarks
+     * `null` signals that all items are currently enabled. An empty array means the user explicitly
+     * disabled every legend item (the map remains unfiltered, but legend items render as disabled).
      */
-    enabledLegendItems: string[];
+    enabledLegendItems: string[] | null;
 
     /**
      * Updates the enabled legend items
      */
-    setEnabledLegendItems: (items: string[]) => void;
+    setEnabledLegendItems: (items: string[] | null) => void;
 
     /**
      * Toggles a legend item's enabled state
@@ -75,36 +79,27 @@ const GeoLegendContext = createContext<IGeoLegendContext | undefined>(undefined)
  * @alpha
  */
 export function GeoLegendProvider({ children }: { children: ReactNode }) {
-    const [enabledLegendItems, setEnabledLegendItems] = useState<string[]>([]);
+    const [enabledLegendItems, setEnabledLegendItems] = useState<string[] | null>(null);
     const [legendPosition, setLegendPosition] = useState<PositionType>("top");
     const [isResponsive, setIsResponsive] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
 
     const toggleLegendItem = (uri: string, allUris: string[]) => {
         setEnabledLegendItems((prev) => {
-            // If empty (all enabled), clicking disables the clicked item
-            // by enabling all EXCEPT the clicked one
-            if (prev.length === 0) {
+            // All items are enabled; disable the clicked one by tracking all others explicitly.
+            if (prev === null) {
                 return allUris.filter((itemUri) => itemUri !== uri);
             }
 
             // If the item is enabled, disable it
             if (prev.includes(uri)) {
                 const newEnabled = prev.filter((item) => item !== uri);
-                // If all items would be enabled again, return to "all enabled" state (empty array)
-                if (newEnabled.length === allUris.length - 1) {
-                    return [];
-                }
-                return newEnabled;
+                return newEnabled.length === 0 ? [] : newEnabled;
             }
 
             // If the item is disabled, enable it
             const newEnabled = [...prev, uri];
-            // If all items are now enabled, return to "all enabled" state (empty array)
-            if (newEnabled.length === allUris.length) {
-                return [];
-            }
-            return newEnabled;
+            return newEnabled.length === allUris.length ? null : newEnabled;
         });
     };
 

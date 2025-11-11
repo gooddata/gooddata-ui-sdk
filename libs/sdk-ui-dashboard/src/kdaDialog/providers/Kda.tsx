@@ -19,6 +19,8 @@ export function KdaProvider({ children, definition, separators }: KdaProps) {
         return {
             separators,
             definition,
+            fromValue: { ...definition?.range[0] },
+            toValue: { ...definition?.range[1] },
             definitionStatus: "success",
             attributeFilters: (definition.filters?.slice() ?? []).filter(
                 (f) => !isAllValuesDashboardAttributeFilter(f),

@@ -25,6 +25,8 @@ import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
 import { buildSemanticSearchItems } from "./itemsBuilder.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider, usePermissions } from "./permissions/index.js";
+import * as searchItemStyles from "./SearchItem.module.scss.js";
+import * as styles from "./SemanticSearch.module.scss.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**
@@ -171,12 +173,12 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
     return (
         <Dropdown
-            className={classnames("gd-semantic-search", className)}
+            className={classnames(styles.semanticSearch, className)}
             ignoreClicksOnByClass={[
                 ".gd-bubble",
                 ".gd-input-icon-clear",
-                ".gd-semantic-search__results-item",
-                ".gd-semantic-search__input",
+                `.${searchItemStyles.resultsItem}`,
+                `.${styles.input}`,
             ]}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
@@ -189,7 +191,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
                     <div ref={ref}>
                         <Input
                             ref={inputRef}
-                            className="gd-semantic-search__input"
+                            className={styles.input}
                             id={inputId}
                             type="search"
                             placeholder={placeholder}
@@ -233,7 +235,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
                                 // API search message
                                 if (!items.length && searchMessage) {
-                                    return <div className="gd-semantic-search__message">{searchMessage}</div>;
+                                    return <div className={styles.message}>{searchMessage}</div>;
                                 }
                                 // No search results
                                 if (!items.length) {

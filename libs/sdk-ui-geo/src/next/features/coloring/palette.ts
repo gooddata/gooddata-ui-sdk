@@ -212,14 +212,17 @@ export function getPushpinColors(
 
     const segmentNames: string[] = [...segmentValues];
     const colorPaletteMapping: ColorPaletteMapping = getColorPaletteMapping(colorStrategy);
+    const fallbackPalette =
+        colorPaletteMapping[DEFAULT_SEGMENT_ITEM] ??
+        getColorPalette(defaultColorValue, DEFAULT_PUSHPIN_COLOR_OPACITY);
 
     // Only segment data, no color measure
     if (colorValues.length === 0) {
         return segmentNames.map((name: string): IPushpinColor => {
-            const palette = colorPaletteMapping[name];
+            const palette = colorPaletteMapping[name] ?? fallbackPalette;
             return {
                 border: DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
-                background: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
+                background: palette?.[DEFAULT_COLOR_INDEX_IN_PALETTE] ?? defaultColor,
             };
         });
     }
@@ -245,11 +248,14 @@ export function getPushpinColors(
         const value = color !== null && Number.isFinite(color) ? color : min;
         const colorIndex = getColorIndexInPalette(value!, min!, max!);
         const segmentItemName = segmentNames[index] || DEFAULT_SEGMENT_ITEM;
-        const palette = colorPaletteMapping[segmentItemName];
+        const palette = colorPaletteMapping[segmentItemName] ?? fallbackPalette;
+        const borderColor =
+            palette?.[DEFAULT_COLOR_INDEX_IN_PALETTE] ?? fallbackPalette[DEFAULT_COLOR_INDEX_IN_PALETTE];
+        const backgroundColor = palette?.[colorIndex] ?? fallbackPalette[colorIndex] ?? defaultColor;
 
         return {
-            border: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
-            background: palette[colorIndex],
+            border: borderColor ?? DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
+            background: backgroundColor,
         };
     });
 }

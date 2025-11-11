@@ -5,6 +5,8 @@ import { ReactElement, useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
 
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+
 // it configures max number of records due to
 // inefficiency with virtual memory allocation
 // that causes application crash (TNT-787)
@@ -19,6 +21,7 @@ export const DEFAULT_ITEM_HEIGHT = 28;
  * @internal
  */
 export interface IListProps<T> {
+    id?: string;
     className?: string;
     compensateBorder?: boolean;
 
@@ -38,6 +41,8 @@ export interface IListProps<T> {
     scrollDirection?: -1 | 1;
     onScrollStart?: ScrollCallback;
     onScrollEnd?: ScrollCallback;
+
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabelledBy" | "role">;
 }
 
 /**
@@ -62,6 +67,7 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
  * @internal
  */
 export function List<T>({
+    id,
     className = "",
     compensateBorder = true,
 
@@ -81,6 +87,8 @@ export function List<T>({
 
     scrollToItem,
     scrollDirection,
+
+    accessibilityConfig,
 }: IListProps<T>): ReactElement {
     const currentItemsCount =
         itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
@@ -140,11 +148,14 @@ export function List<T>({
 
     return (
         <div
+            id={id}
             data-testid="gd-list"
             className={cx("gd-list gd-infinite-list", className)}
             style={styles}
             onMouseOver={disablePageScrolling}
             onMouseOut={enablePageScrolling}
+            role={accessibilityConfig?.role}
+            aria-labelledby={accessibilityConfig?.ariaLabelledBy}
         >
             <Table
                 width={width}

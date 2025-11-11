@@ -86,7 +86,6 @@ export {
     selectEnableRichTextDynamicReferences,
     selectEnableRichTextWidgetFilterConfiguration,
     selectEnableDashboardSectionHeadersDateDataSet,
-    selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectEnableExecutionCancelling,

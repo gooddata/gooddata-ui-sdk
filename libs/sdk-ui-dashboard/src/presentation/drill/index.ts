@@ -41,3 +41,4 @@ export type {
     IDrillToUrl,
 } from "./types.js";
 export { getDrillDownTitle } from "./utils/drillDownUtils.js";
+export { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "./utils/kdaUtils.js";
