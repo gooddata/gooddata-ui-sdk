@@ -378,18 +378,17 @@
         justify-content: center;
         align-items: center;
         height: 300px;
+        color: var(--gd-palette-complementary-6);
     }
 
     &__empty-state-title {
         font-size: 20px;
         font-weight: 700;
-        color: var(--gd-palette-complementary-5);
         margin-top: var(--gd-spacing-15px);
     }
 
     &__empty-state-description {
         font-size: 14px;
-        color: var(--gd-palette-complementary-5);
         line-height: 20px;
     }
 

@@ -80,7 +80,7 @@ export function useHeaderMenu(
               sortDirection: undefined,
               sortIndex: undefined,
               handleSortingItemClick: () => {},
-              handleProgressSort: () => {},
+              handleProgressSort: (_event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {},
           };
 
     // Drills
@@ -90,12 +90,12 @@ export function useHeaderMenu(
         ? { handleHeaderDrill, isDrillable }
         : { handleHeaderDrill: () => {}, isDrillable: false };
 
-    const handleHeaderClick = (event: MouseEvent<HTMLDivElement>) => {
+    const handleHeaderClick = (event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
         event.preventDefault();
         event.stopPropagation();
 
         if (allowSorting) {
-            handleProgressSort();
+            handleProgressSort(event);
         }
 
         if (allowDrilling) {

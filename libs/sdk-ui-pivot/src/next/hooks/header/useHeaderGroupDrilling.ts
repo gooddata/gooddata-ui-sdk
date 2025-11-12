@@ -44,7 +44,7 @@ export function useHeaderGroupDrilling(params: AgGridHeaderGroupParams) {
      * Handle header group click for drilling
      */
     const handleHeaderDrill = useCallback(
-        (event: MouseEvent) => {
+        (event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
             if (!onDrill || !isDrillable || !currentDataView) {
                 return false;
             }

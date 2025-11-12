@@ -1,9 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import {
-    JsonApiAnalyticalDashboardOutMeta,
-    JsonApiVisualizationObjectOutMetaOrigin,
-} from "@gooddata/api-client-tiger";
+import { JsonApiAnalyticalDashboardOutMeta, JsonApiDatasetOutMetaOrigin } from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {
     id: string;
@@ -17,9 +14,7 @@ export function isInheritedObject<T = unknown>(obj: JsonApiMetadataLikeObject<T>
     return originType === "PARENT";
 }
 
-export function getObjectOrigin<T = unknown>(
-    obj: JsonApiMetadataLikeObject<T>,
-): JsonApiVisualizationObjectOutMetaOrigin {
+export function getObjectOrigin<T = unknown>(obj: JsonApiMetadataLikeObject<T>): JsonApiDatasetOutMetaOrigin {
     const { origin } = obj.meta || {};
     return origin || { originType: "NATIVE", originId: "" };
 }
@@ -27,7 +22,7 @@ export function getObjectOrigin<T = unknown>(
 /**
  * @internal
  */
-export type OriginInfoWithId = JsonApiVisualizationObjectOutMetaOrigin & { id: string };
+export type OriginInfoWithId = JsonApiDatasetOutMetaOrigin & { id: string };
 
 /**
  * This method split id by Prefix separator (:) and return origin info

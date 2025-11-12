@@ -515,6 +515,8 @@ export {
     changeRichTextWidgetContent,
     enableRichTextWidgetDateFilter,
     disableRichTextWidgetDateFilter,
+    ignoreDateFilterOnRichTextWidget,
+    unignoreDateFilterOnRichTextWidget,
     ignoreFilterOnRichTextWidget,
     unignoreFilterOnRichTextWidget,
 } from "./richText.js";

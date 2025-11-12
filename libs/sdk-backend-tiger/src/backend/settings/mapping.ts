@@ -70,6 +70,7 @@ export function mapTypeToKey(
         case "ATTACHMENT_LINK_TTL":
         case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
         case "DATA_LOCALE":
+        case "LDM_DEFAULT_LOCALE":
         case undefined:
             return fallback;
         default:

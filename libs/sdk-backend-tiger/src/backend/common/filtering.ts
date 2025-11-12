@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
+import type { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 
 /**
  * Builds an RSQL filter query string from base options.
@@ -40,8 +40,13 @@ function buildSearchClause(search?: string): string | undefined {
 
 /**
  * Builds a single clause for a list-based operator (in/out) if values are provided.
+ * @internal
  */
-function buildListClause(field: string, operator: "in" | "out", values?: string[]): string | undefined {
+export function buildListClause(
+    field: string,
+    operator: "in" | "out",
+    values?: string[],
+): string | undefined {
     if (!hasValues(values)) {
         return undefined;
     }
@@ -50,8 +55,9 @@ function buildListClause(field: string, operator: "in" | "out", values?: string[
 
 /**
  * Builds a case-insensitive contains clause for a single string value.
+ * @internal
  */
-function buildContainsIcClause(field: string, value?: string): string | undefined {
+export function buildContainsIcClause(field: string, value?: string): string | undefined {
     if (!value) {
         return undefined;
     }
@@ -72,7 +78,11 @@ function buildIsHiddenClause(isHidden?: boolean): string | undefined {
     return undefined;
 }
 
-function joinClauses(clauses: Array<string | undefined>): string | undefined {
+/**
+ * Joins multiple filter clauses with semicolon separator.
+ * @internal
+ */
+export function joinClauses(clauses: Array<string | undefined>): string | undefined {
     const present = clauses.filter(Boolean);
     return present.length > 0 ? present.join(";") : undefined;
 }
@@ -86,21 +96,25 @@ function hasValues(values?: string[]): values is string[] {
  *
  * Wrapping each value in double quotes allows values with spaces.
  * Joining by comma acts as an OR operator.
+ *
+ * @internal
  */
-function formatInValues(values: string[]): string {
+export function formatInValues(values: string[]): string {
     return values.map(formatValue).join(",");
 }
 
 /**
  * Formats value for RSQL.
+ * @internal
  */
-function formatValue(value: string): string {
+export function formatValue(value: string): string {
     return `"${escapeValue(value)}"`;
 }
 
 /**
  * Escapes characters (backslashes and double quotes) that would break quoted filter values.
+ * @internal
  */
-function escapeValue(value: string): string {
+export function escapeValue(value: string): string {
     return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }

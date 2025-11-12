@@ -4,7 +4,8 @@ import { KeyboardEvent, ReactNode, useCallback, useMemo, useState } from "react"
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
+import { IUiFocusHelperConnectors } from "./types.js";
+import { NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 

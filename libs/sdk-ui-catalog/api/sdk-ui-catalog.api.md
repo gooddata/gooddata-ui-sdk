@@ -10,6 +10,7 @@ import type { IdentifierRef } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
+import { ReactNode } from 'react';
 
 // @internal (undocumented)
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
@@ -39,6 +40,9 @@ export interface AnalyticsCatalogDetailProps extends Omit<CatalogDetailProps, "o
     workspace?: string;
 }
 
+// @internal
+export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
+
 // @internal (undocumented)
 export interface CatalogDetailContentProps {
     objectDefinition?: Partial<ICatalogItem> | null;
@@ -58,6 +62,21 @@ export interface CatalogDetailProps extends CatalogDetailContentProps {
     onClose: () => void;
     open: boolean;
     zIndex?: number;
+}
+
+// @internal
+export interface IAnalyticsCatalogFilterProps<T> {
+    actions?: ReactNode;
+    dataTestId: string;
+    getItemKey?: (item: T) => string;
+    getItemTitle?: (item: T) => string;
+    isSelectionInverted: boolean;
+    label: string;
+    noDataMessage?: ReactNode;
+    onSelectionChange: (selection: T[], isInverted: boolean) => void;
+    options: T[];
+    selection: T[];
+    statusBar?: ReactNode;
 }
 
 // @internal (undocumented)

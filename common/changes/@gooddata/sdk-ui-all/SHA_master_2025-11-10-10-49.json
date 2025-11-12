@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "[sdk-ui-gen-ai]: Support KDA in chatbot visualisation drill, repair summary if no keys drivers ",
+            "comment": "sdk-ui-gen-ai: Support KDA in chatbot visualisation drill, repair summary if no keys drivers ",
             "type": "none"
         }
     ],

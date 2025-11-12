@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -26,6 +26,11 @@ export interface IHeaderMenuProps {
     onSortingItemClick: (item: ISortingMenuItem) => void;
     isMenuOpened: boolean;
     onMenuOpenedChange: (opened: boolean) => void;
+    /**
+     * Whether the menu was opened via keyboard (Alt + Down Arrow).
+     * When true, the menu will autofocus on open.
+     */
+    isKeyboardTriggered?: boolean;
 }
 
 function MenuToggler({ onClick }: { onClick: () => void }) {
@@ -54,13 +59,25 @@ export function HeaderMenu({
     onSortingItemClick,
     isMenuOpened,
     onMenuOpenedChange,
+    isKeyboardTriggered = false,
 }: IHeaderMenuProps) {
     const intl = useIntl();
+    const toggleDropdownRef = useRef<((desired?: boolean) => void) | null>(null);
+    const prevIsMenuOpenedRef = useRef(isMenuOpened);
 
     const uiMenuItems = useMemo(
         () => buildUiMenuItems(aggregationsItems, textWrappingItems, sortingItems, intl),
         [aggregationsItems, textWrappingItems, sortingItems, intl],
     );
+
+    // When isMenuOpened changes from parent and we have the toggle function,
+    // use it instead of relying on prop changes alone
+    useEffect(() => {
+        if (isMenuOpened !== prevIsMenuOpenedRef.current && toggleDropdownRef.current) {
+            toggleDropdownRef.current(isMenuOpened);
+        }
+        prevIsMenuOpenedRef.current = isMenuOpened;
+    }, [isMenuOpened]);
 
     const handleSelect = useCallback(
         (item: IUiMenuItem<AggregationsMenuItemData>) => {
@@ -106,7 +123,11 @@ export function HeaderMenu({
                 ]}
                 accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
                 overlayZIndex={overlayZIndex}
-                renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}
+                autofocusOnOpen={isKeyboardTriggered}
+                renderButton={({ toggleDropdown }) => {
+                    toggleDropdownRef.current = toggleDropdown;
+                    return <MenuToggler onClick={toggleDropdown} />;
+                }}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
                     <UiMenu<AggregationsMenuItemData>
                         items={uiMenuItems}

@@ -1,0 +1,53 @@
+{{/* (C) 2023 GoodData Corporation */}}
+{{ $pageLang := cond (isset .Page.Params "lang") (default "en" (index (split .Page.Params.lang "_") 0)) .Site.Language.Lang }}
+
+<!doctype html>
+<html lang="{{ $pageLang }}" class="no-js">
+  <head>
+    {{ partial "head.html" . }}
+    {{ partial "meta-version.html" . }}
+    {{ if .Params.externalLink }}
+      <meta http-equiv="refresh" content="0;url={{ .Params.externalLink }}" />
+    {{ end }}
+    <script type="application/ld+json">
+        {{ partial "structureddata/structureddata.template.html" (dict "Page" . "Site" .Site) | safeJS }}
+    </script>
+  </head>
+  <body class="td-{{ .Kind }}{{ if .Page.Params.edition }} doc{{ .Page.Params.edition }}{{ end }}{{ if .Page.Params.type }} {{ .Page.Params.type }}{{ end }}" id="top">
+    {{ partial "gtm-body.html" }}
+    {{ partial "skip-links.html" . }}
+    <header aria-label="Main site header">
+      {{ partial "navbar.html" . }}
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="gd-docs-header-nav__mobile">
+          {{ partial "navbar-breadcrumb.html" . }}
+        </div>
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-lg-4 col-xl-3 td-sidebar d-print-none">
+            {{ partial "sidebar.html" . }}
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            {{ partial "toc.html" . }}
+          </div>
+          <main class="col-12 col-lg-8 col-xl-7 pl-lg-5 ps-lg-5" role="main" id="main-content" aria-label="Article content">
+            {{ partial "version-banner.html" . }}
+            {{ if not .Site.Params.ui.breadcrumb_disable }}{{ partial "breadcrumb.html" . }}{{ end }}
+            {{ if .Draft }}
+            <div class="alert alert-warning" role="alert">
+                <h1>DRAFT</h1>
+                <p>This document is a draft and will not be published.</p>
+            </div>
+            {{ end }}
+            {{ block "main" . }}{{ end }}
+          </main>
+        </div>
+      </div>
+      {{ partialCached "footer.html" . }}
+    </div>
+    {{ partial "custom-scripts.html" . }}
+    {{ partial "scripts.html" . }}
+    {{ partial "search.html" . }}
+  </body>
+</html>

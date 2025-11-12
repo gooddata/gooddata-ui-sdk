@@ -5361,6 +5361,9 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
 // @public
 export function ignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
+// @alpha
+export function ignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
+
 // @public
 export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
 
@@ -10407,6 +10410,9 @@ export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayout
 
 // @beta
 export function unignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+
+// @alpha
+export function unignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
 
 // @beta
 export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;

@@ -131,7 +131,7 @@ export const PUSHPIN_STYLE_CIRCLE_STROKE_COLOR = "circle-stroke-color";
  * @remarks
  * Limits are in place for performance reasons
  */
-export const DEFAULT_DATA_POINTS_LIMIT = 25000;
+export const DEFAULT_DATA_POINTS_LIMIT = 50000;
 
 // =============================================================================
 // Tooltip Configuration

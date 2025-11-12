@@ -11,6 +11,7 @@ import { useCellSelectionProps } from "./useCellSelectionProps.js";
 import { useClipboardProps } from "./useClipboardProps.js";
 import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { useDataLoadingProps } from "./useDataLoadingProps.js";
+import { useFocusManagementProps } from "./useFocusManagementProps.js";
 import { useHeaderComponents } from "./useHeaderComponents.js";
 import { useInteractionProps } from "./useInteractionProps.js";
 import { usePivotingProps } from "./usePivotingProps.js";
@@ -41,6 +42,7 @@ export function useAgGridReactProps() {
     const enhanceWithHeaderComponents = useHeaderComponents();
     const enhanceWithAfterRender = useAfterRenderCallback();
     const enhanceWithVirtualColumnAutoResize = useVirtualColumnAutoResize();
+    const enhanceWithFocusManagement = useFocusManagementProps();
 
     return useMemo<AgGridProps>(() => {
         return [
@@ -59,6 +61,7 @@ export function useAgGridReactProps() {
             enhanceWithHeaderComponents,
             enhanceWithAfterRender,
             enhanceWithVirtualColumnAutoResize,
+            enhanceWithFocusManagement,
         ].reduce((acc, fn) => fn(acc), AG_GRID_DEFAULT_PROPS);
     }, [
         enhanceWithAgGridApi,
@@ -76,5 +79,6 @@ export function useAgGridReactProps() {
         enhanceWithHeaderComponents,
         enhanceWithAfterRender,
         enhanceWithVirtualColumnAutoResize,
+        enhanceWithFocusManagement,
     ]);
 }

@@ -1,0 +1,30 @@
+{{- $url := . -}}
+{{- $variant := "full" -}}
+
+{{- /* Check if variant is passed as context (dict) or just the URL string */ -}}
+{{- if reflect.IsMap . -}}
+  {{- $url = .url -}}
+  {{- $variant = .variant | default "full" -}}
+{{- end -}}
+
+{{- $urlObj := urls.Parse $url -}}
+{{- $host := printf "%s://%s" $urlObj.Scheme $urlObj.Host -}}
+{{- $pathname := $urlObj.Path -}}
+
+{{- $breadcrumbs := slice -}}
+{{- $segments := split $pathname "/" -}}
+{{- $currentPath := "" -}}
+
+{{- /* Default variant: Parse all segments */ -}}
+{{- range $segments -}}
+  {{- if ne . "" -}}
+    {{- $currentPath = printf "%s%s/" $currentPath . -}}
+    {{- $fullUrl := printf "%s/%s" $host $currentPath -}}
+    {{- $breadcrumbs = $breadcrumbs | append $fullUrl -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $breadcrumbs) 0 -}}
+{{- $breadcrumbs | jsonify }}
+{{- else -}}
+[]{{- end -}}

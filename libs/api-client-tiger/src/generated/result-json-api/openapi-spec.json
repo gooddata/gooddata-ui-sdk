@@ -16,6 +16,10 @@
     ],
     "tags": [
         {
+            "name": "OGC API Features",
+            "description": "OGC API Features implementation for GeoParquet collections"
+        },
+        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
@@ -263,6 +267,108 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/location/collections/{collectionId}/items": {
+            "get": {
+                "tags": ["OGC API Features"],
+                "summary": "Get collection features",
+                "description": "Retrieve features from a GeoParquet collection as GeoJSON",
+                "operationId": "getCollectionItems",
+                "parameters": [
+                    {
+                        "name": "collectionId",
+                        "in": "path",
+                        "description": "Collection identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "countries"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of features to return",
+                        "required": false,
+                        "schema": {
+                            "maximum": 10000,
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "example": 100
+                    },
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Bounding box filter (minx,miny,maxx,maxy)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "-180,-90,180,90"
+                    },
+                    {
+                        "name": "datetime",
+                        "in": "query",
+                        "description": "Datetime filter (ISO 8601)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2020-01-01T00:00:00Z/2020-12-31T23:59:59Z"
+                    },
+                    {
+                        "name": "matchingProperty",
+                        "in": "query",
+                        "description": "Property to match against collection features",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "id"
+                        },
+                        "example": "ISO_A3"
+                    },
+                    {
+                        "name": "values",
+                        "in": "query",
+                        "description": "List of values to filter features by",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "example": "US,CA,MX"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Features retrieved successfully",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Collection not found",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -801,6 +907,64 @@
                     }
                 },
                 "description": "Request to delete files from the storage."
+            },
+            "GeoJsonFeature": {
+                "required": ["properties", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "object"
+                    },
+                    "geometry": {
+                        "$ref": "#/components/schemas/GeoJsonGeometry"
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "description": "GeoJSON Feature"
+            },
+            "GeoJsonFeatureCollection": {
+                "required": ["features", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GeoJsonFeature"
+                        }
+                    },
+                    "bbox": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    }
+                },
+                "description": "GeoJSON FeatureCollection"
+            },
+            "GeoJsonGeometry": {
+                "required": ["coordinates", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "type": "object"
+                    }
+                },
+                "description": "GeoJSON Geometry"
             },
             "CacheRemovalInterval": {
                 "required": ["from", "removed", "to"],

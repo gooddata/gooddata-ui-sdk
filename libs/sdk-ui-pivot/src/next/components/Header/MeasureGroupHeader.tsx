@@ -15,6 +15,7 @@ import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
+import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
@@ -26,6 +27,7 @@ import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from ".
  */
 export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const { isPivoted } = useColumnDefs();
     const { config } = usePivotTableProps();
     const { columnHeadersPosition } = config;
@@ -73,6 +75,15 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
 
+    useHeaderMenuKeyboard(
+        isHeader ? params : ({ eGridHeader: undefined } as unknown as AgGridHeaderParams),
+        () => {
+            setIsKeyboardTriggered(true);
+            setIsMenuOpen(true);
+        },
+        isHeader && hasMenuItems,
+    );
+
     const effectiveMeasure = rowScope.find((scope) => scope.type === "measureScope");
     // For non-header cells, get the measure name from the row scope's measure descriptor
     // instead of using the formatted value directly. The formatted value contains the measure name from
@@ -99,7 +110,13 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
                     onTextWrappingItemClick={handleTextWrappingItemClick}
                     onSortingItemClick={handleSortingItemClick}
                     isMenuOpened={isMenuOpen}
-                    onMenuOpenedChange={setIsMenuOpen}
+                    onMenuOpenedChange={(opened) => {
+                        setIsMenuOpen(opened);
+                        if (!opened) {
+                            setIsKeyboardTriggered(false);
+                        }
+                    }}
+                    isKeyboardTriggered={isKeyboardTriggered}
                 />
             ) : null}
         </div>

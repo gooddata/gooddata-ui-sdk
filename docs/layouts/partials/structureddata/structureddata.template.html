@@ -1,0 +1,110 @@
+{{- $pageData := .Page -}}
+{{- $siteData := .Site -}}
+
+{{- $pageUrl := printf "https://www.gooddata.com/docs/gooddata-ui%s" $pageData.RelPermalink -}}
+{{- $breadcrumbsJson := partial "parseUrlBreadcrumbs.html" $pageUrl -}}
+{{- $breadcrumbs := $breadcrumbsJson | unmarshal -}}
+
+{{- /* Build path with /latest/ instead of version */ -}}
+{{- $pathSegments := split (trim $pageData.RelPermalink "/") "/" -}}
+{{- $latestPath := "" -}}
+{{- range $seg := $pathSegments -}}
+  {{- if or (eq $seg "latest") (findRE `^\d+\.\d+` $seg) (eq $seg "dev") (eq $seg "master") -}}
+    {{- $latestPath = printf "%s/latest" $latestPath -}}
+  {{- else -}}
+    {{- $latestPath = printf "%s/%s" $latestPath $seg -}}
+  {{- end -}}
+{{- end -}}
+{{- $latestPath = printf "%s/" $latestPath -}}
+
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.gooddata.com/docs/gooddata-ui/latest/#website",
+      "url": "https://www.gooddata.com/docs/gooddata-ui/latest/",
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.gooddata.com/#organization",
+      "name": "GoodData",
+      "url": "https://www.gooddata.com"
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://www.gooddata.com/docs/gooddata-ui{{ $latestPath }}#article",
+      "headline": "{{ $pageData.Params.title }} | GoodData.UI",
+      "description": {{ if $pageData.Params.description }}{{ $pageData.Params.description | jsonify }}{{ else }}{{ $pageData.Summary | jsonify }}{{ end }},
+      "url": "https://www.gooddata.com/docs/gooddata-ui/latest/references/filters/attribute_filter/",
+      "dateModified": {{ $pageData.Params.lastmod | jsonify }},
+      "author": {
+        "@id": "https://www.gooddata.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.gooddata.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.gooddata.com/docs/gooddata-ui/latest/#website"
+      },
+      "articleSection": {{ $pageData.Parent.Title | jsonify }},
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.gooddata.com/docs/gooddata-ui{{ $latestPath }}#webpage",
+      "url": "https://www.gooddata.com/docs/gooddata-ui{{ $latestPath }}",
+      "name": "{{ $pageData.Params.title }} | GoodData.UI",
+      "isPartOf": {
+        "@id": "https://www.gooddata.com/docs/gooddata-ui/latest/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://www.gooddata.com/docs/gooddata-ui{{ $latestPath }}#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.gooddata.com/docs/gooddata-ui{{ $latestPath }}#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.gooddata.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://www.gooddata.com/docs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "GoodData.UI",
+          "item": "https://www.gooddata.com/docs/gooddata-ui/latest/"
+        }
+        {{- range $index, $breadcrumb := $breadcrumbs }}
+        {{- if ge $index 3 }}
+        {{- $segments := split (trim $breadcrumb "/") "/" }}
+        {{- $name := index $segments (sub (len $segments) 1) | humanize }}
+        {{- $latestBreadcrumb := "" }}
+        {{- range $seg := $segments }}
+          {{- if or (eq $seg "latest") (findRE `^\d+\.\d+` $seg) (eq $seg "dev") (eq $seg "master") }}
+            {{- $latestBreadcrumb = printf "%s/latest" $latestBreadcrumb }}
+          {{- else if and (ne $seg "") (ne $seg "https:") (ne $seg "www.gooddata.com") }}
+            {{- $latestBreadcrumb = printf "%s/%s" $latestBreadcrumb $seg }}
+          {{- end }}
+        {{- end }}
+        {{- $latestBreadcrumb = printf "https://www.gooddata.com%s/" $latestBreadcrumb }},
+        {
+          "@type": "ListItem",
+          "position": {{ add $index 1 }},
+          "name": {{ $name | jsonify }},
+          "item": {{ $latestBreadcrumb | jsonify }}
+        }{{- end }}
+        {{- end }}
+      ]
+    }
+  ]
+}

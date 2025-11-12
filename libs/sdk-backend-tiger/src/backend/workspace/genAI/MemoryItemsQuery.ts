@@ -11,7 +11,7 @@ import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertMemoryItem } from "../../../convertors/fromBackend/MemoryItemConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { buildFilterQuery } from "../../common/filtering.js";
+import { buildFilterQuery, buildListClause, joinClauses } from "../../common/filtering.js";
 
 export class MemoryItemsQuery implements IMemoryItemsQuery {
     private size = 50;
@@ -41,7 +41,16 @@ export class MemoryItemsQuery implements IMemoryItemsQuery {
         return this;
     }
     withFilter(filter: IMemoryItemsFilterOptions): IMemoryItemsQuery {
-        this.filter = buildMemoryItemsFilterQuery(filter);
+        this.filter = joinClauses([
+            buildFilterQuery(filter),
+            buildListClause("strategy", "in", filter.strategy),
+            buildListClause("strategy", "out", filter.excludeStrategy),
+            buildListClause(
+                "isDisabled",
+                "in",
+                filter.isDisabled === undefined ? [] : [String(filter.isDisabled)],
+            ),
+        ]);
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
@@ -95,43 +104,4 @@ export class MemoryItemsQuery implements IMemoryItemsQuery {
             this.page * this.size,
         );
     }
-}
-
-function buildMemoryItemsFilterQuery(filter: IMemoryItemsFilterOptions): string | undefined {
-    const baseFilter = buildFilterQuery(filter);
-    const filters: string[] = baseFilter ? [baseFilter] : [];
-    if (filter.strategy && filter.strategy.length > 0) {
-        filters.push(`strategy=in=(${formatInValues(filter.strategy)})`);
-    }
-    if (filter.isDisabled !== undefined) {
-        filters.push(`isDisabled=in=(${filter.isDisabled})`);
-    }
-    if (filters.length > 0) {
-        return filters.join(";");
-    }
-    return undefined;
-}
-
-/**
- * Formats values for RSQL "in" operator.
- *
- * Wrapping each value in double quotes allows values with spaces.
- * Joining by comma acts as an OR operator.
- */
-function formatInValues(values: string[]): string {
-    return values.map(formatValue).join(",");
-}
-
-/**
- * Formats value for RSQL.
- */
-function formatValue(value: string): string {
-    return `"${escapeValue(value)}"`;
-}
-
-/**
- * Escapes characters (backslashes and double quotes) that would break quoted filter values.
- */
-function escapeValue(value: string): string {
-    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }

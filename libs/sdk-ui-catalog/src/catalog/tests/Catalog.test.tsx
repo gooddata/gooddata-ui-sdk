@@ -12,7 +12,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
-import { PermissionsState } from "../../permission/types.js";
+import type { PermissionsState } from "../../permission/types.js";
 import { SearchProvider } from "../../search/index.js";
 import { Catalog } from "../Catalog.js";
 

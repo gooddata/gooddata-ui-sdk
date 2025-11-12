@@ -15,21 +15,47 @@ import {
     UnexpectedSdkError,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { isEnterKey, isEscapeKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
+import {
+    findFocusableElementOutsideContainer,
+    isEnterKey,
+    isEscapeKey,
+    isSpaceKey,
+    makeKeyboardNavigation,
+} from "@gooddata/sdk-ui-kit";
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
-import { AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
+import { AgGridApi, AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
 import { AgGridRowData } from "../types/internal.js";
+
+/**
+ * Keyboard navigation action map for pivot table
+ */
+const tableKeyboardNavigation = makeKeyboardNavigation({
+    onHomeNormal: [{ code: "Home", modifiers: ["!Control", "!Meta"] }],
+    onHomeWithModifier: [
+        { code: "Home", modifiers: ["Control"] },
+        { code: "Home", modifiers: ["Meta"] },
+    ],
+    onEndNormal: [{ code: "End", modifiers: ["!Control", "!Meta"] }],
+    onEndWithModifier: [
+        { code: "End", modifiers: ["Control"] },
+        { code: "End", modifiers: ["Meta"] },
+    ],
+});
 
 /**
  * Returns ag-grid props with interactions applied.
  *
- * For selection of single cell, we try to check if the user is dragging the mouse. If not, we drill.
- * If the user is dragging the mouse, we don't drill.
+ * Handles:
+ * - Cell drilling on click and keyboard (Enter/Space)
+ * - Mouse drag detection for cell selection
+ * - Custom keyboard navigation (ArrowUp, PageUp/Down, Home/End, Ctrl+Home/End)
+ * - Tab key to exit grid
+ * - Escape key to blur
  *
  * @alpha
  */
@@ -143,6 +169,63 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
         isDraggingRef.current = true;
     }, []);
 
+    /**
+     * Navigate to first column (and optionally first row with modifier)
+     */
+    const navigateToHome = useCallback((api: AgGridApi, row: number, withModifier: boolean) => {
+        const allColumns = api.getAllDisplayedColumns();
+        if (allColumns && allColumns.length > 0) {
+            const firstColumn = allColumns[0];
+            const targetRow = withModifier ? 0 : row;
+
+            api.clearCellSelection();
+
+            if (withModifier) {
+                api.ensureIndexVisible(0);
+            }
+            api.ensureColumnVisible(firstColumn);
+
+            api.setFocusedCell(targetRow, firstColumn);
+            api.addCellRange({
+                rowStartIndex: targetRow,
+                rowEndIndex: targetRow,
+                columns: [firstColumn],
+            });
+        }
+    }, []);
+
+    /**
+     * Navigate to last column (and optionally last row with modifier)
+     */
+    const navigateToEnd = useCallback((api: AgGridApi, row: number, withModifier: boolean) => {
+        const allColumns = api.getAllDisplayedColumns();
+        if (allColumns && allColumns.length > 0) {
+            const lastColumn = allColumns[allColumns.length - 1];
+            let targetRow = row;
+
+            if (withModifier) {
+                const displayedRowCount = api.getDisplayedRowCount();
+                if (displayedRowCount > 0) {
+                    targetRow = displayedRowCount - 1;
+                }
+            }
+
+            api.clearCellSelection();
+
+            if (withModifier) {
+                api.ensureIndexVisible(targetRow);
+            }
+            api.ensureColumnVisible(lastColumn);
+
+            api.setFocusedCell(targetRow, lastColumn);
+            api.addCellRange({
+                rowStartIndex: targetRow,
+                rowEndIndex: targetRow,
+                columns: [lastColumn],
+            });
+        }
+    }, []);
+
     const onCellKeyDown = useCallback(
         (event: CellKeyDownEvent<AgGridRowData, string | null>) => {
             // Check if it's a keyboard event
@@ -153,11 +236,50 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
             // Cast to ReactKeyboardEvent for helpers that expect React's typing shape
             const keyboardEvent = event.event as unknown as ReactKeyboardEvent;
 
+            // Handle Tab key: find next/previous focusable element outside grid and focus it
+            if (keyboardEvent.key === "Tab") {
+                // Prevent default Tab behavior
+                keyboardEvent.preventDefault();
+                keyboardEvent.stopPropagation();
+
+                // Clear AG Grid's internal focus state
+                event.api.clearFocusedCell();
+
+                const eventTarget = keyboardEvent.target as HTMLElement;
+                if (!eventTarget) {
+                    return;
+                }
+
+                // Find the next/previous focusable element outside the grid
+                const direction = keyboardEvent.shiftKey ? "backward" : "forward";
+                const targetElement = findFocusableElementOutsideContainer(eventTarget, direction);
+
+                if (targetElement) {
+                    targetElement.focus();
+                }
+
+                return;
+            }
+
             // Blur focused element when Escape is pressed, which will trigger onBlur and clear selection
             if (isEscapeKey(keyboardEvent)) {
                 const activeElement = document.activeElement as HTMLElement;
                 activeElement?.blur();
                 return;
+            }
+
+            // Handle custom keyboard navigation (Home/End with and without modifiers)
+            const { api, rowIndex, column } = event;
+            if (column && rowIndex !== null && rowIndex !== undefined) {
+                tableKeyboardNavigation(
+                    {
+                        onHomeNormal: () => navigateToHome(api, rowIndex, false),
+                        onHomeWithModifier: () => navigateToHome(api, rowIndex, true),
+                        onEndNormal: () => navigateToEnd(api, rowIndex, false),
+                        onEndWithModifier: () => navigateToEnd(api, rowIndex, true),
+                    },
+                    { shouldPreventDefault: true, shouldStopPropagation: true },
+                )(keyboardEvent);
             }
 
             // Handle drilling only if there are drillable items
@@ -170,7 +292,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 drillFromCellEvent(event);
             }
         },
-        [drillFromCellEvent, onDrill, drillableItems],
+        [drillFromCellEvent, onDrill, drillableItems, navigateToHome, navigateToEnd],
     );
 
     return useCallback(

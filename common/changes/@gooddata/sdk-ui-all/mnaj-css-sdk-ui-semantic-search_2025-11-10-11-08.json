@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Migrate @gooddata/sdk-ui-semantic-search to css modules",
+            "comment": "sdk-ui-semantic-search: Migrate to css modules",
             "type": "none"
         }
     ],

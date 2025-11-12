@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { type PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import type { ObjectType } from "./types.js";
 

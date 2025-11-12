@@ -143,6 +143,76 @@ export function disableRichTextWidgetDateFilter(
 }
 
 /**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpIgnoreDateFilter} operation.
+ *
+ * Dispatching this command will result in addition of one or more filters into Rich Text widget's date filter ignore-list.
+ * Ignored date filters are not passed down to the metrics resolved in rich text references.
+ *
+ * The operation is idempotent - trying to ignore a date filter multiple times will have no effect.
+ *
+ * @param ref - reference of the Rich Text widget to modify
+ * @param oneOrMoreDataSets - one or more refs of date datasets used by date filters that should be added to the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function ignoreDateFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreDataSets: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    const dateDataSetRefs = Array.isArray(oneOrMoreDataSets) ? oneOrMoreDataSets : [oneOrMoreDataSets];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreDateFilter",
+                dateDataSetRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpUnignoreDateFilter} operation.
+ *
+ * Dispatching this command will result in removal of one or more filters from Rich Text widget's date filter ignore-list.
+ * Ignored date filters are not passed down to the metrics resolved in rich text references.
+ *
+ * The operation is idempotent - trying to unignore a date filter multiple times will have no effect.
+ *
+ * @param ref - reference of the Rich Text widget to modify
+ * @param oneOrMoreDataSets - one or more refs of date datasets used by date filters that should be removed from the ignore-list
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function unignoreDateFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreDataSets: ObjRef | ObjRef[],
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    const dateDataSetRefs = Array.isArray(oneOrMoreDataSets) ? oneOrMoreDataSets : [oneOrMoreDataSets];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreDateFilter",
+                dateDataSetRefs,
+            },
+        },
+    };
+}
+
+/**
  * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into Rich Text widget's attribute filter ignore-list.

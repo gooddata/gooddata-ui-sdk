@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import type mapboxgl from "mapbox-gl";
 
 import { colorPaletteToColors } from "@gooddata/sdk-model";
@@ -102,7 +103,7 @@ export const PUSHPIN_SIZE_OPTIONS_MAP = {
 };
 export const DEFAULT_CLUSTER_RADIUS = 50; // inside this Radius, points will be clustered (defaults to 50)
 
-export const DEFAULT_DATA_POINTS_LIMIT = 25000;
+export const DEFAULT_DATA_POINTS_LIMIT = 50000;
 export const DEFAULT_DATA_SOURCE_NAME = "gdcPushpinsData";
 export const DEFAULT_LAYER_NAME = "gdcPushpins";
 

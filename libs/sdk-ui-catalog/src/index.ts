@@ -11,6 +11,7 @@ export {
     AnalyticsCatalogDetailContent,
     type AnalyticsCatalogDetailContentProps,
 } from "./AnalyticsCatalogDetail.js";
+export { AnalyticsCatalogFilter, type IAnalyticsCatalogFilterProps } from "./AnalyticsCatalogFilter.js";
 
 /*
  * Supplementary API.

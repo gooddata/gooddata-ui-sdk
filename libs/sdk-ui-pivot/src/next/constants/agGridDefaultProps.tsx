@@ -36,12 +36,24 @@ const CELL_SELECTION_PROPS: AgGridProps = {
     suppressCellFocus: false,
 };
 
+const NAVIGATION_PROPS: AgGridProps = {
+    // Disable Tab navigation within the grid - Tab should exit the grid (browser default)
+    // Returning false prevents AG Grid's default Tab behavior
+    tabToNextCell: () => false,
+    tabToNextHeader: () => false,
+    // Set tabindex="-1" ONLY on rows (not cells!) to prevent Tab from focusing rows
+    // Cells need to keep their tabindex so AG Grid can manage focus and call suppressKeyboardEvent
+    processRowPostCreate: (params) => {
+        params.eRow.setAttribute("tabindex", "-1");
+    },
+};
+
 const AGGREGATION_PROPS: AgGridProps = {
     suppressAggFuncInHeader: true,
 };
 
 const SORTING_PROPS: AgGridProps = {
-    alwaysMultiSort: true,
+    alwaysMultiSort: false,
     defaultColDef: {
         sortable: true,
         sortingOrder: ["desc", "asc", null],
@@ -82,6 +94,7 @@ export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     COLUMN_PROPS,
     SIZING_PROPS,
     CELL_SELECTION_PROPS,
+    NAVIGATION_PROPS,
     AGGREGATION_PROPS,
     SORTING_PROPS,
     STYLING_PROPS,
