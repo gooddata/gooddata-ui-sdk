@@ -22,7 +22,9 @@ import {
     enableKpiWidgetDateFilter,
     enableRichTextWidgetDateFilter,
     ignoreDateFilterOnInsightWidget,
+    ignoreDateFilterOnRichTextWidget,
     unignoreDateFilterOnInsightWidget,
+    unignoreDateFilterOnRichTextWidget,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
 
@@ -192,17 +194,60 @@ export function useDateFilterConfigurationHandling(
         },
     });
 
+    const { run: ignoreRichTextDateFilter } = useDashboardCommandProcessing({
+        commandCreator: ignoreDateFilterOnRichTextWidget,
+        successEvent: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(false);
+        },
+    });
+
+    const { run: unignoreRichTextDateFilter } = useDashboardCommandProcessing({
+        commandCreator: unignoreDateFilterOnRichTextWidget,
+        successEvent: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        onBeforeRun: () => {
+            onAppliedChanged(true);
+            setStatus("loading");
+        },
+        onError: () => {
+            setStatus("error");
+        },
+        onSuccess: () => {
+            setStatus("ok");
+        },
+    });
+
     const handleIgnoreChanged = useCallback(
         (ignored: boolean) => {
-            if (dataSetRef) {
+            if (!dataSetRef) {
+                return;
+            }
+
+            if (isInsightWidget(widget)) {
                 if (ignored) {
                     unignoreInsightFilter(ref, dataSetRef);
                 } else {
                     ignoreInsightFilter(ref, dataSetRef);
                 }
+            } else if (isRichTextWidget(widget)) {
+                if (ignored) {
+                    unignoreRichTextDateFilter(ref, dataSetRef);
+                } else {
+                    ignoreRichTextDateFilter(ref, dataSetRef);
+                }
             }
         },
-        [dataSetRef, ignoreInsightFilter, ref, unignoreInsightFilter],
+        [
+            dataSetRef,
+            ignoreInsightFilter,
+            ignoreRichTextDateFilter,
+            ref,
+            unignoreInsightFilter,
+            unignoreRichTextDateFilter,
+            widget,
+        ],
     );
 
     const handleDateDatasetChanged = useCallback(

@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren, useMemo } from "react";
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { PermissionsProvider } from "./PermissionsContext.js";

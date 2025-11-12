@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -32,7 +32,7 @@ export function useHeaderMenuSorting(params: AgGridHeaderParams | AgGridHeaderGr
     const sortIndex = isRegularHeader ? (params.column.getSortIndex() ?? undefined) : undefined;
     const sanitizedSortIndex = sortModel.length > 1 ? sortIndex : undefined; // Show sort index only in case there is multi-sort
 
-    // Direct sort setter for menu interactions
+    // Direct sort setter for menu interactions (always multisort)
     const handleSetSort = useCallback(
         (direction: "asc" | "desc" | null) => {
             if (isRegularHeader) {
@@ -77,11 +77,17 @@ export function useHeaderMenuSorting(params: AgGridHeaderParams | AgGridHeaderGr
         [allowSorting, sortDirection, handleSetSort],
     );
 
-    const handleProgressSort = useCallback(() => {
-        if (isRegularHeader) {
-            params.progressSort(true);
-        }
-    }, [params, isRegularHeader]);
+    // Progress sort for header clicks (respects AG Grid default: regular sort, Shift+click for multisort)
+    const handleProgressSort = useCallback(
+        (event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
+            if (isRegularHeader) {
+                // Check if Shift key is pressed to enable multisort
+                const isShiftPressed = "shiftKey" in event ? event.shiftKey : false;
+                params.progressSort(isShiftPressed);
+            }
+        },
+        [params, isRegularHeader],
+    );
 
     return {
         sortDirection,

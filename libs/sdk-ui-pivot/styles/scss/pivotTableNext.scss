@@ -63,6 +63,16 @@
         background-color: var(--gd-table-headerHoverBackgroundColor);
     }
 
+    // Use outline (doesn't affect layout) with same thickness as cell border (1px)
+    .ag-header-cell:focus-visible,
+    .ag-header-cell:has(:focus-visible),
+    .ag-header-group-cell:focus-visible,
+    .ag-header-group-cell:has(:focus-visible) {
+        outline: 1px solid var(--ag-range-selection-border-color);
+        outline-offset: -1px;
+        box-shadow: none; // Remove AG Grid's default focus box-shadow
+    }
+
     .ag-header-cell-comp-wrapper {
         display: flex;
         width: 100%;
@@ -192,8 +202,8 @@
         &:has(:focus-visible) {
             #{$root}__header-cell-menu-button,
             #{$root}__header-cell-menu-button-wrapper {
-                display: flex;
-                align-items: center;
+                opacity: 1;
+                pointer-events: auto;
             }
 
             .ag-icon-none {
@@ -217,31 +227,37 @@
         }
 
         // Keep hover background color when menu is open
-        &:has(#{$root}__header-cell-menu--is-open) {
-            background-color: var(--gd-table-headerHoverBackgroundColor);
+        // Apply to the parent AG Grid cell to cover the entire cell area
+        &--is-menu-open {
+            #{$root}__header-cell-menu-button,
+            #{$root}__header-cell-menu-button-wrapper {
+                opacity: 1;
+                pointer-events: auto;
+            }
         }
+    }
+
+    // Apply background to the entire AG Grid header cell when menu is open
+    .ag-header-cell:has(#{$root}__header-cell--is-menu-open),
+    .ag-header-group-cell:has(#{$root}__header-cell--is-menu-open) {
+        background-color: var(--gd-table-headerHoverBackgroundColor);
     }
 
     &__header-cell-menu {
         display: flex;
         align-items: center;
-
-        // Keep the menu button visible while the menu is open
-        &--is-open {
-            #{$root}__header-cell-menu-button,
-            #{$root}__header-cell-menu-button-wrapper {
-                display: flex;
-                align-items: center;
-            }
-        }
     }
 
     &__header-cell-menu-button {
-        display: none;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
+        width: 24px;
         z-index: 2;
         flex: 0 0 auto;
         background: none;
@@ -252,7 +268,10 @@
     }
 
     &__header-cell-menu-button-wrapper {
-        display: none;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -495,8 +514,8 @@
         &:has(:focus-visible) {
             #{$root}__header-cell-menu-button,
             #{$root}__header-cell-menu-button-wrapper {
-                display: flex;
-                align-items: center;
+                opacity: 1;
+                pointer-events: auto;
             }
         }
     }

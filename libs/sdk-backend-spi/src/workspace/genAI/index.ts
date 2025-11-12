@@ -289,6 +289,7 @@ export interface ISemanticQualityService {
  */
 export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
     strategy?: MemoryItemStrategy[];
+    excludeStrategy?: MemoryItemStrategy[];
     isDisabled?: boolean;
 }
 

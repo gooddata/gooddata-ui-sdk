@@ -4,6 +4,7 @@ import { KeyboardEvent } from "react";
 
 import { CONFIRM_DIALOG_BASE_ID } from "../Dialog/elementId.js";
 import { IRegion } from "../typings/domUtilities.js";
+import { NavigationDirection } from "../typings/navigation.js";
 
 /**
  * Removes the element specified from the DOM
@@ -226,4 +227,71 @@ export const getFocusableElements = (element?: HTMLElement | null, includeHidden
  */
 export const isElementFocusable = (element?: HTMLElement | null, includeHidden: boolean = false) => {
     return element?.matches(focusableElementsSelector) && isFocusable(element, includeHidden);
+};
+
+/**
+ * @internal
+ * Check a single sibling element for focusable descendants.
+ *
+ * @param sibling - The sibling element to check
+ * @param direction - Direction to determine which focusable element to return
+ * @returns The first or last focusable element within the sibling, or null
+ */
+export const findFocusableElementInSibling = (
+    sibling: Element,
+    direction: NavigationDirection = "forward",
+): HTMLElement | null => {
+    const siblingElement = sibling as HTMLElement;
+
+    // Skip hidden elements early - avoid expensive querySelectorAll on hidden subtrees
+    // offsetParent is null if element or ancestor is display:none
+    if (siblingElement.offsetParent === null && siblingElement !== document.body) {
+        return null;
+    }
+
+    const { firstElement, lastElement } = getFocusableElements(siblingElement);
+
+    // Use the pre-computed first/last element instead of array access
+    return direction === "forward" ? (firstElement ?? null) : (lastElement ?? null);
+};
+
+/**
+ * @internal
+ * Find the next or previous focusable element outside of a given container by traversing up the DOM tree.
+ * This is more efficient than querying all focusable elements on the page.
+ *
+ * @param container - The container to find focusable elements outside of
+ * @param direction - 'forward' for next element (Tab), 'backward' for previous element (Shift+Tab)
+ * @returns The next/previous focusable element, or null if none found
+ */
+export const findFocusableElementOutsideContainer = (
+    container: HTMLElement,
+    direction: NavigationDirection = "forward",
+): HTMLElement | null => {
+    let currentElement: HTMLElement | null = container;
+
+    // Traverse up the DOM tree
+    while (currentElement) {
+        // Check siblings one by one (lazy evaluation)
+        let sibling =
+            direction === "forward"
+                ? currentElement.nextElementSibling
+                : currentElement.previousElementSibling;
+
+        // Check each sibling immediately instead of collecting all first
+        while (sibling) {
+            const targetElement = findFocusableElementInSibling(sibling, direction);
+            if (targetElement) {
+                return targetElement;
+            }
+
+            // Move to next/previous sibling
+            sibling = direction === "forward" ? sibling.nextElementSibling : sibling.previousElementSibling;
+        }
+
+        // Move up to parent and continue searching
+        currentElement = currentElement.parentElement;
+    }
+
+    return null;
 };

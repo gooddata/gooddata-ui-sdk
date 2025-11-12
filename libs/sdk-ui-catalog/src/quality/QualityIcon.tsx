@@ -7,7 +7,7 @@ import { type IntlShape, type MessageDescriptor, defineMessages } from "react-in
 
 import {
     type Identifier,
-    SemanticQualityIssueCode,
+    type SemanticQualityIssueCode,
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
 import { UiTooltip } from "@gooddata/sdk-ui-kit";

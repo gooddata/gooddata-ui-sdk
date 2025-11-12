@@ -2,8 +2,9 @@
 
 import { ReactElement, ReactNode, cloneElement, useCallback, useMemo, useState } from "react";
 
-import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
+import { IUiFocusHelperConnectors } from "./types.js";
 import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
+import { NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 

@@ -2,7 +2,7 @@
 
 import { RefObject } from "react";
 
-import { NavigationDirection } from "./types.js";
+import { NavigationDirection } from "../../typings/navigation.js";
 
 /**
  * @internal

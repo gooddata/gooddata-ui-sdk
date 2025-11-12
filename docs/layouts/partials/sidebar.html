@@ -14,6 +14,7 @@
 </nav>
 
 {{ define "root-link" }}
+    {{ if .root }}
     {{ $isCurrent := eq .currentPage .root.FirstSection }}
     {{ $active := .active }}
     {{ with .root }}
@@ -24,6 +25,7 @@
             </div>
         </li>
         </ul>
+    {{ end }}
     {{ end }}
 {{ end }}
 

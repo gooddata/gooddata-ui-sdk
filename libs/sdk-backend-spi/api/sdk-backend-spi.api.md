@@ -1140,6 +1140,8 @@ export interface IMemoryCreatedByUsers {
 // @public
 export interface IMemoryItemsFilterOptions extends IFilterBaseOptions {
     // (undocumented)
+    excludeStrategy?: MemoryItemStrategy[];
+    // (undocumented)
     isDisabled?: boolean;
     // (undocumented)
     strategy?: MemoryItemStrategy[];

@@ -12,7 +12,9 @@
 
 <h4>GoodData.UI</h4>
 
+{{ if $root }}
 {{ template "root-link" (dict "currentPage" . "root" $root "site" .Site) }}
+{{ end }}
 {{ if $root.CurrentSection }}
 {{ template "section-tree-nav-sections" (dict "root" $root.CurrentSection.Pages "currentPage" . "site" .Site "currentVersion" (partial "version.html" (dict "context" $.Page))) }}
 {{ end }}

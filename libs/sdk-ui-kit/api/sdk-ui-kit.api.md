@@ -513,6 +513,12 @@ export const FilterLabel: FC<WithIntlProps<IFilterLabelProps & WrappedComponentP
 };
 
 // @internal
+export const findFocusableElementInSibling: (sibling: Element, direction?: NavigationDirection) => HTMLElement | null;
+
+// @internal
+export const findFocusableElementOutsideContainer: (container: HTMLElement, direction?: NavigationDirection) => HTMLElement | null;
+
+// @internal
 export const findInteractiveItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], predicate: (item: IUiMenuInteractiveItem<T>) => boolean) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal

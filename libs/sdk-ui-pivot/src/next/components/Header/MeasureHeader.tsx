@@ -15,6 +15,8 @@ import {
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
+import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
+import { useHeaderSpaceKey } from "../../hooks/header/useHeaderSpaceKey.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 import {
     getPivotHeaderClickableAreaTestIdProps,
@@ -28,6 +30,7 @@ import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
  */
 export function MeasureHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const isTransposed = useIsTransposed();
     const { isPivoted } = useColumnDefs();
 
@@ -76,6 +79,16 @@ export function MeasureHeader(params: AgGridHeaderParams) {
         params,
     );
 
+    useHeaderSpaceKey(params, handleHeaderClick);
+    useHeaderMenuKeyboard(
+        params,
+        () => {
+            setIsKeyboardTriggered(true);
+            setIsMenuOpen(true);
+        },
+        hasMenuItems,
+    );
+
     return (
         <div
             className={e("header-cell", {
@@ -107,7 +120,13 @@ export function MeasureHeader(params: AgGridHeaderParams) {
                     onTextWrappingItemClick={handleTextWrappingItemClick}
                     onSortingItemClick={handleSortingItemClick}
                     isMenuOpened={isMenuOpen}
-                    onMenuOpenedChange={setIsMenuOpen}
+                    onMenuOpenedChange={(opened) => {
+                        setIsMenuOpen(opened);
+                        if (!opened) {
+                            setIsKeyboardTriggered(false);
+                        }
+                    }}
+                    isKeyboardTriggered={isKeyboardTriggered}
                 />
             ) : null}
         </div>

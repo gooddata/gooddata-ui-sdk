@@ -21,7 +21,12 @@ export * from "./utils/drag.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
-export { getFocusableElements, isElementFocusable } from "./utils/domUtilities.js";
+export {
+    findFocusableElementInSibling,
+    findFocusableElementOutsideContainer,
+    getFocusableElements,
+    isElementFocusable,
+} from "./utils/domUtilities.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
 export * from "./Button/index.js";
@@ -140,7 +145,8 @@ export {
     isNotDocumentFocused,
     programaticFocusManagement,
 } from "./@ui/UiFocusManager/utils.js";
-export type { IUiFocusHelperConnectors, NavigationDirection } from "./@ui/UiFocusManager/types.js";
+export type { IUiFocusHelperConnectors } from "./@ui/UiFocusManager/types.js";
+export type { NavigationDirection } from "./typings/navigation.js";
 export { UiLink } from "./@ui/UiLink/UiLink.js";
 export type { IUiLinkProps } from "./@ui/UiLink/UiLink.js";
 export type {

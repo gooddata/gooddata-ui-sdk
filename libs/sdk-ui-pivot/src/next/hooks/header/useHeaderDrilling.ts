@@ -53,7 +53,7 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
      * This function should be called after sorting logic to avoid interference
      */
     const handleHeaderDrill = useCallback(
-        (event: MouseEvent) => {
+        (event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
             if (!isRegularHeader || !onDrill || !isDrillable || !currentDataView) {
                 return false;
             }
