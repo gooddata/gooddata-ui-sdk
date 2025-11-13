@@ -6,10 +6,12 @@ import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { IDashboardTab } from "@gooddata/sdk-model";
-import { IUiTab, UiIcon, UiTabs } from "@gooddata/sdk-ui-kit";
+import { IUiTab, UiIcon, UiIconButton, UiTabs, bemFactory, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
 import {
     ExtendedDashboardWidget,
+    createDashboardTab,
+    deleteDashboardTab,
     repositionDashboardTab,
     selectActiveTabId,
     selectEnableDashboardTabs,
@@ -44,42 +46,59 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     );
 
     const uiTabs = useMemo<IUiTab[]>(() => {
-        const mappedTabs = (tabs.map((tab, index) => ({
-            id: tab.identifier,
-            label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
-            actions: isEditMode
-                ? [
-                      {
-                          id: "moveLeft",
-                          label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
-                          iconLeft: <UiIcon type={"arrowLeft"} ariaHidden size={12} />,
-                          onSelect: () => {
-                              if (index <= 0) {
-                                  return;
-                              }
+        const isOnlyOneTab = tabs.length < 2;
 
-                              dispatch(repositionDashboardTab(index, index - 1));
-                          },
-                          isDisabled: index === 0,
-                          closeOnSelect: false,
-                      },
-                      {
-                          id: "moveRight",
-                          label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
-                          iconLeft: <UiIcon type={"arrowRight"} ariaHidden size={12} />,
-                          onSelect: () => {
-                              if (index >= tabs.length - 1) {
-                                  return;
-                              }
+        const mappedTabs =
+            tabs.map(
+                (tab, index) =>
+                    ({
+                        id: tab.identifier,
+                        label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
+                        actions: isEditMode
+                            ? [
+                                  index > 0 && {
+                                      id: "moveLeft",
+                                      label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
+                                      iconLeft: <UiIcon type={"arrowLeft"} ariaHidden size={12} />,
+                                      onSelect: () => {
+                                          if (index <= 0) {
+                                              return;
+                                          }
 
-                              dispatch(repositionDashboardTab(index, index + 1));
-                          },
-                          isDisabled: index === tabs.length - 1,
-                          closeOnSelect: false,
-                      },
-                  ]
-                : [],
-        })) ?? []) satisfies IUiTab[];
+                                          dispatch(repositionDashboardTab(index, index - 1));
+                                      },
+                                      closeOnSelect: false as const,
+                                  },
+                                  index < tabs.length - 1 && {
+                                      id: "moveRight",
+                                      label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
+                                      iconLeft: <UiIcon type={"arrowRight"} ariaHidden size={12} />,
+                                      onSelect: () => {
+                                          if (index >= tabs.length - 1) {
+                                              return;
+                                          }
+
+                                          dispatch(repositionDashboardTab(index, index + 1));
+                                      },
+                                      closeOnSelect: false as const,
+                                  },
+
+                                  ...(isOnlyOneTab
+                                      ? []
+                                      : [
+                                            separatorStaticItem,
+
+                                            {
+                                                id: "delete",
+                                                label: intl.formatMessage({ id: "delete" }),
+                                                iconLeft: <UiIcon type={"trash"} ariaHidden size={12} />,
+                                                onSelect: () => dispatch(deleteDashboardTab(tab.identifier)),
+                                            },
+                                        ]),
+                              ].filter((x) => !!x)
+                            : [],
+                    }) satisfies IUiTab,
+            ) ?? [];
 
         // In edit mode, if tabs feature is enabled but no tabs exist, create a default "Untitled" tab
         if (isEditMode && enableDashboardTabs && mappedTabs.length === 0) {
@@ -87,6 +106,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                 {
                     id: defaultTabIdRef.current,
                     label: intl.formatMessage({ id: "dashboard.tabs.default.label" }),
+                    variant: "placeholder",
                 },
             ];
         }
@@ -110,6 +130,8 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     };
 }
 
+const tabsBem = bemFactory("gd-dash-tabs");
+
 interface IDashboardTabsProps {
     enableDashboardTabs: boolean;
     activeTabId?: string;
@@ -127,6 +149,7 @@ export function DashboardTabs({
 }: IDashboardTabsProps): ReactElement | null {
     const intl = useIntl();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const dispatch = useDashboardDispatch();
 
     const ACCESSIBILITY_CONFIG = useMemo(
         () => ({
@@ -148,16 +171,32 @@ export function DashboardTabs({
         return null;
     }
 
+    const isCreateEnabled = isEditMode && !uiTabs.some((tab) => tab.variant === "placeholder");
+
     return (
-        <div className="gd-dash-tabs-bar">
-            <UiTabs
-                size="large"
-                tabs={uiTabs}
-                onTabSelect={handleTabSelect}
-                selectedTabId={activeTabId ?? uiTabs[0].id}
-                accessibilityConfig={ACCESSIBILITY_CONFIG}
-                maxLabelLength={255}
-            />
+        <div className={tabsBem.b({ "with-create": isCreateEnabled })}>
+            <div className={tabsBem.e("list")}>
+                <UiTabs
+                    size="large"
+                    tabs={uiTabs}
+                    onTabSelect={handleTabSelect}
+                    selectedTabId={activeTabId ?? uiTabs[0].id}
+                    accessibilityConfig={ACCESSIBILITY_CONFIG}
+                    maxLabelLength={255}
+                />
+            </div>
+            {isCreateEnabled ? (
+                <div className={tabsBem.e("add-wrapper")}>
+                    <div className={tabsBem.e("add")}>
+                        <UiIconButton
+                            icon={"plus"}
+                            size={"large"}
+                            variant={"tertiary"}
+                            onClick={() => dispatch(createDashboardTab())}
+                        />
+                    </div>
+                </div>
+            ) : null}
         </div>
     );
 }

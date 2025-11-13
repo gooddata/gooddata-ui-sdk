@@ -174,6 +174,10 @@ export interface IChatThreadQuery {
      */
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
     /**
+     * Define the object types for the chat thread.
+     */
+    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
+    /**
      * Execute the chat thread.
      */
     query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation>;

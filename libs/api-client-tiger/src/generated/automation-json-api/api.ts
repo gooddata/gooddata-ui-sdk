@@ -703,6 +703,10 @@ export interface AutomationDashboardTabularExportRequestV2 {
      */
     dashboardFiltersOverride?: Array<AutomationDashboardFilter>;
     /**
+     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
+     */
+    dashboardTabsFiltersOverrides?: { [key: string]: Array<AutomationDashboardFilter> };
+    /**
      * Dashboard identifier
      */
     dashboardId: string;

@@ -89,6 +89,13 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         () => unwrapGroupItems(items).find(isItemFocusable)?.id,
     );
 
+    // If the focusedId is no longer viable, refocus the default one
+    useEffect(() => {
+        if (!getFocusableItem(items, focusedId)) {
+            setFocusedId_internal(unwrapGroupItems(items).find(isItemFocusable)?.id ?? undefined);
+        }
+    }, [items, focusedId, isItemFocusable]);
+
     const [shownCustomContentItemId, setShownCustomContentItemId] = useState<string | undefined>(undefined);
 
     const setFocusedId = useCallback<typeof setFocusedId_internal>(

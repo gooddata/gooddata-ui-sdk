@@ -101,3 +101,105 @@ export function repositionDashboardTab(
         },
     };
 }
+
+/**
+ * Payload of the {@link CreateDashboardTab} command.
+ * @alpha
+ */
+export interface CreateDashboardTabPayload {
+    /**
+     * Optional title for the new tab. If not provided, empty title will be used.
+     */
+    readonly title?: string;
+    /**
+     * Optional index at which the new tab should be inserted. Defaults to the end of the list.
+     */
+    readonly index?: number;
+}
+
+/**
+ * Command to create a new dashboard tab.
+ *
+ * @remarks
+ * This command will:
+ * - Persist current main dashboard state (layout, filters, configs) into the currently active tab (if any)
+ * - Create a new tab duplicating current main dashboard state
+ * - Insert the tab at requested index (or append) and make it active
+ *
+ * @alpha
+ */
+export interface CreateDashboardTab extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.CREATE";
+    readonly payload: CreateDashboardTabPayload;
+}
+
+/**
+ * Creates the CreateDashboardTab command.
+ *
+ * @param title - optional title for the new tab
+ * @param index - optional position to insert tab (defaults to end)
+ * @param correlationId - specify correlation id to use for this command
+ * @returns create dashboard tab command
+ *
+ * @alpha
+ */
+export function createDashboardTab(
+    title?: string,
+    index?: number,
+    correlationId?: string,
+): CreateDashboardTab {
+    return {
+        type: "GDC.DASH/CMD.TAB.CREATE",
+        correlationId,
+        payload: {
+            title,
+            index,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link DeleteDashboardTab} command.
+ * @alpha
+ */
+export interface DeleteDashboardTabPayload {
+    /**
+     * Identifier of the tab to delete.
+     */
+    readonly tabId: string;
+}
+
+/**
+ * Command to delete a dashboard tab.
+ *
+ * @remarks
+ * This command will:
+ * - Remove the tab with the given identifier
+ * - If the deleted tab is currently active, switch to the next available tab (or previous if next does not exist)
+ * - If no tabs remain, clear the active tab
+ *
+ * @alpha
+ */
+export interface DeleteDashboardTab extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.DELETE";
+    readonly payload: DeleteDashboardTabPayload;
+}
+
+/**
+ * Creates the DeleteDashboardTab command.
+ *
+ * @param tabId - identifier of the tab to delete
+ * @param correlationId - specify correlation id to use for this command
+ * @returns delete dashboard tab command
+ *
+ * @alpha
+ */
+export function deleteDashboardTab(tabId: string, correlationId?: string): DeleteDashboardTab {
+    return {
+        type: "GDC.DASH/CMD.TAB.DELETE",
+        correlationId,
+        payload: {
+            tabId,
+        },
+    };
+}

@@ -6,9 +6,14 @@ import {
     IGetAutomationOptions,
     IGetAutomationsOptions,
     IGetAutomationsQueryOptions,
+    IRawExportCustomOverrides,
     IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IExecutionDefinition,
+} from "@gooddata/sdk-model";
 
 import { AutomationsQuery } from "./automationsQuery.js";
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
@@ -88,6 +93,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     public createAutomation = async (
         automation: IAutomationMetadataObjectDefinition,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
@@ -98,6 +105,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 automation,
                 enableAutomationFilterContext,
                 enableNewScheduledExport,
+                widgetExecution,
+                overrides,
             );
             const result = await client.entities.createEntityAutomations({
                 workspaceId: this.workspaceId,
@@ -125,6 +134,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     public updateAutomation = async (
         automation: IAutomationMetadataObject,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
@@ -135,6 +146,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 automation,
                 enableAutomationFilterContext,
                 enableNewScheduledExport,
+                widgetExecution,
+                overrides,
             );
             const result = await client.entities.updateEntityAutomations({
                 objectId: automation.id,

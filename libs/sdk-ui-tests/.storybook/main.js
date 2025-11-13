@@ -61,6 +61,7 @@ function makePackageStylesAlias(packageName) {
 
 export default {
     stories: ["../stories/**/*.stories.@(ts|tsx)"],
+    addons: ["@storybook/addon-a11y"],
     features: {
         addons: true,
     },

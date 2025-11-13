@@ -9,6 +9,7 @@ import {
     AutomationAutomationTabularExport,
     AutomationAutomationVisualExport,
     JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    JsonApiAutomationOutAttributesRawExportsInner,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -25,11 +26,14 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { convertFilter } from "./afm/FilterConverter.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 
 type MetadataObjectDefinition = {
     widget?: string;
+    visualizationObject?: string;
+    dashboard?: string;
     title?: string;
     filters?: FilterContextItem[];
 };
@@ -91,6 +95,30 @@ export const convertVisualExportRequest = (
         format: "PDF",
         content: {
             dashboard: dashboardId,
+            ...filtersObj,
+        },
+    };
+};
+
+export const convertToRawExportRequest = (
+    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+): IExportDefinitionVisualizationObjectRequestPayload => {
+    const {
+        requestPayload: { fileName, execution, metadata },
+    } = exportRequest;
+    const metadataObj = (metadata ?? {}) as MetadataObjectDefinition;
+    const filters = execution?.filters?.map(convertFilter);
+    const metadataFilters = metadataObj.filters?.map(cloneWithSanitizedIds);
+    const resolvedFilters = metadataFilters && metadataFilters.length > 0 ? metadataFilters : filters;
+    const filtersObj = resolvedFilters && resolvedFilters.length > 0 ? { filters: resolvedFilters } : {};
+    return {
+        type: "visualizationObject",
+        fileName,
+        format: "CSV_RAW",
+        content: {
+            visualizationObject: metadataObj.visualizationObject ?? "",
+            widget: metadataObj.widget ?? "",
+            ...(metadataObj.dashboard ? { dashboard: metadataObj.dashboard } : {}),
             ...filtersObj,
         },
     };

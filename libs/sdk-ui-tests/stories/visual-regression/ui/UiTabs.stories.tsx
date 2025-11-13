@@ -3,7 +3,14 @@
 import { useCallback, useState } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ComponentTable, IUiTab, IUiTabsProps, UiTabs, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import {
+    ComponentTable,
+    IUiTab,
+    IUiTabsProps,
+    UiTabs,
+    propCombinationsFor,
+    separatorStaticItem,
+} from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -94,6 +101,13 @@ function UiTabsWithOverflowTest() {
                     id: `disapprove`,
                     label: `Disapprove`,
                     onSelect: () => setApproved(`tab${i + 1}`, false),
+                },
+                separatorStaticItem,
+                {
+                    id: "closeAll",
+                    label: "Close all",
+                    onSelect: () => undefined,
+                    closeOnSelect: "all",
                 },
             ],
         })),

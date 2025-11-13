@@ -118,7 +118,12 @@ import {
     SaveScheduledEmail,
 } from "./scheduledEmail.js";
 import { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
-import { RepositionDashboardTab, SwitchDashboardTab } from "./tabs.js";
+import {
+    CreateDashboardTab,
+    DeleteDashboardTab,
+    RepositionDashboardTab,
+    SwitchDashboardTab,
+} from "./tabs.js";
 import { LoadAllWorkspaceUsers } from "./users.js";
 import {
     AddVisualizationToVisualizationSwitcherWidgetContent,
@@ -551,10 +556,19 @@ export { setShowWidgetAsTable } from "./showWidgetAsTable.js";
 export type {
     SwitchDashboardTab,
     SwitchDashboardTabPayload,
+    CreateDashboardTab,
+    CreateDashboardTabPayload,
     RepositionDashboardTab,
     RepositionDashboardTabPayload,
+    DeleteDashboardTab,
+    DeleteDashboardTabPayload,
 } from "./tabs.js";
-export { switchDashboardTab, repositionDashboardTab } from "./tabs.js";
+export {
+    switchDashboardTab,
+    repositionDashboardTab,
+    createDashboardTab,
+    deleteDashboardTab,
+} from "./tabs.js";
 
 /**
  * Union type that contains all available built-in dashboard commands.
@@ -675,7 +689,9 @@ export type DashboardCommands =
     | ResetFilterContextWorkingSelection
     | ChangeIgnoreExecutionTimestamp
     | SwitchDashboardTab
+    | CreateDashboardTab
     | RepositionDashboardTab
+    | DeleteDashboardTab
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers

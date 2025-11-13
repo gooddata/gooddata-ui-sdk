@@ -19,7 +19,7 @@ export function DefaultUiTabsTabValue<
     const isOverflowing = tab.label.length > maxLabelLength;
 
     return (
-        <span className={UiTabsBem.e("label", { selected: isSelected })}>
+        <span className={UiTabsBem.e("label", { selected: isSelected, variant: tab.variant ?? "default" })}>
             {isOverflowing ? tab.label.substring(0, maxLabelLength) + "…" : tab.label}
         </span>
     );

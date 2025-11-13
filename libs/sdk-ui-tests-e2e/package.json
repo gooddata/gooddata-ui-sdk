@@ -136,7 +136,7 @@
         "react-dom": "19.1.1",
         "react-intl": "7.1.11",
         "react-router-dom": "^5.2.0",
-        "sass": "1.66.1",
+        "sass": "1.70.0",
         "styled-jsx": "^5.1.0",
         "tslib": "2.8.1",
         "typescript": "5.8.3",

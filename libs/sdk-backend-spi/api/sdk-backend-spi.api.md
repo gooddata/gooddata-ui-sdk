@@ -548,6 +548,7 @@ export interface IChatThreadQuery {
     }): Promise<IGenAIChatEvaluation>;
     stream(): ReadableStream<IGenAIChatEvaluation>;
     withCreateLimit(createLimit: number): IChatThreadQuery;
+    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
 }
@@ -1664,7 +1665,7 @@ export interface IWorkspaceAttributesService {
 
 // @alpha
 export interface IWorkspaceAutomationService {
-    createAutomation(automation: IAutomationMetadataObjectDefinition, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    createAutomation(automation: IAutomationMetadataObjectDefinition, options?: IGetAutomationOptions, widgetExecution?: IExecutionDefinition, overrides?: IRawExportCustomOverrides): Promise<IAutomationMetadataObject>;
     deleteAutomation(id: string): Promise<void>;
     deleteAutomations(ids: string[]): Promise<void>;
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
@@ -1676,7 +1677,7 @@ export interface IWorkspaceAutomationService {
     resumeAutomations(ids: string[]): Promise<void>;
     unsubscribeAutomation(id: string): Promise<void>;
     unsubscribeAutomations(ids: string[]): Promise<void>;
-    updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions, widgetExecution?: IExecutionDefinition, overrides?: IRawExportCustomOverrides): Promise<IAutomationMetadataObject>;
 }
 
 // @public

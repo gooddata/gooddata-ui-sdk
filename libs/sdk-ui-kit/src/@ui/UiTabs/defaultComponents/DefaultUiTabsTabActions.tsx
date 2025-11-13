@@ -5,7 +5,8 @@ import { useCallback, useMemo, useState } from "react";
 import { EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
-import { IUiMenuInteractiveItem } from "../../UiMenu/types.js";
+import { isSeparator } from "../../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
+import { IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
@@ -14,7 +15,7 @@ import { IUiTabAction, IUiTabComponentProps } from "../types.js";
 type IMenuItemType<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
-> = IUiMenuInteractiveItem<{
+> = IUiMenuItem<{
     interactive: { onSelect: IUiTabAction<TTabProps, TTabActionProps>["onSelect"] };
 }>;
 
@@ -38,28 +39,36 @@ export function DefaultUiTabsTabActions<
 
     const menuItems: IMenuItemType<TTabProps, TTabActionProps>[] = useMemo(
         () =>
-            tab.actions?.map((action) => ({
-                type: "interactive" as const,
-                id: action.id,
-                stringTitle: action.label,
-                isDisabled: action.isDisabled,
-                iconLeft: action.iconLeft,
-                iconRight: action.iconRight,
-                data: {
-                    onSelect: ((ctx) => {
-                        action.onSelect(ctx);
-                        onActionTriggered({ action, tab, location });
-                        if (action.closeOnSelect) {
-                            setIsOpen(false);
-                        }
-                    }) as IUiTabAction<TTabProps, TTabActionProps>["onSelect"],
-                },
-            })) ?? [],
+            tab.actions?.map((action) => {
+                return isSeparator(action)
+                    ? action
+                    : {
+                          type: "interactive" as const,
+                          id: action.id,
+                          stringTitle: action.label,
+                          isDisabled: action.isDisabled,
+                          iconLeft: action.iconLeft,
+                          iconRight: action.iconRight,
+                          data: {
+                              onSelect: ((ctx) => {
+                                  action.onSelect(ctx);
+                                  onActionTriggered({ action, tab, location });
+                                  if (action.closeOnSelect !== false) {
+                                      setIsOpen(false);
+                                  }
+                              }) as IUiTabAction<TTabProps, TTabActionProps>["onSelect"],
+                          },
+                      };
+            }) ?? [],
         [tab, onActionTriggered, location],
     );
 
     const handleItemSelected = useCallback(
         (item: IMenuItemType<TTabProps, TTabActionProps>) => {
+            if (item.type !== "interactive") {
+                return;
+            }
+
             item.data.onSelect?.({ tab });
         },
         [tab],
@@ -96,7 +105,7 @@ export function DefaultUiTabsTabActions<
             )}
             autofocusOnOpen
             shouldTrapFocus
-            alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
+            alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
             closeOnEscape
             closeOnOutsideClick
             accessibilityConfig={{

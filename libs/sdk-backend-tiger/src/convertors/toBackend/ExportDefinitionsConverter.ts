@@ -1,5 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
+
+import { isEmpty, omitBy } from "lodash-es";
+
 import {
+    AutomationRawExportAutomationRequest,
     DashboardTabularExportRequestV2,
     ImageExportRequest,
     JsonApiExportDefinitionInDocument,
@@ -9,8 +13,9 @@ import {
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
-import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IRawExportCustomOverrides, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
+    IExecutionDefinition,
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionMetadataObjectDefinition,
     IExportDefinitionRequestPayload,
@@ -19,6 +24,9 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
+import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
+import { convertAttribute } from "./afm/AttributeConverter.js";
+import { convertMeasure } from "./afm/MeasureConverter.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
@@ -41,6 +49,78 @@ export const convertExportDefinitionMdObjectDefinition = (
                 ),
             },
         },
+    };
+};
+
+export const convertToRawExportRequest = (
+    exportRequest: IExportDefinitionVisualizationObjectRequestPayload,
+    widgetExecution?: IExecutionDefinition,
+    overrides?: IRawExportCustomOverrides,
+): AutomationRawExportAutomationRequest => {
+    const { widget } = exportRequest.content;
+    if (!widget || !widgetExecution) {
+        throw new UnexpectedError("Export definition must have a widget with execution");
+    }
+
+    const { filters: convertedFilters, auxMeasures: filterAuxMeasures } = convertAfmFilters(
+        widgetExecution.measures ?? [],
+        widgetExecution.filters ?? [],
+        true,
+    );
+
+    const automationMeasures =
+        widgetExecution.measures?.map((measure) => {
+            const { localIdentifier, definition } = convertMeasure(measure);
+            return { localIdentifier, definition };
+        }) ?? [];
+
+    const automationAuxMeasuresFromFilters = filterAuxMeasures.map(({ localIdentifier, definition }) => ({
+        localIdentifier,
+        definition,
+    }));
+
+    const automationAttributes =
+        widgetExecution.attributes?.map((attribute, idx) => {
+            const { localIdentifier, label } = convertAttribute(attribute, idx);
+            return { localIdentifier, label };
+        }) ?? [];
+
+    const automationExecution = {
+        attributes: automationAttributes,
+        filters: convertedFilters ?? [],
+        measures: automationMeasures,
+        auxMeasures: automationAuxMeasuresFromFilters,
+    };
+
+    const customOverride =
+        isEmpty(overrides) || (isEmpty(overrides?.measures) && isEmpty(overrides?.displayForms))
+            ? undefined
+            : {
+                  metrics: overrides?.measures,
+                  labels: overrides?.displayForms,
+              };
+
+    const metadata = omitBy(
+        {
+            widget: exportRequest.content.widget,
+            visualizationObject: exportRequest.content.visualizationObject,
+            dashboard: exportRequest.content.dashboard,
+        },
+        (value) => value === undefined || (Array.isArray(value) && value.length === 0),
+    );
+
+    const executionSettings =
+        widgetExecution.executionConfig && !isEmpty(widgetExecution.executionConfig)
+            ? widgetExecution.executionConfig
+            : undefined;
+
+    return {
+        fileName: exportRequest.fileName,
+        format: "CSV",
+        execution: automationExecution,
+        executionSettings,
+        customOverride,
+        ...(isEmpty(metadata) ? {} : { metadata }),
     };
 };
 
@@ -92,7 +172,7 @@ export const convertToSlidesExportRequest = (
 
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
         const { filters, dashboard } = exportRequest.content;
-        const isMetadataFilled = title || exportRequest.content.filters;
+        const isMetadataFilled = title || filters;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -140,7 +220,7 @@ export const convertToVisualExportRequest = (
     title?: string,
 ): VisualExportRequest => {
     const { filters, dashboard } = exportRequest.content;
-    const isMetadataFilled = title || exportRequest.content.filters;
+    const isMetadataFilled = title || filters;
     const metadataObj = {
         ...(isMetadataFilled
             ? {
@@ -164,7 +244,7 @@ export const convertToVisualExportRequest = (
 };
 
 export const convertToDashboardTabularExportRequest = (
-    exportRequest: IExportDefinitionRequestPayload,
+    exportRequest: IExportDefinitionDashboardRequestPayload,
 ): DashboardTabularExportRequestV2 => {
     const { filters, dashboard } = exportRequest.content;
     if (

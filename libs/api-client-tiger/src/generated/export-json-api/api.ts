@@ -500,6 +500,10 @@ export interface ExportDashboardTabularExportRequest {
      */
     dashboardFiltersOverride?: Array<ExportDashboardFilter>;
     /**
+     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
+     */
+    dashboardTabsFiltersOverrides?: { [key: string]: Array<ExportDashboardFilter> };
+    /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      */
     widgetIds?: Array<string>;

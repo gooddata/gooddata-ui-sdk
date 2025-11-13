@@ -31,15 +31,12 @@ import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch
 import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
 import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 import { useInvertableSelect } from "./useInvertableSelect.js";
-import {
-    ListWithActionsFocusStore,
-    useFocusWithinContainer,
-    useListWithActionsFocusStoreValue,
-} from "../../@ui/hooks/useListWithActionsFocus.js";
+import { useFocusWithinContainer } from "../../@ui/hooks/useFocusWithinContainer.js";
 import {
     SELECT_ITEM_ACTION,
     useListWithActionsKeyboardNavigation,
 } from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore, useScopedIdStoreValue } from "../../@ui/hooks/useScopedId.js";
 import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
@@ -319,11 +316,11 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             isWrapping: false,
         });
 
-    const focusStoreValue = useListWithActionsFocusStoreValue(getItemKey);
+    const scopedIdStoreValue = useScopedIdStoreValue(getItemKey);
 
     const { containerRef } = useFocusWithinContainer(
         focusedItem && focusedAction
-            ? focusStoreValue.makeId({ item: focusedItem, action: focusedAction })
+            ? scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction })
             : "",
     );
 
@@ -382,12 +379,12 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
     const handleFocus = useCallback<FocusEventHandler>(
         (e) => {
-            if (e.target.id !== focusStoreValue.containerId) {
+            if (e.target.id !== scopedIdStoreValue.containerId) {
                 return;
             }
 
             const elementToFocus = document.getElementById(
-                focusStoreValue.makeId({ item: focusedItem, action: SELECT_ITEM_ACTION }),
+                scopedIdStoreValue.makeId({ item: focusedItem, specifier: SELECT_ITEM_ACTION }),
             );
 
             listRef.current.scrollToItem(focusedItem);
@@ -399,7 +396,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             setFocusedAction(SELECT_ITEM_ACTION);
             elementToFocus.focus();
         },
-        [focusStoreValue, focusedItem, setFocusedAction],
+        [scopedIdStoreValue, focusedItem, setFocusedAction],
     );
     const handleBlur = useCallback<FocusEventHandler>(
         // Select the default action when the focus leaves the list
@@ -431,9 +428,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                   tabIndex: -1,
                   "aria-activedescendant":
                       focusedItem && focusedAction
-                          ? focusStoreValue.makeId({
+                          ? scopedIdStoreValue.makeId({
                                 item: focusedItem,
-                                action: focusedAction,
+                                specifier: focusedAction,
                             })
                           : undefined,
                   "aria-multiselectable": !isSingleSelect,
@@ -442,7 +439,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             : {};
 
     return (
-        <ListWithActionsFocusStore value={focusStoreValue}>
+        <ScopedIdStore value={scopedIdStoreValue}>
             <div className="gd-invertable-select">
                 <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
                     {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
@@ -479,7 +476,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 onBlur={handleBlur}
                                                 className={cx("gd-async-list", className || "")}
                                                 ref={containerRef as RefObject<HTMLDivElement>}
-                                                id={focusStoreValue.containerId}
+                                                id={scopedIdStoreValue.containerId}
                                                 {...selectProps}
                                             >
                                                 <UiPagedVirtualList<T>
@@ -534,7 +531,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                     }
                 />
             </div>
-        </ListWithActionsFocusStore>
+        </ScopedIdStore>
     );
 }
 

@@ -142,6 +142,7 @@ export type ChatThreadQueryConfig = {
     limitSearch?: number;
     limitCreate?: number;
     userContext?: IGenAIUserContext;
+    objectTypes?: GenAIObjectType[];
 };
 
 /**
@@ -175,6 +176,13 @@ export class ChatThreadQuery implements IChatThreadQuery {
         });
     }
 
+    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, {
+            ...this.config,
+            objectTypes,
+        });
+    }
+
     async query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation> {
         const response = await this.authCall((client) =>
             client.genAI.aiChat(
@@ -185,6 +193,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                         limitSearch: this.config.limitSearch,
                         limitCreate: this.config.limitCreate,
                         userContext: this.config.userContext,
+                        objectTypes: this.config.objectTypes,
                     },
                 },
                 options,
@@ -213,6 +222,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                                 limitSearch: config.limitSearch,
                                 limitCreate: config.limitCreate,
                                 userContext: config.userContext,
+                                objectTypes: config.objectTypes,
                             },
                         },
                         {
@@ -409,9 +419,12 @@ function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualiz
 function convertChangeAnalysisParams(
     data: Required<ChatHistoryInteraction>["changeAnalysisParams"],
 ): IGenAIChangeAnalysisParams {
+    const measure = convertMeasure(data.measure);
+    measure.measure.title = data.measureTitle;
+
     return {
         ...data,
-        measure: convertMeasure(data.measure),
+        measure,
         dateAttribute: convertAttribute(data.dateAttribute),
         attributes: data.attributes?.map(convertAttribute) ?? [],
         filters: data.filters?.map(convertFilter) ?? [],

@@ -84,6 +84,7 @@
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-web-components": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
+        "@storybook/addon-a11y": "^10.0.6",
         "@storybook/builder-vite": "^10.0.6",
         "@storybook/cli": "^10.0.6",
         "@storybook/preset-scss": "^1.0.3",

@@ -9,8 +9,8 @@ import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
     Button,
-    ListWithActionsFocusStore,
     SELECT_ITEM_ACTION,
+    ScopedIdStore,
     Typography,
     UiFocusManager,
     UiIcon,
@@ -20,8 +20,8 @@ import {
     useFocusWithinContainer,
     useId,
     useIdPrefixed,
-    useListWithActionsFocusStoreValue,
     useListWithActionsKeyboardNavigation,
+    useScopedIdStoreValue,
 } from "@gooddata/sdk-ui-kit";
 
 import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
@@ -147,7 +147,7 @@ function FilterListItem({
     const { name, isDefault = false } = item;
 
     const isFocused = !!focusedAction;
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
     const titleId = useIdPrefixed("title");
 
     return (
@@ -165,7 +165,7 @@ function FilterListItem({
                 <div
                     role={"button"}
                     tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
-                    id={makeId?.({ item, action: SELECT_ITEM_ACTION }) ?? undefined}
+                    id={makeId?.({ item, specifier: SELECT_ITEM_ACTION }) ?? undefined}
                 >
                     <span className="gd-filter-view__item__value__title">{name}</span>
                     {isDefault ? (
@@ -182,7 +182,7 @@ function FilterListItem({
                     title={name}
                     onClick={onSetAsDefault}
                     isFocused={focusedAction === "setDefault"}
-                    id={makeId?.({ item, action: "setDefault" })}
+                    id={makeId?.({ item, specifier: "setDefault" })}
                 />
             ) : null}
             {onDelete ? (
@@ -190,7 +190,7 @@ function FilterListItem({
                     onClick={onDelete}
                     title={name}
                     isFocused={focusedAction === "delete"}
-                    id={makeId?.({ item, action: "delete" })}
+                    id={makeId?.({ item, specifier: "delete" })}
                 />
             ) : null}
         </div>
@@ -298,12 +298,12 @@ export function FilterViewsList({
         </div>
     );
 
-    const listWithActionsFocusStoreValue = useListWithActionsFocusStoreValue((item) =>
+    const scopedIdStoreValue = useScopedIdStoreValue((item) =>
         item ? objRefToString((item as IDashboardFilterView).ref) : "",
     );
 
     const { containerRef } = useFocusWithinContainer(
-        listWithActionsFocusStoreValue.makeId({ item: focusedItem, action: focusedAction }) ?? "",
+        scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
 
     const handleBlur = useCallback<FocusEventHandler>(
@@ -357,7 +357,7 @@ export function FilterViewsList({
                         />
                     </div>
                 </div>
-                <ListWithActionsFocusStore value={listWithActionsFocusStoreValue}>
+                <ScopedIdStore value={scopedIdStoreValue}>
                     <div
                         className="configuration-category gd-filter-view__list"
                         role="grid"
@@ -365,7 +365,7 @@ export function FilterViewsList({
                         onKeyDown={onKeyboardNavigation}
                         onBlur={handleBlur}
                         tabIndex={-1}
-                        id={listWithActionsFocusStoreValue.containerId}
+                        id={scopedIdStoreValue.containerId}
                         aria-label={
                             canCreateFilterView
                                 ? intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.withActions" })
@@ -395,7 +395,7 @@ export function FilterViewsList({
                             </div>
                         )}
                     </div>
-                </ListWithActionsFocusStore>
+                </ScopedIdStore>
                 <div className="configuration-panel-footer">
                     <div className="configuration-panel-footer__content">
                         <Button

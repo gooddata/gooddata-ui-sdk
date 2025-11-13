@@ -132,3 +132,135 @@ export function dashboardTabRepositioned(
  */
 export const isDashboardTabRepositioned = (event: any): event is DashboardTabRepositioned =>
     event.type === "GDC.DASH/EVT.TAB.REPOSITIONED";
+
+/**
+ * Payload of the {@link DashboardTabCreated} event.
+ * @alpha
+ */
+export interface DashboardTabCreatedPayload {
+    /**
+     * Identifier of the newly created tab.
+     */
+    readonly newTabId: string;
+    /**
+     * Index at which the new tab was inserted.
+     */
+    readonly index: number;
+}
+
+/**
+ * This event is emitted when a dashboard tab is created.
+ *
+ * @alpha
+ */
+export interface DashboardTabCreated extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.CREATED";
+    readonly payload: DashboardTabCreatedPayload;
+}
+
+/**
+ * Creates the DashboardTabCreated event.
+ *
+ * @param ctx - dashboard context
+ * @param newTabId - identifier of the newly created tab
+ * @param index - index at which the new tab was inserted
+ * @param correlationId - correlation id to use for this event
+ * @returns dashboard tab created event
+ *
+ * @alpha
+ */
+export function dashboardTabCreated(
+    ctx: DashboardContext,
+    newTabId: string,
+    index: number,
+    correlationId?: string,
+): DashboardTabCreated {
+    return {
+        type: "GDC.DASH/EVT.TAB.CREATED",
+        ctx,
+        correlationId,
+        payload: {
+            newTabId,
+            index,
+        },
+    };
+}
+
+/**
+ * Type guard that checks if an event is a DashboardTabCreated event.
+ *
+ * @alpha
+ */
+export const isDashboardTabCreated = (event: any): event is DashboardTabCreated =>
+    event.type === "GDC.DASH/EVT.TAB.CREATED";
+
+/**
+ * Payload of the {@link DashboardTabDeleted} event.
+ * @alpha
+ */
+export interface DashboardTabDeletedPayload {
+    /**
+     * Identifier of the deleted tab.
+     */
+    readonly deletedTabId: string;
+    /**
+     * Index from which the tab was deleted.
+     */
+    readonly previousIndex: number;
+    /**
+     * Identifier of the next active tab after deletion. Undefined if none selected.
+     */
+    readonly nextActiveTabId?: string;
+}
+
+/**
+ * This event is emitted when a dashboard tab is deleted.
+ *
+ * @alpha
+ */
+export interface DashboardTabDeleted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.DELETED";
+    readonly payload: DashboardTabDeletedPayload;
+}
+
+/**
+ * Creates the DashboardTabDeleted event.
+ *
+ * @param ctx - dashboard context
+ * @param deletedTabId - identifier of the deleted tab
+ * @param previousIndex - index from which the tab was deleted
+ * @param nextActiveTabId - identifier of the next active tab, if any
+ * @param correlationId - correlation id to use for this event
+ * @returns dashboard tab deleted event
+ *
+ * @alpha
+ */
+export function dashboardTabDeleted(
+    ctx: DashboardContext,
+    deletedTabId: string,
+    previousIndex: number,
+    nextActiveTabId?: string,
+    correlationId?: string,
+): DashboardTabDeleted {
+    return {
+        type: "GDC.DASH/EVT.TAB.DELETED",
+        ctx,
+        correlationId,
+        payload: {
+            deletedTabId,
+            previousIndex,
+            nextActiveTabId,
+        },
+    };
+}
+
+/**
+ * Type guard that checks if an event is a DashboardTabDeleted event.
+ *
+ * @param event - event to check
+ * @returns true if the event is a DashboardTabDeleted event
+ *
+ * @alpha
+ */
+export const isDashboardTabDeleted = (event: any): event is DashboardTabDeleted =>
+    event.type === "GDC.DASH/EVT.TAB.DELETED";
