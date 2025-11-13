@@ -1,6 +1,30 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 06 Nov 2025 08:32:11 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Nov 2025 07:39:54 GMT and should not be manually modified.
+
+## 11.9.0
+
+Thu, 13 Nov 2025 07:39:54 GMT
+
+### Updates
+
+- sdk-model: Add artificial `NONE` code to `SemanticQualityIssueCode` for frontend filtering purposes.
+- sdk-ui-catalog: Implement artificial `Without issues` filtering option so that users can filter out objects without any semantic quality issues.
+- sdk-ui-kit: Update empty state color in `UiAsyncTableEmptyState`.
+- sdk-backend: Add `excludeStrategy` to `IMemoryItemsFilterOptions`.
+- sdk-ui-gen-ai: Support KDA in chatbot visualisation drill, repair summary if no keys drivers
+- sdk-ui-gen-ai: Key driver analysis use metric title and right granularity format, updated SDK client
+- feat: Ability to create a new dashboard tab
+- sdk-ui-dashboard: Add ability to delete dashboard tabs.
+- sdk-ui-dashboard: Handle situation with custom date filter options
+- sdk-ui-pivot: Do not use multi-sort in pivot table by default.
+- sdk-ui-pivot: Add pivot table keyboard navigation.
+- sdk-ui-pivot: Enhance keyboard navigation in pivot table - row/column selection and multi-sort on headers.
+- sdk-ui-geo: Increase data points limit for geo charts from 25,000 to 50,000.
+- sdk-ui-semantic-search: Migrate to css modules
+- chore: Upgrade sass to 1.70.0
+- sdk-ui-dashboard: Changed: Feature flag enableDashboardFiltersApplyModes has been removed. The "Apply all dashboard filter changes at once" is available to everyone by default.
+- sdk-ui-kit: Fixing UIAsyncTable row height
 
 ## 11.8.0
 
@@ -35,7 +59,7 @@ Thu, 06 Nov 2025 08:32:11 GMT
 - sdk-ui-pivot: Fix initial grow to fit behaviour in new pivot tables
 - sdk-ui-geo: Add @alpha support for geo area labels in sdk-model, sdk-backend-tiger and data modeler app.
 - sdk-ui-charts: Fixed: Do not count "invisible" styling metrics in bucket item rules to not disable various chart controls that works only for limited number of rendered metrics.
-- sdk-ui-dashboard: fix: prevent overriding selected dashboard filters with empty default value
+- fix: prevent overriding selected dashboard filters with empty default value
 - sdk-ui-kit: Add variant-delete class to ListItem component
 - api-client-tiger: Updating OpenAPI client.
 - sdk-ui-gen-ai: add chat feedback popup
@@ -68,9 +92,9 @@ Thu, 30 Oct 2025 08:25:43 GMT
 - sdk-ui-dashboard: Use filters from dashboard and also drill (apply filter) on graph click
 - sdk-ui-dashboard: fix error that appears when drilling into some drivers
 - sdk-ui-dashboard: blank page appears when clicking on certain data points
-- sdk-ui-kit: fix: Make menu items properly selectable to align with ARIA
-- sdk-ui-filters: fix: Display focus outline on the "Only" filter option in Safari
-- sdk-ui-filters: fix: Do not leak arrow key event from new filter creation popup
+- fix: Make menu items properly selectable to align with ARIA
+- fix: Display focus outline on the "Only" filter option in Safari
+- fix: Do not leak arrow key event from new filter creation popup
 - sdk-ui-gen-ai: Fix AG grid token propagation for the new pivot table
 - home-ui: Improving AI Memory UI
 - sdk-ui-kit: Ability to specify to the header menu item use the starting path to check if the item is active.

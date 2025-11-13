@@ -2,6 +2,66 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.9.0",
+            "tag": "@gooddata/sdk-ui-all_v11.9.0",
+            "date": "Thu, 13 Nov 2025 07:39:54 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-model: Add artificial `NONE` code to `SemanticQualityIssueCode` for frontend filtering purposes."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Implement artificial `Without issues` filtering option so that users can filter out objects without any semantic quality issues."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Update empty state color in `UiAsyncTableEmptyState`."
+                    },
+                    {
+                        "comment": "sdk-backend: Add `excludeStrategy` to `IMemoryItemsFilterOptions`."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Support KDA in chatbot visualisation drill, repair summary if no keys drivers "
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Key driver analysis use metric title and right granularity format, updated SDK client"
+                    },
+                    {
+                        "comment": "feat: Ability to create a new dashboard tab"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add ability to delete dashboard tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Handle situation with custom date filter options"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Do not use multi-sort in pivot table by default."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Add pivot table keyboard navigation."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Enhance keyboard navigation in pivot table - row/column selection and multi-sort on headers."
+                    },
+                    {
+                        "comment": "sdk-ui-geo: Increase data points limit for geo charts from 25,000 to 50,000."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: Migrate to css modules"
+                    },
+                    {
+                        "comment": "chore: Upgrade sass to 1.70.0"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Changed: Feature flag enableDashboardFiltersApplyModes has been removed. The \"Apply all dashboard filter changes at once\" is available to everyone by default. "
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fixing UIAsyncTable row height"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.8.0",
             "tag": "@gooddata/sdk-ui-all_v11.8.0",
             "date": "Thu, 06 Nov 2025 08:32:11 GMT",
@@ -218,7 +278,7 @@
                         "comment": "[sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return \"Some terms weren't recognized\" "
                     },
                     {
-                        "comment": "[sdk-ui-dashboard] KDA Cannot Be Triggered When Visualization Is Sliced by Date\u2013Week/Year, Support table chart for drill"
+                        "comment": "[sdk-ui-dashboard] KDA Cannot Be Triggered When Visualization Is Sliced by Date–Week/Year, Support table chart for drill"
                     },
                     {
                         "comment": "[sdk-ui-dashboard]: repair KDA graph to show relevant key drivers"
@@ -230,7 +290,7 @@
                         "comment": "[sdk-ui-dashboard]: Update key driver analysis dialog to use new api + some minor fixes"
                     },
                     {
-                        "comment": "[sdk-ui-dashboard] Drivers Detail Chart - the columns don\u2019t match the driver names for negative values. Cannot activate Year-over-Year option for chart sliced by Week."
+                        "comment": "[sdk-ui-dashboard] Drivers Detail Chart - the columns don’t match the driver names for negative values. Cannot activate Year-over-Year option for chart sliced by Week."
                     },
                     {
                         "comment": "[sdk-ui-dashboard]: prepare for filters from dashboard, repairs for more slicing"
@@ -1384,7 +1444,7 @@
                         "comment": "fix failing storybook test for AttributeFilterStatusBar"
                     },
                     {
-                        "comment": "Change chart's X axis label autorotation value from -90\u00b0 to -45\u00b0"
+                        "comment": "Change chart's X axis label autorotation value from -90° to -45°"
                     }
                 ]
             }
@@ -2398,7 +2458,7 @@
                         "comment": "DashboardView, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage."
                     },
                     {
-                        "comment": "The capability to validate URLs against an organization\u2019s whitelist is added to the backend. Currently, the implementation supports only the sdk-backend-bear package backend. The sdk-backend-tiger package backend considers all validation requests valid. The responses from the backend are cached by the decorated caching backend layer."
+                        "comment": "The capability to validate URLs against an organization’s whitelist is added to the backend. Currently, the implementation supports only the sdk-backend-bear package backend. The sdk-backend-tiger package backend considers all validation requests valid. The responses from the backend are cached by the decorated caching backend layer."
                     }
                 ]
             }
