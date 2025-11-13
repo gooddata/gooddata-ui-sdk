@@ -14,6 +14,13 @@ export const separatorStaticItem = {
 };
 
 /**
+ * @internal
+ */
+export function isSeparator(item: unknown): item is typeof separatorStaticItem {
+    return item === separatorStaticItem;
+}
+
+/**
  * By default just renders the data.
  * @internal
  */

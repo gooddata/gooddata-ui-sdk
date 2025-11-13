@@ -34,8 +34,8 @@ export function DateFilterBodyContentFiltered({
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 isMobile={isMobile}
                 isFocusFallback={
-                    selectedFilterOption.localIdentifier === filterOptions.absoluteForm.localIdentifier ||
-                    selectedFilterOption.localIdentifier === filterOptions.relativeForm.localIdentifier
+                    selectedFilterOption.localIdentifier === filterOptions.absoluteForm?.localIdentifier ||
+                    selectedFilterOption.localIdentifier === filterOptions.relativeForm?.localIdentifier
                 }
             />
             {filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (

@@ -122,7 +122,7 @@ import {
     DashboardScheduledEmailSaved,
 } from "./scheduledEmail.js";
 import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
-import { DashboardTabSwitched } from "./tabs.js";
+import { DashboardTabCreated, DashboardTabDeleted, DashboardTabSwitched } from "./tabs.js";
 import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import {
     DashboardVisualizationSwitcherWidgetVisualizationAdded,
@@ -179,8 +179,22 @@ export type {
     DashboardExportToImageResolved,
     DashboardExportToImageResolvedPayload,
 } from "./dashboard.js";
-export type { DashboardTabSwitched, DashboardTabSwitchedPayload } from "./tabs.js";
-export { dashboardTabSwitched, isDashboardTabSwitched } from "./tabs.js";
+export type {
+    DashboardTabSwitched,
+    DashboardTabSwitchedPayload,
+    DashboardTabCreated,
+    DashboardTabCreatedPayload,
+    DashboardTabDeleted,
+    DashboardTabDeletedPayload,
+} from "./tabs.js";
+export {
+    dashboardTabSwitched,
+    isDashboardTabSwitched,
+    dashboardTabCreated,
+    isDashboardTabCreated,
+    dashboardTabDeleted,
+    isDashboardTabDeleted,
+} from "./tabs.js";
 export {
     isDashboardSaved,
     isDashboardCopySaved,
@@ -689,6 +703,8 @@ export type DashboardEvents =
     | DashboardDrillableItemsChanged
     | DashboardIgnoreExecutionTimestampChanged
     | DashboardTabSwitched
+    | DashboardTabCreated
+    | DashboardTabDeleted
     // internal
     | CreateInsightRequested
     | CreateAttributeHierarchyRequested

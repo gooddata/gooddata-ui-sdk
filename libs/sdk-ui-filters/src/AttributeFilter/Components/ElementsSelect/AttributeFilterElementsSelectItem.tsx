@@ -10,8 +10,8 @@ import {
     Bubble,
     BubbleHoverTrigger,
     IAlignPoint,
-    ListWithActionsFocusStore,
     SELECT_ITEM_ACTION,
+    ScopedIdStore,
     UiLink,
 } from "@gooddata/sdk-ui-kit";
 
@@ -84,7 +84,7 @@ export function AttributeFilterElementsSelectItem({
     const itemTitle = getElementTitle(item, intl);
     const itemPrimaryTitle = getElementPrimaryTitle(item);
 
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     return (
         <div
@@ -99,7 +99,7 @@ export function AttributeFilterElementsSelectItem({
                 <label className={labelClasses}>
                     <input
                         tabIndex={focusedAction === "selectItem" ? 0 : -1}
-                        id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+                        id={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
                         type="checkbox"
                         className="input-checkbox"
                         readOnly
@@ -130,7 +130,7 @@ export function AttributeFilterElementsSelectItem({
             >
                 <UiLink
                     onClick={onOnlyItemClick}
-                    id={makeId?.({ item, action: "only" })}
+                    id={makeId?.({ item, specifier: "only" })}
                     variant={"primary"}
                     flipUnderline
                     role={"button"}
@@ -144,7 +144,7 @@ export function AttributeFilterElementsSelectItem({
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
                 isFocused={focusedAction === "questionMark"}
-                id={makeId?.({ item, action: "questionMark" })}
+                id={makeId?.({ item, specifier: "questionMark" })}
             />
         </div>
     );

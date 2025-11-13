@@ -5,7 +5,7 @@ import { KeyboardEvent, useRef } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ListWithActionsFocusStore } from "../../@ui/hooks/useListWithActionsFocus.js";
+import { useScopedIdOptional } from "../../@ui/hooks/useScopedId.js";
 import { isEnterKey, isSpaceKey } from "../../utils/events.js";
 
 /**
@@ -55,7 +55,7 @@ export function InvertableSelectAllCheckbox({
 
     const wrapperClasses = cx("gd-invertable-select-all-checkbox-wrapper", "input-checkbox-label");
 
-    const controlsId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.containerId);
+    const containerId = useScopedIdOptional();
 
     const ariaLabel = isFiltered
         ? intl.formatMessage({ id: "gs.list.allSearchResultsAndCount" }, { count: totalItemsCount })
@@ -74,7 +74,7 @@ export function InvertableSelectAllCheckbox({
             onKeyDown={onKeyDown}
             role="checkbox"
             aria-checked={isPartialSelection ? "mixed" : checked}
-            aria-controls={controlsId}
+            aria-controls={containerId}
             aria-label={ariaLabel}
         >
             <span className={wrapperClasses}>

@@ -59,6 +59,7 @@ import {
     IOrganizations,
     IPagedResource,
     IPreparedExecution,
+    IRawExportCustomOverrides,
     ISecuritySettingsService,
     ISemanticSearchQuery,
     IUserService,
@@ -1362,6 +1363,8 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
     createAutomation(
         automation: IAutomationMetadataObjectDefinition,
         _options?: IGetAutomationOptions,
+        _widgetExecution?: IExecutionDefinition,
+        _overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
         return Promise.resolve({
             ...automation,
@@ -1443,6 +1446,8 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
     updateAutomation(
         automation: IAutomationMetadataObject,
         _options?: IGetAutomationOptions,
+        _widgetExecution?: IExecutionDefinition,
+        _overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
         return Promise.resolve({
             exportDefinitions: [],

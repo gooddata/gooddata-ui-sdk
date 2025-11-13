@@ -1,16 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useCombineRefs } from "@gooddata/sdk-ui";
 import { EmptyObject } from "@gooddata/util";
 
-import {
-    ListWithActionsFocusStore,
-    useFocusWithinContainer,
-    useListWithActionsFocusStoreValue,
-} from "../../hooks/useListWithActionsFocus.js";
+import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
 import { useListWithActionsKeyboardNavigation } from "../../hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { IUiTab, IUiTabComponentProps } from "../types.js";
@@ -61,13 +58,21 @@ export function DefaultUiTabsContainer<
         focusedIndex: tabs.findIndex((t) => t.id === selectedTabId) ?? 0,
     });
 
-    const listWithActionsFocusStoreValue = useListWithActionsFocusStoreValue<
-        IUiTab<TTabProps, TTabActionProps>
-    >((item) => item.id);
+    const scopedIdStoreValue = useScopedIdStoreValue<IUiTab<TTabProps, TTabActionProps> | undefined>(
+        (item) => item?.id,
+    );
 
     const { containerRef: focusContainerRef } = useFocusWithinContainer(
-        listWithActionsFocusStoreValue.makeId({ item: focusedItem, action: focusedAction }) ?? "",
+        scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
+
+    useEffect(() => {
+        // We currently cannot use the smooth scrolling, since the actions dropdown uses the Bubble component
+        // which does not reposition itself once opened. So with the smooth animation, it becomes detached.
+        document
+            .getElementById(scopedIdStoreValue.makeId({ item: focusedItem, specifier: "container" }))
+            ?.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
+    }, [focusedItem, scopedIdStoreValue, selectedTabId]);
 
     return (
         <div className={UiTabsBem.b({ size, overflow: true })}>
@@ -75,7 +80,7 @@ export function DefaultUiTabsContainer<
                 className={UiTabsBem.e("container")}
                 ref={useCombineRefs(resizeContainerRef, focusContainerRef)}
                 onKeyDown={onKeyboardNavigation}
-                id={listWithActionsFocusStoreValue.containerId}
+                id={scopedIdStoreValue.containerId}
                 tabIndex={-1}
                 aria-label={accessibilityConfig?.ariaLabel}
                 aria-labelledby={accessibilityConfig?.ariaLabelledBy}
@@ -83,7 +88,7 @@ export function DefaultUiTabsContainer<
                 aria-expanded={accessibilityConfig?.ariaExpanded}
                 role={accessibilityConfig?.role}
             >
-                <ListWithActionsFocusStore value={listWithActionsFocusStoreValue}>
+                <ScopedIdStore value={scopedIdStoreValue}>
                     {tabs.map((tab) => {
                         const isSelected = selectedTabId === tab.id;
                         const onSelect = () => onTabSelect(tab);
@@ -98,7 +103,7 @@ export function DefaultUiTabsContainer<
                             />
                         );
                     })}
-                </ListWithActionsFocusStore>
+                </ScopedIdStore>
             </div>
 
             <AllTabs />

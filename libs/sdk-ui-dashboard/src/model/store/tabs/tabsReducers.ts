@@ -51,6 +51,15 @@ const updateTab: TabsReducer<PayloadAction<IDashboardTab<ExtendedDashboardWidget
 };
 
 /**
+ * Removes a tab by its identifier. If the tab does not exist, no changes are made.
+ */
+const removeTabById: TabsReducer<PayloadAction<string>> = (state, action) => {
+    const tabId = action.payload;
+    state.tabs = state.tabs?.filter((tab) => tab.identifier !== tabId);
+    // Do not touch activeTabId here; handlers set it explicitly based on UX flow.
+};
+
+/**
  * Clears all tabs from the state.
  */
 const clearTabs: TabsReducer<PayloadAction> = (state) => {
@@ -62,5 +71,6 @@ export const tabsReducers = {
     setTabs,
     setActiveTabId,
     updateTab,
+    removeTabById,
     clearTabs,
 };

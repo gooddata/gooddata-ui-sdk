@@ -28,7 +28,7 @@ import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
-import { AgGridApi, AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
+import { AgGridApi, AgGridColumn, AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
 import { AgGridRowData } from "../types/internal.js";
 
 /**
@@ -45,15 +45,19 @@ const tableKeyboardNavigation = makeKeyboardNavigation({
         { code: "End", modifiers: ["Control"] },
         { code: "End", modifiers: ["Meta"] },
     ],
+    onSelectColumn: [{ code: "Space", modifiers: ["Control"] }],
+    onSelectRow: [{ code: "Space", modifiers: ["Shift", "!Control", "!Meta"] }],
 });
 
 /**
  * Returns ag-grid props with interactions applied.
  *
  * Handles:
- * - Cell drilling on click and keyboard (Enter/Space)
+ * - Cell drilling on click and keyboard (Enter/Space without modifiers)
  * - Mouse drag detection for cell selection
  * - Custom keyboard navigation (ArrowUp, PageUp/Down, Home/End, Ctrl+Home/End)
+ * - Column selection (Ctrl+Space)
+ * - Row selection (Shift+Space)
  * - Tab key to exit grid
  * - Escape key to blur
  *
@@ -226,6 +230,36 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
         }
     }, []);
 
+    /**
+     * Select entire column containing the focused cell
+     */
+    const selectColumn = useCallback((api: AgGridApi, column: AgGridColumn) => {
+        const displayedRowCount = api.getDisplayedRowCount();
+        if (displayedRowCount > 0) {
+            api.clearCellSelection();
+            api.addCellRange({
+                rowStartIndex: 0,
+                rowEndIndex: displayedRowCount - 1,
+                columns: [column],
+            });
+        }
+    }, []);
+
+    /**
+     * Select entire row containing the focused cell
+     */
+    const selectRow = useCallback((api: AgGridApi, row: number) => {
+        const allColumns = api.getAllDisplayedColumns();
+        if (allColumns && allColumns.length > 0) {
+            api.clearCellSelection();
+            api.addCellRange({
+                rowStartIndex: row,
+                rowEndIndex: row,
+                columns: allColumns,
+            });
+        }
+    }, []);
+
     const onCellKeyDown = useCallback(
         (event: CellKeyDownEvent<AgGridRowData, string | null>) => {
             // Check if it's a keyboard event
@@ -268,7 +302,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 return;
             }
 
-            // Handle custom keyboard navigation (Home/End with and without modifiers)
+            // Handle custom keyboard navigation (Home/End with and without modifiers, column/row selection)
             const { api, rowIndex, column } = event;
             if (column && rowIndex !== null && rowIndex !== undefined) {
                 tableKeyboardNavigation(
@@ -277,6 +311,8 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                         onHomeWithModifier: () => navigateToHome(api, rowIndex, true),
                         onEndNormal: () => navigateToEnd(api, rowIndex, false),
                         onEndWithModifier: () => navigateToEnd(api, rowIndex, true),
+                        onSelectColumn: () => selectColumn(api, column),
+                        onSelectRow: () => selectRow(api, rowIndex),
                     },
                     { shouldPreventDefault: true, shouldStopPropagation: true },
                 )(keyboardEvent);
@@ -288,11 +324,18 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
             }
 
             // Drill via keyboard: ENTER or SPACE pressed on a drillable cell
-            if (isEnterKey(keyboardEvent) || isSpaceKey(keyboardEvent)) {
+            // Only drill if no modifier keys are pressed (to avoid conflicts with selection shortcuts)
+            const hasModifiers =
+                keyboardEvent.ctrlKey ||
+                keyboardEvent.metaKey ||
+                keyboardEvent.shiftKey ||
+                keyboardEvent.altKey;
+
+            if ((isEnterKey(keyboardEvent) || isSpaceKey(keyboardEvent)) && !hasModifiers) {
                 drillFromCellEvent(event);
             }
         },
-        [drillFromCellEvent, onDrill, drillableItems, navigateToHome, navigateToEnd],
+        [drillFromCellEvent, onDrill, drillableItems, navigateToHome, navigateToEnd, selectColumn, selectRow],
     );
 
     return useCallback(

@@ -11,10 +11,12 @@ import {
     JsonApiAutomationOutAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
+import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IExecutionDefinition,
     isAutomationExternalUserRecipient,
     isAutomationUserRecipient,
     isExportDefinitionDashboardRequestPayload,
@@ -28,6 +30,7 @@ import {
     convertExportDefinitionRequestPayload,
     convertToDashboardTabularExportRequest,
     convertToImageExportRequest,
+    convertToRawExportRequest,
     convertToSlidesExportRequest,
     convertToTabularExportRequest,
     convertToVisualExportRequest,
@@ -38,6 +41,8 @@ export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     enableAutomationFilterContext: boolean,
     enableNewScheduledExport: boolean,
+    widgetExecution?: IExecutionDefinition,
+    overrides?: IRawExportCustomOverrides,
 ): JsonApiAutomationIn {
     const {
         id,
@@ -121,7 +126,7 @@ export function convertAutomation(
         imageExports,
         slidesExports,
         dashboardTabularExports,
-        // rawExports,
+        rawExports,
     } = (exportDefinitions ?? []).reduce((acc, ed) => {
         switch (ed.requestPayload.format) {
             case "CSV":
@@ -209,20 +214,20 @@ export function convertAutomation(
                         },
                     ],
                 };
-            // case "CSV_RAW":
-            //     return {
-            //         ...acc,
-            //         rawExports: [
-            //             ...(acc.rawExports ?? []),
-            //             {
-            //                 requestPayload: convertToRawExportRequest(
-            //                     ed.requestPayload,
-            //                     enableAutomationFilterContext,
-            //                     ed.title,
-            //                 ),
-            //             },
-            //         ],
-            //     };
+            case "CSV_RAW":
+                return {
+                    ...acc,
+                    rawExports: [
+                        ...(acc.rawExports ?? []),
+                        {
+                            requestPayload: convertToRawExportRequest(
+                                ed.requestPayload,
+                                widgetExecution,
+                                overrides,
+                            ),
+                        },
+                    ],
+                };
             default:
                 return acc;
         }
@@ -240,7 +245,7 @@ export function convertAutomation(
             imageExports,
             slidesExports,
             dashboardTabularExports,
-            // rawExports,
+            rawExports,
             externalRecipients,
             ...metadataObj,
             ...scheduleObj,

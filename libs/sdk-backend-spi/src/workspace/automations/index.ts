@@ -1,6 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IExecutionDefinition,
+} from "@gooddata/sdk-model";
 
 import {
     AutomationFilterType,
@@ -8,6 +12,7 @@ import {
     IGetAutomationsQueryOptions,
 } from "../../common/automations.js";
 import { IPagedResource } from "../../common/paging.js";
+import { IRawExportCustomOverrides } from "../dashboards/index.js";
 
 /**
  * Configuration options for loading automation metadata objects.
@@ -89,11 +94,15 @@ export interface IWorkspaceAutomationService {
      *
      * @param automation - definition of the automation
      * @param options - specify additional options
+     * @param widgetExecution - execution definition for widget exports
+     * @param overrides - custom overrides for widget exports
      * @returns Promise resolved with created automation.
      */
     createAutomation(
         automation: IAutomationMetadataObjectDefinition,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject>;
 
     /**
@@ -101,11 +110,15 @@ export interface IWorkspaceAutomationService {
      *
      * @param automation - definition of the automation
      * @param options - specify additional options
+     * @param widgetExecution - execution definition for widget exports
+     * @param overrides - custom overrides for widget exports
      * @returns Promise resolved when the automation is updated.
      */
     updateAutomation(
         automation: IAutomationMetadataObject,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject>;
 
     /**

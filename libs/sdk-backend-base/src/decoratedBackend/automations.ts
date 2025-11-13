@@ -8,9 +8,14 @@ import {
     IGetAutomationOptions,
     IGetAutomationsOptions,
     IGetAutomationsQueryOptions,
+    IRawExportCustomOverrides,
     IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IExecutionDefinition,
+} from "@gooddata/sdk-model";
 
 export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     protected constructor(protected readonly decorated: IAutomationsQuery) {}
@@ -65,8 +70,10 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
     createAutomation(
         automation: IAutomationMetadataObjectDefinition,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
-        return this.decorated.createAutomation(automation, options);
+        return this.decorated.createAutomation(automation, options, widgetExecution, overrides);
     }
 
     deleteAutomation(id: string): Promise<void> {
@@ -92,8 +99,10 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
     updateAutomation(
         automation: IAutomationMetadataObject,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
-        return this.decorated.updateAutomation(automation, options);
+        return this.decorated.updateAutomation(automation, options, widgetExecution, overrides);
     }
 
     unsubscribeAutomation(id: string): Promise<void> {

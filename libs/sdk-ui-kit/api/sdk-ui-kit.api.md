@@ -377,7 +377,12 @@ export const DefaultUiMenuStaticItem: MemoExoticComponent<(<T extends IUiMenuIte
 export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"AllTabs", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsAllTabsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ isOpen, onClick, ref }: IUiTabComponentProps<"AllTabsButton", TTabProps, TTabActionProps>): JSX.Element;
+export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(props: Omit<{
+    isOpen: boolean;
+    onClick: () => void;
+    ref?: RefObject<HTMLElement>;
+    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+}, "ref"> & RefAttributes<HTMLElement>) => ReactNode;
 
 // @internal (undocumented)
 export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"Container", TTabProps, TTabActionProps>): JSX.Element;
@@ -4917,6 +4922,9 @@ export interface ISpinnerProps {
     className?: string;
 }
 
+// @internal (undocumented)
+export function isSeparator(item: unknown): item is typeof separatorStaticItem;
+
 // @internal
 export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
 
@@ -5561,7 +5569,8 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
 export type IUiTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = {
     id: string;
     label: string;
-    actions?: IUiTabAction<TTabProps, TTabActionProps>[];
+    variant?: "default" | "placeholder";
+    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 
 // @internal (undocumented)
@@ -5878,15 +5887,6 @@ export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 export function List<T>({ id, className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, accessibilityConfig, }: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
-export const ListWithActionsFocusStore: IContextStore<    {
-makeId: ({ item, action }: {
-item: unknown;
-action: string;
-}) => string;
-containerId: string;
-}>;
-
-// @internal (undocumented)
 export const LOADING_HEIGHT = 100;
 
 // @internal (undocumented)
@@ -6156,6 +6156,15 @@ export function RichTextWithTooltip(props: IRichTextWithTooltipProps): JSX.Eleme
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";
+
+// @internal (undocumented)
+export const ScopedIdStore: IContextStore<    {
+makeId: ({ item, specifier }: {
+item: unknown;
+specifier?: string;
+}) => string;
+containerId: string;
+}>;
 
 // @internal
 export function ScreenReaderToast(): JSX.Element;
@@ -7416,15 +7425,6 @@ export const useKeyboardNavigationTarget: ({ navigationId, label, tabIndex, onFo
 };
 
 // @internal (undocumented)
-export const useListWithActionsFocusStoreValue: <T>(getIdFromItem: (item: T) => string) => {
-    makeId: ({ item, action }: {
-        item: T;
-        action: string;
-    }) => string;
-    containerId: string;
-};
-
-// @internal (undocumented)
 export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, isWrapping, focusedIndex: focusedIndexProp, }: {
     items: Item[];
     actionHandlers: {
@@ -7458,6 +7458,21 @@ export function useOverlayZIndexWithRegister(): number;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
+
+// @internal
+export function useScopedId<T>(item?: T, specifier?: string): string;
+
+// @internal
+export function useScopedIdOptional<T>(item?: T, specifier?: string): string;
+
+// @internal (undocumented)
+export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {
+    makeId: ({ item, specifier }: {
+        item: T;
+        specifier?: string;
+    }) => string;
+    containerId: string;
+};
 
 // @internal (undocumented)
 export const useScrollContext: () => {

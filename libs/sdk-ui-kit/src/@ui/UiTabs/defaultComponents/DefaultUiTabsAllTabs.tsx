@@ -5,15 +5,12 @@ import { RefObject, useCallback, useState } from "react";
 import { EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
-import {
-    ListWithActionsFocusStore,
-    useFocusWithinContainer,
-    useListWithActionsFocusStoreValue,
-} from "../../hooks/useListWithActionsFocus.js";
+import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
 import {
     SELECT_ITEM_ACTION,
     useListWithActionsKeyboardNavigation,
 } from "../../hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { IUiTab, IUiTabComponentProps } from "../types.js";
@@ -63,12 +60,12 @@ export function DefaultUiTabsAllTabs<
             isSimple: true,
         });
 
-    const listWithActionsFocusStoreValue = useListWithActionsFocusStoreValue<
-        IUiTab<TTabProps, TTabActionProps>
-    >((item) => item.id);
+    const scopedIdStoreValue = useScopedIdStoreValue<IUiTab<TTabProps, TTabActionProps> | undefined>(
+        (item) => item?.id ?? "",
+    );
 
     const { containerRef } = useFocusWithinContainer(
-        listWithActionsFocusStoreValue.makeId({ item: focusedItem, action: focusedAction }) ?? "",
+        scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
 
     if (!isOverflowing) {
@@ -88,14 +85,14 @@ export function DefaultUiTabsAllTabs<
                         />
                     )}
                     renderBody={({ ariaAttributes }) => (
-                        <ListWithActionsFocusStore value={listWithActionsFocusStoreValue}>
+                        <ScopedIdStore value={scopedIdStoreValue}>
                             <div
                                 className={UiTabsBem.e("tab-list")}
                                 role="grid"
                                 ref={containerRef as RefObject<HTMLDivElement>}
                                 onKeyDown={onKeyboardNavigation}
                                 tabIndex={-1}
-                                id={listWithActionsFocusStoreValue.containerId}
+                                id={scopedIdStoreValue.containerId}
                                 {...ariaAttributes}
                                 aria-label={"TODO"}
                                 aria-rowcount={tabs.length}
@@ -110,7 +107,7 @@ export function DefaultUiTabsAllTabs<
                                     />
                                 ))}
                             </div>
-                        </ListWithActionsFocusStore>
+                        </ScopedIdStore>
                     )}
                     autofocusOnOpen
                     shouldTrapFocus
@@ -157,7 +154,7 @@ function TabListItem<
 
     const isSelected = item.id === selectedTabId;
     const isFocused = !!focusedAction;
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     return (
         <div
@@ -167,14 +164,14 @@ function TabListItem<
             })}
             role="row"
             aria-rowindex={index + 1}
-            aria-labelledby={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+            aria-labelledby={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
             tabIndex={-1}
         >
             <div className={UiTabsBem.e("tab-list-item-value")} onClick={onApply} role={"gridcell"}>
                 <div
                     role={"button"}
                     tabIndex={isSelected ? 0 : -1}
-                    id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+                    id={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
                 >
                     <TabValue tab={item} isSelected={isSelected} location={"allList"} />
                 </div>
@@ -188,7 +185,7 @@ function TabListItem<
                         tab={item}
                         location={"allList"}
                         tabIndex={-1}
-                        id={makeId?.({ item, action: "selectTabActions" })}
+                        id={makeId?.({ item, specifier: "selectTabActions" })}
                     />
                 </div>
             ) : null}

@@ -497,6 +497,10 @@ export type BoundedFilterGranularityEnum =
  */
 export interface ChangeAnalysisParams {
     measure: MeasureItem;
+    /**
+     * The title of the measure being analyzed
+     */
+    measureTitle: string;
     dateAttribute: AttributeItem;
     /**
      * The reference time period
@@ -717,7 +721,26 @@ export interface ChatRequest {
      * If true, includes hidden objects in search and visualization building. If false (default), excludes objects where isHidden=true.
      */
     includeHidden?: boolean;
+    /**
+     * List of object types to filter the search and visualization building. If empty or null, all object types are considered.
+     */
+    objectTypes?: Array<ChatRequestObjectTypesEnum>;
 }
+
+export const ChatRequestObjectTypesEnum = {
+    ATTRIBUTE: "attribute",
+    METRIC: "metric",
+    FACT: "fact",
+    LABEL: "label",
+    DATE: "date",
+    DATASET: "dataset",
+    VISUALIZATION: "visualization",
+    DASHBOARD: "dashboard",
+} as const;
+
+export type ChatRequestObjectTypesEnum =
+    (typeof ChatRequestObjectTypesEnum)[keyof typeof ChatRequestObjectTypesEnum];
+
 export interface ChatResult {
     routing?: RouteResult;
     /**

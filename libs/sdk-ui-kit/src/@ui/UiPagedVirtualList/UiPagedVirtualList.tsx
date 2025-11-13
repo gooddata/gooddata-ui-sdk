@@ -20,8 +20,8 @@ import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 
 import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigationWithConfirm } from "../@utils/keyboardNavigation.js";
-import { ListWithActionsFocusStore } from "../hooks/useListWithActionsFocus.js";
 import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore } from "../hooks/useScopedId.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 
@@ -130,7 +130,7 @@ function UiPagedVirtualListNotWrapped<T>(
     );
     const ListElement = representAs === "grid" ? "div" : "ul";
     const ItemElement = representAs === "grid" ? "div" : "li";
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
     const focusedItemIndex = focusedItem ? items?.indexOf(focusedItem) : 0;
     const finalFocusedIndex = focusedItem ? focusedItemIndex : focusedIndex;
 
@@ -183,7 +183,7 @@ function UiPagedVirtualListNotWrapped<T>(
                                           focusedItem === item && focusedAction === SELECT_ITEM_ACTION
                                               ? 0
                                               : -1,
-                                      id: makeId?.({ item: item!, action: SELECT_ITEM_ACTION }),
+                                      id: makeId?.({ item: item!, specifier: SELECT_ITEM_ACTION }),
                                   }
                                 : {};
 

@@ -2,8 +2,8 @@
 
 import { EmptyObject } from "@gooddata/util";
 
-import { ListWithActionsFocusStore } from "../../hooks/useListWithActionsFocus.js";
 import { SELECT_ITEM_ACTION } from "../../hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore } from "../../hooks/useScopedId.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
@@ -24,7 +24,7 @@ export function DefaultUiTabsTab<
         "maxLabelLength",
     ]);
 
-    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     const isOverflowing = tab.label.length > maxLabelLength;
 
@@ -36,14 +36,20 @@ export function DefaultUiTabsTab<
             aria-selected={isSelected}
             aria-label={isOverflowing ? tab.label : undefined}
             tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
-            id={makeId?.({ item: tab, action: SELECT_ITEM_ACTION })}
+            id={makeId?.({ item: tab, specifier: SELECT_ITEM_ACTION })}
         >
             <TabValue tab={tab} isSelected={isSelected} location={"tabs"} />
         </button>
     );
 
     return (
-        <div className={UiTabsBem.e("tab-wrapper", { selected: isSelected })}>
+        <div
+            className={UiTabsBem.e("tab-wrapper", {
+                selected: isSelected,
+                variant: tab.variant ?? "default",
+            })}
+            id={makeId?.({ item: tab, specifier: "container" })}
+        >
             {isOverflowing ? (
                 <UiTooltip
                     key={tab.id}
@@ -60,7 +66,7 @@ export function DefaultUiTabsTab<
             <TabActions
                 tab={tab}
                 location={"tabs"}
-                id={makeId?.({ item: tab, action: "selectTabActions" })}
+                id={makeId?.({ item: tab, specifier: "selectTabActions" })}
                 tabIndex={focusedAction === "selectTabActions" ? 0 : -1}
             />
         </div>

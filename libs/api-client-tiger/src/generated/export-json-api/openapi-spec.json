@@ -470,6 +470,12 @@
                                     "type": "string",
                                     "format": "binary"
                                 }
+                            },
+                            "application/zip": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
                             }
                         }
                     },
@@ -495,6 +501,12 @@
                                 }
                             },
                             "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/zip": {
                                 "schema": {
                                     "type": "string",
                                     "format": "binary"
@@ -2467,6 +2479,16 @@
                         "items": {
                             "$ref": "#/components/schemas/DashboardFilter"
                         }
+                    },
+                    "dashboardTabsFiltersOverrides": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/DashboardFilter"
+                            }
+                        },
+                        "description": "Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab."
                     },
                     "widgetIds": {
                         "maxItems": 1,

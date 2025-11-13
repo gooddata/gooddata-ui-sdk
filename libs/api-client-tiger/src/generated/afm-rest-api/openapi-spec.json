@@ -3794,6 +3794,24 @@
                         "type": "boolean",
                         "description": "If true, includes hidden objects in search and visualization building. If false (default), excludes objects where isHidden=true.",
                         "default": false
+                    },
+                    "objectTypes": {
+                        "type": "array",
+                        "description": "List of object types to filter the search and visualization building. If empty or null, all object types are considered.",
+                        "items": {
+                            "type": "string",
+                            "description": "Object type to filter.",
+                            "enum": [
+                                "attribute",
+                                "metric",
+                                "fact",
+                                "label",
+                                "date",
+                                "dataset",
+                                "visualization",
+                                "dashboard"
+                            ]
+                        }
                     }
                 }
             },
@@ -3920,6 +3938,7 @@
                     "dateAttribute",
                     "filters",
                     "measure",
+                    "measureTitle",
                     "referencePeriod",
                     "useSmartAttributeSelection"
                 ],
@@ -3927,6 +3946,10 @@
                 "properties": {
                     "measure": {
                         "$ref": "#/components/schemas/MeasureItem"
+                    },
+                    "measureTitle": {
+                        "type": "string",
+                        "description": "The title of the measure being analyzed"
                     },
                     "dateAttribute": {
                         "$ref": "#/components/schemas/AttributeItem"

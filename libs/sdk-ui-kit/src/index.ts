@@ -159,6 +159,7 @@ export { DefaultUiListboxInteractiveItemComponent } from "./@ui/UiListbox/defaul
 export {
     separatorStaticItem,
     DefaultUiListboxStaticItemComponent,
+    isSeparator,
 } from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 export type {
     UiListboxProps,
@@ -286,11 +287,13 @@ export {
     useListWithActionsKeyboardNavigation,
     SELECT_ITEM_ACTION,
 } from "./@ui/hooks/useListWithActionsKeyboardNavigation.js";
+export { useFocusWithinContainer } from "./@ui/hooks/useFocusWithinContainer.js";
 export {
-    ListWithActionsFocusStore,
-    useFocusWithinContainer,
-    useListWithActionsFocusStoreValue,
-} from "./@ui/hooks/useListWithActionsFocus.js";
+    ScopedIdStore,
+    useScopedIdStoreValue,
+    useScopedId,
+    useScopedIdOptional,
+} from "./@ui/hooks/useScopedId.js";
 
 export { UiNavigationBypass } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
 export type {

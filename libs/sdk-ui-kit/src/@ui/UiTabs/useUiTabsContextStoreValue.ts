@@ -61,14 +61,19 @@ export function useUiTabsContextStoreValue<
 }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps> {
     const [isOverflowing, setIsOverflowing] = useState(false);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
+    const mutationObserverRef = useRef<MutationObserver | null>(null);
+    const containerRef = useRef<Element>(null);
 
     const accessibilityConfig = useMemo(() => {
         return { tabRole: "tab", role: "tablist", ...accessibilityConfigProp };
     }, [accessibilityConfigProp]);
 
     // Check if tabs overflow the container
-    const containerRef = useCallback((container: Element) => {
+    const containerRefCallback = useCallback((container: Element) => {
+        containerRef.current = container;
+
         resizeObserverRef.current?.disconnect();
+        mutationObserverRef.current?.disconnect();
 
         if (!container) {
             return undefined;
@@ -83,6 +88,8 @@ export function useUiTabsContextStoreValue<
 
         resizeObserverRef.current = new ResizeObserver(checkOverflow);
         resizeObserverRef.current.observe(container);
+        mutationObserverRef.current = new MutationObserver(checkOverflow);
+        mutationObserverRef.current.observe(container, { childList: true });
     }, []);
 
     const [actionEventListeners] = useState(
@@ -114,7 +121,7 @@ export function useUiTabsContextStoreValue<
             useActionListener,
 
             isOverflowing,
-            containerRef,
+            containerRef: containerRefCallback,
 
             Container,
             Tab,
@@ -134,7 +141,7 @@ export function useUiTabsContextStoreValue<
             onActionTriggered,
             useActionListener,
             isOverflowing,
-            containerRef,
+            containerRefCallback,
             Container,
             Tab,
             TabValue,

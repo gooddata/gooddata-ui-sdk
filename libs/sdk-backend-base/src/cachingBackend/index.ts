@@ -28,6 +28,7 @@ import {
     IGetAutomationsOptions,
     IGetAutomationsQueryOptions,
     IPreparedExecution,
+    IRawExportCustomOverrides,
     ISecuritySettingsService,
     IUserWorkspaceSettings,
     IWorkspaceAttributesService,
@@ -1315,9 +1316,11 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
     public override async createAutomation(
         automation: IAutomationMetadataObjectDefinition,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
-        const result = await super.createAutomation(automation, options);
+        const result = await super.createAutomation(automation, options, widgetExecution, overrides);
         cache.automations.clear();
         cache.queries.clear();
         return result;
@@ -1326,9 +1329,11 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
     public override async updateAutomation(
         automation: IAutomationMetadataObject,
         options?: IGetAutomationOptions,
+        widgetExecution?: IExecutionDefinition,
+        overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
-        const result = await super.updateAutomation(automation, options);
+        const result = await super.updateAutomation(automation, options, widgetExecution, overrides);
         cache.automations.clear();
         cache.queries.clear();
         return result;

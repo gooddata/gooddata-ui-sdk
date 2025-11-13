@@ -32,9 +32,45 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     flex-basis: 100%;
 }
 
-.gd-dash-tabs-bar {
+.gd-dash-tabs {
+    $root: &;
+
     padding-left: 6px;
     padding-right: 6px;
+    overflow: hidden;
+    display: flex;
+
+    &__list {
+        flex-grow: 1;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    &__add-wrapper {
+        flex-grow: 0;
+        flex-shrink: 0;
+        min-width: 0;
+        border-bottom: 1px solid var(--gd-palette-complementary-3);
+        display: flex;
+        align-items: center;
+        padding-left: var(--gd-spacing-10px);
+        padding-right: var(--gd-spacing-5px);
+    }
+
+    &__add {
+        padding-left: var(--gd-spacing-10px);
+        border-left: 1px solid var(--gd-palette-complementary-3);
+    }
+
+    &--with-create {
+        #{$root}__list {
+            flex-grow: 0;
+        }
+
+        #{$root}__add-wrapper {
+            flex-grow: 1;
+        }
+    }
 }
 
 .gd-dash-bottom-position-pixel {

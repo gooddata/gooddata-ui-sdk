@@ -44,6 +44,7 @@ import {
     convertInlineExportDefinitionMdObject,
     convertSlidesExportRequest,
     convertTabularExportRequest,
+    convertToRawExportRequest,
     convertVisualExportRequest,
     wrapExportDefinition,
 } from "./ExportDefinitionsConverter.js";
@@ -177,6 +178,7 @@ export function convertAutomation(
         tabularExports,
         imageExports,
         slidesExports,
+        rawExports,
         dashboardTabularExports,
         externalRecipients,
         evaluationMode,
@@ -224,9 +226,9 @@ export function convertAutomation(
         ...(dashboardTabularExports?.map((dte) =>
             wrapExportDefinition(convertDashboardTabularExportRequest(dte)),
         ) ?? []),
-        // ...(rawExports?.map((re) =>
-        //     convertInlineExportDefinitionMdObject(re, enableAutomationFilterContext),
-        // ) ?? []),
+        ...(rawExports?.map((re) =>
+            wrapExportDefinition(convertToRawExportRequest(re), re.requestPayload.metadata ?? undefined),
+        ) ?? []),
     ];
 
     const recipients = [

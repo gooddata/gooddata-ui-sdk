@@ -8,6 +8,7 @@ import { IDropdownButtonRenderProps } from "../../Dropdown/index.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
+import { separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 
 /**
  * @internal
@@ -42,7 +43,11 @@ export type IUiTab<
 > = {
     id: string;
     label: string;
-    actions?: IUiTabAction<TTabProps, TTabActionProps>[];
+    /**
+     * @defaultValue "default"
+     */
+    variant?: "default" | "placeholder";
+    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 
 /**

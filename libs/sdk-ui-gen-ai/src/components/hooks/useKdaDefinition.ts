@@ -35,7 +35,7 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
             content.params.referencePeriod,
             content.params.analyzedPeriod,
             locale ?? intl.locale,
-            format,
+            getFormatByGranularity(content.params.dateAttribute) ?? format,
         );
     }, [
         content.params.analyzedPeriod,
@@ -157,4 +157,44 @@ export function getDashboardAttributeFilter(f: IFilter) {
         return attributeFilterToDashboardAttributeFilter(f, `local_${id}`, undefined);
     }
     return null;
+}
+
+function getFormatByGranularity(attr: IAttribute) {
+    const ref = objRefToString(attr.attribute.displayForm);
+    const granularity = ref.split(".")[1];
+
+    switch (granularity) {
+        case "day":
+            return "dd/MM/yyyy";
+        case "dayOfMonth":
+            return "d";
+        case "dayOfWeek":
+            return "ccc";
+        case "dayOfYear":
+            return "D";
+        case "hour":
+            return "M/d/y, h a";
+        case "hourOfDay":
+            return "h a";
+        case "minute":
+            return "M/d/y, h:mm a";
+        case "minuteOfHour":
+            return "m";
+        case "month":
+            return "MMM y";
+        case "monthOfYear":
+            return "LLL";
+        case "quarter":
+            return "QQQ y";
+        case "quarterOfYear":
+            return "qqq";
+        case "week":
+            return "w/Y";
+        case "weekOfYear":
+            return "w";
+        case "year":
+            return "y";
+        default:
+            return undefined;
+    }
 }
