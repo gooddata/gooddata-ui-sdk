@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -12,12 +13,25 @@ import {
     selectDateFilterConfigsOverrides,
     selectEffectiveDateFiltersModeMap,
 } from "../dateFilterConfigsSelectors.js";
-import { DateFilterConfigsState } from "../dateFilterConfigsState.js";
 
 describe("dateFilterConfigsSelectors", () => {
-    const createInitialState = (dateFilterConfigs?: DateFilterConfigsState, renderMode?: string): any => {
+    const createInitialState = (
+        dateFilterConfigs?: IDashboardDateFilterConfigItem[],
+        renderMode?: string,
+    ): any => {
         return {
-            dateFilterConfigs,
+            tabs: {
+                tabs: dateFilterConfigs
+                    ? [
+                          {
+                              identifier: "tab-1",
+                              title: "Test Tab",
+                              dateFilterConfigs: { dateFilterConfigs },
+                          },
+                      ]
+                    : [],
+                activeTabId: "tab-1",
+            },
             renderMode: {
                 renderMode,
             },
@@ -25,13 +39,13 @@ describe("dateFilterConfigsSelectors", () => {
     };
 
     describe("selectDateFilterConfigsOverrides", () => {
-        it("should return an empty array when dateFilterConfigs state is undefined", () => {
+        it("should return an empty array when tabs is empty", () => {
             const state = createInitialState(undefined);
             expect(selectDateFilterConfigsOverrides(state)).toEqual([]);
         });
 
         it("should return an empty array when dateFilterConfigs is undefined", () => {
-            const state = createInitialState({});
+            const state = createInitialState([]);
             expect(selectDateFilterConfigsOverrides(state)).toEqual([]);
         });
 
@@ -60,9 +74,7 @@ describe("dateFilterConfigsSelectors", () => {
                 },
             ];
 
-            const state = createInitialState({
-                dateFilterConfigs: configs,
-            });
+            const state = createInitialState(configs);
             expect(selectDateFilterConfigsOverrides(state)).toEqual(configs);
         });
     });
@@ -93,9 +105,7 @@ describe("dateFilterConfigsSelectors", () => {
                 },
             ];
 
-            const state = createInitialState({
-                dateFilterConfigs: configs,
-            });
+            const state = createInitialState(configs);
 
             const expectedMap = new Map([
                 ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.HIDDEN],
@@ -133,12 +143,7 @@ describe("dateFilterConfigsSelectors", () => {
                 },
             ];
 
-            const state = createInitialState(
-                {
-                    dateFilterConfigs: configs,
-                },
-                "view",
-            );
+            const state = createInitialState(configs, "view");
 
             const expectedMap = new Map([
                 ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.HIDDEN],
@@ -174,12 +179,7 @@ describe("dateFilterConfigsSelectors", () => {
                 },
             ];
 
-            const state = createInitialState(
-                {
-                    dateFilterConfigs: configs,
-                },
-                "edit",
-            );
+            const state = createInitialState(configs, "edit");
 
             const expectedMap = new Map([
                 ['{"identifier":"id_1"}', DashboardDateFilterConfigModeValues.ACTIVE],

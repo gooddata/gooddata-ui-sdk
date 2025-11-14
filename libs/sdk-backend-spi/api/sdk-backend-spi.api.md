@@ -843,6 +843,7 @@ export interface IExportConfig {
     mergeHeaders?: boolean;
     pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
+    timeout?: number;
     title?: string;
     visualizationObjectCustomFilters?: Array<IFilter>;
     visualizationObjectId?: string;

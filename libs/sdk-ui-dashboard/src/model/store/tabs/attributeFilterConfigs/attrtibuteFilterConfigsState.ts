@@ -1,4 +1,5 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
 import { IDashboardAttributeFilterConfig } from "@gooddata/sdk-model";
 
 /**

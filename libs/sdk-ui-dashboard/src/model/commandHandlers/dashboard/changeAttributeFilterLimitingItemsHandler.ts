@@ -8,8 +8,8 @@ import { SetAttributeFilterLimitingItems } from "../../commands/index.js";
 import { dashboardAttributeConfigLimitingItemsChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectFilterContextAttributeFilterByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
@@ -20,7 +20,7 @@ export function* changeAttributeFilterLimitingItemsHandler(
     const filterLocalId = yield call(getValidatedFilterLocalIdentifier, ctx, cmd);
 
     yield put(
-        filterContextActions.changeLimitingItems({
+        tabsActions.changeLimitingItems({
             filterLocalId,
             limitingItems: cmd.payload.limitingItems,
         }),

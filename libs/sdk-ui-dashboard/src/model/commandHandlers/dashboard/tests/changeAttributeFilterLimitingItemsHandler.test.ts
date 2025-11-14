@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { idRef } from "@gooddata/sdk-model";
 
 import { setAttributeFilterLimitingItems } from "../../../commands/index.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

@@ -9,6 +9,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
@@ -143,6 +144,7 @@ export interface GenAIAssistantProps {
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
     locale?: string;
+    objectTypes?: GenAIObjectType[];
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     settings?: IUserWorkspaceSettings;

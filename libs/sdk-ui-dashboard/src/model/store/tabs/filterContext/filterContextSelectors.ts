@@ -24,16 +24,76 @@ import {
 } from "@gooddata/sdk-model";
 
 import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
-import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
-import { createMemoizedSelector } from "../_infra/selectors.js";
-import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import { createMemoizedSelector } from "../../_infra/selectors.js";
+import { selectSupportsCircularDependencyInFilters } from "../../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../drill/drillSelectors.js";
+import { DashboardSelector, DashboardState } from "../../types.js";
+import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs, selectTabsState } from "../index.js";
+import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
 
-const selectSelf = createSelector(
-    (state: DashboardState) => state,
-    (state) => state.filterContext,
+const selectSelf = createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+    if (!tabs || !activeTabId) {
+        return filterContextInitialState;
+    }
+    const activeTab = tabs.find((tab) => tab.identifier === activeTabId);
+    return activeTab?.filterContext ?? filterContextInitialState;
+});
+
+const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+
+/**
+ * Returns filter context state for each tab keyed by identifier.
+ *
+ * @internal
+ */
+export const selectFilterContextStatesByTab = createSelector(selectTabsArray, (tabs) => {
+    if (!tabs.length) {
+        return {};
+    }
+
+    return tabs.reduce<Record<string, FilterContextState>>((acc, tab) => {
+        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.filterContext ?? filterContextInitialState;
+        return acc;
+    }, {});
+});
+
+/**
+ * Returns applied filter context definitions for each tab keyed by identifier.
+ *
+ * @internal
+ */
+export const selectFilterContextDefinitionsByTab = createSelector(
+    selectFilterContextStatesByTab,
+    (statesByTab) => {
+        return Object.entries(statesByTab).reduce<Record<string, IFilterContextDefinition | undefined>>(
+            (acc, [identifier, state]) => {
+                acc[identifier] = state.filterContextDefinition;
+                return acc;
+            },
+            {},
+        );
+    },
+);
+
+/**
+ * Returns original (persisted) filter context definitions for each tab keyed by identifier.
+ *
+ * @internal
+ */
+export const selectOriginalFilterContextDefinitionsByTab = createSelector(
+    selectFilterContextStatesByTab,
+    (statesByTab) => {
+        return Object.entries(statesByTab).reduce<Record<string, IFilterContextDefinition | undefined>>(
+            (acc, [identifier, state]) => {
+                acc[identifier] = state.originalFilterContextDefinition;
+                return acc;
+            },
+            {},
+        );
+    },
 );
 
 /**
@@ -667,13 +727,14 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
 
 /**
  * Select preloaded attribute metadata objects with references for attribute filters.
+ * Returns merged attributes from all filters across all tabs.
  *
  * @internal
  */
 export const selectPreloadedAttributesWithReferences: DashboardSelector<
     IAttributeWithReferences[] | undefined
-> = createSelector(selectSelf, (state) => {
-    return state.attributesWithReferences;
+> = createSelector(selectTabsState, (tabsState) => {
+    return tabsState.attributesWithReferences;
 });
 
 /**

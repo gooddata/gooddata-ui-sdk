@@ -42,20 +42,20 @@ import {
     drillToDashboardResolved,
 } from "../../events/drill.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
-import {
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectAttributeFilterConfigsOverrides,
-} from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import {
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterConfigsOverrides,
+} from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
     selectFilterContextDraggableFilters,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardState } from "../../store/types.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -11,13 +12,12 @@ import { RemoveDateFilters } from "../../../commands/filters.js";
 import { dateFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
+import { layoutActions } from "../../../store/layout/index.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { layoutActions } from "../../../store/layout/index.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
@@ -64,7 +64,7 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
         const batch = batchActions([
             // remove filter from parents and keep track of the affected filters
             ...affectedDependentFilters.map(({ attributeFilter }) =>
-                filterContextActions.setAttributeFilterDependentDateFilters({
+                tabsActions.setAttributeFilterDependentDateFilters({
                     filterLocalId: attributeFilter.localIdentifier!,
                     dependentDateFilters: attributeFilter.filterElementsByDate!.filter(
                         (parent) => parent.filterLocalIdentifier !== localIdentifier?.identifier,
@@ -72,12 +72,12 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
                 }),
             ),
             // remove filter itself
-            filterContextActions.removeDateFilter({
+            tabsActions.removeDateFilter({
                 dataSet: removedFilter.dateFilter.dataSet!,
             }),
 
             // remove reflect dashboard date filter config
-            dateFilterConfigsActions.removeDateFilterConfig(removedFilter.dateFilter.dataSet!),
+            tabsActions.removeDateFilterConfigs(removedFilter.dateFilter.dataSet!),
             // house-keeping: ensure the removed date filter disappears from widget ignore lists
             layoutActions.removeIgnoredDateFilter({
                 dateDataSets: [removedFilter.dateFilter.dataSet!],

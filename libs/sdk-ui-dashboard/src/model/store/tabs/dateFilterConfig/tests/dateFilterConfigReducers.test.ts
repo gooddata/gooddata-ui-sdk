@@ -1,20 +1,37 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { DashboardDateFilterConfigModeValues, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
+import { tabsActions } from "../../index.js";
+import { TabsState, tabsInitialState } from "../../tabsState.js";
 import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
-import { DateFilterConfigState } from "../dateFilterConfigState.js";
-import { dateFilterConfigActions } from "../index.js";
 
 describe("dateFilterConfigReducers", () => {
-    const createDateFilterConfigSliceInitialState = (
+    const createTabsInitialState = (
         dateFilterConfig?: IDashboardDateFilterConfig,
-    ): DateFilterConfigState => {
+        activeTabId: string = "tab1",
+    ): TabsState => {
         return {
-            dateFilterConfig: dateFilterConfig ? cloneDeep(dateFilterConfig) : undefined,
+            ...tabsInitialState,
+            tabs: [
+                {
+                    identifier: activeTabId,
+                    title: "Tab 1",
+                    dateFilterConfig: dateFilterConfig
+                        ? {
+                              dateFilterConfig: cloneDeep(dateFilterConfig),
+                              effectiveDateFilterConfig: undefined,
+                              isUsingDashboardOverrides: undefined,
+                              dateFilterConfigValidationWarnings: undefined,
+                          }
+                        : undefined,
+                },
+            ],
+            activeTabId,
         };
     };
 
@@ -27,31 +44,31 @@ describe("dateFilterConfigReducers", () => {
                 hideGranularities: ["GDC.time.minute"],
                 addPresets: {},
             };
-            const initialState = createDateFilterConfigSliceInitialState(initialDateFilterConfig);
+            const initialState = createTabsInitialState(initialDateFilterConfig);
             const newMode = DashboardDateFilterConfigModeValues.READONLY;
 
             const newState = produce(initialState, (draft) => {
-                const action = dateFilterConfigActions.setDateFilterConfigMode(newMode);
+                const action = tabsActions.setDateFilterConfigMode(newMode);
                 return dateFilterConfigReducers.setDateFilterConfigMode(draft, action);
             });
 
-            expect(newState.dateFilterConfig).toEqual({
+            expect(newState.tabs?.[0].dateFilterConfig?.dateFilterConfig).toEqual({
                 ...initialDateFilterConfig,
                 mode: newMode,
             });
         });
 
         it("should create a new date filter config if it doesn't exist", () => {
-            const initialState = createDateFilterConfigSliceInitialState(undefined);
+            const initialState = createTabsInitialState(undefined);
 
             const newState = produce(initialState, (draft) => {
-                const action = dateFilterConfigActions.setDateFilterConfigMode(
+                const action = tabsActions.setDateFilterConfigMode(
                     DashboardDateFilterConfigModeValues.READONLY,
                 );
                 return dateFilterConfigReducers.setDateFilterConfigMode(draft, action);
             });
 
-            expect(newState.dateFilterConfig).toEqual({
+            expect(newState.tabs?.[0].dateFilterConfig?.dateFilterConfig).toEqual({
                 mode: DashboardDateFilterConfigModeValues.READONLY,
                 filterName: "",
             });

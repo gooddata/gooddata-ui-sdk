@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -31,12 +30,13 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { FilterContextState } from "./filterContextState.js";
-import { applyFilterContext } from "./filterContextUtils.js";
-import { AddDateFilterPayload } from "../../commands/index.js";
-import { generateFilterLocalIdentifier } from "../_infra/generators.js";
+import { filterContextInitialState } from "./filterContextState.js";
+import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
+import { AddDateFilterPayload } from "../../../commands/index.js";
+import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
+import { TabsState, getActiveTab } from "../tabsState.js";
 
-type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
+type FilterContextReducer<A extends Action> = CaseReducer<TabsState, A>;
 
 //
 //
@@ -50,6 +50,11 @@ type SetFilterContextPayload = {
 };
 
 const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPayload>> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+
     const {
         filterContextDefinition,
         originalFilterContextDefinition,
@@ -57,37 +62,13 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
         attributeFilterDisplayForms,
     } = action.payload;
 
-    // make sure attribute filters always have localId
-    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem, i) =>
-        isDashboardAttributeFilter(filter)
-            ? {
-                  attributeFilter: {
-                      ...filter.attributeFilter,
-                      localIdentifier:
-                          filter.attributeFilter.localIdentifier ??
-                          generateFilterLocalIdentifier(filter.attributeFilter.displayForm, i),
-                  },
-              }
-            : filter,
+    // Use the helper function to initialize the filter context
+    activeTab.filterContext = initializeFilterContext(
+        filterContextDefinition,
+        originalFilterContextDefinition,
+        attributeFilterDisplayForms,
+        filterContextIdentity,
     );
-
-    // make sure that common date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
-    // we have to keep order of rest of array (attributeFilters and date filters with dimension) it represent order of filters in filter bar
-    const [commonDateFilter, otherFilters] = partition(filtersWithLocalId, isDashboardCommonDateFilter);
-    const filters = [...commonDateFilter, ...otherFilters];
-
-    state.filterContextDefinition = {
-        ...filterContextDefinition,
-
-        filters: filters,
-    };
-
-    state.workingFilterContextDefinition = { filters: [] };
-
-    state.originalFilterContextDefinition = originalFilterContextDefinition;
-
-    state.filterContextIdentity = filterContextIdentity;
-    state.attributeFilterDisplayForms = attributeFilterDisplayForms;
 };
 
 //
@@ -102,7 +83,15 @@ const updateFilterContextIdentity: FilterContextReducer<PayloadAction<SetFilterC
     state,
     action,
 ) => {
-    state.filterContextIdentity = action.payload.filterContextIdentity;
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    activeTab.filterContext.filterContextIdentity = action.payload.filterContextIdentity;
 };
 
 //
@@ -110,26 +99,52 @@ const updateFilterContextIdentity: FilterContextReducer<PayloadAction<SetFilterC
 //
 
 const removeAttributeFilterDisplayForms: FilterContextReducer<PayloadAction<ObjRef>> = (state, action) => {
-    invariant(state.attributeFilterDisplayForms, "attempting to work with uninitialized state");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
 
-    state.attributeFilterDisplayForms = state.attributeFilterDisplayForms.filter((df) => {
-        return !areObjRefsEqual(df, action.payload);
-    });
+    invariant(
+        activeTab.filterContext.attributeFilterDisplayForms,
+        "attempting to work with uninitialized state",
+    );
+
+    activeTab.filterContext.attributeFilterDisplayForms =
+        activeTab.filterContext.attributeFilterDisplayForms.filter((df) => {
+            return !areObjRefsEqual(df, action.payload);
+        });
 };
 
 const addAttributeFilterDisplayForm: FilterContextReducer<
     PayloadAction<IAttributeDisplayFormMetadataObject>
 > = (state, action) => {
-    invariant(state.attributeFilterDisplayForms, "attempting to work with uninitialized state");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.attributeFilterDisplayForms,
+        "attempting to work with uninitialized state",
+    );
 
     // if there is already a display form with the same ref, replace it
-    const existing = state.attributeFilterDisplayForms.find((df) => areObjRefsEqual(df, action.payload.ref));
+    const existing = activeTab.filterContext.attributeFilterDisplayForms.find((df) =>
+        areObjRefsEqual(df, action.payload.ref),
+    );
     if (existing) {
-        state.attributeFilterDisplayForms = state.attributeFilterDisplayForms.filter(
-            (df) => !areObjRefsEqual(df, action.payload),
-        );
+        activeTab.filterContext.attributeFilterDisplayForms =
+            activeTab.filterContext.attributeFilterDisplayForms.filter(
+                (df) => !areObjRefsEqual(df, action.payload),
+            );
     }
-    state.attributeFilterDisplayForms.push(action.payload);
+    activeTab.filterContext.attributeFilterDisplayForms.push(action.payload);
 };
 
 //
@@ -139,6 +154,8 @@ const addAttributeFilterDisplayForm: FilterContextReducer<
 const setPreloadedAttributesWithReferences: FilterContextReducer<
     PayloadAction<IAttributeWithReferences[]>
 > = (state, action) => {
+    // Store attributesWithReferences at TabsState level (shared across all tabs)
+    // The payload already contains merged attributes from all filters across all tabs
     state.attributesWithReferences = action.payload;
 };
 
@@ -146,6 +163,9 @@ const setPreloadedAttributesWithReferences: FilterContextReducer<
 //
 //
 
+/**
+ * @internal
+ */
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
     readonly dataSet?: ObjRef;
@@ -153,6 +173,9 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly localIdentifier?: string;
 }
 
+/**
+ * @internal
+ */
 export interface IUpsertDateFilterNonAllTimePayload {
     readonly type: DateFilterType;
     readonly granularity: DateFilterGranularity;
@@ -164,12 +187,23 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
+/**
+ * @internal
+ */
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
     const filterContextDefinition = action.payload.isWorkingSelectionChange
-        ? state.workingFilterContextDefinition
-        : state.filterContextDefinition;
+        ? activeTab.filterContext.workingFilterContextDefinition
+        : activeTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const dateDataSet = action.payload.dataSet;
@@ -257,6 +291,9 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
 //
 //
 
+/**
+ * @internal
+ */
 export interface IUpdateAttributeFilterSelectionPayload {
     readonly filterLocalId: string;
     readonly elements: IAttributeElements;
@@ -270,6 +307,14 @@ export interface IUpdateAttributeFilterSelectionPayload {
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
     const {
         elements,
         filterLocalId,
@@ -280,8 +325,8 @@ const updateAttributeFilterSelection: FilterContextReducer<
         isSelectionInvalid,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
-        ? state.workingFilterContextDefinition
-        : state.filterContextDefinition;
+        ? activeTab.filterContext.workingFilterContextDefinition
+        : activeTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const existingFilterIndex = filterContextDefinition.filters.findIndex(
@@ -319,7 +364,7 @@ const updateAttributeFilterSelection: FilterContextReducer<
 
     // update original filters to not show "reset filters" button, that will revert filter to the wrong state
     if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
-        const originalFilter = state.originalFilterContextDefinition?.filters.find(
+        const originalFilter = activeTab.filterContext.originalFilterContextDefinition?.filters.find(
             (item: FilterContextItem) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
@@ -335,14 +380,13 @@ const updateAttributeFilterSelection: FilterContextReducer<
     // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
     if (isSelectionInvalid) {
         // Add filterLocalId to the array if not already present
-        if (!state.filtersWithInvalidSelection.includes(filterLocalId)) {
-            state.filtersWithInvalidSelection.push(filterLocalId);
+        if (!activeTab.filterContext.filtersWithInvalidSelection.includes(filterLocalId)) {
+            activeTab.filterContext.filtersWithInvalidSelection.push(filterLocalId);
         }
     } else {
         // Remove filterLocalId from the array if present
-        state.filtersWithInvalidSelection = state.filtersWithInvalidSelection.filter(
-            (id) => id !== filterLocalId,
-        );
+        activeTab.filterContext.filtersWithInvalidSelection =
+            activeTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
     }
 };
 
@@ -350,6 +394,9 @@ const updateAttributeFilterSelection: FilterContextReducer<
 //
 //
 
+/**
+ * @internal
+ */
 export interface IAddAttributeFilterPayload {
     readonly displayForm: ObjRef;
     readonly index: number;
@@ -365,7 +412,18 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const {
         displayForm,
@@ -379,7 +437,8 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     } = action.payload;
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+    const isDateFilterPresent =
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
 
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
 
@@ -402,9 +461,9 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     };
 
     if (index === -1) {
-        state.filterContextDefinition.filters.push(filter);
+        activeTab.filterContext.filterContextDefinition.filters.push(filter);
     } else {
-        state.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
+        activeTab.filterContext.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
     }
 };
 
@@ -412,6 +471,9 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
 //
 //
 
+/**
+ * @internal
+ */
 export interface IRemoveAttributeFilterPayload {
     readonly filterLocalId: string;
 }
@@ -420,19 +482,38 @@ const removeAttributeFilter: FilterContextReducer<PayloadAction<IRemoveAttribute
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId } = action.payload;
 
-    state.filterContextDefinition.filters = state.filterContextDefinition.filters.filter(
+    const newFilters = activeTab.filterContext.filterContextDefinition.filters.filter(
         (item) => isDashboardDateFilter(item) || item.attributeFilter.localIdentifier !== filterLocalId,
     );
+
+    activeTab.filterContext.filterContextDefinition = {
+        ...activeTab.filterContext.filterContextDefinition,
+        filters: newFilters,
+    };
 };
 
 //
 //
 //
 
+/**
+ * @internal
+ */
 export interface IMoveAttributeFilterPayload {
     readonly filterLocalId: string;
     readonly index: number;
@@ -442,29 +523,41 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, index } = action.payload;
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
 
-    const filter = state.filterContextDefinition.filters[currentFilterIndex];
+    const filter = activeTab.filterContext.filterContextDefinition.filters[currentFilterIndex];
 
-    state.filterContextDefinition.filters.splice(currentFilterIndex, 1);
+    activeTab.filterContext.filterContextDefinition.filters.splice(currentFilterIndex, 1);
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+    const isDateFilterPresent =
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
 
     if (index === -1) {
-        state.filterContextDefinition.filters.push(filter);
+        activeTab.filterContext.filterContextDefinition.filters.push(filter);
     } else {
         // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
         const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
-        state.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
+        activeTab.filterContext.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
     }
 };
 
@@ -472,6 +565,9 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
 //
 //
 
+/**
+ * @internal
+ */
 export interface ISetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
@@ -481,18 +577,31 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, parentFilters } = action.payload;
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
 
     (
-        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
+        activeTab.filterContext.filterContextDefinition.filters[
+            currentFilterIndex
+        ] as IDashboardAttributeFilter
     ).attributeFilter.filterElementsBy = [...parentFilters];
 };
 
@@ -500,6 +609,9 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
 //
 //
 
+/**
+ * @internal
+ */
 export interface ISetAttributeFilterDependentDateFiltersPayload {
     readonly filterLocalId: string;
     readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
@@ -508,18 +620,31 @@ export interface ISetAttributeFilterDependentDateFiltersPayload {
 const setAttributeFilterDependentDateFilters: FilterContextReducer<
     PayloadAction<ISetAttributeFilterDependentDateFiltersPayload>
 > = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, dependentDateFilters } = action.payload;
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set dependent date filter of a non-existing filter");
 
     (
-        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
+        activeTab.filterContext.filterContextDefinition.filters[
+            currentFilterIndex
+        ] as IDashboardAttributeFilter
     ).attributeFilter.filterElementsByDate = [...dependentDateFilters];
 };
 
@@ -527,6 +652,9 @@ const setAttributeFilterDependentDateFilters: FilterContextReducer<
 //
 //
 
+/**
+ * @internal
+ */
 export interface IClearAttributeFiltersSelectionPayload {
     readonly filterLocalIds: string[];
 }
@@ -534,18 +662,29 @@ export interface IClearAttributeFiltersSelectionPayload {
 const clearAttributeFiltersSelection: FilterContextReducer<
     PayloadAction<IClearAttributeFiltersSelectionPayload>
 > = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
     const { filterLocalIds } = action.payload;
 
     filterLocalIds.forEach((filterLocalId) => {
-        invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
-        const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        invariant(
+            activeTab.filterContext?.filterContextDefinition,
+            "Attempt to edit uninitialized filter context",
+        );
+        const currentFilterIndex = activeTab.filterContext!.filterContextDefinition.filters.findIndex(
             (item) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
 
         invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
 
-        const currentFilter = state.filterContextDefinition.filters[
+        const currentFilter = activeTab.filterContext!.filterContextDefinition.filters[
             currentFilterIndex
         ] as IDashboardAttributeFilter;
 
@@ -559,6 +698,9 @@ const clearAttributeFiltersSelection: FilterContextReducer<
     });
 };
 
+/**
+ * @internal
+ */
 export interface IChangeAttributeDisplayFormPayload {
     readonly filterLocalId: string;
     readonly displayForm: ObjRef;
@@ -574,6 +716,14 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     state,
     action,
 ) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
     const {
         filterLocalId,
         displayForm,
@@ -582,8 +732,8 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
         isResultOfMigration,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
-        ? state.workingFilterContextDefinition
-        : state.filterContextDefinition;
+        ? activeTab.filterContext.workingFilterContextDefinition
+        : activeTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const currentFilterIndex = filterContextDefinition.filters.findIndex(
@@ -612,7 +762,7 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 
     // update original filters to not show "reset filters" button, that will revert filter to wrong state
     if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
-        const originalFilter = state.originalFilterContextDefinition?.filters.find(
+        const originalFilter = activeTab.filterContext.originalFilterContextDefinition?.filters.find(
             (item: FilterContextItem) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
@@ -622,6 +772,9 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     }
 };
 
+/**
+ * @internal
+ */
 export interface IChangeAttributeTitlePayload {
     readonly filterLocalId: string;
     readonly title?: string;
@@ -634,11 +787,22 @@ const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeT
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, title } = action.payload;
 
-    const findFilter = state.filterContextDefinition.filters.find(
+    const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
@@ -647,6 +811,9 @@ const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeT
     (findFilter as IDashboardAttributeFilter).attributeFilter.title = title;
 };
 
+/**
+ * @internal
+ */
 export interface IChangeAttributeSelectionModePayload {
     readonly filterLocalId: string;
     readonly selectionMode: DashboardAttributeFilterSelectionMode;
@@ -659,11 +826,22 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, selectionMode } = action.payload;
 
-    const findFilter = state.filterContextDefinition.filters.find(
+    const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
@@ -673,7 +851,18 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
 };
 
 const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { index, dateDataset } = action.payload;
 
@@ -687,14 +876,14 @@ const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> =
 
     // Only draggable filters are indexed, if DateFilter is present should be always first item
     const isCommonDateFilterPresent =
-        state.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
 
     if (index === -1) {
-        state.filterContextDefinition.filters.push(filter);
+        activeTab.filterContext.filterContextDefinition.filters.push(filter);
     } else {
         // If CommonDateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
         const newFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
-        state.filterContextDefinition.filters.splice(newFilterIndex, 0, filter);
+        activeTab.filterContext.filterContextDefinition.filters.splice(newFilterIndex, 0, filter);
     }
 };
 
@@ -702,53 +891,86 @@ const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> =
 //
 //
 
+/**
+ * @internal
+ */
 export interface IRemoveDateFilterPayload {
     readonly dataSet: ObjRef;
 }
 
 const removeDateFilter: FilterContextReducer<PayloadAction<IRemoveDateFilterPayload>> = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { dataSet } = action.payload;
 
-    state.filterContextDefinition.filters = state.filterContextDefinition.filters.filter(
+    const newFilters = activeTab.filterContext.filterContextDefinition.filters.filter(
         (item) => isDashboardAttributeFilter(item) || !areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
     );
+
+    activeTab.filterContext.filterContextDefinition = {
+        ...activeTab.filterContext.filterContextDefinition,
+        filters: newFilters,
+    };
 };
 
 //
 //
 //
+/**
+ * @internal
+ */
 export interface IMoveDateFilterPayload {
     readonly dataSet: ObjRef;
     readonly index: number;
 }
 
 const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>> = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { dataSet, index } = action.payload;
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
         (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
 
-    const filter = state.filterContextDefinition.filters[currentFilterIndex];
+    const filter = activeTab.filterContext.filterContextDefinition.filters[currentFilterIndex];
 
-    state.filterContextDefinition.filters.splice(currentFilterIndex, 1);
+    activeTab.filterContext.filterContextDefinition.filters.splice(currentFilterIndex, 1);
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
     const isCommonDateFilterPresent =
-        state.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
 
     if (index === -1) {
-        state.filterContextDefinition.filters.push(filter);
+        activeTab.filterContext.filterContextDefinition.filters.push(filter);
     } else {
         // If DateFilter is present we have to move index by 1 because index of filter is calculated just for DraggableFilters array
         const dateFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
-        state.filterContextDefinition.filters.splice(dateFilterIndex, 0, filter);
+        activeTab.filterContext.filterContextDefinition.filters.splice(dateFilterIndex, 0, filter);
     }
 };
 
@@ -756,6 +978,9 @@ const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>
 //
 //
 
+/**
+ * @internal
+ */
 export interface IChangeAttributeLimitingItemsPayload {
     readonly filterLocalId: string;
     readonly limitingItems: ObjRef[];
@@ -768,11 +993,22 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
 
     const { filterLocalId, limitingItems } = action.payload;
 
-    const findFilter = state.filterContextDefinition.filters.find(
+    const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
@@ -785,6 +1021,9 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 //
 
+/**
+ * @internal
+ */
 export interface IApplyWorkingSelectionPayload {
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 }
@@ -793,14 +1032,25 @@ const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSel
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
     const { enableImmediateAttributeFilterDisplayAsLabelMigration } = action.payload;
-    state.filterContextDefinition = applyFilterContext(
-        state.filterContextDefinition,
-        state.workingFilterContextDefinition,
+    activeTab.filterContext.filterContextDefinition = applyFilterContext(
+        activeTab.filterContext.filterContextDefinition,
+        activeTab.filterContext.workingFilterContextDefinition,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
-    state.workingFilterContextDefinition = { filters: [] };
+    activeTab.filterContext.workingFilterContextDefinition = { filters: [] };
 };
 
 //
@@ -808,8 +1058,19 @@ const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSel
 //
 
 const resetWorkingSelection: FilterContextReducer<PayloadAction> = (state) => {
-    invariant(state.workingFilterContextDefinition, "Attempt to edit uninitialized working filter context");
-    state.workingFilterContextDefinition = { filters: [] };
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.workingFilterContextDefinition,
+        "Attempt to edit uninitialized working filter context",
+    );
+    activeTab.filterContext.workingFilterContextDefinition = { filters: [] };
 };
 
 //
@@ -820,7 +1081,15 @@ const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContex
     state,
     action,
 ) => {
-    state.defaultFilterOverrides = action.payload;
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    activeTab.filterContext.defaultFilterOverrides = action.payload;
 };
 
 //

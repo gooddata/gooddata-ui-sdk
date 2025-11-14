@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
-@use "attributeFilterVariables";
+@use "attributeFilterVariables" as attributeFilterVariables;
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -37,7 +37,7 @@
         left: 9px;
         width: 7px;
         height: 26px;
-        background: url(attributeFilterVariables.$separator-icon) no-repeat;
+        background: url("#{attributeFilterVariables.$separator-icon}") no-repeat;
         opacity: 0;
     }
 

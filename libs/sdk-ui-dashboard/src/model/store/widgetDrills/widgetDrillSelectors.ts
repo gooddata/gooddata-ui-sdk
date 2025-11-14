@@ -5,7 +5,6 @@ import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    DateAttributeGranularity,
     DrillDefinition,
     DrillOrigin,
     ICatalogAttribute,
@@ -70,6 +69,7 @@ import {
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
+import { keyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/const.js";
 import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectWidgetDrills,
@@ -453,17 +453,6 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     return undefined;
                 }
 
-                const supportedGranularities = [
-                    "GDC.time.year",
-                    "GDC.time.week_us",
-                    "GDC.time.week",
-                    "GDC.time.quarter",
-                    "GDC.time.month",
-                    "GDC.time.date",
-                    "GDC.time.hour",
-                    "GDC.time.minute",
-                ] as DateAttributeGranularity[];
-
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
                 const availableDrillAttributesWithDates = availableDrillAttributes.filter(
@@ -484,7 +473,10 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                         ),
                 );
 
-                if (!dateAttribute || !supportedGranularities.includes(dateAttribute.granularity)) {
+                if (
+                    !dateAttribute ||
+                    !keyDriverAnalysisSupportedGranularities.includes(dateAttribute.granularity)
+                ) {
                     return undefined;
                 }
 

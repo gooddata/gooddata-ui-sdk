@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -11,15 +12,25 @@ import {
     selectAttributeFilterConfigsOverrides,
     selectEffectiveAttributeFiltersModeMap,
 } from "../attributeFilterConfigsSelectors.js";
-import { AttributeFilterConfigsState } from "../attributeFilterConfigsState.js";
 
 describe("attributeFilterConfigsSelectors", () => {
     const createInitialState = (
-        attributeFilterConfigs?: AttributeFilterConfigsState,
+        attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
         renderMode?: string,
     ): any => {
         return {
-            attributeFilterConfigs,
+            tabs: {
+                tabs: attributeFilterConfigs
+                    ? [
+                          {
+                              identifier: "tab-1",
+                              title: "Test Tab",
+                              attributeFilterConfigs: { attributeFilterConfigs },
+                          },
+                      ]
+                    : [],
+                activeTabId: "tab-1",
+            },
             renderMode: {
                 renderMode,
             },
@@ -33,7 +44,7 @@ describe("attributeFilterConfigsSelectors", () => {
         });
 
         it("should return an empty array when attributeFilterConfigs is undefined", () => {
-            const state = createInitialState({});
+            const state = createInitialState([]);
             expect(selectAttributeFilterConfigsOverrides(state)).toEqual([]);
         });
 
@@ -44,9 +55,7 @@ describe("attributeFilterConfigsSelectors", () => {
                 { localIdentifier: "id_3", mode: DashboardAttributeFilterConfigModeValues.ACTIVE },
             ];
 
-            const state = createInitialState({
-                attributeFilterConfigs: configs,
-            });
+            const state = createInitialState(configs);
             expect(selectAttributeFilterConfigsOverrides(state)).toEqual(configs);
         });
     });
@@ -60,9 +69,7 @@ describe("attributeFilterConfigsSelectors", () => {
                 { localIdentifier: "id_4" },
             ];
 
-            const state = createInitialState({
-                attributeFilterConfigs: configs,
-            });
+            const state = createInitialState(configs);
 
             const expectedMap = new Map([
                 ["id_1", DashboardAttributeFilterConfigModeValues.HIDDEN],
@@ -84,12 +91,7 @@ describe("attributeFilterConfigsSelectors", () => {
                 { localIdentifier: "id_4" },
             ];
 
-            const state = createInitialState(
-                {
-                    attributeFilterConfigs: configs,
-                },
-                "view",
-            );
+            const state = createInitialState(configs, "view");
 
             const expectedMap = new Map([
                 ["id_1", DashboardAttributeFilterConfigModeValues.HIDDEN],
@@ -109,12 +111,7 @@ describe("attributeFilterConfigsSelectors", () => {
                 { localIdentifier: "id_4" },
             ];
 
-            const state = createInitialState(
-                {
-                    attributeFilterConfigs: configs,
-                },
-                "edit",
-            );
+            const state = createInitialState(configs, "edit");
 
             const expectedMap = new Map([
                 ["id_1", DashboardAttributeFilterConfigModeValues.ACTIVE],

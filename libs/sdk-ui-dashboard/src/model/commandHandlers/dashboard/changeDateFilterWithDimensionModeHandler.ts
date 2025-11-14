@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -7,9 +8,9 @@ import { SetDashboardDateFilterWithDimensionConfigMode } from "../../commands/da
 import { dateFilterModeChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { dateFilterConfigsActions } from "../../store/dateFilterConfigs/index.js";
-import { selectFilterContextDateFilterByDataSet } from "../../store/filterContext/filterContextSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { selectFilterContextDateFilterByDataSet } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
@@ -27,7 +28,7 @@ export function* changeDateFilterWithDimensionModeHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with data set ${dataSet} not found.`);
     }
 
-    yield put(dateFilterConfigsActions.changeMode(cmd.payload));
+    yield put(tabsActions.changeDateFilterConfigsMode(cmd.payload));
 
     const changedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> = yield select(
         selectFilterContextDateFilterByDataSet(dataSet),

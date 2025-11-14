@@ -2,7 +2,7 @@
 
 import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-model";
 
-import { DateFilterValidationResult } from "../../../types.js";
+import { DateFilterValidationResult } from "../../../../types.js";
 
 /**
  * @beta

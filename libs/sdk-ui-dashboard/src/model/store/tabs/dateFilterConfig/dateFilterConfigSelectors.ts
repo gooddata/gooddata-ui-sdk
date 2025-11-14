@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -10,15 +11,32 @@ import {
 } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
-import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters.js";
-import { DateFilterValidationResult } from "../../../types.js";
-import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { convertDateFilterConfigToDateFilterOptions } from "../../../../_staging/dateFilterConfig/dateFilterConfigConverters.js";
+import { DateFilterValidationResult } from "../../../../types.js";
+import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
+import { DashboardSelector } from "../../types.js";
+import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../index.js";
 
-const selectSelf = createSelector(
-    (state: DashboardState) => state,
-    (state) => state.dateFilterConfig,
-);
+const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+
+/**
+ * Returns date filter config overrides keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectDateFilterConfigOverridesByTab: DashboardSelector<
+    Record<string, IDashboardDateFilterConfig | undefined>
+> = createSelector(selectTabsArray, (tabs) => {
+    if (!tabs.length) {
+        return {};
+    }
+
+    return tabs.reduce<Record<string, IDashboardDateFilterConfig | undefined>>((acc, tab) => {
+        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.dateFilterConfig?.dateFilterConfig ?? undefined;
+        return acc;
+    }, {});
+});
 
 /**
  * Returns date filter config that is specified on the loaded dashboard.
@@ -34,8 +52,15 @@ const selectSelf = createSelector(
  * @alpha
  */
 export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFilterConfig | undefined> =
-    createSelector(selectSelf, (dateFilterConfigState) => {
-        return dateFilterConfigState.dateFilterConfig ?? undefined;
+    createSelector(selectDateFilterConfigOverridesByTab, selectActiveTabId, (overridesByTab, activeTabId) => {
+        if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
+            return undefined;
+        }
+
+        const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
+        return (
+            overridesByTab[resolvedActiveTabId] ?? overridesByTab[Object.keys(overridesByTab)[0]] ?? undefined
+        );
     });
 
 /**
@@ -47,14 +72,16 @@ export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFi
  * @alpha
  */
 export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfig> = createSelector(
-    selectSelf,
-    (dateFilterConfigState) => {
+    selectTabs,
+    selectActiveTabId,
+    (tabs, activeTabId) => {
+        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
         invariant(
-            dateFilterConfigState.effectiveDateFilterConfig,
+            activeTab?.dateFilterConfig?.effectiveDateFilterConfig,
             "attempting to access uninitialized date filter config state",
         );
 
-        return dateFilterConfigState.effectiveDateFilterConfig!;
+        return activeTab!.dateFilterConfig!.effectiveDateFilterConfig!;
     },
 );
 
@@ -90,14 +117,19 @@ export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<
 /**
  * Indicates whether the effective date filter is using dashboard-level overrides.
  */
-const effectiveDateFilterConfigIsUsingOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
-    invariant(
-        dateFilterConfigState.isUsingDashboardOverrides !== undefined,
-        "attempting to access uninitialized date filter config state",
-    );
+const effectiveDateFilterConfigIsUsingOverrides = createSelector(
+    selectTabs,
+    selectActiveTabId,
+    (tabs, activeTabId) => {
+        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
+        invariant(
+            activeTab?.dateFilterConfig?.isUsingDashboardOverrides !== undefined,
+            "attempting to access uninitialized date filter config state",
+        );
 
-    return dateFilterConfigState.isUsingDashboardOverrides!;
-});
+        return activeTab!.dateFilterConfig!.isUsingDashboardOverrides!;
+    },
+);
 
 /**
  * Returns custom title to use for the date filter. Custom title comes from the dashboard-level date filter config overrides. If no overrides
@@ -146,6 +178,7 @@ export const selectEffectiveDateFilterMode: DashboardSelector<DashboardDateFilte
  * @alpha
  */
 export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFilterValidationResult[]> =
-    createSelector(selectSelf, (dateFilterConfigState) => {
-        return dateFilterConfigState.dateFilterConfigValidationWarnings ?? [];
+    createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
+        return activeTab?.dateFilterConfig?.dateFilterConfigValidationWarnings ?? [];
     });
