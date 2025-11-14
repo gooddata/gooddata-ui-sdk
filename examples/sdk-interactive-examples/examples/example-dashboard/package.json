@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-dashboard",
-    "version": "11.10.0-alpha.0",
+    "version": "11.10.0-alpha.1",
     "private": false,
     "description": "This example shows how to use the Dashboard component.",
     "license": "LicenseRef-LICENSE",

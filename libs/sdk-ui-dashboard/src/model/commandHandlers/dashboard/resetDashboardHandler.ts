@@ -9,6 +9,9 @@ import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
+    IDashboardTab,
+    IDateFilterConfig,
+    IFilterContextDefinition,
     areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
@@ -23,21 +26,16 @@ import {
 import { ResetDashboard } from "../../commands/index.js";
 import { dashboardWasReset } from "../../events/dashboard.js";
 import { DashboardWasReset } from "../../events/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import {
     selectDateFilterConfig,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectSettings,
 } from "../../store/config/configSelectors.js";
-import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import {
-    selectFilterContextAttributeFilters,
-    selectOriginalFilterContextDefinition,
-} from "../../store/filterContext/filterContextSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { DEFAULT_TAB_ID, TabState, selectTabs } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
@@ -61,6 +59,79 @@ export function* resetDashboardRuntime(ctx: DashboardContext, cmd: ResetDashboar
     return {
         batch: batchActions(data.batch, "@@GDC.DASH/RESET"),
         reset: dashboardWasReset(ctx, data.persistedDashboard, cmd.correlationId),
+    };
+}
+
+interface FilterRelatedParamsPerTab {
+    migratedAttributeFilters: IDashboardAttributeFilter[];
+    effectiveAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    effectiveOriginalFilterContext: IFilterContextDefinition | undefined;
+    dateFilterConfig: IDateFilterConfig;
+    dateFilterConfigSource: "dashboard" | "workspace";
+}
+
+function* getFilterRelatedParamsPerTab(
+    persistedTab: Pick<IDashboardTab, "identifier" | "attributeFilterConfigs"> & {
+        filterContext?: IDashboardTab["filterContext"];
+    },
+    currentTab: TabState | undefined,
+    isImmediateAttributeFilterMigrationEnabled: boolean,
+): SagaIterator<FilterRelatedParamsPerTab> {
+    const crossFilteringFiltersLocalIdentifiers: ReturnType<
+        typeof selectCrossFilteringFiltersLocalIdentifiers
+    > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
+    const persistedTabFilters = persistedTab.filterContext?.filters?.filter(isDashboardAttributeFilter) ?? [];
+    const currentTabFilters =
+        currentTab?.filterContext?.filterContextDefinition?.filters?.filter(isDashboardAttributeFilter) ?? [];
+
+    // Get ad-hoc attribute filter configs for this specific tab from currentTab state
+    const adHocAttributeFilterConfigs: IDashboardAttributeFilterConfig[] =
+        currentTab?.attributeFilterConfigs?.attributeFilterConfigs ?? [];
+
+    // Get original filter context definition for this specific tab from currentTab state
+    const originalFilterContext: IFilterContextDefinition | undefined =
+        currentTab?.filterContext?.originalFilterContextDefinition;
+
+    const tabMigratedAttributeFilters = isImmediateAttributeFilterMigrationEnabled
+        ? getMigratedAttributeFilters(
+              persistedTabFilters,
+              currentTabFilters,
+              crossFilteringFiltersLocalIdentifiers,
+          )
+        : [];
+
+    const tabEffectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+        ? mergeDashboardAttributeFilterConfigs(
+              persistedTab.attributeFilterConfigs ?? [],
+              adHocAttributeFilterConfigs,
+              tabMigratedAttributeFilters,
+          )
+        : (persistedTab.attributeFilterConfigs ?? []);
+
+    const hasUnsavedFilterChanges = tabMigratedAttributeFilters.length > 0;
+
+    const tabsEffectiveOriginalFilterContext =
+        isImmediateAttributeFilterMigrationEnabled && hasUnsavedFilterChanges
+            ? originalFilterContext
+            : undefined;
+
+    // Get dateFilterConfig for this tab
+    // Use the current tab's effectiveDateFilterConfig if available, otherwise get it from settings
+    const effectiveDateFilterConfig: IDateFilterConfig | undefined =
+        currentTab?.dateFilterConfig?.effectiveDateFilterConfig;
+
+    // Fallback: get from settings if not available in tab state
+    const fallbackDateFilterConfig: ReturnType<typeof selectDateFilterConfig> =
+        yield select(selectDateFilterConfig);
+
+    return {
+        migratedAttributeFilters: tabMigratedAttributeFilters,
+        effectiveAttributeFilterConfigs: tabEffectiveAttributeFilterConfigs,
+        effectiveOriginalFilterContext: tabsEffectiveOriginalFilterContext,
+        dateFilterConfig: effectiveDateFilterConfig || fallbackDateFilterConfig,
+        dateFilterConfigSource: currentTab?.dateFilterConfig?.isUsingDashboardOverrides
+            ? "dashboard"
+            : "workspace",
     };
 }
 
@@ -89,43 +160,43 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
         > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
 
-        const currentFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-            selectFilterContextAttributeFilters,
-        );
-        const crossFilteringFiltersLocalIdentifiers: ReturnType<
-            typeof selectCrossFilteringFiltersLocalIdentifiers
-        > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
-        const migratedAttributeFilters = isImmediateAttributeFilterMigrationEnabled
-            ? getMigratedAttributeFilters(
-                  persistedDashboard.filterContext?.filters.filter(isDashboardAttributeFilter),
-                  currentFilters,
-                  crossFilteringFiltersLocalIdentifiers,
-              )
-            : [];
+        const currentTabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
 
-        // Attribute filter configs created in view mode by ad-hoc attribute filter displayAsLabel migration.
-        // The config must be preserved when mode is changed from view to edit (when this saga is called) so the
-        // user can save the dashboard changes, including the config that would get lost otherwise.
-        const adHocAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
-            selectAttributeFilterConfigsOverrides,
-        );
-        const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
-            ? mergeDashboardAttributeFilterConfigs(
-                  persistedDashboard.attributeFilterConfigs,
-                  adHocAttributeFilterConfigs,
-                  migratedAttributeFilters,
-              )
-            : persistedDashboard.attributeFilterConfigs;
+        const tabsToProcess =
+            persistedDashboard.tabs && persistedDashboard.tabs.length > 0
+                ? persistedDashboard.tabs
+                : [
+                      {
+                          identifier: DEFAULT_TAB_ID,
+                          title: "",
+                          filterContext: persistedDashboard.filterContext,
+                          attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
+                      },
+                  ];
 
-        const originalFilterContext: ReturnType<typeof selectOriginalFilterContextDefinition> = yield select(
-            selectOriginalFilterContextDefinition,
-        );
+        // Compute migratedAttributeFilters, effectiveAttributeFilterConfigs, and dateFilterConfig for each tab
+        const effectiveOriginalFilterContext: Record<string, IFilterContextDefinition | undefined> = {};
+        const migratedAttributeFilters: Record<string, IDashboardAttributeFilter[]> = {};
+        const effectiveAttributeFilterConfigs: Record<string, IDashboardAttributeFilterConfig[]> = {};
+        const dateFilterConfig: Record<string, IDateFilterConfig> = {};
+        const tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace"> = {};
+        for (const tab of tabsToProcess) {
+            const tabId = tab.identifier;
+            const currentTab = currentTabs?.find((t) => t.identifier === tabId);
 
-        const hasUnsavedFilterChanges = migratedAttributeFilters.length > 0;
-        const effectiveOriginalFilterContext =
-            isImmediateAttributeFilterMigrationEnabled && hasUnsavedFilterChanges
-                ? originalFilterContext
-                : undefined;
+            const filterParams: FilterRelatedParamsPerTab = yield call(
+                getFilterRelatedParamsPerTab,
+                tab,
+                currentTab,
+                isImmediateAttributeFilterMigrationEnabled,
+            );
+
+            migratedAttributeFilters[tabId] = filterParams.migratedAttributeFilters;
+            effectiveAttributeFilterConfigs[tabId] = filterParams.effectiveAttributeFilterConfigs;
+            effectiveOriginalFilterContext[tabId] = filterParams.effectiveOriginalFilterContext;
+            dateFilterConfig[tabId] = filterParams.dateFilterConfig;
+            tabsDateFilterConfigSource[tabId] = filterParams.dateFilterConfigSource;
+        }
         // end of ad-hoc migration content
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
@@ -144,10 +215,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             uniqueInsightRefsFromWidgets,
         );
 
-        const effectiveDateFilterConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
-            selectEffectiveDateFilterConfig,
-        );
-
         const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
             selectAllCatalogDisplayFormsMap,
         );
@@ -163,7 +230,8 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             effectiveOriginalFilterContext,
             migratedAttributeFilters,
             effectiveAttributeFilterConfigs,
-            effectiveDateFilterConfig,
+            dateFilterConfig,
+            tabsDateFilterConfigSource,
             displayForms,
         );
     } else {

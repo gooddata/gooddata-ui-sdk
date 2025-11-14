@@ -20,18 +20,17 @@ import { AddAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
+import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreFilters,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
@@ -121,7 +120,7 @@ export function* addAttributeFilterHandler(
 
     yield put(
         batchActions([
-            filterContextActions.addAttributeFilter({
+            tabsActions.addAttributeFilter({
                 displayForm: displayFormMetadata.ref,
                 index,
                 initialIsNegativeSelection,
@@ -131,7 +130,7 @@ export function* addAttributeFilterHandler(
                 localIdentifier,
                 title,
             }),
-            filterContextActions.addAttributeFilterDisplayForm(displayFormMetadata),
+            tabsActions.addAttributeFilterDisplayForm(displayFormMetadata),
         ]),
     );
 
@@ -151,7 +150,7 @@ export function* addAttributeFilterHandler(
     const attributeFilterConfigActions = [];
     if (capabilities.supportsHiddenAndLockedFiltersOnUI && mode) {
         attributeFilterConfigActions.push(
-            attributeFilterConfigsActions.changeMode({
+            tabsActions.changeAttributeFilterConfigMode({
                 localIdentifier: addedFilter.attributeFilter.localIdentifier!,
                 mode,
             }),
@@ -159,7 +158,7 @@ export function* addAttributeFilterHandler(
     }
     if (displayAsLabel) {
         attributeFilterConfigActions.push(
-            attributeFilterConfigsActions.changeDisplayAsLabel({
+            tabsActions.changeDisplayAsLabel({
                 localIdentifier: addedFilter.attributeFilter.localIdentifier!,
                 displayAsLabel,
             }),

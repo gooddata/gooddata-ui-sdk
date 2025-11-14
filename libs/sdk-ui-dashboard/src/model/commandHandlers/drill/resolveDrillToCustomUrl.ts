@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import stringify from "json-stable-stringify";
 import { groupBy } from "lodash-es";
 import { SagaIterator } from "redux-saga";
@@ -36,15 +37,15 @@ import { DrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectCatalogDateAttributes,
 } from "../../store/catalog/catalogSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";

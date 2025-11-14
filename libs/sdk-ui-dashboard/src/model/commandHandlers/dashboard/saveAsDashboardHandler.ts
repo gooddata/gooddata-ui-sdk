@@ -25,17 +25,9 @@ import { SaveDashboardAs } from "../../commands/dashboard.js";
 import { changeRenderMode } from "../../commands/index.js";
 import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextDefinition,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
@@ -47,6 +39,14 @@ import {
 } from "../../store/meta/metaSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDefinition,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -214,7 +214,7 @@ function* saveAs(
     const batch = batchActions(
         [
             metaActions.setMeta({ dashboard: dashboardWithUser }),
-            filterContextActions.updateFilterContextIdentity({
+            tabsActions.updateFilterContextIdentity({
                 filterContextIdentity: dashboardFilterContextIdentity(dashboardWithUser),
             }),
             layoutActions.updateWidgetIdentities(identityMapping),

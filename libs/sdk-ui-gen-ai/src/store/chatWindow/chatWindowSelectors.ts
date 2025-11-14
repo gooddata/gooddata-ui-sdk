@@ -3,7 +3,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -29,6 +29,11 @@ export const colorPaletteSelector: (state: RootState) => IColorPalette | undefin
 export const settingsSelector: (state: RootState) => IUserWorkspaceSettings | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.settings,
+);
+
+export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | undefined = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.objectTypes,
 );
 
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(

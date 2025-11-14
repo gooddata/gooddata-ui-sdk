@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
@@ -22,10 +23,10 @@ import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/das
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import {
     extractDashboardFilterDisplayFormIdentifiers,

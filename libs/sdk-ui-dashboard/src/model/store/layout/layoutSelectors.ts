@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, partition } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -47,7 +48,7 @@ import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "../drill/drillSelectors.js";
-import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
+import { selectFilterContextFilters } from "../tabs/filterContext/filterContextSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

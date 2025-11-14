@@ -52,7 +52,9 @@ import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js"
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
-const MAX_POLL_ATTEMPTS = 50;
+// default to 5 minutes: this is roughly the same as the previous
+// 50 attempts * (5 seconds + the length of the request) each
+const DEFAULT_POLL_TIMEOUT_MS = 5 * 60 * 1000;
 
 function isTabularExportFormat(format: string = ""): format is keyof typeof TabularExportRequestFormatEnum {
     return format in TabularExportRequestFormatEnum;
@@ -293,10 +295,14 @@ export class TigerExecutionResult implements IExecutionResult {
                 exportTabularExportRequest: payload,
             });
 
-            return await this.handleExportResultPolling(client, {
-                workspaceId: this.workspace,
-                exportId: tabularExport?.data?.exportResult,
-            });
+            return await this.handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: tabularExport?.data?.exportResult,
+                },
+                options.timeout,
+            );
         });
     }
 
@@ -330,26 +336,35 @@ export class TigerExecutionResult implements IExecutionResult {
     private async handleExportResultPolling(
         client: ITigerClient,
         payload: ActionsExportGetTabularExportRequest,
+        timeout = DEFAULT_POLL_TIMEOUT_MS,
     ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            try {
-                const result = await client.export.getTabularExport(payload, {
-                    transformResponse: (x) => x,
-                    responseType: "blob",
-                });
-
-                if (result?.status === 200) {
-                    return {
-                        uri: result.config?.url || "",
-                        objectUrl: URL.createObjectURL(result.data),
-                        fileName: parseNameFromContentDisposition(result),
-                    };
+        const timeoutSignal = AbortSignal.timeout(timeout);
+        let lastPollingTimeoutId;
+        try {
+            while (!timeoutSignal.aborted) {
+                try {
+                    const result = await client.export.getTabularExport(payload, {
+                        responseType: "blob",
+                        signal: timeoutSignal,
+                    });
+                    if (result?.status === 200) {
+                        return {
+                            uri: result.config?.url || "",
+                            objectUrl: URL.createObjectURL(result.data),
+                            fileName: parseNameFromContentDisposition(result),
+                        };
+                    }
+                } catch (error: any) {
+                    await tryParseError(error);
                 }
-            } catch (error: any) {
-                await tryParseError(error);
-            }
 
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+                await new Promise((resolve) => {
+                    lastPollingTimeoutId = setTimeout(resolve, DEFAULT_POLL_DELAY);
+                });
+            }
+        } finally {
+            // Prevent memory leak by ensuring there is no dangling timeout in case anything goes wrong.
+            clearTimeout(lastPollingTimeoutId);
         }
 
         throw new TimeoutError(

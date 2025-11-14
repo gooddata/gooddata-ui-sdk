@@ -18,6 +18,7 @@ import {
     GET_COMPONENT,
     LOAD_COMPONENT,
 } from "../common/index.js";
+import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
 import { CustomElementContext } from "../context.js";
 
 type IGenAIAssistant = typeof OriginalGenAIAssistant;
@@ -25,7 +26,7 @@ type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 
 export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
     static get observedAttributes() {
-        return ["workspace", "locale"];
+        return ["workspace", "locale", "objectTypes"];
     }
 
     async [LOAD_COMPONENT]() {
@@ -40,6 +41,21 @@ export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = resolveLocale(this.getAttribute("locale"));
+        }
+
+        if (this.hasAttribute("objectTypes")) {
+            const stringifiedObjectTypes = this.getAttribute("objectTypes");
+            if (stringifiedObjectTypes) {
+                try {
+                    extraProps.objectTypes = stringToObjectTypes(stringifiedObjectTypes);
+                } catch (e) {
+                    console.error(
+                        "Invalid object types not used in <gd-ai-assistant> component",
+                        e,
+                        stringifiedObjectTypes,
+                    );
+                }
+            }
         }
 
         // Emit custom DOM event when link is clicked

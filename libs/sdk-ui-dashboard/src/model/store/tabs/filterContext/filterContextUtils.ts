@@ -1,9 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { partition } from "lodash-es";
+
 import {
     FilterContextItem,
+    IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    IDashboardObjectIdentity,
     IFilterContextDefinition,
     areObjRefsEqual,
     isAllTimeDashboardDateFilter,
@@ -13,7 +17,8 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import type { IWorkingFilterContextDefinition } from "./filterContextState.js";
+import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
+import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 
 /**
  * Deeply merges partial working filter context into filter context definition.
@@ -108,6 +113,74 @@ export function applyFilterContext(
     return {
         ...filterContext,
         filters: [workingCommonDateFilter, ...filters],
+    };
+}
+
+/**
+ * Initializes filter context definition by ensuring filters have local identifiers
+ * and are in proper order (common date filter first).
+ *
+ * @param filterContextDefinition - The filter context definition to initialize
+ * @returns Initialized filter context definition with local identifiers and proper ordering
+ * @internal
+ */
+export function initializeFilterContextDefinition(
+    filterContextDefinition: IFilterContextDefinition,
+): IFilterContextDefinition {
+    // Make sure attribute filters always have localId
+    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem, i) =>
+        isDashboardAttributeFilter(filter)
+            ? {
+                  attributeFilter: {
+                      ...filter.attributeFilter,
+                      localIdentifier:
+                          filter.attributeFilter.localIdentifier ??
+                          generateFilterLocalIdentifier(filter.attributeFilter.displayForm, i),
+                  },
+              }
+            : filter,
+    );
+
+    // Make sure that common date filter is always first if present
+    // (when DateFilter is set to all time it's missing in filterContextDefinition and originalFilterContextDefinition)
+    // We have to keep order of rest of array (attributeFilters and date filters with dimension)
+    // it represents order of filters in filter bar
+    const [commonDateFilter, otherFilters] = partition(filtersWithLocalId, isDashboardCommonDateFilter);
+    const filters = [...commonDateFilter, ...otherFilters];
+
+    return {
+        ...filterContextDefinition,
+        filters,
+    };
+}
+
+/**
+ * Creates a complete initialized FilterContextState from raw data.
+ * Applies all initialization logic including local identifiers and filter ordering.
+ *
+ * @param filterContextDefinition - The filter context definition
+ * @param originalFilterContextDefinition - Optional original definition for reset functionality
+ * @param attributeFilterDisplayForms - Display forms for attribute filters
+ * @param filterContextIdentity - Optional identity for persisted filter contexts
+ * @returns Fully initialized FilterContextState
+ * @internal
+ */
+export function initializeFilterContext(
+    filterContextDefinition: IFilterContextDefinition,
+    originalFilterContextDefinition?: IFilterContextDefinition,
+    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[],
+    filterContextIdentity?: IDashboardObjectIdentity,
+): FilterContextState {
+    const initialized = initializeFilterContextDefinition(filterContextDefinition);
+
+    return {
+        filtersWithInvalidSelection: [],
+        filterContextDefinition: initialized,
+        workingFilterContextDefinition: { filters: [] },
+        originalFilterContextDefinition,
+        filterContextIdentity,
+        attributeFilterDisplayForms: attributeFilterDisplayForms ?? [],
+        defaultFilterOverrides: [],
     };
 }
 

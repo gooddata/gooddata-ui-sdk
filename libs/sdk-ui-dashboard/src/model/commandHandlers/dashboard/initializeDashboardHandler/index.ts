@@ -8,7 +8,9 @@ import { SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
 import { IDashboardWithReferences, IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     IDashboard,
+    IDashboardAttributeFilterConfig,
     IDashboardLayout,
+    IDateFilterConfig,
     IDateHierarchyTemplate,
     IInsight,
     IWidget,
@@ -39,26 +41,27 @@ import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { automationsActions } from "../../../store/automations/index.js";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities/index.js";
 import { catalogActions } from "../../../store/catalog/index.js";
 import { configActions } from "../../../store/config/index.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { entitlementsActions } from "../../../store/entitlements/index.js";
 import { executionResultsActions } from "../../../store/executionResults/index.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
 import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { listedDashboardsActions } from "../../../store/listedDashboards/index.js";
 import { loadingActions } from "../../../store/loading/index.js";
 import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { permissionsActions } from "../../../store/permissions/index.js";
 import { renderModeActions } from "../../../store/renderMode/index.js";
+import { DEFAULT_TAB_ID, tabsActions } from "../../../store/tabs/index.js";
 import { uiActions } from "../../../store/ui/index.js";
 import { userActions } from "../../../store/user/index.js";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
+import {
+    DashboardContext,
+    PrivateDashboardContext,
+    ResolvedDashboardConfig,
+} from "../../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 import {
@@ -180,6 +183,64 @@ type DashboardLoadResult = {
     event: DashboardInitialized;
 };
 
+function resolveActiveTabId(
+    tabs: IDashboard["tabs"] | undefined,
+    initialTabId: string | undefined,
+    defaultActiveTabId: string | undefined,
+): string | undefined {
+    if (!tabs || tabs.length === 0) {
+        return defaultActiveTabId;
+    }
+
+    if (initialTabId && tabs.some((tab) => tab.identifier === initialTabId)) {
+        return initialTabId;
+    }
+
+    if (defaultActiveTabId && tabs.some((tab) => tab.identifier === defaultActiveTabId)) {
+        return defaultActiveTabId;
+    }
+
+    return tabs[0]?.identifier ?? DEFAULT_TAB_ID;
+}
+
+function* getTabsFilterConfigs(
+    dashboard: IDashboard,
+    config: ResolvedDashboardConfig,
+    ctx: DashboardContext,
+    cmd: InitializeDashboard,
+): SagaIterator<{
+    tabsAttributeFilterConfigs: Record<string, IDashboardAttributeFilterConfig[]>;
+    tabsDateFilterConfig: Record<string, IDateFilterConfig>;
+    tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace">;
+}> {
+    const tabsAttributeFilterConfigs: Record<string, IDashboardAttributeFilterConfig[]> = {};
+    const tabsDateFilterConfig: Record<string, IDateFilterConfig> = {};
+    const tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace"> = {};
+    const tabs = dashboard.tabs ?? [
+        {
+            identifier: DEFAULT_TAB_ID,
+            title: "",
+            filterContext: dashboard.filterContext,
+            dateFilterConfig: dashboard.dateFilterConfig,
+            dateFilterConfigs: dashboard.dateFilterConfigs,
+            attributeFilterConfigs: dashboard.attributeFilterConfigs,
+        },
+    ];
+    for (const tab of tabs) {
+        const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
+            mergeDateFilterConfigWithOverrides,
+            ctx,
+            cmd,
+            config.dateFilterConfig!,
+            tab.dateFilterConfig,
+        );
+        tabsDateFilterConfig[tab.identifier] = effectiveDateFilterConfig.config;
+        tabsDateFilterConfigSource[tab.identifier] = effectiveDateFilterConfig.source;
+        tabsAttributeFilterConfigs[tab.identifier] = tab.attributeFilterConfigs ?? [];
+    }
+    return { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource };
+}
+
 function* loadExistingDashboard(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
@@ -227,14 +288,23 @@ function* loadExistingDashboard(
         references: { insights },
     } = dashboardWithReferences;
 
-    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, config.settings);
+    const dashboardWithFilterView = applyDefaultFilterView(loadedDashboard, filterViews, config.settings);
+    const resolvedActiveTabId = resolveActiveTabId(
+        dashboardWithFilterView.tabs,
+        cmd.payload.initialTabId,
+        dashboardWithFilterView.activeTabId,
+    );
+    const dashboard = {
+        ...dashboardWithFilterView,
+        activeTabId: resolvedActiveTabId,
+    };
 
-    const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
-        mergeDateFilterConfigWithOverrides,
+    const { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource } = yield call(
+        getTabsFilterConfigs,
+        dashboard,
+        config,
         ctx,
         cmd,
-        config.dateFilterConfig!,
-        dashboard.dateFilterConfig,
     );
 
     const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
@@ -245,12 +315,12 @@ function* loadExistingDashboard(
         config.settings,
         config.settings.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false,
         undefined,
-        [],
-        dashboard.attributeFilterConfigs,
-        effectiveDateFilterConfig.config,
+        undefined,
+        tabsAttributeFilterConfigs,
+        tabsDateFilterConfig,
+        tabsDateFilterConfigSource,
         createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
-        cmd.payload.initialTabId,
     );
 
     const catalogPayload = {
@@ -266,17 +336,8 @@ function* loadExistingDashboard(
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
             ...initActions,
-            dateFilterConfigActions.setDateFilterConfig({
-                dateFilterConfig: dashboard.dateFilterConfig,
-                effectiveDateFilterConfig: effectiveDateFilterConfig.config,
-                isUsingDashboardOverrides: effectiveDateFilterConfig.source === "dashboard",
-            }),
-            attributeFilterConfigsActions.setAttributeFilterConfigs({
-                attributeFilterConfigs: dashboard.attributeFilterConfigs,
-            }),
-            dateFilterConfigsActions.setDateFilterConfigs({
-                dateFilterConfigs: dashboard.dateFilterConfigs,
-            }),
+            // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
+            // are now initialized as part of the tabs state in initActions via setTabs action
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
@@ -362,7 +423,7 @@ function* initializeNewDashboard(
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...initActions,
-            dateFilterConfigActions.setDateFilterConfig({
+            tabsActions.setDateFilterConfig({
                 dateFilterConfig: undefined,
                 effectiveDateFilterConfig: config.dateFilterConfig,
                 isUsingDashboardOverrides: false,
@@ -411,7 +472,7 @@ export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: I
     const attributesWithReferences: PromiseFnReturnType<typeof preloadAttributeFiltersDataFromBackend> =
         yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard);
 
-    yield put(filterContextActions.setPreloadedAttributesWithReferences(attributesWithReferences));
+    yield put(tabsActions.setPreloadedAttributesWithReferences(attributesWithReferences));
 }
 
 export function* requestDashboardsList(ctx: DashboardContext) {

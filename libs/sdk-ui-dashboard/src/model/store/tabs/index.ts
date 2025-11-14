@@ -2,27 +2,67 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+import { attributeFilterConfigsReducers } from "./attributeFilterConfigs/attributeFilterConfigsReducers.js";
+import { dateFilterConfigReducers } from "./dateFilterConfig/dateFilterConfigReducers.js";
+import { dateFilterConfigsReducers } from "./dateFilterConfigs/dateFilterConfigsReducers.js";
+import { filterContextReducers } from "./filterContext/filterContextReducers.js";
 import { tabsReducers } from "./tabsReducers.js";
 import { tabsInitialState } from "./tabsState.js";
+
+const allReducers = {
+    ...tabsReducers,
+    ...attributeFilterConfigsReducers,
+    ...dateFilterConfigsReducers,
+    ...dateFilterConfigReducers,
+    ...filterContextReducers,
+} as const;
 
 const tabsSlice = createSlice({
     name: "tabs",
     initialState: tabsInitialState,
-    reducers: tabsReducers,
+    reducers: allReducers,
 });
 
 export const tabsSliceReducer = tabsSlice.reducer;
 
 /**
- * @alpha
+ * @internal
  */
 export const tabsActions = tabsSlice.actions;
 
+export type {
+    IAddAttributeFilterPayload,
+    IRemoveAttributeFilterPayload,
+    ISetAttributeFilterDependentDateFiltersPayload,
+    ISetAttributeFilterParentsPayload,
+    IMoveAttributeFilterPayload,
+    IRemoveDateFilterPayload,
+    IMoveDateFilterPayload,
+    IUpdateAttributeFilterSelectionPayload,
+    IClearAttributeFiltersSelectionPayload,
+    IUpsertDateFilterPayload,
+    IUpsertDateFilterAllTimePayload,
+    IUpsertDateFilterNonAllTimePayload,
+    IChangeAttributeDisplayFormPayload,
+    IChangeAttributeTitlePayload,
+    IChangeAttributeSelectionModePayload,
+    IChangeAttributeLimitingItemsPayload,
+    IApplyWorkingSelectionPayload,
+} from "./filterContext/filterContextReducers.js";
+export type { TabsReducer } from "./tabsReducers.js";
 export {
     selectTabs,
     selectActiveTabId,
     selectActiveTab,
     selectTabById,
     selectHasTabs,
+    selectTabsState,
 } from "./tabsSelectors.js";
-export type { TabsState } from "./tabsState.js";
+export type { TabsState, TabState, FilterContextState, DateFilterConfigState } from "./tabsState.js";
+
+export type {
+    WorkingDashboardAttributeFilter,
+    WorkingFilterContextItem,
+    IWorkingFilterContextDefinition,
+} from "./filterContext/filterContextState.js";
+export { DEFAULT_TAB_ID } from "./tabsState.js";

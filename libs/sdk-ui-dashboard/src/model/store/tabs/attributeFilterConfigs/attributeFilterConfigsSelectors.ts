@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
@@ -8,13 +9,30 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 
-import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
+import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../../tabs/index.js";
+import { DashboardSelector } from "../../types.js";
 
-const selectSelf = createSelector(
-    (state: DashboardState) => state,
-    (state) => state.attributeFilterConfigs,
-);
+const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+
+/**
+ * Returns attribute filter config overrides keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectAttributeFilterConfigsOverridesByTab: DashboardSelector<
+    Record<string, IDashboardAttributeFilterConfig[]>
+> = createSelector(selectTabsArray, (tabs) => {
+    if (!tabs.length) {
+        return {};
+    }
+
+    return tabs.reduce<Record<string, IDashboardAttributeFilterConfig[]>>((acc, tab) => {
+        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.attributeFilterConfigs?.attributeFilterConfigs ?? [];
+        return acc;
+    }, {});
+});
 
 /**
  * Returns attribute filter configs that is specified on the loaded dashboard.
@@ -26,9 +44,20 @@ const selectSelf = createSelector(
  * @alpha
  */
 export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]> =
-    createSelector(selectSelf, (attributeFilterConfigsState) => {
-        return attributeFilterConfigsState?.attributeFilterConfigs ?? [];
-    });
+    createSelector(
+        selectAttributeFilterConfigsOverridesByTab,
+        selectActiveTabId,
+        (overridesByTab, activeTabId) => {
+            if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
+                return [];
+            }
+
+            const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
+            return (
+                overridesByTab[resolvedActiveTabId] ?? overridesByTab[Object.keys(overridesByTab)[0]] ?? []
+            );
+        },
+    );
 
 /**
  * Get a map of attribute filter modes directly from dashboard attribute filter configurations.

@@ -1,8 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands/index.js";
-import { selectFilterContextDateFilter } from "../../../../store/filterContext/filterContextSelectors.js";
+import { selectFilterContextDateFilter } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";

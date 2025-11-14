@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -7,14 +8,13 @@ import { SetDateFilterConfigTitle } from "../../commands/dashboard.js";
 import { dateFilterTitleChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import { dateFilterConfigActions } from "../../store/dateFilterConfig/index.js";
-import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { dateFilterConfigsActions } from "../../store/dateFilterConfigs/index.js";
+import { selectDateFilterConfigOverrides } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterByDataSet,
-} from "../../store/filterContext/filterContextSelectors.js";
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
@@ -32,7 +32,7 @@ export function* changeDateFilterTitleHandler(
             throw invalidArgumentsProvided(ctx, cmd, `Filter with data set ${dataSet} not found.`);
         }
 
-        yield put(dateFilterConfigsActions.changeTitle(cmd.payload));
+        yield put(tabsActions.changeDateFilterConfigsTitle(cmd.payload));
 
         const changedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
             yield select(selectFilterContextDateFilterByDataSet(dataSet));
@@ -54,7 +54,7 @@ export function* changeDateFilterTitleHandler(
 
         yield dispatchDashboardEvent(dateFilterTitleChanged(ctx, changedFilter, changedFilterConfig.config));
     } else {
-        yield put(dateFilterConfigActions.setDateFilterConfigTitle(cmd.payload.title));
+        yield put(tabsActions.setDateFilterConfigTitle(cmd.payload.title));
 
         const changedFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
             selectFilterContextDateFilter,

@@ -29,13 +29,13 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { query } from "../../../store/_infra/queryCall.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextDraggableFilters,
-} from "../../../store/filterContext/filterContextSelectors.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import {
     FilterOpEnableDateFilter,

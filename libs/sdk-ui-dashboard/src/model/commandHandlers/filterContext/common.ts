@@ -10,16 +10,16 @@ import { IDashboardCommand } from "../../commands/base.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
 import { filterContextChanged } from "../../events/filters.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
-import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectIsCrossFiltering,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEffectiveDateFilterOptions } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectFilterContextDefinition } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* dispatchFilterContextChanged(
@@ -75,9 +75,7 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
-    yield put(
-        filterContextActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }),
-    );
+    yield put(tabsActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }));
     const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
 
     if (isCrossFiltering) {
@@ -87,5 +85,5 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
 }
 
 export function* resetWorkingSelectionHandler() {
-    yield put(filterContextActions.resetWorkingSelection());
+    yield put(tabsActions.resetWorkingSelection());
 }

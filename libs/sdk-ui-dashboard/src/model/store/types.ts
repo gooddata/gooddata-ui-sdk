@@ -5,20 +5,16 @@ import { AnyAction, Dispatch, EntityId, EntityState } from "@reduxjs/toolkit";
 import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
 
 import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
-import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { AutomationsState } from "./automations/automationsState.js";
 import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
 import { CatalogState } from "./catalog/catalogState.js";
 import { ConfigState } from "./config/configState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
-import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
-import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import { DrillState } from "./drill/drillState.js";
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 import { EntitlementsState } from "./entitlements/entitlementsState.js";
 import { ExecutedState } from "./executed/executedState.js";
 import { IExecutionResultEnvelope } from "./executionResults/types.js";
-import { FilterContextState } from "./filterContext/filterContextState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
 import { LayoutState } from "./layout/layoutState.js";
 import { LoadingState } from "./loading/loadingState.js";
@@ -67,15 +63,8 @@ export interface DashboardState {
     /** @beta */
     entitlements: EntitlementsState;
     permissions: PermissionsState;
-    filterContext: FilterContextState;
     /** @alpha */
     layout: LayoutState;
-    /** @beta */
-    dateFilterConfig: DateFilterConfigState;
-    /** @alpha */
-    attributeFilterConfigs: AttributeFilterConfigsState;
-    /** @alpha */
-    dateFilterConfigs: DateFilterConfigsState;
     /** @alpha */
     tabs: TabsState;
     catalog: CatalogState;

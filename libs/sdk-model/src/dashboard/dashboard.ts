@@ -158,7 +158,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     /**
      * Tab-specific filter context.
      */
-    filterContext: IFilterContext | ITempFilterContext;
+    filterContext?: IFilterContext | ITempFilterContext;
 
     /**
      * Dashboard tab common date filter config

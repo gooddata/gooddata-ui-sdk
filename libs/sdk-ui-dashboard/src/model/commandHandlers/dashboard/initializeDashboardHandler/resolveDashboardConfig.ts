@@ -17,7 +17,7 @@ import {
 } from "../../../../_staging/dateFilterConfig/validation.js";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
 import { InitializeDashboard } from "../../../commands/index.js";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import {
     DashboardConfig,
     DashboardContext,
@@ -157,7 +157,7 @@ export function* resolveDashboardConfig(
         payload: { config = {} },
     } = cmd;
 
-    yield put(dateFilterConfigActions.clearDateFilterConfigValidationWarning());
+    yield put(tabsActions.clearDateFilterConfigValidationWarning());
 
     if (isResolvedConfig(config)) {
         /*

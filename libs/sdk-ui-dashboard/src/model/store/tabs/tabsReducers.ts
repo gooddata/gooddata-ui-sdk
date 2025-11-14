@@ -2,18 +2,21 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 
-import { IDashboardTab } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 
-import { TabsState } from "./tabsState.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
+import { TabState, TabsState } from "./tabsState.js";
 
-type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
+/**
+ * @alpha
+ */
+export type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
 
 type SetTabsPayload = {
     /**
      * Array of tabs with their configurations.
      */
-    tabs?: IDashboardTab<ExtendedDashboardWidget>[];
+    tabs?: TabState[];
 
     /**
      * Identifier of the currently active tab.
@@ -22,12 +25,52 @@ type SetTabsPayload = {
 };
 
 /**
+ * Applies initialization logic to a tab's filterContext if present.
+ * Ensures filters have local identifiers and proper ordering.
+ */
+function initializeTabFilterContext(tab: TabState): TabState {
+    if (!tab.filterContext?.filterContextDefinition) {
+        return tab;
+    }
+
+    return {
+        ...tab,
+        filterContext: initializeFilterContext(
+            tab.filterContext.filterContextDefinition,
+            tab.filterContext.originalFilterContextDefinition,
+            tab.filterContext.attributeFilterDisplayForms,
+            tab.filterContext.filterContextIdentity,
+        ),
+    };
+}
+
+/**
  * Sets the tabs and active tab ID in the state.
+ * Applies initialization logic to each tab's filter context to ensure proper state structure.
+ *
+ * @remarks
+ * This reducer ensures that all filter contexts are properly initialized with:
+ * - Local identifiers for all attribute filters
+ * - Proper filter ordering (common date filter first)
+ * - Initialized working filter context
+ * - Default values for all required fields
+ *
+ * Note: We return a new state object instead of mutating to ensure Immer properly handles the initialization.
  */
 const setTabs: TabsReducer<PayloadAction<SetTabsPayload>> = (state, action) => {
     const { tabs, activeTabId } = action.payload;
-    state.tabs = tabs;
-    state.activeTabId = activeTabId;
+
+    // Process each tab to apply initialization logic from respective config reducers
+    const processedTabs = tabs?.map((tab) => {
+        // Apply filterContext initialization logic
+        return initializeTabFilterContext(tab);
+    });
+
+    return {
+        ...state,
+        tabs: processedTabs,
+        activeTabId,
+    };
 };
 
 /**
@@ -39,13 +82,15 @@ const setActiveTabId: TabsReducer<PayloadAction<string | undefined>> = (state, a
 
 /**
  * Updates a specific tab by identifier.
+ * Applies initialization logic to ensure the tab's state is properly structured.
  */
-const updateTab: TabsReducer<PayloadAction<IDashboardTab<ExtendedDashboardWidget>>> = (state, action) => {
+const updateTab: TabsReducer<PayloadAction<TabState>> = (state, action) => {
     const updatedTab = action.payload;
     if (state.tabs) {
         const index = state.tabs.findIndex((tab) => tab.identifier === updatedTab.identifier);
         if (index !== -1) {
-            state.tabs[index] = updatedTab;
+            // Apply initialization logic to the updated tab
+            state.tabs[index] = initializeTabFilterContext(updatedTab);
         }
     }
 };
@@ -66,6 +111,21 @@ const clearTabs: TabsReducer<PayloadAction> = (state) => {
     state.tabs = undefined;
     state.activeTabId = undefined;
 };
+
+/**
+ * Payload of the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
+    /**
+     * Local identifier of the filter to change display as label (= display form).
+     */
+    localIdentifier: string;
+    /**
+     *  Display as label of the attribute filter. Used to present filter in UI
+     */
+    displayAsLabel: ObjRef | undefined;
+}
 
 export const tabsReducers = {
     setTabs,

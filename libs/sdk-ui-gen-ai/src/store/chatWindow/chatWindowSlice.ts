@@ -3,7 +3,7 @@
 import { PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 type ChatWindowSliceState = {
@@ -27,6 +27,10 @@ type ChatWindowSliceState = {
      * Key driver analysis to use for the chat UI.
      */
     keyDriverAnalysis?: IKdaDefinition;
+    /**
+     * Object types to use for the chat UI.
+     */
+    objectTypes?: GenAIObjectType[];
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -36,6 +40,7 @@ const initialState: ChatWindowSliceState = {
     isFullscreen: false,
     colorPalette: undefined,
     settings: undefined,
+    objectTypes: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -69,6 +74,12 @@ const chatWindowSlice = createSlice({
         ) => {
             state.keyDriverAnalysis = keyDriverAnalysis;
         },
+        setObjectTypesAction: (
+            state,
+            { payload: { objectTypes } }: PayloadAction<{ objectTypes?: GenAIObjectType[] }>,
+        ) => {
+            state.objectTypes = objectTypes;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -81,4 +92,5 @@ export const {
     setSettingsAction,
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
+    setObjectTypesAction,
 } = chatWindowSlice.actions;

@@ -13,9 +13,9 @@ import {
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
+import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 

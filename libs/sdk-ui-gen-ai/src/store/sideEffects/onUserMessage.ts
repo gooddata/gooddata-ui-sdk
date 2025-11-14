@@ -9,6 +9,7 @@ import {
     IGenAIChatEvaluation,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
+import { GenAIObjectType } from "@gooddata/sdk-model";
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";
@@ -19,7 +20,7 @@ import {
     isUserMessage,
     makeAssistantMessage,
 } from "../../model.js";
-import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
+import { objectTypesSelector, settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     evaluateMessageAction,
     evaluateMessageCompleteAction,
@@ -83,10 +84,13 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
 function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: IChatThreadQuery) {
     let reader: ReadableStreamReader<IGenAIChatEvaluation> | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
+    const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
 
     try {
         const results: ReadableStream<IGenAIChatEvaluation> = yield call([
-            preparedChatThread.withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5),
+            preparedChatThread
+                .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
+                .withObjectTypes(objectTypes),
             preparedChatThread.stream,
         ]);
 

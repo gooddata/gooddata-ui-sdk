@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
@@ -8,13 +9,30 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
+import { DashboardSelector } from "../../types.js";
+import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../index.js";
 
-const selectSelf = createSelector(
-    (state: DashboardState) => state,
-    (state) => state.dateFilterConfigs,
-);
+const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+
+/**
+ * Returns date filter configs keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectDateFilterConfigsOverridesByTab: DashboardSelector<
+    Record<string, IDashboardDateFilterConfigItem[]>
+> = createSelector(selectTabsArray, (tabs) => {
+    if (!tabs.length) {
+        return {};
+    }
+
+    return tabs.reduce<Record<string, IDashboardDateFilterConfigItem[]>>((acc, tab) => {
+        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.dateFilterConfigs?.dateFilterConfigs ?? [];
+        return acc;
+    }, {});
+});
 
 /**
  * Returns date filter configs that is specified on the loaded dashboard.
@@ -26,9 +44,20 @@ const selectSelf = createSelector(
  * @alpha
  */
 export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateFilterConfigItem[]> =
-    createSelector(selectSelf, (dateFilterConfigsState) => {
-        return dateFilterConfigsState?.dateFilterConfigs ?? [];
-    });
+    createSelector(
+        selectDateFilterConfigsOverridesByTab,
+        selectActiveTabId,
+        (overridesByTab, activeTabId) => {
+            if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
+                return [];
+            }
+
+            const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
+            return (
+                overridesByTab[resolvedActiveTabId] ?? overridesByTab[Object.keys(overridesByTab)[0]] ?? []
+            );
+        },
+    );
 
 /**
  * Get a map of date filter modes directly from dashboard date filter configurations.

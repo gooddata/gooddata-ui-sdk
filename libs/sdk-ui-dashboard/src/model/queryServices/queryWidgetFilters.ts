@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { compact, isEmpty } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, select } from "redux-saga/effects";
@@ -38,7 +39,6 @@ import {
 import { invalidQueryArguments } from "../events/general.js";
 import { QueryWidgetFilters } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
@@ -46,6 +46,7 @@ import {
     selectAllFiltersForWidgetByRef,
     selectFilterableWidgetByRef,
 } from "../store/layout/layoutSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { FilterableDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";

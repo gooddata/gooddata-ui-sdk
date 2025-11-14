@@ -150,12 +150,7 @@ export {
     selectCanEditLockedDashboardPermission,
     selectDashboardPermissions,
 } from "./dashboardPermissions/dashboardPermissionsSelectors.js";
-export type {
-    FilterContextState,
-    IWorkingFilterContextDefinition,
-    WorkingDashboardAttributeFilter,
-    WorkingFilterContextItem,
-} from "./filterContext/filterContextState.js";
+
 export {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
@@ -187,8 +182,8 @@ export {
     selectPreloadedAttributesWithReferences,
     selectDefaultFilterOverrides,
     selectNamesOfFiltersWithInvalidSelection,
-} from "./filterContext/filterContextSelectors.js";
-export { getFilterIdentifier } from "./filterContext/filterContextUtils.js";
+} from "./tabs/filterContext/filterContextSelectors.js";
+export { getFilterIdentifier } from "./tabs/filterContext/filterContextUtils.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
 export {
     selectImplicitDrillsDownByWidgetRef,
@@ -263,7 +258,8 @@ export {
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
 } from "./layout/layoutSelectors.js";
-export type { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
+export type { DateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterConfigState.js";
+
 export {
     selectDateFilterConfigOverrides,
     selectEffectiveDateFilterConfig,
@@ -272,16 +268,40 @@ export {
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterAvailableGranularities,
     selectDateFilterConfigValidationWarnings,
-} from "./dateFilterConfig/dateFilterConfigSelectors.js";
-export type { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
+} from "./tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 export {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
-} from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-export type { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
-export type { TabsState } from "./tabs/tabsState.js";
+} from "./tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+export type { TabsState, TabState } from "./tabs/tabsState.js";
+export type { DateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
+export type { AttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+export type { TabsReducer } from "./tabs/tabsReducers.js";
+export type {
+    IAddAttributeFilterPayload,
+    IRemoveAttributeFilterPayload,
+    ISetAttributeFilterDependentDateFiltersPayload,
+    ISetAttributeFilterParentsPayload,
+    IMoveAttributeFilterPayload,
+    IRemoveDateFilterPayload,
+    IMoveDateFilterPayload,
+    IUpdateAttributeFilterSelectionPayload,
+    IClearAttributeFiltersSelectionPayload,
+    IUpsertDateFilterPayload,
+    IUpsertDateFilterAllTimePayload,
+    IUpsertDateFilterNonAllTimePayload,
+    IChangeAttributeDisplayFormPayload,
+    IChangeAttributeTitlePayload,
+    IChangeAttributeSelectionModePayload,
+    IChangeAttributeLimitingItemsPayload,
+    IApplyWorkingSelectionPayload,
+    FilterContextState,
+    IWorkingFilterContextDefinition,
+    WorkingDashboardAttributeFilter,
+    WorkingFilterContextItem,
+} from "./tabs/index.js";
 export {
     selectTabs,
     selectActiveTabId,
@@ -294,7 +314,7 @@ export {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsModeMap,
     selectEffectiveDateFiltersModeMap,
-} from "./dateFilterConfigs/dateFilterConfigsSelectors.js";
+} from "./tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 export {
     selectInsights,
     selectInsightRefs,
@@ -502,6 +522,12 @@ export {
 
 export type { UsersState } from "./users/usersState.js";
 export { selectUsers, selectErrorUsers, selectUsersLoadingStatus } from "./users/usersSelectors.js";
+
+export {
+    keyDriverYearGranularity,
+    keyDriverAnalysisSupportedGranularities,
+    keyDriverAnalysisSupportedStringGranularities,
+} from "./keyDriverAnalysis/const.js";
 
 export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";

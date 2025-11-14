@@ -52,6 +52,16 @@ export interface IExportConfig {
      * when visualizationObject is given. (PDF only)
      */
     visualizationObjectCustomFilters?: Array<IFilter>;
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
 }
 
 /**

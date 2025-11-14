@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -11,12 +12,12 @@ import {
     resetDashboard,
 } from "../../../commands/index.js";
 import { DashboardWasReset } from "../../../events/index.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { selectDashboardTitle } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { selectLayout } from "../../../store/layout/layoutSelectors.js";
-import { selectDashboardTitle } from "../../../store/meta/metaSelectors.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {

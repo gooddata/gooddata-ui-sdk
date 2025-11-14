@@ -1,20 +1,31 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { DashboardDateFilterConfigModeValues, IDashboardAttributeFilterConfig } from "@gooddata/sdk-model";
 
+import { TabsState, tabsActions } from "../../index.js";
 import { attributeFilterConfigsReducers } from "../attributeFilterConfigsReducers.js";
-import { AttributeFilterConfigsState } from "../attributeFilterConfigsState.js";
-import { attributeFilterConfigsActions } from "../index.js";
 
 describe("attributeFilterConfigsReducers", () => {
     const createAttributeFilterConfigSliceInitialState = (
         attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
-    ): AttributeFilterConfigsState => {
+    ): TabsState => {
         return {
-            attributeFilterConfigs: attributeFilterConfigs ? cloneDeep(attributeFilterConfigs) : [],
+            tabs: [
+                {
+                    identifier: "tab-1",
+                    title: "Test Tab",
+                    dateFilterConfigs: undefined,
+                    dateFilterConfig: undefined,
+                    attributeFilterConfigs: attributeFilterConfigs
+                        ? { attributeFilterConfigs: cloneDeep(attributeFilterConfigs) }
+                        : { attributeFilterConfigs: [] },
+                },
+            ],
+            activeTabId: "tab-1",
         };
     };
 
@@ -30,7 +41,7 @@ describe("attributeFilterConfigsReducers", () => {
             const newMode = DashboardDateFilterConfigModeValues.READONLY;
 
             const newState: any = produce(initialState, (draft: any) => {
-                const action = attributeFilterConfigsActions.setAttributeFilterConfigs({
+                const action = tabsActions.setAttributeFilterConfigs({
                     attributeFilterConfigs: [
                         {
                             ...initialAttributeFilterConfigs[0],
@@ -41,7 +52,7 @@ describe("attributeFilterConfigsReducers", () => {
                 return attributeFilterConfigsReducers.setAttributeFilterConfigs(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.tabs?.[0]?.attributeFilterConfigs?.attributeFilterConfigs).toEqual([
                 {
                     ...initialAttributeFilterConfigs[0],
                     mode: newMode,
@@ -53,7 +64,7 @@ describe("attributeFilterConfigsReducers", () => {
             const initialState = createAttributeFilterConfigSliceInitialState(undefined);
 
             const newState = produce(initialState, (draft) => {
-                const action = attributeFilterConfigsActions.setAttributeFilterConfigs({
+                const action = tabsActions.setAttributeFilterConfigs({
                     attributeFilterConfigs: [
                         {
                             localIdentifier: "id2",
@@ -64,7 +75,7 @@ describe("attributeFilterConfigsReducers", () => {
                 return attributeFilterConfigsReducers.setAttributeFilterConfigs(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.tabs?.[0]?.attributeFilterConfigs?.attributeFilterConfigs).toEqual([
                 {
                     mode: DashboardDateFilterConfigModeValues.HIDDEN,
                     localIdentifier: "id2",
@@ -84,14 +95,14 @@ describe("attributeFilterConfigsReducers", () => {
         it("should set the attribute filter configs", () => {
             const newMode = DashboardDateFilterConfigModeValues.READONLY;
             const newState: any = produce(initialState, (draft: any) => {
-                const action = attributeFilterConfigsActions.changeMode({
+                const action = tabsActions.changeAttributeFilterConfigMode({
                     localIdentifier: "id1",
                     mode: newMode,
                 });
-                return attributeFilterConfigsReducers.changeMode(draft, action);
+                return attributeFilterConfigsReducers.changeAttributeFilterConfigMode(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.tabs?.[0]?.attributeFilterConfigs?.attributeFilterConfigs).toEqual([
                 {
                     localIdentifier: "id1",
                     mode: newMode,
@@ -101,14 +112,14 @@ describe("attributeFilterConfigsReducers", () => {
 
         it("should create a new attribute filter config if it doesn't exist", () => {
             const newState = produce(initialState, (draft) => {
-                const action = attributeFilterConfigsActions.changeMode({
+                const action = tabsActions.changeAttributeFilterConfigMode({
                     localIdentifier: "id2",
                     mode: DashboardDateFilterConfigModeValues.ACTIVE,
                 });
-                return attributeFilterConfigsReducers.changeMode(draft, action);
+                return attributeFilterConfigsReducers.changeAttributeFilterConfigMode(draft, action);
             });
 
-            expect(newState.attributeFilterConfigs).toEqual([
+            expect(newState.tabs?.[0]?.attributeFilterConfigs?.attributeFilterConfigs).toEqual([
                 {
                     localIdentifier: "id1",
                     mode: DashboardDateFilterConfigModeValues.HIDDEN,

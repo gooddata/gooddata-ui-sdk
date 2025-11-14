@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -13,8 +14,8 @@ import {
     dashboardExportToPdfResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 

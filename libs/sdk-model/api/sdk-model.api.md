@@ -1606,7 +1606,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
-    filterContext: IFilterContext | ITempFilterContext;
+    filterContext?: IFilterContext | ITempFilterContext;
     identifier: string;
     layout?: IDashboardLayout<TWidget>;
     title: string;
