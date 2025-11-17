@@ -33,15 +33,15 @@ import {
     filterViewDeletionFailed,
     filterViewDeletionSucceeded,
 } from "../../events/filters.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
-import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
@@ -148,7 +148,7 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
         const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
             yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
         if (isApplyAllAtOnceEnabledAndSet) {
-            yield put(filterContextActions.resetWorkingSelection());
+            yield put(tabsActions.resetWorkingSelection());
         }
         yield put(
             changeFilterContextSelectionByParams({

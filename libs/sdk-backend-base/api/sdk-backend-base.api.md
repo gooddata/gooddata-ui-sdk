@@ -47,6 +47,9 @@ import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardBase } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportImageOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardExportPdfOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardExportRawOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardExportTabularOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
@@ -580,16 +583,13 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides, options?: IDashboardExportRawOptions): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], options?: {
-        widgetIds?: ObjRef[];
-        filename?: string;
-    }): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     // (undocumented)

@@ -9,6 +9,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
@@ -65,7 +66,7 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @public
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
@@ -74,10 +75,18 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 }
 
 // @public
+export type ChatFeedbackErrorEvent = BaseEvent & {
+    type: "chatFeedbackError";
+    interactionId?: string;
+    errorMessage: string;
+};
+
+// @public
 export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
     interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
+    userTextFeedback?: string;
 };
 
 // @public
@@ -143,6 +152,7 @@ export interface GenAIAssistantProps {
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
     locale?: string;
+    objectTypes?: GenAIObjectType[];
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     settings?: IUserWorkspaceSettings;
@@ -163,6 +173,9 @@ export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
 
 // @public
 export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;
+
+// @public
+export const isChatFeedbackErrorEvent: (event: ChatEvent) => event is ChatFeedbackErrorEvent;
 
 // @public
 export const isChatFeedbackEvent: (event: ChatEvent) => event is ChatFeedbackEvent;

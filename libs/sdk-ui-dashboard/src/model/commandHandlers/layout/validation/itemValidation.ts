@@ -34,8 +34,8 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { query } from "../../../store/_infra/queryCall.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";

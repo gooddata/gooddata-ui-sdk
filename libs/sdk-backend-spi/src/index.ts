@@ -208,6 +208,8 @@ export type {
     IDashboardsQueryResult,
     IRawExportCustomOverride,
     IRawExportCustomOverrides,
+    IDashboardExportPdfOptions,
+    IDashboardExportRawOptions,
     IDashboardExportTabularOptions,
     IDashboardExportImageOptions,
     IDashboardExportPresentationOptions,

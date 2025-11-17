@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -10,8 +11,8 @@ import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextDraggableFilterIndexByRef,
     selectFilterContextFilters,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
@@ -47,7 +48,7 @@ export function* moveAttributeFilterHandler(
         yield select(selectFilterContextDraggableFilterIndexByRef(filterLocalId));
 
     yield put(
-        filterContextActions.moveAttributeFilter({
+        tabsActions.moveAttributeFilter({
             filterLocalId,
             index,
         }),

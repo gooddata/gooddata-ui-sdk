@@ -73,6 +73,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                     onClick={handlePositiveFeedbackClick}
                                     accessibilityConfig={{
                                         ariaLabel: thumbsUpLabel,
+                                        ariaPressed: message.feedback === "POSITIVE" ? "true" : "false",
                                     }}
                                 />
                             }
@@ -80,14 +81,23 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                         />
                         <FeedbackPopup
                             anchor={
-                                <UiIconButton
-                                    icon="thumbsDown"
-                                    variant="tertiary"
-                                    isActive={message.feedback === "NEGATIVE"}
-                                    onClick={handleNegativeFeedbackClick}
-                                    accessibilityConfig={{
-                                        ariaLabel: thumbsDownLabel,
-                                    }}
+                                <UiTooltip
+                                    triggerBy={["focus", "hover"]}
+                                    arrowPlacement="bottom"
+                                    anchor={
+                                        <UiIconButton
+                                            icon="thumbsDown"
+                                            variant="tertiary"
+                                            isActive={message.feedback === "NEGATIVE"}
+                                            onClick={handleNegativeFeedbackClick}
+                                            accessibilityConfig={{
+                                                ariaLabel: thumbsDownLabel,
+                                                ariaPressed:
+                                                    message.feedback === "NEGATIVE" ? "true" : "false",
+                                            }}
+                                        />
+                                    }
+                                    content={thumbsDownLabel}
                                 />
                             }
                             onSubmit={handleFeedbackSubmit}

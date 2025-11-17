@@ -12,8 +12,6 @@ import {
     IDashboard,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfig,
-    IDashboardDateFilterConfigItem,
     IDashboardLayout,
     IDashboardObjectIdentity,
     IDashboardTab,
@@ -42,21 +40,21 @@ import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
-import { mergeFilterContextFilters } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
+import {
+    ValidationResult,
+    mergeFilterContextFilters,
+} from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { drillActions } from "../../../store/drill/index.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { layoutActions } from "../../../store/layout/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
-import { tabsActions } from "../../../store/tabs/index.js";
+import { filterContextInitialState } from "../../../store/tabs/filterContext/filterContextState.js";
+import { DEFAULT_TAB_ID, FilterContextState, TabState, tabsActions } from "../../../store/tabs/index.js";
 import { uiActions } from "../../../store/ui/index.js";
 import {
     DashboardContext,
@@ -65,6 +63,101 @@ import {
 } from "../../../types/commonTypes.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
+
+/**
+ * Processes a single tab's filterContext and returns initialized FilterContextState.
+ * This includes sanitization, migration, merging with overrides, and display form resolution.
+ */
+function* processExistingTabFilterContext(
+    ctx: DashboardContext,
+    tab: IDashboardTab,
+    effectiveDateFilterConfig: IDateFilterConfig,
+    dataSets: IDataSetMetadataObject[] | undefined,
+    overrideDefaultFilters: FilterContextItem[] | undefined,
+    isImmediateAttributeFilterMigrationEnabled: boolean,
+    migratedAttributeFilters: IDashboardAttributeFilter[],
+    originalFilterContextDefinition: IFilterContextDefinition | undefined,
+    displayForms: ObjRefMap<IAttributeDisplayFormMetadataObject> | undefined,
+    dashboard: IDashboard,
+): SagaIterator<[FilterContextState, ValidationResult[] | undefined]> {
+    // Sanitize the tab's filter context
+    const sanitizedFilterContext: IFilterContext | ITempFilterContext = yield call(
+        sanitizeFilterContext,
+        ctx,
+        tab.filterContext,
+        dataSets,
+        displayForms,
+    );
+
+    // Build a temporary dashboard object for this tab to use existing helper functions
+    const tabAsDashboard: IDashboard = {
+        ...dashboard,
+        filterContext: sanitizedFilterContext,
+        dateFilterConfig: tab.dateFilterConfig,
+        dateFilterConfigs: tab.dateFilterConfigs,
+        attributeFilterConfigs: tab.attributeFilterConfigs,
+    };
+
+    // Extract filter context definition or create a default filter context
+    const originalSanitizedFilterContextDefinition = dashboardFilterContextDefinition(
+        tabAsDashboard,
+        effectiveDateFilterConfig,
+    );
+    const filterContextIdentity = dashboardFilterContextIdentity(tabAsDashboard);
+
+    // Merge with override filters if provided
+    const { mergedFilters, validationResults } = mergeFilterContextFilters(
+        originalSanitizedFilterContextDefinition.filters,
+        overrideDefaultFilters ?? [],
+        {
+            dateFilterConfig: tab.dateFilterConfig,
+            dateFilterConfigs: tab.dateFilterConfigs,
+            attributeFilterConfigs: tab.attributeFilterConfigs,
+        },
+    );
+
+    const filterContextDefinition = overrideDefaultFilters
+        ? {
+              ...originalSanitizedFilterContextDefinition,
+              filters: mergedFilters,
+          }
+        : originalSanitizedFilterContextDefinition;
+
+    // Apply migrations if enabled
+    const migratedFilterContext: IFilterContextDefinition = isImmediateAttributeFilterMigrationEnabled
+        ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
+        : filterContextDefinition;
+
+    const migratedOriginalFilterContext: IFilterContextDefinition =
+        isImmediateAttributeFilterMigrationEnabled && originalFilterContextDefinition !== undefined
+            ? originalFilterContextDefinition
+            : filterContextDefinition;
+
+    // Get display as labels for display form resolution
+    const displayAsLabels = getDisplayAsLabels(tab.attributeFilterConfigs);
+
+    // Resolve display forms for filters
+    const attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[] = yield call(
+        resolveFilterDisplayForms,
+        ctx,
+        migratedFilterContext.filters,
+        displayAsLabels,
+        displayForms,
+    );
+
+    // Return the complete FilterContextState for this tab
+    return [
+        {
+            ...filterContextInitialState,
+            filterContextDefinition: migratedFilterContext,
+            originalFilterContextDefinition: migratedOriginalFilterContext,
+            filterContextIdentity,
+            attributeFilterDisplayForms,
+            defaultFilterOverrides: overrideDefaultFilters,
+        },
+        validationResults,
+    ];
+}
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard
@@ -87,29 +180,18 @@ import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 function getEffectiveDashboardProperties<TWidget>(
     dashboard: IDashboard<TWidget>,
     enableDashboardTabs: boolean,
-    initialTabId?: string,
 ): {
     layout: IDashboardLayout<TWidget> | undefined;
-    filterContext: IFilterContext | ITempFilterContext | undefined;
-    dateFilterConfig: IDashboardDateFilterConfig | undefined;
-    dateFilterConfigs: IDashboardDateFilterConfigItem[] | undefined;
-    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined;
 } {
     // If dashboard has tabs and feature flag is enabled, use the active tab (or first tab) instead of root properties
     if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
-        // Priority: initialTabId > activeTabId > first tab
-        const targetTabId = initialTabId ?? dashboard.activeTabId;
-        const activeTab: IDashboardTab<TWidget> | undefined = targetTabId
-            ? dashboard.tabs.find((tab) => tab.identifier === targetTabId)
+        const activeTab: IDashboardTab<TWidget> | undefined = dashboard.activeTabId
+            ? dashboard.tabs.find((tab) => tab.identifier === dashboard.activeTabId)
             : undefined;
         const effectiveTab = activeTab ?? dashboard.tabs[0];
 
         return {
             layout: effectiveTab.layout,
-            filterContext: effectiveTab.filterContext,
-            dateFilterConfig: effectiveTab.dateFilterConfig,
-            dateFilterConfigs: effectiveTab.dateFilterConfigs,
-            attributeFilterConfigs: effectiveTab.attributeFilterConfigs,
         };
     }
 
@@ -119,10 +201,6 @@ function getEffectiveDashboardProperties<TWidget>(
     // No tabs or feature flag disabled - use root-level properties
     return {
         layout: dashboard.layout,
-        filterContext: dashboard.filterContext,
-        dateFilterConfig: dashboard.dateFilterConfig,
-        dateFilterConfigs: dashboard.dateFilterConfigs,
-        attributeFilterConfigs: dashboard.attributeFilterConfigs,
     };
 }
 
@@ -152,30 +230,83 @@ export function* actionsToInitializeNewDashboard(
     // Check if dashboard tabs feature is enabled
     const enableDashboardTabs = settings.enableDashboardTabs ?? false;
 
-    // Extract effective properties from active/first tab if tabs are present and feature is enabled
-    const effectiveProps = dashboard
-        ? getEffectiveDashboardProperties(dashboard, enableDashboardTabs, initialTabId)
-        : undefined;
+    const tabs: IDashboardTab[] = dashboard?.tabs ?? [
+        {
+            identifier: DEFAULT_TAB_ID,
+            title: "",
+            filterContext: filterContextDefinition,
+            dateFilterConfig: dashboard?.dateFilterConfig,
+            dateFilterConfigs: [],
+            attributeFilterConfigs: [],
+            layout: dashboardLayout ?? EmptyDashboardLayout,
+        },
+    ];
 
-    // Prepare tabs action if tabs exist and feature is enabled
+    // Prepare tabs action with complete filterContext for each tab
     const tabsAction =
-        enableDashboardTabs && dashboard?.tabs
+        enableDashboardTabs && tabs
             ? [
                   tabsActions.setTabs({
-                      tabs: dashboard.tabs,
-                      activeTabId: initialTabId ?? dashboard.activeTabId,
+                      tabs: tabs.map((tab: IDashboardTab) => ({
+                          title: tab.title,
+                          identifier: tab.identifier,
+                          filterContext: {
+                              ...filterContextInitialState,
+                              filterContextDefinition,
+                              originalFilterContextDefinition,
+                              filterContextIdentity,
+                              attributeFilterDisplayForms,
+                          },
+                          dateFilterConfig: {
+                              dateFilterConfig: tab.dateFilterConfig,
+                              effectiveDateFilterConfig: dateFilterConfig,
+                              isUsingDashboardOverrides: false,
+                              dateFilterConfigValidationWarnings: undefined,
+                          },
+                          dateFilterConfigs: {
+                              dateFilterConfigs: tab.dateFilterConfigs ?? [],
+                          },
+                          attributeFilterConfigs: {
+                              attributeFilterConfigs: tab.attributeFilterConfigs ?? [],
+                          },
+                      })),
+                      activeTabId: initialTabId ?? dashboard?.activeTabId ?? DEFAULT_TAB_ID,
                   }),
               ]
-            : [];
+            : [
+                  // For dashboards without tabs, create a single default tab
+                  tabsActions.setTabs({
+                      tabs: [
+                          {
+                              identifier: DEFAULT_TAB_ID,
+                              title: "",
+                              filterContext: {
+                                  ...filterContextInitialState,
+                                  filterContextDefinition,
+                                  originalFilterContextDefinition,
+                                  filterContextIdentity,
+                                  attributeFilterDisplayForms,
+                              },
+                              dateFilterConfig: {
+                                  dateFilterConfig: dashboard?.dateFilterConfig,
+                                  effectiveDateFilterConfig: dateFilterConfig,
+                                  isUsingDashboardOverrides: false,
+                                  dateFilterConfigValidationWarnings: undefined,
+                              },
+                              dateFilterConfigs: {
+                                  dateFilterConfigs: dashboard?.dateFilterConfigs ?? [],
+                              },
+                              attributeFilterConfigs: {
+                                  attributeFilterConfigs: dashboard?.attributeFilterConfigs ?? [],
+                              },
+                          },
+                      ],
+                      activeTabId: DEFAULT_TAB_ID,
+                  }),
+              ];
 
     return {
         initActions: [
-            filterContextActions.setFilterContext({
-                originalFilterContextDefinition,
-                filterContextDefinition,
-                filterContextIdentity,
-                attributeFilterDisplayForms,
-            }),
             layoutActions.setLayout(dashboardLayout),
             ...tabsAction,
             ...(dashboard
@@ -183,13 +314,6 @@ export function* actionsToInitializeNewDashboard(
                       metaActions.setMeta({
                           dashboard,
                           initialContent,
-                      }),
-                      attributeFilterConfigsActions.setAttributeFilterConfigs({
-                          attributeFilterConfigs: effectiveProps!.attributeFilterConfigs,
-                      }),
-                      dateFilterConfigActions.updateDateFilterConfig(effectiveProps!.dateFilterConfig!),
-                      dateFilterConfigsActions.setDateFilterConfigs({
-                          dateFilterConfigs: effectiveProps!.dateFilterConfigs,
                       }),
                       metaActions.setDashboardTitle(dashboard.title),
                       uiActions.clearWidgetSelection(),
@@ -255,19 +379,11 @@ function* actionsToInitializeOrFillNewDashboard(
           ) as IDashboard<ExtendedDashboardWidget>)
         : undefined;
 
-    // Check if dashboard tabs feature is enabled
-    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
-
-    // Extract effective properties from active/first tab if tabs are present and feature is enabled
-    const effectiveProps = dashboard
-        ? getEffectiveDashboardProperties(dashboard, enableDashboardTabs, undefined)
-        : undefined;
-
     const sanitizedFilterContext = yield call(
         sanitizeFilterContext,
         ctx,
         (overrideFilterContext ??
-            effectiveProps?.filterContext ??
+            dashboard?.filterContext ??
             createDefaultFilterContext(updatedDateFilterConfig, true)) as IDashboard["filterContext"],
         dashboard?.dataSets,
         displayForms,
@@ -276,7 +392,7 @@ function* actionsToInitializeOrFillNewDashboard(
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> | null = dashboard
         ? {
               ...dashboard,
-              layout: (effectiveProps?.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+              layout: (dashboard?.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
               filterContext: sanitizedFilterContext,
           }
         : null;
@@ -294,7 +410,7 @@ function* actionsToInitializeOrFillNewDashboard(
         updatedDateFilterConfig,
         ctx.config?.overrideDefaultFilters,
     );
-    const effectiveAttributeFilterConfigs = effectiveProps?.attributeFilterConfigs;
+    const effectiveAttributeFilterConfigs = dashboard?.attributeFilterConfigs;
     const filterContextIdentity = customizedDashboard
         ? dashboardFilterContextIdentity(customizedDashboard)
         : undefined;
@@ -464,7 +580,7 @@ function getDisplayAsLabels(attributeFilterConfigs: IDashboardAttributeFilterCon
  *  the dashboard so user can save these changes (persisted dashboard state remains as is).
  * @param migratedAttributeFilterConfigs - ad-hoc migrated attribute filter configs in view mode that must be
  *  applied to the dashboard so user can save these changes (persisted dashboard state remains as is).
- * @param dateFilterConfig - effective date filter config to use; note that this function will not store
+ * @param effectiveDateFilterConfigMap - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
  * @param dateDataSets - all catalog date datasets used to validate date filters. May not be given when
@@ -479,33 +595,24 @@ export function* actionsToInitializeExistingDashboard(
     insights: IInsight[],
     settings: ISettings,
     isImmediateAttributeFilterMigrationEnabled: boolean,
-    originalFilterContextDefinition: IFilterContextDefinition | undefined,
-    migratedAttributeFilters: IDashboardAttributeFilter[],
-    migratedAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
-    dateFilterConfig: IDateFilterConfig,
+    originalFilterContextDefinition: Record<string, IFilterContextDefinition | undefined> | undefined,
+
+    migratedAttributeFilters: Record<string, IDashboardAttributeFilter[]> | undefined,
+    migratedAttributeFilterConfigs: Record<string, IDashboardAttributeFilterConfig[]>,
+    effectiveDateFilterConfigMap: Record<string, IDateFilterConfig>,
+    tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace">,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
-    initialTabId?: string,
 ): SagaIterator<Array<PayloadAction<any>>> {
     // Check if dashboard tabs feature is enabled
     const enableDashboardTabs = settings.enableDashboardTabs ?? false;
 
-    // Extract effective properties from active/first tab if tabs are present and feature is enabled
-    const effectiveProps = getEffectiveDashboardProperties(dashboard, enableDashboardTabs, initialTabId);
-
-    const sanitizedFilterContext = yield call(
-        sanitizeFilterContext,
-        ctx,
-        effectiveProps.filterContext,
-        dashboard.dataSets,
-        displayForms,
-    );
+    const effectiveProps = getEffectiveDashboardProperties(dashboard, enableDashboardTabs);
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = updateDashboard(
         {
             ...dashboard,
             layout: (effectiveProps.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
-            filterContext: sanitizedFilterContext,
         } as IDashboard,
         ctx.config?.overrideTitle,
         ctx.config?.hideWidgetTitles,
@@ -515,53 +622,6 @@ export function* actionsToInitializeExistingDashboard(
     const customizedDashboard =
         privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
     const modifiedWidgets = privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {};
-
-    const originalSanitizedFilterContextDefinition = dashboardFilterContextDefinition(
-        customizedDashboard,
-        dateFilterConfig,
-    );
-    const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
-    const overrideDefaultFilters = ctx.config?.overrideDefaultFilters;
-    const { mergedFilters, validationResults } = mergeFilterContextFilters(
-        originalSanitizedFilterContextDefinition.filters,
-        overrideDefaultFilters ?? [],
-        {
-            dateFilterConfig: sanitizedDashboard.dateFilterConfig,
-            dateFilterConfigs: sanitizedDashboard.dateFilterConfigs,
-            attributeFilterConfigs: sanitizedDashboard.attributeFilterConfigs,
-        },
-    );
-
-    const filterContextDefinition = overrideDefaultFilters
-        ? {
-              ...originalSanitizedFilterContextDefinition,
-              filters: mergedFilters,
-          }
-        : originalSanitizedFilterContextDefinition;
-
-    const migratedFilterContext: IFilterContextDefinition = isImmediateAttributeFilterMigrationEnabled
-        ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
-        : filterContextDefinition;
-
-    const migratedOriginalFilterContext: IFilterContextDefinition =
-        isImmediateAttributeFilterMigrationEnabled && originalFilterContextDefinition !== undefined
-            ? originalFilterContextDefinition
-            : filterContextDefinition;
-
-    const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
-        ? migratedAttributeFilterConfigs
-        : effectiveProps.attributeFilterConfigs;
-
-    const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
-
-    // load DFs for both filter refs and displayAsLabels
-    const attributeFilterDisplayForms = yield call(
-        resolveFilterDisplayForms,
-        ctx,
-        migratedFilterContext.filters,
-        displayAsLabels,
-        displayForms,
-    );
 
     /*
      * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
@@ -575,37 +635,153 @@ export function* actionsToInitializeExistingDashboard(
         insights,
         settings,
     );
-    // Prepare tabs action if tabs exist and feature is enabled
-    const tabsAction =
-        enableDashboardTabs && dashboard?.tabs
-            ? tabsActions.setTabs({
-                  tabs: dashboard.tabs as IDashboardTab<ExtendedDashboardWidget>[],
-                  activeTabId: initialTabId ?? dashboard.activeTabId,
-              })
-            : null;
+
+    // Process tabs with complete filterContext initialization for each tab
+    let tabsAction = null;
+    const validationResults: ValidationResult[] = [];
+    if (enableDashboardTabs && dashboard?.tabs && dashboard.tabs.length > 0) {
+        // Process each tab to build complete TabState with filterContext
+        const processedTabs: TabState[] = [];
+
+        for (const tab of dashboard.tabs) {
+            const isActiveTab = tab.identifier === dashboard.activeTabId;
+
+            // Override default filters are only applied to the active tab
+            const overrideDefaultFilters =
+                isActiveTab && ctx.config?.overrideDefaultFilters
+                    ? ctx.config?.overrideDefaultFilters
+                    : undefined;
+            // Process this tab's filterContext
+            const [tabFilterContext, tabValidationResults]: SagaReturnType<
+                typeof processExistingTabFilterContext
+            > = yield call(
+                processExistingTabFilterContext,
+                ctx,
+                tab,
+                effectiveDateFilterConfigMap[tab.identifier],
+                dashboard.dataSets,
+                overrideDefaultFilters,
+                isImmediateAttributeFilterMigrationEnabled,
+                migratedAttributeFilters?.[tab.identifier] ?? [],
+                originalFilterContextDefinition?.[tab.identifier],
+                displayForms,
+                dashboard,
+            );
+            validationResults.push(...(tabValidationResults ?? []));
+
+            const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+                ? (migratedAttributeFilterConfigs?.[tab.identifier] ?? [])
+                : (tab.attributeFilterConfigs ?? []);
+
+            // Build complete TabState with all nested states
+            const tabState: TabState = {
+                ...tab,
+                filterContext: tabFilterContext,
+                dateFilterConfig: {
+                    dateFilterConfig: tab.dateFilterConfig,
+                    effectiveDateFilterConfig: effectiveDateFilterConfigMap[tab.identifier],
+                    isUsingDashboardOverrides: tabsDateFilterConfigSource[tab.identifier] === "dashboard",
+                },
+                dateFilterConfigs: tab.dateFilterConfigs
+                    ? {
+                          dateFilterConfigs: tab.dateFilterConfigs,
+                      }
+                    : undefined,
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: effectiveAttributeFilterConfigs,
+                },
+            };
+
+            processedTabs.push(tabState);
+        }
+        tabsAction = tabsActions.setTabs({
+            tabs: processedTabs,
+            activeTabId: dashboard.activeTabId,
+        });
+    } else {
+        // For dashboards without tabs, create a single default tab with the filterContext
+        const tabForProcessing: IDashboardTab = {
+            identifier: DEFAULT_TAB_ID,
+            title: "",
+            filterContext: dashboard.filterContext,
+            dateFilterConfig: dashboard.dateFilterConfig,
+            dateFilterConfigs: dashboard.dateFilterConfigs,
+            attributeFilterConfigs: dashboard.attributeFilterConfigs,
+        };
+        const [tabFilterContext, tabValidationResults]: SagaReturnType<
+            typeof processExistingTabFilterContext
+        > = yield call(
+            processExistingTabFilterContext,
+            ctx,
+            tabForProcessing,
+            effectiveDateFilterConfigMap[DEFAULT_TAB_ID],
+            dashboard.dataSets,
+            ctx.config?.overrideDefaultFilters,
+            isImmediateAttributeFilterMigrationEnabled,
+            migratedAttributeFilters?.[DEFAULT_TAB_ID] ?? [],
+            originalFilterContextDefinition?.[DEFAULT_TAB_ID],
+            displayForms,
+            dashboard,
+        );
+        validationResults.push(...(tabValidationResults ?? []));
+
+        const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+            ? (migratedAttributeFilterConfigs?.[DEFAULT_TAB_ID] ?? [])
+            : dashboard.attributeFilterConfigs;
+
+        const defaultTab: TabState = {
+            identifier: DEFAULT_TAB_ID,
+            title: "",
+            filterContext: tabFilterContext,
+            dateFilterConfig: {
+                dateFilterConfig: dashboard.dateFilterConfig,
+                effectiveDateFilterConfig: effectiveDateFilterConfigMap[DEFAULT_TAB_ID],
+                isUsingDashboardOverrides: tabsDateFilterConfigSource[DEFAULT_TAB_ID] === "dashboard",
+            },
+            dateFilterConfigs: dashboard.dateFilterConfigs
+                ? {
+                      dateFilterConfigs: dashboard.dateFilterConfigs,
+                  }
+                : undefined,
+            attributeFilterConfigs: effectiveAttributeFilterConfigs
+                ? {
+                      attributeFilterConfigs: effectiveAttributeFilterConfigs,
+                  }
+                : undefined,
+        };
+
+        tabsAction = tabsActions.setTabs({
+            tabs: [defaultTab],
+            activeTabId: DEFAULT_TAB_ID,
+        });
+    }
+
+    // TODO INE LX-1603: remove this sanitization once layout is stored in the tabs state too
+    const sanitizePersistedDashboard = (originalPersistedDashboard: IDashboard): IDashboard => {
+        const activeTabId =
+            originalPersistedDashboard.activeTabId ??
+            originalPersistedDashboard.tabs?.[0]?.identifier ??
+            DEFAULT_TAB_ID;
+        const layout =
+            originalPersistedDashboard.layout ??
+            originalPersistedDashboard.tabs?.find((tab) => tab.identifier === activeTabId)?.layout ??
+            EmptyDashboardLayout;
+        return {
+            ...originalPersistedDashboard,
+            layout,
+        };
+    };
+
+    const sanitizedPersistedDashboard = persistedDashboard
+        ? sanitizePersistedDashboard(persistedDashboard)
+        : undefined;
 
     return compact([
-        filterContextActions.setFilterContext({
-            originalFilterContextDefinition: migratedOriginalFilterContext,
-            filterContextDefinition: migratedFilterContext,
-            filterContextIdentity,
-            attributeFilterDisplayForms,
-        }),
-        overrideDefaultFilters
-            ? filterContextActions.setDefaultFilterOverrides(overrideDefaultFilters)
-            : null,
         layoutActions.setLayout(dashboardLayout),
         tabsAction,
         metaActions.setMeta({
-            dashboard: persistedDashboard ?? dashboard,
+            dashboard: sanitizedPersistedDashboard ?? dashboard,
             initialContent: false,
-        }),
-        attributeFilterConfigsActions.setAttributeFilterConfigs({
-            attributeFilterConfigs: effectiveAttributeFilterConfigs,
-        }),
-        dateFilterConfigActions.updateDateFilterConfig(effectiveProps.dateFilterConfig!),
-        dateFilterConfigsActions.setDateFilterConfigs({
-            dateFilterConfigs: effectiveProps.dateFilterConfigs,
         }),
         insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard

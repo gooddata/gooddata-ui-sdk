@@ -2,9 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { IDashboardTab } from "@gooddata/sdk-model";
-
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { TabState } from "./tabsState.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -13,14 +11,23 @@ const selectSelf = createSelector(
 );
 
 /**
+ * Returns the full tabs state (including tabs array, activeTabId, and shared state like attributesWithReferences).
+ *
+ * @internal
+ */
+export const selectTabsState = selectSelf;
+
+/**
  * Returns all tabs with their configurations.
  *
  * @alpha
  */
-export const selectTabs: DashboardSelector<IDashboardTab<ExtendedDashboardWidget>[] | undefined> =
-    createSelector(selectSelf, (tabsState) => {
+export const selectTabs: DashboardSelector<TabState[] | undefined> = createSelector(
+    selectSelf,
+    (tabsState) => {
         return tabsState.tabs;
-    });
+    },
+);
 
 /**
  * Returns the identifier of the currently active tab.
@@ -39,22 +46,23 @@ export const selectActiveTabId: DashboardSelector<string | undefined> = createSe
  *
  * @alpha
  */
-export const selectActiveTab: DashboardSelector<IDashboardTab<ExtendedDashboardWidget> | undefined> =
-    createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+export const selectActiveTab: DashboardSelector<TabState | undefined> = createSelector(
+    selectTabs,
+    selectActiveTabId,
+    (tabs, activeTabId) => {
         if (!tabs || !activeTabId) {
             return undefined;
         }
         return tabs.find((tab) => tab.identifier === activeTabId);
-    });
+    },
+);
 
 /**
  * Returns a specific tab by its identifier.
  *
  * @alpha
  */
-export const selectTabById = (
-    tabId: string,
-): DashboardSelector<IDashboardTab<ExtendedDashboardWidget> | undefined> =>
+export const selectTabById = (tabId: string): DashboardSelector<TabState | undefined> =>
     createSelector(selectTabs, (tabs) => {
         if (!tabs) {
             return undefined;

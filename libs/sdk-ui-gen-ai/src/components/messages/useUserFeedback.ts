@@ -1,14 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useEffect } from "react";
-
-import { useDispatch } from "react-redux";
-
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
-
 import { IFeedbackData } from "./FeedbackPopup.js";
 import { AssistantMessage } from "../../model.js";
-import { clearUserFeedbackError, setUserFeedback } from "../../store/index.js";
+import { setUserFeedback } from "../../store/index.js";
 
 /**
  * @internal
@@ -34,18 +28,6 @@ export interface UseUserFeedbackReturn {
  * @internal
  */
 export function useUserFeedback({ message, setUserFeedback }: UseUserFeedbackProps): UseUserFeedbackReturn {
-    const dispatch = useDispatch();
-    const { addSuccess, addError } = useToastMessage();
-
-    // Watch for feedback errors and show error toast
-    useEffect(() => {
-        if (message.feedbackError) {
-            addError({ id: "gd.gen-ai.feedback.error" });
-            // Clear the error after showing the toast
-            dispatch(clearUserFeedbackError({ assistantMessageId: message.localId }));
-        }
-    }, [message.feedbackError, addError, dispatch, message.localId]);
-
     const handlePositiveFeedbackClick = () => {
         if (message.feedback === "POSITIVE") {
             // If already positive, toggle back to none
@@ -75,8 +57,8 @@ export function useUserFeedback({ message, setUserFeedback }: UseUserFeedbackPro
 
     const handleFeedbackSubmit = (feedbackData: IFeedbackData) => {
         // Construct userTextFeedback from the feedback data
-        let userTextFeedback = feedbackData.reason;
-        if (feedbackData.reason === "other" && feedbackData.description.trim()) {
+        let userTextFeedback = feedbackData.reason.join(", ");
+        if (feedbackData.reason.includes("other") && feedbackData.description.trim()) {
             userTextFeedback = feedbackData.description.trim();
         }
 
@@ -85,9 +67,6 @@ export function useUserFeedback({ message, setUserFeedback }: UseUserFeedbackPro
             feedback: "NEGATIVE",
             userTextFeedback,
         });
-
-        // Show success notification
-        addSuccess({ id: "gd.gen-ai.feedback.success" });
     };
 
     return {

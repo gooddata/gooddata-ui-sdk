@@ -27,16 +27,8 @@ import { createListedDashboard } from "../../../_staging/listedDashboard/listedD
 import { SaveDashboard, changeRenderMode } from "../../commands/index.js";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    selectFilterContextDefinition,
-    selectFilterContextIdentity,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
@@ -44,9 +36,17 @@ import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { TabState } from "../../store/tabs/tabsState.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
@@ -119,14 +119,48 @@ export function getDashboardWithSharing(
     return dashboard;
 }
 
-function processExistingTabs(tabs: IDashboardTab<ExtendedDashboardWidget>[]): IDashboardTab[] {
-    return tabs.map((tab) => ({
-        ...tab,
-        layout: tab.layout ? processLayout(tab.layout) : undefined,
-    }));
+// TODO INE LX-1603: remove root layout once layout placed in each tab
+function processExistingTabs(tabs: TabState[], layout: IDashboardLayout): IDashboardTab[] {
+    return tabs.map((tab) => {
+        const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
+
+        const dateFilterConfigProp = dateFilterConfig ? { dateFilterConfig } : {};
+
+        const dateFilterConfigs: IDashboardTab["dateFilterConfigs"] =
+            tab.dateFilterConfigs?.dateFilterConfigs;
+
+        const dateFilterConfigsProp = dateFilterConfigs?.length ? { dateFilterConfigs } : {};
+
+        const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
+            tab.attributeFilterConfigs?.attributeFilterConfigs;
+        const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+
+        const filterContext =
+            tab.filterContext?.filterContextDefinition && tab.filterContext?.filterContextIdentity
+                ? {
+                      ...tab.filterContext?.filterContextIdentity,
+                      ...tab.filterContext?.filterContextDefinition,
+                  }
+                : undefined;
+        const result: IDashboardTab = {
+            // explicitly type the result to avoid type errors caused by spread operators
+            identifier: tab.identifier,
+            title: tab.title ?? "",
+            layout: layout,
+            filterContext,
+            ...dateFilterConfigProp,
+            ...dateFilterConfigsProp,
+            ...attributeFilterConfigsProp,
+        };
+        return result;
+    });
 }
 
-function processLayout(layout: IDashboardLayout<ExtendedDashboardWidget>): IDashboardLayout {
+function processLayout(layout: IDashboardLayout | undefined): IDashboardLayout | undefined {
+    if (!layout) {
+        return undefined;
+    }
+
     return dashboardLayoutRemoveIdentity(layout as IDashboardLayout, isTemporaryIdentity);
 }
 
@@ -197,7 +231,7 @@ function* createDashboardSaveContext(
                   {
                       identifier: uuid(),
                       title: "",
-                      layout: layout ? processLayout(layout) : undefined,
+                      layout: layout ?? undefined,
                       filterContext: rootFilterContext,
                       dateFilterConfig,
                       ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
@@ -205,7 +239,7 @@ function* createDashboardSaveContext(
                   },
               ]
             : tabs
-              ? processExistingTabs(tabs)
+              ? processExistingTabs(tabs, layout)
               : undefined;
 
     const defaultActiveTabId =
@@ -226,13 +260,19 @@ function* createDashboardSaveContext(
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-        ...(processedTabs ? { tabs: processedTabs, activeTabId: defaultActiveTabId } : {}),
+        ...(enableDashboardTabs && processedTabs
+            ? { tabs: processedTabs, activeTabId: defaultActiveTabId }
+            : {}),
         ...pluginsProp,
     };
 
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         layout: dashboardLayoutRemoveIdentity(layout, isTemporaryIdentity),
+        tabs: dashboardFromState.tabs?.map((tab) => ({
+            ...tab,
+            layout: processLayout(tab.layout),
+        })),
     };
 
     return {
@@ -273,7 +313,7 @@ function* save(
 
     const actions: AnyAction[] = [
         metaActions.setMeta({ dashboard }),
-        filterContextActions.updateFilterContextIdentity({
+        tabsActions.updateFilterContextIdentity({
             filterContextIdentity: dashboardFilterContextIdentity(dashboard),
         }),
         layoutActions.updateWidgetIdentities(identityMapping),

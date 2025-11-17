@@ -21,6 +21,7 @@ import {
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     setUserFeedback,
+    setUserFeedbackError,
     visualizationErrorAction,
 } from "../messages/messagesSlice.js";
 
@@ -31,6 +32,7 @@ export function* onEvent() {
     yield takeEvery(newMessageAction.type, onNewMessage);
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
     yield takeEvery(setUserFeedback.type, onUserFeedback);
+    yield takeEvery(setUserFeedbackError.type, onUserFeedbackError);
     yield takeEvery(visualizationErrorAction.type, onVisualizationError);
     yield takeEvery(saveVisualizationErrorAction.type, onSaveVisualizationError);
     yield takeEvery(saveVisualizationSuccessAction.type, onSaveVisualizationSuccess);
@@ -120,7 +122,9 @@ function* onEvaluateMessageComplete({
     });
 }
 
-function* onUserFeedback({ payload: { assistantMessageId, feedback } }: ReturnType<typeof setUserFeedback>) {
+function* onUserFeedback({
+    payload: { assistantMessageId, feedback, userTextFeedback },
+}: ReturnType<typeof setUserFeedback>) {
     const allMessages: Message[] = yield select(messagesSelector);
     const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
 
@@ -136,6 +140,28 @@ function* onUserFeedback({ payload: { assistantMessageId, feedback } }: ReturnTy
         interactionId: assistantMessage.id,
         threadId,
         feedback,
+        userTextFeedback,
+    });
+}
+
+function* onUserFeedbackError({
+    payload: { assistantMessageId, error },
+}: ReturnType<typeof setUserFeedbackError>) {
+    const allMessages: Message[] = yield select(messagesSelector);
+    const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
+
+    if (!assistantMessage) {
+        return;
+    }
+
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatFeedbackError",
+        interactionId: assistantMessage.id,
+        threadId,
+        errorMessage: error,
     });
 }
 

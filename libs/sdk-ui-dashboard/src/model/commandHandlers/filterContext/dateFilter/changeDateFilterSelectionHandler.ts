@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { toNumber } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -19,8 +20,8 @@ import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterByDataSet,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
 
@@ -53,7 +54,7 @@ export function* changeDateFilterSelectionHandler(
         ? { localIdentifier: cmd.payload.localIdentifier }
         : {};
     yield put(
-        filterContextActions.upsertDateFilter(
+        tabsActions.upsertDateFilter(
             isAllTime
                 ? {
                       type: "allTime",

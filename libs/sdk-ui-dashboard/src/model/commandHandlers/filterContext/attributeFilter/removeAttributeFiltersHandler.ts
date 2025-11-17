@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { compact, difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -10,11 +11,10 @@ import { RemoveAttributeFilters } from "../../../commands/filters.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
 import { layoutActions } from "../../../store/layout/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
@@ -72,7 +72,7 @@ export function* removeAttributeFiltersHandler(
             compact([
                 // remove filter from parents and keep track of the affected filters
                 ...affectedChildren.map(({ attributeFilter }) =>
-                    filterContextActions.setAttributeFilterParents({
+                    tabsActions.setAttributeFilterParents({
                         filterLocalId: attributeFilter.localIdentifier!,
                         parentFilters: attributeFilter.filterElementsBy!.filter(
                             (parent) =>
@@ -82,17 +82,13 @@ export function* removeAttributeFiltersHandler(
                     }),
                 ),
                 // remove filter itself
-                filterContextActions.removeAttributeFilter({
+                tabsActions.removeAttributeFilter({
                     filterLocalId: removedFilter.attributeFilter.localIdentifier!,
                 }),
                 // remove filter's display form metadata object
-                filterContextActions.removeAttributeFilterDisplayForms(
-                    removedFilter.attributeFilter.displayForm,
-                ),
+                tabsActions.removeAttributeFilterDisplayForms(removedFilter.attributeFilter.displayForm),
                 // remove reflect dashboard attribute filter config
-                attributeFilterConfigsActions.removeAttributeFilterConfig(
-                    removedFilter.attributeFilter.localIdentifier!,
-                ),
+                tabsActions.removeAttributeFilterConfig(removedFilter.attributeFilter.localIdentifier!),
                 // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
                 ...removeIgnoredAttributeFilterActionArray,
             ]),

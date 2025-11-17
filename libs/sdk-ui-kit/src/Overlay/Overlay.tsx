@@ -46,6 +46,7 @@ const INIT_STATE_ALIGN = -500;
 
 export const POSITION_SAME_AS_TARGET = "sameAsTarget";
 const OVERLAY_CONTENT_CLASS = "gd-overlay-content";
+const VISIBLE_PART_TOLERANCE = 0.01;
 
 function exceedsThreshold(firstNumber: number, secondNumber: number) {
     return (
@@ -110,14 +111,12 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
     private resizeHandler = debounce(() => {
-        this.isInitialAlign = true;
         this.align();
     }, 100);
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
     private clickedInside: boolean;
     private alignmentTimeoutId: number;
-    private isInitialAlign: boolean;
     static override contextType = OverlayContext;
     declare context: ContextType<typeof OverlayContext>;
     private observer: ResizeObserver | undefined;
@@ -134,7 +133,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                 width: 0,
                 height: 0,
             },
-            initialVisiblePart: 0,
+            visiblePart: 0,
             observedHeight: 0,
         };
 
@@ -143,7 +142,6 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         this.isComponentMounted = false;
         this.clickedInside = false;
         this.alignmentTimeoutId = 0;
-        this.isInitialAlign = true;
         this.id = props.id ?? uuid();
 
         bindAll(
@@ -182,8 +180,10 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     public override shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
         const propsChanged = !isReactEqual(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
+        const visibilityChanged =
+            Math.abs(this.state.visiblePart - nextState.visiblePart) > VISIBLE_PART_TOLERANCE;
 
-        return propsChanged || positionChanged;
+        return propsChanged || positionChanged || visibilityChanged;
     }
 
     public override componentDidUpdate(): void {
@@ -262,17 +262,20 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             ? this.calculateConstrainedAlignment(optimalAlign.alignment, overlay, positionType === "fixed")
             : optimalAlign.alignment;
 
-        if (alignExceedsThreshold(this.state.alignment, constrainedAlignment)) {
+        const visiblePartChanged = this.hasVisiblePartChanged(optimalAlign.visiblePart);
+        const alignmentChanged = alignExceedsThreshold(this.state.alignment, constrainedAlignment);
+
+        if (alignmentChanged || visiblePartChanged) {
             this.setState(
-                {
-                    alignment: constrainedAlignment,
-                    initialVisiblePart: this.isInitialAlign
-                        ? optimalAlign.visiblePart
-                        : this.state.initialVisiblePart,
-                },
+                (prevState) => ({
+                    alignment: alignmentChanged ? constrainedAlignment : prevState.alignment,
+                    visiblePart: visiblePartChanged ? optimalAlign.visiblePart : prevState.visiblePart,
+                }),
                 () => {
-                    this.isInitialAlign = false;
-                    this.props.onAlign(constrainedAlignment);
+                    const alignmentToReport = alignmentChanged
+                        ? constrainedAlignment
+                        : optimalAlign.alignment;
+                    this.props.onAlign(alignmentToReport);
                 },
             );
         } else {
@@ -417,7 +420,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             return "";
         }
 
-        return this.props.ensureVisibility && this.state.initialVisiblePart < 1 ? "truncated" : "";
+        return this.props.ensureVisibility && this.state.visiblePart < 1 ? "truncated" : "";
     };
 
     private createPortalNode(): void {
@@ -593,6 +596,14 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                 this.setState({ observedHeight: newHeightCandidate });
             }
         });
+    }
+
+    private hasVisiblePartChanged(nextVisiblePart: number): boolean {
+        if (!isFinite(nextVisiblePart)) {
+            return false;
+        }
+
+        return Math.abs(this.state.visiblePart - nextVisiblePart) > VISIBLE_PART_TOLERANCE;
     }
 }
 

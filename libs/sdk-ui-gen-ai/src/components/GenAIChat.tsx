@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Provider as StoreProvider } from "react-redux";
 
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+import { CatalogItem, GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
@@ -77,6 +77,11 @@ export interface GenAIAssistantProps {
     disableFullControl?: boolean;
 
     /**
+     * A list of object types to search for.
+     */
+    objectTypes?: GenAIObjectType[];
+
+    /**
      * When provided, the function will be called with the store dispatch function
      * after the store has been initialized.
      */
@@ -95,13 +100,15 @@ export type GenAIChatProps = GenAIAssistantProps;
  * @public
  */
 export function GenAIAssistant(props: GenAIAssistantProps) {
-    const { backend, workspace, locale, colorPalette, eventHandlers, settings, onDispatcher } = props;
+    const { backend, workspace, locale, colorPalette, eventHandlers, settings, objectTypes, onDispatcher } =
+        props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
         colorPalette,
         eventHandlers,
         settings,
+        objectTypes,
     });
 
     useEffect(() => {

@@ -104,6 +104,7 @@ export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
     interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
+    userTextFeedback?: string;
 };
 
 /**
@@ -112,6 +113,24 @@ export type ChatFeedbackEvent = BaseEvent & {
  */
 export const isChatFeedbackEvent = (event: ChatEvent): event is ChatFeedbackEvent => {
     return event.type === "chatFeedback";
+};
+
+/**
+ * A chat feedback error event.
+ * @public
+ */
+export type ChatFeedbackErrorEvent = BaseEvent & {
+    type: "chatFeedbackError";
+    interactionId?: string;
+    errorMessage: string;
+};
+
+/**
+ * Type guard for the ChatFeedbackErrorEvent.
+ * @public
+ */
+export const isChatFeedbackErrorEvent = (event: ChatEvent): event is ChatFeedbackErrorEvent => {
+    return event.type === "chatFeedbackError";
 };
 
 /**
@@ -199,6 +218,7 @@ export type ChatEvent =
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent
+    | ChatFeedbackErrorEvent
     | ChatCopyToClipboardEvent
     | ChatVisualizationErrorEvent
     | ChatSaveVisualizationErrorEvent

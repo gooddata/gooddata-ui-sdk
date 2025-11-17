@@ -17,8 +17,8 @@ import {
     selectCanAddMoreFilters,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
@@ -70,7 +70,7 @@ export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter)
     }
 
     yield put(
-        filterContextActions.addDateFilter({
+        tabsActions.addDateFilter({
             index,
             dateDataset,
         }),

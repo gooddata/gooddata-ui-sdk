@@ -16,7 +16,6 @@ import {
 } from "../../commands/filters.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import {
     selectEnableCrossFilteringAliasTitles,
@@ -27,7 +26,8 @@ import {
     selectCrossFilteringItemByWidgetRef,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
-import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextDraggableFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";

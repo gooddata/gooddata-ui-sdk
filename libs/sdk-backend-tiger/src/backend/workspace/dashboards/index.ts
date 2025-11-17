@@ -5,11 +5,6 @@ import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
 import {
-    ActionsExportGetExportedFileRequest,
-    ActionsExportGetImageExportRequest,
-    ActionsExportGetRawExportRequest,
-    ActionsExportGetSlidesExportRequest,
-    ActionsExportGetTabularExportRequest,
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     ExportAFM,
     ExportRawExportRequest,
@@ -29,7 +24,9 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardExportImageOptions,
+    IDashboardExportPdfOptions,
     IDashboardExportPresentationOptions,
+    IDashboardExportRawOptions,
     IDashboardExportTabularOptions,
     IDashboardReferences,
     IDashboardWithReferences,
@@ -41,7 +38,6 @@ import {
     IWorkspaceDashboardsService,
     NotSupported,
     SupportedDashboardReferenceTypes,
-    TimeoutError,
     UnexpectedError,
     walkLayout,
 } from "@gooddata/sdk-backend-spi";
@@ -102,14 +98,11 @@ import { convertExportMetadata as convertToBackendExportMetadata } from "../../.
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
-import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { convertApiError } from "../../../utils/errorHandling.js";
+import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
-
-const DEFAULT_POLL_DELAY = 5000;
-const MAX_POLL_ATTEMPTS = 50;
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(
@@ -325,11 +318,39 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+        // Process root-level filter context for backward compatibility
         let filterContext;
         if (dashboard.filterContext) {
             filterContext = isFilterContextDefinition(dashboard.filterContext)
                 ? await this.createFilterContext(dashboard.filterContext)
                 : dashboard.filterContext;
+        }
+
+        // Process filter contexts for each tab if tabs are present
+        let dashboardWithTabFilterContexts = dashboard;
+        if (dashboard.tabs && dashboard.tabs.length > 0) {
+            const tabsWithProcessedFilterContexts = await Promise.all(
+                dashboard.tabs.map(async (tab) => {
+                    if (!tab.filterContext) {
+                        return tab;
+                    }
+
+                    // Create or use existing filter context for this tab
+                    const tabFilterContext = isFilterContextDefinition(tab.filterContext)
+                        ? await this.createFilterContext(tab.filterContext)
+                        : tab.filterContext;
+
+                    return {
+                        ...tab,
+                        filterContext: tabFilterContext,
+                    };
+                }),
+            );
+
+            dashboardWithTabFilterContexts = {
+                ...dashboard,
+                tabs: tabsWithProcessedFilterContexts,
+            };
         }
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
@@ -338,7 +359,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
 
         const dashboardContent = convertAnalyticalDashboard(
-            dashboard,
+            dashboardWithTabFilterContexts,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
             enableDashboardSectionHeadersDateDataSet,
@@ -385,10 +406,39 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return this.createDashboard(updatedDashboard);
         }
 
+        // Process root-level filter context for backward compatibility
         const filterContext = await this.processFilterContextUpdate(
             originalDashboard.filterContext,
             updatedDashboard.filterContext,
         );
+
+        // Process filter contexts for each tab if tabs are present
+        let updatedDashboardWithTabFilterContexts = updatedDashboard;
+        if (updatedDashboard.tabs && updatedDashboard.tabs.length > 0) {
+            const tabsWithProcessedFilterContexts = await Promise.all(
+                updatedDashboard.tabs.map(async (updatedTab) => {
+                    const originalTab = originalDashboard.tabs?.find(
+                        (t) => t.identifier === updatedTab.identifier,
+                    );
+
+                    // Process the tab's filter context
+                    const tabFilterContext = await this.processFilterContextUpdate(
+                        originalTab?.filterContext,
+                        updatedTab.filterContext,
+                    );
+
+                    return {
+                        ...updatedTab,
+                        filterContext: tabFilterContext,
+                    };
+                }),
+            );
+
+            updatedDashboardWithTabFilterContexts = {
+                ...updatedDashboard,
+                tabs: tabsWithProcessedFilterContexts,
+            };
+        }
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
@@ -396,7 +446,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const dashboardContent = convertAnalyticalDashboard(
-            updatedDashboard,
+            updatedDashboardWithTabFilterContexts,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
             enableDashboardSectionHeadersDateDataSet,
@@ -497,6 +547,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToPdf = async (
         dashboardRef: ObjRef,
         filters?: FilterContextItem[],
+        options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
@@ -517,7 +568,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             const { title } = convertDashboard(dashboardResponse.data);
             const visualExportRequest = {
-                fileName: title,
+                fileName: options?.filename ?? title,
                 dashboardId,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
@@ -526,10 +577,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 exportVisualExportRequest: visualExportRequest,
             });
 
-            return await this.handleExportResultPolling(client, "application/pdf", {
-                workspaceId: this.workspace,
-                exportId: pdfExport?.data?.exportResult,
-            });
+            return await handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: pdfExport?.data?.exportResult,
+                },
+                "getExportedFile",
+                options?.timeout,
+            );
         });
     };
 
@@ -577,15 +633,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 exportSlidesExportRequest: slidesExportRequest,
             });
 
-            return await this.handleExportSlidesResultPolling(
+            return await handleExportResultPolling(
                 client,
-                format === "PDF"
-                    ? "application/pdf"
-                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
                 {
                     workspaceId: this.workspace,
                     exportId: slideshowExport?.data?.exportResult,
                 },
+                "getSlidesExport",
+                options?.timeout,
             );
         });
     };
@@ -641,15 +696,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
             });
 
-            const contentType =
-                format === "PDF"
-                    ? "application/pdf"
-                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-            return await this.handleExportTabularResultPolling(client, contentType, {
-                workspaceId: this.workspace,
-                exportId: tabularExport?.data?.exportResult,
-            });
+            return await handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: tabularExport?.data?.exportResult,
+                },
+                "getTabularExport",
+                options?.timeout,
+            );
         });
     };
 
@@ -657,6 +712,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         definition: IExecutionDefinition,
         filename: string,
         customOverrides?: IRawExportCustomOverrides,
+        options?: IDashboardExportRawOptions,
     ): Promise<IExportResult> => {
         const execution = toAfmExecution(definition);
         const payload: ExportRawExportRequest = {
@@ -678,152 +734,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 exportRawExportRequest: payload,
             });
 
-            return await this.handleExportRawResultPolling(client, {
-                workspaceId: this.workspace,
-                exportId: rawExport?.data?.exportResult,
-            });
+            return await handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: rawExport?.data?.exportResult,
+                },
+                "getRawExport",
+                options?.timeout,
+            );
         });
     };
-
-    private async handleExportResultPolling(
-        client: ITigerClient,
-        type: "application/pdf",
-        payload: ActionsExportGetExportedFileRequest,
-    ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getExportedFile(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
-
-            if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type });
-                return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
-                    fileName: parseNameFromContentDisposition(result),
-                };
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
-        }
-
-        throw new TimeoutError(
-            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
-        );
-    }
-
-    private async handleExportSlidesResultPolling(
-        client: ITigerClient,
-        type: "application/pdf" | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
-        payload: ActionsExportGetSlidesExportRequest,
-    ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getSlidesExport(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
-
-            if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type });
-                return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
-                    fileName: parseNameFromContentDisposition(result),
-                };
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
-        }
-
-        throw new TimeoutError(
-            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
-        );
-    }
-
-    private async handleExportTabularResultPolling(
-        client: ITigerClient,
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" | "application/pdf",
-        payload: ActionsExportGetTabularExportRequest,
-    ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getTabularExport(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
-
-            if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type });
-                return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
-                    fileName: parseNameFromContentDisposition(result),
-                };
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
-        }
-
-        throw new TimeoutError(
-            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
-        );
-    }
-
-    private async handleExportRawResultPolling(
-        client: ITigerClient,
-        payload: ActionsExportGetRawExportRequest,
-    ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getRawExport(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
-
-            if (result?.status === 200) {
-                const type = "text/csv";
-                const blob = new Blob([result?.data as any], { type });
-                return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
-                    fileName: parseNameFromContentDisposition(result),
-                };
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
-        }
-
-        throw new TimeoutError(
-            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
-        );
-    }
-
-    private async handleExportImageResultPolling(
-        client: ITigerClient,
-        type: "image/png",
-        payload: ActionsExportGetImageExportRequest,
-    ): Promise<IExportResult> {
-        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getImageExport(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
-
-            if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type });
-                return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
-                    fileName: parseNameFromContentDisposition(result),
-                };
-            }
-
-            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
-        }
-
-        throw new TimeoutError(
-            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
-        );
-    }
 
     public exportDashboardToImage = async (
         dashboardRef: ObjRef,
@@ -859,10 +780,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 exportImageExportRequest: imageExportRequest,
             });
 
-            return await this.handleExportImageResultPolling(client, "image/png", {
-                workspaceId: this.workspace,
-                exportId: imageExport?.data?.exportResult,
-            });
+            return await handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: imageExport?.data?.exportResult,
+                },
+                "getImageExport",
+                options?.timeout,
+            );
         });
     };
 

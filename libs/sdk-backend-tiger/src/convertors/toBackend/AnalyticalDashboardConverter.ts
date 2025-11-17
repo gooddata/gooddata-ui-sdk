@@ -149,7 +149,7 @@ export function convertAnalyticalDashboard(
         disableFilterViews: dashboard.disableFilterViews,
         evaluationFrequency: dashboard.evaluationFrequency,
         tabs: dashboard.tabs?.map((tab) =>
-            convertDashboardTabToBackend(tab, filterContextRef, useWidgetLocalIdentifiers),
+            convertDashboardTabToBackend(tab, tab.filterContext?.ref, useWidgetLocalIdentifiers),
         ),
         activeTabId: dashboard.activeTabId,
         version: "2",
