@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { removeAttributeFilter } from "../../../../commands/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-} from "../../../../store/filterContext/filterContextSelectors.js";
+} from "../../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";

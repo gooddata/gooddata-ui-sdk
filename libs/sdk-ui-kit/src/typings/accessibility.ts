@@ -17,6 +17,7 @@ export interface IAccessibilityConfigBase {
     ariaCurrent?: AriaAttributes["aria-current"];
     ariaHaspopup?: AriaAttributes["aria-haspopup"];
     ariaAutocomplete?: AriaAttributes["aria-autocomplete"];
+    ariaPressed?: AriaAttributes["aria-pressed"];
 }
 
 /**

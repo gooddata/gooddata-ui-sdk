@@ -16,20 +16,16 @@ import { IDashboardQueryService } from "./_infra/queryService.js";
 import { rootCommandHandler } from "./_infra/rootCommandHandler.js";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter.js";
 import { accessibleDashboardsSliceReducer } from "./accessibleDashboards/index.js";
-import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { automationsSliceReducer } from "./automations/index.js";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities/index.js";
 import { catalogSliceReducer } from "./catalog/index.js";
 import { configSliceReducer } from "./config/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
-import { dateFilterConfigSliceReducer } from "./dateFilterConfig/index.js";
-import { dateFilterConfigsSliceReducer } from "./dateFilterConfigs/index.js";
 import { drillSliceReducer } from "./drill/index.js";
 import { drillTargetsReducer } from "./drillTargets/index.js";
 import { entitlementsSliceReducer } from "./entitlements/index.js";
 import { executedSliceReducer } from "./executed/index.js";
 import { executionResultsSliceReducer } from "./executionResults/index.js";
-import { filterContextSliceReducer } from "./filterContext/index.js";
 import { filterViewsSliceReducer } from "./filterViews/index.js";
 import { inaccessibleDashboardsSliceReducer } from "./inaccessibleDashboards/index.js";
 import { insightsSliceReducer } from "./insights/index.js";
@@ -315,11 +311,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         config: configSliceReducer,
         entitlements: entitlementsSliceReducer,
         permissions: permissionsSliceReducer,
-        filterContext: filterContextSliceReducer,
         layout: layoutSliceReducer,
-        dateFilterConfig: dateFilterConfigSliceReducer,
-        attributeFilterConfigs: attributeFilterConfigsSliceReducer,
-        dateFilterConfigs: dateFilterConfigsSliceReducer,
         tabs: tabsSliceReducer,
         insights: insightsSliceReducer,
         drillTargets: drillTargetsReducer,

@@ -269,6 +269,55 @@ export interface IDashboardExportTabularOptions {
         pageOrientation?: "PORTRAIT" | "LANDSCAPE";
         showInfoPage?: boolean;
     };
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
+}
+
+/**
+ * Options for exporting dashboard to PDF format
+ *
+ * @alpha
+ */
+export interface IDashboardExportPdfOptions {
+    /**
+     * Filename for the export. If not provided, the dashboard title will be fetched.
+     */
+    filename?: string;
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
+}
+
+/**
+ * Options for exporting dashboard to raw data
+ *
+ * @alpha
+ */
+export interface IDashboardExportRawOptions {
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
 }
 
 /**
@@ -286,6 +335,16 @@ export interface IDashboardExportImageOptions {
      * Filename for the export. If not provided, the dashboard title will be fetched.
      */
     filename?: string;
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
 }
 
 /**
@@ -300,6 +359,16 @@ export interface IDashboardExportPresentationOptions {
     title?: string;
     hideWidgetTitles?: boolean;
     filename?: string;
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
 }
 
 /**
@@ -422,9 +491,14 @@ export interface IWorkspaceDashboardsService {
      *
      * @param ref - dashboard reference
      * @param filters - Override stored dashboard filters with custom filters
+     * @param options - export options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPdf(
+        ref: ObjRef,
+        filters?: FilterContextItem[],
+        options?: IDashboardExportPdfOptions,
+    ): Promise<IExportResult>;
 
     /**
      * Export dashboard to pdf. You can override dashboard filters with custom filters.
@@ -483,12 +557,14 @@ export interface IWorkspaceDashboardsService {
      * @param definition - execution definition
      * @param fileName - name of the file
      * @param customOverrides - custom title overrides for measures and display forms
+     * @param options - export options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
     exportDashboardToCSVRaw(
         definition: IExecutionDefinition,
         fileName: string,
         customOverrides?: IRawExportCustomOverrides,
+        options?: IDashboardExportRawOptions,
     ): Promise<IExportResult>;
 
     /**

@@ -580,7 +580,14 @@ export interface ICommentExpressionToken {
 // @alpha
 export interface IDashboardExportImageOptions {
     filename?: string;
+    timeout?: number;
     widgetIds?: ObjRef[];
+}
+
+// @alpha
+export interface IDashboardExportPdfOptions {
+    filename?: string;
+    timeout?: number;
 }
 
 // @beta
@@ -591,12 +598,18 @@ export interface IDashboardExportPresentationOptions {
     hideWidgetTitles?: boolean;
     // (undocumented)
     templateId?: string;
+    timeout?: number;
     // (undocumented)
     title?: string;
     // (undocumented)
     visualizationIds?: ObjRef[];
     // (undocumented)
     widgetIds?: ObjRef[];
+}
+
+// @alpha
+export interface IDashboardExportRawOptions {
+    timeout?: number;
 }
 
 // @alpha
@@ -610,6 +623,7 @@ export interface IDashboardExportTabularOptions {
         pageOrientation?: "PORTRAIT" | "LANDSCAPE";
         showInfoPage?: boolean;
     };
+    timeout?: number;
     title?: string;
     widgetIds?: string[];
 }
@@ -843,6 +857,7 @@ export interface IExportConfig {
     mergeHeaders?: boolean;
     pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
+    timeout?: number;
     title?: string;
     visualizationObjectCustomFilters?: Array<IFilter>;
     visualizationObjectId?: string;
@@ -1762,9 +1777,9 @@ export interface IWorkspaceDashboardsService {
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides, options?: IDashboardExportRawOptions): Promise<IExportResult>;
     exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportPdfOptions): Promise<IExportResult>;
     exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;

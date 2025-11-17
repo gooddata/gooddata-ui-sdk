@@ -6,11 +6,17 @@ import { invariant } from "ts-invariant";
 
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import {
+    FilterContextItem,
     IAccessControlAware,
     IDashboard,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    IDashboardDateFilter,
     IDashboardDateFilterConfig,
+    IDashboardDateFilterConfigItem,
     IDashboardDefinition,
     IDashboardObjectIdentity,
+    IDashboardTab,
     IDashboardWidget,
     IFilterContext,
     IFilterContextDefinition,
@@ -28,19 +34,20 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DashboardDescriptor } from "./metaState.js";
-import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEnableDashboardTabs } from "../config/configSelectors.js";
-import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextDateFilter,
-    selectFilterContextDefinition,
-    selectFilterContextDraggableFilters,
-    selectFilterContextIdentity,
-} from "../filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../layout/layoutSelectors.js";
-import { selectActiveTabId, selectTabs } from "../tabs/tabsSelectors.js";
+import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
+    selectDateFilterConfigOverrides,
+    selectDateFilterConfigOverridesByTab,
+} from "../tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverridesByTab } from "../tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectFilterContextDefinition,
+    selectFilterContextDefinitionsByTab,
+    selectFilterContextIdentity,
+} from "../tabs/filterContext/filterContextSelectors.js";
+import { DEFAULT_TAB_ID, TabState, selectActiveTabId, selectTabs } from "../tabs/index.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -79,73 +86,287 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
 );
 
 /**
- * Selects persisted IFilterContext/ITempFilterContext - that is the IFilterContext or ITempFilterContext that
- * was used to initialize the original filters of the dashboard component during the initial load of the
- * dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
+ * Snapshot of persisted dashboard tab data relevant for dirty checking.
  */
-export const selectPersistedDashboardFilterContext: DashboardSelector<
-    IFilterContext | ITempFilterContext | undefined
-> = createSelector(selectSelf, selectEnableDashboardTabs, (state, enableDashboardTabs) => {
-    const persistedDashboard = state.persistedDashboard;
-    if (!persistedDashboard) {
+const toFilterContextDefinition = (
+    filterContext?: IFilterContext | ITempFilterContext,
+): IFilterContextDefinition | undefined => {
+    if (!filterContext) {
         return undefined;
     }
 
-    // If tabs are enabled and dashboard has tabs, get filter context from the active tab
-    if (enableDashboardTabs && persistedDashboard.tabs && persistedDashboard.tabs.length > 0) {
-        const persistedActiveTabId = persistedDashboard.activeTabId;
-        const activeTab = persistedActiveTabId
-            ? persistedDashboard.tabs.find((tab) => tab.identifier === persistedActiveTabId)
-            : undefined;
-        const effectiveTab = activeTab ?? persistedDashboard.tabs[0];
-        return effectiveTab.filterContext ?? undefined;
+    if (isTempFilterContext(filterContext)) {
+        const { ref: _, uri: __, ...definition } = filterContext;
+        return {
+            ...definition,
+            title: "filterContext",
+            description: "",
+        };
     }
 
-    // No tabs or feature disabled - use root-level filter context
-    return persistedDashboard.filterContext ?? undefined;
+    const { identifier: _, ref: __, uri: ___, ...definition } = filterContext;
+    return definition;
+};
+
+export const selectPersistedDashboardTabs = createSelector(
+    selectSelf,
+    selectEnableDashboardTabs,
+    (state, enableDashboardTabs): IDashboardTab[] => {
+        const persistedDashboard = state.persistedDashboard;
+
+        if (!persistedDashboard) {
+            return [];
+        }
+
+        if (enableDashboardTabs && persistedDashboard.tabs && persistedDashboard.tabs.length > 0) {
+            return persistedDashboard.tabs;
+        }
+
+        return [
+            {
+                identifier: DEFAULT_TAB_ID,
+                title: "",
+                filterContext: persistedDashboard.filterContext,
+                attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
+                dateFilterConfig: persistedDashboard.dateFilterConfig,
+                dateFilterConfigs: persistedDashboard.dateFilterConfigs,
+            },
+        ];
+    },
+);
+
+const selectPersistedDashboardActiveTabId = createSelector(
+    selectSelf,
+    selectPersistedDashboardTabs,
+    selectEnableDashboardTabs,
+    (state, tabs, enableDashboardTabs) => {
+        const persistedDashboard = state.persistedDashboard;
+        if (!persistedDashboard) {
+            return undefined;
+        }
+
+        if (enableDashboardTabs) {
+            const persistedActiveTabId = persistedDashboard.activeTabId ?? tabs[0]?.identifier;
+            return persistedActiveTabId ?? DEFAULT_TAB_ID;
+        }
+
+        return DEFAULT_TAB_ID;
+    },
+);
+
+/**
+ * Returns raw persisted filter contexts keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardFilterContextsByTab: DashboardSelector<
+    Record<string, IFilterContext | ITempFilterContext | undefined>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IFilterContext | ITempFilterContext | undefined>>(
+        (acc, snapshot) => {
+            acc[snapshot.identifier] = snapshot.filterContext;
+            return acc;
+        },
+        {},
+    );
 });
 
 /**
+ * Returns persisted filter context definitions keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardFilterContextDefinitionsByTab: DashboardSelector<
+    Record<string, IFilterContextDefinition | undefined>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IFilterContextDefinition | undefined>>((acc, snapshot) => {
+        acc[snapshot.identifier] = toFilterContextDefinition(snapshot.filterContext);
+        return acc;
+    }, {});
+});
+
+/**
+ * Returns persisted attribute filter configs keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardAttributeFilterConfigsByTab: DashboardSelector<
+    Record<string, IDashboardAttributeFilterConfig[]>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IDashboardAttributeFilterConfig[]>>((acc, snapshot) => {
+        acc[snapshot.identifier] = snapshot.attributeFilterConfigs ?? [];
+        return acc;
+    }, {});
+});
+
+/**
+ * Returns persisted date filter config overrides keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardDateFilterConfigByTab: DashboardSelector<
+    Record<string, IDashboardDateFilterConfig | undefined>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IDashboardDateFilterConfig | undefined>>((acc, snapshot) => {
+        acc[snapshot.identifier] = snapshot.dateFilterConfig ?? undefined;
+        return acc;
+    }, {});
+});
+
+/**
+ * Returns persisted date filter configs keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardDateFilterConfigsByTab: DashboardSelector<
+    Record<string, IDashboardDateFilterConfigItem[]>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IDashboardDateFilterConfigItem[]>>((acc, snapshot) => {
+        acc[snapshot.identifier] = snapshot.dateFilterConfigs ?? [];
+        return acc;
+    }, {});
+});
+
+const selectPersistedDashboardFilterContextFiltersByTab: DashboardSelector<
+    Record<string, FilterContextItem[]>
+> = createSelector(selectPersistedDashboardFilterContextDefinitionsByTab, (definitionsByTab) => {
+    return Object.entries(definitionsByTab).reduce<Record<string, FilterContextItem[]>>(
+        (acc, [identifier, definition]) => {
+            acc[identifier] = definition?.filters ?? [];
+            return acc;
+        },
+        {},
+    );
+});
+
+const selectWorkingFilterContextFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>> =
+    createSelector(selectFilterContextDefinitionsByTab, (definitionsByTab) => {
+        return Object.entries(definitionsByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [identifier, definition]) => {
+                acc[identifier] = definition?.filters ?? [];
+                return acc;
+            },
+            {},
+        );
+    });
+
+const collectTabIdentifiers = (...maps: Array<Record<string, unknown>>): string[] => {
+    const identifiers = new Set<string>();
+    maps.forEach((map) => {
+        Object.keys(map ?? {}).forEach((identifier) => identifiers.add(identifier));
+    });
+
+    return Array.from(identifiers);
+};
+
+const selectPersistedDashboardAttributeFiltersByTab: DashboardSelector<
+    Record<string, IDashboardAttributeFilter[]>
+> = createSelector(selectPersistedDashboardFilterContextFiltersByTab, (filtersByTab) => {
+    return Object.entries(filtersByTab).reduce<Record<string, IDashboardAttributeFilter[]>>(
+        (acc, [identifier, filters]) => {
+            acc[identifier] = filters.filter(isDashboardAttributeFilter);
+            return acc;
+        },
+        {},
+    );
+});
+
+const selectWorkingAttributeFiltersByTab: DashboardSelector<Record<string, IDashboardAttributeFilter[]>> =
+    createSelector(selectWorkingFilterContextFiltersByTab, (filtersByTab) => {
+        return Object.entries(filtersByTab).reduce<Record<string, IDashboardAttributeFilter[]>>(
+            (acc, [identifier, filters]) => {
+                acc[identifier] = filters.filter(isDashboardAttributeFilter);
+                return acc;
+            },
+            {},
+        );
+    });
+
+const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<
+    Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
+> = createSelector(selectPersistedDashboardFilterContextFiltersByTab, (filtersByTab) => {
+    return Object.entries(filtersByTab).reduce<
+        Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
+    >((acc, [identifier, filters]) => {
+        acc[identifier] = filters.filter(
+            (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
+        ) as Array<IDashboardDateFilter | IDashboardAttributeFilter>;
+        return acc;
+    }, {});
+});
+
+const selectWorkingDraggableFiltersByTab: DashboardSelector<
+    Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
+> = createSelector(selectWorkingFilterContextFiltersByTab, (filtersByTab) => {
+    return Object.entries(filtersByTab).reduce<
+        Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
+    >((acc, [identifier, filters]) => {
+        acc[identifier] = filters.filter(
+            (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
+        ) as Array<IDashboardDateFilter | IDashboardAttributeFilter>;
+        return acc;
+    }, {});
+});
+
+/**
+ * Selects persisted filter context for the active tab (legacy selector).
+ */
+export const selectPersistedDashboardFilterContext: DashboardSelector<
+    IFilterContext | ITempFilterContext | undefined
+> = createSelector(
+    selectPersistedDashboardFilterContextsByTab,
+    selectPersistedDashboardActiveTabId,
+    (filterContextsByTab, activeTabId) => {
+        if (!filterContextsByTab || Object.keys(filterContextsByTab).length === 0) {
+            return undefined;
+        }
+
+        const resolvedActiveTabId = activeTabId ?? Object.keys(filterContextsByTab)[0];
+        return (
+            filterContextsByTab[resolvedActiveTabId] ??
+            filterContextsByTab[Object.keys(filterContextsByTab)[0]]
+        );
+    },
+);
+
+/**
+ * Selects persisted date filter config for the active tab (legacy selector).
+ *
  * @internal
  */
 export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<
     IDashboardDateFilterConfig | undefined
-> = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.dateFilterConfig ?? undefined;
-});
+> = createSelector(
+    selectPersistedDashboardDateFilterConfigByTab,
+    selectPersistedDashboardActiveTabId,
+    (dateFilterConfigByTab, activeTabId) => {
+        if (!dateFilterConfigByTab || Object.keys(dateFilterConfigByTab).length === 0) {
+            return undefined;
+        }
+
+        const resolvedActiveTabId = activeTabId ?? Object.keys(dateFilterConfigByTab)[0];
+        return (
+            dateFilterConfigByTab[resolvedActiveTabId] ??
+            dateFilterConfigByTab[Object.keys(dateFilterConfigByTab)[0]]
+        );
+    },
+);
 
 /**
- * Selects persisted IFilterContextDefinition - that is the IFilterContext or ITempFilterContext that
- * was used to initialize the original filters of the dashboard component during the initial load of the
- * dashboard but removes ref, uri and identifier, effectively creating a clone of the stored value
- * that can be used independently.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
+ * Selects persisted filter context definition for the active tab (legacy selector).
  */
 export const selectPersistedDashboardFilterContextAsFilterContextDefinition: DashboardSelector<
     IFilterContextDefinition | undefined
 > = createSelector(
-    selectPersistedDashboardFilterContext,
-    (filterContext): IFilterContextDefinition | undefined => {
-        if (!filterContext) {
+    selectPersistedDashboardFilterContextDefinitionsByTab,
+    selectPersistedDashboardActiveTabId,
+    (definitionsByTab, activeTabId) => {
+        if (!definitionsByTab || Object.keys(definitionsByTab).length === 0) {
             return undefined;
         }
 
-        if (isTempFilterContext(filterContext)) {
-            const { ref: _, uri: __, ...definition } = filterContext;
-            return {
-                ...definition,
-                title: "filterContext",
-                description: "",
-            };
-        } else {
-            const { identifier: _, ref: __, uri: ___, ...definition } = filterContext;
-            return definition;
-        }
+        const resolvedActiveTabId = activeTabId ?? Object.keys(definitionsByTab)[0];
+        return definitionsByTab[resolvedActiveTabId] ?? definitionsByTab[Object.keys(definitionsByTab)[0]];
     },
 );
 
@@ -419,64 +640,6 @@ export const selectEvaluationFrequency: DashboardSelector<string | undefined> = 
 //
 
 /**
- * Selects persisted FilterContextItems - that is the FilterContextItems that were used to initialize
- * the original filters of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardFilterContextFilters = createSelector(
-    selectPersistedDashboardFilterContext,
-    (persistedFilterContext) => {
-        return persistedFilterContext?.filters;
-    },
-);
-
-/**
- * Selects persisted IDashboardDateFilter - that is the IDashboardDateFilter that were used to initialize
- * the original filters of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardFilterContextDateFilter = createSelector(
-    selectPersistedDashboardFilterContextFilters,
-    (persistedFilters) => {
-        return (persistedFilters ?? []).find(isDashboardCommonDateFilter);
-    },
-);
-
-/**
- * Selects persisted IDashboardAttributeFilters - that is the IDashboardAttributeFilters that were used to initialize
- * the original filters of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
-    selectPersistedDashboardFilterContextFilters,
-    (persistedFilters) => {
-        return (persistedFilters ?? []).filter(isDashboardAttributeFilter);
-    },
-);
-
-/**
- * Selects persisted draggable filters (date filters with dimension and attribute filters) - that is the filters that were used to initialize
- * the original filters of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardFilterContextDraggableFilters = createSelector(
-    selectPersistedDashboardFilterContextFilters,
-    (persistedFilters) => {
-        return (persistedFilters ?? []).filter(
-            (f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilter(f),
-        );
-    },
-);
-
-/**
  * Selects persisted title - that is the title that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
@@ -554,38 +717,26 @@ const selectPersistedDashboardLayout = createSelector(selectSelf, (state) => {
 });
 
 /**
- * Selects persisted attribute filter configs - that is the attribute filter configs array object that was used to initialize the rest
- * of the dashboard state of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardAttributeFilterConfigs = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.attributeFilterConfigs || [];
-});
-
-/**
  * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  */
 export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardAttributeFilterConfigs,
-    selectAttributeFilterConfigsOverrides,
-    (persistedAttributeFilterConfigs, currentAttributeFilterConfigs) => {
-        return !isEqual(persistedAttributeFilterConfigs, currentAttributeFilterConfigs);
+    selectPersistedDashboardAttributeFilterConfigsByTab,
+    selectAttributeFilterConfigsOverridesByTab,
+    (persistedAttributeFilterConfigsByTab, currentAttributeFilterConfigsByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedAttributeFilterConfigsByTab,
+            currentAttributeFilterConfigsByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedConfigs = persistedAttributeFilterConfigsByTab[tabId] ?? [];
+            const currentConfigs = currentAttributeFilterConfigsByTab[tabId] ?? [];
+
+            return !isEqual(persistedConfigs, currentConfigs);
+        });
     },
 );
-
-/**
- * Selects persisted date filter configs - that is the date filter configs array object that was used to initialize the rest
- * of the dashboard state of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.dateFilterConfigs || [];
-});
 
 /**
  * Selects the date dataset to use for filtering metrics in section header rich text.
@@ -608,36 +759,24 @@ const selectPersistedDashboardSectionHeadersDateDataSet = createSelector(selectS
 });
 
 /**
- * Selects persisted tabs - that is the tabs array that was used to initialize the rest
- * of the dashboard state of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardTabs = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.tabs;
-});
-
-/**
- * Selects persisted active tab ID - that is the active tab ID that was used to initialize the rest
- * of the dashboard state of the dashboard component during the initial load of the dashboard.
- *
- * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
- * been persisted (typically newly created dashboard being edited).
- */
-const selectPersistedDashboardActiveTabId = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.activeTabId;
-});
-
-/**
  * Selects a boolean indication if the dashboard has any changes to the dashboard date filter configs compared to the persisted version (if any)
  *
  */
 export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardDateFilterConfigs,
-    selectDateFilterConfigsOverrides,
-    (persistedDateFilterConfigs, currentDateFilterConfigs) => {
-        return !isEqual(persistedDateFilterConfigs, currentDateFilterConfigs);
+    selectPersistedDashboardDateFilterConfigsByTab,
+    selectDateFilterConfigsOverridesByTab,
+    (persistedDateFilterConfigsByTab, currentDateFilterConfigsByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedDateFilterConfigsByTab,
+            currentDateFilterConfigsByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedConfigs = persistedDateFilterConfigsByTab[tabId] ?? [];
+            const currentConfigs = currentDateFilterConfigsByTab[tabId] ?? [];
+
+            return !isEqual(persistedConfigs, currentConfigs);
+        });
     },
 );
 
@@ -647,18 +786,37 @@ export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = crea
  * @internal
  */
 export const selectIsDateFilterChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardFilterContextDateFilter,
-    selectFilterContextDateFilter,
-    (persistedDateFilter, currentDateFilter) => {
-        return !isEqual(persistedDateFilter, currentDateFilter);
+    selectPersistedDashboardFilterContextFiltersByTab,
+    selectWorkingFilterContextFiltersByTab,
+    (persistedFiltersByTab, workingFiltersByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(persistedFiltersByTab, workingFiltersByTab);
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedFilters = persistedFiltersByTab[tabId] ?? [];
+            const workingFilters = workingFiltersByTab[tabId] ?? [];
+            const persistedDateFilter = persistedFilters.find(isDashboardCommonDateFilter);
+            const workingDateFilter = workingFilters.find(isDashboardCommonDateFilter);
+
+            return !isEqual(persistedDateFilter, workingDateFilter);
+        });
     },
 );
 
 export const selectIsDateFilterConfigChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardFilterContextDateFilterConfig,
-    selectDateFilterConfigOverrides,
-    (persistedDateFilterConfig, currentDateFilterConfig) => {
-        return !isEqual(persistedDateFilterConfig, currentDateFilterConfig);
+    selectPersistedDashboardDateFilterConfigByTab,
+    selectDateFilterConfigOverridesByTab,
+    (persistedDateFilterConfigByTab, currentDateFilterConfigByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedDateFilterConfigByTab,
+            currentDateFilterConfigByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedConfig = persistedDateFilterConfigByTab[tabId];
+            const currentConfig = currentDateFilterConfigByTab[tabId];
+
+            return !isEqual(persistedConfig, currentConfig);
+        });
     },
 );
 
@@ -668,10 +826,20 @@ export const selectIsDateFilterConfigChanged: DashboardSelector<boolean> = creat
  * @internal
  */
 export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardFilterContextAttributeFilters,
-    selectFilterContextAttributeFilters,
-    (persistedAttributeFilters, currentAttributeFilters) => {
-        return !isEqual(persistedAttributeFilters, currentAttributeFilters);
+    selectPersistedDashboardAttributeFiltersByTab,
+    selectWorkingAttributeFiltersByTab,
+    (persistedAttributeFiltersByTab, workingAttributeFiltersByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedAttributeFiltersByTab,
+            workingAttributeFiltersByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedFilters = persistedAttributeFiltersByTab[tabId] ?? [];
+            const workingFilters = workingAttributeFiltersByTab[tabId] ?? [];
+
+            return !isEqual(persistedFilters, workingFilters);
+        });
     },
 );
 
@@ -681,10 +849,20 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
  * @internal
  */
 export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardFilterContextDraggableFilters,
-    selectFilterContextDraggableFilters,
-    (persistedFilters, currentFilters) => {
-        return !isEqual(persistedFilters, currentFilters);
+    selectPersistedDashboardDraggableFiltersByTab,
+    selectWorkingDraggableFiltersByTab,
+    (persistedDraggableFiltersByTab, workingDraggableFiltersByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedDraggableFiltersByTab,
+            workingDraggableFiltersByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedFilters = persistedDraggableFiltersByTab[tabId] ?? [];
+            const workingFilters = workingDraggableFiltersByTab[tabId] ?? [];
+
+            return !isEqual(persistedFilters, workingFilters);
+        });
     },
 );
 
@@ -793,22 +971,45 @@ export const selectIsSectionHeadersDateDataSetChanged: DashboardSelector<boolean
 
 /**
  * Selects a boolean indication if the dashboard has any changes to the tabs compared to the persisted version (if any)
+ * Compares only the tabs identifiers and titles.
  *
- * @internal
  */
-export const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
+const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardTabs,
     selectPersistedDashboardActiveTabId,
     selectTabs,
     selectActiveTabId,
     (persistedTabs, persistedActiveTabId, currentTabs, currentActiveTabId) => {
-        // Check if active tab ID changed
+        // Check if active tab ID changed (only if persisted dashboard has tabs)
         if (persistedActiveTabId !== currentActiveTabId) {
             return true;
         }
 
-        // Compare tabs arrays
-        return !isEqual(persistedTabs, currentTabs);
+        // Both have tabs - compare them
+        // Normalize tabs for comparison - compare all common properties including filter configs
+        // Layout is compared separately via selectIsLayoutChanged
+        const normalizeTabsForComparison = (
+            tabs: IDashboardTab<IDashboardWidget>[] | TabState[] | undefined,
+        ) => {
+            if (!tabs || tabs.length === 0) {
+                return [];
+            }
+            return tabs
+                .map((tab) => {
+                    return {
+                        identifier: tab.identifier,
+                        title: tab.title,
+                        // all other props are dirty checked separately
+                    };
+                })
+                .sort((a, b) => a.identifier.localeCompare(b.identifier));
+        };
+
+        const normalizedPersistedTabs = normalizeTabsForComparison(persistedTabs);
+        const normalizedCurrentTabs = normalizeTabsForComparison(currentTabs);
+
+        // Compare normalized tabs arrays
+        return !isEqual(normalizedPersistedTabs, normalizedCurrentTabs);
     },
 );
 

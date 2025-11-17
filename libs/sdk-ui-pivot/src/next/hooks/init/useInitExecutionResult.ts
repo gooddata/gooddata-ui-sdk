@@ -59,29 +59,26 @@ export const useInitExecutionResult = () => {
                      * When execution succeeds but data loading fails, push drill targets
                      * for the Interactions menu before propagating the error.
                      */
-                    if (!pushData) {
-                        throw e;
-                    }
-
-                    // Check error types on the original error before conversion (matches old table behavior)
-                    if (isUnexpectedResponseError(e)) {
-                        pushData({
-                            availableDrillTargets: getAvailableDrillTargets(
-                                DataViewFacade.forResult(initialExecutionResult),
-                                measureGroupDimension,
-                                columnHeadersPosition,
-                            ),
-                        });
-                    }
-
-                    if (isNoDataError(e) && e.dataView) {
-                        pushData({
-                            availableDrillTargets: getAvailableDrillTargets(
-                                DataViewFacade.for(e.dataView),
-                                measureGroupDimension,
-                                columnHeadersPosition,
-                            ),
-                        });
+                    if (pushData) {
+                        // Check error types on the original error before conversion (matches old table behavior)
+                        if (isUnexpectedResponseError(e)) {
+                            pushData({
+                                availableDrillTargets: getAvailableDrillTargets(
+                                    DataViewFacade.forResult(initialExecutionResult),
+                                    measureGroupDimension,
+                                    columnHeadersPosition,
+                                ),
+                            });
+                        }
+                        if (isNoDataError(e) && e.dataView) {
+                            pushData({
+                                availableDrillTargets: getAvailableDrillTargets(
+                                    DataViewFacade.for(e.dataView),
+                                    measureGroupDimension,
+                                    columnHeadersPosition,
+                                ),
+                            });
+                        }
                     }
 
                     throw convertError(e);

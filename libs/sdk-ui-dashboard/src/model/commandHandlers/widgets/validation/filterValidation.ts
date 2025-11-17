@@ -29,16 +29,16 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { query } from "../../../store/_infra/queryCall.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
 } from "../../../store/catalog/catalogSelectors.js";
 import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
-} from "../../../store/filterContext/filterContextSelectors.js";
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 

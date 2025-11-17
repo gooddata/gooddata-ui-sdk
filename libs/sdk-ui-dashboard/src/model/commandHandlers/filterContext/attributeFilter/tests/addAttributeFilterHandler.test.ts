@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -6,11 +7,11 @@ import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-
 
 import { addAttributeFilter } from "../../../../commands/index.js";
 import { DashboardCommandFailed } from "../../../../events/index.js";
+import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
-} from "../../../../store/filterContext/filterContextSelectors.js";
-import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
+} from "../../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
@@ -101,6 +102,7 @@ describe("addAttributeFilterHandler", () => {
         );
 
         const attributeFilterConfigsModeMap = selectAttributeFilterConfigsModeMap(Tester.state());
+
         expect(Array.from(attributeFilterConfigsModeMap.values())).toEqual([
             DashboardAttributeFilterConfigModeValues.READONLY,
         ]);

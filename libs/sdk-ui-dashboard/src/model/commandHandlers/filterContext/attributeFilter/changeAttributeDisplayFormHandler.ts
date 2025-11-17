@@ -20,8 +20,8 @@ import {
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
@@ -76,8 +76,8 @@ export function* changeAttributeDisplayFormHandler(
     yield put(
         batchActions([
             // keep the attribute display form field up to date
-            filterContextActions.addAttributeFilterDisplayForm(displayFormData),
-            filterContextActions.changeAttributeDisplayForm({
+            tabsActions.addAttributeFilterDisplayForm(displayFormData),
+            tabsActions.changeAttributeDisplayForm({
                 filterLocalId,
                 displayForm,
                 isWorkingSelectionChange:

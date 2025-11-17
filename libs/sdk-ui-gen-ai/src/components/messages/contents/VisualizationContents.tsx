@@ -95,6 +95,7 @@ export type VisualizationContentsProps = {
     showSuggestions?: boolean;
     colorPalette?: IColorPalette;
     enableNewPivotTable?: boolean;
+    enableChangeAnalysis?: boolean;
     enableAccessibleChartTooltip?: boolean;
     agGridToken?: string;
     onCopyToClipboard?: (data: { content: string }) => void;
@@ -108,6 +109,7 @@ function VisualizationContentsComponentCore({
     colorPalette,
     enableNewPivotTable = true,
     enableAccessibleChartTooltip = false,
+    enableChangeAnalysis = false,
     agGridToken,
     showSuggestions = false,
     onCopyToClipboard,
@@ -547,6 +549,7 @@ function VisualizationContentsComponentCore({
                                                     handleSuccess,
                                                     handlerDrill,
                                                     {
+                                                        enableChangeAnalysis,
                                                         enableNewPivotTable,
                                                         enableAccessibleChartTooltip,
                                                         agGridToken: resolvedAgGridToken,
@@ -568,6 +571,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
                                                     );
@@ -584,6 +588,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
                                                     );
@@ -600,6 +605,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
                                                     );
@@ -616,6 +622,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
                                                     );
@@ -631,6 +638,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            enableChangeAnalysis,
                                                             enableNewPivotTable,
                                                             enableAccessibleChartTooltip,
                                                             agGridToken: resolvedAgGridToken,
@@ -647,6 +655,9 @@ function VisualizationContentsComponentCore({
                                                         handleLoadingChanged,
                                                         handleSuccess,
                                                         handlerDrill,
+                                                        {
+                                                            enableChangeAnalysis,
+                                                        },
                                                     );
                                                 default:
                                                     return assertNever(visualization.visualizationType);
@@ -722,6 +733,7 @@ const renderBarChart = (
     onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
     },
 ) => (
     <BarChart
@@ -739,7 +751,11 @@ const renderBarChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        drillableItems={
+            props.enableChangeAnalysis
+                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                : undefined
+        }
         onDrill={onDrill}
         filters={filters}
         onError={onError}
@@ -761,6 +777,7 @@ const renderColumnChart = (
     onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
     },
 ) => (
     <ColumnChart
@@ -778,7 +795,11 @@ const renderColumnChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        drillableItems={
+            props.enableChangeAnalysis
+                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                : undefined
+        }
         onDrill={onDrill}
         filters={filters}
         onError={onError}
@@ -800,6 +821,7 @@ const renderLineChart = (
     onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
     },
 ) => (
     <LineChart
@@ -816,7 +838,11 @@ const renderLineChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        drillableItems={
+            props.enableChangeAnalysis
+                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                : undefined
+        }
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -837,6 +863,7 @@ const renderPieChart = (
     onDrill: OnFiredDrillEvent,
     props: {
         enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
     },
 ) => (
     <PieChart
@@ -851,7 +878,11 @@ const renderPieChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        drillableItems={
+            props.enableChangeAnalysis
+                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                : undefined
+        }
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -872,6 +903,7 @@ const renderTable = (
     props: {
         enableAccessibleChartTooltip?: boolean;
         enableNewPivotTable?: boolean;
+        enableChangeAnalysis?: boolean;
         agGridToken?: string;
     },
 ) => {
@@ -884,9 +916,11 @@ const renderTable = (
             filters={filters}
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
-            drillableItems={[dimensions[0], dimensions[1]]
-                .filter(Boolean)
-                .map((x) => x.attribute.displayForm)}
+            drillableItems={
+                props.enableChangeAnalysis
+                    ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                    : undefined
+            }
             onDrill={onDrill}
             onError={onError}
             onLoadingChanged={onLoadingChanged}
@@ -905,6 +939,9 @@ const renderHeadline = (
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
+    props: {
+        enableChangeAnalysis?: boolean;
+    },
 ) => (
     <Headline
         locale={locale}
@@ -916,7 +953,11 @@ const renderHeadline = (
             ...getHeadlineComparison(metrics),
             colorPalette,
         }}
-        drillableItems={[dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)}
+        drillableItems={
+            props.enableChangeAnalysis
+                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
+                : undefined
+        }
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -955,13 +996,18 @@ const mapStateToProps = (
     state: RootState,
 ): Pick<
     VisualizationContentsProps,
-    "colorPalette" | "enableNewPivotTable" | "enableAccessibleChartTooltip" | "agGridToken"
+    | "colorPalette"
+    | "enableNewPivotTable"
+    | "enableAccessibleChartTooltip"
+    | "enableChangeAnalysis"
+    | "agGridToken"
 > => {
     const settings = settingsSelector(state);
     return {
         colorPalette: colorPaletteSelector(state),
         enableNewPivotTable: settings?.enableNewPivotTable,
         enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
+        enableChangeAnalysis: settings?.enableChangeAnalysis,
         agGridToken: settings?.agGridToken,
     };
 };

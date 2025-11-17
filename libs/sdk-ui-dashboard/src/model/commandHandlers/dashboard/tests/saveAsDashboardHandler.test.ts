@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
 import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
-import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";

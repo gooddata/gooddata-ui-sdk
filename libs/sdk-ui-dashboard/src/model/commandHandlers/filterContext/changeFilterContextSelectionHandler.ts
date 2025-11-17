@@ -30,21 +30,20 @@ import {
 import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { ChangeFilterContextSelection } from "../../commands/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
 import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     IUpdateAttributeFilterSelectionPayload,
     IUpsertDateFilterPayload,
-} from "../../store/filterContext/filterContextReducers.js";
+} from "../../store/tabs/filterContext/filterContextReducers.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
 import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
@@ -232,13 +231,13 @@ function* getAttributeFiltersUpdateActions(
             if (foundByDisplayAsLabel && displayFormData) {
                 updateActions.push(
                     // keep the attribute display form field up to date
-                    filterContextActions.addAttributeFilterDisplayForm(displayFormData),
-                    filterContextActions.changeAttributeDisplayForm({
+                    tabsActions.addAttributeFilterDisplayForm(displayFormData),
+                    tabsActions.changeAttributeDisplayForm({
                         filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
                         displayForm: filterRef,
                     }),
                     // backup current displayForm to the displayAsLabel
-                    attributeFilterConfigsActions.changeDisplayAsLabel({
+                    tabsActions.changeDisplayAsLabel({
                         localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
                         displayAsLabel: dashboardFilter.attributeFilter.displayForm,
                     }),
@@ -247,20 +246,20 @@ function* getAttributeFiltersUpdateActions(
             if (foundByDashboardFilterDisplayAsLabel && displayFormData) {
                 updateActions.push(
                     // keep the attribute display form field up to date
-                    filterContextActions.addAttributeFilterDisplayForm(displayFormData),
-                    filterContextActions.changeAttributeDisplayForm({
+                    tabsActions.addAttributeFilterDisplayForm(displayFormData),
+                    tabsActions.changeAttributeDisplayForm({
                         filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
                         displayForm: filterRef,
                     }),
                     // clear displayAsLabel
-                    attributeFilterConfigsActions.changeDisplayAsLabel({
+                    tabsActions.changeDisplayAsLabel({
                         localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
                         displayAsLabel: undefined,
                     }),
                 );
             }
             updateActions.push(
-                filterContextActions.updateAttributeFilterSelection(
+                tabsActions.updateAttributeFilterSelection(
                     getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
                 ),
             );
@@ -280,7 +279,7 @@ function* getAttributeFiltersUpdateActions(
         );
         if (unhandledFilters.length > 0) {
             updateActions.push(
-                filterContextActions.clearAttributeFiltersSelection({
+                tabsActions.clearAttributeFiltersSelection({
                     filterLocalIds: unhandledFilters.map((filter) => filter.attributeFilter.localIdentifier!),
                 }),
             );
@@ -324,9 +323,9 @@ function* getDateFilterUpdateActions(
                       : {}),
               };
 
-        return [filterContextActions.upsertDateFilter(upsertPayload)];
+        return [tabsActions.upsertDateFilter(upsertPayload)];
     } else if (resetOthers) {
-        return [filterContextActions.upsertDateFilter({ type: "allTime" })];
+        return [tabsActions.upsertDateFilter({ type: "allTime" })];
     }
 
     return [];
@@ -367,7 +366,7 @@ function* getDateFiltersUpdateActions(
                           : {}),
                   };
 
-            updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
+            updateActions.push(tabsActions.upsertDateFilter(upsertPayload));
         }
     }
 
@@ -385,7 +384,7 @@ function* getDateFiltersUpdateActions(
                     ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
                     : {};
                 updateActions.push(
-                    filterContextActions.upsertDateFilter({
+                    tabsActions.upsertDateFilter({
                         type: "allTime",
                         dataSet: dateFilter.dateFilter.dataSet,
                         ...localIdentifierObj,

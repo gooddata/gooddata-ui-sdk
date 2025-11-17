@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
     IDashboardExportImageOptions,
+    IDashboardExportPdfOptions,
+    IDashboardExportPresentationOptions,
+    IDashboardExportRawOptions,
     IDashboardReferences,
     IDashboardWithReferences,
     IDashboardsQuery,
@@ -349,7 +352,11 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
-    public exportDashboardToPdf(_ref: ObjRef, _filters?: FilterContextItem[]): Promise<IExportResult> {
+    public exportDashboardToPdf(
+        _ref: ObjRef,
+        _filters?: FilterContextItem[],
+        _options?: IDashboardExportPdfOptions,
+    ): Promise<IExportResult> {
         return Promise.resolve({
             uri: "/example/export.pdf",
             objectUrl: "blob:/01345454545454",
@@ -361,10 +368,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _ref: ObjRef,
         _format: string,
         _filters?: FilterContextItem[],
-        _options?: {
-            widgetIds?: ObjRef[];
-            filename?: string;
-        },
+        _options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }
@@ -385,6 +389,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _definition: IExecutionDefinition,
         _fileName: string,
         _customOverrides?: IRawExportCustomOverrides,
+        _options?: IDashboardExportRawOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }

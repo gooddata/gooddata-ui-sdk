@@ -1,6 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     IDashboardExportImageOptions,
+    IDashboardExportPdfOptions,
+    IDashboardExportPresentationOptions,
+    IDashboardExportRawOptions,
     IDashboardExportTabularOptions,
     IDashboardReferences,
     IDashboardWithReferences,
@@ -108,18 +112,19 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.deleteDashboard(ref);
     }
 
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult> {
-        return this.decorated.exportDashboardToPdf(ref, filters);
+    exportDashboardToPdf(
+        ref: ObjRef,
+        filters?: FilterContextItem[],
+        options?: IDashboardExportPdfOptions,
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToPdf(ref, filters, options);
     }
 
     exportDashboardToPresentation(
         ref: ObjRef,
         format: "PPTX" | "PDF",
         filters?: FilterContextItem[],
-        options?: {
-            widgetIds?: ObjRef[];
-            filename?: string;
-        },
+        options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> {
         return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
     }
@@ -140,8 +145,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         definition: IExecutionDefinition,
         fileName: string,
         customOverrides?: IRawExportCustomOverrides,
+        options?: IDashboardExportRawOptions,
     ): Promise<IExportResult> {
-        return this.decorated.exportDashboardToCSVRaw(definition, fileName, customOverrides);
+        return this.decorated.exportDashboardToCSVRaw(definition, fileName, customOverrides, options);
     }
 
     createScheduledMail(

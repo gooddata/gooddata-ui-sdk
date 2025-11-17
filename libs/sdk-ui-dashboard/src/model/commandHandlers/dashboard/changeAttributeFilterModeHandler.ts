@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -7,8 +8,8 @@ import { SetDashboardAttributeFilterConfigMode } from "../../commands/dashboard.
 import { dashboardAttributeConfigModeChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../store/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
@@ -26,7 +27,7 @@ export function* changeAttributeFilterModeHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localIdentifier ${localIdentifier} not found.`);
     }
 
-    yield put(attributeFilterConfigsActions.changeMode(cmd.payload));
+    yield put(tabsActions.changeAttributeFilterConfigMode(cmd.payload));
 
     const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
         yield select(selectFilterContextAttributeFilterByLocalId(localIdentifier));

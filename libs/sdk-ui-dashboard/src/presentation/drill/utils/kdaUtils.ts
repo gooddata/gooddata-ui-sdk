@@ -30,7 +30,11 @@ import {
     isValueRowDefinition,
 } from "@gooddata/sdk-ui";
 
-import { DashboardKeyDriverCombinationItem } from "../../../model/index.js";
+import {
+    DashboardKeyDriverCombinationItem,
+    keyDriverAnalysisSupportedStringGranularities,
+    keyDriverYearGranularity,
+} from "../../../model/index.js";
 
 /**
  * @internal
@@ -45,6 +49,14 @@ export function getKdaKeyDriverCombinations(
 
     // No relevant headers
     if (!combinations.dateHeader || !combinations.metricHeader) {
+        return [];
+    }
+
+    //Find granularity
+    const validGranularity = keyDriverAnalysisSupportedStringGranularities.includes(
+        combinations.dateHeader.attributeHeader.granularity ?? "",
+    );
+    if (!validGranularity) {
         return [];
     }
 
@@ -385,7 +397,7 @@ function createYearToYear(
 
     const attribute = current.scope.descriptor.attributeHeader;
     const attributeItem = current.scope.header.attributeHeaderItem;
-    const isYear = attribute.granularity === "GDC.time.year" || attribute.granularity === "YEAR";
+    const isYear = keyDriverYearGranularity.includes(attribute.granularity ?? "");
 
     // Year to year is not available for year granularity, it not makes sense
     if (isYear) {

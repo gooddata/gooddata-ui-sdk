@@ -4,11 +4,11 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { IDashboardDefinition } from "@gooddata/sdk-model";
 
-import { addLayoutSection, saveDashboard } from "../../../commands/index.js";
+import { addLayoutSection, initializeDashboard, saveDashboard } from "../../../commands/index.js";
 import { DashboardSaved } from "../../../events/index.js";
-import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
@@ -106,6 +106,37 @@ describe("save dashboard handler", () => {
             await Tester.dispatchAndWaitFor(saveDashboard(undefined, TestCorrelation), "GDC.DASH/EVT.SAVED");
 
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+        });
+    });
+
+    describe("tabs feature flag gating", () => {
+        let Tester: DashboardTester;
+
+        it("should omit tabs when feature flag is disabled", async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                undefined,
+                {
+                    initCommand: initializeDashboard({
+                        settings: {
+                            enableDashboardTabs: false,
+                        },
+                    }),
+                    backendConfig: {
+                        useRefType: "id",
+                    },
+                },
+            );
+
+            const event: DashboardSaved = await Tester.dispatchAndWaitFor(
+                saveDashboard(),
+                "GDC.DASH/EVT.SAVED",
+            );
+
+            expect(event.payload.dashboard.tabs).toBeUndefined();
+            expect(selectPersistedDashboard(Tester.state())?.tabs).toBeUndefined();
         });
     });
 });

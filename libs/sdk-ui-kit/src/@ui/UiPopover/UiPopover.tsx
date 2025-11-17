@@ -79,6 +79,7 @@ export function UiPopover({
         return returnFocusTo ?? ref;
     }, [returnFocusTo]);
     const id = useIdPrefixed("popover");
+    const titleId = useIdPrefixed("popover-title");
 
     return (
         <UiTooltip
@@ -87,7 +88,7 @@ export function UiPopover({
             accessibilityConfig={{
                 ...accessibilityConfig,
                 role: "dialog",
-                ariaLabelledBy: id,
+                ariaLabelledBy: titleId,
             }}
             anchor={cloneElement(anchor, {
                 ...(tabIndex === undefined ? {} : { tabIndex }),
@@ -121,9 +122,11 @@ export function UiPopover({
                         >
                             <div className={e("header")}>
                                 {typeof title === "string" ? (
-                                    <div className={e("header-title")}>{title}</div>
+                                    <div id={titleId} className={e("header-title")}>
+                                        {title}
+                                    </div>
                                 ) : (
-                                    <>{title}</>
+                                    <div id={titleId}>{title}</div>
                                 )}
                                 {closeVisible ? (
                                     <div className={e("header-close")}>

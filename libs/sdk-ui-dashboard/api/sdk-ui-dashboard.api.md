@@ -21,6 +21,7 @@ import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
+import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
@@ -82,7 +83,6 @@ import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
-import { IDashboardTab } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -3076,8 +3076,6 @@ export interface DashboardState {
     // @beta (undocumented)
     accessibleDashboards: AccessibleDashboardsState;
     // @alpha (undocumented)
-    attributeFilterConfigs: AttributeFilterConfigsState;
-    // @alpha (undocumented)
     automations: AutomationsState;
     // (undocumented)
     backendCapabilities: BackendCapabilitiesState;
@@ -3088,10 +3086,6 @@ export interface DashboardState {
     // (undocumented)
     dashboardPermissions: DashboardPermissionsState;
     // @beta (undocumented)
-    dateFilterConfig: DateFilterConfigState;
-    // @alpha (undocumented)
-    dateFilterConfigs: DateFilterConfigsState;
-    // @beta (undocumented)
     drill: DrillState;
     // @alpha (undocumented)
     drillTargets: EntityState<IDrillTargets, EntityId>;
@@ -3101,8 +3095,6 @@ export interface DashboardState {
     executed: ExecutedState;
     // @beta
     executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
-    // (undocumented)
-    filterContext: FilterContextState;
     // (undocumented)
     filterViews: FilterViewsState;
     // @alpha (undocumented)
@@ -4390,6 +4382,26 @@ export interface IAddAttributeFilterButtonProps {
 }
 
 // @internal (undocumented)
+export interface IAddAttributeFilterPayload {
+    // (undocumented)
+    readonly displayForm: ObjRef;
+    // (undocumented)
+    readonly index: number;
+    // (undocumented)
+    readonly initialIsNegativeSelection?: boolean;
+    // (undocumented)
+    readonly initialSelection?: IAttributeElements;
+    // (undocumented)
+    readonly localIdentifier?: string;
+    // (undocumented)
+    readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+    // (undocumented)
+    readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+    // (undocumented)
+    readonly title?: string;
+}
+
+// @internal (undocumented)
 export interface IAlertDialogContext {
     alert?: IAutomationMetadataObject;
     widgetRef?: ObjRef;
@@ -4451,6 +4463,12 @@ export interface IAlertingManagementDialogProps {
 }
 
 // @internal (undocumented)
+export interface IApplyWorkingSelectionPayload {
+    // (undocumented)
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+}
+
+// @internal (undocumented)
 export type IAttributeFilterDraggingComponentProps = {
     itemType: "attributeFilter";
     item: AttributeFilterDraggableItem;
@@ -4508,6 +4526,50 @@ export interface ICancelEditDialogProps {
     onCancel: () => void;
     // (undocumented)
     onSubmit: () => void;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeDisplayFormPayload {
+    // (undocumented)
+    readonly displayForm: ObjRef;
+    // (undocumented)
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly isResultOfMigration?: boolean;
+    // (undocumented)
+    readonly isWorkingSelectionChange?: boolean;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeLimitingItemsPayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly limitingItems: ObjRef[];
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeSelectionModePayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly selectionMode: DashboardAttributeFilterSelectionMode;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeTitlePayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly title?: string;
+}
+
+// @internal (undocumented)
+export interface IClearAttributeFiltersSelectionPayload {
+    // (undocumented)
+    readonly filterLocalIds: string[];
 }
 
 // @internal (undocumented)
@@ -5764,6 +5826,22 @@ export interface IMetricsAndFacts {
     metrics: ICatalogMeasure[];
 }
 
+// @internal (undocumented)
+export interface IMoveAttributeFilterPayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly index: number;
+}
+
+// @internal (undocumented)
+export interface IMoveDateFilterPayload {
+    // (undocumented)
+    readonly dataSet: ObjRef;
+    // (undocumented)
+    readonly index: number;
+}
+
 // @alpha (undocumented)
 export interface INestedLayoutProps {
     backend?: IAnalyticalBackend;
@@ -5961,6 +6039,18 @@ export interface IPdfExportConfig {
     format: "pdf";
     // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IRemoveAttributeFilterPayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+}
+
+// @internal (undocumented)
+export interface IRemoveDateFilterPayload {
+    // (undocumented)
+    readonly dataSet: ObjRef;
 }
 
 // @alpha (undocumented)
@@ -6560,6 +6650,22 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 // @alpha
 export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 
+// @internal (undocumented)
+export interface ISetAttributeFilterDependentDateFiltersPayload {
+    // (undocumented)
+    readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
+    // (undocumented)
+    readonly filterLocalId: string;
+}
+
+// @internal (undocumented)
+export interface ISetAttributeFilterParentsPayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+}
+
 // @beta (undocumented)
 export interface ISettingButtonProps {
     // (undocumented)
@@ -6769,6 +6875,59 @@ export interface ITopBarProps {
     // (undocumented)
     titleProps: ITitleProps;
 }
+
+// @internal (undocumented)
+export interface IUpdateAttributeFilterSelectionPayload {
+    // (undocumented)
+    readonly elements: IAttributeElements;
+    // (undocumented)
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    // (undocumented)
+    readonly filterLocalId: string;
+    // (undocumented)
+    readonly isResultOfMigration?: boolean;
+    // (undocumented)
+    readonly isSelectionInvalid?: boolean;
+    // (undocumented)
+    readonly isWorkingSelectionChange?: boolean;
+    // (undocumented)
+    readonly negativeSelection: boolean;
+}
+
+// @internal (undocumented)
+export interface IUpsertDateFilterAllTimePayload {
+    // (undocumented)
+    readonly dataSet?: ObjRef;
+    // (undocumented)
+    readonly isWorkingSelectionChange?: boolean;
+    // (undocumented)
+    readonly localIdentifier?: string;
+    // (undocumented)
+    readonly type: "allTime";
+}
+
+// @internal (undocumented)
+export interface IUpsertDateFilterNonAllTimePayload {
+    // (undocumented)
+    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    // (undocumented)
+    readonly dataSet?: ObjRef;
+    // (undocumented)
+    readonly from?: DateString | number;
+    // (undocumented)
+    readonly granularity: DateFilterGranularity;
+    // (undocumented)
+    readonly isWorkingSelectionChange?: boolean;
+    // (undocumented)
+    readonly localIdentifier?: string;
+    // (undocumented)
+    readonly to?: DateString | number;
+    // (undocumented)
+    readonly type: DateFilterType;
+}
+
+// @internal (undocumented)
+export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 // @internal (undocumented)
 export interface IUseAttributeElements {
@@ -7022,6 +7181,15 @@ export interface KeyDriverAnalysisPayload {
     readonly filters: FilterContextItem[];
     readonly keyDriveItem: DashboardKeyDriverCombinationItem;
 }
+
+// @internal (undocumented)
+export const keyDriverAnalysisSupportedGranularities: DateAttributeGranularity[];
+
+// @internal (undocumented)
+export const keyDriverAnalysisSupportedStringGranularities: string[];
+
+// @internal (undocumented)
+export const keyDriverYearGranularity: string[];
 
 // @internal (undocumented)
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
@@ -8541,7 +8709,7 @@ export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefin
 export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha
-export const selectActiveTab: DashboardSelector<IDashboardTab<ExtendedDashboardWidget> | undefined>;
+export const selectActiveTab: DashboardSelector<TabState | undefined>;
 
 // @alpha
 export const selectActiveTabId: DashboardSelector<string | undefined>;
@@ -9560,7 +9728,7 @@ export const selectPermissions: DashboardSelector<IWorkspacePermissions>;
 // @internal
 export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>;
 
-// @internal (undocumented)
+// @internal
 export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<IDashboardDateFilterConfig_2 | undefined>;
 
 // @public
@@ -9660,10 +9828,10 @@ export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolea
 export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean>;
 
 // @alpha
-export const selectTabById: (tabId: string) => DashboardSelector<IDashboardTab<ExtendedDashboardWidget> | undefined>;
+export const selectTabById: (tabId: string) => DashboardSelector<TabState | undefined>;
 
 // @alpha
-export const selectTabs: DashboardSelector<IDashboardTab<ExtendedDashboardWidget>[] | undefined>;
+export const selectTabs: DashboardSelector<TabState[] | undefined>;
 
 // @public
 export const selectTimezone: DashboardSelector<string | undefined>;
@@ -10144,37 +10312,217 @@ export interface SwitchDashboardTabPayload {
 // @beta
 export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode;
 
-// @alpha (undocumented)
+// @internal (undocumented)
 export const tabsActions: CaseReducerActions<    {
-setTabs: (state: WritableDraft<TabsState>, action: {
+readonly setFilterContext: (state: WritableDraft<TabsState>, action: {
 payload: {
-tabs?: IDashboardTab<ExtendedDashboardWidget>[];
-activeTabId?: string;
+filterContextDefinition: IFilterContextDefinition;
+originalFilterContextDefinition?: IFilterContextDefinition;
+attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
+filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
-setActiveTabId: (state: WritableDraft<TabsState>, action: {
-payload: string | undefined;
+readonly updateFilterContextIdentity: (state: WritableDraft<TabsState>, action: {
+payload: {
+filterContextIdentity?: IDashboardObjectIdentity;
+};
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
-updateTab: (state: WritableDraft<TabsState>, action: {
-payload: IDashboardTab<ExtendedDashboardWidget>;
+readonly removeAttributeFilterDisplayForms: (state: WritableDraft<TabsState>, action: {
+payload: ObjRef;
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
-removeTabById: (state: WritableDraft<TabsState>, action: {
-payload: string;
+readonly addAttributeFilterDisplayForm: (state: WritableDraft<TabsState>, action: {
+payload: IAttributeDisplayFormMetadataObject;
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
-clearTabs: (state: WritableDraft<TabsState>, action: {
+readonly addAttributeFilter: (state: WritableDraft<TabsState>, action: {
+payload: IAddAttributeFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeAttributeFilter: (state: WritableDraft<TabsState>, action: {
+payload: IRemoveAttributeFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly moveAttributeFilter: (state: WritableDraft<TabsState>, action: {
+payload: IMoveAttributeFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly addDateFilter: (state: WritableDraft<TabsState>, action: {
+payload: AddDateFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeDateFilter: (state: WritableDraft<TabsState>, action: {
+payload: IRemoveDateFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly moveDateFilter: (state: WritableDraft<TabsState>, action: {
+payload: IMoveDateFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateAttributeFilterSelection: (state: WritableDraft<TabsState>, action: {
+payload: IUpdateAttributeFilterSelectionPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setAttributeFilterParents: (state: WritableDraft<TabsState>, action: {
+payload: ISetAttributeFilterParentsPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setAttributeFilterDependentDateFilters: (state: WritableDraft<TabsState>, action: {
+payload: ISetAttributeFilterDependentDateFiltersPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly clearAttributeFiltersSelection: (state: WritableDraft<TabsState>, action: {
+payload: IClearAttributeFiltersSelectionPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly upsertDateFilter: (state: WritableDraft<TabsState>, action: {
+payload: IUpsertDateFilterPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeAttributeDisplayForm: (state: WritableDraft<TabsState>, action: {
+payload: IChangeAttributeDisplayFormPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeAttributeTitle: (state: WritableDraft<TabsState>, action: {
+payload: IChangeAttributeTitlePayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeSelectionMode: (state: WritableDraft<TabsState>, action: {
+payload: IChangeAttributeSelectionModePayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeLimitingItems: (state: WritableDraft<TabsState>, action: {
+payload: IChangeAttributeLimitingItemsPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setPreloadedAttributesWithReferences: (state: WritableDraft<TabsState>, action: {
+payload: IAttributeWithReferences[];
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly applyWorkingSelection: (state: WritableDraft<TabsState>, action: {
+payload: IApplyWorkingSelectionPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly resetWorkingSelection: (state: WritableDraft<TabsState>, action: {
 payload: void;
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
+readonly setDefaultFilterOverrides: (state: WritableDraft<TabsState>, action: {
+payload: FilterContextItem[];
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setDateFilterConfig: (state: WritableDraft<TabsState>, action: {
+payload: {
+dateFilterConfig?: IDashboardDateFilterConfig_2;
+effectiveDateFilterConfig: IDateFilterConfig;
+isUsingDashboardOverrides: boolean;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setDateFilterConfigMode: (state: WritableDraft<TabsState>, action: {
+payload: DashboardDateFilterConfigMode;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setDateFilterConfigTitle: (state: WritableDraft<TabsState>, action: {
+payload: string | undefined;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateDateFilterConfig: (state: WritableDraft<TabsState>, action: {
+payload: IDashboardDateFilterConfig_2;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly addDateFilterConfigValidationWarning: (state: WritableDraft<TabsState>, action: {
+payload: DateFilterValidationResult;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<TabsState>, action: {
+payload: void;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeDateFilterConfigsMode: (state: WritableDraft<TabsState>, action: {
+payload: SetDashboardDateFilterWithDimensionConfigModePayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setDateFilterConfigs: (state: WritableDraft<TabsState>, action: {
+payload: any;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeDateFilterConfigs: (state: WritableDraft<TabsState>, action: {
+payload: ObjRef;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeDateFilterConfigsTitle: (state: WritableDraft<TabsState>, action: {
+payload: SetDateFilterConfigTitlePayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeAttributeFilterConfigMode: (state: WritableDraft<TabsState>, action: {
+payload: SetDashboardAttributeFilterConfigModePayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setAttributeFilterConfigs: (state: WritableDraft<TabsState>, action: {
+payload: any;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeAttributeFilterConfig: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly changeDisplayAsLabel: (state: WritableDraft<TabsState>, action: {
+payload: SetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setTabs: TabsReducer<    {
+payload: {
+tabs?: TabState[];
+activeTabId?: string;
+};
+type: string;
+}>;
+readonly setActiveTabId: TabsReducer<    {
+payload: string | undefined;
+type: string;
+}>;
+readonly updateTab: TabsReducer<    {
+payload: TabState;
+type: string;
+}>;
+readonly removeTabById: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly clearTabs: TabsReducer<    {
+payload: void;
+type: string;
+}>;
 }, "tabs">;
+
+// @alpha (undocumented)
+export type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
 
 // @alpha (undocumented)
 export interface TabsState {
     activeTabId?: string;
-    tabs?: IDashboardTab<ExtendedDashboardWidget>[];
+    // @beta
+    attributesWithReferences?: IAttributeWithReferences[];
+    tabs?: TabState[];
+}
+
+// @alpha (undocumented)
+export interface TabState {
+    // (undocumented)
+    attributeFilterConfigs?: AttributeFilterConfigsState;
+    // (undocumented)
+    dateFilterConfig?: DateFilterConfigState;
+    // (undocumented)
+    dateFilterConfigs?: DateFilterConfigsState;
+    // (undocumented)
+    filterContext?: FilterContextState;
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    title?: string;
 }
 
 // @internal (undocumented)

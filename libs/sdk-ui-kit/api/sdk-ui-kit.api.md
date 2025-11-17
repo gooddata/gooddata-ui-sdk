@@ -809,6 +809,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaLabelledBy?: AriaAttributes["aria-labelledby"];
     // (undocumented)
+    ariaPressed?: AriaAttributes["aria-pressed"];
+    // (undocumented)
     role?: HTMLAttributes<HTMLElement>["role"];
 }
 
@@ -2078,7 +2080,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy" | "ariaControls" | "ariaExpanded" | "ariaHaspopup">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy" | "ariaControls" | "ariaExpanded" | "ariaHaspopup" | "ariaPressed">;
     ariaAttributes: {
         role: AriaRole;
     } & Pick<AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
@@ -4209,13 +4211,13 @@ export interface IOverlayState {
         align: string;
     };
     // (undocumented)
-    initialVisiblePart: number;
-    // (undocumented)
     observedHeight?: number;
     // (undocumented)
     overflow?: string;
     // (undocumented)
     scrollTop?: number;
+    // (undocumented)
+    visiblePart: number;
 }
 
 // @internal (undocumented)

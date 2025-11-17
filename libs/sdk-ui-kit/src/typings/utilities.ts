@@ -31,5 +31,6 @@ export function accessibilityConfigToAttributes(
         "aria-expanded": accessibilityConfig.ariaExpanded,
         "aria-controls": accessibilityConfig.ariaControls,
         "aria-haspopup": accessibilityConfig.ariaHaspopup,
+        "aria-pressed": accessibilityConfig.ariaPressed,
     };
 }

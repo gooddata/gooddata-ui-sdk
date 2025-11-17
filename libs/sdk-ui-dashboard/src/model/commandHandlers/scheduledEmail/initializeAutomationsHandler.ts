@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { compact, omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -50,12 +51,12 @@ import {
     selectIsReadOnly,
     selectOpenAutomationOnLoad,
 } from "../../store/config/configSelectors.js";
-import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
+import { selectFilterContextDateFilter } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";

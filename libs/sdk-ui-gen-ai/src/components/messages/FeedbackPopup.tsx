@@ -4,7 +4,7 @@ import { ReactElement, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { UiButton, UiCheckbox, UiPopover } from "@gooddata/sdk-ui-kit";
+import { EditableLabel, UiButton, UiCheckbox, UiPopover, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 export interface IFeedbackPopupProps {
     anchor: ReactElement<any>;
@@ -12,7 +12,7 @@ export interface IFeedbackPopupProps {
 }
 
 export interface IFeedbackData {
-    reason: string;
+    reason: string[];
     description: string;
 }
 
@@ -21,8 +21,9 @@ export interface IFeedbackData {
  */
 export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
     const intl = useIntl();
-    const [selectedReason, setSelectedReason] = useState<string>("");
+    const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
     const [description, setDescription] = useState("");
+    const textareaWrapperId = useIdPrefixed("feedback-textarea-wrapper");
 
     const feedbackReasons = [
         {
@@ -45,13 +46,9 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
 
     const handleReasonChange = (reasonId: string, checked: boolean) => {
         if (checked) {
-            setSelectedReason(reasonId);
-            // Clear description if switching away from "other"
-            if (selectedReason === "other" && reasonId !== "other") {
-                setDescription("");
-            }
+            setSelectedReasons((prev) => [...prev, reasonId]);
         } else {
-            setSelectedReason("");
+            setSelectedReasons((prev) => prev.filter((id) => id !== reasonId));
             // Clear description when unchecking "other"
             if (reasonId === "other") {
                 setDescription("");
@@ -60,14 +57,14 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
     };
 
     const handleCancel = (onClose: () => void) => {
-        setSelectedReason("");
+        setSelectedReasons([]);
         setDescription("");
         onClose();
     };
 
     const handleSubmit = (onClose: () => void) => {
         onSubmit?.({
-            reason: selectedReason,
+            reason: selectedReasons,
             description,
         });
         handleCancel(onClose);
@@ -83,38 +80,48 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
             content={() => (
                 <div className="gd-gen-ai-feedback-popup__body">
                     <div className="gd-gen-ai-feedback-popup__section">
-                        <label className="gd-gen-ai-feedback-popup__section-label">
-                            {intl.formatMessage({ id: "gd.gen-ai.feedback.popup.reasons-label" })}
-                        </label>
-                        <div className="gd-gen-ai-feedback-popup__checkboxes">
-                            {feedbackReasons.map((reason) => (
-                                <UiCheckbox
-                                    key={reason.id}
-                                    label={reason.label}
-                                    checked={selectedReason === reason.id}
-                                    onChange={(e) => handleReasonChange(reason.id, e.target.checked)}
-                                />
-                            ))}
-                        </div>
+                        <fieldset style={{ border: "none" }}>
+                            <legend className="gd-label">
+                                {intl.formatMessage({ id: "gd.gen-ai.feedback.popup.reasons-label" })}
+                            </legend>
+                            <div className="gd-gen-ai-feedback-popup__checkboxes">
+                                {feedbackReasons.map((reason) => (
+                                    <UiCheckbox
+                                        key={reason.id}
+                                        label={reason.label}
+                                        checked={selectedReasons.includes(reason.id)}
+                                        onChange={(e) => handleReasonChange(reason.id, e.target.checked)}
+                                        accessibilityConfig={
+                                            reason.id === "other"
+                                                ? {
+                                                      ariaControls: textareaWrapperId,
+                                                      ariaExpanded: selectedReasons.includes("other")
+                                                          ? "true"
+                                                          : "false",
+                                                  }
+                                                : undefined
+                                        }
+                                    />
+                                ))}
+                            </div>
+                        </fieldset>
                     </div>
 
-                    {selectedReason === "other" && (
-                        <div className="gd-gen-ai-feedback-popup__section">
-                            <label
-                                htmlFor="feedback-description"
-                                className="gd-gen-ai-feedback-popup__section-label"
-                            >
-                                {intl.formatMessage({ id: "gd.gen-ai.feedback.popup.description-label" })}
-                            </label>
-                            <textarea
-                                id="feedback-description"
-                                className="gd-gen-ai-feedback-popup__textarea gd-input-field"
-                                rows={4}
+                    {selectedReasons.includes("other") && (
+                        <div id={textareaWrapperId} className="gd-gen-ai-feedback-popup__section">
+                            <EditableLabel
+                                value={description}
+                                onChange={setDescription}
+                                onSubmit={setDescription}
                                 placeholder={intl.formatMessage({
                                     id: "gd.gen-ai.feedback.popup.description-placeholder",
                                 })}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                maxRows={4}
+                                ariaLabel={intl.formatMessage({
+                                    id: "gd.gen-ai.feedback.popup.description-label",
+                                })}
+                                className="gd-input-field"
+                                textareaInOverlay
                             />
                         </div>
                     )}
@@ -130,7 +137,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
                     <UiButton
                         label={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.send" })}
                         variant="primary"
-                        isDisabled={!selectedReason}
+                        isDisabled={false}
                         onClick={() => handleSubmit(onClose)}
                     />
                 </>

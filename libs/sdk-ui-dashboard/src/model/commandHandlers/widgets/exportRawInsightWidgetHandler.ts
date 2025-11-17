@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -17,8 +18,8 @@ import { filterContextItemsToDashboardFiltersByWidget } from "../../../converter
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
-import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { selectRawExportOverridesForInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 

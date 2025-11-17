@@ -203,16 +203,30 @@ function getConvertedAnalyticalDashboardContent(
         });
     }
 
-    return {
-        dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
-        dateFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs),
-        attributeFilterConfigs: cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs),
-        layout: convertLayout(
-            true,
-            prepareDrillLocalIdentifierIfMissing(
-                setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
-            ),
+    const tabs = analyticalDashboard.tabs?.map((tab) => {
+        return convertDashboardTab(tab, filterContextsList);
+    });
+
+    const activeTab = tabs?.find((tab) => tab.identifier === analyticalDashboard.activeTabId) ?? tabs?.[0];
+
+    const layout = convertLayout(
+        true,
+        prepareDrillLocalIdentifierIfMissing(
+            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
         ),
+    );
+
+    return {
+        dateFilterConfig: analyticalDashboard.dateFilterConfig
+            ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig)
+            : activeTab?.dateFilterConfig,
+        dateFilterConfigs: analyticalDashboard.dateFilterConfigs
+            ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs)
+            : activeTab?.dateFilterConfigs,
+        attributeFilterConfigs: analyticalDashboard.attributeFilterConfigs
+            ? cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs)
+            : activeTab?.attributeFilterConfigs,
+        layout: layout ?? activeTab?.layout,
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
@@ -220,9 +234,7 @@ function getConvertedAnalyticalDashboardContent(
         disableFilterViews: analyticalDashboard.disableFilterViews,
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
         sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
-        tabs: analyticalDashboard.tabs?.map((tab) => {
-            return convertDashboardTab(tab, filterContextsList);
-        }),
+        tabs,
         activeTabId: analyticalDashboard.activeTabId,
     };
 }

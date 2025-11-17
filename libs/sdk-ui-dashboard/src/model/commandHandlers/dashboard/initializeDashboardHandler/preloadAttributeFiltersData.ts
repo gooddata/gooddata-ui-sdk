@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { IDashboard, isDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboard, ObjRef, isDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 
@@ -13,12 +14,18 @@ export function preloadAttributeFiltersData(
         .filter(isDashboardAttributeFilter)
         .map((filter) => filter.attributeFilter.displayForm);
 
-    if (!dashboardAttributeFilterRefs?.length) {
+    const tabsAttributeFilterRefs = dashboard?.tabs?.reduce((acc, tab) => {
+        const refs = tab.filterContext?.filters
+            .filter(isDashboardAttributeFilter)
+            .map((filter) => filter.attributeFilter.displayForm);
+        return [...acc, ...(refs ?? [])];
+    }, [] as ObjRef[]);
+
+    const attributeFilterRefs = [...(dashboardAttributeFilterRefs ?? []), ...(tabsAttributeFilterRefs ?? [])];
+
+    if (!attributeFilterRefs?.length) {
         return Promise.resolve([]);
     }
 
-    return backend
-        .workspace(workspace)
-        .attributes()
-        .getAttributesWithReferences(dashboardAttributeFilterRefs);
+    return backend.workspace(workspace).attributes().getAttributesWithReferences(attributeFilterRefs);
 }
