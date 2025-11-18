@@ -10,8 +10,8 @@ import {
     DashboardInsightWidgetDrillDownRemoved,
     insightWidgetDrillDownRemoved,
 } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
@@ -33,7 +33,7 @@ export function* removeDrillDownForInsightWidgetHandler(
     const newBlacklistHierarchies = [...(currentBlacklistHierarchies || []), ...blacklistHierarchies];
 
     yield put(
-        layoutActions.replaceWidgetBlacklistHierarchies({
+        tabsActions.replaceWidgetBlacklistHierarchies({
             ref: widgetRef,
             blacklistHierarchies: newBlacklistHierarchies,
             undo: {
@@ -51,7 +51,7 @@ export function* removeDrillDownForInsightWidgetHandler(
         );
 
     yield put(
-        layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
+        tabsActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
             ref: widgetRef,
             ignoredDrillDownIntersectionIgnoredAttributes:
                 drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies ?? [],

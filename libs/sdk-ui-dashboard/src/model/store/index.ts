@@ -107,6 +107,7 @@ export {
     selectEnableAccessibilityMode,
     selectEnableDashboardTabs,
     selectEnablePreserveFilterSelectionDuringInit,
+    selectExportResultPollingTimeout,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -227,7 +228,6 @@ export {
 } from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
-export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
 
 export {
     selectLayout,
@@ -257,7 +257,7 @@ export {
     selectKpiWidgetPlaceholderPath,
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
-} from "./layout/layoutSelectors.js";
+} from "./tabs/layout/layoutSelectors.js";
 export type { DateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterConfigState.js";
 
 export {
@@ -278,7 +278,11 @@ export {
 export type { TabsState, TabState } from "./tabs/tabsState.js";
 export type { DateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { AttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+export type { LayoutState, LayoutStash } from "./tabs/layout/layoutState.js";
 export type { TabsReducer } from "./tabs/tabsReducers.js";
+export type { IItemWithHeight, IItemWithWidth } from "../types/layoutTypes.js";
+export type { IdentityMapping } from "../../_staging/dashboard/dashboardLayout.js";
+export type { UndoPayload } from "./_infra/undoEnhancer.js";
 export type {
     IAddAttributeFilterPayload,
     IRemoveAttributeFilterPayload,

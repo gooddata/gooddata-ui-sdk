@@ -11,7 +11,7 @@ import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_
 import { DrillDown } from "../../commands/drill.js";
 import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillDownHandler(

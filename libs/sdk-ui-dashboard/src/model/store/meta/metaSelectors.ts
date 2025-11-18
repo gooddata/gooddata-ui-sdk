@@ -35,7 +35,6 @@ import {
 
 import { DashboardDescriptor } from "./metaState.js";
 import { selectEnableDashboardTabs } from "../config/configSelectors.js";
-import { selectBasicLayout } from "../layout/layoutSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -48,6 +47,7 @@ import {
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
 import { DEFAULT_TAB_ID, TabState, selectActiveTabId, selectTabs } from "../tabs/index.js";
+import { selectBasicLayout } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

@@ -5,7 +5,6 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { initializeDashboard } from "../../../../commands/index.js";
 import { DashboardInitialized } from "../../../../events/index.js";
 import { selectConfig } from "../../../../store/config/configSelectors.js";
-import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
 import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../../store/permissions/permissionsSelectors.js";
 import {
@@ -13,6 +12,7 @@ import {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
 } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectLayout } from "../../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";

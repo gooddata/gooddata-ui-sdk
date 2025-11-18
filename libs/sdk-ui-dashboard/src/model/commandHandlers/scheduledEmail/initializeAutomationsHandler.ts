@@ -52,11 +52,11 @@ import {
     selectOpenAutomationOnLoad,
 } from "../../store/config/configSelectors.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import { selectFilterContextDateFilter } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";

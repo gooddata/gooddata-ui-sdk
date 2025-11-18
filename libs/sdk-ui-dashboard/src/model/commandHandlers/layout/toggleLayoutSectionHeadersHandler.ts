@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
 import { ToggleLayoutSectionHeaders } from "../../commands/layout.js";
 import { LayoutSectionHeadersToggled, layoutSectionHeadersToggled } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* toggleLayoutSectionHeadersHandler(
@@ -14,7 +15,7 @@ export function* toggleLayoutSectionHeadersHandler(
     const { layoutPath, enableSectionHeaders } = cmd.payload;
 
     yield put(
-        layoutActions.toggleLayoutSectionHeaders({
+        tabsActions.toggleLayoutSectionHeaders({
             layoutPath,
             enableSectionHeaders,
             undo: {

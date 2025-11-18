@@ -13,8 +13,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { ModifyDrillsForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetByRef, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
@@ -43,7 +43,7 @@ export function* modifyDrillsForInsightWidgetHandler(
         const blacklist = insightWidget.ignoredDrillDownHierarchies || [];
 
         yield put(
-            layoutActions.replaceWidgetBlacklistHierarchies({
+            tabsActions.replaceWidgetBlacklistHierarchies({
                 ref: widgetRef,
                 blacklistHierarchies: [...blacklist, ...blacklistHierarchiesToUpdate],
                 undo: {
@@ -80,7 +80,7 @@ export function* modifyDrillsForInsightWidgetHandler(
     yield put(
         batchActions([
             insightsActions.addInsights(validationData.resolvedInsights.loaded),
-            layoutActions.replaceWidgetDrills({
+            tabsActions.replaceWidgetDrills({
                 ref: insightWidget.ref,
                 drillDefinitions: updatedInsightDrills,
                 undo: {

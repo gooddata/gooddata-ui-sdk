@@ -17,7 +17,7 @@ import { InitialLoadCorrelationId, initializeDashboardWithPersistedDashboard } f
 import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
 import { ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
-import { getWidgetsOfType } from "../store/layout/layoutUtils.js";
+import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
 
 type InitProps = {

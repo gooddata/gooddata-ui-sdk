@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
@@ -11,7 +12,7 @@ import {
     drillToAttributeUrlRequested,
     drillToAttributeUrlResolved,
 } from "../../events/drill.js";
-import { selectWidgetDrills } from "../../store/layout/layoutSelectors.js";
+import { selectWidgetDrills } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToAttributeUrlHandler(

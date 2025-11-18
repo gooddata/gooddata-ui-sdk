@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { AnyAction } from "@reduxjs/toolkit";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -8,13 +9,19 @@ import {
     IAccessControlAware,
     IDashboard,
     IDashboardDefinition,
+    IDashboardLayout,
+    IDashboardTab,
+    IFilterContext,
+    ITempFilterContext,
     isDashboardAttributeFilter,
+    isTempFilterContext,
 } from "@gooddata/sdk-model";
 
 import {
     getMigratedAttributeFilters,
     mergedMigratedAttributeFilters,
 } from "./common/migratedAttributeFilters.js";
+import { processLayout } from "./saveDashboardHandler.js";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
     dashboardLayoutRemoveIdentity,
@@ -26,10 +33,11 @@ import { changeRenderMode } from "../../commands/index.js";
 import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDashboardTabs,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import {
@@ -46,7 +54,9 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { tabsActions } from "../../store/tabs/index.js";
+import { TabState, tabsActions } from "../../store/tabs/index.js";
+import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -78,6 +88,51 @@ type DashboardSaveAsResult = {
 
 function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContext): Promise<IDashboard> {
     return ctx.backend.workspace(ctx.workspace).dashboards().createDashboard(saveAsCtx.dashboardToSave);
+}
+
+/**
+ * Converts TabState[] from the dashboard state into IDashboardTab[] for saving.
+ * Removes widget identities from all tab layouts to ensure new widgets are created.
+ *
+ * @param tabs - Array of TabState objects from the dashboard state
+ * @returns Array of IDashboardTab objects ready for saving to backend
+ */
+function processExistingTabsForSaveAs(tabs: TabState[]): IDashboardTab[] {
+    return tabs.map((tab) => {
+        const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
+
+        const dateFilterConfigs: IDashboardTab["dateFilterConfigs"] =
+            tab.dateFilterConfigs?.dateFilterConfigs;
+
+        const dateFilterConfigsProp = dateFilterConfigs?.length ? { dateFilterConfigs } : {};
+
+        const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
+            tab.attributeFilterConfigs?.attributeFilterConfigs;
+        const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+        // Get this tab's specific layout from tab.layout.layout
+        const tabLayout = tab.layout?.layout ? processLayout(tab.layout.layout) : undefined;
+
+        const filterContext = tab.filterContext?.filterContextDefinition
+            ? ({
+                  ...(tab.filterContext?.filterContextIdentity || {}),
+                  ...tab.filterContext.filterContextDefinition,
+              } as IFilterContext | ITempFilterContext)
+            : undefined;
+
+        const result: IDashboardTab = {
+            // explicitly type the result to avoid type errors caused by spread operators
+            identifier: tab.identifier,
+            title: tab.title ?? "",
+            // Remove widget identifies from tab layout to ensure new widgets are created
+            layout: tabLayout ? dashboardLayoutRemoveIdentity(tabLayout, () => true) : undefined,
+            filterContext,
+            ...(dateFilterConfig ? { dateFilterConfig } : {}),
+            ...dateFilterConfigsProp,
+            ...attributeFilterConfigsProp,
+        };
+
+        return result;
+    });
 }
 
 /*
@@ -138,10 +193,19 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         selectDateFilterConfigsOverrides,
     );
 
+    const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
+
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
     const { isUnderStrictControl: _unusedProp, ...dashboardDescriptorRest } = dashboardDescriptor;
+
+    // Process tabs if tabs feature is enabled and tabs exist
+    const processedTabs: IDashboardTab[] | undefined =
+        enableDashboardTabs && tabs && tabs.length > 0 ? processExistingTabsForSaveAs(tabs) : undefined;
 
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
@@ -153,6 +217,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+        ...(enableDashboardTabs && processedTabs
+            ? { tabs: processedTabs, activeTabId: activeTabId ?? processedTabs[0]?.identifier }
+            : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
@@ -170,6 +237,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     // remove widget identity from all widgets; according to the SPI contract, this will result in
     // creation of new widgets
+    // Note: processedTabs already have widget identities removed in processExistingTabsForSaveAs
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         ...titleProp,
@@ -206,22 +274,72 @@ function* saveAs(
         };
     }
 
-    const identityMapping = dashboardLayoutWidgetIdentityMap(
-        saveAsCtx.dashboardFromState.layout!,
-        dashboardWithUser.layout!,
-    );
+    /*
+     * For dashboards with tabs, we need to update identities for ALL tabs, not just the active one.
+     * Each tab has its own layout that may contain widgets that need identity updates.
+     */
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
 
-    const batch = batchActions(
-        [
-            metaActions.setMeta({ dashboard: dashboardWithUser }),
+    const actions: AnyAction[] = [metaActions.setMeta({ dashboard: dashboardWithUser })];
+
+    if (enableDashboardTabs && dashboardWithUser.tabs && dashboardWithUser.tabs.length > 0) {
+        const stateTabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+
+        // For each tab in the saved dashboard, update its widget identities and filter context identity
+        dashboardWithUser.tabs.forEach((savedTab) => {
+            const stateTab = stateTabs?.find((t) => t.identifier === savedTab.identifier);
+
+            // Update filter context identity for this tab
+            // Extract identity directly from the filter context
+            const filterContext = savedTab.filterContext;
+            const filterContextIdentity =
+                filterContext && !isTempFilterContext(filterContext) && filterContext.ref
+                    ? {
+                          ref: filterContext.ref,
+                          uri: filterContext.uri,
+                          identifier: filterContext.identifier,
+                      }
+                    : undefined;
+            actions.push(
+                tabsActions.updateFilterContextIdentityForTab({
+                    tabId: savedTab.identifier,
+                    filterContextIdentity,
+                }),
+            );
+
+            // Update widget identities for this tab if both layouts exist
+            if (stateTab?.layout?.layout && savedTab.layout) {
+                const mapping = dashboardLayoutWidgetIdentityMap(
+                    stateTab.layout.layout as IDashboardLayout,
+                    savedTab.layout,
+                );
+                actions.push(
+                    tabsActions.updateWidgetIdentitiesForTab({
+                        tabId: savedTab.identifier,
+                        mapping,
+                    }),
+                );
+            }
+        });
+    } else {
+        // For dashboards without tabs, use the original approach with active tab actions
+        const identityMapping = dashboardLayoutWidgetIdentityMap(
+            saveAsCtx.dashboardFromState.layout!,
+            dashboardWithUser.layout!,
+        );
+
+        actions.push(
             tabsActions.updateFilterContextIdentity({
                 filterContextIdentity: dashboardFilterContextIdentity(dashboardWithUser),
             }),
-            layoutActions.updateWidgetIdentities(identityMapping),
-            layoutActions.clearLayoutHistory(),
-        ],
-        "@@GDC.DASH.SAVE_AS",
-    );
+            tabsActions.updateWidgetIdentities(identityMapping),
+        );
+    }
+
+    actions.push(tabsActions.clearLayoutHistory());
+
+    const batch = batchActions(actions, "@@GDC.DASH.SAVE_AS");
 
     return {
         batch,

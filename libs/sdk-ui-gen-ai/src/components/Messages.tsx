@@ -6,8 +6,8 @@ import { useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
 import { connect } from "react-redux";
 
-import { EmptyState } from "./EmptyState.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
+import { useCustomization } from "./CustomizationProvider.js";
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 
@@ -19,6 +19,7 @@ type MessagesComponentProps = {
 
 function MessagesComponent({ messages, loading, initializing }: MessagesComponentProps) {
     const { scrollerRef } = useMessageScroller(messages);
+    const { LandingScreenComponent } = useCustomization();
     const intl = useIntl();
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
     const isEmpty = !messages.length && !isLoading;
@@ -31,7 +32,7 @@ function MessagesComponent({ messages, loading, initializing }: MessagesComponen
                 aria-relevant={isEmpty || isLoading ? undefined : "additions"}
                 aria-label={intl.formatMessage({ id: "gd.gen-ai.messages.label" })}
             >
-                {isEmpty ? <EmptyState /> : null}
+                {isEmpty ? <LandingScreenComponent /> : null}
                 {isLoading ? <Skeleton count={3} height="2em" /> : null}
                 {isLoading
                     ? null

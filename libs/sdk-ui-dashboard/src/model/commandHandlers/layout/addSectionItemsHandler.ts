@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -26,8 +27,8 @@ import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../..
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
@@ -184,7 +185,7 @@ export function* addSectionItemsHandler(
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
-            layoutActions.addSectionItems({
+            tabsActions.addSectionItems({
                 layoutPath,
                 items: itemsWithNormalizedSize,
                 usedStashes: stashValidationResult.existing,

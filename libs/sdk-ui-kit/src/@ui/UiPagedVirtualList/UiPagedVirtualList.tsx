@@ -40,6 +40,7 @@ export interface UiPagedVirtualListProps<T> {
     items?: T[];
     itemHeight: number;
     itemsGap: number;
+    containerPadding?: number;
     itemPadding: number;
     skeletonItemsCount: number;
     hasNextPage?: boolean;
@@ -92,6 +93,7 @@ function UiPagedVirtualListNotWrapped<T>(
         itemHeight,
         itemsGap,
         itemPadding,
+        containerPadding = 0,
         tabIndex = 0,
         onKeyDownSelect,
         onKeyDownConfirm,
@@ -143,7 +145,7 @@ function UiPagedVirtualListNotWrapped<T>(
             <div
                 ref={scrollContainerRef}
                 className={e("scroll-container", { hover: scrollbarHoverEffect })}
-                style={{ height, paddingTop: itemsGap }}
+                style={{ height, paddingTop: itemsGap + containerPadding }}
             >
                 <ListElement
                     className={e("list")}
@@ -222,6 +224,7 @@ function useVirtualList<T>({
     items,
     itemHeight,
     itemsGap,
+    containerPadding = 0,
     skeletonItemsCount,
     hasNextPage,
     loadNextPage,
@@ -259,7 +262,7 @@ function useVirtualList<T>({
             ? (itemHeight + itemsGap) * itemsCount + itemsGap
             : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap;
 
-    const height = Math.min(maxHeight, realHeight);
+    const height = Math.min(maxHeight, realHeight) + containerPadding;
 
     const hasScroll = scrollContainerRef.current
         ? scrollContainerRef.current?.scrollHeight >

@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -8,8 +9,8 @@ import {
     DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
 } from "../../events/index.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* updateVisualizationsFromSwticherWidgetContentHandler(
@@ -24,7 +25,7 @@ export function* updateVisualizationsFromSwticherWidgetContentHandler(
     const visualizationSwitcherWidget = validateExistingVisualizationSwitcherWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.updateVisualizationSwitcherWidgetVisualizations({
+        tabsActions.updateVisualizationSwitcherWidgetVisualizations({
             ref: visualizationSwitcherWidget.ref,
             visualizations,
             undo: {

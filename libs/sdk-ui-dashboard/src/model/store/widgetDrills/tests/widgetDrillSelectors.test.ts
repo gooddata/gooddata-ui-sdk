@@ -13,7 +13,7 @@ import {
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
 import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
-import * as layoutSelectors from "../../layout/layoutSelectors.js";
+import * as layoutSelectors from "../../tabs/layout/layoutSelectors.js";
 import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
 
 let isDisableDrillDown = false;

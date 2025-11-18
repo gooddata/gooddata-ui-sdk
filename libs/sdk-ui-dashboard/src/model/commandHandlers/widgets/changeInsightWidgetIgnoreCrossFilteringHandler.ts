@@ -9,8 +9,8 @@ import {
     DashboardInsightWidgetIgnoreCrossFilteringChanged,
     insightWidgetIgnoreCrossFilteringChanged,
 } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetIgnoreCrossFilteringHandler(
@@ -25,7 +25,7 @@ export function* changeInsightWidgetIgnoreCrossFilteringHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.changeWidgetIgnoreCrossFiltering({
+        tabsActions.changeWidgetIgnoreCrossFiltering({
             ref: insightWidget.ref,
             ignoreCrossFiltering,
             undo: {

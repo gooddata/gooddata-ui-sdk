@@ -12,7 +12,6 @@ import { RemoveDateFilters } from "../../../commands/filters.js";
 import { dateFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { layoutActions } from "../../../store/layout/index.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
@@ -79,7 +78,7 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
             // remove reflect dashboard date filter config
             tabsActions.removeDateFilterConfigs(removedFilter.dateFilter.dataSet!),
             // house-keeping: ensure the removed date filter disappears from widget ignore lists
-            layoutActions.removeIgnoredDateFilter({
+            tabsActions.removeIgnoredDateFilter({
                 dateDataSets: [removedFilter.dateFilter.dataSet!],
             }),
         ]);

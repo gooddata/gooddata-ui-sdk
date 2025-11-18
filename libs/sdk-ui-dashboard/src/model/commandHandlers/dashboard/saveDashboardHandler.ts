@@ -16,6 +16,7 @@ import {
     IDashboardTab,
     IFilterContext,
     ITempFilterContext,
+    isTempFilterContext,
 } from "@gooddata/sdk-model";
 
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
@@ -29,8 +30,6 @@ import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
@@ -44,9 +43,11 @@ import {
     selectFilterContextIdentity,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
+import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { TabState } from "../../store/tabs/tabsState.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
@@ -119,8 +120,13 @@ export function getDashboardWithSharing(
     return dashboard;
 }
 
-// TODO INE LX-1603: remove root layout once layout placed in each tab
-function processExistingTabs(tabs: TabState[], layout: IDashboardLayout): IDashboardTab[] {
+/**
+ * Converts TabState[] from the dashboard state into IDashboardTab[] for saving.
+ *
+ * @param tabs - Array of TabState objects from the dashboard state
+ * @returns Array of IDashboardTab objects ready for saving to backend
+ */
+function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
 
@@ -134,19 +140,22 @@ function processExistingTabs(tabs: TabState[], layout: IDashboardLayout): IDashb
         const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
             tab.attributeFilterConfigs?.attributeFilterConfigs;
         const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+        // Get this tab's specific layout from tab.layout.layout
+        const tabLayout = tab.layout?.layout;
 
-        const filterContext =
-            tab.filterContext?.filterContextDefinition && tab.filterContext?.filterContextIdentity
-                ? {
-                      ...tab.filterContext?.filterContextIdentity,
-                      ...tab.filterContext?.filterContextDefinition,
-                  }
-                : undefined;
+        const filterContext = tab.filterContext?.filterContextDefinition
+            ? ({
+                  ...(tab.filterContext?.filterContextIdentity || {}),
+                  ...tab.filterContext.filterContextDefinition,
+              } as IFilterContext | ITempFilterContext)
+            : undefined;
+
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
             identifier: tab.identifier,
             title: tab.title ?? "",
-            layout: layout,
+            // Use each tab's own layout, not a shared one
+            layout: tabLayout ? processLayout(tabLayout) : undefined,
             filterContext,
             ...dateFilterConfigProp,
             ...dateFilterConfigsProp,
@@ -156,11 +165,7 @@ function processExistingTabs(tabs: TabState[], layout: IDashboardLayout): IDashb
     });
 }
 
-function processLayout(layout: IDashboardLayout | undefined): IDashboardLayout | undefined {
-    if (!layout) {
-        return undefined;
-    }
-
+export function processLayout(layout: IDashboardLayout<ExtendedDashboardWidget>): IDashboardLayout {
     return dashboardLayoutRemoveIdentity(layout as IDashboardLayout, isTemporaryIdentity);
 }
 
@@ -231,7 +236,7 @@ function* createDashboardSaveContext(
                   {
                       identifier: uuid(),
                       title: "",
-                      layout: layout ?? undefined,
+                      layout: layout ? processLayout(layout) : undefined,
                       filterContext: rootFilterContext,
                       dateFilterConfig,
                       ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
@@ -239,7 +244,7 @@ function* createDashboardSaveContext(
                   },
               ]
             : tabs
-              ? processExistingTabs(tabs, layout)
+              ? processExistingTabs(tabs)
               : undefined;
 
     const defaultActiveTabId =
@@ -269,10 +274,6 @@ function* createDashboardSaveContext(
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
         layout: dashboardLayoutRemoveIdentity(layout, isTemporaryIdentity),
-        tabs: dashboardFromState.tabs?.map((tab) => ({
-            ...tab,
-            layout: processLayout(tab.layout),
-        })),
     };
 
     return {
@@ -305,20 +306,70 @@ function* save(
      *
      * The first task is easy. The second requires additional processing to identify mapping between
      * temporary identity and persistent identity and then update the layout state accordingly.
+     *
+     * For dashboards with tabs, we need to update identities for ALL tabs, not just the active one.
      */
-    const identityMapping = dashboardLayoutWidgetIdentityMap(
-        saveCtx.dashboardFromState.layout!,
-        dashboard.layout!,
-    );
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
 
-    const actions: AnyAction[] = [
-        metaActions.setMeta({ dashboard }),
-        tabsActions.updateFilterContextIdentity({
-            filterContextIdentity: dashboardFilterContextIdentity(dashboard),
-        }),
-        layoutActions.updateWidgetIdentities(identityMapping),
-        layoutActions.clearLayoutHistory(),
-    ];
+    const actions: AnyAction[] = [metaActions.setMeta({ dashboard })];
+
+    if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
+        const stateTabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+
+        // For each tab in the saved dashboard, update its widget identities and filter context identity
+        dashboard.tabs.forEach((savedTab) => {
+            const stateTab = stateTabs?.find((t) => t.identifier === savedTab.identifier);
+
+            // Update filter context identity for this tab
+            // Extract identity directly from the filter context
+            const filterContext = savedTab.filterContext;
+            const filterContextIdentity =
+                filterContext && !isTempFilterContext(filterContext) && filterContext.ref
+                    ? {
+                          ref: filterContext.ref,
+                          uri: filterContext.uri,
+                          identifier: filterContext.identifier,
+                      }
+                    : undefined;
+
+            actions.push(
+                tabsActions.updateFilterContextIdentityForTab({
+                    tabId: savedTab.identifier,
+                    filterContextIdentity,
+                }),
+            );
+
+            // Update widget identities for this tab if both layouts exist
+            if (stateTab?.layout?.layout && savedTab.layout) {
+                const mapping = dashboardLayoutWidgetIdentityMap(
+                    stateTab.layout.layout as IDashboardLayout,
+                    savedTab.layout,
+                );
+                actions.push(
+                    tabsActions.updateWidgetIdentitiesForTab({
+                        tabId: savedTab.identifier,
+                        mapping,
+                    }),
+                );
+            }
+        });
+    } else {
+        // For dashboards without tabs, use the original approach with active tab actions
+        const identityMapping = dashboardLayoutWidgetIdentityMap(
+            saveCtx.dashboardFromState.layout!,
+            dashboard.layout!,
+        );
+
+        actions.push(
+            tabsActions.updateFilterContextIdentity({
+                filterContextIdentity: dashboardFilterContextIdentity(dashboard),
+            }),
+            tabsActions.updateWidgetIdentities(identityMapping),
+        );
+    }
+
+    actions.push(tabsActions.clearLayoutHistory());
 
     if (saveCtx.persistedDashboard === undefined) {
         const listedDashboard = createListedDashboard(dashboard);

@@ -29,7 +29,6 @@ import { executionResultsSliceReducer } from "./executionResults/index.js";
 import { filterViewsSliceReducer } from "./filterViews/index.js";
 import { inaccessibleDashboardsSliceReducer } from "./inaccessibleDashboards/index.js";
 import { insightsSliceReducer } from "./insights/index.js";
-import { layoutSliceReducer } from "./layout/index.js";
 import { listedDashboardsSliceReducer } from "./listedDashboards/index.js";
 import { loadingSliceReducer } from "./loading/index.js";
 import { metaSliceReducer } from "./meta/index.js";
@@ -311,7 +310,6 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         config: configSliceReducer,
         entitlements: entitlementsSliceReducer,
         permissions: permissionsSliceReducer,
-        layout: layoutSliceReducer,
         tabs: tabsSliceReducer,
         insights: insightsSliceReducer,
         drillTargets: drillTargetsReducer,

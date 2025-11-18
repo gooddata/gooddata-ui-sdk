@@ -6,6 +6,7 @@ import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attrtibute
 import type { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
 import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import type { FilterContextState } from "./filterContext/filterContextState.js";
+import type { LayoutState } from "./layout/layoutState.js";
 
 /**
  * Identifier used for dashboards without explicit tabs support.
@@ -22,7 +23,7 @@ export const getActiveTab = (state: TabsState): TabState | undefined => {
 };
 
 // Re-export for convenience
-export type { DateFilterConfigState, FilterContextState };
+export type { DateFilterConfigState, FilterContextState, LayoutState };
 
 /**
  * @alpha
@@ -35,7 +36,7 @@ export interface TabState {
     dateFilterConfigs?: DateFilterConfigsState;
     attributeFilterConfigs?: AttributeFilterConfigsState;
     filterContext?: FilterContextState;
-    // layout?: LayoutState; // TODO INE LX-1603: add layout to tab state
+    layout?: LayoutState;
 }
 
 /**

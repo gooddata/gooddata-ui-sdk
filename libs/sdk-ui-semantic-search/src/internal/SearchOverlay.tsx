@@ -39,6 +39,7 @@ import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
 import * as styles from "./SearchOverlay.module.scss.js";
+import { testIds } from "../automation/index.js";
 import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -310,6 +311,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                 onChange={onValueChange}
                 onEscKeyPress={onEscKeyPress}
                 onKeyDown={handleKeyDown}
+                dataTestId={testIds.semanticSearchInput}
             />
             {(() => {
                 if (searchStatus === "loading") {

@@ -44,24 +44,16 @@ export const UpdatedDate = memo(function UpdatedDate({ createdAt, modifiedAt }: 
 
     if (config.isToday || config.isYesterday) {
         return (
-            <span>
+            <>
                 <FormattedMessage id={relativeDate} />
                 &nbsp;
                 <FormattedMessage id={messages.at.id} />
                 &nbsp;
                 <FormattedTime value={config.date} hour="numeric" minute="2-digit" />
-            </span>
+            </>
         );
     } else if (config.isCurrentYear) {
-        return (
-            <span>
-                <FormattedDate value={config.date} day="numeric" month="short" />
-            </span>
-        );
+        return <FormattedDate value={config.date} day="numeric" month="short" />;
     }
-    return (
-        <span>
-            <FormattedDate value={config.date} day="numeric" month="short" year="numeric" />
-        </span>
-    );
+    return <FormattedDate value={config.date} day="numeric" month="short" year="numeric" />;
 });

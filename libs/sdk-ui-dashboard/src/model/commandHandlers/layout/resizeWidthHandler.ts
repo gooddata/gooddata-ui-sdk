@@ -37,8 +37,8 @@ import {
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 
@@ -168,7 +168,7 @@ export function* resizeWidthHandler(
     const itemsWithChangedWidth = findItemsWithChangedWidth(layout, itemLayoutPath, width, screen);
     if (itemsWithChangedWidth.length > 0) {
         yield put(
-            layoutActions.updateWidthOfMultipleItems({
+            tabsActions.updateWidthOfMultipleItems({
                 itemsWithSizes: itemsWithChangedWidth,
             }),
         );

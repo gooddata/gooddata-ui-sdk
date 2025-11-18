@@ -9,6 +9,7 @@ import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filt
 import { ExportSlidesInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -27,6 +28,9 @@ export function* exportSlidesInsightWidgetHandler(
     }
     const filterContextFilters = yield select(selectFilterContextFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
 
     const exportDashboardToPresentation = backend
         .workspace(workspace)
@@ -39,6 +43,7 @@ export function* exportSlidesInsightWidgetHandler(
         {
             widgetIds: [ref],
             filename,
+            timeout,
         },
     );
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

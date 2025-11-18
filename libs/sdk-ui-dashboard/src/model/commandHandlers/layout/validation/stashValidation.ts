@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { LayoutStash } from "../../../store/layout/layoutState.js";
+import { LayoutStash } from "../../../store/tabs/layout/layoutState.js";
 import {
     ExtendedDashboardItem,
     InternalDashboardItemDefinition,

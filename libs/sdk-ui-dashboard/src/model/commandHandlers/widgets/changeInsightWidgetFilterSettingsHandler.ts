@@ -22,8 +22,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
 import { DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
@@ -77,7 +77,7 @@ export function* changeInsightWidgetFilterSettingsHandler(
     });
 
     yield put(
-        layoutActions.replaceWidgetFilterSettings({
+        tabsActions.replaceWidgetFilterSettings({
             ref: insightWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
             ignoreDashboardFilters,

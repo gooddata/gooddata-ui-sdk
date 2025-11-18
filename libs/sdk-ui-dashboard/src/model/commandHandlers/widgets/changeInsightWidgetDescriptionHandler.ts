@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -6,8 +7,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { ChangeInsightWidgetDescription } from "../../commands/index.js";
 import { DashboardInsightWidgetDescriptionChanged } from "../../events/index.js";
 import { insightWidgetDescriptionChanged } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetDescriptionHandler(
@@ -22,7 +23,7 @@ export function* changeInsightWidgetDescriptionHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.replaceWidgetDescription({
+        tabsActions.replaceWidgetDescription({
             ref: insightWidget.ref,
             description,
             undo: {

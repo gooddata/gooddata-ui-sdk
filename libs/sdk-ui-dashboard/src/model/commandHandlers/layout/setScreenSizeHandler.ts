@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
 import { SetScreenSize } from "../../commands/index.js";
 import { ScreenSizeChanged, screenSizeChanged } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* setScreenSizeHandler(
@@ -13,7 +14,7 @@ export function* setScreenSizeHandler(
 ): SagaIterator<ScreenSizeChanged> {
     const { screenSize } = cmd.payload;
 
-    yield put(layoutActions.setScreen({ screen: screenSize }));
+    yield put(tabsActions.setScreen({ screen: screenSize }));
 
     return screenSizeChanged(ctx, screenSize, cmd.correlationId);
 }

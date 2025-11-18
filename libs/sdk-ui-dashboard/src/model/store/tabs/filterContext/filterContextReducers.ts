@@ -94,6 +94,42 @@ const updateFilterContextIdentity: FilterContextReducer<PayloadAction<SetFilterC
     activeTab.filterContext.filterContextIdentity = action.payload.filterContextIdentity;
 };
 
+/**
+ * Payload for updating filter context identity for a specific tab.
+ */
+type UpdateFilterContextIdentityForTabPayload = {
+    tabId: string;
+    filterContextIdentity?: IDashboardObjectIdentity;
+};
+
+/**
+ * Updates filter context identity for a specific tab after a dashboard save.
+ * This ensures that the filter context gets the correct identity from the backend.
+ *
+ * @param state - The tabs state
+ * @param action - Object containing tabId and the filter context identity
+ */
+const updateFilterContextIdentityForTab: FilterContextReducer<
+    PayloadAction<UpdateFilterContextIdentityForTabPayload>
+> = (state, action) => {
+    if (!state.tabs) {
+        return;
+    }
+
+    const { tabId, filterContextIdentity } = action.payload;
+    const tab = state.tabs.find((t) => t.identifier === tabId);
+
+    if (!tab) {
+        return;
+    }
+
+    if (!tab.filterContext) {
+        tab.filterContext = { ...filterContextInitialState };
+    }
+
+    tab.filterContext.filterContextIdentity = filterContextIdentity;
+};
+
 //
 //
 //
@@ -1099,6 +1135,7 @@ const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContex
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
+    updateFilterContextIdentityForTab,
     removeAttributeFilterDisplayForms,
     addAttributeFilterDisplayForm,
     addAttributeFilter,

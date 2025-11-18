@@ -13,6 +13,7 @@ import { GroupResultCounter } from "./GroupResultCounter.js";
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
+import { testIds } from "../automation/index.js";
 import { SearchItem } from "../SearchItem.js";
 import * as styles from "../SearchItemText.module.scss.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
@@ -44,9 +45,11 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
         >
             <span className={styles.textRow}>
                 {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} ariaHidden /> : null}
-                <span className={styles.textEllipsis}>{item.stringTitle}</span>
+                <span className={styles.textEllipsis} data-testid={testIds.semanticSearchItemTitle}>
+                    {item.stringTitle}
+                </span>
             </span>
-            <span className={styles.textRow}>
+            <span className={styles.textRow} data-testid={testIds.semanticSearchItemDate}>
                 {isSemanticSearchResultItem(item.data) && level === 1 && (
                     <UpdatedDate createdAt={item.data.createdAt} modifiedAt={item.data.modifiedAt} />
                 )}

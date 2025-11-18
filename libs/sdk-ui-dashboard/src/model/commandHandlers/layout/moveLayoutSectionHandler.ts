@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -16,8 +17,8 @@ import {
 import { MoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
@@ -139,7 +140,7 @@ export function* moveLayoutSectionHandler(
             : updateSectionIndex(toIndex, absoluteIndex);
 
     yield put(
-        layoutActions.moveSection({
+        tabsActions.moveSection({
             sectionIndex: sourceSection,
             toIndex: toSectionPath,
             undo: {

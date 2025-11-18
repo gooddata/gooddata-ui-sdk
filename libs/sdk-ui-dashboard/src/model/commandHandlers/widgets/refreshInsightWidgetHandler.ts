@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -11,7 +12,7 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* refreshInsightWidgetHandler(

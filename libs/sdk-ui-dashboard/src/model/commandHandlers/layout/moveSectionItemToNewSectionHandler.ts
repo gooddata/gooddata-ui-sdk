@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -32,8 +33,8 @@ import {
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 
@@ -234,14 +235,14 @@ export function* moveSectionItemToNewSectionHandler(
             ...rowContainerSanitizationActions,
             ...(shouldChangeSize
                 ? [
-                      layoutActions.changeItemWidth({
+                      tabsActions.changeItemWidth({
                           layoutPath: sourceItemIndex,
                           width: itemWithNormalizedSize.size.xl.gridWidth,
                       }),
                   ]
                 : []),
             // changes section index
-            layoutActions.addSection({
+            tabsActions.addSection({
                 index:
                     toItemIndex === undefined
                         ? { parent: undefined, sectionIndex: targetSectionIndex }
@@ -253,7 +254,7 @@ export function* moveSectionItemToNewSectionHandler(
                 },
             }),
             // changes item index
-            layoutActions.moveSectionItem({
+            tabsActions.moveSectionItem({
                 itemIndex:
                     itemPathWithSectionsShifted === undefined
                         ? [{ sectionIndex: itemSectionIndex, itemIndex }]
@@ -265,7 +266,7 @@ export function* moveSectionItemToNewSectionHandler(
             }),
             ...(shouldRemoveSection
                 ? [
-                      layoutActions.removeSection({
+                      tabsActions.removeSection({
                           index:
                               itemPathWithSectionsShifted === undefined
                                   ? { parent: undefined, sectionIndex: itemSectionIndex }

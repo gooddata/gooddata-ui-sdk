@@ -24,8 +24,8 @@ import {
     DashboardRichTextWidgetFilterSettingsChanged,
     richTextWidgetFilterSettingsChanged,
 } from "../../events/index.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 const RichTextWidgetFilterValidations: FilterValidators<IRichTextWidget> = {
@@ -79,7 +79,7 @@ export function* changeRichTextWidgetFilterSettingsHandler(
     });
 
     yield put(
-        layoutActions.replaceWidgetFilterSettings({
+        tabsActions.replaceWidgetFilterSettings({
             ref: richTextWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
             ignoreDashboardFilters,

@@ -1,12 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { DashboardLayoutCommands, UndoLayoutChanges, UndoPointSelector } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardLayoutChanged, layoutChanged } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectUndoableLayoutCommands } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectUndoableLayoutCommands } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 /*
@@ -39,7 +40,7 @@ export function* undoLayoutChangesHandler(
     const selectedCommand = undoableCommands[undoUpToIncludingCmd];
 
     yield put(
-        layoutActions.undoLayout({
+        tabsActions.undoLayout({
             undoDownTo: selectedCommand.firstOccurrenceOnStack,
         }),
     );

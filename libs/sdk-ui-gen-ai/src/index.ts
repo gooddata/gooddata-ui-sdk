@@ -53,3 +53,12 @@ export {
 export { clearThreadAction, newMessageAction } from "./store/index.js";
 export { makeUserMessage, makeTextContents } from "./model.js";
 export type { LinkHandlerEvent } from "./components/ConfigContext.js";
+
+//customization
+
+export type { LandingScreenProps } from "./components/customized/LandingScreen.js";
+export { DefaultLandingScreen } from "./components/customized/LandingScreen.js";
+export type { LandingTitleProps } from "./components/customized/LandingTitle.js";
+export { DefaultLandingTitle, DefaultLandingTitleAscent } from "./components/customized/LandingTitle.js";
+export type { LandingQuestionProps } from "./components/customized/LandingQuestion.js";
+export { DefaultLandingQuestion } from "./components/customized/LandingQuestion.js";

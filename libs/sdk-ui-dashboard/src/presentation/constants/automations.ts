@@ -23,7 +23,7 @@ export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [
     },
 ];
 
-export const AUTOMATIONS_MAX_HEIGHT = 328;
+export const AUTOMATIONS_MAX_HEIGHT = 380;
 
 //create dialog
 export const AUTOMATION_FILTERS_GROUP_LABEL_ID = "automation-filters-group-label";

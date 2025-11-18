@@ -20,7 +20,7 @@ import {
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectConfig } from "../config/configSelectors.js";
-import { selectWidgetsMap } from "../layout/layoutSelectors.js";
+import { selectWidgetsMap } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

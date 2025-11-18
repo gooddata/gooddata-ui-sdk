@@ -24,37 +24,42 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { LayoutStash, LayoutState } from "./layoutState.js";
-import { getWidgetCoordinates, isItemWithBaseWidget } from "./layoutUtils.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import { IDashboardFilter, ILayoutCoordinates, ILayoutItemPath } from "../../../types.js";
+import { LayoutStash, LayoutState, layoutInitialState } from "./layoutState.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
+import { IDashboardFilter, ILayoutCoordinates, ILayoutItemPath } from "../../../../types.js";
 import {
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
     isPlaceholderWidget,
-} from "../../../widgets/index.js";
-import { DashboardLayoutCommands } from "../../commands/index.js";
+} from "../../../../widgets/index.js";
+import { DashboardLayoutCommands } from "../../../commands/index.js";
 import {
     ExtendedDashboardWidget,
     ICustomWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
-} from "../../types/layoutTypes.js";
-import { createMemoizedSelector } from "../_infra/selectors.js";
-import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
-import { selectEnableIgnoreCrossFiltering } from "../config/configSelectors.js";
+} from "../../../types/layoutTypes.js";
+import { createMemoizedSelector } from "../../_infra/selectors.js";
+import { UndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
+import { selectEnableIgnoreCrossFiltering } from "../../config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
-} from "../drill/drillSelectors.js";
-import { selectFilterContextFilters } from "../tabs/filterContext/filterContextSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+} from "../../drill/drillSelectors.js";
+import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
+import { DashboardSelector } from "../../types.js";
+import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
+import { selectActiveTabId, selectTabs } from "../tabsSelectors.js";
 
-const selectSelf = createSelector(
-    (state: DashboardState) => state,
-    (state) => state.layout,
-);
+const selectSelf = createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+    if (!tabs || !activeTabId) {
+        return layoutInitialState;
+    }
+    const activeTab = tabs.find((tab) => tab.identifier === activeTabId);
+
+    return activeTab?.layout ?? layoutInitialState;
+});
 
 /**
  * This selector returns current layout's stash. This stash can contain items that were removed from the layout with the

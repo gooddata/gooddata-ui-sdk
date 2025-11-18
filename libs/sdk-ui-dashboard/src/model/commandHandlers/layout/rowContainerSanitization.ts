@@ -12,7 +12,7 @@ import {
 import { getParentPath } from "../../../_staging/layout/coordinates.js";
 import { ILayoutItemPath } from "../../../types.js";
 import { IDashboardCommand } from "../../commands/index.js";
-import { layoutActions } from "../../store/layout/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
 function findNestedRowContainers(
@@ -125,7 +125,7 @@ export function buildRowContainerSanitizationActions(
     );
     return [
         ...containersForDirectionChange.map((itemPath) =>
-            layoutActions.toggleLayoutDirection({
+            tabsActions.toggleLayoutDirection({
                 layoutPath: itemPath,
                 direction: "column",
                 undo: {
@@ -135,7 +135,7 @@ export function buildRowContainerSanitizationActions(
         ),
         ...(childrenWithNewWidth.length > 0
             ? [
-                  layoutActions.updateWidthOfMultipleItems({
+                  tabsActions.updateWidthOfMultipleItems({
                       itemsWithSizes: childrenWithNewWidth,
                   }),
               ]

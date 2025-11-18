@@ -21,8 +21,8 @@ import {
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 function validateLayoutIndexes(
@@ -102,7 +102,7 @@ export function* resizeHeightHandler(
     const sectionPath = typeof sectionIndex === "number" ? { parent: undefined, sectionIndex } : sectionIndex;
 
     yield put(
-        layoutActions.changeItemsHeight({
+        tabsActions.changeItemsHeight({
             sectionIndex: sectionPath,
             itemIndexes,
             height,
