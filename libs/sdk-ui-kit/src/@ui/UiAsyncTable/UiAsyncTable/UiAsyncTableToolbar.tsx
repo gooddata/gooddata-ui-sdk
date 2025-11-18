@@ -9,6 +9,7 @@ import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
 import { Input } from "../../../Form/Input.js";
+import { UiSearchResultsAnnouncement } from "../../UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
@@ -154,6 +155,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
         return onSearch ? (
             <div className={e("toolbar-search")}>
+                <UiSearchResultsAnnouncement totalResults={searchValue ? totalItemsCount : undefined} />
                 <Input
                     isSearch
                     type="search"
@@ -168,7 +170,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 />
             </div>
         ) : null;
-    }, [onSearch, intl, searchValue, setSearchValue, accessibilityConfig?.searchAriaLabel]);
+    }, [onSearch, intl, searchValue, setSearchValue, accessibilityConfig?.searchAriaLabel, totalItemsCount]);
 
     const hasContent = useMemo(() => {
         return filters?.length || bulkActions;

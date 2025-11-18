@@ -20,13 +20,7 @@ import {
 import { messages } from "../messages.js";
 import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
-import {
-    getNextRunFromCron,
-    getRecipientName,
-    getWidgetId,
-    getWidgetName,
-    getWorkspaceId,
-} from "../utils.js";
+import { getNextRunFromCron, getWidgetId, getWidgetName, getWorkspaceId } from "../utils.js";
 
 export const useAutomationColumns = ({
     type,
@@ -116,10 +110,6 @@ export const useAutomationColumns = ({
                 key: "recipients",
                 label: intl.formatMessage(messages.columnRecipients),
                 getTextContent: (item) => formatCellValue(item.recipients?.length, "number"),
-                getTextTitle: (item) =>
-                    formatCellValue(
-                        item.recipients?.map((recipient) => getRecipientName(recipient)).join(", "),
-                    ),
                 width: DEFAULT_COLUMN_WIDTHS.RECIPIENTS,
             },
             ["lastRun"]: {

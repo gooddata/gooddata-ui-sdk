@@ -11,7 +11,7 @@ import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableColumn, UiAsyncTableHeaderProps } from "../types.js";
 
-const arrowIcon = <UiIcon aria-hidden type="dropDown" size={11} color="complementary-6" />;
+const arrowIcon = <UiIcon ariaHidden type="dropDown" size={11} color="complementary-6" />;
 
 export function UiAsyncTableHeader<T>({
     columns,

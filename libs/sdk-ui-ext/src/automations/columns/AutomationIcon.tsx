@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 
-import { IAutomationMetadataObject } from "node_modules/@gooddata/sdk-model/esm/automations/index.js";
 import { useIntl } from "react-intl";
 
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiIcon, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIconTooltip } from "./AutomationIconTooltip.js";
@@ -88,7 +88,7 @@ export function AutomationIcon({ type, automation, state }: IAutomationIconProps
         );
     }
 
-    return <UiIcon {...props} />;
+    return <UiIcon {...props} ariaHidden />;
 }
 
 function TooltipRecipientsList({ automation }: { automation: IAutomationMetadataObject }) {

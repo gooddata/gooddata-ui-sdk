@@ -49,7 +49,13 @@ export function UiAsyncTableBody<T extends { id: string }>({
             customKeyboardNavigationHandler={handleKeyDown}
         >
             {(item, itemIndex) => {
-                return renderItem(item, focusedItemRef, itemIndex === focusedRowIndex, focusedColumnIndex);
+                return renderItem(
+                    item,
+                    itemIndex,
+                    focusedItemRef,
+                    itemIndex === focusedRowIndex,
+                    focusedColumnIndex,
+                );
             }}
         </UiPagedVirtualList>
     );

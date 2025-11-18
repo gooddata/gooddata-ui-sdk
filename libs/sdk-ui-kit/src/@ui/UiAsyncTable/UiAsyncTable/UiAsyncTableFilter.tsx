@@ -6,9 +6,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
-import { FILTER_CHIP_MAX_WIDTH, FILTER_OPTION_ALL_VALUE, SCROLLBAR_WIDTH } from "./constants.js";
+import {
+    FILTER_CHIP_MAX_WIDTH,
+    FILTER_ITEMS_OFFSET,
+    FILTER_OPTION_ALL_VALUE,
+    SCROLLBAR_WIDTH,
+} from "./constants.js";
 import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
-import { getFilterOptionsMap } from "./utils.js";
+import { getFilterDropdownId, getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
@@ -37,7 +42,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { isMultiSelect, isFiltersTooLarge, variant, isMobileView, width } = props;
+    const { isMultiSelect, isFiltersTooLarge, variant, isMobileView, width, label } = props;
     const isSmall = variant === "small";
 
     const chipMaxWidth = useMemo(() => {
@@ -56,6 +61,9 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                         maxWidth={chipMaxWidth}
                         onClick={() => toggleDropdown()}
                         isActive={isOpen}
+                        accessibilityConfig={{
+                            ariaControls: getFilterDropdownId(label),
+                        }}
                     />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
@@ -63,21 +71,25 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                     <UiAutofocus>
                         <>
                             <DropdownList<UiAsyncTableFilterOption>
+                                id={getFilterDropdownId(label)}
                                 items={filteredOptions}
-                                renderItem={({ item }) => (
+                                renderItem={({ item, isFirst }) => (
                                     <UiAsyncTableDropdownItem
                                         label={item.label ?? String(item.value)}
                                         secondaryLabel={item.secondaryLabel}
                                         onClick={() => onItemClick(item, closeDropdown)}
                                         isSelected={isItemSelected(item)}
                                         isMultiSelect={isMultiSelect}
+                                        isUnderlined={isFirst}
                                     />
                                 )}
                                 showSearch
                                 searchPlaceholder={intl.formatMessage(messages["filterSearchPlaceholder"])}
                                 searchString={searchValue}
+                                searchFieldSize="small"
                                 onSearch={setSearchValue}
                                 renderVirtualisedList
+                                containerPadding={FILTER_ITEMS_OFFSET}
                                 onKeyDownSelect={(item) => onItemClick(item, closeDropdown)}
                                 onKeyDownConfirm={onApplyFactory(closeDropdown)}
                                 closeDropdown={closeDropdown}
