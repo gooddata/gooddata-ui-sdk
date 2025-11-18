@@ -6,8 +6,8 @@ import { put, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { RemoveDrillForKpiWidget } from "../../commands/index.js";
 import { DashboardKpiWidgetDrillRemoved, kpiWidgetDrillRemoved } from "../../events/kpi.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeDrillForKpiWidgetHandler(
@@ -21,7 +21,7 @@ export function* removeDrillForKpiWidgetHandler(
     const { ref: widgetRef } = kpiWidget;
 
     yield put(
-        layoutActions.replaceKpiWidgetDrill({
+        tabsActions.replaceKpiWidgetDrill({
             ref: widgetRef,
             drill: undefined,
             undo: {

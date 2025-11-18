@@ -4,7 +4,11 @@ import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { IExportResult, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardExportRawOptions,
+    IExportResult,
+    IRawExportCustomOverrides,
+} from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
     INullableFilter,
@@ -17,6 +21,7 @@ import {
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectRawExportOverridesForInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -28,10 +33,14 @@ async function exportDashboardToCSVRaw(
     definition: IExecutionDefinition,
     filename: string,
     overrides?: IRawExportCustomOverrides,
+    options?: IDashboardExportRawOptions,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
 
-    return backend.workspace(workspace).dashboards().exportDashboardToCSVRaw(definition, filename, overrides);
+    return backend
+        .workspace(workspace)
+        .dashboards()
+        .exportDashboardToCSVRaw(definition, filename, overrides, options);
 }
 
 export function* exportRawInsightWidgetHandler(
@@ -67,12 +76,17 @@ export function* exportRawInsightWidgetHandler(
         selectRawExportOverridesForInsightByRef(insightRef(insight)),
     );
 
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
+
     const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
         exportDashboardToCSVRaw,
         ctx,
         preparedExecutionDefinition,
         filename,
         overrides,
+        { timeout },
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

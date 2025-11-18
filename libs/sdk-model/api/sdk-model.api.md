@@ -3706,6 +3706,7 @@ export interface ISettings {
     enableWidgetExportPngImage?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
+    exportResultPollingTimeoutSeconds?: number;
     formatLocale?: string;
     llmEndpoint?: ILlmEndpoint;
     metadataLocale?: string;

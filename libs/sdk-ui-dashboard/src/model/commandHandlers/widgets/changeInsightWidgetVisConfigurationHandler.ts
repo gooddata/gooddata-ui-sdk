@@ -7,8 +7,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { ChangeInsightWidgetVisConfiguration } from "../../commands/index.js";
 import { DashboardInsightWidgetVisConfigurationChanged } from "../../events/index.js";
 import { insightWidgetVisConfigurationChanged } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetVisConfigurationHandler(
@@ -23,7 +23,7 @@ export function* changeInsightWidgetVisConfigurationHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.replaceInsightWidgetVisConfiguration({
+        tabsActions.replaceInsightWidgetVisConfiguration({
             ref: insightWidget.ref,
             config,
             undo: {

@@ -13,7 +13,7 @@ import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../../tabs/index.js";
 import { DashboardSelector } from "../../types.js";
 
-const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
 /**
  * Returns attribute filter config overrides keyed by tab identifier.

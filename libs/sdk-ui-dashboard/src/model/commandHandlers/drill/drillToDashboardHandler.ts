@@ -46,7 +46,6 @@ import { selectSupportsMultipleDateFilters } from "../../store/backendCapabiliti
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterConfigsOverrides,
@@ -56,6 +55,7 @@ import {
     selectFilterContextDateFilter,
     selectFilterContextDraggableFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardState } from "../../store/types.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 

@@ -12,12 +12,12 @@ import {
     resetDashboard,
 } from "../../../commands/index.js";
 import { DashboardWasReset } from "../../../events/index.js";
-import { selectLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectDashboardTitle } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {

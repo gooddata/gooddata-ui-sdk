@@ -31,6 +31,13 @@ export const getColumnHeaderId = (key: string) => {
     return `${ASYNC_TABLE_ID_PREFIX}column-header-${key}`;
 };
 
+export const getRowLabelId = (key: number) => {
+    return `${ASYNC_TABLE_ID_PREFIX}label-cell-row-${key}`;
+};
+
+export const getFilterDropdownId = (label: string) => {
+    return `${ASYNC_TABLE_ID_PREFIX}filter-dropdown-${label}`;
+};
 export const stopPropagationCallback = <T extends HTMLElement>(
     event: MouseEvent<T> | KeyboardEvent<T>,
     callback?: () => void,

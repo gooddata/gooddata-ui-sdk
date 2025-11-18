@@ -108,6 +108,11 @@ export interface ISettings {
      */
     enableAutomationEvaluationMode?: boolean;
 
+    /**
+     * Override the default timeout for polling for the export results.
+     */
+    exportResultPollingTimeoutSeconds?: number;
+
     //
     // Feature Flags
     //

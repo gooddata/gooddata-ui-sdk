@@ -3101,8 +3101,6 @@ export interface DashboardState {
     inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
     // @beta (undocumented)
     insights: EntityState<IInsight, EntityId>;
-    // @alpha (undocumented)
-    layout: LayoutState;
     // @beta (undocumented)
     listedDashboards: EntityState<IListedDashboard, EntityId>;
     // @beta (undocumented)
@@ -5356,6 +5354,12 @@ export interface IDefaultDashboardToolbarGroupProps {
     title: string;
 }
 
+// @internal
+export type IdentityMapping = {
+    original: IDashboardObjectIdentity;
+    updated: IDashboardObjectIdentity;
+};
+
 // @internal (undocumented)
 export type IDraggableCreatePanelItemProps = {
     Component: CustomCreatePanelItemComponent;
@@ -5646,6 +5650,22 @@ export interface IIRichTextMenuItemSeparator {
     itemId: string;
     // (undocumented)
     type: "separator";
+}
+
+// @internal
+export interface IItemWithHeight {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    itemPath: ILayoutItemPath;
+}
+
+// @internal
+export interface IItemWithWidth {
+    // (undocumented)
+    itemPath: ILayoutItemPath;
+    // (undocumented)
+    width: number;
 }
 
 // @internal (undocumented)
@@ -9320,6 +9340,9 @@ export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardS
 // @internal (undocumented)
 export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
 
+// @alpha
+export const selectExportResultPollingTimeout: DashboardSelector<number | undefined>;
+
 // @internal
 export const selectExternalRecipient: DashboardSelector<string | undefined>;
 
@@ -10314,6 +10337,303 @@ export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode
 
 // @internal (undocumented)
 export const tabsActions: CaseReducerActions<    {
+readonly setLayout: (state: WritableDraft<TabsState>, action: {
+payload: IDashboardLayout<ExtendedDashboardWidget>;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly setScreen: (state: WritableDraft<TabsState>, action: {
+payload: {
+screen: ScreenSize;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateWidgetIdentities: (state: WritableDraft<TabsState>, action: {
+payload: ObjRefMap<IdentityMapping>;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateWidgetIdentitiesForTab: (state: WritableDraft<TabsState>, action: {
+payload: {
+tabId: string;
+mapping: ObjRefMap<IdentityMapping>;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeIgnoredAttributeFilter: (state: WritableDraft<TabsState>, action: {
+payload: {
+displayFormRefs: ObjRef[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeIgnoredDateFilter: (state: WritableDraft<TabsState>, action: {
+payload: {
+dateDataSets: ObjRef[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly addSection: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+section: ExtendedDashboardLayoutSection;
+index: ILayoutSectionPath;
+usedStashes: StashedDashboardItemsId[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeSection: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+index: ILayoutSectionPath;
+stashIdentifier?: StashedDashboardItemsId;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly moveSection: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+sectionIndex: ILayoutSectionPath;
+toIndex: ILayoutSectionPath;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeSectionHeader: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+index: ILayoutSectionPath;
+header: IDashboardLayoutSectionHeader;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly addSectionItems: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath;
+items: ExtendedDashboardItem[];
+usedStashes: StashedDashboardItemsId[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly moveSectionItem: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+itemIndex: ILayoutItemPath;
+toItemIndex: ILayoutItemPath;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly removeSectionItem: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+itemIndex: ILayoutItemPath;
+stashIdentifier?: StashedDashboardItemsId;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceSectionItem: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath;
+newItems: ExtendedDashboardItem[];
+stashIdentifier?: StashedDashboardItemsId;
+usedStashes: StashedDashboardItemsId[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetHeader: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+header: WidgetHeader;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetDescription: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+description: WidgetDescription;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetDrillWithoutUndo: (state: WritableDraft<TabsState>, action: {
+payload: {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetDrills: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetBlacklistHierarchies: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+blacklistHierarchies: IDrillDownReference[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetDrillDownIntersectionIgnoredAttributes: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceInsightWidgetVisProperties: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+properties: VisualizationProperties | undefined;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceInsightWidgetVisConfiguration: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+config: IInsightWidgetConfiguration | undefined;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceInsightWidgetInsight: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+insightRef: ObjRef;
+properties: VisualizationProperties | undefined;
+header: WidgetHeader | undefined;
+newSize?: IVisualizationSizeInfo;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetFilterSettings: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoreDashboardFilters?: IDashboardFilterReference[];
+dateDataSet?: ObjRef;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceWidgetDateDataset: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+dateDataSet?: ObjRef;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceKpiWidgetMeasure: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+measureRef: ObjRef;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceKpiWidgetComparison: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+comparisonType: IKpiComparisonTypeComparison;
+comparisonDirection?: IKpiComparisonDirection;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceKpiWidgetDrillWithoutUndo: (state: WritableDraft<TabsState>, action: {
+payload: {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceKpiWidgetDrill: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+drill: IDrillToLegacyDashboard | undefined;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceKpiWidgetConfiguration: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+config: IKpiWidgetConfiguration | undefined;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly replaceRichTextWidgetContent: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+content: string;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+visualization: IInsightWidget;
+newSize?: IVisualizationSizeInfo;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateVisualizationSwitcherWidgetVisualizations: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+visualizations: IInsightWidget[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly undoLayout: <TState extends UndoEnhancedState>(state: WritableDraft<TabsState>, action: {
+payload: {
+undoDownTo: number;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly clearLayoutHistory: (state: WritableDraft<TabsState>, action: {
+payload: void;
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeItemsHeight: (state: WritableDraft<TabsState>, action: {
+payload: {
+sectionIndex: ILayoutSectionPath;
+itemIndexes: number[];
+height: number;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeItemWidth: (state: WritableDraft<TabsState>, action: {
+payload: {
+layoutPath: ILayoutItemPath;
+width: number;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoreCrossFiltering?: boolean;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+newSize?: IVisualizationSizeInfo;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly toggleLayoutSectionHeaders: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath | undefined;
+enableSectionHeaders: boolean;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly toggleLayoutDirection: (state: WritableDraft<TabsState>, action: {
+payload: UndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath | undefined;
+direction: IDashboardLayoutContainerDirection;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateHeightOfMultipleItems: (state: WritableDraft<TabsState>, action: {
+payload: {
+itemsWithSizes: IItemWithHeight[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateWidthOfMultipleItems: (state: WritableDraft<TabsState>, action: {
+payload: {
+itemsWithSizes: IItemWithWidth[];
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
 readonly setFilterContext: (state: WritableDraft<TabsState>, action: {
 payload: {
 filterContextDefinition: IFilterContextDefinition;
@@ -10325,6 +10645,13 @@ type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
 readonly updateFilterContextIdentity: (state: WritableDraft<TabsState>, action: {
 payload: {
+filterContextIdentity?: IDashboardObjectIdentity;
+};
+type: string;
+}) => void | TabsState | WritableDraft<TabsState>;
+readonly updateFilterContextIdentityForTab: (state: WritableDraft<TabsState>, action: {
+payload: {
+tabId: string;
 filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
@@ -10521,6 +10848,8 @@ export interface TabState {
     filterContext?: FilterContextState;
     // (undocumented)
     identifier: string;
+    // (undocumented)
+    layout?: LayoutState;
     // (undocumented)
     title?: string;
 }
@@ -10829,6 +11158,13 @@ export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correla
 // @beta
 export interface UndoLayoutChangesPayload {
     readonly undoPointSelector?: UndoPointSelector;
+}
+
+// @internal
+export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
+    undo: {
+        cmd: T;
+    };
 }
 
 // @beta

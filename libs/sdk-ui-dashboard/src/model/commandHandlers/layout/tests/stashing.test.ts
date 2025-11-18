@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -8,7 +9,7 @@ import {
     replaceSectionItem,
 } from "../../../commands/index.js";
 import { removeSectionItem } from "../../../commands/layout.js";
-import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,

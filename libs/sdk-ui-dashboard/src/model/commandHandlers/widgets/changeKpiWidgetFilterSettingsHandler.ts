@@ -19,8 +19,8 @@ import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { ChangeKpiWidgetFilterSettings } from "../../commands/index.js";
 import { DashboardKpiWidgetFilterSettingsChanged } from "../../events/index.js";
 import { kpiWidgetFilterSettingsChanged } from "../../events/kpi.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 const KpiWidgetFilterValidations: FilterValidators<IKpiWidget> = {
@@ -68,7 +68,7 @@ export function* changeKpiWidgetFilterSettingsHandler(
     });
 
     yield put(
-        layoutActions.replaceWidgetFilterSettings({
+        tabsActions.replaceWidgetFilterSettings({
             ref: kpiWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
             ignoreDashboardFilters,

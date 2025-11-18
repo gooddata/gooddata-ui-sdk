@@ -3,7 +3,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { IDashboardExportPdfOptions, IExportResult } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
@@ -14,6 +14,7 @@ import {
     dashboardExportToPdfResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -23,9 +24,10 @@ function exportDashboardToPdf(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     filters: FilterContextItem[] | undefined,
+    options?: IDashboardExportPdfOptions,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters);
+    return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters, options);
 }
 
 export function* exportDashboardToPdfHandler(
@@ -43,12 +45,16 @@ export function* exportDashboardToPdfHandler(
         yield select(selectFilterContextFilters);
 
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
 
     const result: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(
         exportDashboardToPdf,
         ctx,
         dashboardRef,
         effectiveFilters,
+        { timeout },
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

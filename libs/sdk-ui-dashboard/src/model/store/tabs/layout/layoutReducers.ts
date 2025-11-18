@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { Draft } from "immer";
 import { invariant } from "ts-invariant";
@@ -33,13 +34,18 @@ import {
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { LayoutState } from "./layoutState.js";
+import { LayoutState, layoutInitialState } from "./layoutState.js";
 import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
-import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout.js";
-import { findItem, findSection, findSections, getItemIndex } from "../../../_staging/layout/coordinates.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
-import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
+import { IdentityMapping } from "../../../../_staging/dashboard/dashboardLayout.js";
+import {
+    findItem,
+    findSection,
+    findSections,
+    getItemIndex,
+} from "../../../../_staging/layout/coordinates.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
+import { setOrDelete } from "../../../../_staging/objectUtils/setOrDelete.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
@@ -48,21 +54,80 @@ import {
     IItemWithWidth,
     StashedDashboardItemsId,
     isCustomWidget,
-} from "../../types/layoutTypes.js";
-import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
-import { addArrayElements, removeArrayElement } from "../../utils/arrayOps.js";
-import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
+} from "../../../types/layoutTypes.js";
+import { WidgetDescription, WidgetHeader } from "../../../types/widgetTypes.js";
+import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
+import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
+import { TabsState } from "../tabsState.js";
 
-type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
+// Core layout reducer type (operates directly on LayoutState, which extends UndoEnhancedState)
+// Use this type for reducers that will be wrapped with withUndo
+type CoreLayoutReducer<P> = CaseReducer<LayoutState, PayloadAction<P>>;
+
+// Generic layout reducer type (operates on TabsState and extracts LayoutState)
+// This is the most common type for reducers that manipulate layout through tabs
+type LayoutReducer<A> = CaseReducer<TabsState, PayloadAction<A>>;
+
+// Wrapped reducer type (operates on TabsState) - same as LayoutReducer
+type AdaptedLayoutReducer<P> = CaseReducer<TabsState, PayloadAction<P>>;
+
+/**
+ * Adapts a core layout reducer (for LayoutState) to a tabs reducer (for TabsState).
+ * Automatically applies the reducer to the active tab's layout state.
+ */
+function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): AdaptedLayoutReducer<P> {
+    return (state: Draft<TabsState>, action: PayloadAction<P>) => {
+        const activeTab = state.tabs?.find((tab) => tab.identifier === state.activeTabId);
+        if (!activeTab) return;
+
+        const layoutState = activeTab.layout;
+        if (!layoutState) return;
+
+        // Call the reducer - it may mutate the draft or return a new state (e.g., when wrapped with withUndo)
+        const result = coreLayoutReducer(layoutState as Draft<LayoutState>, action);
+
+        // If the reducer returns a new state (like withUndo does), replace the layout
+        if (result !== undefined) {
+            activeTab.layout = result;
+        }
+    };
+}
+
+/**
+ * Helper function to get the active tab's layout state.
+ * Initializes the layout if it doesn't exist.
+ * Returns undefined if no active tab is found.
+ */
+function getActiveTabLayout(state: Draft<TabsState>): Draft<LayoutState> | undefined {
+    if (!state.tabs || !state.activeTabId) {
+        return undefined;
+    }
+
+    const activeTab = state.tabs.find((tab) => tab.identifier === state.activeTabId);
+    if (!activeTab) {
+        return undefined;
+    }
+
+    // Initialize layout state if it doesn't exist
+    if (!activeTab.layout) {
+        activeTab.layout = { ...layoutInitialState };
+    }
+
+    return activeTab.layout;
+}
 
 //
 //
 //
 
 const setLayout: LayoutReducer<IDashboardLayout<ExtendedDashboardWidget>> = (state, action) => {
-    state.layout = action.payload;
+    const layoutState = getActiveTabLayout(state);
+    if (!layoutState) {
+        return;
+    }
 
-    resetUndoReducer(state);
+    layoutState.layout = action.payload;
+    resetUndoReducer(layoutState);
 };
 
 //
@@ -99,9 +164,41 @@ function recurseLayoutAndUpdateWidgetIds(
 }
 
 const updateWidgetIdentities: LayoutReducer<ObjRefMap<IdentityMapping>> = (state, action) => {
-    invariant(state.layout);
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
 
-    recurseLayoutAndUpdateWidgetIds(state.layout, action.payload);
+    recurseLayoutAndUpdateWidgetIds(layoutState.layout, action.payload);
+};
+
+/**
+ * Payload for updating widget identities for a specific tab.
+ */
+type UpdateWidgetIdentitiesForTabPayload = {
+    tabId: string;
+    mapping: ObjRefMap<IdentityMapping>;
+};
+
+/**
+ * Updates widget identities for a specific tab after a dashboard save.
+ * This ensures that temporary widget IDs are replaced with persistent IDs
+ * for widgets in the specified tab's layout.
+ *
+ * @param state - The tabs state
+ * @param action - Object containing tabId and the identity mapping for that tab's widgets
+ */
+const updateWidgetIdentitiesForTab: LayoutReducer<UpdateWidgetIdentitiesForTabPayload> = (state, action) => {
+    if (!state.tabs) {
+        return;
+    }
+
+    const { tabId, mapping } = action.payload;
+    const tab = state.tabs.find((t) => t.identifier === tabId);
+
+    if (!tab?.layout?.layout) {
+        return;
+    }
+
+    recurseLayoutAndUpdateWidgetIds(tab.layout.layout, mapping);
 };
 
 //
@@ -114,7 +211,8 @@ type AddSectionActionPayload = {
     usedStashes: StashedDashboardItemsId[];
 };
 
-const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
+// Core reducer that operates directly on LayoutState (which extends UndoEnhancedState)
+const addSectionCore: CoreLayoutReducer<AddSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { index, section, usedStashes } = action.payload;
@@ -127,13 +225,16 @@ const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
     });
 };
 
+// Wrap with undo and adapt to TabsState
+const addSection = adaptLayoutReducer(withUndo(addSectionCore));
+
 //
 //
 //
 
 type RemoveSectionActionPayload = { index: ILayoutSectionPath; stashIdentifier?: StashedDashboardItemsId };
 
-const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action) => {
+const removeSectionCore: CoreLayoutReducer<RemoveSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { index, stashIdentifier } = action.payload;
@@ -146,19 +247,25 @@ const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action)
     removeArrayElement(sections, index.sectionIndex);
 };
 
+// Wrap with undo and adapt to TabsState
+const removeSection = adaptLayoutReducer(withUndo(removeSectionCore));
+
 //
 //
 //
 
 type ChangeSectionActionPayload = { index: ILayoutSectionPath; header: IDashboardLayoutSectionHeader };
 
-const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, action) => {
+const changeSectionHeaderCore: CoreLayoutReducer<ChangeSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { index, header } = action.payload;
 
     findSection(state.layout, index).header = header;
 };
+
+// Wrap with undo and adapt to TabsState
+const changeSectionHeader = adaptLayoutReducer(withUndo(changeSectionHeaderCore));
 
 //
 //
@@ -169,7 +276,10 @@ type ToggleLayoutSectionHeadersPayload = {
     enableSectionHeaders: boolean;
 };
 
-const toggleLayoutSectionHeaders: LayoutReducer<ToggleLayoutSectionHeadersPayload> = (state, action) => {
+const toggleLayoutSectionHeadersCore: CoreLayoutReducer<ToggleLayoutSectionHeadersPayload> = (
+    state,
+    action,
+) => {
     invariant(state.layout);
 
     const { layoutPath, enableSectionHeaders } = action.payload;
@@ -189,12 +299,15 @@ const toggleLayoutSectionHeaders: LayoutReducer<ToggleLayoutSectionHeadersPayloa
     }
 };
 
+// Wrap with undo and adapt to TabsState
+const toggleLayoutSectionHeaders = adaptLayoutReducer(withUndo(toggleLayoutSectionHeadersCore));
+
 type ToggleLayoutDirectionPayload = {
     layoutPath: ILayoutItemPath | undefined;
     direction: IDashboardLayoutContainerDirection;
 };
 
-const toggleLayoutDirection: LayoutReducer<ToggleLayoutDirectionPayload> = (state, action) => {
+const toggleLayoutDirectionCore: CoreLayoutReducer<ToggleLayoutDirectionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { layoutPath, direction } = action.payload;
@@ -211,6 +324,9 @@ const toggleLayoutDirection: LayoutReducer<ToggleLayoutDirectionPayload> = (stat
     }
 };
 
+// Wrap with undo and adapt to TabsState
+const toggleLayoutDirection = adaptLayoutReducer(withUndo(toggleLayoutDirectionCore));
+
 //
 //
 //
@@ -222,11 +338,12 @@ type changeItemsHeightActionPayload = {
 };
 
 const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state, action) => {
-    invariant(state.layout);
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
 
     const { sectionIndex, itemIndexes, height } = action.payload;
 
-    const section = findSection(state.layout, sectionIndex);
+    const section = findSection(layoutState.layout, sectionIndex);
     itemIndexes.forEach((itemIndex) => {
         const item = section.items[itemIndex];
         if (isCustomWidget(item.widget)) {
@@ -255,8 +372,9 @@ const updateHeightOfMultipleItems: LayoutReducer<updateHeightOfMultipleItemsActi
     state,
     action,
 ) => {
-    invariant(state.layout);
-    const rootLayout = state.layout;
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
+    const rootLayout = layoutState.layout;
     const { itemsWithSizes } = action.payload;
 
     itemsWithSizes.forEach(({ itemPath, height }) => {
@@ -282,8 +400,9 @@ const updateWidthOfMultipleItems: LayoutReducer<updateWidthOfMultipleItemsAction
     state,
     action,
 ) => {
-    invariant(state.layout);
-    const rootLayout = state.layout;
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
+    const rootLayout = layoutState.layout;
     const { itemsWithSizes } = action.payload;
 
     itemsWithSizes.forEach(({ itemPath, width }) => {
@@ -308,11 +427,12 @@ const updateWidthOfMultipleItems: LayoutReducer<updateWidthOfMultipleItemsAction
 type changeItemWidthActionPayload = { layoutPath: ILayoutItemPath; width: number };
 
 const changeItemWidth: LayoutReducer<changeItemWidthActionPayload> = (state, action) => {
-    invariant(state.layout);
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
 
     const { layoutPath, width } = action.payload;
 
-    const item = findItem(state.layout, layoutPath);
+    const item = findItem(layoutState.layout, layoutPath);
 
     item.size = {
         ...item.size,
@@ -329,7 +449,7 @@ const changeItemWidth: LayoutReducer<changeItemWidthActionPayload> = (state, act
 
 type MoveSectionActionPayload = { sectionIndex: ILayoutSectionPath; toIndex: ILayoutSectionPath };
 
-const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => {
+const moveSectionCore: CoreLayoutReducer<MoveSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { sectionIndex, toIndex } = action.payload;
@@ -341,6 +461,9 @@ const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => 
     addArrayElements(targetSections, toIndex.sectionIndex, [movedSection]);
 };
 
+// Wrap with undo and adapt to TabsState
+const moveSection = adaptLayoutReducer(withUndo(moveSectionCore));
+
 //
 //
 //
@@ -351,7 +474,7 @@ type AddSectionItemsActionPayload = {
     usedStashes: StashedDashboardItemsId[];
 };
 
-const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, action) => {
+const addSectionItemsCore: CoreLayoutReducer<AddSectionItemsActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { layoutPath, items, usedStashes } = action.payload;
@@ -367,6 +490,9 @@ const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, act
     });
 };
 
+// Wrap with undo and adapt to TabsState
+const addSectionItems = adaptLayoutReducer(withUndo(addSectionItemsCore));
+
 //
 //
 //
@@ -376,7 +502,7 @@ type MoveSectionItemActionPayload = {
     toItemIndex: ILayoutItemPath;
 };
 
-const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, action) => {
+const moveSectionItemCore: CoreLayoutReducer<MoveSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { itemIndex, toItemIndex } = action.payload;
@@ -395,6 +521,9 @@ const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, act
     addArrayElements(toSection.items, itemIndexAtTargetSection, [item]);
 };
 
+// Wrap with undo and adapt to TabsState
+const moveSectionItem = adaptLayoutReducer(withUndo(moveSectionItemCore));
+
 //
 //
 //
@@ -404,7 +533,7 @@ type RemoveSectionItemActionPayload = {
     stashIdentifier?: StashedDashboardItemsId;
 };
 
-const removeSectionItem: LayoutReducer<RemoveSectionItemActionPayload> = (state, action) => {
+const removeSectionItemCore: CoreLayoutReducer<RemoveSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { itemIndex, stashIdentifier } = action.payload;
@@ -421,6 +550,9 @@ const removeSectionItem: LayoutReducer<RemoveSectionItemActionPayload> = (state,
     }
 };
 
+// Wrap with undo and adapt to TabsState
+const removeSectionItem = adaptLayoutReducer(withUndo(removeSectionItemCore));
+
 //
 //
 //
@@ -432,7 +564,7 @@ type ReplaceSectionItemActionPayload = {
     usedStashes: StashedDashboardItemsId[];
 };
 
-const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (state, action) => {
+const replaceSectionItemCore: CoreLayoutReducer<ReplaceSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { layoutPath, newItems, stashIdentifier, usedStashes } = action.payload;
@@ -465,6 +597,13 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 };
 
 //
+// Wrap with undo and adapt to TabsState
+const replaceSectionItem = adaptLayoutReducer(withUndo(replaceSectionItemCore));
+
+//
+//
+//
+
 // Layout-widget specific reducers
 //
 
@@ -504,7 +643,7 @@ type ReplaceWidgetHeader = {
     header: WidgetHeader;
 };
 
-const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) => {
+const replaceWidgetHeaderCore: CoreLayoutReducer<ReplaceWidgetHeader> = (state, action) => {
     invariant(state.layout);
 
     const { header, ref } = action.payload;
@@ -518,6 +657,9 @@ const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) 
     widget.title = header.title ?? "";
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceWidgetHeader = adaptLayoutReducer(withUndo(replaceWidgetHeaderCore));
+
 //
 //
 //
@@ -527,7 +669,7 @@ type ReplaceWidgetDescription = {
     description: WidgetDescription;
 };
 
-const replaceWidgetDescription: LayoutReducer<ReplaceWidgetDescription> = (state, action) => {
+const replaceWidgetDescriptionCore: CoreLayoutReducer<ReplaceWidgetDescription> = (state, action) => {
     invariant(state.layout);
 
     const { description, ref } = action.payload;
@@ -541,6 +683,9 @@ const replaceWidgetDescription: LayoutReducer<ReplaceWidgetDescription> = (state
     widget.description = description.description ?? "";
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceWidgetDescription = adaptLayoutReducer(withUndo(replaceWidgetDescriptionCore));
+
 //
 //
 //
@@ -551,6 +696,20 @@ type ReplaceWidgetDrillDefinitions = {
 };
 
 const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state, action) => {
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
+
+    const { drillDefinitions, ref } = action.payload;
+    const widget = getWidgetByRef(layoutState, ref);
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.drills = drillDefinitions ?? [];
+};
+
+const replaceWidgetDrillCore: CoreLayoutReducer<ReplaceWidgetDrillDefinitions> = (state, action) => {
     invariant(state.layout);
 
     const { drillDefinitions, ref } = action.payload;
@@ -563,6 +722,7 @@ const replaceWidgetDrill: LayoutReducer<ReplaceWidgetDrillDefinitions> = (state,
     widget.drills = drillDefinitions ?? [];
 };
 
+const replaceWidgetDrills = adaptLayoutReducer(withUndo(replaceWidgetDrillCore));
 //
 //
 //
@@ -573,7 +733,7 @@ type ReplaceWidgetBlacklistHierarchies = {
 };
 
 //
-const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHierarchies> = (
+const replaceWidgetBlacklistHierarchiesCore: CoreLayoutReducer<ReplaceWidgetBlacklistHierarchies> = (
     state,
     action,
 ) => {
@@ -587,6 +747,8 @@ const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHie
     widget.ignoredDrillDownHierarchies = blacklistHierarchies ?? [];
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceWidgetBlacklistHierarchies = adaptLayoutReducer(withUndo(replaceWidgetBlacklistHierarchiesCore));
 //
 //
 //
@@ -597,7 +759,7 @@ type ReplaceWidgetDrillDownIntersectionIgnoredAttributes = {
 };
 
 //
-const replaceWidgetDrillDownIntersectionIgnoredAttributes: LayoutReducer<
+const replaceWidgetDrillDownIntersectionIgnoredAttributesCore: CoreLayoutReducer<
     ReplaceWidgetDrillDownIntersectionIgnoredAttributes
 > = (state, action) => {
     invariant(state.layout);
@@ -610,6 +772,11 @@ const replaceWidgetDrillDownIntersectionIgnoredAttributes: LayoutReducer<
     widget.drillDownIntersectionIgnoredAttributes = ignoredDrillDownIntersectionIgnoredAttributes ?? [];
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceWidgetDrillDownIntersectionIgnoredAttributes = adaptLayoutReducer(
+    withUndo(replaceWidgetDrillDownIntersectionIgnoredAttributesCore),
+);
+
 //
 //
 //
@@ -619,7 +786,10 @@ type ReplaceWidgetVisProperties = {
     properties: VisualizationProperties | undefined;
 };
 
-const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisProperties> = (state, action) => {
+const replaceInsightWidgetVisPropertiesCore: CoreLayoutReducer<ReplaceWidgetVisProperties> = (
+    state,
+    action,
+) => {
     invariant(state.layout);
 
     const { properties, ref } = action.payload;
@@ -629,6 +799,8 @@ const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisPropertie
     setOrDelete(widget, "properties", properties);
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceInsightWidgetVisProperties = adaptLayoutReducer(withUndo(replaceInsightWidgetVisPropertiesCore));
 //
 //
 //
@@ -638,7 +810,7 @@ type ReplaceWidgetVisConfiguration = {
     config: IInsightWidgetConfiguration | undefined;
 };
 
-const replaceInsightWidgetVisConfiguration: LayoutReducer<ReplaceWidgetVisConfiguration> = (
+const replaceInsightWidgetVisConfigurationCore: CoreLayoutReducer<ReplaceWidgetVisConfiguration> = (
     state,
     action,
 ) => {
@@ -650,6 +822,11 @@ const replaceInsightWidgetVisConfiguration: LayoutReducer<ReplaceWidgetVisConfig
     invariant(widget && isInsightWidget(widget));
     setOrDelete(widget, "configuration", config);
 };
+
+// Wrap with undo and adapt to TabsState
+const replaceInsightWidgetVisConfiguration = adaptLayoutReducer(
+    withUndo(replaceInsightWidgetVisConfigurationCore),
+);
 
 //
 //
@@ -663,8 +840,8 @@ type ReplaceWidgetInsight = {
     newSize?: IVisualizationSizeInfo;
 };
 
-const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state, action) => {
-    invariant(state.layout, "State of layout is empty");
+const replaceInsightWidgetInsightCore: CoreLayoutReducer<ReplaceWidgetInsight> = (state, action) => {
+    invariant(state.layout);
 
     const { insightRef, properties, ref, header, newSize } = action.payload;
     const widget = getWidgetByRef(state, ref);
@@ -687,7 +864,8 @@ const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state,
     }
 };
 
-//
+// Wrap with undo and adapt to TabsState
+const replaceInsightWidgetInsight = adaptLayoutReducer(withUndo(replaceInsightWidgetInsightCore));
 //
 //
 
@@ -697,7 +875,7 @@ type ReplaceWidgetFilterSettings = {
     dateDataSet?: ObjRef;
 };
 
-const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = (state, action) => {
+const replaceWidgetFilterSettingsCore: CoreLayoutReducer<ReplaceWidgetFilterSettings> = (state, action) => {
     invariant(state.layout);
 
     const { ignoreDashboardFilters, dateDataSet, ref } = action.payload;
@@ -709,6 +887,8 @@ const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = 
     widget.ignoreDashboardFilters = ignoreDashboardFilters ?? [];
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceWidgetFilterSettings = adaptLayoutReducer(withUndo(replaceWidgetFilterSettingsCore));
 //
 //
 //
@@ -744,9 +924,10 @@ const removeIgnoredAttributeFilterFromLayout = (
 };
 
 const removeIgnoredAttributeFilter: LayoutReducer<RemoveIgnoredAttributeFilter> = (state, action) => {
-    invariant(state.layout);
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
 
-    removeIgnoredAttributeFilterFromLayout(state.layout, action.payload.displayFormRefs);
+    removeIgnoredAttributeFilterFromLayout(layoutState.layout, action.payload.displayFormRefs);
 };
 
 //
@@ -758,7 +939,7 @@ type ReplaceWidgetDateDataset = {
     dateDataSet?: ObjRef;
 };
 
-const replaceWidgetDateDataset: LayoutReducer<ReplaceWidgetDateDataset> = (state, action) => {
+const replaceWidgetDateDatasetCore: CoreLayoutReducer<ReplaceWidgetDateDataset> = (state, action) => {
     invariant(state.layout);
 
     const { dateDataSet, ref } = action.payload;
@@ -768,6 +949,9 @@ const replaceWidgetDateDataset: LayoutReducer<ReplaceWidgetDateDataset> = (state
 
     widget.dateDataSet = dateDataSet;
 };
+
+// Wrap with undo and adapt to TabsState
+const replaceWidgetDateDataset = adaptLayoutReducer(withUndo(replaceWidgetDateDatasetCore));
 //
 //
 //
@@ -802,9 +986,10 @@ const removeIgnoredDateFilterFromLayout = (
 };
 
 const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, action) => {
-    invariant(state.layout);
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
 
-    removeIgnoredDateFilterFromLayout(state.layout, action.payload.dateDataSets);
+    removeIgnoredDateFilterFromLayout(layoutState.layout, action.payload.dateDataSets);
 };
 
 //
@@ -816,7 +1001,7 @@ type ReplaceKpiWidgetMeasure = {
     measureRef: ObjRef;
 };
 
-const replaceKpiWidgetMeasure: LayoutReducer<ReplaceKpiWidgetMeasure> = (state, action) => {
+const replaceKpiWidgetMeasureCore: CoreLayoutReducer<ReplaceKpiWidgetMeasure> = (state, action) => {
     invariant(state.layout);
 
     const { ref, measureRef } = action.payload;
@@ -827,6 +1012,8 @@ const replaceKpiWidgetMeasure: LayoutReducer<ReplaceKpiWidgetMeasure> = (state, 
     widget.kpi.metric = measureRef;
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceKpiWidgetMeasure = adaptLayoutReducer(withUndo(replaceKpiWidgetMeasureCore));
 //
 //
 //
@@ -837,7 +1024,7 @@ type ReplaceKpiWidgetComparison = {
     comparisonDirection?: IKpiComparisonDirection;
 };
 
-const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (state, action) => {
+const replaceKpiWidgetComparisonCore: CoreLayoutReducer<ReplaceKpiWidgetComparison> = (state, action) => {
     invariant(state.layout);
 
     const { ref, comparisonType, comparisonDirection } = action.payload;
@@ -849,6 +1036,8 @@ const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (s
     widget.kpi.comparisonDirection = comparisonDirection;
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceKpiWidgetComparison = adaptLayoutReducer(withUndo(replaceKpiWidgetComparisonCore));
 //
 //
 //
@@ -858,7 +1047,7 @@ type ReplaceKpiWidgetDrill = {
     drill: IDrillToLegacyDashboard | undefined;
 };
 
-const replaceKpiWidgetDrill: LayoutReducer<ReplaceKpiWidgetDrill> = (state, action) => {
+const replaceKpiWidgetDrillCore: CoreLayoutReducer<ReplaceKpiWidgetDrill> = (state, action) => {
     invariant(state.layout);
 
     const { ref, drill } = action.payload;
@@ -869,6 +1058,8 @@ const replaceKpiWidgetDrill: LayoutReducer<ReplaceKpiWidgetDrill> = (state, acti
     widget.drills = drill ? [drill] : [];
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceKpiWidgetDrill = adaptLayoutReducer(withUndo(replaceKpiWidgetDrillCore));
 //
 //
 //
@@ -878,7 +1069,10 @@ type ReplaceKpiWidgetConfiguration = {
     config: IKpiWidgetConfiguration | undefined;
 };
 
-const replaceKpiWidgetConfiguration: LayoutReducer<ReplaceKpiWidgetConfiguration> = (state, action) => {
+const replaceKpiWidgetConfigurationCore: CoreLayoutReducer<ReplaceKpiWidgetConfiguration> = (
+    state,
+    action,
+) => {
     invariant(state.layout);
 
     const { config, ref } = action.payload;
@@ -888,6 +1082,8 @@ const replaceKpiWidgetConfiguration: LayoutReducer<ReplaceKpiWidgetConfiguration
     setOrDelete(widget, "configuration", config);
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceKpiWidgetConfiguration = adaptLayoutReducer(withUndo(replaceKpiWidgetConfigurationCore));
 //
 //
 //
@@ -897,7 +1093,7 @@ type ReplaceRichTextWidgetContent = {
     content: string;
 };
 
-const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> = (state, action) => {
+const replaceRichTextWidgetContentCore: CoreLayoutReducer<ReplaceRichTextWidgetContent> = (state, action) => {
     invariant(state.layout);
 
     const { content, ref } = action.payload;
@@ -907,12 +1103,18 @@ const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> 
     setOrDelete(widget, "content", content);
 };
 
+// Wrap with undo and adapt to TabsState
+const replaceRichTextWidgetContent = adaptLayoutReducer(withUndo(replaceRichTextWidgetContentCore));
+
 type ChangeWidgetIgnoreCrossFiltering = {
     ref: ObjRef;
     ignoreCrossFiltering?: boolean;
 };
 
-const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFiltering> = (state, action) => {
+const changeWidgetIgnoreCrossFilteringCore: CoreLayoutReducer<ChangeWidgetIgnoreCrossFiltering> = (
+    state,
+    action,
+) => {
     invariant(state.layout);
 
     const { ignoreCrossFiltering, ref } = action.payload;
@@ -922,6 +1124,9 @@ const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFil
 
     widget.ignoreCrossFiltering = ignoreCrossFiltering;
 };
+
+// Wrap with undo and adapt to TabsState
+const changeWidgetIgnoreCrossFiltering = adaptLayoutReducer(withUndo(changeWidgetIgnoreCrossFilteringCore));
 
 //
 //
@@ -933,7 +1138,7 @@ type AddVisualizationSwitcherWidgetVisualization = {
     newSize?: IVisualizationSizeInfo;
 };
 
-const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
+const addVisualizationSwitcherWidgetVisualizationCore: CoreLayoutReducer<
     AddVisualizationSwitcherWidgetVisualization
 > = (state, action) => {
     invariant(state.layout);
@@ -951,12 +1156,17 @@ const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
     }
 };
 
+// Wrap with undo and adapt to TabsState
+const addVisualizationSwitcherWidgetVisualization = adaptLayoutReducer(
+    withUndo(addVisualizationSwitcherWidgetVisualizationCore),
+);
+
 type UpdateVisualizationSwitcherWidgetVisualizations = {
     ref: ObjRef;
     visualizations: IInsightWidget[];
 };
 
-const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
+const updateVisualizationSwitcherWidgetVisualizationsCore: CoreLayoutReducer<
     UpdateVisualizationSwitcherWidgetVisualizations
 > = (state, action) => {
     invariant(state.layout);
@@ -969,12 +1179,17 @@ const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
     widgetRef.visualizations = visualizations;
 };
 
+// Wrap with undo and adapt to TabsState
+const updateVisualizationSwitcherWidgetVisualizations = adaptLayoutReducer(
+    withUndo(updateVisualizationSwitcherWidgetVisualizationsCore),
+);
+
 type ResizeVisualizationSwitcherOnInsightChanged = {
     ref: ObjRef;
     newSize?: IVisualizationSizeInfo;
 };
 
-const resizeVisualizationSwitcherOnInsightChanged: LayoutReducer<
+const resizeVisualizationSwitcherOnInsightChangedCore: CoreLayoutReducer<
     ResizeVisualizationSwitcherOnInsightChanged
 > = (state, action) => {
     invariant(state.layout);
@@ -990,6 +1205,11 @@ const resizeVisualizationSwitcherOnInsightChanged: LayoutReducer<
     }
 };
 
+// Wrap with undo and adapt to TabsState
+const resizeVisualizationSwitcherOnInsightChanged = adaptLayoutReducer(
+    withUndo(resizeVisualizationSwitcherOnInsightChangedCore),
+);
+
 //
 // Reducers that manipulate the layout itself - the sections and items
 //
@@ -999,54 +1219,59 @@ type SetScreenActionPayload = {
 };
 
 const setScreen: LayoutReducer<SetScreenActionPayload> = (state, action) => {
-    state.screen = action.payload.screen;
+    // Update screen for all tabs, not just the active one
+    // Screen size is a global property that affects all tabs
+    state.tabs?.forEach((tab) => {
+        if (tab.layout) {
+            tab.layout.screen = action.payload.screen;
+        }
+    });
 };
 
 export const layoutReducers = {
     setLayout,
     setScreen,
     updateWidgetIdentities,
+    updateWidgetIdentitiesForTab,
     removeIgnoredAttributeFilter,
     removeIgnoredDateFilter,
-    addSection: withUndo(addSection),
-    removeSection: withUndo(removeSection),
-    moveSection: withUndo(moveSection),
-    changeSectionHeader: withUndo(changeSectionHeader),
-    addSectionItems: withUndo(addSectionItems),
-    moveSectionItem: withUndo(moveSectionItem),
-    removeSectionItem: withUndo(removeSectionItem),
-    replaceSectionItem: withUndo(replaceSectionItem),
-    replaceWidgetHeader: withUndo(replaceWidgetHeader),
-    replaceWidgetDescription: withUndo(replaceWidgetDescription),
+    addSection,
+    removeSection,
+    moveSection,
+    changeSectionHeader,
+    addSectionItems,
+    moveSectionItem,
+    removeSectionItem,
+    replaceSectionItem,
+    replaceWidgetHeader,
+    replaceWidgetDescription,
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
-    replaceWidgetDrills: withUndo(replaceWidgetDrill),
-    replaceWidgetBlacklistHierarchies: withUndo(replaceWidgetBlacklistHierarchies),
-    replaceWidgetDrillDownIntersectionIgnoredAttributes: withUndo(
-        replaceWidgetDrillDownIntersectionIgnoredAttributes,
-    ),
-    replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
-    replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
-    replaceInsightWidgetInsight: withUndo(replaceInsightWidgetInsight),
-    replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
-    replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
-    replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
-    replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
-    replaceKpiWidgetDrillWithoutUndo: replaceKpiWidgetDrill, // useful in internal sanitization use cases
-    replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
-    replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
-    replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
-    addVisualizationSwitcherWidgetVisualization: withUndo(addVisualizationSwitcherWidgetVisualization),
-    updateVisualizationSwitcherWidgetVisualizations: withUndo(
-        updateVisualizationSwitcherWidgetVisualizations,
-    ),
-    undoLayout: undoReducer,
-    clearLayoutHistory: resetUndoReducer,
-    changeItemsHeight: changeItemsHeight,
-    changeItemWidth: changeItemWidth,
-    changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
-    resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
-    toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
-    toggleLayoutDirection: withUndo(toggleLayoutDirection),
+    replaceWidgetDrills,
+    replaceWidgetBlacklistHierarchies,
+    replaceWidgetDrillDownIntersectionIgnoredAttributes,
+    replaceInsightWidgetVisProperties,
+    replaceInsightWidgetVisConfiguration,
+    replaceInsightWidgetInsight,
+    replaceWidgetFilterSettings,
+    replaceWidgetDateDataset,
+    replaceKpiWidgetMeasure,
+    replaceKpiWidgetComparison,
+    replaceKpiWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
+    replaceKpiWidgetDrill,
+    replaceKpiWidgetConfiguration,
+    replaceRichTextWidgetContent,
+    addVisualizationSwitcherWidgetVisualization,
+    updateVisualizationSwitcherWidgetVisualizations,
+    undoLayout: adaptLayoutReducer(undoReducer),
+    clearLayoutHistory: adaptLayoutReducer((state: Draft<LayoutState>, _action: PayloadAction<void>) => {
+        resetUndoReducer(state);
+    }),
+    changeItemsHeight,
+    changeItemWidth,
+    changeWidgetIgnoreCrossFiltering,
+    resizeVisualizationSwitcherOnInsightChanged,
+    toggleLayoutSectionHeaders,
+    toggleLayoutDirection,
     updateHeightOfMultipleItems,
     updateWidthOfMultipleItems,
 };

@@ -2,9 +2,9 @@
 
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 
-import { DashboardLayoutCommands } from "../../commands/index.js";
-import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../types/layoutTypes.js";
-import { InitialUndoState, UndoEnhancedState } from "../_infra/undoEnhancer.js";
+import { DashboardLayoutCommands } from "../../../commands/index.js";
+import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { InitialUndoState, UndoEnhancedState } from "../../_infra/undoEnhancer.js";
 
 /**
  * @beta

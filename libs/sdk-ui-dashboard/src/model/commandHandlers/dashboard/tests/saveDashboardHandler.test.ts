@@ -6,9 +6,9 @@ import { IDashboardDefinition } from "@gooddata/sdk-model";
 
 import { addLayoutSection, initializeDashboard, saveDashboard } from "../../../commands/index.js";
 import { DashboardSaved } from "../../../events/index.js";
-import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectBasicLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";

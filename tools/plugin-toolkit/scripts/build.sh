@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+# Function to filter out baseline-browser-mapping warnings from stderr
+filter_baseline_warning() {
+    grep -v "\[baseline-browser-mapping\]" || true
+}
+
 # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
 node -p "'// (C) 2021 GoodData Corporation' + '\n\n' + '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' + '\n\n' + 'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';' +'\n\n' + 'export const LIB_DESCRIPTION = ' + JSON.stringify(require('./package.json').description) + ';' +'\n\n' + 'export const LIB_NAME = ' + JSON.stringify(require('./package.json').name) + ';'" >src/__version.ts
 
@@ -80,7 +85,7 @@ cp ${JS_CONFIG_TEMPLATES_DOT} "${JS_BUILD_DIR}"
 # transpile TypeScript files to JavaScript
 $BABEL_BIN --no-babelrc \
   --config-file "${PACKAGE_DIR}/.babelrc-js" \
-  --extensions .ts,.tsx "${JS_BUILD_DIR}" -d "${JS_BUILD_DIR}"
+  --extensions .ts,.tsx "${JS_BUILD_DIR}" -d "${JS_BUILD_DIR}" 2> >(filter_baseline_warning >&2)
 
 # remove TypeScript files
 find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx -o -iname \*.d.js \) -exec rm -rf {} \;

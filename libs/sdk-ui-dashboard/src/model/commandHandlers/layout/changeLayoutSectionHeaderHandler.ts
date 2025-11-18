@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { merge } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -11,8 +12,8 @@ import { findSection, serializeLayoutSectionPath } from "../../../_staging/layou
 import { ChangeLayoutSectionHeader } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeLayoutSectionHeaderHandler(
@@ -52,7 +53,7 @@ export function* changeLayoutSectionHeaderHandler(
     const sectionPath = isLegacyCommand ? { parent: undefined, sectionIndex: index } : index;
 
     yield put(
-        layoutActions.changeSectionHeader({
+        tabsActions.changeSectionHeader({
             index: sectionPath,
             header: sanitizedHeader,
             undo: {

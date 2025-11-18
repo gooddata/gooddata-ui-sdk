@@ -6,6 +6,7 @@ import { attributeFilterConfigsReducers } from "./attributeFilterConfigs/attribu
 import { dateFilterConfigReducers } from "./dateFilterConfig/dateFilterConfigReducers.js";
 import { dateFilterConfigsReducers } from "./dateFilterConfigs/dateFilterConfigsReducers.js";
 import { filterContextReducers } from "./filterContext/filterContextReducers.js";
+import { layoutReducers } from "./layout/layoutReducers.js";
 import { tabsReducers } from "./tabsReducers.js";
 import { tabsInitialState } from "./tabsState.js";
 
@@ -15,6 +16,7 @@ const allReducers = {
     ...dateFilterConfigsReducers,
     ...dateFilterConfigReducers,
     ...filterContextReducers,
+    ...layoutReducers,
 } as const;
 
 const tabsSlice = createSlice({
@@ -58,7 +60,13 @@ export {
     selectHasTabs,
     selectTabsState,
 } from "./tabsSelectors.js";
-export type { TabsState, TabState, FilterContextState, DateFilterConfigState } from "./tabsState.js";
+export type {
+    TabsState,
+    TabState,
+    FilterContextState,
+    DateFilterConfigState,
+    LayoutState,
+} from "./tabsState.js";
 
 export type {
     WorkingDashboardAttributeFilter,

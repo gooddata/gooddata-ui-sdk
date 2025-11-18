@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -8,9 +9,9 @@ import { isInsightWidget } from "@gooddata/sdk-model";
 import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
 import { DashboardRenderModeChanged } from "../../events/index.js";
 import { renderModeChanged } from "../../events/renderMode.js";
-import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors.js";
 import { renderModeActions } from "../../store/renderMode/index.js";
 import { clearShowWidgetAsTable } from "../../store/showWidgetAsTable/index.js";
+import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";

@@ -13,6 +13,7 @@ import {
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -33,6 +34,7 @@ function exportDashboardToTabular(
         pageOrientation?: "PORTRAIT" | "LANDSCAPE";
         showInfoPage?: boolean;
     },
+    timeout?: number,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
     return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, {
@@ -43,6 +45,7 @@ function exportDashboardToTabular(
         dashboardFiltersOverride,
         widgetIds,
         pdfConfiguration,
+        timeout,
     });
 }
 
@@ -68,6 +71,9 @@ export function* exportToTabularHandler(
     const hasDefaultFilterViewApplied = filterViews.some((filterView) => filterView.isDefault);
     const filterContext: SagaReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
         exportDashboardToTabular,
         ctx,
@@ -79,6 +85,7 @@ export function* exportToTabularHandler(
         isFilterContextChanged || hasDefaultFilterViewApplied ? filterContext : undefined,
         format,
         pdfConfiguration,
+        timeout,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

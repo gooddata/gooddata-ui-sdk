@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import { IRawExportCustomOverride, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -30,7 +31,7 @@ import {
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
 import { selectLocale } from "../config/configSelectors.js";
-import { selectWidgetByRef } from "../layout/layoutSelectors.js";
+import { selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);

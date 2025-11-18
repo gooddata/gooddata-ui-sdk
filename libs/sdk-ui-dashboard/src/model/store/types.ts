@@ -16,7 +16,6 @@ import { EntitlementsState } from "./entitlements/entitlementsState.js";
 import { ExecutedState } from "./executed/executedState.js";
 import { IExecutionResultEnvelope } from "./executionResults/types.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
-import { LayoutState } from "./layout/layoutState.js";
 import { LoadingState } from "./loading/loadingState.js";
 import { DashboardMetaState } from "./meta/metaState.js";
 import { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
@@ -63,8 +62,6 @@ export interface DashboardState {
     /** @beta */
     entitlements: EntitlementsState;
     permissions: PermissionsState;
-    /** @alpha */
-    layout: LayoutState;
     /** @alpha */
     tabs: TabsState;
     catalog: CatalogState;

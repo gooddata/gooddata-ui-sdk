@@ -41,7 +41,7 @@ const selectSelf = createSelector(selectTabs, selectActiveTabId, (tabs, activeTa
     return activeTab?.filterContext ?? filterContextInitialState;
 });
 
-const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
 /**
  * Returns filter context state for each tab keyed by identifier.

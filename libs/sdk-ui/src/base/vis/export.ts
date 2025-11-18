@@ -15,6 +15,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         mergeHeaders,
         title: customTitle,
         pdfConfiguration,
+        timeout,
     } = exportConfig;
 
     const title: string = escapeFileName(customTitle || exportTitle || "Untitled");
@@ -23,6 +24,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         format,
         mergeHeaders,
         title,
+        timeout,
     };
 
     if (includeFilterContext || showFilters) {

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
@@ -25,8 +26,8 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
@@ -176,7 +177,7 @@ export function* replaceSectionItemHandler(
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
-            layoutActions.replaceSectionItem({
+            tabsActions.replaceSectionItem({
                 layoutPath,
                 newItems: [itemWithNormalizedSize],
                 stashIdentifier,

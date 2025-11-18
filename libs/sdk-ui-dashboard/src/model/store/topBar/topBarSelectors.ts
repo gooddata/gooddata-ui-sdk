@@ -22,7 +22,6 @@ import {
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
 } from "../dashboardPermissions/dashboardPermissionsSelectors.js";
-import { selectIsLayoutEmpty } from "../layout/layoutSelectors.js";
 import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors.js";
 import { selectIsDashboardLoading } from "../loading/loadingSelectors.js";
 import {
@@ -38,6 +37,7 @@ import {
     selectCanExportPdf,
 } from "../permissions/permissionsSelectors.js";
 import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
+import { selectIsLayoutEmpty } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 

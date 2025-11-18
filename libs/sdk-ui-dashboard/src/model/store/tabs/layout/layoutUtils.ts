@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     IDashboardLayout,
     IDashboardLayoutItem,
@@ -15,8 +16,8 @@ import {
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { ILayoutCoordinates, ILayoutItemPath } from "../../../types.js";
-import { ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../types/layoutTypes.js";
+import { ILayoutCoordinates, ILayoutItemPath } from "../../../../types.js";
+import { ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../../types/layoutTypes.js";
 
 export function getWidgetCoordinates(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

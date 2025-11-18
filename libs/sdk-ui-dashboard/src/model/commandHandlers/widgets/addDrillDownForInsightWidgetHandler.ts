@@ -11,8 +11,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { AddDrillDownForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 
@@ -51,7 +51,7 @@ export function* addDrillDownForInsightWidgetHandler(
     );
 
     yield put(
-        layoutActions.replaceWidgetDrills({
+        tabsActions.replaceWidgetDrills({
             ref: insightWidget.ref,
             drillDefinitions: updatedInsightDrills,
             undo: {
@@ -68,7 +68,7 @@ export function* addDrillDownForInsightWidgetHandler(
             : [];
 
     yield put(
-        layoutActions.replaceWidgetBlacklistHierarchies({
+        tabsActions.replaceWidgetBlacklistHierarchies({
             ref: widgetRef,
             blacklistHierarchies: newBlacklistHierarchies,
             undo: {
@@ -85,7 +85,7 @@ export function* addDrillDownForInsightWidgetHandler(
             ) ?? [];
 
         yield put(
-            layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
+            tabsActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
                 ref: widgetRef,
                 ignoredDrillDownIntersectionIgnoredAttributes: [
                     ...existingIgnoredAttributesWithoutChangedItem,

@@ -278,6 +278,12 @@
         max-width: 200px;
     }
 
+    &__dropdown-item-container {
+        &--underlined {
+            margin-top: -10px;
+        }
+    }
+
     &__dropdown-item {
         display: flex;
         align-items: center;
@@ -325,6 +331,10 @@
         text-overflow: ellipsis;
         color: var(--gd-palette-complementary-6);
         margin-left: var(--gd-spacing-5px);
+    }
+
+    &__dropdown-item-divider.gd-content-divider {
+        margin: 0 var(--gd-spacing-10px);
     }
 
     &__filter-bottom {

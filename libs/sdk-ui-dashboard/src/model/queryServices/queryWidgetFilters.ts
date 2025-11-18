@@ -42,11 +42,11 @@ import { createQueryService } from "../store/_infra/queryService.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAllFiltersForWidgetByRef,
     selectFilterableWidgetByRef,
-} from "../store/layout/layoutSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+} from "../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { FilterableDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -14,6 +15,7 @@ import {
     insightWidgetExportRequested,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import {
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
@@ -97,10 +99,14 @@ export function* exportInsightWidgetHandler(
     // executionResult must be defined at this point
     invariant(executionEnvelope?.executionResult);
 
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
+
     const result: PromiseFnReturnType<typeof performExport> = yield call(
         performExport,
         executionEnvelope.executionResult,
-        config,
+        { ...config, timeout },
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
