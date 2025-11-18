@@ -22,7 +22,6 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
-import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreFilters,
@@ -31,6 +30,7 @@ import {
     selectFilterContextAttributeFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
+import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";

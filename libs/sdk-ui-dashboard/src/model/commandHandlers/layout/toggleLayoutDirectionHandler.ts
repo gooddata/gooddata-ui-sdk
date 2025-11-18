@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
@@ -22,8 +23,8 @@ import { ToggleLayoutDirection } from "../../commands/layout.js";
 import { LayoutDirectionChanged, layoutDirectionChanged } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 
@@ -61,7 +62,7 @@ export function* toggleLayoutDirectionHandler(
     const settings = yield select(selectSettings);
 
     yield put(
-        layoutActions.toggleLayoutDirection({
+        tabsActions.toggleLayoutDirection({
             layoutPath,
             direction,
             undo: {
@@ -81,7 +82,7 @@ export function* toggleLayoutDirectionHandler(
 
     if (itemsWithUpdatedWidth.length > 0) {
         yield put(
-            layoutActions.updateWidthOfMultipleItems({
+            tabsActions.updateWidthOfMultipleItems({
                 itemsWithSizes: itemsWithUpdatedWidth,
             }),
         );

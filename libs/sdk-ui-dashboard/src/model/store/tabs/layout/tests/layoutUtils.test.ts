@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { IDashboardLayoutSize } from "@gooddata/sdk-model";

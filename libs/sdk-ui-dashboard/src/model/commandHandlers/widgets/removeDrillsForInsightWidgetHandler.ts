@@ -8,8 +8,8 @@ import { validateRemoveDrillsByLocalIdentifier } from "./validation/removeDrills
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { RemoveDrillsForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetByRef, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
@@ -39,7 +39,7 @@ export function* removeDrillsForInsightWidgetHandler(
     );
 
     yield put(
-        layoutActions.replaceWidgetDrills({
+        tabsActions.replaceWidgetDrills({
             ref: widgetRef,
             drillDefinitions: notModifiedDrillDefinition,
             undo: {

@@ -7,8 +7,8 @@ import { validateExistingInsightWidget } from "./validation/widgetValidations.js
 import { ChangeInsightWidgetVisProperties } from "../../commands/index.js";
 import { DashboardInsightWidgetVisPropertiesChanged } from "../../events/index.js";
 import { insightWidgetVisPropertiesChanged } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetVisPropertiesHandler(
@@ -23,7 +23,7 @@ export function* changeInsightWidgetVisPropertiesHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.replaceInsightWidgetVisProperties({
+        tabsActions.replaceInsightWidgetVisProperties({
             ref: insightWidget.ref,
             properties,
             undo: {

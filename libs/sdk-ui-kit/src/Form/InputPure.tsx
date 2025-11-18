@@ -104,6 +104,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         switch (e.keyCode) {
             case ENUM_KEY_CODE.KEY_CODE_ESCAPE:
                 if (this.props.clearOnEsc) {
+                    e.stopPropagation();
                     this.onClear();
                 }
                 this.props.onEscKeyPress(e);

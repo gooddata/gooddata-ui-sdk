@@ -37,6 +37,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     height?: number;
     width?: number;
     maxHeight?: number;
+    containerPadding?: number;
 
     renderVirtualisedList?: boolean;
     onKeyDownSelect?: (item: T) => void;
@@ -127,6 +128,7 @@ export function DropdownList<T>({
     items = [],
     itemsCount = items.length,
     itemHeight = DEFAULT_ITEM_HEIGHT,
+    containerPadding = 0,
     mobileItemHeight = DEFAULT_MOBILE_ITEM_HEIGHT,
 
     showSearch,
@@ -268,6 +270,7 @@ export function DropdownList<T>({
                                     itemHeight={effectiveItemHeight}
                                     itemsGap={0}
                                     itemPadding={0}
+                                    containerPadding={containerPadding}
                                     skeletonItemsCount={0}
                                     onKeyDownSelect={onKeyDownSelect}
                                     onKeyDownConfirm={onKeyDownConfirm}

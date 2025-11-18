@@ -140,6 +140,8 @@ export function dashboardLayoutSanitize<T = IDashboardWidget>(
  * Mapping between dashboard object identities. This is typically used to map between temporary identity assigned
  * to a dashboard object as it is added onto a dashboard and the persistent identity of the object once it
  * it saved by the backend.
+ *
+ * * @internal
  */
 export type IdentityMapping = {
     original: IDashboardObjectIdentity;

@@ -7,8 +7,8 @@ import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { ChangeKpiWidgetConfiguration } from "../../commands/index.js";
 import { DashboardKpiWidgetConfigurationChanged } from "../../events/index.js";
 import { kpiWidgetConfigurationChanged } from "../../events/kpi.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeKpiWidgetConfigurationHandler(
@@ -23,7 +23,7 @@ export function* changeKpiWidgetConfigurationHandler(
     const kpiWidget = validateExistingKpiWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.replaceKpiWidgetConfiguration({
+        tabsActions.replaceKpiWidgetConfiguration({
             ref: kpiWidget.ref,
             config,
             undo: {

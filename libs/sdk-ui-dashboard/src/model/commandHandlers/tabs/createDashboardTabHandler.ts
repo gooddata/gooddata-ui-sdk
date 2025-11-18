@@ -7,8 +7,10 @@ import { v4 as uuid } from "uuid";
 import {
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
+    IDashboardLayout,
     IDateFilterConfig,
     IFilterContextDefinition,
+    ScreenSize,
 } from "@gooddata/sdk-model";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
@@ -16,10 +18,14 @@ import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultF
 import { CreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { DashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
 import { selectDateFilterConfig } from "../../store/config/configSelectors.js";
 import { TabState, tabsActions } from "../../store/tabs/index.js";
+import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 
 const getTabState = ({
     title,
@@ -28,6 +34,8 @@ const getTabState = ({
     dateFilterConfig,
     dateFilterConfigs,
     attributeFilterConfigs,
+    layout,
+    screen,
 }: {
     title: string;
     identifier: string;
@@ -35,6 +43,8 @@ const getTabState = ({
     dateFilterConfig?: IDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    layout: IDashboardLayout<ExtendedDashboardWidget>;
+    screen: ScreenSize;
 }): TabState => {
     return {
         title,
@@ -55,6 +65,12 @@ const getTabState = ({
         attributeFilterConfigs: {
             attributeFilterConfigs,
         },
+        layout: {
+            layout: layout,
+            stash: {},
+            screen,
+            ...InitialUndoState,
+        },
     };
 };
 
@@ -69,16 +85,19 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
     const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
 
+    const screen: ScreenSize = yield select(selectScreen);
+
     const updatedTabs = (tabs ?? []).slice();
 
-    // 2. Create new tab with an empty filter context
+    // 2. Create new tab with an empty filter context and layout
     const newTabId = uuid();
     const newTabFilterContext = createDefaultFilterContext(dateFilterConfig, true);
 
     const newTab: TabState = getTabState({
         identifier: newTabId,
         title,
-        //layout: EmptyDashboardLayout, // TODO INE LX-1603: add layout to tab state
+        layout: EmptyDashboardLayout,
+        screen,
         filterContext: newTabFilterContext,
         dateFilterConfig,
     });

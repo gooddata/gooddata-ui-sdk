@@ -191,6 +191,7 @@ export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
 
 export interface UiAsyncTableRowProps<T extends { id: string }> {
     item?: T;
+    itemIndex: number;
     columns: Array<UiAsyncTableColumn<T>>;
     onSelect?: (item: T) => void;
     onClick?: (item: T) => void;
@@ -235,6 +236,7 @@ export type UiAsyncTableDropdownItemProps = {
     onClick: () => void;
     isSelected?: boolean;
     isMultiSelect?: boolean;
+    isUnderlined?: boolean;
 };
 
 export interface UiAsyncTableBulkActionsProps {
@@ -263,6 +265,7 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
     renderItem: (
         item: T,
+        itemIndex: number,
         focusedItemRef: Ref<HTMLElement>,
         isFocused: boolean,
         focusedColumnIndex?: number,

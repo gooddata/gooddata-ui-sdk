@@ -17,7 +17,7 @@ import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DashboardSelector } from "../../types.js";
 import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../index.js";
 
-const selectTabsArray = createSelector(selectTabs, (tabs) => tabs ?? []);
+const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
 /**
  * Returns date filter config overrides keyed by tab identifier.

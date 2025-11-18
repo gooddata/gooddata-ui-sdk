@@ -57,6 +57,8 @@ export const InitialUndoState: UndoEnhancedState<any> = {
 
 /**
  * Actions that can be undone need to contain extra information in order to perform the undo correctly.
+ *
+ * * @internal
  */
 export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
     /**
@@ -143,7 +145,7 @@ export const withUndo = <
     };
 };
 
-export type UndoActionPayload = {
+type UndoActionPayload = {
     /**
      * Pointer on the undo stack. All stack entries from this index (including) up to the last entry will be undone.
      */

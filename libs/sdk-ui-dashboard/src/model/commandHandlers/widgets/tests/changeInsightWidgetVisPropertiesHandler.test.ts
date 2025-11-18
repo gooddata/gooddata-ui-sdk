@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { IInsightWidget, idRef, uriRef } from "@gooddata/sdk-model";
@@ -8,7 +9,7 @@ import {
     changeInsightWidgetVisProperties,
 } from "../../../commands/index.js";
 import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events/index.js";
-import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,

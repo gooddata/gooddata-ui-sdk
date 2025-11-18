@@ -24,8 +24,8 @@ import { insightWidgetInsightChanged } from "../../events/insight.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgets, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgets, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
@@ -97,7 +97,7 @@ export function* changeInsightWidgetInsightHandler(
              * - properties if set
              * - title if appropriate
              */
-            layoutActions.replaceInsightWidgetInsight({
+            tabsActions.replaceInsightWidgetInsight({
                 ref,
                 insightRef,
                 properties: visualizationProperties,
@@ -117,7 +117,7 @@ export function* changeInsightWidgetInsightHandler(
     // Resize Vis. Switcher
     if (visSwitcherRef) {
         yield put(
-            layoutActions.resizeVisualizationSwitcherOnInsightChanged({
+            tabsActions.resizeVisualizationSwitcherOnInsightChanged({
                 ref: visSwitcherRef,
                 newSize,
                 undo: {

@@ -26,8 +26,8 @@ import { DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/la
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
@@ -139,7 +139,7 @@ export function* addLayoutSectionHandler(
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
-            layoutActions.addSection({
+            tabsActions.addSection({
                 section,
                 usedStashes: stashValidationResult.existing,
                 index: isLegacyCommand ? { parent: undefined, sectionIndex: index } : index,

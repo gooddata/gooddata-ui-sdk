@@ -14,6 +14,7 @@ import {
     dashboardExportToPdfPresentationResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -47,13 +48,21 @@ export function* exportDashboardToPdfPresentationHandler(
         yield select(selectFilterContextFilters);
 
     const effectiveFilters = ensureAllTimeFilterForExport(cmd.payload?.filters ?? filterContextFilters);
+    const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
+        selectExportResultPollingTimeout,
+    );
+
+    const options: IDashboardExportPresentationOptions = {
+        ...(cmd.payload?.options ?? {}),
+        timeout,
+    };
 
     const result: PromiseFnReturnType<typeof exportDashboardToPdfPresentation> = yield call(
         exportDashboardToPdfPresentation,
         ctx,
         dashboardRef,
         effectiveFilters,
-        cmd.payload?.options,
+        options,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

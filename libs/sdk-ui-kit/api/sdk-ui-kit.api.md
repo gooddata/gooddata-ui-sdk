@@ -472,7 +472,7 @@ export function DropdownButton({ id, className, accessibilityConfig, value, titl
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
@@ -2135,6 +2135,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     className?: string;
     // (undocumented)
     closeDropdown?: () => void;
+    // (undocumented)
+    containerPadding?: number;
     // (undocumented)
     disableAutofocus?: boolean;
     // (undocumented)
@@ -7065,6 +7067,8 @@ export interface UiPagedVirtualListProps<T> {
     children: (item: T, focusedIndex?: number) => ReactNode;
     // (undocumented)
     closeDropdown?: () => void;
+    // (undocumented)
+    containerPadding?: number;
     // (undocumented)
     customKeyboardNavigationHandler?: (event: KeyboardEvent_2<Element>) => void;
     // (undocumented)

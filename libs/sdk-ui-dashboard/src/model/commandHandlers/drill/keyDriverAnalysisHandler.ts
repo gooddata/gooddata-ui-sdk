@@ -21,7 +21,7 @@ import {
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
 

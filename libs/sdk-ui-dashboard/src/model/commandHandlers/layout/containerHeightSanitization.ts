@@ -18,8 +18,8 @@ import {
     splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../_staging/layout/sizing.js";
 import { ILayoutItemPath } from "../../../types.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { ExtendedDashboardWidget, IItemWithHeight } from "../../types/layoutTypes.js";
 
 // ============================================================================
@@ -267,7 +267,7 @@ export function* resizeParentContainers(parentPath: ILayoutItemPath | undefined)
     // Step 5: Apply the updates
     if (requiredUpdates.length > 0) {
         yield put(
-            layoutActions.updateHeightOfMultipleItems({
+            tabsActions.updateHeightOfMultipleItems({
                 itemsWithSizes: requiredUpdates,
             }),
         );

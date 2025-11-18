@@ -16,7 +16,7 @@ import {
 
 import { IDashboardCommand } from "../../commands/index.js";
 import { insightWidgetDrillsRemoved } from "../../events/insight.js";
-import { layoutActions } from "../../store/layout/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { uiActions } from "../../store/ui/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils.js";
@@ -67,7 +67,7 @@ function* removeInsightWidgetDrills(
     );
 
     yield put(
-        layoutActions.replaceWidgetDrillWithoutUndo({
+        tabsActions.replaceWidgetDrillWithoutUndo({
             ref: widgetRef(widget),
             drillDefinitions: notModifiedDrillDefinition,
         }),

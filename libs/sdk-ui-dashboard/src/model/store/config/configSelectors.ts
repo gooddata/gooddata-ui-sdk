@@ -947,3 +947,18 @@ export const selectEnablePreserveFilterSelectionDuringInit: DashboardSelector<bo
         return state.settings?.enablePreserveFilterSelectionDuringInit ?? false;
     },
 );
+
+/**
+ * Returns the timeout to use when polling for export results (in milliseconds).
+ *
+ * @alpha
+ */
+export const selectExportResultPollingTimeout: DashboardSelector<number | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        if (state.settings?.exportResultPollingTimeoutSeconds) {
+            return state.settings.exportResultPollingTimeoutSeconds * 1000;
+        }
+        return undefined;
+    },
+);

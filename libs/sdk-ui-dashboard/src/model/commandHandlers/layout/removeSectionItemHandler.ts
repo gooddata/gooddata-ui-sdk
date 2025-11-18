@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -17,8 +18,8 @@ import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands/
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 
@@ -116,7 +117,7 @@ export function* removeSectionItemSaga(
 
     if (eager && fromSection.items.length === 1) {
         yield put(
-            layoutActions.removeSection({
+            tabsActions.removeSection({
                 index: itemPath === undefined ? { parent: undefined, sectionIndex } : asSectionPath(itemPath),
                 stashIdentifier,
                 undo: {
@@ -159,7 +160,7 @@ export function* removeSectionItemSaga(
         );
     } else {
         yield put(
-            layoutActions.removeSectionItem({
+            tabsActions.removeSectionItem({
                 itemIndex: itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
                 stashIdentifier,
                 undo: {

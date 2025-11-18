@@ -22,6 +22,8 @@ export const MENU_COLUMN_WIDTH_LARGE = 65;
 export const SKELETON_ITEM_HEIGHT = 14;
 export const SKELETON_ITEM_GAP = 0;
 
+export const FILTER_ITEMS_OFFSET = 10;
+
 /**
  * @internal
  */

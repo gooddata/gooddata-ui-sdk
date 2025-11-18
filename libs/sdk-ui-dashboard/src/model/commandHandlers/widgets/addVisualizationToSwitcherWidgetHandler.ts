@@ -13,8 +13,8 @@ import {
 } from "../../events/index.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* addVisualizationToSwticherWidgetContentHandler(
@@ -34,7 +34,7 @@ export function* addVisualizationToSwticherWidgetContentHandler(
     yield put(
         batchActions([
             insightsActions.upsertInsight(insight),
-            layoutActions.addVisualizationSwitcherWidgetVisualization({
+            tabsActions.addVisualizationSwitcherWidgetVisualization({
                 ref: visualizationSwitcherWidget.ref,
                 visualization,
                 newSize,

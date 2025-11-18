@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { RefObject, useEffect, useMemo } from "react";
+import { ComponentType, RefObject, useEffect, useMemo } from "react";
 
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
@@ -11,6 +11,7 @@ import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStric
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
 
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
+import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -33,6 +34,7 @@ export type GenAIChatDialogProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
+    LandingScreenComponentProvider?: () => ComponentType;
 };
 
 // Default z-index:
@@ -56,6 +58,7 @@ export function GenAIChatDialog({
     colorPalette,
     onLinkClick,
     onDispatcher,
+    LandingScreenComponentProvider,
 }: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -101,7 +104,11 @@ export function GenAIChatDialog({
                                 canAnalyze={canAnalyze}
                                 canFullControl={canFullControl}
                             >
-                                <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onClose} />
+                                <CustomizationProvider
+                                    landingScreenComponentProvider={LandingScreenComponentProvider}
+                                >
+                                    <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onClose} />
+                                </CustomizationProvider>
                             </ConfigProvider>
                         </OverlayControllerProvider>
                     </WorkspaceProvider>

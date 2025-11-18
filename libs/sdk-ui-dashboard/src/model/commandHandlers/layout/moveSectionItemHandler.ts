@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -32,8 +33,8 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
 
@@ -292,14 +293,14 @@ export function* moveSectionItemHandler(
             ...rowContainerSanitizationActions,
             ...(shouldChangeSize
                 ? [
-                      layoutActions.changeItemWidth({
+                      tabsActions.changeItemWidth({
                           layoutPath: currentItemIndex,
                           width: itemWithNormalizedSize.size.xl.gridWidth,
                       }),
                   ]
                 : []),
             // changes item index
-            layoutActions.moveSectionItem({
+            tabsActions.moveSectionItem({
                 itemIndex: currentItemIndex,
                 toItemIndex,
                 undo: {
@@ -308,7 +309,7 @@ export function* moveSectionItemHandler(
             }),
             ...(shouldRemoveSection
                 ? [
-                      layoutActions.removeSection({
+                      tabsActions.removeSection({
                           index:
                               fromPath === undefined
                                   ? { parent: undefined, sectionIndex }

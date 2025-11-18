@@ -22,11 +22,12 @@ export function ChipContent({
     buttonRef,
     styleObj,
 }: ChipContentProps) {
-    const { isExpanded, popupId, ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+    const { isExpanded, popupId, ariaLabel, ariaLabelledBy, ariaControls } = accessibilityConfig ?? {};
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
         ...(popupId ? { "aria-haspopup": !!popupId } : {}),
         ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
+        ...(ariaControls ? { "aria-controls": ariaControls } : {}),
     };
 
     return (

@@ -6,7 +6,6 @@ import { put, select } from "redux-saga/effects";
 
 import { SwitchDashboardTab } from "../../commands/tabs.js";
 import { DashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
-import { layoutActions } from "../../store/layout/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -32,7 +31,7 @@ export function* switchDashboardTabHandler(
     const actions = [];
 
     actions.push(tabsActions.setActiveTabId(newTab.identifier));
-    actions.push(layoutActions.clearLayoutHistory());
+    actions.push(tabsActions.clearLayoutHistory());
 
     yield put(batchActions(actions));
 

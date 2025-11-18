@@ -70,11 +70,11 @@ import { selectDrillableItems } from "../drill/drillSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { keyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/const.js";
+import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
 import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectWidgetDrills,
-} from "../layout/layoutSelectors.js";
-import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
+} from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector } from "../types.js";
 
 /**

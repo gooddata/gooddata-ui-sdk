@@ -171,6 +171,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
                           title: "",
                           filterContext: persistedDashboard.filterContext,
                           attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
+                          layout: persistedDashboard.layout,
                       },
                   ];
 
@@ -233,6 +234,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             dateFilterConfig,
             tabsDateFilterConfigSource,
             displayForms,
+            persistedDashboard,
         );
     } else {
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);

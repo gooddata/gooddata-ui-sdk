@@ -7,6 +7,8 @@
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
+import { ComponentType } from 'react';
+import { FC } from 'react';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
@@ -17,6 +19,7 @@ import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
+import { ReactNode } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
 // @public (undocumented)
@@ -132,6 +135,18 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 // @public (undocumented)
 export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
+// @beta (undocumented)
+export const DefaultLandingQuestion: FC<LandingQuestionProps>;
+
+// @beta (undocumented)
+export const DefaultLandingScreen: FC<LandingScreenProps>;
+
+// @beta (undocumented)
+export function DefaultLandingTitle({ children }: LandingTitleProps): JSX.Element;
+
+// @beta (undocumented)
+export function DefaultLandingTitleAscent({ children }: LandingTitleProps): JSX.Element;
+
 // @public (undocumented)
 export type ErrorContents = {
     type: "error";
@@ -151,6 +166,7 @@ export interface GenAIAssistantProps {
     disableFullControl?: boolean;
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
+    LandingScreenComponentProvider?: () => ComponentType;
     locale?: string;
     objectTypes?: GenAIObjectType[];
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
@@ -197,6 +213,29 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 
 // @public
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
+
+// @beta (undocumented)
+export interface LandingQuestionProps {
+    // (undocumented)
+    answer: string;
+    // (undocumented)
+    icon?: ReactNode;
+    // (undocumented)
+    question: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @beta (undocumented)
+export type LandingScreenProps = {
+    LandingScreen?: ComponentType;
+};
+
+// @beta (undocumented)
+export interface LandingTitleProps {
+    // (undocumented)
+    children: ReactNode;
+}
 
 // @public (undocumented)
 export type LinkHandlerEvent = {

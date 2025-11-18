@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "11.10.0-alpha.2",
+    "version": "11.10.0-alpha.4",
     "description": "GoodData SDK TypeScript & React skeleton",
     "repository": {
         "type": "git",
@@ -48,7 +48,7 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "scss": "sass --load-path=node_modules styles/scss:styles/css && sass --load-path=node_modules src:esm",
-        "stylelint": "stylelint '**/*.scss'",
+        "stylelint": "bash scripts/stylelint.sh",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",

@@ -16,8 +16,8 @@ import {
     selectSupportsExportToXlsx,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectSettings } from "../config/configSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors.js";
 import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

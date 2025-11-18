@@ -149,12 +149,19 @@ const useAsyncTable = <T extends { id: string }>({
     }, [columns, bulkActions, widthProp, isLargeRow]);
 
     const renderItem = useCallback(
-        (item: T, focusedItemRef: Ref<HTMLElement>, isFocused: boolean, focusedColumnIndex?: number) => {
+        (
+            item: T,
+            itemIndex: number,
+            focusedItemRef: Ref<HTMLElement>,
+            isFocused: boolean,
+            focusedColumnIndex?: number,
+        ) => {
             return renderItemProp ? (
                 renderItemProp(item)
             ) : (
                 <UiAsyncTableRow
                     item={item}
+                    itemIndex={itemIndex}
                     columns={columns}
                     onSelect={onItemSelect}
                     isSelected={isItemSelected(item)}

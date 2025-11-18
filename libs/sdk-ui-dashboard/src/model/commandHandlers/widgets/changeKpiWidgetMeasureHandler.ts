@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { PayloadAction } from "@reduxjs/toolkit";
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -16,8 +17,8 @@ import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
 import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { WidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
 
@@ -123,14 +124,14 @@ export function* changeKpiWidgetMeasureHandler(
     );
 
     const actions: Array<PayloadAction<any>> = [
-        layoutActions.replaceKpiWidgetMeasure({
+        tabsActions.replaceKpiWidgetMeasure({
             ref: kpiWidget.ref,
             measureRef: measure.measure.ref,
             undo: {
                 cmd,
             },
         }),
-        layoutActions.replaceWidgetDateDataset({
+        tabsActions.replaceWidgetDateDataset({
             ref: kpiWidget.ref,
             dateDataSet: dateDataset?.dataSet.ref,
             undo: {
@@ -141,7 +142,7 @@ export function* changeKpiWidgetMeasureHandler(
 
     if (header) {
         actions.push(
-            layoutActions.replaceWidgetHeader({
+            tabsActions.replaceWidgetHeader({
                 ref: kpiWidget.ref,
                 header,
                 undo: {

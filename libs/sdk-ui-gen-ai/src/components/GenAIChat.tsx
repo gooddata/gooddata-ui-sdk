@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useEffect } from "react";
+import { ComponentType, useEffect } from "react";
 
 import { Provider as StoreProvider } from "react-redux";
 
@@ -9,6 +9,7 @@ import { CatalogItem, GenAIObjectType, IColorPalette } from "@gooddata/sdk-model
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
+import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -86,6 +87,11 @@ export interface GenAIAssistantProps {
      * after the store has been initialized.
      */
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
+
+    /**
+     * Custom React node rendered when no conversation exists yet.
+     */
+    LandingScreenComponentProvider?: () => ComponentType;
 }
 
 /**
@@ -138,7 +144,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
 export const GenAIChat = GenAIAssistant;
 
 function GenAIContent(props: GenAIChatProps) {
-    const { onLinkClick, catalogItems } = props;
+    const { onLinkClick, catalogItems, LandingScreenComponentProvider } = props;
     const { permissions, loading } = usePermissions();
 
     return (
@@ -150,7 +156,9 @@ function GenAIContent(props: GenAIChatProps) {
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
             canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}
         >
-            <GenAIChatWrapper initializing={loading} />
+            <CustomizationProvider landingScreenComponentProvider={LandingScreenComponentProvider}>
+                <GenAIChatWrapper initializing={loading} />
+            </CustomizationProvider>
         </ConfigProvider>
     );
 }

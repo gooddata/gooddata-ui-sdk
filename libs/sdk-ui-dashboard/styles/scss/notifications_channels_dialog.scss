@@ -34,6 +34,42 @@ $min-content-height: 110px;
     }
 }
 
+.gd-dialog--no-padding.gd-dialog.gd-notifications-channels-management-dialog {
+    padding: 0;
+
+    .gd-notifications-channels-management-dialog-title {
+        margin: 0;
+        padding: var(--gd-spacing-20px);
+    }
+
+    .gd-notifications-channels-content {
+        margin: 0;
+        padding: var(--gd-spacing-20px) var(--gd-spacing-20px) 0 var(--gd-spacing-20px);
+        width: 100%;
+        background-color: variables.$dialog-background;
+        height: 475px;
+    }
+
+    .gd-content-divider--no-spacing {
+        margin: 0;
+        padding: 0;
+    }
+
+    .gd-buttons {
+        margin: 0;
+        padding: var(--gd-spacing-20px);
+    }
+
+    .gd-buttons-inner {
+        display: flex;
+        gap: var(--gd-spacing-10px);
+    }
+
+    .gd-button {
+        margin: 0;
+    }
+}
+
 .gd-notifications-channels-dialog-overlay {
     border: 1px solid transparent;
 }
