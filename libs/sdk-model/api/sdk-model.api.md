@@ -1319,7 +1319,7 @@ export type ICustomSmtpDestinationConfiguration = {
 
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly activeTabId?: string;
+    readonly activeTabLocalIdentifier?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
@@ -1441,7 +1441,7 @@ export interface IDashboardDateFilterReference {
 
 // @alpha
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
-    readonly activeTabId?: string;
+    readonly activeTabLocalIdentifier?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
@@ -1607,8 +1607,8 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     filterContext?: IFilterContext | ITempFilterContext;
-    identifier: string;
     layout?: IDashboardLayout<TWidget>;
+    localIdentifier: string;
     title: string;
 }
 

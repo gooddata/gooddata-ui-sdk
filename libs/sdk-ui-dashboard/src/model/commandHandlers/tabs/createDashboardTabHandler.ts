@@ -22,14 +22,14 @@ import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
 import { selectDateFilterConfig } from "../../store/config/configSelectors.js";
 import { TabState, tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 
 const getTabState = ({
     title,
-    identifier,
+    localIdentifier,
     filterContext,
     dateFilterConfig,
     dateFilterConfigs,
@@ -38,7 +38,7 @@ const getTabState = ({
     screen,
 }: {
     title: string;
-    identifier: string;
+    localIdentifier: string;
     filterContext: IFilterContextDefinition;
     dateFilterConfig?: IDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
@@ -48,7 +48,7 @@ const getTabState = ({
 }): TabState => {
     return {
         title,
-        identifier,
+        localIdentifier,
         filterContext: {
             filtersWithInvalidSelection: [],
             filterContextDefinition: filterContext,
@@ -82,7 +82,9 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
 
     // 1. Get current state from main dashboard slices
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
 
     const screen: ScreenSize = yield select(selectScreen);
@@ -94,7 +96,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
     const newTabFilterContext = createDefaultFilterContext(dateFilterConfig, true);
 
     const newTab: TabState = getTabState({
-        identifier: newTabId,
+        localIdentifier: newTabId,
         title,
         layout: EmptyDashboardLayout,
         screen,
@@ -116,7 +118,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
     yield put(
         tabsActions.setTabs({
             tabs: updatedTabs,
-            activeTabId,
+            activeTabLocalIdentifier,
         }),
     );
 

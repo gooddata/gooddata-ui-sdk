@@ -651,6 +651,14 @@
         "value": "To create or edit alerts, reset the dashboard date to today.",
         "comment": "Error message shown when trying to create alerts with non-current date filters applied"
     },
+    "dialogs.alert.tabs.general": {
+        "value": "General",
+        "comment": "Label for the General tab in alert dialog"
+    },
+    "dialogs.alert.tabs.filters": {
+        "value": "Filters",
+        "comment": "Label for the Filters tab in alert dialog"
+    },
     "dialogs.schedule.email.widgetError": {
         "value": "Error: Schedule can't be sent — the source widget was deleted. Delete the schedule or contact your administrator.",
         "comment": "Error message shown when alert configuration references a deleted widget"

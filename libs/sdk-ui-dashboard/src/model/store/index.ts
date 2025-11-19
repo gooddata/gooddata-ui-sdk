@@ -308,7 +308,7 @@ export type {
 } from "./tabs/index.js";
 export {
     selectTabs,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     selectActiveTab,
     selectTabById,
     selectHasTabs,

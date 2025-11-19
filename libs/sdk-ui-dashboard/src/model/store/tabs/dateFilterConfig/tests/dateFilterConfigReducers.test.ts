@@ -13,13 +13,13 @@ import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
 describe("dateFilterConfigReducers", () => {
     const createTabsInitialState = (
         dateFilterConfig?: IDashboardDateFilterConfig,
-        activeTabId: string = "tab1",
+        activeTabLocalIdentifier: string = "tab1",
     ): TabsState => {
         return {
             ...tabsInitialState,
             tabs: [
                 {
-                    identifier: activeTabId,
+                    localIdentifier: activeTabLocalIdentifier,
                     title: "Tab 1",
                     dateFilterConfig: dateFilterConfig
                         ? {
@@ -31,7 +31,7 @@ describe("dateFilterConfigReducers", () => {
                         : undefined,
                 },
             ],
-            activeTabId,
+            activeTabLocalIdentifier,
         };
     };
 

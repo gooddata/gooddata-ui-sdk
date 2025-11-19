@@ -24,13 +24,13 @@ describe("dateFilterConfigsSelectors", () => {
                 tabs: dateFilterConfigs
                     ? [
                           {
-                              identifier: "tab-1",
+                              localIdentifier: "tab-1",
                               title: "Test Tab",
                               dateFilterConfigs: { dateFilterConfigs },
                           },
                       ]
                     : [],
-                activeTabId: "tab-1",
+                activeTabLocalIdentifier: "tab-1",
             },
             renderMode: {
                 renderMode,

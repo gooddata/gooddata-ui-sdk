@@ -143,7 +143,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     /**
      * Unique identifier of the tab (stable within dashboard).
      */
-    identifier: string;
+    localIdentifier: string;
 
     /**
      * Display title of the tab.
@@ -411,11 +411,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly tabs?: IDashboardTab<TWidget>[];
 
     /**
-     * Identifier of the active tab for persistence purposes.
+     * Local identifier of the active tab for persistence purposes.
      *
      * @alpha
      */
-    readonly activeTabId?: string;
+    readonly activeTabLocalIdentifier?: string;
 }
 
 /**
@@ -499,11 +499,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
     readonly tabs?: IDashboardTab<TWidget>[];
 
     /**
-     * Identifier of the active tab for persistence purposes.
+     * Local identifier of the active tab for persistence purposes.
      *
      * @alpha
      */
-    readonly activeTabId?: string;
+    readonly activeTabLocalIdentifier?: string;
 }
 
 /**
@@ -613,7 +613,7 @@ export function isDashboardTab(obj: unknown): obj is IDashboardTab {
 
     return (
         !isEmpty(asTab) &&
-        typeof asTab.identifier === "string" &&
+        typeof asTab.localIdentifier === "string" &&
         typeof asTab.title === "string" &&
         asTab.filterContext !== undefined
     );

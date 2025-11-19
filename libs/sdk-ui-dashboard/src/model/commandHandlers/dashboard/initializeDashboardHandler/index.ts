@@ -192,15 +192,15 @@ function resolveActiveTabId(
         return defaultActiveTabId;
     }
 
-    if (initialTabId && tabs.some((tab) => tab.identifier === initialTabId)) {
+    if (initialTabId && tabs.some((tab) => tab.localIdentifier === initialTabId)) {
         return initialTabId;
     }
 
-    if (defaultActiveTabId && tabs.some((tab) => tab.identifier === defaultActiveTabId)) {
+    if (defaultActiveTabId && tabs.some((tab) => tab.localIdentifier === defaultActiveTabId)) {
         return defaultActiveTabId;
     }
 
-    return tabs[0]?.identifier ?? DEFAULT_TAB_ID;
+    return tabs[0]?.localIdentifier ?? DEFAULT_TAB_ID;
 }
 
 function* getTabsFilterConfigs(
@@ -217,7 +217,7 @@ function* getTabsFilterConfigs(
     const tabsDateFilterConfig: Record<string, IDateFilterConfig> = {};
     const tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace"> = {};
     const defaultTab = {
-        identifier: DEFAULT_TAB_ID,
+        localIdentifier: DEFAULT_TAB_ID,
         title: "",
         filterContext: dashboard.filterContext,
         dateFilterConfig: dashboard.dateFilterConfig,
@@ -234,9 +234,9 @@ function* getTabsFilterConfigs(
             config.dateFilterConfig!,
             tab.dateFilterConfig,
         );
-        tabsDateFilterConfig[tab.identifier] = effectiveDateFilterConfig.config;
-        tabsDateFilterConfigSource[tab.identifier] = effectiveDateFilterConfig.source;
-        tabsAttributeFilterConfigs[tab.identifier] = tab.attributeFilterConfigs ?? [];
+        tabsDateFilterConfig[tab.localIdentifier] = effectiveDateFilterConfig.config;
+        tabsDateFilterConfigSource[tab.localIdentifier] = effectiveDateFilterConfig.source;
+        tabsAttributeFilterConfigs[tab.localIdentifier] = tab.attributeFilterConfigs ?? [];
     }
     return { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource };
 }
@@ -292,11 +292,11 @@ function* loadExistingDashboard(
     const resolvedActiveTabId = resolveActiveTabId(
         dashboardWithFilterView.tabs,
         cmd.payload.initialTabId,
-        dashboardWithFilterView.activeTabId,
+        dashboardWithFilterView.activeTabLocalIdentifier,
     );
     const dashboard = {
         ...dashboardWithFilterView,
-        activeTabId: resolvedActiveTabId,
+        activeTabLocalIdentifier: resolvedActiveTabId,
     };
 
     const { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource } = yield call(

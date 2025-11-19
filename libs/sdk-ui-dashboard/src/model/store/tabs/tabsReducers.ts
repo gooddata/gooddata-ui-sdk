@@ -19,9 +19,9 @@ type SetTabsPayload = {
     tabs?: TabState[];
 
     /**
-     * Identifier of the currently active tab.
+     * Local identifier of the currently active tab.
      */
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
 };
 
 /**
@@ -58,7 +58,7 @@ function initializeTabFilterContext(tab: TabState): TabState {
  * Note: We return a new state object instead of mutating to ensure Immer properly handles the initialization.
  */
 const setTabs: TabsReducer<PayloadAction<SetTabsPayload>> = (state, action) => {
-    const { tabs, activeTabId } = action.payload;
+    const { tabs, activeTabLocalIdentifier } = action.payload;
 
     // Process each tab to apply initialization logic from respective config reducers
     const processedTabs = tabs?.map((tab) => {
@@ -69,15 +69,15 @@ const setTabs: TabsReducer<PayloadAction<SetTabsPayload>> = (state, action) => {
     return {
         ...state,
         tabs: processedTabs,
-        activeTabId,
+        activeTabLocalIdentifier,
     };
 };
 
 /**
- * Sets only the active tab ID without changing the tabs array.
+ * Sets only the active tab local identifier without changing the tabs array.
  */
-const setActiveTabId: TabsReducer<PayloadAction<string | undefined>> = (state, action) => {
-    state.activeTabId = action.payload;
+const setActiveTabLocalIdentifier: TabsReducer<PayloadAction<string | undefined>> = (state, action) => {
+    state.activeTabLocalIdentifier = action.payload;
 };
 
 /**
@@ -87,7 +87,7 @@ const setActiveTabId: TabsReducer<PayloadAction<string | undefined>> = (state, a
 const updateTab: TabsReducer<PayloadAction<TabState>> = (state, action) => {
     const updatedTab = action.payload;
     if (state.tabs) {
-        const index = state.tabs.findIndex((tab) => tab.identifier === updatedTab.identifier);
+        const index = state.tabs.findIndex((tab) => tab.localIdentifier === updatedTab.localIdentifier);
         if (index !== -1) {
             // Apply initialization logic to the updated tab
             state.tabs[index] = initializeTabFilterContext(updatedTab);
@@ -100,7 +100,7 @@ const updateTab: TabsReducer<PayloadAction<TabState>> = (state, action) => {
  */
 const removeTabById: TabsReducer<PayloadAction<string>> = (state, action) => {
     const tabId = action.payload;
-    state.tabs = state.tabs?.filter((tab) => tab.identifier !== tabId);
+    state.tabs = state.tabs?.filter((tab) => tab.localIdentifier !== tabId);
     // Do not touch activeTabId here; handlers set it explicitly based on UX flow.
 };
 
@@ -109,7 +109,7 @@ const removeTabById: TabsReducer<PayloadAction<string>> = (state, action) => {
  */
 const clearTabs: TabsReducer<PayloadAction> = (state) => {
     state.tabs = undefined;
-    state.activeTabId = undefined;
+    state.activeTabLocalIdentifier = undefined;
 };
 
 /**
@@ -129,7 +129,7 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
 
 export const tabsReducers = {
     setTabs,
-    setActiveTabId,
+    setActiveTabLocalIdentifier,
     updateTab,
     removeTabById,
     clearTabs,

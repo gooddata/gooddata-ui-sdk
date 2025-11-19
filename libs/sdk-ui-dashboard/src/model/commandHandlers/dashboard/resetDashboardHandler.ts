@@ -71,7 +71,7 @@ interface FilterRelatedParamsPerTab {
 }
 
 function* getFilterRelatedParamsPerTab(
-    persistedTab: Pick<IDashboardTab, "identifier" | "attributeFilterConfigs"> & {
+    persistedTab: Pick<IDashboardTab, "localIdentifier" | "attributeFilterConfigs"> & {
         filterContext?: IDashboardTab["filterContext"];
     },
     currentTab: TabState | undefined,
@@ -167,7 +167,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
                 ? persistedDashboard.tabs
                 : [
                       {
-                          identifier: DEFAULT_TAB_ID,
+                          localIdentifier: DEFAULT_TAB_ID,
                           title: "",
                           filterContext: persistedDashboard.filterContext,
                           attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
@@ -182,8 +182,8 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         const dateFilterConfig: Record<string, IDateFilterConfig> = {};
         const tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace"> = {};
         for (const tab of tabsToProcess) {
-            const tabId = tab.identifier;
-            const currentTab = currentTabs?.find((t) => t.identifier === tabId);
+            const tabId = tab.localIdentifier;
+            const currentTab = currentTabs?.find((t) => t.localIdentifier === tabId);
 
             const filterParams: FilterRelatedParamsPerTab = yield call(
                 getFilterRelatedParamsPerTab,

@@ -56,7 +56,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { TabState, tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -121,7 +121,7 @@ function processExistingTabsForSaveAs(tabs: TabState[]): IDashboardTab[] {
 
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
-            identifier: tab.identifier,
+            localIdentifier: tab.localIdentifier,
             title: tab.title ?? "",
             // Remove widget identifies from tab layout to ensure new widgets are created
             layout: tabLayout ? dashboardLayoutRemoveIdentity(tabLayout, () => true) : undefined,
@@ -194,7 +194,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
     const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
         yield select(selectEnableDashboardTabs);
 
@@ -218,7 +220,10 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
         ...(enableDashboardTabs && processedTabs
-            ? { tabs: processedTabs, activeTabId: activeTabId ?? processedTabs[0]?.identifier }
+            ? {
+                  tabs: processedTabs,
+                  activeTabLocalIdentifier: activeTabLocalIdentifier ?? processedTabs[0]?.localIdentifier,
+              }
             : {}),
     };
 
@@ -288,7 +293,7 @@ function* saveAs(
 
         // For each tab in the saved dashboard, update its widget identities and filter context identity
         dashboardWithUser.tabs.forEach((savedTab) => {
-            const stateTab = stateTabs?.find((t) => t.identifier === savedTab.identifier);
+            const stateTab = stateTabs?.find((t) => t.localIdentifier === savedTab.localIdentifier);
 
             // Update filter context identity for this tab
             // Extract identity directly from the filter context
@@ -303,7 +308,7 @@ function* saveAs(
                     : undefined;
             actions.push(
                 tabsActions.updateFilterContextIdentityForTab({
-                    tabId: savedTab.identifier,
+                    tabId: savedTab.localIdentifier,
                     filterContextIdentity,
                 }),
             );
@@ -316,7 +321,7 @@ function* saveAs(
                 );
                 actions.push(
                     tabsActions.updateWidgetIdentitiesForTab({
-                        tabId: savedTab.identifier,
+                        tabId: savedTab.localIdentifier,
                         mapping,
                     }),
                 );

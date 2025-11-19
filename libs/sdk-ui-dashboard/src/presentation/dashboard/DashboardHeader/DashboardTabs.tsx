@@ -13,7 +13,7 @@ import {
     createDashboardTab,
     deleteDashboardTab,
     repositionDashboardTab,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     selectEnableDashboardTabs,
     selectIsInEditMode,
     selectTabs,
@@ -30,7 +30,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const tabs = useDashboardSelector(selectTabs) ?? EMPTY_TABS;
-    const activeTabId = useDashboardSelector(selectActiveTabId);
+    const activeTabLocalIdentifier = useDashboardSelector(selectActiveTabLocalIdentifier);
     const dispatch = useDashboardDispatch();
 
     // Generate a stable unique ID for the default tab
@@ -38,11 +38,11 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
 
     const handleTabSelect = useCallback(
         (tab: IUiTab) => {
-            if (tab.id !== activeTabId) {
+            if (tab.id !== activeTabLocalIdentifier) {
                 dispatch(switchDashboardTab(tab.id));
             }
         },
-        [activeTabId, dispatch],
+        [activeTabLocalIdentifier, dispatch],
     );
 
     const uiTabs = useMemo<IUiTab[]>(() => {
@@ -52,7 +52,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
             tabs.map(
                 (tab, index) =>
                     ({
-                        id: tab.identifier,
+                        id: tab.localIdentifier,
                         label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
                         actions: isEditMode
                             ? [
@@ -92,7 +92,8 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                                 id: "delete",
                                                 label: intl.formatMessage({ id: "delete" }),
                                                 iconLeft: <UiIcon type={"trash"} ariaHidden size={12} />,
-                                                onSelect: () => dispatch(deleteDashboardTab(tab.identifier)),
+                                                onSelect: () =>
+                                                    dispatch(deleteDashboardTab(tab.localIdentifier)),
                                             },
                                         ]),
                               ].filter((x) => !!x)
@@ -114,17 +115,17 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         return mappedTabs;
     }, [tabs, isEditMode, enableDashboardTabs, intl, dispatch]);
 
-    // Use the default tab ID as activeTabId if we created a default tab and no activeTabId is set
-    const effectiveActiveTabId = useMemo(() => {
-        if (isEditMode && enableDashboardTabs && tabs.length === 0 && !activeTabId) {
+    // Use the default tab ID as activeTabLocalIdentifier if we created a default tab and no activeTabLocalIdentifier is set
+    const effectiveActiveTabLocalIdentifier = useMemo(() => {
+        if (isEditMode && enableDashboardTabs && tabs.length === 0 && !activeTabLocalIdentifier) {
             return defaultTabIdRef.current;
         }
-        return activeTabId;
-    }, [isEditMode, enableDashboardTabs, tabs, activeTabId]);
+        return activeTabLocalIdentifier;
+    }, [isEditMode, enableDashboardTabs, tabs, activeTabLocalIdentifier]);
 
     return {
         enableDashboardTabs,
-        activeTabId: effectiveActiveTabId,
+        activeTabLocalIdentifier: effectiveActiveTabLocalIdentifier,
         uiTabs,
         handleTabSelect,
     };
@@ -134,7 +135,7 @@ const tabsBem = bemFactory("gd-dash-tabs");
 
 interface IDashboardTabsProps {
     enableDashboardTabs: boolean;
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
     uiTabs: IUiTab[];
     handleTabSelect: (tab: IUiTab) => void;
 }
@@ -143,7 +144,7 @@ interface IDashboardTabsProps {
  */
 export function DashboardTabs({
     enableDashboardTabs,
-    activeTabId,
+    activeTabLocalIdentifier,
     uiTabs,
     handleTabSelect,
 }: IDashboardTabsProps): ReactElement | null {
@@ -161,11 +162,11 @@ export function DashboardTabs({
     );
 
     const shouldHideTabs = useMemo(() => {
-        if (!enableDashboardTabs || !uiTabs || activeTabId === undefined) {
+        if (!enableDashboardTabs || !uiTabs || activeTabLocalIdentifier === undefined) {
             return true;
         }
         return isEditMode ? uiTabs.length < 1 : uiTabs.length <= 1;
-    }, [isEditMode, enableDashboardTabs, uiTabs, activeTabId]);
+    }, [isEditMode, enableDashboardTabs, uiTabs, activeTabLocalIdentifier]);
 
     if (shouldHideTabs) {
         return null;
@@ -180,7 +181,7 @@ export function DashboardTabs({
                     size="large"
                     tabs={uiTabs}
                     onTabSelect={handleTabSelect}
-                    selectedTabId={activeTabId ?? uiTabs[0].id}
+                    selectedTabId={activeTabLocalIdentifier ?? uiTabs[0].id}
                     accessibilityConfig={ACCESSIBILITY_CONFIG}
                     maxLabelLength={255}
                 />

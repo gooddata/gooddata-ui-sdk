@@ -7,7 +7,7 @@ import { RepositionDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardTabRepositioned, dashboardTabRepositioned } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 /**
@@ -20,7 +20,9 @@ export function* repositionDashboardTabHandler(
     const { oldIndex, newIndex } = cmd.payload;
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
 
     if (!tabs || tabs.length === 0) {
         throw invalidArgumentsProvided(ctx, cmd, "Attempting to reposition tab when there are no tabs.");
@@ -51,7 +53,7 @@ export function* repositionDashboardTabHandler(
     yield put(
         tabsActions.setTabs({
             tabs: updatedTabs,
-            activeTabId,
+            activeTabLocalIdentifier,
         }),
     );
 

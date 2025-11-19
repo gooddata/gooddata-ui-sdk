@@ -418,7 +418,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const tabsWithProcessedFilterContexts = await Promise.all(
                 updatedDashboard.tabs.map(async (updatedTab) => {
                     const originalTab = originalDashboard.tabs?.find(
-                        (t) => t.identifier === updatedTab.identifier,
+                        (t) => t.localIdentifier === updatedTab.localIdentifier,
                     );
 
                     // Process the tab's filter context

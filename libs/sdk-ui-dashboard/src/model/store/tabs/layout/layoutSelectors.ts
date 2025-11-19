@@ -50,13 +50,13 @@ import {
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
 import { DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
-import { selectActiveTabId, selectTabs } from "../tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
 
-const selectSelf = createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
     if (!tabs || !activeTabId) {
         return layoutInitialState;
     }
-    const activeTab = tabs.find((tab) => tab.identifier === activeTabId);
+    const activeTab = tabs.find((tab) => tab.localIdentifier === activeTabId);
 
     return activeTab?.layout ?? layoutInitialState;
 });

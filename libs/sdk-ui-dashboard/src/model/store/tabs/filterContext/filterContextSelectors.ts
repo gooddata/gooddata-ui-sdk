@@ -30,14 +30,14 @@ import { selectSupportsCircularDependencyInFilters } from "../../backendCapabili
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../drill/drillSelectors.js";
 import { DashboardSelector, DashboardState } from "../../types.js";
-import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs, selectTabsState } from "../index.js";
+import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../index.js";
 import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
 
-const selectSelf = createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
+const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
     if (!tabs || !activeTabId) {
         return filterContextInitialState;
     }
-    const activeTab = tabs.find((tab) => tab.identifier === activeTabId);
+    const activeTab = tabs.find((tab) => tab.localIdentifier === activeTabId);
     return activeTab?.filterContext ?? filterContextInitialState;
 });
 
@@ -54,7 +54,7 @@ export const selectFilterContextStatesByTab = createSelector(selectTabsArray, (t
     }
 
     return tabs.reduce<Record<string, FilterContextState>>((acc, tab) => {
-        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
         acc[identifier] = tab.filterContext ?? filterContextInitialState;
         return acc;
     }, {});

@@ -16,7 +16,7 @@ describe("attributeFilterConfigsReducers", () => {
         return {
             tabs: [
                 {
-                    identifier: "tab-1",
+                    localIdentifier: "tab-1",
                     title: "Test Tab",
                     dateFilterConfigs: undefined,
                     dateFilterConfig: undefined,
@@ -25,7 +25,7 @@ describe("attributeFilterConfigsReducers", () => {
                         : { attributeFilterConfigs: [] },
                 },
             ],
-            activeTabId: "tab-1",
+            activeTabLocalIdentifier: "tab-1",
         };
     };
 

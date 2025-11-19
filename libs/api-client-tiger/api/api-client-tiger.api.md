@@ -13033,7 +13033,7 @@ interface IAnalyticalDashboard {
 // @public (undocumented)
 interface IAnalyticalDashboard_2 {
     // @alpha
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
     // (undocumented)
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     // (undocumented)
@@ -13106,8 +13106,8 @@ interface IDashboardTab {
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     filterContextRef: ObjRef;
-    identifier: string;
     layout: IDashboardLayout;
+    localIdentifier: string;
     title: string;
 }
 

@@ -31,7 +31,7 @@ export interface IDashboardTab {
     /**
      * Unique identifier of the tab (stable within dashboard).
      */
-    identifier: string;
+    localIdentifier: string;
 
     /**
      * Display title of the tab.
@@ -91,11 +91,11 @@ export interface IAnalyticalDashboard {
     tabs?: IDashboardTab[];
 
     /**
-     * Identifier of the active tab for persistence purposes.
+     * Local identifier of the active tab for persistence purposes.
      *
      * @alpha
      */
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
 }
 
 /**
@@ -157,7 +157,7 @@ export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashb
 export function isDashboardTab(tab: unknown): tab is IDashboardTab {
     return (
         !isEmpty(tab) &&
-        typeof (tab as IDashboardTab).identifier === "string" &&
+        typeof (tab as IDashboardTab).localIdentifier === "string" &&
         typeof (tab as IDashboardTab).title === "string" &&
         typeof (tab as IDashboardTab).layout === "object" &&
         typeof (tab as IDashboardTab).filterContextRef === "object"

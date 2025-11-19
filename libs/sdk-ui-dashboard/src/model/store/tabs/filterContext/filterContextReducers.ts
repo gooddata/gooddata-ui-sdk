@@ -117,7 +117,7 @@ const updateFilterContextIdentityForTab: FilterContextReducer<
     }
 
     const { tabId, filterContextIdentity } = action.payload;
-    const tab = state.tabs.find((t) => t.identifier === tabId);
+    const tab = state.tabs.find((t) => t.localIdentifier === tabId);
 
     if (!tab) {
         return;

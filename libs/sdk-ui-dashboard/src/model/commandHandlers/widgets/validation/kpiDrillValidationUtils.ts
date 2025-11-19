@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { KpiDrillDefinition, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
 import { ILegacyDashboard } from "../../../../types.js";
@@ -14,7 +15,7 @@ export function validateKpiDrillTarget(
         throw Error(`Dashboard with ref ${objRefToString(drill.target)} was not found.`);
     }
 
-    if (!relevantDashboard.tabs.some((tab) => tab.identifier === drill.tab)) {
+    if (!relevantDashboard.tabs.some((tab) => tab.localIdentifier === drill.tab)) {
         throw Error(
             `Dashboard with ref ${objRefToString(drill.target)} does not contain tab with identifier ${
                 drill.tab

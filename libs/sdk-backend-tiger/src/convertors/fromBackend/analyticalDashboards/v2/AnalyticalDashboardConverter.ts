@@ -125,7 +125,7 @@ interface IAnalyticalDashboardContent {
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: IdentifierRef;
     tabs?: IDashboardTab[];
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
 }
 
 function convertDashboardPluginLink(
@@ -151,7 +151,7 @@ function convertDashboardTabContent(
     filterContext?: IFilterContext,
 ): IDashboardTab {
     return {
-        identifier: tab.identifier,
+        localIdentifier: tab.localIdentifier,
         title: tab.title,
         layout: convertLayout(
             true,
@@ -207,7 +207,9 @@ function getConvertedAnalyticalDashboardContent(
         return convertDashboardTab(tab, filterContextsList);
     });
 
-    const activeTab = tabs?.find((tab) => tab.identifier === analyticalDashboard.activeTabId) ?? tabs?.[0];
+    const activeTab =
+        tabs?.find((tab) => tab.localIdentifier === analyticalDashboard.activeTabLocalIdentifier) ??
+        tabs?.[0];
 
     const layout = convertLayout(
         true,
@@ -235,7 +237,7 @@ function getConvertedAnalyticalDashboardContent(
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
         sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
         tabs,
-        activeTabId: analyticalDashboard.activeTabId,
+        activeTabLocalIdentifier: analyticalDashboard.activeTabLocalIdentifier,
     };
 }
 
@@ -262,7 +264,7 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
-        activeTabId,
+        activeTabLocalIdentifier,
     } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
         included,
@@ -297,7 +299,7 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
-        activeTabId,
+        activeTabLocalIdentifier,
         dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }
