@@ -109,11 +109,13 @@ const setDateFilterConfigs: DateFilterConfigReducer<PayloadAction<any>> = (state
 };
 
 const removeDateFilterConfigs: DateFilterConfigReducer<PayloadAction<ObjRef>> = (state, action) => {
-    if (!state.tabs || !state.activeTabId) {
+    if (!state.tabs || !state.activeTabLocalIdentifier) {
         return;
     }
 
-    const activeTabIndex = state.tabs?.findIndex((tab) => tab.identifier === state.activeTabId);
+    const activeTabIndex = state.tabs?.findIndex(
+        (tab) => tab.localIdentifier === state.activeTabLocalIdentifier,
+    );
     if (activeTabIndex === -1) {
         return;
     }

@@ -131,6 +131,10 @@ export function createKdaDefinitionFromDrill(
         return;
     }
 
+    if (!from.header.attributeHeaderItem.normalizedValue || !to.header.attributeHeaderItem.normalizedValue) {
+        return;
+    }
+
     return createKdaDefinition(
         measure,
         {
@@ -141,8 +145,8 @@ export function createKdaDefinitionFromDrill(
             },
         },
         filters ?? [],
-        from.header.attributeHeaderItem.uri,
-        to.header.attributeHeaderItem.uri,
+        from.header.attributeHeaderItem.normalizedValue,
+        to.header.attributeHeaderItem.normalizedValue,
         attr.format?.locale ?? locale,
         attr.format?.pattern,
     );

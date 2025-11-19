@@ -5,10 +5,10 @@ import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, select } from "redux-saga/effects";
 
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     FilterContextItem,
     IAutomationMetadataObject,
-    IDashboardDateFilter,
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
     IFilter,
@@ -21,6 +21,7 @@ import {
     insightFilters,
     isAbsoluteDateFilter,
     isAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDateFilter,
     isExportDefinitionDashboardRequestPayload,
@@ -55,7 +56,7 @@ import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
-import { selectFilterContextDateFilter } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -135,9 +136,11 @@ export function* initializeAutomationsHandler(
                 selectInsightByWidgetRef(targetWidget ? idRef(targetWidget) : undefined),
             );
 
-            const dashboardCommonDateFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
-                selectFilterContextDateFilter,
-            );
+            const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
+                yield select(selectFilterContextFilters);
+            const commonDateFilter = filterContextFilters.find(isDashboardCommonDateFilter);
+            const commonDateFilterLocalId =
+                commonDateFilter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
 
             const {
                 targetAlertFilters,
@@ -155,7 +158,7 @@ export function* initializeAutomationsHandler(
                     insight && isInsightWidget(widget)
                         ? getDashboardFiltersOnly(
                               targetAlertFilters,
-                              dashboardCommonDateFilter,
+                              commonDateFilterLocalId,
                               insight,
                               widget,
                           )
@@ -182,7 +185,7 @@ export function* initializeAutomationsHandler(
                         return true;
                     }) ?? [];
 
-                const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, dashboardCommonDateFilter);
+                const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, commonDateFilterLocalId);
 
                 // Empty schedule execution filters = reset all filters (set them to all).
                 // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
@@ -291,24 +294,31 @@ function extractExportDefinitionFilters(
  * to properly match the dashboard's common date filter.
  *
  * This function removes the dataset from any date filter that matches the
- * dashboard's common date filter local identifier.
+ * dashboard's common date filter local identifier, or from filters that already
+ * have no dataset (common date filters).
+ *
+ * @param filters - Filters to sanitize
+ * @param commonDateFilterLocalId - Local identifier of the common date filter
  */
-function sanitizeDateFilters(
-    filters: FilterContextItem[],
-    dashboardCommonDateFilter: IDashboardDateFilter | undefined,
-) {
+function sanitizeDateFilters(filters: FilterContextItem[], commonDateFilterLocalId: string | undefined) {
     return filters.map((filter) => {
-        if (
-            isDashboardDateFilter(filter) &&
-            dashboardCommonDateFilter &&
-            filter.dateFilter.localIdentifier === dashboardCommonDateFilter.dateFilter.localIdentifier
-        ) {
-            return {
-                ...filter,
-                dateFilter: {
-                    ...omit(filter.dateFilter, "dataSet"),
-                },
-            };
+        if (isDashboardDateFilter(filter)) {
+            // Primary match: by local identifier
+            const matchesByLocalId =
+                commonDateFilterLocalId && filter.dateFilter.localIdentifier === commonDateFilterLocalId;
+
+            // Fallback: filters without datasets are common date filters
+            const isCommonFilter = !filter.dateFilter.dataSet;
+
+            if (matchesByLocalId || isCommonFilter) {
+                // Remove dataset to ensure it's treated as common date filter
+                return {
+                    ...filter,
+                    dateFilter: {
+                        ...omit(filter.dateFilter, "dataSet"),
+                    },
+                };
+            }
         }
 
         return filter;
@@ -318,11 +328,16 @@ function sanitizeDateFilters(
 /**
  * Filter out insight and alert only filters from the list of filters
  *
+ * @param filters - Filters to process
+ * @param commonDateFilterLocalId - Local identifier of the common date filter
+ * @param insight - Insight to check filters against
+ * @param widget - Widget to check filters against
+ *
  * @internal
  */
 function getDashboardFiltersOnly(
     filters: IFilter[],
-    common: IDashboardDateFilter | undefined,
+    commonDateFilterLocalId: string | undefined,
     insight: IInsight,
     widget: IInsightWidget,
 ) {
@@ -338,13 +353,19 @@ function getDashboardFiltersOnly(
         widget,
     );
 
-    // Find common date filter by local id
+    // Find common date filter by local id or by absence of dataset
     const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
     const foundCommonFilter = dateFilters.find((f) => {
         if (isRelativeDateFilter(f)) {
-            return common && f.relativeDateFilter.localIdentifier === common.dateFilter.localIdentifier;
+            const matchesByLocalId =
+                commonDateFilterLocalId && f.relativeDateFilter.localIdentifier === commonDateFilterLocalId;
+            const hasNoDataset = !f.relativeDateFilter.dataSet;
+            return matchesByLocalId || hasNoDataset;
         }
-        return common && f.absoluteDateFilter.localIdentifier === common.dateFilter.localIdentifier;
+        const matchesByLocalId =
+            commonDateFilterLocalId && f.absoluteDateFilter.localIdentifier === commonDateFilterLocalId;
+        const hasNoDataset = !f.absoluteDateFilter.dataSet;
+        return matchesByLocalId || hasNoDataset;
     });
 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.

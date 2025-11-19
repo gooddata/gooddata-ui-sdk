@@ -9,7 +9,7 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardTabDeleted, DashboardTabSwitched, dashboardTabDeleted } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 /**
@@ -22,13 +22,15 @@ export function* deleteDashboardTabHandler(
     const { tabId } = cmd.payload;
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
 
     if (!tabs || tabs.length === 0) {
         throw invalidArgumentsProvided(ctx, cmd, "Attempting to delete tab when there are no tabs.");
     }
 
-    const index = tabs.findIndex((t) => t.identifier === tabId);
+    const index = tabs.findIndex((t) => t.localIdentifier === tabId);
     if (index < 0) {
         throw invalidArgumentsProvided(
             ctx,
@@ -37,32 +39,32 @@ export function* deleteDashboardTabHandler(
         );
     }
 
-    const isActive = activeTabId === tabId;
-    let nextActiveTabId: string | undefined = undefined;
+    const isActive = activeTabLocalIdentifier === tabId;
+    let nextActiveTabLocalIdentifier: string | undefined = undefined;
 
     if (isActive) {
         // Prefer tab at the same index after deletion, then previous index
         const hasNextAtSameIndex = index + 1 < tabs.length; // there is an item after current index
         if (hasNextAtSameIndex) {
-            nextActiveTabId = tabs[index + 1].identifier;
+            nextActiveTabLocalIdentifier = tabs[index + 1].localIdentifier;
         } else if (index - 1 >= 0) {
-            nextActiveTabId = tabs[index - 1].identifier;
+            nextActiveTabLocalIdentifier = tabs[index - 1].localIdentifier;
         } else {
-            nextActiveTabId = undefined;
+            nextActiveTabLocalIdentifier = undefined;
         }
 
-        if (nextActiveTabId) {
+        if (nextActiveTabLocalIdentifier) {
             // Switch to the next tab first so the current active tab state is saved back
             const switchedEvent: DashboardTabSwitched = yield call(
                 switchDashboardTabHandler,
                 ctx,
-                switchDashboardTab(nextActiveTabId, cmd.correlationId),
+                switchDashboardTab(nextActiveTabLocalIdentifier, cmd.correlationId),
             );
             // Ensure app-level sagas receive the switched event for URL sync etc.
             yield dispatchDashboardEvent(switchedEvent);
         } else {
             // No next active -> clear active tab id explicitly
-            yield put(tabsActions.setActiveTabId(undefined));
+            yield put(tabsActions.setActiveTabLocalIdentifier(undefined));
         }
     }
 
@@ -70,5 +72,5 @@ export function* deleteDashboardTabHandler(
     yield put(tabsActions.removeTabById(tabId));
 
     // Emit deleted event
-    return dashboardTabDeleted(ctx, tabId, index, nextActiveTabId, cmd.correlationId);
+    return dashboardTabDeleted(ctx, tabId, index, nextActiveTabLocalIdentifier, cmd.correlationId);
 }

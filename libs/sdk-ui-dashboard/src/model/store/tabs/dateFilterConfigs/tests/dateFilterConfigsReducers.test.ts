@@ -20,7 +20,7 @@ describe("dateFilterConfigsReducers", () => {
         return {
             tabs: [
                 {
-                    identifier: "tab-1",
+                    localIdentifier: "tab-1",
                     title: "Test Tab",
                     dateFilterConfigs: dateFilterConfigs
                         ? { dateFilterConfigs: cloneDeep(dateFilterConfigs) }
@@ -29,7 +29,7 @@ describe("dateFilterConfigsReducers", () => {
                     attributeFilterConfigs: { attributeFilterConfigs: [] },
                 },
             ],
-            activeTabId: "tab-1",
+            activeTabLocalIdentifier: "tab-1",
         };
     };
 

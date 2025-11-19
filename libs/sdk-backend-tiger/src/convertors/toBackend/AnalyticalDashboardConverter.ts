@@ -95,7 +95,7 @@ function convertDashboardTabToBackend(
     );
 
     return {
-        identifier: tab.identifier,
+        localIdentifier: tab.localIdentifier,
         title: tab.title,
         layout: cloneWithSanitizedIds(layout),
         filterContextRef: cloneWithSanitizedIds(filterContextRef)!,
@@ -119,8 +119,8 @@ export function convertAnalyticalDashboard(
     let effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
 
     if (dashboard.tabs && dashboard.tabs.length > 0) {
-        const activeTab = dashboard.activeTabId
-            ? dashboard.tabs.find((tab) => tab.identifier === dashboard.activeTabId)
+        const activeTab = dashboard.activeTabLocalIdentifier
+            ? dashboard.tabs.find((tab) => tab.localIdentifier === dashboard.activeTabLocalIdentifier)
             : undefined;
         const effectiveTab = activeTab ?? dashboard.tabs[0];
 
@@ -151,7 +151,7 @@ export function convertAnalyticalDashboard(
         tabs: dashboard.tabs?.map((tab) =>
             convertDashboardTabToBackend(tab, tab.filterContext?.ref, useWidgetLocalIdentifiers),
         ),
-        activeTabId: dashboard.activeTabId,
+        activeTabLocalIdentifier: dashboard.activeTabLocalIdentifier,
         version: "2",
     };
 

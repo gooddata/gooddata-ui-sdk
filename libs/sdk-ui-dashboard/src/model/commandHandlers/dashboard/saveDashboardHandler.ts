@@ -44,7 +44,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectActiveTabId, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { TabState } from "../../store/tabs/tabsState.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
@@ -152,7 +152,7 @@ function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
 
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
-            identifier: tab.identifier,
+            localIdentifier: tab.localIdentifier,
             title: tab.title ?? "",
             // Use each tab's own layout, not a shared one
             layout: tabLayout ? processLayout(tabLayout) : undefined,
@@ -199,7 +199,6 @@ function* createDashboardSaveContext(
         selectDateFilterConfigsOverrides,
     );
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabId: ReturnType<typeof selectActiveTabId> = yield select(selectActiveTabId);
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
@@ -234,7 +233,7 @@ function* createDashboardSaveContext(
         shouldHaveTabs && rootFilterContext
             ? [
                   {
-                      identifier: uuid(),
+                      localIdentifier: uuid(),
                       title: "",
                       layout: layout ? processLayout(layout) : undefined,
                       filterContext: rootFilterContext,
@@ -247,10 +246,13 @@ function* createDashboardSaveContext(
               ? processExistingTabs(tabs)
               : undefined;
 
-    const defaultActiveTabId =
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
+    const defaultActiveTabLocalIdentifier =
         enableDashboardTabs && (!tabs || tabs.length === 0) && processedTabs
-            ? processedTabs[0].identifier
-            : activeTabId;
+            ? processedTabs[0].localIdentifier
+            : activeTabLocalIdentifier;
 
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
@@ -266,7 +268,7 @@ function* createDashboardSaveContext(
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
         ...(enableDashboardTabs && processedTabs
-            ? { tabs: processedTabs, activeTabId: defaultActiveTabId }
+            ? { tabs: processedTabs, activeTabLocalIdentifier: defaultActiveTabLocalIdentifier }
             : {}),
         ...pluginsProp,
     };
@@ -319,7 +321,7 @@ function* save(
 
         // For each tab in the saved dashboard, update its widget identities and filter context identity
         dashboard.tabs.forEach((savedTab) => {
-            const stateTab = stateTabs?.find((t) => t.identifier === savedTab.identifier);
+            const stateTab = stateTabs?.find((t) => t.localIdentifier === savedTab.localIdentifier);
 
             // Update filter context identity for this tab
             // Extract identity directly from the filter context
@@ -335,7 +337,7 @@ function* save(
 
             actions.push(
                 tabsActions.updateFilterContextIdentityForTab({
-                    tabId: savedTab.identifier,
+                    tabId: savedTab.localIdentifier,
                     filterContextIdentity,
                 }),
             );
@@ -348,7 +350,7 @@ function* save(
                 );
                 actions.push(
                     tabsActions.updateWidgetIdentitiesForTab({
-                        tabId: savedTab.identifier,
+                        tabId: savedTab.localIdentifier,
                         mapping,
                     }),
                 );

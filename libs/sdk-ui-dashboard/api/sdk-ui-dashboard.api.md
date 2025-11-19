@@ -5733,7 +5733,7 @@ export interface ILegacyDashboard {
 
 // @alpha
 export interface ILegacyDashboardTab {
-    readonly identifier: string;
+    readonly localIdentifier: string;
     readonly title: string;
 }
 
@@ -8732,7 +8732,7 @@ export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 export const selectActiveTab: DashboardSelector<TabState | undefined>;
 
 // @alpha
-export const selectActiveTabId: DashboardSelector<string | undefined>;
+export const selectActiveTabLocalIdentifier: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]>;
@@ -10803,11 +10803,11 @@ type: string;
 readonly setTabs: TabsReducer<    {
 payload: {
 tabs?: TabState[];
-activeTabId?: string;
+activeTabLocalIdentifier?: string;
 };
 type: string;
 }>;
-readonly setActiveTabId: TabsReducer<    {
+readonly setActiveTabLocalIdentifier: TabsReducer<    {
 payload: string | undefined;
 type: string;
 }>;
@@ -10830,7 +10830,7 @@ export type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
 
 // @alpha (undocumented)
 export interface TabsState {
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
     // @beta
     attributesWithReferences?: IAttributeWithReferences[];
     tabs?: TabState[];
@@ -10847,9 +10847,9 @@ export interface TabState {
     // (undocumented)
     filterContext?: FilterContextState;
     // (undocumented)
-    identifier: string;
-    // (undocumented)
     layout?: LayoutState;
+    // (undocumented)
+    localIdentifier: string;
     // (undocumented)
     title?: string;
 }

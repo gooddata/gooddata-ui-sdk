@@ -26,6 +26,7 @@ export const keyDriverAnalysisSupportedStringGranularities = [
     "QUARTER",
     "MONTH",
     "DATE",
+    "DAY",
     "HOUR",
     "MINUTE",
 ];

@@ -15,7 +15,7 @@ import { convertDateFilterConfigToDateFilterOptions } from "../../../../_staging
 import { DateFilterValidationResult } from "../../../../types.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DashboardSelector } from "../../types.js";
-import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../index.js";
+import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
@@ -32,7 +32,7 @@ export const selectDateFilterConfigOverridesByTab: DashboardSelector<
     }
 
     return tabs.reduce<Record<string, IDashboardDateFilterConfig | undefined>>((acc, tab) => {
-        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
         acc[identifier] = tab.dateFilterConfig?.dateFilterConfig ?? undefined;
         return acc;
     }, {});
@@ -52,16 +52,22 @@ export const selectDateFilterConfigOverridesByTab: DashboardSelector<
  * @alpha
  */
 export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFilterConfig | undefined> =
-    createSelector(selectDateFilterConfigOverridesByTab, selectActiveTabId, (overridesByTab, activeTabId) => {
-        if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
-            return undefined;
-        }
+    createSelector(
+        selectDateFilterConfigOverridesByTab,
+        selectActiveTabLocalIdentifier,
+        (overridesByTab, activeTabId) => {
+            if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
+                return undefined;
+            }
 
-        const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
-        return (
-            overridesByTab[resolvedActiveTabId] ?? overridesByTab[Object.keys(overridesByTab)[0]] ?? undefined
-        );
-    });
+            const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
+            return (
+                overridesByTab[resolvedActiveTabId] ??
+                overridesByTab[Object.keys(overridesByTab)[0]] ??
+                undefined
+            );
+        },
+    );
 
 /**
  * Returns effective date filter config. The effective date filter config is created by merging the workspace-level
@@ -73,9 +79,9 @@ export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFi
  */
 export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfig> = createSelector(
     selectTabs,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     (tabs, activeTabId) => {
-        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
+        const activeTab = tabs?.find((tab) => tab.localIdentifier === activeTabId);
         invariant(
             activeTab?.dateFilterConfig?.effectiveDateFilterConfig,
             "attempting to access uninitialized date filter config state",
@@ -119,9 +125,9 @@ export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<
  */
 const effectiveDateFilterConfigIsUsingOverrides = createSelector(
     selectTabs,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     (tabs, activeTabId) => {
-        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
+        const activeTab = tabs?.find((tab) => tab.localIdentifier === activeTabId);
         invariant(
             activeTab?.dateFilterConfig?.isUsingDashboardOverrides !== undefined,
             "attempting to access uninitialized date filter config state",
@@ -178,7 +184,7 @@ export const selectEffectiveDateFilterMode: DashboardSelector<DashboardDateFilte
  * @alpha
  */
 export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFilterValidationResult[]> =
-    createSelector(selectTabs, selectActiveTabId, (tabs, activeTabId) => {
-        const activeTab = tabs?.find((tab) => tab.identifier === activeTabId);
+    createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
+        const activeTab = tabs?.find((tab) => tab.localIdentifier === activeTabId);
         return activeTab?.dateFilterConfig?.dateFilterConfigValidationWarnings ?? [];
     });

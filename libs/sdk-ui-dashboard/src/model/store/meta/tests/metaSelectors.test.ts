@@ -198,7 +198,7 @@ describe("selectIsDashboardDirty", () => {
         expect(firstTab).toBeDefined();
 
         const secondTab = cloneDeep(firstTab);
-        secondTab.identifier = "second";
+        secondTab.localIdentifier = "second";
         secondTab.title = "Second Tab";
 
         expect(secondTab.filterContext?.filterContextDefinition).toBeDefined();
@@ -225,7 +225,7 @@ describe("selectIsDashboardDirty", () => {
             ...persistedDashboard!,
             tabs: [
                 {
-                    identifier: firstTab.identifier,
+                    localIdentifier: firstTab.localIdentifier,
                     title: firstTab.title ?? "",
                     filterContext: cloneDeep(persistedDashboard!.filterContext),
                     dateFilterConfig: persistedDashboard!.dateFilterConfig,
@@ -233,7 +233,7 @@ describe("selectIsDashboardDirty", () => {
                     attributeFilterConfigs: persistedDashboard!.attributeFilterConfigs,
                 },
                 {
-                    identifier: secondTab.identifier,
+                    localIdentifier: secondTab.localIdentifier,
                     title: secondTab.title ?? "",
                     filterContext: cloneDeep(persistedDashboard!.filterContext),
                     dateFilterConfig: persistedDashboard!.dateFilterConfig,
@@ -241,7 +241,7 @@ describe("selectIsDashboardDirty", () => {
                     attributeFilterConfigs: persistedDashboard!.attributeFilterConfigs,
                 },
             ],
-            activeTabId: firstTab.identifier,
+            activeTabLocalIdentifier: firstTab.localIdentifier,
         };
 
         Tester.dispatch(
@@ -254,7 +254,7 @@ describe("selectIsDashboardDirty", () => {
         Tester.dispatch(
             tabsActions.setTabs({
                 tabs: [firstTab, secondTab],
-                activeTabId: firstTab.identifier,
+                activeTabLocalIdentifier: firstTab.localIdentifier,
             }),
         );
 

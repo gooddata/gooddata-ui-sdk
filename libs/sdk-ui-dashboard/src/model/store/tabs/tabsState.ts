@@ -16,10 +16,10 @@ import type { LayoutState } from "./layout/layoutState.js";
 export const DEFAULT_TAB_ID = "defaultTabId";
 
 export const getActiveTab = (state: TabsState): TabState | undefined => {
-    if (!state.tabs || !state.activeTabId) {
+    if (!state.tabs || !state.activeTabLocalIdentifier) {
         return;
     }
-    return state.tabs.find((tab) => tab.identifier === state.activeTabId);
+    return state.tabs.find((tab) => tab.localIdentifier === state.activeTabLocalIdentifier);
 };
 
 // Re-export for convenience
@@ -30,7 +30,7 @@ export type { DateFilterConfigState, FilterContextState, LayoutState };
  */
 export interface TabState {
     title?: string;
-    identifier: string;
+    localIdentifier: string;
 
     dateFilterConfig?: DateFilterConfigState;
     dateFilterConfigs?: DateFilterConfigsState;
@@ -48,9 +48,9 @@ export interface TabsState {
      */
     tabs?: TabState[];
     /**
-     * Identifier of the currently active tab.
+     * Local identifier of the currently active tab.
      */
-    activeTabId?: string;
+    activeTabLocalIdentifier?: string;
     /**
      * Attribute metadata objects with referenced objects for all attribute filters across all tabs.
      * @beta
@@ -60,6 +60,6 @@ export interface TabsState {
 
 export const tabsInitialState: TabsState = {
     tabs: undefined,
-    activeTabId: undefined,
+    activeTabLocalIdentifier: undefined,
     attributesWithReferences: undefined,
 };

@@ -11,7 +11,7 @@ import {
 
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DashboardSelector } from "../../types.js";
-import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../index.js";
+import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
@@ -28,7 +28,7 @@ export const selectDateFilterConfigsOverridesByTab: DashboardSelector<
     }
 
     return tabs.reduce<Record<string, IDashboardDateFilterConfigItem[]>>((acc, tab) => {
-        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
         acc[identifier] = tab.dateFilterConfigs?.dateFilterConfigs ?? [];
         return acc;
     }, {});
@@ -46,7 +46,7 @@ export const selectDateFilterConfigsOverridesByTab: DashboardSelector<
 export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateFilterConfigItem[]> =
     createSelector(
         selectDateFilterConfigsOverridesByTab,
-        selectActiveTabId,
+        selectActiveTabLocalIdentifier,
         (overridesByTab, activeTabId) => {
             if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
                 return [];

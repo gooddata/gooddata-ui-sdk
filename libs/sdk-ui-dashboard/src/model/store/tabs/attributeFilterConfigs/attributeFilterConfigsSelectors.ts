@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
-import { DEFAULT_TAB_ID, selectActiveTabId, selectTabs } from "../../tabs/index.js";
+import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../../tabs/index.js";
 import { DashboardSelector } from "../../types.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
@@ -28,7 +28,7 @@ export const selectAttributeFilterConfigsOverridesByTab: DashboardSelector<
     }
 
     return tabs.reduce<Record<string, IDashboardAttributeFilterConfig[]>>((acc, tab) => {
-        const identifier = tab.identifier ?? DEFAULT_TAB_ID;
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
         acc[identifier] = tab.attributeFilterConfigs?.attributeFilterConfigs ?? [];
         return acc;
     }, {});
@@ -46,7 +46,7 @@ export const selectAttributeFilterConfigsOverridesByTab: DashboardSelector<
 export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]> =
     createSelector(
         selectAttributeFilterConfigsOverridesByTab,
-        selectActiveTabId,
+        selectActiveTabLocalIdentifier,
         (overridesByTab, activeTabId) => {
             if (!overridesByTab || Object.keys(overridesByTab).length === 0) {
                 return [];

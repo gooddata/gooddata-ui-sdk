@@ -46,7 +46,7 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
-import { DEFAULT_TAB_ID, TabState, selectActiveTabId, selectTabs } from "../tabs/index.js";
+import { DEFAULT_TAB_ID, TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
 import { selectBasicLayout } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
@@ -124,7 +124,7 @@ export const selectPersistedDashboardTabs = createSelector(
 
         return [
             {
-                identifier: DEFAULT_TAB_ID,
+                localIdentifier: DEFAULT_TAB_ID,
                 title: "",
                 filterContext: persistedDashboard.filterContext,
                 attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
@@ -146,7 +146,8 @@ const selectPersistedDashboardActiveTabId = createSelector(
         }
 
         if (enableDashboardTabs) {
-            const persistedActiveTabId = persistedDashboard.activeTabId ?? tabs[0]?.identifier;
+            const persistedActiveTabId =
+                persistedDashboard.activeTabLocalIdentifier ?? tabs[0]?.localIdentifier;
             return persistedActiveTabId ?? DEFAULT_TAB_ID;
         }
 
@@ -164,7 +165,7 @@ export const selectPersistedDashboardFilterContextsByTab: DashboardSelector<
 > = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
     return tabSnapshots.reduce<Record<string, IFilterContext | ITempFilterContext | undefined>>(
         (acc, snapshot) => {
-            acc[snapshot.identifier] = snapshot.filterContext;
+            acc[snapshot.localIdentifier] = snapshot.filterContext;
             return acc;
         },
         {},
@@ -180,7 +181,7 @@ export const selectPersistedDashboardFilterContextDefinitionsByTab: DashboardSel
     Record<string, IFilterContextDefinition | undefined>
 > = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
     return tabSnapshots.reduce<Record<string, IFilterContextDefinition | undefined>>((acc, snapshot) => {
-        acc[snapshot.identifier] = toFilterContextDefinition(snapshot.filterContext);
+        acc[snapshot.localIdentifier] = toFilterContextDefinition(snapshot.filterContext);
         return acc;
     }, {});
 });
@@ -194,7 +195,7 @@ export const selectPersistedDashboardAttributeFilterConfigsByTab: DashboardSelec
     Record<string, IDashboardAttributeFilterConfig[]>
 > = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
     return tabSnapshots.reduce<Record<string, IDashboardAttributeFilterConfig[]>>((acc, snapshot) => {
-        acc[snapshot.identifier] = snapshot.attributeFilterConfigs ?? [];
+        acc[snapshot.localIdentifier] = snapshot.attributeFilterConfigs ?? [];
         return acc;
     }, {});
 });
@@ -208,7 +209,7 @@ export const selectPersistedDashboardDateFilterConfigByTab: DashboardSelector<
     Record<string, IDashboardDateFilterConfig | undefined>
 > = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
     return tabSnapshots.reduce<Record<string, IDashboardDateFilterConfig | undefined>>((acc, snapshot) => {
-        acc[snapshot.identifier] = snapshot.dateFilterConfig ?? undefined;
+        acc[snapshot.localIdentifier] = snapshot.dateFilterConfig ?? undefined;
         return acc;
     }, {});
 });
@@ -222,7 +223,7 @@ export const selectPersistedDashboardDateFilterConfigsByTab: DashboardSelector<
     Record<string, IDashboardDateFilterConfigItem[]>
 > = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
     return tabSnapshots.reduce<Record<string, IDashboardDateFilterConfigItem[]>>((acc, snapshot) => {
-        acc[snapshot.identifier] = snapshot.dateFilterConfigs ?? [];
+        acc[snapshot.localIdentifier] = snapshot.dateFilterConfigs ?? [];
         return acc;
     }, {});
 });
@@ -978,7 +979,7 @@ const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardTabs,
     selectPersistedDashboardActiveTabId,
     selectTabs,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     (persistedTabs, persistedActiveTabId, currentTabs, currentActiveTabId) => {
         // Check if active tab ID changed (only if persisted dashboard has tabs)
         if (persistedActiveTabId !== currentActiveTabId) {
@@ -997,12 +998,12 @@ const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
             return tabs
                 .map((tab) => {
                     return {
-                        identifier: tab.identifier,
+                        localIdentifier: tab.localIdentifier,
                         title: tab.title,
                         // all other props are dirty checked separately
                     };
                 })
-                .sort((a, b) => a.identifier.localeCompare(b.identifier));
+                .sort((a, b) => a.localIdentifier.localeCompare(b.localIdentifier));
         };
 
         const normalizedPersistedTabs = normalizeTabsForComparison(persistedTabs);
@@ -1105,7 +1106,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
         selectBasicLayout,
         selectDateFilterConfigOverrides,
         selectTabs,
-        selectActiveTabId,
+        selectActiveTabLocalIdentifier,
         (
             persistedDashboard,
             dashboardDescriptor,
@@ -1114,7 +1115,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
             layout,
             dateFilterConfig,
             tabs,
-            activeTabId,
+            activeTabLocalIdentifier,
         ): IDashboardDefinition => {
             const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
                 ref: persistedDashboard?.ref,
@@ -1134,7 +1135,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
-                ...(tabs ? { tabs: tabs as any, activeTabId } : {}),
+                ...(tabs ? { tabs: tabs as any, activeTabLocalIdentifier } : {}),
                 ...pluginsProp,
             };
         },

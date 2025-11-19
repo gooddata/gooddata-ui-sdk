@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -236,9 +237,9 @@ export interface ILegacyDashboardTab {
      */
     readonly title: string;
     /**
-     * Unique identifier of the tab
+     * Unique local identifier of the tab
      */
-    readonly identifier: string;
+    readonly localIdentifier: string;
 }
 
 /**

@@ -11,7 +11,7 @@ const selectSelf = createSelector(
 );
 
 /**
- * Returns the full tabs state (including tabs array, activeTabId, and shared state like attributesWithReferences).
+ * Returns the full tabs state (including tabs array, activeTabLocalIdentifier, and shared state like attributesWithReferences).
  *
  * @internal
  */
@@ -30,14 +30,14 @@ export const selectTabs: DashboardSelector<TabState[] | undefined> = createSelec
 );
 
 /**
- * Returns the identifier of the currently active tab.
+ * Returns the local identifier of the currently active tab.
  *
  * @alpha
  */
-export const selectActiveTabId: DashboardSelector<string | undefined> = createSelector(
+export const selectActiveTabLocalIdentifier: DashboardSelector<string | undefined> = createSelector(
     selectSelf,
     (tabsState) => {
-        return tabsState.activeTabId;
+        return tabsState.activeTabLocalIdentifier;
     },
 );
 
@@ -48,12 +48,12 @@ export const selectActiveTabId: DashboardSelector<string | undefined> = createSe
  */
 export const selectActiveTab: DashboardSelector<TabState | undefined> = createSelector(
     selectTabs,
-    selectActiveTabId,
-    (tabs, activeTabId) => {
-        if (!tabs || !activeTabId) {
+    selectActiveTabLocalIdentifier,
+    (tabs, activeTabLocalIdentifier) => {
+        if (!tabs || !activeTabLocalIdentifier) {
             return undefined;
         }
-        return tabs.find((tab) => tab.identifier === activeTabId);
+        return tabs.find((tab) => tab.localIdentifier === activeTabLocalIdentifier);
     },
 );
 
@@ -67,7 +67,7 @@ export const selectTabById = (tabId: string): DashboardSelector<TabState | undef
         if (!tabs) {
             return undefined;
         }
-        return tabs.find((tab) => tab.identifier === tabId);
+        return tabs.find((tab) => tab.localIdentifier === tabId);
     });
 
 /**

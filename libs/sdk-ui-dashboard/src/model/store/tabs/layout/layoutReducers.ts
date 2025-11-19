@@ -77,7 +77,7 @@ type AdaptedLayoutReducer<P> = CaseReducer<TabsState, PayloadAction<P>>;
  */
 function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): AdaptedLayoutReducer<P> {
     return (state: Draft<TabsState>, action: PayloadAction<P>) => {
-        const activeTab = state.tabs?.find((tab) => tab.identifier === state.activeTabId);
+        const activeTab = state.tabs?.find((tab) => tab.localIdentifier === state.activeTabLocalIdentifier);
         if (!activeTab) return;
 
         const layoutState = activeTab.layout;
@@ -99,11 +99,11 @@ function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): Adapted
  * Returns undefined if no active tab is found.
  */
 function getActiveTabLayout(state: Draft<TabsState>): Draft<LayoutState> | undefined {
-    if (!state.tabs || !state.activeTabId) {
+    if (!state.tabs || !state.activeTabLocalIdentifier) {
         return undefined;
     }
 
-    const activeTab = state.tabs.find((tab) => tab.identifier === state.activeTabId);
+    const activeTab = state.tabs.find((tab) => tab.localIdentifier === state.activeTabLocalIdentifier);
     if (!activeTab) {
         return undefined;
     }
@@ -192,7 +192,7 @@ const updateWidgetIdentitiesForTab: LayoutReducer<UpdateWidgetIdentitiesForTabPa
     }
 
     const { tabId, mapping } = action.payload;
-    const tab = state.tabs.find((t) => t.identifier === tabId);
+    const tab = state.tabs.find((t) => t.localIdentifier === tabId);
 
     if (!tab?.layout?.layout) {
         return;

@@ -54,7 +54,7 @@ export type {
 export type { TabsReducer } from "./tabsReducers.js";
 export {
     selectTabs,
-    selectActiveTabId,
+    selectActiveTabLocalIdentifier,
     selectActiveTab,
     selectTabById,
     selectHasTabs,

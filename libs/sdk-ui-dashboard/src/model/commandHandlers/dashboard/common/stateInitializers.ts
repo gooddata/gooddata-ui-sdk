@@ -186,8 +186,8 @@ function getEffectiveDashboardProperties<TWidget>(
 } {
     // If dashboard has tabs and feature flag is enabled, use the active tab (or first tab) instead of root properties
     if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
-        const activeTab: IDashboardTab<TWidget> | undefined = dashboard.activeTabId
-            ? dashboard.tabs.find((tab) => tab.identifier === dashboard.activeTabId)
+        const activeTab: IDashboardTab<TWidget> | undefined = dashboard.activeTabLocalIdentifier
+            ? dashboard.tabs.find((tab) => tab.localIdentifier === dashboard.activeTabLocalIdentifier)
             : undefined;
         const effectiveTab = activeTab ?? dashboard.tabs[0];
 
@@ -233,7 +233,7 @@ export function* actionsToInitializeNewDashboard(
 
     const tabs: IDashboardTab[] = dashboard?.tabs ?? [
         {
-            identifier: DEFAULT_TAB_ID,
+            localIdentifier: DEFAULT_TAB_ID,
             title: "",
             filterContext: filterContextDefinition,
             dateFilterConfig: dashboard?.dateFilterConfig,
@@ -250,7 +250,7 @@ export function* actionsToInitializeNewDashboard(
                   tabsActions.setTabs({
                       tabs: tabs.map((tab: IDashboardTab) => ({
                           title: tab.title,
-                          identifier: tab.identifier,
+                          localIdentifier: tab.localIdentifier,
                           filterContext: {
                               ...filterContextInitialState,
                               filterContextDefinition,
@@ -275,7 +275,8 @@ export function* actionsToInitializeNewDashboard(
                               layout: tab.layout ?? dashboardLayout ?? EmptyDashboardLayout,
                           },
                       })),
-                      activeTabId: initialTabId ?? dashboard?.activeTabId ?? DEFAULT_TAB_ID,
+                      activeTabLocalIdentifier:
+                          initialTabId ?? dashboard?.activeTabLocalIdentifier ?? DEFAULT_TAB_ID,
                   }),
               ]
             : [
@@ -283,7 +284,7 @@ export function* actionsToInitializeNewDashboard(
                   tabsActions.setTabs({
                       tabs: [
                           {
-                              identifier: DEFAULT_TAB_ID,
+                              localIdentifier: DEFAULT_TAB_ID,
                               title: "",
                               filterContext: {
                                   ...filterContextInitialState,
@@ -310,7 +311,7 @@ export function* actionsToInitializeNewDashboard(
                               },
                           },
                       ],
-                      activeTabId: DEFAULT_TAB_ID,
+                      activeTabLocalIdentifier: DEFAULT_TAB_ID,
                   }),
               ];
 
@@ -654,7 +655,7 @@ export function* actionsToInitializeExistingDashboard(
         const processedTabs: TabState[] = [];
 
         for (const tab of dashboard.tabs) {
-            const isActiveTab = tab.identifier === dashboard.activeTabId;
+            const isActiveTab = tab.localIdentifier === dashboard.activeTabLocalIdentifier;
             // Override default filters are only applied to the active tab
             const overrideDefaultFilters =
                 isActiveTab && ctx.config?.overrideDefaultFilters
@@ -667,19 +668,19 @@ export function* actionsToInitializeExistingDashboard(
                 processExistingTabFilterContext,
                 ctx,
                 tab,
-                effectiveDateFilterConfigMap[tab.identifier],
+                effectiveDateFilterConfigMap[tab.localIdentifier],
                 dashboard.dataSets,
                 overrideDefaultFilters,
                 isImmediateAttributeFilterMigrationEnabled,
-                migratedAttributeFilters?.[tab.identifier] ?? [],
-                originalFilterContextDefinition?.[tab.identifier],
+                migratedAttributeFilters?.[tab.localIdentifier] ?? [],
+                originalFilterContextDefinition?.[tab.localIdentifier],
                 displayForms,
                 dashboard,
             );
             validationResults.push(...(tabValidationResults ?? []));
 
             const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
-                ? (migratedAttributeFilterConfigs?.[tab.identifier] ?? [])
+                ? (migratedAttributeFilterConfigs?.[tab.localIdentifier] ?? [])
                 : (tab.attributeFilterConfigs ?? []);
 
             // Sanitize this tab's layout
@@ -695,8 +696,9 @@ export function* actionsToInitializeExistingDashboard(
                 filterContext: tabFilterContext,
                 dateFilterConfig: {
                     dateFilterConfig: tab.dateFilterConfig,
-                    effectiveDateFilterConfig: effectiveDateFilterConfigMap[tab.identifier],
-                    isUsingDashboardOverrides: tabsDateFilterConfigSource[tab.identifier] === "dashboard",
+                    effectiveDateFilterConfig: effectiveDateFilterConfigMap[tab.localIdentifier],
+                    isUsingDashboardOverrides:
+                        tabsDateFilterConfigSource[tab.localIdentifier] === "dashboard",
                 },
                 dateFilterConfigs: tab.dateFilterConfigs
                     ? {
@@ -717,12 +719,12 @@ export function* actionsToInitializeExistingDashboard(
         }
         tabsAction = tabsActions.setTabs({
             tabs: processedTabs,
-            activeTabId: dashboard.activeTabId,
+            activeTabLocalIdentifier: dashboard.activeTabLocalIdentifier,
         });
     } else {
         // For dashboards without tabs, create a single default tab with the filterContext
         const tabForProcessing: IDashboardTab = {
-            identifier: DEFAULT_TAB_ID,
+            localIdentifier: DEFAULT_TAB_ID,
             title: "",
             filterContext: dashboard.filterContext,
             dateFilterConfig: dashboard.dateFilterConfig,
@@ -731,7 +733,7 @@ export function* actionsToInitializeExistingDashboard(
             layout: dashboard.layout ?? EmptyDashboardLayout,
         };
 
-        const tabIdentifier = dashboard.tabs?.[0]?.identifier ?? DEFAULT_TAB_ID;
+        const tabIdentifier = dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID;
 
         const [tabFilterContext, tabValidationResults]: SagaReturnType<
             typeof processExistingTabFilterContext
@@ -755,7 +757,7 @@ export function* actionsToInitializeExistingDashboard(
             : dashboard.attributeFilterConfigs;
 
         const defaultTab: TabState = {
-            identifier: tabIdentifier,
+            localIdentifier: tabIdentifier,
             title: "",
             filterContext: tabFilterContext,
             dateFilterConfig: {
@@ -782,7 +784,7 @@ export function* actionsToInitializeExistingDashboard(
 
         tabsAction = tabsActions.setTabs({
             tabs: [defaultTab],
-            activeTabId: tabIdentifier,
+            activeTabLocalIdentifier: tabIdentifier,
         });
     }
 

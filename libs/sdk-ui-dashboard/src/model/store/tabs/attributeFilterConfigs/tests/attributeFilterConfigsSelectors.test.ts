@@ -23,13 +23,13 @@ describe("attributeFilterConfigsSelectors", () => {
                 tabs: attributeFilterConfigs
                     ? [
                           {
-                              identifier: "tab-1",
+                              localIdentifier: "tab-1",
                               title: "Test Tab",
                               attributeFilterConfigs: { attributeFilterConfigs },
                           },
                       ]
                     : [],
-                activeTabId: "tab-1",
+                activeTabLocalIdentifier: "tab-1",
             },
             renderMode: {
                 renderMode,
