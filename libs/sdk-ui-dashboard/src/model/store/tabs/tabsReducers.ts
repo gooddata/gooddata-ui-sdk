@@ -127,10 +127,45 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
     displayAsLabel: ObjRef | undefined;
 }
 
+/**
+ * Sets isRenaming flag on a particular tab.
+ * Note: this is internal UI state and not part of the public model
+ */
+const setTabIsRenaming: TabsReducer<PayloadAction<{ tabId: string; isRenaming: boolean }>> = (
+    state,
+    action,
+) => {
+    const { tabId, isRenaming } = action.payload;
+
+    const tab = state.tabs?.find((tab) => tab.localIdentifier === tabId);
+
+    if (!tab) {
+        return;
+    }
+
+    tab.isRenaming = isRenaming;
+};
+
+/**
+ * Renames a tab by id
+ */
+const renameTab: TabsReducer<PayloadAction<{ tabId: string; title: string }>> = (state, action) => {
+    const { tabId, title } = action.payload;
+    const tab = state.tabs?.find((tab) => tab.localIdentifier === tabId);
+
+    if (!tab) {
+        return;
+    }
+
+    tab.title = title;
+};
+
 export const tabsReducers = {
     setTabs,
     setActiveTabLocalIdentifier,
     updateTab,
     removeTabById,
     clearTabs,
+    setTabIsRenaming,
+    renameTab,
 };

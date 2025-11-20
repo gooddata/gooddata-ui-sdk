@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { DataValue, ISeparators, assertNever } from "@gooddata/sdk-model";
 import { DataViewFacade, ITableDataValue, createNumberJsFormatter } from "@gooddata/sdk-ui";
 
+import { GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
 import { AgGridRowData } from "../../types/internal.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
@@ -9,20 +11,28 @@ import { columnDefinitionToColId } from "../columns/colId.js";
 /**
  * Creates ag-grid row data {@link AgGridRowData} from {@link DataViewFacade}.
  *
+ * @param dataView - The data view facade containing the table data
+ * @param columnHeadersPosition - Position of column headers (top or left)
+ * @param separators - Number formatting separators
+ * @param grandTotalsPosition - Position of grand totals rows (pinnedBottom, pinnedTop, bottom, top)
+ *
  * @internal
  */
 export function dataViewToRowData(
     dataView: DataViewFacade,
     columnHeadersPosition: ColumnHeadersPosition,
     separators?: ISeparators,
+    grandTotalsPosition: GrandTotalsPosition = "pinnedBottom",
 ): {
     rowData: AgGridRowData[];
     grandTotalRowData: AgGridRowData[];
+    grandTotalCount: number;
 } {
     const tableData = dataView.data({ valueFormatter: createNumberJsFormatter(separators) }).asTable();
 
     const rowData: AgGridRowData[] = [];
     const grandTotalRowData: AgGridRowData[] = [];
+    const tempGrandTotalRows: AgGridRowData[] = [];
 
     tableData.data.forEach((row, rowIndex) => {
         const data: AgGridRowData = { cellDataByColId: {}, allRowData: [] };
@@ -35,15 +45,30 @@ export function dataViewToRowData(
         });
 
         if (tableData.rowDefinitions[rowIndex].type === "grandTotal") {
-            grandTotalRowData.push(data);
+            tempGrandTotalRows.push(data);
         } else {
             rowData.push(data);
         }
     });
 
+    // Handle grand total positioning based on configuration
+    if (tempGrandTotalRows.length > 0) {
+        if (grandTotalsPosition === "pinnedTop" || grandTotalsPosition === "pinnedBottom") {
+            // For pinned positions, keep grand totals separate
+            grandTotalRowData.push(...tempGrandTotalRows);
+        } else if (grandTotalsPosition === "top") {
+            // For non-pinned top, prepend grand totals to rowData
+            rowData.unshift(...tempGrandTotalRows);
+        } else {
+            // For non-pinned bottom (default), append grand totals to rowData
+            rowData.push(...tempGrandTotalRows);
+        }
+    }
+
     return {
         rowData,
         grandTotalRowData,
+        grandTotalCount: tempGrandTotalRows.length,
     };
 }
 

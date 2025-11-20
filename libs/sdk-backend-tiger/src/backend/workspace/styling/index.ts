@@ -1,5 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
+import {
+    EntitiesApi_GetAllEntitiesColorPalettes,
+    EntitiesApi_GetAllEntitiesThemes,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
     IColorPaletteItem,
@@ -45,11 +49,10 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
 
         return (await this.isStylizable(activeColorPaletteId))
             ? this.authCall(async (client) =>
-                  client.entities
-                      .getAllEntitiesColorPalettes({
-                          filter: `id=="${activeColorPaletteId}"`,
-                      })
-                      .then((colorPalettes) => {
+                  EntitiesApi_GetAllEntitiesColorPalettes(client.axios, client.basePath, {
+                      filter: `id=="${activeColorPaletteId}"`,
+                  })
+                      .then((colorPalettes: any) => {
                           if (colorPalettes.data.data.length !== 0) {
                               return unwrapColorPaletteContent(colorPalettes.data.data[0].attributes.content);
                           }
@@ -69,11 +72,10 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
 
         return (await this.isStylizable(activeThemeId))
             ? this.authCall(async (client) =>
-                  client.entities
-                      .getAllEntitiesThemes({
-                          filter: `id=="${activeThemeId}"`,
-                      })
-                      .then((themes) => {
+                  EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, {
+                      filter: `id=="${activeThemeId}"`,
+                  })
+                      .then((themes: any) => {
                           if (themes.data.data.length !== 0) {
                               return themes.data.data[0].attributes.content;
                           }

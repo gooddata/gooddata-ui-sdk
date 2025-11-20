@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ActionsUtilities, JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesDataSourceIdentifiers } from "@gooddata/api-client-tiger/entitiesObjects";
 import { IDataSourcesService } from "@gooddata/sdk-backend-spi";
 import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 
@@ -23,9 +24,10 @@ export class TigerDataSourcesService implements IDataSourcesService {
     public async getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]> {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.entities
-                    .getAllEntitiesDataSourceIdentifiers({ page, size })
-                    .then((response) => response.data.data.map(convertdataSourceIdentifier)),
+                EntitiesApi_GetAllEntitiesDataSourceIdentifiers(client.axios, client.basePath, {
+                    page,
+                    size,
+                }).then((response) => response.data.data.map(convertdataSourceIdentifier)),
             );
         });
     }

@@ -122,7 +122,14 @@ import {
     DashboardScheduledEmailSaved,
 } from "./scheduledEmail.js";
 import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
-import { DashboardTabCreated, DashboardTabDeleted, DashboardTabSwitched } from "./tabs.js";
+import {
+    DashboardTabCreated,
+    DashboardTabDeleted,
+    DashboardTabRenamed,
+    DashboardTabRenamingCanceled,
+    DashboardTabRenamingStarted,
+    DashboardTabSwitched,
+} from "./tabs.js";
 import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import {
     DashboardVisualizationSwitcherWidgetVisualizationAdded,
@@ -186,6 +193,12 @@ export type {
     DashboardTabCreatedPayload,
     DashboardTabDeleted,
     DashboardTabDeletedPayload,
+    DashboardTabRenamingStarted,
+    DashboardTabRenamingStartedPayload,
+    DashboardTabRenamingCanceled,
+    DashboardTabRenamingCanceledPayload,
+    DashboardTabRenamed,
+    DashboardTabRenamedPayload,
 } from "./tabs.js";
 export {
     dashboardTabSwitched,
@@ -194,6 +207,12 @@ export {
     isDashboardTabCreated,
     dashboardTabDeleted,
     isDashboardTabDeleted,
+    dashboardTabRenamingStarted,
+    isDashboardTabRenamingStarted,
+    dashboardTabRenamingCanceled,
+    isDashboardTabRenamingCanceled,
+    dashboardTabRenamed,
+    isDashboardTabRenamed,
 } from "./tabs.js";
 export {
     isDashboardSaved,
@@ -705,6 +724,9 @@ export type DashboardEvents =
     | DashboardTabSwitched
     | DashboardTabCreated
     | DashboardTabDeleted
+    | DashboardTabRenamingStarted
+    | DashboardTabRenamingCanceled
+    | DashboardTabRenamed
     // internal
     | CreateInsightRequested
     | CreateAttributeHierarchyRequested

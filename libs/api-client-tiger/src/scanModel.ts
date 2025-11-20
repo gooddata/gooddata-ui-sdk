@@ -4,7 +4,7 @@ import { AxiosInstance } from "axios";
 
 import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base.js";
 import {
-    ActionsApiFactory,
+    ActionsApi,
     Configuration,
     ConfigurationParameters,
     ActionsApiInterface as ScanModelActionsApiInterface,
@@ -18,4 +18,4 @@ export type {
 export { Configuration as ScanModelConfiguration, BaseAPI as ScanModelBaseApi };
 
 export const tigerScanModelClientFactory = (axios: AxiosInstance): ScanModelActionsApiInterface =>
-    ActionsApiFactory(undefined, "", axios);
+    new ActionsApi(undefined, "", axios);

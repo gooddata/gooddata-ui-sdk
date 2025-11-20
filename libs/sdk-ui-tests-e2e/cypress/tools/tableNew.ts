@@ -16,6 +16,7 @@ const PT_CELL = ".gd-pivot-table-next__cell";
 const PT_CELL_DRILLABLE = ".gd-pivot-tpivotTableAggregationsMenuAndAddTotalable-next__cell--drillable";
 const PT_HEADER_MENU_BTN = ".gd-pivot-table-next__header-cell-menu-button";
 const LOADING_COMPUTING = ".adi-computing-inner"; // computing overlay
+const HEADER_TEXT = "[data-testid~='pivot-header-text']";
 
 export const nonEmptyValue = /\$?[0-9,.]+/;
 /** utility: convert 0-based column index to aria-colindex (1-based) */
@@ -268,7 +269,7 @@ export class TableNew {
 
     hasHeaderColumnWidth(width: number) {
         this.getElement()
-            .find(`.s-header-cell-label span`)
+            .find(HEADER_TEXT)
             .invoke("width")
             .should("be.gte", width)
             .should("be.lte", width + 2);
@@ -283,17 +284,22 @@ export class TableNew {
             .should(isUnderlined ? "have.css" : "not.have.css", "text-decoration", "underline");
     }
 
+    private colAria(index: number) {
+        return index + 1;
+    }
+
+    private cellByRC = (rowIndex: number, columnIndex: number) =>
+        `[role="row"][row-index="${rowIndex}"] [role="gridcell"][aria-colindex="${this.colAria(columnIndex)}"]`;
+
     hasMetricHeaderInRow(rowIndex: number, columnIndex: number, metricName: string) {
-        this.getElement()
-            .find(
-                `[role="row"][row-index="${rowIndex}"] [role="gridcell"][aria-colindex="${columnIndex}"] .gd-header-text`,
-            )
-            .should("have.text", metricName);
+        this.getElement().find(this.cellByRC(rowIndex, columnIndex)).should("have.text", metricName);
         return this;
     }
 
     hasColumnHeaderOnTop(columnHeaders: string) {
-        this.getElement().find(`.s-table-column-group-header-descriptor`).should("have.text", columnHeaders);
+        this.getElement()
+            .find(".ag-header-viewport .ag-header-row.ag-header-row-group .ag-header-group-cell")
+            .should("have.text", columnHeaders);
         return this;
     }
 
@@ -336,6 +342,16 @@ export class TableNew {
     isComputed() {
         cy.get(LOADING_COMPUTING).should("not.exist");
         this.getElement().should("exist");
+        return this;
+    }
+
+    hasColumnHeader(columnIndex: number, values: string[]) {
+        values.forEach((value) => {
+            this.getElement()
+                .find(`[role="columnheader"][aria-colindex="${this.colAria(columnIndex)}"] ${HEADER_TEXT}`)
+                .contains(value)
+                .should("exist");
+        });
         return this;
     }
 }

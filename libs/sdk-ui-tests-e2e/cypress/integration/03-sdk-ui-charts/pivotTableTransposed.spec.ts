@@ -1,45 +1,40 @@
 // (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
-import { Table } from "../../tools/table";
+import { TableNew } from "../../tools/tableNew";
 
-describe.skip("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
-    const table = new Table(".s-table-component-transpose");
+describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
+    const table = new TableNew(".s-table-component-transpose");
 
     it(
         "should display Metric in row, Column header on top",
         { tags: ["checklist_integrated_tiger_releng"] },
         () => {
-            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-left");
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-top");
             table
                 .waitLoaded()
                 .hasMetricHeaderInRow(1, 1, "Amount")
                 .hasMetricHeaderInRow(2, 1, "Amount")
-                .hasHeader("Product");
+                .hasColumnHeader(0, ["Product"]);
         },
     );
-
-    it("should display successful with Metric in row", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-top");
-        table.waitLoaded().hasMetricHeaderInRow(1, 1, "Amount").hasMetricHeaderInRow(2, 1, "Amount");
-    });
 
     it(
         "should display Row attribute and Column header on top",
         { tags: ["checklist_integrated_tiger_releng"] },
         () => {
-            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-left");
-            table.waitLoaded().hasHeader("Product").hasColumnHeaderOnTop("Forecast Category");
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-top");
+            table.waitLoaded().hasColumnHeader(0, ["Product"]).hasColumnHeaderOnTop("Forecast Category");
         },
     );
 
     it("should display Row header on top", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-r-row-left");
-        table.waitLoaded().hasHeader("Product");
+        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-r-row-top");
+        table.waitLoaded().hasColumnHeader(0, ["Product"]);
     });
 
     it("should display Metric in row", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-m-row-left");
+        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-m-row-top");
         table.waitLoaded().hasMetricHeaderInRow(0, 0, "Amount").hasCellValue(0, 1, "$116,625,456.54");
     });
 
@@ -49,30 +44,21 @@ describe.skip("Table Component", { tags: ["checklist_integrated_tiger"] }, () =>
     });
 });
 
-describe.skip("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
-    const table = new Table(".s-insight-view-transpose");
+describe("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
+    const table = new TableNew(".s-insight-view-transpose");
 
-    it("should display Metric in row, Column header on left", () => {
+    // TODO: skip this because of bug https://gooddata.atlassian.net/browse/F1-2003
+    it.skip("should display Metric in row, Column header on left", () => {
         Navigation.visit("insight/insight-transpose-has-mc-row-left");
         table.waitLoaded().hasCellValue(0, 0, "Forecast Category").hasMetricHeaderInRow(1, 0, "Amount");
-    });
-
-    it("should display Metric in column, Column header on top", () => {
-        Navigation.visit("insight/insight-transpose-has-mc-column-left");
-        table
-            .waitLoaded()
-            .hasColumnHeaderOnTop("Forecast Category")
-            .hasMeasureHeader(1, "Amount", true)
-            .hasMeasureHeader(2, "Amount", true);
     });
 
     it("should display Metric in column, Column header on the top", () => {
         Navigation.visit("insight/insight-transpose-has-mc-column-top");
         table
             .waitLoaded()
-            .hasColumnHeaderOnTop("Forecast Category")
-            .hasMeasureHeader(0, "Amount", true)
-            .hasMeasureHeader(1, "Amount", true);
+            .hasColumnHeader(0, ["Forecast Category", "Exclude", "Amount"])
+            .hasColumnHeader(1, ["Include", "Amount"]);
     });
 
     it("should display Metric in row", () => {
@@ -80,7 +66,8 @@ describe.skip("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
         table.waitLoaded().hasMetricHeaderInRow(0, 0, "Amount");
     });
 
-    it("should display Column header on top", () => {
+    // TODO: skip this because of bug https://gooddata.atlassian.net/browse/F1-2003
+    it.skip("should display Column header on top", () => {
         Navigation.visit("insight/insight-transpose-has-mc-left");
         table.waitLoaded().hasColumnHeaderOnTop("Forecast Category");
     });

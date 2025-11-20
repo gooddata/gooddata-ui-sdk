@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosPromise, GenericAbortSignal } from "axios";
+import { AxiosInstance, AxiosPromise, GenericAbortSignal } from "axios";
 import { merge, uniqBy } from "lodash-es";
 
-import { ITigerClient } from "./client.js";
+import { ITigerClientBase } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
     JsonApiAnalyticalDashboardOutList,
@@ -140,6 +140,16 @@ export type MetadataGetEntitiesFn<
     P extends MetadataGetEntitiesParams,
 > = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
+export type MetadataGetEntitiesFnNew<
+    T extends MetadataGetEntitiesResult,
+    P extends MetadataGetEntitiesParams,
+> = (
+    axios: AxiosInstance,
+    basePath: string,
+    params: P,
+    options: MetadataGetEntitiesOptions,
+) => AxiosPromise<T>;
+
 /**
  * Tiger metadata utility functions
  *
@@ -161,7 +171,7 @@ export class MetadataUtilities {
      * @param options - options accepted by the function
      * @internal
      */
-    public static getAllPagesOf = async <
+    /*public static getAllPagesOf = async <
         T extends MetadataGetEntitiesResult,
         P extends MetadataGetEntitiesParams,
     >(
@@ -190,7 +200,7 @@ export class MetadataUtilities {
         }
 
         return results;
-    };
+    };*/
 
     /**
      * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
@@ -208,7 +218,7 @@ export class MetadataUtilities {
      * @param options - options accepted by the function
      * @internal
      */
-    public static getAllPagesOfParallel = async <
+    /* public static getAllPagesOfParallel = async <
         T extends MetadataGetEntitiesResult,
         P extends MetadataGetEntitiesParams,
     >(
@@ -234,7 +244,7 @@ export class MetadataUtilities {
         );
 
         return [initialGet, ...morePages].map((item) => item.data);
-    };
+    }; */
 
     /**
      * This function merges multiple pages containing metadata entities into a single page. The entity data from different
@@ -268,4 +278,81 @@ export class MetadataUtilities {
         result.data = (result.data as any[]).filter((entity) => entity.attributes?.areRelationsValid ?? true);
         return result;
     }
+
+    public static getAllPagesOf = async <
+        T extends MetadataGetEntitiesResult,
+        P extends MetadataGetEntitiesParams,
+    >(
+        client: ITigerClientBase,
+        entitiesGet: MetadataGetEntitiesFnNew<T, P>,
+        params: P,
+        options: MetadataGetEntitiesOptions = {},
+    ): Promise<T[]> => {
+        const results: T[] = [];
+        const pageSize = options.params?.size ?? DefaultPageSize;
+        let reachedEnd = false;
+        let nextPage: number = 0;
+
+        while (!reachedEnd) {
+            const optionsToUse = createOptionsForPage(nextPage, options);
+            const result = await entitiesGet(client.axios, "", params, optionsToUse);
+
+            results.push(result.data);
+
+            if (result.data.data.length < pageSize) {
+                reachedEnd = true;
+            } else {
+                nextPage += 1;
+            }
+        }
+
+        return results;
+    };
+
+    /**
+     * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
+     * retrieve all pages from the metadata.
+     * Unlike to the getAllPagesOf, the requests will not be done in series. Instead, a first request will be done
+     * with metaInclude=page to get the number of pages and all subsequent pages will be fetched in parallel.
+     *
+     * The parameters are passed to the function as is. The options will be used as a 'template'. If the options specify
+     * page `size`, it will be retained and used for paging.
+     *
+     * @param client - API client to use, this is required so that function can correctly bind 'this' for
+     *  the entitiesGet function
+     * @param entitiesGet - function to get pages list of entities
+     * @param params - parameters accepted by the function
+     * @param options - options accepted by the function
+     * @internal
+     */
+    public static getAllPagesOfParallel = async <
+        T extends MetadataGetEntitiesResult,
+        P extends MetadataGetEntitiesParams,
+    >(
+        client: ITigerClientBase,
+        entitiesGet: MetadataGetEntitiesFnNew<T, P>,
+        params: P,
+        options: MetadataGetEntitiesOptions = {},
+    ): Promise<T[]> => {
+        const initialOptions = createOptionsForPage(0, options);
+        const initialGet = await entitiesGet(
+            client.axios,
+            "",
+            { ...params, metaInclude: ["page"] },
+            initialOptions,
+        );
+
+        const total = initialGet.data?.meta?.page?.totalPages || 1;
+
+        const range = Array.from({ length: total - 1 }, (_v, i) => i + 1);
+
+        const morePages = await Promise.all(
+            range.map((page) => {
+                const optionsToUse = createOptionsForPage(page, options);
+                return entitiesGet(client.axios, "", params, optionsToUse);
+            }),
+        );
+
+        return [initialGet, ...morePages].map((item) => item.data);
+    };
 }

@@ -6,10 +6,9 @@ import {
     DependsOn,
     DependsOnDateFilter,
     ElementsRequest,
-    ElementsRequestSortOrderEnum,
     ElementsResponseGranularityEnum,
-    FilterByLabelTypeEnum,
 } from "@gooddata/api-client-tiger";
+import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/labelElements";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     FilterWithResolvableElements,
@@ -143,13 +142,13 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 ? {
                       exactFilter: elements.values as string[],
                       filterBy: {
-                          labelType: FilterByLabelTypeEnum.REQUESTED,
+                          labelType: "REQUESTED",
                       },
                   }
                 : {
                       exactFilter: elements.primaryValues as string[],
                       filterBy: {
-                          labelType: FilterByLabelTypeEnum.PRIMARY,
+                          labelType: "PRIMARY",
                       },
                   };
         }
@@ -211,32 +210,30 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                             excludePrimaryLabel: options.excludePrimaryLabel,
                         }),
                         ...(options?.order && {
-                            sortOrder:
-                                options.order === "asc"
-                                    ? ElementsRequestSortOrderEnum.ASC
-                                    : ElementsRequestSortOrderEnum.DESC,
+                            sortOrder: options.order === "asc" ? "ASC" : "DESC",
                         }),
                         ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
                         ...(cacheId && { cacheId: cacheId }),
                         ...(options?.filterByPrimaryLabel && {
                             filterBy: {
-                                labelType: FilterByLabelTypeEnum.PRIMARY,
+                                labelType: "PRIMARY",
                             },
                         }),
                     };
 
-                    const elementsRequestWrapped: Parameters<
-                        typeof client.labelElements.computeLabelElementsPost
-                    >[0] = {
-                        limit: limit,
-                        offset: offset,
-                        elementsRequest,
-                        workspaceId: this.workspace,
-                    };
-
-                    return client.labelElements.computeLabelElementsPost(elementsRequestWrapped, {
-                        ...new TigerCancellationConverter(this.signal).forAxios(),
-                    });
+                    return ActionsApi_ComputeLabelElementsPost(
+                        client.axios,
+                        "",
+                        {
+                            limit: limit,
+                            offset: offset,
+                            elementsRequest,
+                            workspaceId: this.workspace,
+                        },
+                        {
+                            ...new TigerCancellationConverter(this.signal).forAxios(),
+                        },
+                    );
                 });
 
                 const { paging, elements, format, granularity, cacheId: responseCacheId } = response.data;

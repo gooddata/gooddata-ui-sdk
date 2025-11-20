@@ -264,3 +264,140 @@ export function dashboardTabDeleted(
  */
 export const isDashboardTabDeleted = (event: any): event is DashboardTabDeleted =>
     event.type === "GDC.DASH/EVT.TAB.DELETED";
+
+/**
+ * Payload of the {@link DashboardTabRenamingStarted} event.
+ * @alpha
+ */
+export interface DashboardTabRenamingStartedPayload {
+    /**
+     * Identifier of the tab whose renaming has started.
+     */
+    readonly tabId: string;
+}
+
+/**
+ * This event is emitted when renaming mode is started for a dashboard tab.
+ * @alpha
+ */
+export interface DashboardTabRenamingStarted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
+    readonly payload: DashboardTabRenamingStartedPayload;
+}
+
+/**
+ * Creates the DashboardTabRenamingStarted event.
+ * @alpha
+ */
+export function dashboardTabRenamingStarted(
+    ctx: DashboardContext,
+    tabId: string,
+    correlationId?: string,
+): DashboardTabRenamingStarted {
+    return {
+        type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED",
+        ctx,
+        correlationId,
+        payload: { tabId },
+    };
+}
+
+/**
+ * Type guard for {@link DashboardTabRenamingStarted}.
+ * @alpha
+ */
+export const isDashboardTabRenamingStarted = (event: any): event is DashboardTabRenamingStarted =>
+    event.type === "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
+
+/**
+ * Payload of the {@link DashboardTabRenamingCanceled} event.
+ * @alpha
+ */
+export interface DashboardTabRenamingCanceledPayload {
+    /**
+     * Identifier of the tab whose renaming has been canceled.
+     */
+    readonly tabId: string;
+}
+
+/**
+ * This event is emitted when renaming mode is canceled for a dashboard tab.
+ * @alpha
+ */
+export interface DashboardTabRenamingCanceled extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
+    readonly payload: DashboardTabRenamingCanceledPayload;
+}
+
+/**
+ * Creates the DashboardTabRenamingCanceled event.
+ * @alpha
+ */
+export function dashboardTabRenamingCanceled(
+    ctx: DashboardContext,
+    tabId: string,
+    correlationId?: string,
+): DashboardTabRenamingCanceled {
+    return {
+        type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED",
+        ctx,
+        correlationId,
+        payload: { tabId },
+    };
+}
+
+/**
+ * Type guard for {@link DashboardTabRenamingCanceled}.
+ * @alpha
+ */
+export const isDashboardTabRenamingCanceled = (event: any): event is DashboardTabRenamingCanceled =>
+    event.type === "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
+
+/**
+ * Payload of the {@link DashboardTabRenamed} event.
+ * @alpha
+ */
+export interface DashboardTabRenamedPayload {
+    /**
+     * Identifier of the tab that was renamed.
+     */
+    readonly tabId: string;
+    /**
+     * New title of the tab.
+     */
+    readonly title: string;
+}
+
+/**
+ * This event is emitted when a dashboard tab is renamed.
+ * @alpha
+ */
+export interface DashboardTabRenamed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.RENAMED";
+    readonly payload: DashboardTabRenamedPayload;
+}
+
+/**
+ * Creates the DashboardTabRenamed event.
+ * @alpha
+ */
+export function dashboardTabRenamed(
+    ctx: DashboardContext,
+    tabId: string,
+    title: string,
+    correlationId?: string,
+): DashboardTabRenamed {
+    return {
+        type: "GDC.DASH/EVT.TAB.RENAMED",
+        ctx,
+        correlationId,
+        payload: { tabId, title },
+    };
+}
+
+/**
+ * Type guard for {@link DashboardTabRenamed}.
+ * @alpha
+ */
+export const isDashboardTabRenamed = (event: any): event is DashboardTabRenamed =>
+    event.type === "GDC.DASH/EVT.TAB.RENAMED";

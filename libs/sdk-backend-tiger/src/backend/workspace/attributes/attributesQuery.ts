@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { EntitiesApiGetAllEntitiesAttributesRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IAttributesQuery, IAttributesQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
@@ -70,7 +71,7 @@ export class AttributesQuery implements IAttributesQuery {
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesAttributes({
+                    EntitiesApi_GetAllEntitiesAttributes(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...this.sort,

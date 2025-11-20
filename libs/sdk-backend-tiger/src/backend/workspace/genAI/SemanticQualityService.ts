@@ -1,5 +1,9 @@
 // (C) 2025 GoodData Corporation
 
+import {
+    GenAiApi_GetQualityIssues,
+    GenAiApi_TriggerQualityIssuesCalculation,
+} from "@gooddata/api-client-tiger/genAI";
 import type { ISemanticQualityService } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
 
@@ -26,7 +30,9 @@ export class SemanticQualityService implements ISemanticQualityService {
      */
     async getQualityReport(options?: { signal?: AbortSignal }): Promise<ISemanticQualityReport> {
         const response = await this.authCall((client) => {
-            return client.genAI.getQualityIssues(
+            return GenAiApi_GetQualityIssues(
+                client.axios,
+                client.basePath,
                 { workspaceId: this.workspaceId },
                 { signal: options?.signal },
             );
@@ -37,7 +43,9 @@ export class SemanticQualityService implements ISemanticQualityService {
 
     async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {
         const response = await this.authCall((client) => {
-            return client.genAI.triggerQualityIssuesCalculation({ workspaceId: this.workspaceId });
+            return GenAiApi_TriggerQualityIssuesCalculation(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            });
         });
 
         return convertQualityIssuesCalculationResponse(response.data);

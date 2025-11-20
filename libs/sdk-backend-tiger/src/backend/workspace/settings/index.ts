@@ -2,11 +2,20 @@
 
 import {
     FeatureContext,
-    JsonApiDatasetOutMetaOriginOriginTypeEnum,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
 } from "@gooddata/api-client-tiger";
+import { ActionsApi_WorkspaceResolveAllSettings } from "@gooddata/api-client-tiger/actions";
+import {
+    EntitiesApi_CreateEntityWorkspaceSettings,
+    EntitiesApi_DeleteEntityWorkspaceSettings,
+    EntitiesApi_GetAllEntitiesWorkspaceSettings,
+    EntitiesApi_GetEntityWorkspaces,
+    EntitiesApi_UpdateEntityWorkspaceSettings,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
     IUserWorkspaceSettings,
     IWorkspaceSettings,
@@ -44,14 +53,16 @@ export class TigerWorkspaceSettings
     public override getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async (client) => {
             const { data } = await this.authCall(async (client) =>
-                client.entities.getAllEntitiesWorkspaceSettings({ workspaceId: this.workspace }),
+                EntitiesApi_GetAllEntitiesWorkspaceSettings(client.axios, client.basePath, {
+                    workspaceId: this.workspace,
+                }),
             );
             const settings = this.mapSettingsToKeys(data.data);
 
             const {
                 data: { meta: config },
             } = (
-                await client.entities.getEntityWorkspaces({
+                await EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
                     id: this.workspace,
                     ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                 })
@@ -67,14 +78,8 @@ export class TigerWorkspaceSettings
     }
 
     private mapSettingsToKeys = (data: JsonApiWorkspaceSettingOutWithLinks[]): ISettings => {
-        const nativeSettings = this.mapSettingsToKeysByOrigin(
-            data,
-            JsonApiDatasetOutMetaOriginOriginTypeEnum.NATIVE,
-        );
-        const parentSettings = this.mapSettingsToKeysByOrigin(
-            data,
-            JsonApiDatasetOutMetaOriginOriginTypeEnum.PARENT,
-        );
+        const nativeSettings = this.mapSettingsToKeysByOrigin(data, "NATIVE");
+        const parentSettings = this.mapSettingsToKeysByOrigin(data, "PARENT");
         return Object.keys(parentSettings).reduce((result: ISettings, key) => {
             if (result[key] === undefined) {
                 return {
@@ -88,7 +93,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
+        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;
@@ -172,7 +177,7 @@ export class TigerWorkspaceSettings
 
     protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
-            client.entities.getAllEntitiesWorkspaceSettings({
+            EntitiesApi_GetAllEntitiesWorkspaceSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 origin: "NATIVE",
                 filter: `type==${type}`,
@@ -182,7 +187,7 @@ export class TigerWorkspaceSettings
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
-            client.entities.updateEntityWorkspaceSettings({
+            EntitiesApi_UpdateEntityWorkspaceSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId: id,
                 jsonApiWorkspaceSettingInDocument: {
@@ -201,7 +206,7 @@ export class TigerWorkspaceSettings
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
-            client.entities.createEntityWorkspaceSettings({
+            EntitiesApi_CreateEntityWorkspaceSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiWorkspaceSettingPostOptionalIdDocument: {
                     data: {
@@ -221,7 +226,7 @@ export class TigerWorkspaceSettings
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall(async (client) =>
-                client.entities.deleteEntityWorkspaceSettings({
+                EntitiesApi_DeleteEntityWorkspaceSettings(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     objectId: setting.id,
                 }),
@@ -235,7 +240,7 @@ export class TigerWorkspaceSettings
  */
 async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace: string): Promise<ISettings> {
     const { data } = await authCall(async (client) =>
-        client.actions.workspaceResolveAllSettings({
+        ActionsApi_WorkspaceResolveAllSettings(client.axios, client.basePath, {
             workspaceId: workspace,
         }),
     );
@@ -267,12 +272,12 @@ export function getSettingsForCurrentUser(
     workspace: string,
 ): Promise<IUserWorkspaceSettings> {
     return authCall(async (client) => {
-        const profile = await client.profile.getCurrent();
+        const profile = await ProfileApi_GetCurrent(client.axios);
         const {
             data: {
                 data: { meta: config, attributes: wsAttributes },
             },
-        } = await client.entities.getEntityWorkspaces({
+        } = await EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
             id: workspace,
             ...GET_OPTIMIZED_WORKSPACE_PARAMS,
         });

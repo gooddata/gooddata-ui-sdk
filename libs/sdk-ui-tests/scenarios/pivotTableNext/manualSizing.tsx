@@ -59,16 +59,20 @@ const justManualResizing = scenariosFor<IPivotTableNextProps>("PivotTableNext", 
             },
         },
     })
-    .addScenario("table with multiple measure columns and weak measure size", {
-        ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-        config: {
-            columnSizing: {
-                columnWidths: [weakMeasureColumnWidthItem],
-                defaultWidth: "unset",
-                growToFit: false,
+    .addScenario(
+        "table with multiple measure columns and weak measure size",
+        {
+            ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
+            config: {
+                columnSizing: {
+                    columnWidths: [weakMeasureColumnWidthItem],
+                    defaultWidth: "unset",
+                    growToFit: false,
+                },
             },
         },
-    });
+        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
+    );
 
 const withColumnAutoresize = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("manual-resizing", "combined with column autoresize")

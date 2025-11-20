@@ -30,6 +30,7 @@ import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js
 const getTabState = ({
     title,
     localIdentifier,
+    isRenaming,
     filterContext,
     dateFilterConfig,
     dateFilterConfigs,
@@ -39,6 +40,7 @@ const getTabState = ({
 }: {
     title: string;
     localIdentifier: string;
+    isRenaming?: boolean;
     filterContext: IFilterContextDefinition;
     dateFilterConfig?: IDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
@@ -49,6 +51,7 @@ const getTabState = ({
     return {
         title,
         localIdentifier,
+        isRenaming,
         filterContext: {
             filtersWithInvalidSelection: [],
             filterContextDefinition: filterContext,
@@ -78,7 +81,7 @@ const getTabState = ({
  * @internal
  */
 export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDashboardTab): SagaIterator {
-    const { title = "", index } = cmd.payload;
+    const { title = "", index, shouldStartRenaming = true } = cmd.payload;
 
     // 1. Get current state from main dashboard slices
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
@@ -102,6 +105,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
         screen,
         filterContext: newTabFilterContext,
         dateFilterConfig,
+        isRenaming: shouldStartRenaming,
     });
 
     // 4. Insert new tab at specified index (or append)

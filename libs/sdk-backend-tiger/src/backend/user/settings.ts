@@ -1,4 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
+import { ActionsApi_ResolveAllSettingsWithoutWorkspace } from "@gooddata/api-client-tiger/actions";
+import {
+    EntitiesApi_CreateEntityUserSettings,
+    EntitiesApi_DeleteEntityUserSettings,
+    EntitiesApi_GetAllEntitiesUserSettings,
+    EntitiesApi_UpdateEntityUserSettings,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import { IUserSettings, IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
@@ -20,10 +28,13 @@ export class TigerUserSettingsService
 
     public override async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
+            const profile = await ProfileApi_GetCurrent(client.axios);
             const context = pickContext(undefined, profile.organizationId, profile.entitlements);
             const features = await this.tigerFeatureService.getFeatures(profile, context);
-            const { data } = await client.actions.resolveAllSettingsWithoutWorkspace();
+            const { data } = await ActionsApi_ResolveAllSettingsWithoutWorkspace(
+                client.axios,
+                client.basePath,
+            );
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({
                     ...result,
@@ -43,8 +54,8 @@ export class TigerUserSettingsService
 
     protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            return client.entities.getAllEntitiesUserSettings({
+            const profile = await ProfileApi_GetCurrent(client.axios);
+            return EntitiesApi_GetAllEntitiesUserSettings(client.axios, client.basePath, {
                 userId: profile.userId,
                 filter: `type==${type}`,
             });
@@ -53,8 +64,8 @@ export class TigerUserSettingsService
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            return client.entities.updateEntityUserSettings({
+            const profile = await ProfileApi_GetCurrent(client.axios);
+            return EntitiesApi_UpdateEntityUserSettings(client.axios, client.basePath, {
                 id,
                 userId: profile.userId,
                 jsonApiUserSettingInDocument: {
@@ -73,8 +84,8 @@ export class TigerUserSettingsService
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            return client.entities.createEntityUserSettings({
+            const profile = await ProfileApi_GetCurrent(client.axios);
+            return EntitiesApi_CreateEntityUserSettings(client.axios, client.basePath, {
                 userId: profile.userId,
                 jsonApiUserSettingInDocument: {
                     data: {
@@ -94,8 +105,8 @@ export class TigerUserSettingsService
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall(async (client) => {
-                const profile = await client.profile.getCurrent();
-                return client.entities.deleteEntityUserSettings({
+                const profile = await ProfileApi_GetCurrent(client.axios);
+                return EntitiesApi_DeleteEntityUserSettings(client.axios, client.basePath, {
                     userId: profile.userId,
                     id: setting.id,
                 });

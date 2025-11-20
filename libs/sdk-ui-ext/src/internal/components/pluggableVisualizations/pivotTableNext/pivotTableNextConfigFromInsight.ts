@@ -38,6 +38,8 @@ export function pivotTableNextConfigFromInsight(
     const metricsPositionProp = isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
     const columnHeadersPosition = insightProperties(insight)?.["controls"]?.columnHeadersPosition;
     const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
+    const grandTotalsPosition = insightProperties(insight)?.["controls"]?.grandTotalsPosition;
+    const grandTotalsPositionProp = isEmpty(grandTotalsPosition) ? {} : { grandTotalsPosition };
     const columnSizing: IColumnSizing = {
         columnWidths: insightProperties(insight)?.["controls"]?.columnWidths,
         defaultWidth: "autoresizeAll",
@@ -50,6 +52,7 @@ export function pivotTableNextConfigFromInsight(
         ...separatorsProp,
         ...metricsPositionProp,
         ...columnHeadersPositionProp,
+        ...grandTotalsPositionProp,
         columnSizing,
         textWrapping,
         ...AG_GRID_TOKEN_PLACEHOLDER,

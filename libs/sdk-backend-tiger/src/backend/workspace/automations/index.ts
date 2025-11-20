@@ -1,6 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    ActionsApi_DeleteWorkspaceAutomations,
+    ActionsApi_PauseWorkspaceAutomations,
+    ActionsApi_UnpauseWorkspaceAutomations,
+    ActionsApi_UnsubscribeAutomation,
+    ActionsApi_UnsubscribeSelectedWorkspaceAutomations,
+} from "@gooddata/api-client-tiger/actions";
+import {
+    EntitiesApi_CreateEntityAutomations,
+    EntitiesApi_DeleteEntityAutomations,
+    EntitiesApi_GetAllEntitiesAutomations,
+    EntitiesApi_GetEntityAutomations,
+    EntitiesApi_UpdateEntityAutomations,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import {
     IAutomationsQuery,
     IGetAutomationOptions,
@@ -32,8 +46,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getAllEntitiesAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetAllEntitiesAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 include: [
                     "notificationChannel",
@@ -69,8 +83,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getEntityAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetEntityAutomations(client.axios, client.basePath, {
                 objectId: id,
                 workspaceId: this.workspaceId,
                 include: [
@@ -100,7 +114,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
-        return this.authCall(async (client: ITigerClient) => {
+        return this.authCall(async (client: ITigerClientBase) => {
             const convertedAutomation = convertAutomationToBackend(
                 automation,
                 enableAutomationFilterContext,
@@ -108,7 +122,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 widgetExecution,
                 overrides,
             );
-            const result = await client.entities.createEntityAutomations({
+            const result = await EntitiesApi_CreateEntityAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 jsonApiAutomationInDocument: {
                     data: convertedAutomation,
@@ -141,7 +155,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
-        return this.authCall(async (client: ITigerClient) => {
+        return this.authCall(async (client: ITigerClientBase) => {
             const convertedAutomation = convertAutomationToBackend(
                 automation,
                 enableAutomationFilterContext,
@@ -149,7 +163,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 widgetExecution,
                 overrides,
             );
-            const result = await client.entities.updateEntityAutomations({
+            const result = await EntitiesApi_UpdateEntityAutomations(client.axios, client.basePath, {
                 objectId: automation.id,
                 workspaceId: this.workspaceId,
                 jsonApiAutomationInDocument: {
@@ -173,20 +187,26 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     };
 
     public deleteAutomation(id: string): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.entities.deleteEntityAutomations({ workspaceId: this.workspaceId, objectId: id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            await EntitiesApi_DeleteEntityAutomations(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                objectId: id,
+            });
         });
     }
 
     public unsubscribeAutomation(id: string): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.actions.unsubscribeAutomation({ workspaceId: this.workspaceId, automationId: id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            await ActionsApi_UnsubscribeAutomation(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                automationId: id,
+            });
         });
     }
 
     public deleteAutomations(ids: string[]): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.actions.deleteWorkspaceAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            await ActionsApi_DeleteWorkspaceAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 workspaceAutomationManagementBulkRequest: {
                     automations: ids.map((id) => ({ id })),
@@ -196,8 +216,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     }
 
     public unsubscribeAutomations(ids: string[]): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.actions.unsubscribeSelectedWorkspaceAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            await ActionsApi_UnsubscribeSelectedWorkspaceAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 workspaceAutomationManagementBulkRequest: {
                     automations: ids.map((id) => ({ id })),
@@ -211,8 +231,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     }
 
     pauseAutomations(ids: string[]): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.actions.pauseWorkspaceAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            await ActionsApi_PauseWorkspaceAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 workspaceAutomationManagementBulkRequest: {
                     automations: ids.map((id) => ({ id })),
@@ -226,8 +246,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
     }
 
     resumeAutomations(ids: string[]): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.actions.unpauseWorkspaceAutomations({
+        return this.authCall(async (client: ITigerClientBase) => {
+            await ActionsApi_UnpauseWorkspaceAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 workspaceAutomationManagementBulkRequest: {
                     automations: ids.map((id) => ({ id })),

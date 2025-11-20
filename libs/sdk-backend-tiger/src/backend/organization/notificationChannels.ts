@@ -1,6 +1,17 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    AutomationApi_TestExistingNotificationChannel,
+    AutomationApi_TestNotificationChannel,
+} from "@gooddata/api-client-tiger/automation";
+import {
+    EntitiesApi_CreateEntityNotificationChannels,
+    EntitiesApi_DeleteEntityNotificationChannels,
+    EntitiesApi_GetEntityNotificationChannels,
+    EntitiesApi_PatchEntityNotificationChannels,
+    EntitiesApi_UpdateEntityNotificationChannels,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import {
     INotificationChannelsQuery,
     IOrganizationNotificationChannelService,
@@ -47,20 +58,24 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
         }
 
         if ("id" in channel && channel.id) {
-            return this.authCall(async (client: ITigerClient) => {
-                const result = await client.automation.testExistingNotificationChannel({
-                    notificationChannelId: channel.id,
-                    automationTestDestinationRequest: {
-                        destination,
-                        externalRecipients,
+            return this.authCall(async (client: ITigerClientBase) => {
+                const result = await AutomationApi_TestExistingNotificationChannel(
+                    client.axios,
+                    client.basePath,
+                    {
+                        notificationChannelId: channel.id,
+                        automationTestDestinationRequest: {
+                            destination,
+                            externalRecipients,
+                        },
                     },
-                });
+                );
                 return result.data;
             });
         }
 
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.automation.testNotificationChannel({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await AutomationApi_TestNotificationChannel(client.axios, client.basePath, {
                 automationTestDestinationRequest: {
                     destination,
                     externalRecipients,
@@ -78,8 +93,10 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
      * @beta
      */
     public getNotificationChannel(id: string): Promise<INotificationChannelMetadataObject> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getEntityNotificationChannels({ id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetEntityNotificationChannels(client.axios, client.basePath, {
+                id,
+            });
             const convertedChannel = convertNotificationChannelFromBackend(result.data.data);
             if (!convertedChannel) {
                 throw new UnexpectedError(`Notification channel with id ${id} not found`);
@@ -99,12 +116,16 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     public createNotificationChannel<T extends INotificationChannelMetadataObjectDefinition>(
         notificationChannel: T,
     ): Promise<ToNotificationChannelMetadataObject<T>> {
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.createEntityNotificationChannels({
-                jsonApiNotificationChannelPostOptionalIdDocument: {
-                    data: convertNotificationChannelToBackend(notificationChannel),
+        return this.authCall(async (client: ITigerClientBase) => {
+            const channel = await EntitiesApi_CreateEntityNotificationChannels(
+                client.axios,
+                client.basePath,
+                {
+                    jsonApiNotificationChannelPostOptionalIdDocument: {
+                        data: convertNotificationChannelToBackend(notificationChannel),
+                    },
                 },
-            });
+            );
             const convertedChannel = convertNotificationChannelFromBackend(
                 channel.data.data,
             ) as ToNotificationChannelMetadataObject<T>;
@@ -126,7 +147,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     public updateNotificationChannel<T extends INotificationChannelMetadataObject>(
         notificationChannel: T,
     ): Promise<T> {
-        return this.authCall(async (client: ITigerClient) => {
+        return this.authCall(async (client: ITigerClientBase) => {
             const destinationType = notificationChannel.destinationType;
             switch (destinationType) {
                 case "smtp":
@@ -134,12 +155,16 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
                 case "webhook":
                     return this.updateWebhookNotificationChannel(notificationChannel) as unknown as T;
                 case "inPlatform": {
-                    const channel = await client.entities.updateEntityNotificationChannels({
-                        id: notificationChannel.id,
-                        jsonApiNotificationChannelInDocument: {
-                            data: convertNotificationChannelToBackend(notificationChannel),
+                    const channel = await EntitiesApi_UpdateEntityNotificationChannels(
+                        client.axios,
+                        client.basePath,
+                        {
+                            id: notificationChannel.id,
+                            jsonApiNotificationChannelInDocument: {
+                                data: convertNotificationChannelToBackend(notificationChannel),
+                            },
                         },
-                    });
+                    );
                     const convertedChannel = convertNotificationChannelFromBackend(channel.data.data) as T;
                     if (!convertedChannel) {
                         throw new UnexpectedError(`Failed to update notification channel`);
@@ -162,8 +187,8 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
      * @beta
      */
     public deleteNotificationChannel(id: string): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.entities.deleteEntityNotificationChannels({ id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            await EntitiesApi_DeleteEntityNotificationChannels(client.axios, client.basePath, { id });
         });
     }
 
@@ -189,13 +214,17 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
         //NOTE: If smtp has password but password is undefined, we need to patch the smtp
         // instead of updating it because we want to keep the password on the backend
         if (smtp.destinationConfig?.type === "customSmtp" && !smtp.destinationConfig?.password) {
-            return this.authCall(async (client: ITigerClient) => {
-                const channel = await client.entities.patchEntityNotificationChannels({
-                    id: smtp.id,
-                    jsonApiNotificationChannelPatchDocument: {
-                        data: convertNotificationChannelToBackend(smtp),
+            return this.authCall(async (client: ITigerClientBase) => {
+                const channel = await EntitiesApi_PatchEntityNotificationChannels(
+                    client.axios,
+                    client.basePath,
+                    {
+                        id: smtp.id,
+                        jsonApiNotificationChannelPatchDocument: {
+                            data: convertNotificationChannelToBackend(smtp),
+                        },
                     },
-                });
+                );
                 const convertedChannel = convertNotificationChannelFromBackend(
                     channel.data.data,
                 ) as ISmtpNotificationChannelMetadataObject;
@@ -206,13 +235,17 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             });
         }
 
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.updateEntityNotificationChannels({
-                id: smtp.id,
-                jsonApiNotificationChannelInDocument: {
-                    data: convertNotificationChannelToBackend(smtp),
+        return this.authCall(async (client: ITigerClientBase) => {
+            const channel = await EntitiesApi_UpdateEntityNotificationChannels(
+                client.axios,
+                client.basePath,
+                {
+                    id: smtp.id,
+                    jsonApiNotificationChannelInDocument: {
+                        data: convertNotificationChannelToBackend(smtp),
+                    },
                 },
-            });
+            );
             const convertedChannel = convertNotificationChannelFromBackend(
                 channel.data.data,
             ) as ISmtpNotificationChannelMetadataObject;
@@ -232,13 +265,17 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
         //NOTE: If webhook has token but token is undefined, we need to patch the webhook
         // instead of updating it because we want to keep the token on the backend
         if (webhook.destinationConfig?.hasToken && !webhook.destinationConfig?.token) {
-            return this.authCall(async (client: ITigerClient) => {
-                const channel = await client.entities.patchEntityNotificationChannels({
-                    id: webhook.id,
-                    jsonApiNotificationChannelPatchDocument: {
-                        data: convertNotificationChannelToBackend(webhook),
+            return this.authCall(async (client: ITigerClientBase) => {
+                const channel = await EntitiesApi_PatchEntityNotificationChannels(
+                    client.axios,
+                    client.basePath,
+                    {
+                        id: webhook.id,
+                        jsonApiNotificationChannelPatchDocument: {
+                            data: convertNotificationChannelToBackend(webhook),
+                        },
                     },
-                });
+                );
 
                 const convertedChannel = convertNotificationChannelFromBackend(
                     channel.data.data,
@@ -251,13 +288,17 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             });
         }
 
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.updateEntityNotificationChannels({
-                id: webhook.id,
-                jsonApiNotificationChannelInDocument: {
-                    data: convertNotificationChannelToBackend(webhook),
+        return this.authCall(async (client: ITigerClientBase) => {
+            const channel = await EntitiesApi_UpdateEntityNotificationChannels(
+                client.axios,
+                client.basePath,
+                {
+                    id: webhook.id,
+                    jsonApiNotificationChannelInDocument: {
+                        data: convertNotificationChannelToBackend(webhook),
+                    },
                 },
-            });
+            );
 
             const convertedChannel = convertNotificationChannelFromBackend(
                 channel.data.data,

@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosPromise, AxiosRequestConfig } from "axios";
+import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
 import { merge, uniqBy } from "lodash-es";
 
-import { ITigerClient } from "./client.js";
+import { ITigerClientBase } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
     EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
@@ -70,6 +70,16 @@ export type OrganizationGetEntitiesFn<
 > = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 /**
+ * All API client getEntities* functions follow this signature.
+ *
+ * @internal
+ */
+export type OrganizationGetEntitiesFnNew<
+    T extends OrganizationGetEntitiesResult,
+    P extends OrganizationGetEntitiesParams,
+> = (axios: AxiosInstance, basePath: string, params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
+
+/**
  * Tiger organization utility functions
  *
  * @internal
@@ -85,38 +95,24 @@ export class OrganizationUtilities {
         return (entity as OrganizationGetEntitiesSupportingIncludedResult).included !== undefined;
     }
 
-    /**
-     * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
-     * retrieve all pages from the metadata.
-     *
-     * The parameters are passed to the function as is. The options will be used as a 'template'. If the options specify
-     * page `size`, it will be retained and used for paging. Otherwise the size will be set to a default value (250). The
-     * `page` number will be added dynamically upon each page request.
-     *
-     * @param client - API client to use, this is required so that function can correctly bind 'this' for
-     *  the entitiesGet function
-     * @param entitiesGet - function to get pages list of entities
-     * @param params - parameters accepted by the function
-     * @param options - options accepted by the function
-     * @internal
-     */
     public static getAllPagesOf = async <
         T extends OrganizationGetEntitiesResult,
         P extends OrganizationGetEntitiesParams,
     >(
-        client: ITigerClient,
-        entitiesGet: OrganizationGetEntitiesFn<T, P>,
+        client: ITigerClientBase,
+        entitiesGet: OrganizationGetEntitiesFnNew<T, P>,
         params: P,
         options: AxiosRequestConfig = {},
     ): Promise<T[]> => {
-        const boundGet = entitiesGet.bind(client.entities);
         const results: T[] = [];
         const pageSize = params?.size ?? DefaultPageSize;
         let reachedEnd = false;
         let nextPage: number = 0;
 
         while (!reachedEnd) {
-            const result = await boundGet(
+            const result = await entitiesGet(
+                client.axios,
+                "",
                 { ...params, page: nextPage, size: pageSize },
                 merge({}, DefaultOptions, options),
             );

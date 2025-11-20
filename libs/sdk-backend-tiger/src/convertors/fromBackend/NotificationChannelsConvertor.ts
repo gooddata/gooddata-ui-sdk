@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
-    DeclarativeNotificationChannelDestinationTypeEnum,
     DefaultSmtp,
     JsonApiNotificationChannelIdentifierOut,
     JsonApiNotificationChannelOut,
@@ -70,16 +70,16 @@ export function convertNotificationChannelFromBackend(
     const destinationType = channel.attributes?.destinationType;
 
     switch (destinationType) {
-        case DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK: {
+        case "WEBHOOK": {
             return convertWebhookNotificationChannelFromBackend(channel);
         }
-        case DeclarativeNotificationChannelDestinationTypeEnum.SMTP: {
+        case "SMTP": {
             return convertCustomSmtpNotificationChannelFromBackend(channel);
         }
-        case DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP: {
+        case "DEFAULT_SMTP": {
             return convertDefaultSmtpNotificationChannelFromBackend(channel);
         }
-        case DeclarativeNotificationChannelDestinationTypeEnum.IN_PLATFORM: {
+        case "IN_PLATFORM": {
             return convertInPlatformNotificationChannelFromBackend(channel);
         }
         case undefined:
@@ -199,11 +199,11 @@ function convertAllowedRecipientsFromBackend(
     }
 
     switch (allowedRecipients) {
-        case JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.CREATOR:
+        case "CREATOR":
             return "creator";
-        case JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.INTERNAL:
+        case "INTERNAL":
             return "internal";
-        case JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.EXTERNAL:
+        case "EXTERNAL":
             return "external";
         default:
             assertNever(allowedRecipients);
@@ -215,11 +215,11 @@ function convertDashboardLinkVisibility(
     type?: JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
 ) {
     switch (type) {
-        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.HIDDEN:
+        case "HIDDEN":
             return "hidden";
-        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.ALL:
+        case "ALL":
             return "visible";
-        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.INTERNAL_ONLY:
+        case "INTERNAL_ONLY":
             return "internalOnly";
         default:
             return undefined;

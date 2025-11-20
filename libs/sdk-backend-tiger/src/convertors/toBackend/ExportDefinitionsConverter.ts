@@ -7,7 +7,6 @@ import {
     DashboardTabularExportRequestV2,
     ImageExportRequest,
     JsonApiExportDefinitionInDocument,
-    JsonApiExportDefinitionOutWithLinksTypeEnum,
     JsonApiExportDefinitionPostOptionalIdDocument,
     SlidesExportRequest,
     TabularExportRequest,
@@ -37,7 +36,7 @@ export const convertExportDefinitionMdObjectDefinition = (
 
     return {
         data: {
-            type: JsonApiExportDefinitionOutWithLinksTypeEnum.EXPORT_DEFINITION,
+            type: "exportDefinition",
             attributes: {
                 title,
                 description,

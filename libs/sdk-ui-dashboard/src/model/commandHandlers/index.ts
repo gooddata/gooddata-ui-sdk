@@ -80,7 +80,9 @@ import { initializeAutomationsHandler } from "./scheduledEmail/initializeAutomat
 import { refreshAutomationsHandlers } from "./scheduledEmail/refreshAutomationsHandlers.js";
 import { saveScheduledEmailHandler } from "./scheduledEmail/saveScheduledEmailHandler.js";
 import { handleSetWidgetToShowAsTable } from "./showWidgetAsTable/showWidgetAsTableHandler.js";
+import { cancelRenamingDashboardTabHandler } from "./tabs/cancelRenamingDashboardTabHandler.js";
 import { createDashboardTabHandler } from "./tabs/createDashboardTabHandler.js";
+import { renameDashboardTabHandler } from "./tabs/renameDashboardTabHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
@@ -119,6 +121,7 @@ import { DashboardContext } from "../types/commonTypes.js";
 import { keyDriverAnalysisHandler } from "./drill/keyDriverAnalysisHandler.js";
 import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
 import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";
+import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
 import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
@@ -246,4 +249,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.TAB.SWITCH": switchDashboardTabHandler,
     "GDC.DASH/CMD.TAB.REPOSITION": repositionDashboardTabHandler,
     "GDC.DASH/CMD.TAB.DELETE": deleteDashboardTabHandler,
+    "GDC.DASH/CMD.TAB.RENAME_MODE.START": startRenamingDashboardTabHandler,
+    "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL": cancelRenamingDashboardTabHandler,
+    "GDC.DASH/CMD.TAB.RENAME": renameDashboardTabHandler,
 };

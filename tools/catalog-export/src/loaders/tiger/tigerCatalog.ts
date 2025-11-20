@@ -1,12 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    ITigerClient,
+    ITigerClientBase,
     JsonApiAttributeOutList,
     JsonApiFactOutList,
     JsonApiMetricOutList,
     MetadataUtilities,
     ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_GetAllEntitiesAttributes,
+    EntitiesApi_GetAllEntitiesFacts,
+    EntitiesApi_GetAllEntitiesMetrics,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 
 import { convertAttribute, createLabelMap } from "./tigerCommon.js";
 import { Attribute, Catalog, Fact, Metric } from "../../base/types.js";
@@ -57,11 +62,11 @@ function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
 /**
  * Loads metric, attribute and fact catalog
  */
-export async function loadCatalog(client: ITigerClient, workspaceId: string): Promise<Catalog> {
+export async function loadCatalog(client: ITigerClientBase, workspaceId: string): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
         MetadataUtilities.getAllPagesOf(
             client,
-            client.entities.getAllEntitiesMetrics,
+            EntitiesApi_GetAllEntitiesMetrics,
             {
                 workspaceId,
             },
@@ -69,10 +74,10 @@ export async function loadCatalog(client: ITigerClient, workspaceId: string): Pr
         )
             .then(MetadataUtilities.mergeEntitiesResults)
             .then(MetadataUtilities.filterValidEntities),
-        MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, {
+        MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesFacts, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),
-        MetadataUtilities.getAllPagesOfParallel(client, client.entities.getAllEntitiesAttributes, {
+        MetadataUtilities.getAllPagesOfParallel(client, EntitiesApi_GetAllEntitiesAttributes, {
             workspaceId,
             include: ["labels"],
         }).then(MetadataUtilities.mergeEntitiesResults),

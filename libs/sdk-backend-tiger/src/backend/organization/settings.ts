@@ -1,5 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
+import {
+    EntitiesApi_CreateEntityOrganizationSettings,
+    EntitiesApi_DeleteEntityOrganizationSettings,
+    EntitiesApi_GetAllEntitiesOrganizationSettings,
+    EntitiesApi_UpdateEntityOrganizationSettings,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
@@ -96,7 +102,7 @@ export class OrganizationSettingsService
 
     public override async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
-            client.entities.getAllEntitiesOrganizationSettings({}),
+            EntitiesApi_GetAllEntitiesOrganizationSettings(client.axios, client.basePath, {}),
         );
 
         return data.data.reduce((result: ISettings, setting) => {
@@ -111,7 +117,7 @@ export class OrganizationSettingsService
 
     protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
-            client.entities.getAllEntitiesOrganizationSettings({
+            EntitiesApi_GetAllEntitiesOrganizationSettings(client.axios, client.basePath, {
                 filter: `type==${type}`,
             }),
         );
@@ -119,7 +125,7 @@ export class OrganizationSettingsService
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
-            client.entities.updateEntityOrganizationSettings({
+            EntitiesApi_UpdateEntityOrganizationSettings(client.axios, client.basePath, {
                 id,
                 jsonApiOrganizationSettingInDocument: {
                     data: {
@@ -137,7 +143,7 @@ export class OrganizationSettingsService
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
-            client.entities.createEntityOrganizationSettings({
+            EntitiesApi_CreateEntityOrganizationSettings(client.axios, client.basePath, {
                 jsonApiOrganizationSettingInDocument: {
                     data: {
                         type: "organizationSetting",
@@ -156,7 +162,9 @@ export class OrganizationSettingsService
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall((client) =>
-                client.entities.deleteEntityOrganizationSettings({ id: setting.id }),
+                EntitiesApi_DeleteEntityOrganizationSettings(client.axios, client.basePath, {
+                    id: setting.id,
+                }),
             );
         }
     }

@@ -3,11 +3,13 @@
 import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
+import { AfmObjectIdentifierAttribute, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import {
-    AfmObjectIdentifierAttribute,
-    JsonApiAttributeHierarchyInTypeEnum,
-    jsonApiHeaders,
-} from "@gooddata/api-client-tiger";
+    EntitiesApi_CreateEntityAttributeHierarchies,
+    EntitiesApi_DeleteEntityAttributeHierarchies,
+    EntitiesApi_UpdateEntityAttributeHierarchies,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { ValidDescendantsApi_ComputeValidDescendants } from "@gooddata/api-client-tiger/validDescendants";
 import { IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
 import {
     ICatalogAttributeHierarchy,
@@ -38,13 +40,15 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
     ): Promise<ICatalogAttributeHierarchy> => {
         const attributeHierarchy = await this.authCall((client) => {
             const attributeHierarchyId = uuid();
-            return client.entities.createEntityAttributeHierarchies(
+            return EntitiesApi_CreateEntityAttributeHierarchies(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiAttributeHierarchyInDocument: {
                         data: {
                             id: attributeHierarchyId,
-                            type: JsonApiAttributeHierarchyInTypeEnum.ATTRIBUTE_HIERARCHY,
+                            type: "attributeHierarchy",
                             attributes: {
                                 title: title,
                                 content: {
@@ -68,14 +72,16 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
     ): Promise<ICatalogAttributeHierarchy> => {
         const { attributeHierarchy } = catalogAttributeHierarchy;
         await this.authCall((client) => {
-            return client.entities.updateEntityAttributeHierarchies(
+            return EntitiesApi_UpdateEntityAttributeHierarchies(
+                client.axios,
+                client.basePath,
                 {
                     objectId: attributeHierarchy.id,
                     workspaceId: this.workspace,
                     jsonApiAttributeHierarchyInDocument: {
                         data: {
                             id: attributeHierarchy.id,
-                            type: JsonApiAttributeHierarchyInTypeEnum.ATTRIBUTE_HIERARCHY,
+                            type: "attributeHierarchy",
                             attributes: {
                                 title: attributeHierarchy.title,
                                 description: attributeHierarchy.description,
@@ -97,7 +103,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
 
     public deleteAttributeHierarchy = async (attributeHierarchyId: string): Promise<void> => {
         await this.authCall((client) => {
-            return client.entities.deleteEntityAttributeHierarchies({
+            return EntitiesApi_DeleteEntityAttributeHierarchies(client.axios, client.basePath, {
                 objectId: attributeHierarchyId,
                 workspaceId: this.workspace,
             });
@@ -106,7 +112,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
 
     public getValidDescendants = async (attributes: ObjRef[]): Promise<ObjRef[]> => {
         const response = await this.authCall((client) =>
-            client.validDescendants.computeValidDescendants({
+            ValidDescendantsApi_ComputeValidDescendants(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 afmValidDescendantsQuery: {
                     attributes: attributes.map(toAttributeQualifier),

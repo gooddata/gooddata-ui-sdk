@@ -84,6 +84,42 @@ const getRowIndex = (params: CommonCellParams): number | null => {
     return null;
 };
 
+/**
+ * Determines whether the current cell belongs to the last pinned-top row.
+ */
+const isPinnedTopLastRow = (params: CommonCellParams, isPinnedTop: boolean): boolean => {
+    if (!isPinnedTop) {
+        return false;
+    }
+
+    const rowIndex = getRowIndex(params);
+    if (rowIndex === null) {
+        return false;
+    }
+
+    const pinnedTopRowCount: number | undefined = params.api?.getPinnedTopRowCount?.();
+    if (typeof pinnedTopRowCount !== "number" || pinnedTopRowCount <= 0) {
+        return false;
+    }
+
+    return rowIndex === pinnedTopRowCount - 1;
+};
+
+/**
+ * Helper function to get rowPinned from either CellClassParams or ICellRendererParams.
+ *
+ * Returns "top" | "bottom" when the row is pinned, null otherwise.
+ */
+const getRowPinned = (params: CommonCellParams): "top" | "bottom" | null => {
+    if (isCellClassParams(params)) {
+        return params.node?.rowPinned ?? null;
+    }
+    if (isCellRendererParams(params)) {
+        return params.node?.rowPinned ?? null;
+    }
+    return null;
+};
+
 export const getCellTypes = (
     params: CommonCellParams,
     drillableItems?: ExplicitDrill[],
@@ -139,6 +175,12 @@ export const getCellTypes = (
 
     const isTransposedLeftBorder = isTransposed && leftBorderWhenTransposed;
 
+    const rowPinned = getRowPinned(params);
+    const isPinnedTop = rowPinned === "top";
+    const isPinnedBottom = rowPinned === "bottom";
+
+    const isPinnedTopLast = isPinnedTopLastRow(params, isPinnedTop);
+
     return {
         isDrillable,
         isAttribute,
@@ -157,6 +199,9 @@ export const getCellTypes = (
         isMetric,
         isFirstOfGroup,
         isTransposedLeftBorder,
+        isPinnedTop,
+        isPinnedBottom,
+        isPinnedTopLast,
     };
 };
 
@@ -197,6 +242,9 @@ export const getCellClassName = (
         isFirstOfGroup,
         isTotal,
         isTransposedLeftBorder,
+        isPinnedTop,
+        isPinnedBottom,
+        isPinnedTopLast,
     } = cellTypes;
 
     return cx(
@@ -222,6 +270,9 @@ export const getCellClassName = (
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
             "transposed-left-border": isTransposedLeftBorder,
+            "pinned-top": isPinnedTop,
+            "pinned-bottom": isPinnedBottom,
+            "pinned-top-last": isPinnedTopLast,
         }),
     );
 };
@@ -262,8 +313,10 @@ export const getTransposedCellClassName = (
         isSeparated,
         isFirstOfGroup,
         isTransposedLeftBorder,
+        isPinnedTop,
+        isPinnedBottom,
+        isPinnedTopLast,
     } = cellTypes;
-
     return cx(
         e("cell", {
             null: isNull,
@@ -284,6 +337,9 @@ export const getTransposedCellClassName = (
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
             "transposed-left-border": isTransposedLeftBorder,
+            "pinned-top": isPinnedTop,
+            "pinned-bottom": isPinnedBottom,
+            "pinned-top-last": isPinnedTopLast,
         }),
     );
 };

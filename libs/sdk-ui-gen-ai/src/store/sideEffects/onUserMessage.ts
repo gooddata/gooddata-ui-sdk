@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, cancelled, getContext, put, select } from "redux-saga/effects";
+import { call, cancel, cancelled, getContext, put, select } from "redux-saga/effects";
 
 import {
     IAnalyticalBackend,
@@ -21,6 +21,7 @@ import {
     makeAssistantMessage,
 } from "../../model.js";
 import { objectTypesSelector, settingsSelector } from "../chatWindow/chatWindowSelectors.js";
+import { messagesSelector } from "../messages/messagesSelectors.js";
 import {
     evaluateMessageAction,
     evaluateMessageCompleteAction,
@@ -62,7 +63,9 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
 
         yield call(evaluateUserMessage, newAssistantMessage, chatThreadQuery);
     } catch (e) {
-        if (newAssistantMessage) {
+        const wasCanceled: boolean = yield cancelled();
+
+        if (newAssistantMessage && !wasCanceled) {
             yield put(
                 evaluateMessageErrorAction({
                     assistantMessageId: newAssistantMessage.localId,
@@ -71,7 +74,9 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
             );
         }
     } finally {
-        if (newAssistantMessage) {
+        const wasCanceled: boolean = yield cancelled();
+
+        if (newAssistantMessage && !wasCanceled) {
             yield put(
                 evaluateMessageCompleteAction({
                     assistantMessageId: newAssistantMessage.localId,
@@ -124,6 +129,13 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
             }
 
             yield call([reader, reader.releaseLock]);
+        }
+
+        //Cancel saga
+        const messages: Message[] = yield select(messagesSelector);
+        const found = messages.find((m) => m.localId === message.localId);
+        if (!found) {
+            yield cancel();
         }
     }
 }

@@ -4,6 +4,8 @@ import open from "open";
 import ora from "ora";
 
 import { ITigerClient, JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 
 import { createTigerClient } from "./tigerClient.js";
 import { tigerLoad } from "./tigerLoad.js";
@@ -23,7 +25,7 @@ import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
  */
 async function probeAccess(client: ITigerClient): Promise<boolean> {
     try {
-        await client.profile.getCurrent();
+        await ProfileApi_GetCurrent(client.axios);
 
         return true;
     } catch (err: any) {
@@ -113,7 +115,9 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
 }
 
 async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceOutList> {
-    const response = await client.entities.getAllEntitiesWorkspaces(
+    const response = await EntitiesApi_GetAllEntitiesWorkspaces(
+        client.axios,
+        "",
         {
             page: 0,
             size: 500,

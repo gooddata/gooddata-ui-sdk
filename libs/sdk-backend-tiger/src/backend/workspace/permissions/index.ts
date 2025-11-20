@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
 import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
@@ -25,7 +26,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
         const response = await this.authCall((client) =>
-            client.entities.getEntityWorkspaces({
+            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
                 id: this.workspace,
                 ...GET_OPTIMIZED_WORKSPACE_PARAMS,
             }),

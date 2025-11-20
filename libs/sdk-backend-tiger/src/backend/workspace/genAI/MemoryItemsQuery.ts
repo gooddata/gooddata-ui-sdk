@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { EntitiesApiGetAllEntitiesMemoryItemsRequest } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesMemoryItems } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IMemoryItemsFilterOptions,
@@ -78,7 +79,7 @@ export class MemoryItemsQuery implements IMemoryItemsQuery {
                 const metaIncludeObj =
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
                 const response = await this.authCall((client) =>
-                    client.entities.getAllEntitiesMemoryItems({
+                    EntitiesApi_GetAllEntitiesMemoryItems(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...this.sort,

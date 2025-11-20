@@ -1,12 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ITigerClient,
+    ITigerClientBase,
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOut,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
 
 import {
     DatasetMap,
@@ -76,10 +77,13 @@ function convertToExportableFormat(
     });
 }
 
-export async function loadDateDataSets(client: ITigerClient, workspaceId: string): Promise<DateDataSet[]> {
+export async function loadDateDataSets(
+    client: ITigerClientBase,
+    workspaceId: string,
+): Promise<DateDataSet[]> {
     const result = await MetadataUtilities.getAllPagesOfParallel(
         client,
-        client.entities.getAllEntitiesAttributes,
+        EntitiesApi_GetAllEntitiesAttributes,
         {
             workspaceId,
             include: ["labels", "datasets"],

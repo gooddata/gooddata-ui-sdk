@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
+import { ActionsApi_WorkspaceResolveSettings } from "@gooddata/api-client-tiger/actions";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 
@@ -39,7 +40,7 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
 
     public async queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult> {
         const { data } = await this.authCall((sdk) =>
-            sdk.actions.workspaceResolveSettings({
+            ActionsApi_WorkspaceResolveSettings(sdk.axios, sdk.basePath, {
                 workspaceId: this.workspace,
                 resolveSettingsRequest: { settings: ["DATE_FILTER_CONFIG"] },
             }),

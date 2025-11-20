@@ -101,6 +101,10 @@ const getAssistantMessageStrict = (
     return message;
 };
 
+const getMessageExists = (state: MessagesSliceState, assistantMessageId: string): boolean => {
+    return !!state.messages[assistantMessageId];
+};
+
 const getUserMessageBeforeStrict = (state: MessagesSliceState, assistantMessageId: string): UserMessage => {
     const messageIndex = state.messageOrder.indexOf(assistantMessageId);
     const message = state.messages[state.messageOrder[messageIndex - 1]];
@@ -193,6 +197,13 @@ const messagesSlice = createSlice({
                 interactionId?: string;
             }>,
         ) => {
+            //NOTE: During streaming a message, user can choose to close or reset a chat
+            // and without this check, we would get an unwanted error
+            const exists = getMessageExists(state, payload.assistantMessageId);
+            if (!exists) {
+                return;
+            }
+
             // Update assistant message
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;

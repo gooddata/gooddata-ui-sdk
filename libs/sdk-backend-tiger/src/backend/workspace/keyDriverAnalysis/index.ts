@@ -1,6 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { FilterDefinition, ITigerClient } from "@gooddata/api-client-tiger";
+import { FilterDefinition, ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    ExecutionAPI_ChangeAnalysis,
+    ExecutionResultAPI_ChangeAnalysisResult,
+} from "@gooddata/api-client-tiger/execution";
 import {
     type IChangeAnalysisDefinition,
     type IChangeAnalysisPeriod,
@@ -31,7 +35,9 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
                 | FilterDefinition[]
                 | undefined;
 
-            const results = await client.execution.changeAnalysis(
+            const results = await ExecutionAPI_ChangeAnalysis(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     changeAnalysisRequest: {
@@ -58,10 +64,10 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
     }
 
     private async retrieveComputeResult(
-        client: ITigerClient,
+        client: ITigerClientBase,
         resultId: string,
     ): Promise<IChangeAnalysisResults> {
-        const result = await client.executionResult.changeAnalysisResult({
+        const result = await ExecutionResultAPI_ChangeAnalysisResult(client.axios, client.basePath, {
             workspaceId: this.workspace,
             resultId,
         });

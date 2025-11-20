@@ -8,7 +8,7 @@ import {
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
     JsonApiAutomationOutAttributes,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationPatchAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -270,7 +270,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationOutAttributesAlert => {
+): JsonApiAutomationPatchAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(
@@ -332,7 +332,7 @@ const convertAlert = (
                         },
                     },
                     threshold: {
-                        ...(condition.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
+                        ...(condition.measure.operator === "CHANGE"
                             ? {
                                   value: fixNumber(condition.threshold / 100),
                               }

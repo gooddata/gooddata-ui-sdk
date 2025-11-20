@@ -5,7 +5,7 @@ import { BaseAPI, RequestArgs } from "./generated/metadata-json-api/base.js";
 import {
     Configuration,
     ConfigurationParameters,
-    EntitiesApiFactory,
+    EntitiesApi,
     EntitiesApiInterface,
 } from "./generated/metadata-json-api/index.js";
 
@@ -16,4 +16,4 @@ export type {
 export { Configuration as MetadataConfiguration, BaseAPI as MetadataBaseApi };
 
 export const tigerEntitiesObjectsClientFactory = (axios: AxiosInstance): EntitiesApiInterface =>
-    EntitiesApiFactory(undefined, "", axios);
+    new EntitiesApi(undefined, "", axios);

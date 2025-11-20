@@ -1,6 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ActionsAutomationGetNotificationsRequest } from "@gooddata/api-client-tiger";
+import {
+    type AutomationApiGetNotificationsRequest,
+    AutomationApi_GetNotifications,
+} from "@gooddata/api-client-tiger/automation";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { INotificationsQuery, INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 import { INotification } from "@gooddata/sdk-model";
@@ -44,7 +47,7 @@ export class NotificationsQuery implements INotificationsQuery {
     query(): Promise<INotificationsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                let params: ActionsAutomationGetNotificationsRequest = {
+                let params: AutomationApiGetNotificationsRequest = {
                     workspaceId: this.workspaceId,
                     page: String(offset / limit),
                     size: String(limit),
@@ -65,7 +68,9 @@ export class NotificationsQuery implements INotificationsQuery {
                     }
                 }
 
-                const response = await this.authCall((client) => client.automation.getNotifications(params));
+                const response = await this.authCall((client) =>
+                    AutomationApi_GetNotifications(client.axios, client.basePath, params),
+                );
 
                 const items = response.data.data.map(convertNotificationFromBackend);
                 const totalCount = response.data.meta.total?.all ?? 0;

@@ -6,6 +6,7 @@ import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesExportDefinitions } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     ExportDefinitionQuerySort,
@@ -106,7 +107,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                 const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesExportDefinitions({
+                    EntitiesApi_GetAllEntitiesExportDefinitions(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...filterObj,

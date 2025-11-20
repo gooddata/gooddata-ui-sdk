@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { WrappedComponentProps } from "react-intl";
 
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -100,6 +101,18 @@ export type MeasureGroupDimension = "columns" | "rows";
 export type ColumnHeadersPosition = "top" | "left";
 
 /**
+ * Position of grand totals rows in the table.
+ *
+ * - "pinnedBottom" - Grand totals are pinned at the bottom of the table (always visible)
+ * - "pinnedTop" - Grand totals are pinned at the top of the table (always visible)
+ * - "bottom" - Grand totals appear at the end of the table data (scrolls with content)
+ * - "top" - Grand totals appear at the beginning of the table data (scrolls with content)
+ *
+ * @public
+ */
+export type GrandTotalsPosition = "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+
+/**
  * @public
  */
 export interface IPivotTableConfig {
@@ -160,6 +173,19 @@ export interface IPivotTableConfig {
      * Default: false
      */
     enableExecutionCancelling?: boolean;
+
+    /**
+     * Customize position of grand totals rows in the table.
+     *
+     * @remarks
+     * - "pinnedBottom" - Grand totals are pinned at the bottom (always visible while scrolling)
+     * - "pinnedTop" - Grand totals are pinned at the top (always visible while scrolling)
+     * - "bottom" - Grand totals appear at the end of the table data (scrolls with content)
+     * - "top" - Grand totals appear at the beginning of the table data (scrolls with content)
+     *
+     * Default: "pinnedBottom"
+     */
+    grandTotalsPosition?: GrandTotalsPosition;
 }
 
 /**

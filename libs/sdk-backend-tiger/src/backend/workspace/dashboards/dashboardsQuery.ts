@@ -4,6 +4,7 @@ import {
     EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import type { IDashboardsQuery, IDashboardsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
@@ -98,7 +99,7 @@ export class DashboardsQuery implements IDashboardsQuery {
                 }
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesAnalyticalDashboards({
+                    DashboardsApi_GetAllEntitiesAnalyticalDashboards(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...this.sort,
                         filter: buildFilterQuery(filter),

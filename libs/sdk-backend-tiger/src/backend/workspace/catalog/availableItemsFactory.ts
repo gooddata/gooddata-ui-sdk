@@ -4,6 +4,7 @@ import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
@@ -35,10 +36,11 @@ import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeCon
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
+//ivec investigate
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
-    attribute: AfmValidObjectsQueryTypesEnum.ATTRIBUTES,
-    fact: AfmValidObjectsQueryTypesEnum.FACTS,
-    measure: AfmValidObjectsQueryTypesEnum.MEASURES,
+    attribute: "attributes",
+    fact: "facts",
+    measure: "measures",
     // dateDatasets are not supported by tiger in this context
 };
 
@@ -182,7 +184,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const availableItemsResponse = afmValidObjectsQueryEmpty
             ? null
             : await this.authCall((client) =>
-                  client.validObjects.computeValidObjects({
+                  ActionsApi_ComputeValidObjects(client.axios, client.basePath, {
                       workspaceId: this.workspace,
                       afmValidObjectsQuery,
                   }),

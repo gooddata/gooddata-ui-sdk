@@ -2,11 +2,14 @@
 
 import { v4 as uuid } from "uuid";
 
+import { JsonApiUserIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 import {
-    JsonApiMemoryItemInTypeEnum,
-    JsonApiMemoryItemPatchTypeEnum,
-    JsonApiUserIdentifierOutWithLinks,
-} from "@gooddata/api-client-tiger";
+    EntitiesApi_CreateEntityMemoryItems,
+    EntitiesApi_DeleteEntityMemoryItems,
+    EntitiesApi_PatchEntityMemoryItems,
+    EntitiesApi_UpdateEntityMemoryItems,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { GenAiApi_MemoryCreatedByUsers } from "@gooddata/api-client-tiger/genAI";
 import { IMemoryCreatedByUsers, IMemoryItemsQuery, IMemoryItemsService } from "@gooddata/sdk-backend-spi";
 import { IMemoryItemDefinition, IMemoryItemMetadataObject } from "@gooddata/sdk-model";
 
@@ -31,13 +34,13 @@ export class MemoryItemsService implements IMemoryItemsService {
 
     async create(item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject> {
         return this.authCall(async (client) => {
-            const response = await client.entities.createEntityMemoryItems({
+            const response = await EntitiesApi_CreateEntityMemoryItems(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 include: ["createdBy"],
                 jsonApiMemoryItemPostOptionalIdDocument: {
                     data: {
                         id: uuid(),
-                        type: JsonApiMemoryItemInTypeEnum.MEMORY_ITEM,
+                        type: "memoryItem",
                         attributes: {
                             instruction: item.instruction,
                             strategy: item.strategy,
@@ -59,13 +62,13 @@ export class MemoryItemsService implements IMemoryItemsService {
 
     async update(id: string, item: IMemoryItemDefinition): Promise<IMemoryItemMetadataObject> {
         return this.authCall(async (client) => {
-            const response = await client.entities.updateEntityMemoryItems({
+            const response = await EntitiesApi_UpdateEntityMemoryItems(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 objectId: id,
                 jsonApiMemoryItemInDocument: {
                     data: {
                         id: id,
-                        type: JsonApiMemoryItemInTypeEnum.MEMORY_ITEM,
+                        type: "memoryItem",
                         attributes: item,
                     },
                 },
@@ -79,13 +82,13 @@ export class MemoryItemsService implements IMemoryItemsService {
 
     async patch(id: string, item: Partial<IMemoryItemDefinition>): Promise<IMemoryItemMetadataObject> {
         return this.authCall(async (client) => {
-            const response = await client.entities.patchEntityMemoryItems({
+            const response = await EntitiesApi_PatchEntityMemoryItems(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 objectId: id,
                 jsonApiMemoryItemPatchDocument: {
                     data: {
                         id: id,
-                        type: JsonApiMemoryItemPatchTypeEnum.MEMORY_ITEM,
+                        type: "memoryItem",
                         attributes: item,
                     },
                 },
@@ -99,7 +102,7 @@ export class MemoryItemsService implements IMemoryItemsService {
 
     async delete(id: string): Promise<void> {
         return this.authCall(async (client) => {
-            await client.entities.deleteEntityMemoryItems({
+            await EntitiesApi_DeleteEntityMemoryItems(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 objectId: id,
             });
@@ -108,7 +111,7 @@ export class MemoryItemsService implements IMemoryItemsService {
 
     async getCreatedByUsers(): Promise<IMemoryCreatedByUsers> {
         const response = await this.authCall((client) =>
-            client.genAI.memoryCreatedByUsers({ workspaceId: this.workspaceId }),
+            GenAiApi_MemoryCreatedByUsers(client.axios, client.basePath, { workspaceId: this.workspaceId }),
         );
         return convertMemoryItemCreatedByUsers(response.data);
     }

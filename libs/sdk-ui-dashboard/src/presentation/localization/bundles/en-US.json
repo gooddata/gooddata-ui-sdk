@@ -2923,6 +2923,10 @@
         "value": "Move right",
         "comment": "Label for the action that moves the tab to the right"
     },
+    "dashboard.tabs.rename": {
+        "value": "Rename",
+        "comment": "Label for the action that toggles the tab to renaming mode"
+    },
     "dashboard.tabs.accessibility.label": {
         "value": "Dashboard tabs",
         "comment": "Accessibility label for dashboard tabs"

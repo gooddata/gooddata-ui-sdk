@@ -14,22 +14,22 @@ export function convertLabelType(
     }
 
     switch (type) {
-        case JsonApiLabelOutAttributesValueTypeEnum.HYPERLINK:
+        case "HYPERLINK":
             return "GDC.link";
 
-        case JsonApiLabelOutAttributesValueTypeEnum.IMAGE:
+        case "IMAGE":
             return "GDC.image";
 
-        case JsonApiLabelOutAttributesValueTypeEnum.GEO:
+        case "GEO":
             return "GDC.geo.pin";
 
-        case JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE:
+        case "GEO_LATITUDE":
             return "GDC.geo.pin_latitude";
 
-        case JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE:
+        case "GEO_LONGITUDE":
             return "GDC.geo.pin_longitude";
 
-        case JsonApiLabelOutAttributesValueTypeEnum.GEO_AREA:
+        case "GEO_AREA":
             return "GDC.geo.area";
 
         default:

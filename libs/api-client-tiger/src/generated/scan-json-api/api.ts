@@ -1,5 +1,3 @@
-// (C) 2025 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -29,25 +27,23 @@ export interface ColumnStatistic {
     value?: string;
 }
 
-export const ColumnStatisticTypeEnum = {
-    COUNT: "COUNT",
-    COUNT_NULL: "COUNT_NULL",
-    COUNT_UNIQUE: "COUNT_UNIQUE",
-    AVG: "AVG",
-    STDDEV: "STDDEV",
-    MIN: "MIN",
-    MAX: "MAX",
-    PERCENTILE_25: "PERCENTILE_25",
-    PERCENTILE_50: "PERCENTILE_50",
-    PERCENTILE_75: "PERCENTILE_75",
-} as const;
-
-export type ColumnStatisticTypeEnum = (typeof ColumnStatisticTypeEnum)[keyof typeof ColumnStatisticTypeEnum];
+export type ColumnStatisticTypeEnum =
+    | "COUNT"
+    | "COUNT_NULL"
+    | "COUNT_UNIQUE"
+    | "AVG"
+    | "STDDEV"
+    | "MIN"
+    | "MAX"
+    | "PERCENTILE_25"
+    | "PERCENTILE_50"
+    | "PERCENTILE_75";
 
 export interface ColumnStatisticWarning {
     action: string;
     message: string;
 }
+
 /**
  * A request to retrieve statistics for a column.
  */
@@ -59,21 +55,17 @@ export interface ColumnStatisticsRequest {
     frequency?: FrequencyProperties;
 }
 
-export const ColumnStatisticsRequestStatisticsEnum = {
-    COUNT: "COUNT",
-    COUNT_NULL: "COUNT_NULL",
-    COUNT_UNIQUE: "COUNT_UNIQUE",
-    AVG: "AVG",
-    STDDEV: "STDDEV",
-    MIN: "MIN",
-    MAX: "MAX",
-    PERCENTILE_25: "PERCENTILE_25",
-    PERCENTILE_50: "PERCENTILE_50",
-    PERCENTILE_75: "PERCENTILE_75",
-} as const;
-
 export type ColumnStatisticsRequestStatisticsEnum =
-    (typeof ColumnStatisticsRequestStatisticsEnum)[keyof typeof ColumnStatisticsRequestStatisticsEnum];
+    | "COUNT"
+    | "COUNT_NULL"
+    | "COUNT_UNIQUE"
+    | "AVG"
+    | "STDDEV"
+    | "MIN"
+    | "MAX"
+    | "PERCENTILE_25"
+    | "PERCENTILE_50"
+    | "PERCENTILE_75";
 
 /**
  * @type ColumnStatisticsRequestFrom
@@ -86,6 +78,7 @@ export interface ColumnStatisticsResponse {
     frequency?: Frequency;
     warnings?: Array<ColumnStatisticWarning>;
 }
+
 /**
  * Warning related to single column.
  */
@@ -99,6 +92,7 @@ export interface ColumnWarning {
      */
     message: string;
 }
+
 /**
  * A parameter for testing data source connection
  */
@@ -112,12 +106,14 @@ export interface DataSourceParameter {
      */
     value: string;
 }
+
 /**
  * Result of getSchemata. Contains list of available DB schema names.
  */
 export interface DataSourceSchemata {
     schemaNames: Array<string>;
 }
+
 /**
  * A table column.
  */
@@ -148,18 +144,14 @@ export interface DeclarativeColumn {
     description?: string;
 }
 
-export const DeclarativeColumnDataTypeEnum = {
-    INT: "INT",
-    STRING: "STRING",
-    DATE: "DATE",
-    NUMERIC: "NUMERIC",
-    TIMESTAMP: "TIMESTAMP",
-    TIMESTAMP_TZ: "TIMESTAMP_TZ",
-    BOOLEAN: "BOOLEAN",
-} as const;
-
 export type DeclarativeColumnDataTypeEnum =
-    (typeof DeclarativeColumnDataTypeEnum)[keyof typeof DeclarativeColumnDataTypeEnum];
+    | "INT"
+    | "STRING"
+    | "DATE"
+    | "NUMERIC"
+    | "TIMESTAMP"
+    | "TIMESTAMP_TZ"
+    | "BOOLEAN";
 
 /**
  * A database table.
@@ -186,6 +178,7 @@ export interface DeclarativeTable {
      */
     columns: Array<DeclarativeColumn>;
 }
+
 /**
  * A physical data model (PDM) tables.
  */
@@ -195,30 +188,37 @@ export interface DeclarativeTables {
      */
     tables: Array<DeclarativeTable>;
 }
+
 export interface Frequency {
     buckets: Array<FrequencyBucket>;
 }
+
 export interface FrequencyBucket {
     count: number;
     value?: string;
 }
+
 export interface FrequencyProperties {
     /**
      * The maximum number of distinct values to return.
      */
     valueLimit?: number;
 }
+
 export interface Histogram {
     buckets: Array<HistogramBucket>;
 }
+
 export interface HistogramBucket {
     count: number;
     lowerBound: number;
     upperBound: number;
 }
+
 export interface HistogramProperties {
     bucketCount: number;
 }
+
 /**
  * A request containing all information critical to model scanning.
  */
@@ -248,6 +248,7 @@ export interface ScanRequest {
      */
     viewPrefix?: string;
 }
+
 /**
  * Result of scan of data source physical model.
  */
@@ -255,6 +256,7 @@ export interface ScanResultPdm {
     pdm: DeclarativeTables;
     warnings: Array<TableWarning>;
 }
+
 /**
  * A request with SQL query to by analyzed.
  */
@@ -264,6 +266,7 @@ export interface ScanSqlRequest {
      */
     sql: string;
 }
+
 /**
  * Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally
  */
@@ -277,6 +280,7 @@ export interface ScanSqlResponse {
      */
     dataPreview?: Array<Array<string | null>>;
 }
+
 /**
  * A SQL query result column.
  */
@@ -295,24 +299,23 @@ export interface SqlColumn {
     description?: string;
 }
 
-export const SqlColumnDataTypeEnum = {
-    INT: "INT",
-    STRING: "STRING",
-    DATE: "DATE",
-    NUMERIC: "NUMERIC",
-    TIMESTAMP: "TIMESTAMP",
-    TIMESTAMP_TZ: "TIMESTAMP_TZ",
-    BOOLEAN: "BOOLEAN",
-} as const;
-
-export type SqlColumnDataTypeEnum = (typeof SqlColumnDataTypeEnum)[keyof typeof SqlColumnDataTypeEnum];
+export type SqlColumnDataTypeEnum =
+    | "INT"
+    | "STRING"
+    | "DATE"
+    | "NUMERIC"
+    | "TIMESTAMP"
+    | "TIMESTAMP_TZ"
+    | "BOOLEAN";
 
 export interface SqlQuery {
     sql: string;
 }
+
 export interface Table {
     tableName: string;
 }
+
 /**
  * Warnings related to single table.
  */
@@ -327,6 +330,7 @@ export interface TableWarning {
     message?: string;
     columns: Array<ColumnWarning>;
 }
+
 /**
  * A request containing all information for testing data source definition.
  */
@@ -374,37 +378,33 @@ export interface TestDefinitionRequest {
     parameters?: Array<DataSourceParameter>;
 }
 
-export const TestDefinitionRequestTypeEnum = {
-    POSTGRESQL: "POSTGRESQL",
-    REDSHIFT: "REDSHIFT",
-    VERTICA: "VERTICA",
-    SNOWFLAKE: "SNOWFLAKE",
-    ADS: "ADS",
-    BIGQUERY: "BIGQUERY",
-    MSSQL: "MSSQL",
-    PRESTO: "PRESTO",
-    DREMIO: "DREMIO",
-    DRILL: "DRILL",
-    GREENPLUM: "GREENPLUM",
-    AZURESQL: "AZURESQL",
-    SYNAPSESQL: "SYNAPSESQL",
-    DATABRICKS: "DATABRICKS",
-    GDSTORAGE: "GDSTORAGE",
-    CLICKHOUSE: "CLICKHOUSE",
-    MYSQL: "MYSQL",
-    MARIADB: "MARIADB",
-    ORACLE: "ORACLE",
-    PINOT: "PINOT",
-    SINGLESTORE: "SINGLESTORE",
-    MOTHERDUCK: "MOTHERDUCK",
-    FLEXCONNECT: "FLEXCONNECT",
-    STARROCKS: "STARROCKS",
-    ATHENA: "ATHENA",
-    MONGODB: "MONGODB",
-} as const;
-
 export type TestDefinitionRequestTypeEnum =
-    (typeof TestDefinitionRequestTypeEnum)[keyof typeof TestDefinitionRequestTypeEnum];
+    | "POSTGRESQL"
+    | "REDSHIFT"
+    | "VERTICA"
+    | "SNOWFLAKE"
+    | "ADS"
+    | "BIGQUERY"
+    | "MSSQL"
+    | "PRESTO"
+    | "DREMIO"
+    | "DRILL"
+    | "GREENPLUM"
+    | "AZURESQL"
+    | "SYNAPSESQL"
+    | "DATABRICKS"
+    | "GDSTORAGE"
+    | "CLICKHOUSE"
+    | "MYSQL"
+    | "MARIADB"
+    | "ORACLE"
+    | "PINOT"
+    | "SINGLESTORE"
+    | "MOTHERDUCK"
+    | "FLEXCONNECT"
+    | "STARROCKS"
+    | "ATHENA"
+    | "MONGODB";
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.
@@ -419,6 +419,7 @@ export interface TestQueryDuration {
      */
     createCacheTable?: number;
 }
+
 /**
  * A request containing all information for testing existing data source.
  */
@@ -461,6 +462,7 @@ export interface TestRequest {
     clientSecret?: string;
     parameters?: Array<DataSourceParameter>;
 }
+
 /**
  * Response from data source testing.
  */
@@ -476,539 +478,482 @@ export interface TestResponse {
     queryDurationMillis?: TestQueryDuration;
 }
 
+// ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * ActionsApi - axios parameter creator
- * @export
+ * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+ * @summary (EXPERIMENTAL) Compute column statistics
+ * @param {string} dataSourceId
+ * @param {ColumnStatisticsRequest} columnStatisticsRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {string} dataSourceId
-         * @param {ColumnStatisticsRequest} columnStatisticsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        columnStatistics: async (
-            dataSourceId: string,
-            columnStatisticsRequest: ColumnStatisticsRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("columnStatistics", "dataSourceId", dataSourceId);
-            // verify required parameter 'columnStatisticsRequest' is not null or undefined
-            assertParamExists("columnStatistics", "columnStatisticsRequest", columnStatisticsRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof columnStatisticsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(columnStatisticsRequest !== undefined ? columnStatisticsRequest : {})
-                : columnStatisticsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {string} dataSourceId Data source id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataSourceSchemata: async (
-            dataSourceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("getDataSourceSchemata", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSchemata`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {string} dataSourceId Data source id
-         * @param {ScanRequest} scanRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanDataSource: async (
-            dataSourceId: string,
-            scanRequest: ScanRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("scanDataSource", "dataSourceId", dataSourceId);
-            // verify required parameter 'scanRequest' is not null or undefined
-            assertParamExists("scanDataSource", "scanRequest", scanRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scan`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof scanRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(scanRequest !== undefined ? scanRequest : {})
-                : scanRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {string} dataSourceId Data source id
-         * @param {ScanSqlRequest} scanSqlRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanSql: async (
-            dataSourceId: string,
-            scanSqlRequest: ScanSqlRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("scanSql", "dataSourceId", dataSourceId);
-            // verify required parameter 'scanSqlRequest' is not null or undefined
-            assertParamExists("scanSql", "scanSqlRequest", scanSqlRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSql`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof scanSqlRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(scanSqlRequest !== undefined ? scanSqlRequest : {})
-                : scanSqlRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {string} dataSourceId Data source id
-         * @param {TestRequest} testRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSource: async (
-            dataSourceId: string,
-            testRequest: TestRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("testDataSource", "dataSourceId", dataSourceId);
-            // verify required parameter 'testRequest' is not null or undefined
-            assertParamExists("testDataSource", "testRequest", testRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/test`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof testRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testRequest !== undefined ? testRequest : {})
-                : testRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {TestDefinitionRequest} testDefinitionRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSourceDefinition: async (
-            testDefinitionRequest: TestDefinitionRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'testDefinitionRequest' is not null or undefined
-            assertParamExists("testDataSourceDefinition", "testDefinitionRequest", testDefinitionRequest);
-            const localVarPath = `/api/v1/actions/dataSource/test`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof testDefinitionRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDefinitionRequest !== undefined ? testDefinitionRequest : {})
-                : testDefinitionRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ActionsApi - functional programming interface
- * @export
- */
-export const ActionsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {string} dataSourceId
-         * @param {ColumnStatisticsRequest} columnStatisticsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async columnStatistics(
-            dataSourceId: string,
-            columnStatisticsRequest: ColumnStatisticsRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColumnStatisticsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.columnStatistics(
-                dataSourceId,
-                columnStatisticsRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {string} dataSourceId Data source id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDataSourceSchemata(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceSchemata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataSourceSchemata(
-                dataSourceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {string} dataSourceId Data source id
-         * @param {ScanRequest} scanRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async scanDataSource(
-            dataSourceId: string,
-            scanRequest: ScanRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanResultPdm>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.scanDataSource(
-                dataSourceId,
-                scanRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {string} dataSourceId Data source id
-         * @param {ScanSqlRequest} scanSqlRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async scanSql(
-            dataSourceId: string,
-            scanSqlRequest: ScanSqlRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanSqlResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.scanSql(
-                dataSourceId,
-                scanSqlRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {string} dataSourceId Data source id
-         * @param {TestRequest} testRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testDataSource(
-            dataSourceId: string,
-            testRequest: TestRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.testDataSource(
-                dataSourceId,
-                testRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {TestDefinitionRequest} testDefinitionRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testDataSourceDefinition(
-            testDefinitionRequest: TestDefinitionRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.testDataSourceDefinition(
-                testDefinitionRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ActionsApi - factory interface
- * @export
- */
-export const ActionsApiFactory = function (
+export async function ActionsApiAxiosParamCreator_ColumnStatistics(
+    dataSourceId: string,
+    columnStatisticsRequest: ColumnStatisticsRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ActionsApiFp(configuration);
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {ActionsApiColumnStatisticsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        columnStatistics(
-            requestParameters: ActionsApiColumnStatisticsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ColumnStatisticsResponse> {
-            return localVarFp
-                .columnStatistics(
-                    requestParameters.dataSourceId,
-                    requestParameters.columnStatisticsRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {ActionsApiGetDataSourceSchemataRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataSourceSchemata(
-            requestParameters: ActionsApiGetDataSourceSchemataRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<DataSourceSchemata> {
-            return localVarFp
-                .getDataSourceSchemata(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {ActionsApiScanDataSourceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanDataSource(
-            requestParameters: ActionsApiScanDataSourceRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ScanResultPdm> {
-            return localVarFp
-                .scanDataSource(requestParameters.dataSourceId, requestParameters.scanRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {ActionsApiScanSqlRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanSql(
-            requestParameters: ActionsApiScanSqlRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ScanSqlResponse> {
-            return localVarFp
-                .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {ActionsApiTestDataSourceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSource(
-            requestParameters: ActionsApiTestDataSourceRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
-            return localVarFp
-                .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {ActionsApiTestDataSourceDefinitionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSourceDefinition(
-            requestParameters: ActionsApiTestDataSourceDefinitionRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
-            return localVarFp
-                .testDataSourceDefinition(requestParameters.testDefinitionRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("columnStatistics", "dataSourceId", dataSourceId);
+    // verify required parameter 'columnStatisticsRequest' is not null or undefined
+    assertParamExists("columnStatistics", "columnStatisticsRequest", columnStatisticsRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof columnStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(columnStatisticsRequest !== undefined ? columnStatisticsRequest : {})
+        : columnStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
+ * @summary Get a list of schema names of a database
+ * @param {string} dataSourceId Data source id
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetDataSourceSchemata(
+    dataSourceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("getDataSourceSchemata", "dataSourceId", dataSourceId);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSchemata`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
+ * @summary Scan a database to get a physical data model (PDM)
+ * @param {string} dataSourceId Data source id
+ * @param {ScanRequest} scanRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ScanDataSource(
+    dataSourceId: string,
+    scanRequest: ScanRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("scanDataSource", "dataSourceId", dataSourceId);
+    // verify required parameter 'scanRequest' is not null or undefined
+    assertParamExists("scanDataSource", "scanRequest", scanRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scan`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof scanRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(scanRequest !== undefined ? scanRequest : {})
+        : scanRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+ * @summary Collect metadata about SQL query
+ * @param {string} dataSourceId Data source id
+ * @param {ScanSqlRequest} scanSqlRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ScanSql(
+    dataSourceId: string,
+    scanSqlRequest: ScanSqlRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("scanSql", "dataSourceId", dataSourceId);
+    // verify required parameter 'scanSqlRequest' is not null or undefined
+    assertParamExists("scanSql", "scanSqlRequest", scanSqlRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSql`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof scanSqlRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(scanSqlRequest !== undefined ? scanSqlRequest : {})
+        : scanSqlRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Test if it is possible to connect to a database using an existing data source definition.
+ * @summary Test data source connection by data source id
+ * @param {string} dataSourceId Data source id
+ * @param {TestRequest} testRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_TestDataSource(
+    dataSourceId: string,
+    testRequest: TestRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("testDataSource", "dataSourceId", dataSourceId);
+    // verify required parameter 'testRequest' is not null or undefined
+    assertParamExists("testDataSource", "testRequest", testRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/test`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof testRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testRequest !== undefined ? testRequest : {})
+        : testRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
+ * @summary Test connection by data source definition
+ * @param {TestDefinitionRequest} testDefinitionRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_TestDataSourceDefinition(
+    testDefinitionRequest: TestDefinitionRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'testDefinitionRequest' is not null or undefined
+    assertParamExists("testDataSourceDefinition", "testDefinitionRequest", testDefinitionRequest);
+    const localVarPath = `/api/v1/actions/dataSource/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof testDefinitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testDefinitionRequest !== undefined ? testDefinitionRequest : {})
+        : testDefinitionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+ * @summary (EXPERIMENTAL) Compute column statistics
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiColumnStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ColumnStatistics(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiColumnStatisticsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ColumnStatisticsResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ColumnStatistics(
+        requestParameters.dataSourceId,
+        requestParameters.columnStatisticsRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
+ * @summary Get a list of schema names of a database
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetDataSourceSchemataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetDataSourceSchemata(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiGetDataSourceSchemataRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DataSourceSchemata> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetDataSourceSchemata(
+        requestParameters.dataSourceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
+ * @summary Scan a database to get a physical data model (PDM)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiScanDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ScanDataSource(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiScanDataSourceRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ScanResultPdm> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ScanDataSource(
+        requestParameters.dataSourceId,
+        requestParameters.scanRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+ * @summary Collect metadata about SQL query
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiScanSqlRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ScanSql(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiScanSqlRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ScanSqlResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ScanSql(
+        requestParameters.dataSourceId,
+        requestParameters.scanSqlRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Test if it is possible to connect to a database using an existing data source definition.
+ * @summary Test data source connection by data source id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTestDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_TestDataSource(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiTestDataSourceRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TestDataSource(
+        requestParameters.dataSourceId,
+        requestParameters.testRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
+ * @summary Test connection by data source definition
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTestDataSourceDefinitionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_TestDataSourceDefinition(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiTestDataSourceDefinitionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TestDataSourceDefinition(
+        requestParameters.testDefinitionRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ActionsApi - interface
@@ -1226,13 +1171,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiColumnStatisticsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .columnStatistics(
-                requestParameters.dataSourceId,
-                requestParameters.columnStatisticsRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ColumnStatistics(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1247,9 +1192,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiGetDataSourceSchemataRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .getDataSourceSchemata(requestParameters.dataSourceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_GetDataSourceSchemata(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1261,9 +1210,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public scanDataSource(requestParameters: ActionsApiScanDataSourceRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .scanDataSource(requestParameters.dataSourceId, requestParameters.scanRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ScanDataSource(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1275,9 +1228,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ScanSql(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -1289,9 +1240,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public testDataSource(requestParameters: ActionsApiTestDataSourceRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_TestDataSource(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1306,135 +1261,98 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiTestDataSourceDefinitionRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .testDataSourceDefinition(requestParameters.testDefinitionRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_TestDataSourceDefinition(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// ComputationApi FP - ComputationApiAxiosParamCreator
 /**
- * ComputationApi - axios parameter creator
- * @export
+ * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+ * @summary (EXPERIMENTAL) Compute column statistics
+ * @param {string} dataSourceId
+ * @param {ColumnStatisticsRequest} columnStatisticsRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {string} dataSourceId
-         * @param {ColumnStatisticsRequest} columnStatisticsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        columnStatistics: async (
-            dataSourceId: string,
-            columnStatisticsRequest: ColumnStatisticsRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("columnStatistics", "dataSourceId", dataSourceId);
-            // verify required parameter 'columnStatisticsRequest' is not null or undefined
-            assertParamExists("columnStatistics", "columnStatisticsRequest", columnStatisticsRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof columnStatisticsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(columnStatisticsRequest !== undefined ? columnStatisticsRequest : {})
-                : columnStatisticsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ComputationApi - functional programming interface
- * @export
- */
-export const ComputationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {string} dataSourceId
-         * @param {ColumnStatisticsRequest} columnStatisticsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async columnStatistics(
-            dataSourceId: string,
-            columnStatisticsRequest: ColumnStatisticsRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColumnStatisticsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.columnStatistics(
-                dataSourceId,
-                columnStatisticsRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ComputationApi - factory interface
- * @export
- */
-export const ComputationApiFactory = function (
+export async function ComputationApiAxiosParamCreator_ColumnStatistics(
+    dataSourceId: string,
+    columnStatisticsRequest: ColumnStatisticsRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ComputationApiFp(configuration);
-    return {
-        /**
-         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
-         * @summary (EXPERIMENTAL) Compute column statistics
-         * @param {ComputationApiColumnStatisticsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        columnStatistics(
-            requestParameters: ComputationApiColumnStatisticsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ColumnStatisticsResponse> {
-            return localVarFp
-                .columnStatistics(
-                    requestParameters.dataSourceId,
-                    requestParameters.columnStatisticsRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("columnStatistics", "dataSourceId", dataSourceId);
+    // verify required parameter 'columnStatisticsRequest' is not null or undefined
+    assertParamExists("columnStatistics", "columnStatisticsRequest", columnStatisticsRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof columnStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(columnStatisticsRequest !== undefined ? columnStatisticsRequest : {})
+        : columnStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi Api FP
+/**
+ * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+ * @summary (EXPERIMENTAL) Compute column statistics
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiColumnStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ColumnStatistics(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiColumnStatisticsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ColumnStatisticsResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ColumnStatistics(
+        requestParameters.dataSourceId,
+        requestParameters.columnStatisticsRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ComputationApi - interface
@@ -1496,294 +1414,251 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiColumnStatisticsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .columnStatistics(
-                requestParameters.dataSourceId,
-                requestParameters.columnStatisticsRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ColumnStatistics(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// ScanningApi FP - ScanningApiAxiosParamCreator
 /**
- * ScanningApi - axios parameter creator
- * @export
+ * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
+ * @summary Get a list of schema names of a database
+ * @param {string} dataSourceId Data source id
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ScanningApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {string} dataSourceId Data source id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataSourceSchemata: async (
-            dataSourceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("getDataSourceSchemata", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSchemata`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {string} dataSourceId Data source id
-         * @param {ScanRequest} scanRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanDataSource: async (
-            dataSourceId: string,
-            scanRequest: ScanRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("scanDataSource", "dataSourceId", dataSourceId);
-            // verify required parameter 'scanRequest' is not null or undefined
-            assertParamExists("scanDataSource", "scanRequest", scanRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scan`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof scanRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(scanRequest !== undefined ? scanRequest : {})
-                : scanRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {string} dataSourceId Data source id
-         * @param {ScanSqlRequest} scanSqlRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanSql: async (
-            dataSourceId: string,
-            scanSqlRequest: ScanSqlRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("scanSql", "dataSourceId", dataSourceId);
-            // verify required parameter 'scanSqlRequest' is not null or undefined
-            assertParamExists("scanSql", "scanSqlRequest", scanSqlRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSql`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof scanSqlRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(scanSqlRequest !== undefined ? scanSqlRequest : {})
-                : scanSqlRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ScanningApi - functional programming interface
- * @export
- */
-export const ScanningApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ScanningApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {string} dataSourceId Data source id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDataSourceSchemata(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceSchemata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataSourceSchemata(
-                dataSourceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {string} dataSourceId Data source id
-         * @param {ScanRequest} scanRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async scanDataSource(
-            dataSourceId: string,
-            scanRequest: ScanRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanResultPdm>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.scanDataSource(
-                dataSourceId,
-                scanRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {string} dataSourceId Data source id
-         * @param {ScanSqlRequest} scanSqlRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async scanSql(
-            dataSourceId: string,
-            scanSqlRequest: ScanSqlRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanSqlResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.scanSql(
-                dataSourceId,
-                scanSqlRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ScanningApi - factory interface
- * @export
- */
-export const ScanningApiFactory = function (
+export async function ScanningApiAxiosParamCreator_GetDataSourceSchemata(
+    dataSourceId: string,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ScanningApiFp(configuration);
-    return {
-        /**
-         * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
-         * @summary Get a list of schema names of a database
-         * @param {ScanningApiGetDataSourceSchemataRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDataSourceSchemata(
-            requestParameters: ScanningApiGetDataSourceSchemataRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<DataSourceSchemata> {
-            return localVarFp
-                .getDataSourceSchemata(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
-         * @summary Scan a database to get a physical data model (PDM)
-         * @param {ScanningApiScanDataSourceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanDataSource(
-            requestParameters: ScanningApiScanDataSourceRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ScanResultPdm> {
-            return localVarFp
-                .scanDataSource(requestParameters.dataSourceId, requestParameters.scanRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
-         * @summary Collect metadata about SQL query
-         * @param {ScanningApiScanSqlRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        scanSql(
-            requestParameters: ScanningApiScanSqlRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ScanSqlResponse> {
-            return localVarFp
-                .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("getDataSourceSchemata", "dataSourceId", dataSourceId);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSchemata`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ScanningApi FP - ScanningApiAxiosParamCreator
+/**
+ * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
+ * @summary Scan a database to get a physical data model (PDM)
+ * @param {string} dataSourceId Data source id
+ * @param {ScanRequest} scanRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ScanningApiAxiosParamCreator_ScanDataSource(
+    dataSourceId: string,
+    scanRequest: ScanRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("scanDataSource", "dataSourceId", dataSourceId);
+    // verify required parameter 'scanRequest' is not null or undefined
+    assertParamExists("scanDataSource", "scanRequest", scanRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scan`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof scanRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(scanRequest !== undefined ? scanRequest : {})
+        : scanRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ScanningApi FP - ScanningApiAxiosParamCreator
+/**
+ * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+ * @summary Collect metadata about SQL query
+ * @param {string} dataSourceId Data source id
+ * @param {ScanSqlRequest} scanSqlRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ScanningApiAxiosParamCreator_ScanSql(
+    dataSourceId: string,
+    scanSqlRequest: ScanSqlRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("scanSql", "dataSourceId", dataSourceId);
+    // verify required parameter 'scanSqlRequest' is not null or undefined
+    assertParamExists("scanSql", "scanSqlRequest", scanSqlRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSql`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof scanSqlRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(scanSqlRequest !== undefined ? scanSqlRequest : {})
+        : scanSqlRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ScanningApi Api FP
+/**
+ * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
+ * @summary Get a list of schema names of a database
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ScanningApiGetDataSourceSchemataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ScanningApi_GetDataSourceSchemata(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ScanningApiGetDataSourceSchemataRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DataSourceSchemata> {
+    const localVarAxiosArgs = await ScanningApiAxiosParamCreator_GetDataSourceSchemata(
+        requestParameters.dataSourceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ScanningApi Api FP
+/**
+ * It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.
+ * @summary Scan a database to get a physical data model (PDM)
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ScanningApiScanDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ScanningApi_ScanDataSource(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ScanningApiScanDataSourceRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ScanResultPdm> {
+    const localVarAxiosArgs = await ScanningApiAxiosParamCreator_ScanDataSource(
+        requestParameters.dataSourceId,
+        requestParameters.scanRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ScanningApi Api FP
+/**
+ * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+ * @summary Collect metadata about SQL query
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ScanningApiScanSqlRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ScanningApi_ScanSql(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ScanningApiScanSqlRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ScanSqlResponse> {
+    const localVarAxiosArgs = await ScanningApiAxiosParamCreator_ScanSql(
+        requestParameters.dataSourceId,
+        requestParameters.scanSqlRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ScanningApi - interface
@@ -1906,9 +1781,13 @@ export class ScanningApi extends BaseAPI implements ScanningApiInterface {
         requestParameters: ScanningApiGetDataSourceSchemataRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ScanningApiFp(this.configuration)
-            .getDataSourceSchemata(requestParameters.dataSourceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ScanningApi_GetDataSourceSchemata(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1920,9 +1799,13 @@ export class ScanningApi extends BaseAPI implements ScanningApiInterface {
      * @memberof ScanningApi
      */
     public scanDataSource(requestParameters: ScanningApiScanDataSourceRequest, options?: AxiosRequestConfig) {
-        return ScanningApiFp(this.configuration)
-            .scanDataSource(requestParameters.dataSourceId, requestParameters.scanRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ScanningApi_ScanDataSource(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1934,208 +1817,167 @@ export class ScanningApi extends BaseAPI implements ScanningApiInterface {
      * @memberof ScanningApi
      */
     public scanSql(requestParameters: ScanningApiScanSqlRequest, options?: AxiosRequestConfig) {
-        return ScanningApiFp(this.configuration)
-            .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ScanningApi_ScanSql(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
+// TestConnectionApi FP - TestConnectionApiAxiosParamCreator
 /**
- * TestConnectionApi - axios parameter creator
- * @export
+ * Test if it is possible to connect to a database using an existing data source definition.
+ * @summary Test data source connection by data source id
+ * @param {string} dataSourceId Data source id
+ * @param {TestRequest} testRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const TestConnectionApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {string} dataSourceId Data source id
-         * @param {TestRequest} testRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSource: async (
-            dataSourceId: string,
-            testRequest: TestRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("testDataSource", "dataSourceId", dataSourceId);
-            // verify required parameter 'testRequest' is not null or undefined
-            assertParamExists("testDataSource", "testRequest", testRequest);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/test`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof testRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testRequest !== undefined ? testRequest : {})
-                : testRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {TestDefinitionRequest} testDefinitionRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSourceDefinition: async (
-            testDefinitionRequest: TestDefinitionRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'testDefinitionRequest' is not null or undefined
-            assertParamExists("testDataSourceDefinition", "testDefinitionRequest", testDefinitionRequest);
-            const localVarPath = `/api/v1/actions/dataSource/test`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof testDefinitionRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDefinitionRequest !== undefined ? testDefinitionRequest : {})
-                : testDefinitionRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * TestConnectionApi - functional programming interface
- * @export
- */
-export const TestConnectionApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = TestConnectionApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {string} dataSourceId Data source id
-         * @param {TestRequest} testRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testDataSource(
-            dataSourceId: string,
-            testRequest: TestRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.testDataSource(
-                dataSourceId,
-                testRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {TestDefinitionRequest} testDefinitionRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testDataSourceDefinition(
-            testDefinitionRequest: TestDefinitionRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.testDataSourceDefinition(
-                testDefinitionRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * TestConnectionApi - factory interface
- * @export
- */
-export const TestConnectionApiFactory = function (
+export async function TestConnectionApiAxiosParamCreator_TestDataSource(
+    dataSourceId: string,
+    testRequest: TestRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = TestConnectionApiFp(configuration);
-    return {
-        /**
-         * Test if it is possible to connect to a database using an existing data source definition.
-         * @summary Test data source connection by data source id
-         * @param {TestConnectionApiTestDataSourceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSource(
-            requestParameters: TestConnectionApiTestDataSourceRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
-            return localVarFp
-                .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
-         * @summary Test connection by data source definition
-         * @param {TestConnectionApiTestDataSourceDefinitionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testDataSourceDefinition(
-            requestParameters: TestConnectionApiTestDataSourceDefinitionRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
-            return localVarFp
-                .testDataSourceDefinition(requestParameters.testDefinitionRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("testDataSource", "dataSourceId", dataSourceId);
+    // verify required parameter 'testRequest' is not null or undefined
+    assertParamExists("testDataSource", "testRequest", testRequest);
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/test`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof testRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testRequest !== undefined ? testRequest : {})
+        : testRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// TestConnectionApi FP - TestConnectionApiAxiosParamCreator
+/**
+ * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
+ * @summary Test connection by data source definition
+ * @param {TestDefinitionRequest} testDefinitionRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function TestConnectionApiAxiosParamCreator_TestDataSourceDefinition(
+    testDefinitionRequest: TestDefinitionRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'testDefinitionRequest' is not null or undefined
+    assertParamExists("testDataSourceDefinition", "testDefinitionRequest", testDefinitionRequest);
+    const localVarPath = `/api/v1/actions/dataSource/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof testDefinitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testDefinitionRequest !== undefined ? testDefinitionRequest : {})
+        : testDefinitionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// TestConnectionApi Api FP
+/**
+ * Test if it is possible to connect to a database using an existing data source definition.
+ * @summary Test data source connection by data source id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {TestConnectionApiTestDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function TestConnectionApi_TestDataSource(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: TestConnectionApiTestDataSourceRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestResponse> {
+    const localVarAxiosArgs = await TestConnectionApiAxiosParamCreator_TestDataSource(
+        requestParameters.dataSourceId,
+        requestParameters.testRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// TestConnectionApi Api FP
+/**
+ * Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.
+ * @summary Test connection by data source definition
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {TestConnectionApiTestDataSourceDefinitionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function TestConnectionApi_TestDataSourceDefinition(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: TestConnectionApiTestDataSourceDefinitionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestResponse> {
+    const localVarAxiosArgs = await TestConnectionApiAxiosParamCreator_TestDataSourceDefinition(
+        requestParameters.testDefinitionRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * TestConnectionApi - interface
@@ -2224,9 +2066,13 @@ export class TestConnectionApi extends BaseAPI implements TestConnectionApiInter
         requestParameters: TestConnectionApiTestDataSourceRequest,
         options?: AxiosRequestConfig,
     ) {
-        return TestConnectionApiFp(this.configuration)
-            .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return TestConnectionApi_TestDataSource(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -2241,8 +2087,12 @@ export class TestConnectionApi extends BaseAPI implements TestConnectionApiInter
         requestParameters: TestConnectionApiTestDataSourceDefinitionRequest,
         options?: AxiosRequestConfig,
     ) {
-        return TestConnectionApiFp(this.configuration)
-            .testDataSourceDefinition(requestParameters.testDefinitionRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return TestConnectionApi_TestDataSourceDefinition(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }

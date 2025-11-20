@@ -8,6 +8,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../../model.js";
 import { setMessagesAction } from "../../store/index.js";
+import { escapeMarkdown } from "../utils/markdownUtils.js";
 
 interface LandingQuestionActionsProps {
     setMessagesAction: typeof setMessagesAction;
@@ -38,8 +39,8 @@ function LandingQuestionComponent({
             onClick={() =>
                 setMessagesAction({
                     messages: [
-                        makeUserMessage([makeTextContents(question, [])]),
-                        makeAssistantMessage([makeTextContents(answer, [])], true),
+                        makeUserMessage([makeTextContents(escapeMarkdown(question), [])]),
+                        makeAssistantMessage([makeTextContents(escapeMarkdown(answer), [])], true),
                     ],
                 })
             }

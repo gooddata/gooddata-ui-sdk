@@ -58,25 +58,25 @@ export default {
     title: "13 Web Components/Insight",
 };
 export function Base() {
-    return <InsightContainer insight={insightIds[0]} />;
+    return <InsightContainer insight={insightIds[15]} />;
 }
 
 Base.parameters = { kind: "Base", screenshot: true };
 
 export function WithLocalization() {
-    return <InsightContainer insight={insightIds[0]} locale="fr-FR" />;
+    return <InsightContainer insight={insightIds[15]} locale="fr-FR" />;
 }
 WithLocalization.parameters = { kind: "With localization", screenshot: true };
 
 export function WithCustomTitle() {
-    return <InsightContainer insight={insightIds[0]} title="Custom title" />;
+    return <InsightContainer insight={insightIds[15]} title="Custom title" />;
 }
 WithCustomTitle.parameters = { kind: "With custom title", screenshot: true };
 
 // JSX+React has issues with setting boolean props on custom element, so we can't use
 //  <InsightContainer title /> without specifying an empty string value or boolean
 export function WithDefaultTitle() {
-    return <InsightContainer insight={insightIds[0]} title="" />;
+    return <InsightContainer insight={insightIds[15]} title="" />;
 }
 WithDefaultTitle.parameters = { kind: "With default title", screenshot: true };
 
@@ -89,4 +89,10 @@ export function AllInsightTypes() {
         </>
     );
 }
-AllInsightTypes.parameters = { kind: "All insight types", screenshot: { postInteractionWait: 1000 } };
+AllInsightTypes.parameters = {
+    kind: "All insight types",
+    screenshot: {
+        // Wait for AGgrid watermark to disappear
+        postInteractionWait: 6500,
+    },
+};

@@ -56,6 +56,8 @@ export function ShareGranteeBase({
         return compact([owner, ...grantees]);
     }, [grantees, owner]);
 
+    const isUsingTabs = window.location.hash.includes("/tab/");
+
     const dialogLabels = useMemo(() => {
         const shareDashboardTitle = intl.formatMessage({ id: "shareDialog.share.dashboard.title" });
         const shareGranteeTitle = intl.formatMessage({ id: "shareDialog.share.grantee.title" });
@@ -68,11 +70,13 @@ export function ShareGranteeBase({
             shareGrantHeadline: showDashboardShareLink ? shareDashboardListTitle : shareGranteeListTitle,
             cancelButtonText: applyShareGrantOnSelect ? closeButtonText : cancelButtonText,
             linkHeadline: intl.formatMessage({ id: "shareDialog.share.link.title" }),
-            linkHelperText: intl.formatMessage({ id: "shareDialog.share.link.helperText" }),
+            linkHelperText: isUsingTabs
+                ? intl.formatMessage({ id: "shareDialog.share.link.helperTextWithTabs" })
+                : intl.formatMessage({ id: "shareDialog.share.link.helperText" }),
             linkButtonLabel: intl.formatMessage({ id: "shareDialog.share.link.buttonText" }),
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
-    }, [intl, showDashboardShareLink, applyShareGrantOnSelect]);
+    }, [intl, showDashboardShareLink, applyShareGrantOnSelect, isUsingTabs]);
 
     const shouldDisplayAdminMessage = useMemo(
         () => canWorkspaceManagerSeeEverySharedObject && isCurrentUserWorkspaceManager && !isLoading,

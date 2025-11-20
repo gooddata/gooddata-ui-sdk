@@ -71,6 +71,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             flex-grow: 1;
         }
     }
+
+    &__rename-input {
+        width: 120px;
+    }
 }
 
 .gd-dash-bottom-position-pixel {

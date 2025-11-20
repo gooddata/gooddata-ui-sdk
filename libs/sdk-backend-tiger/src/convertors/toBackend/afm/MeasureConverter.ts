@@ -84,28 +84,28 @@ function convertAggregation(
         return undefined;
     }
     if (aggregation === "sum") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.SUM;
+        return "SUM";
     }
     if (aggregation === "avg") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.AVG;
+        return "AVG";
     }
     if (aggregation === "count") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.COUNT;
+        return "COUNT";
     }
     if (aggregation === "approximate_count") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.APPROXIMATE_COUNT;
+        return "APPROXIMATE_COUNT";
     }
     if (aggregation === "max") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MAX;
+        return "MAX";
     }
     if (aggregation === "median") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MEDIAN;
+        return "MEDIAN";
     }
     if (aggregation === "min") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MIN;
+        return "MIN";
     }
 
-    return SimpleMeasureDefinitionMeasureAggregationEnum.RUNSUM;
+    return "RUNSUM";
 }
 
 function convertSimpleMeasureDefinition({ measureDefinition }: IMeasureDefinition): SimpleMeasureDefinition {
@@ -175,15 +175,15 @@ function convertArithmeticMeasureOperator(
 ): ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
     switch (operator) {
         case "sum":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.SUM;
+            return "SUM";
         case "difference":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.DIFFERENCE;
+            return "DIFFERENCE";
         case "multiplication":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.MULTIPLICATION;
+            return "MULTIPLICATION";
         case "ratio":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.RATIO;
+            return "RATIO";
         case "change":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.CHANGE;
+            return "CHANGE";
         default:
             throw new InvariantError(`Unknown arithmetic measure operator "${operator}"`);
     }

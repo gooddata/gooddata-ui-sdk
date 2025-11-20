@@ -12,6 +12,10 @@ export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.
 export type { PivotTableNextCellSelectionConfig } from "./types/cellSelection.js";
 export type { PivotTableNextExecutionCancellingConfig } from "./types/executionCancelling.js";
 export type { PivotTableNextFormattingConfig } from "./types/formatting.js";
+export type {
+    PivotTableNextGrandTotalsPositionConfig,
+    GrandTotalsPosition,
+} from "./types/grandTotalsPosition.js";
 export type { PivotTableNextLayoutConfig } from "./types/layout.js";
 export type { PivotTableNextAgGridLicenseConfig } from "./types/license.js";
 export type { PivotTableNextMenuConfig } from "./types/menu.js";

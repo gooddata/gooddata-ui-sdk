@@ -3,6 +3,8 @@
 import { AxiosRequestConfig } from "axios";
 import { isEqual } from "lodash-es";
 
+import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/execution";
+import { ExplainApi_ExplainAFM } from "@gooddata/api-client-tiger/explain";
 import {
     ExplainConfig,
     ExplainType,
@@ -57,7 +59,9 @@ export class TigerPreparedExecution implements IPreparedExecution {
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall((client) =>
-            client.execution.computeReport(
+            ExecutionAPI_ComputeReport(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.definition.workspace,
                     afmExecution,
@@ -180,7 +184,9 @@ async function explainCall<T extends ExplainType | undefined>(
 ) {
     if (definition) {
         return authCall((client) =>
-            client.explain.explainAFM(
+            ExplainApi_ExplainAFM(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: definition.workspace,
                     afmExecution: toAfmExecution(definition),

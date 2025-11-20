@@ -38,6 +38,7 @@ export function usePeriodChangeHandler() {
 
             const definition = updateDefinitionPeriod(def, dateAttribute, type);
             setState({
+                definition,
                 ...clearSummaryValue(definition),
             });
         },

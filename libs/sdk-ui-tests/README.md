@@ -277,6 +277,8 @@ long - especially if you are adding just a couple of tests. Luckily backstopjs a
 
 To do filtered backstopjs execution in this project, you can follow these steps:
 
+test
+
 1.  Make sure you have run `rush build -t sdk-ui-tests`
 2.  Make sure you have run `npm run backstop-prepare`
 3.  Navigate to the `backstop` subdirectory

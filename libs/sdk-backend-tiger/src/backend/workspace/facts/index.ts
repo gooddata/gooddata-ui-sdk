@@ -2,12 +2,8 @@
 
 import { invariant } from "ts-invariant";
 
-import {
-    ITigerClient,
-    JsonApiDatasetOutWithLinks,
-    JsonApiDatasetOutWithLinksTypeEnum,
-    jsonApiHeaders,
-} from "@gooddata/api-client-tiger";
+import { ITigerClientBase, JsonApiDatasetOutWithLinks, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/entitiesObjects";
 import { IFactsQuery, IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import {
     IDataSetMetadataObject,
@@ -46,7 +42,9 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     public async getFact(ref: ObjRef, opts: { include?: ["dataset"] } = {}): Promise<IFactMetadataObject> {
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
-            client.entities.getEntityFacts(
+            EntitiesApi_GetEntityFacts(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -74,33 +72,33 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
 }
 
 function loadFactDataset(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspace: string,
     ref: ObjRef,
 ): Promise<IDataSetMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.entities
-        .getEntityFacts(
-            {
-                workspaceId: workspace,
-                objectId: ref.identifier,
-                include: ["datasets"],
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        )
-        .then((res) => {
-            // if this happens then its either bad query parameterization or the backend is hosed badly
-            invariant(
-                res.data.included && res.data.included.length > 0,
-                "server returned that fact does not belong to any dataset",
-            );
-            const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
-                return include.type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
-            });
-
-            return convertDatasetWithLinks(datasets[0]);
+    return EntitiesApi_GetEntityFacts(
+        client.axios,
+        client.basePath,
+        {
+            workspaceId: workspace,
+            objectId: ref.identifier,
+            include: ["datasets"],
+        },
+        {
+            headers: jsonApiHeaders,
+        },
+    ).then((res) => {
+        // if this happens then its either bad query parameterization or the backend is hosed badly
+        invariant(
+            res.data.included && res.data.included.length > 0,
+            "server returned that fact does not belong to any dataset",
+        );
+        const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
+            return include.type === "dataset";
         });
+
+        return convertDatasetWithLinks(datasets[0]);
+    });
 }

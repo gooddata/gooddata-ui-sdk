@@ -2,7 +2,7 @@
 
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
-    ITigerClient,
+    ITigerClientBase,
     JsonApiAttributeHierarchyOutWithLinks,
     JsonApiAttributeOutIncludes,
     JsonApiAttributeOutList,
@@ -10,10 +10,10 @@ import {
     JsonApiDatasetLinkage,
     JsonApiDatasetOutWithLinks,
     JsonApiLabelLinkage,
-    JsonApiLabelOutAttributesValueTypeEnum,
     JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
     CatalogItem,
     ICatalogAttribute,
@@ -70,12 +70,7 @@ function getAttributeDataSet(
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     const type = label.attributes?.valueType;
 
-    return (
-        type === JsonApiLabelOutAttributesValueTypeEnum.GEO ||
-        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE ||
-        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE ||
-        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_AREA
-    );
+    return type === "GEO" || type === "GEO_LATITUDE" || type === "GEO_LONGITUDE" || type === "GEO_AREA";
 }
 
 function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {
@@ -156,7 +151,7 @@ function createAttributeHierarchies(attributes: JsonApiAttributeOutList): ICatal
 }
 
 export async function loadAttributesAndDateDatasetsAndHierarchies(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     rsqlFilter: string,
     loadAttributes?: boolean,
@@ -178,7 +173,7 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
 
     const attributes = await MetadataUtilities.getAllPagesOfParallel(
         client,
-        client.entities.getAllEntitiesAttributes,
+        EntitiesApi_GetAllEntitiesAttributes,
         params,
         {
             signal,

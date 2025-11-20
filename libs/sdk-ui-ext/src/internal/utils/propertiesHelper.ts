@@ -5,7 +5,12 @@ import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
 
 import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import {
+    ColumnHeadersPosition,
+    ColumnWidthItem,
+    GrandTotalsPosition,
+    MeasureGroupDimension,
+} from "@gooddata/sdk-ui-pivot";
 import { ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
 
 import {
@@ -278,6 +283,12 @@ export function getTextWrappingFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ITextWrapping | undefined {
     return visualizationProperties?.controls?.["textWrapping"];
+}
+
+export function getGrandTotalsPositionFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): GrandTotalsPosition | undefined {
+    return visualizationProperties?.controls?.["grandTotalsPosition"];
 }
 
 export function getMeasureGroupDimensionFromProperties(

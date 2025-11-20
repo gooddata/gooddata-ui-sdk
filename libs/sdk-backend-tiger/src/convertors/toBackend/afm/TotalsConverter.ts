@@ -374,22 +374,22 @@ export function marginalTotalLocalIdentifier(total: ITotal, dimIdx: number): str
 
 function convertTotalType(type: TotalType): TotalFunctionEnum {
     if (type === "sum") {
-        return TotalFunctionEnum.SUM;
+        return "SUM";
     }
     if (type === "max") {
-        return TotalFunctionEnum.MAX;
+        return "MAX";
     }
     if (type === "min") {
-        return TotalFunctionEnum.MIN;
+        return "MIN";
     }
     if (type === "avg") {
-        return TotalFunctionEnum.AVG;
+        return "AVG";
     }
     if (type === "med") {
-        return TotalFunctionEnum.MED;
+        return "MED";
     }
     if (type === "nat") {
-        return TotalFunctionEnum.NAT;
+        return "NAT";
     }
     throw new Error(`Unknown total type "${type}".`);
 }

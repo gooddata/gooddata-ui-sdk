@@ -4,7 +4,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
 import { inRange, isEmpty, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
+import { ITigerClientBase, newAxios, tigerClientBaseFactory } from "@gooddata/api-client-tiger";
 import {
     AnonymousAuthProvider,
     AuthProviderCallGuard,
@@ -147,7 +147,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: TigerBackendConfig & TigerSpecificFunctionsSubscription;
-    private readonly client: ITigerClient;
+    private readonly client: ITigerClientBase;
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
     private readonly dateStringifier: DateStringifier;
@@ -168,7 +168,7 @@ export class TigerBackend implements IAnalyticalBackend {
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
 
-        this.client = tigerClientFactory(axios);
+        this.client = tigerClientBaseFactory(axios);
 
         this.authProvider.initializeClient?.(this.client);
 
@@ -284,7 +284,7 @@ export class TigerBackend implements IAnalyticalBackend {
      * @param errorConverter - converter from rest client errors to analytical backend errors
      */
     private authApiCall = async <T>(
-        call: AuthenticatedAsyncCall<ITigerClient, T>,
+        call: AuthenticatedAsyncCall<ITigerClientBase, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
         try {

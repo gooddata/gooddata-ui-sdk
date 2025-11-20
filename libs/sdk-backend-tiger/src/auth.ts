@@ -2,6 +2,7 @@
 import { invariant } from "ts-invariant";
 
 import { ITigerClient, IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -54,7 +55,7 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         const client = context.client as ITigerClient;
 
         try {
-            return await client.profile.getCurrent();
+            return await ProfileApi_GetCurrent(client.axios);
         } catch (err) {
             throw convertApiError(err as Error);
         }

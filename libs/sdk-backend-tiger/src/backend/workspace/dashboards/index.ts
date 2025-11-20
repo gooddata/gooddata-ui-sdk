@@ -8,12 +8,9 @@ import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     ExportAFM,
     ExportRawExportRequest,
-    ITigerClient,
+    ITigerClientBase,
     ImageExportRequest,
-    JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
-    JsonApiDashboardPluginInTypeEnum,
-    JsonApiFilterContextInTypeEnum,
     JsonApiFilterViewOutDocument,
     MetadataUtilities,
     ValidateRelationsHeader,
@@ -22,6 +19,38 @@ import {
     isVisualizationObjectsItem,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import { ActionsApi_GetDependentEntitiesGraph } from "@gooddata/api-client-tiger/actions";
+import {
+    ContextFiltersApi_CreateEntityFilterContexts,
+    ContextFiltersApi_GetEntityFilterContexts,
+    ContextFiltersApi_UpdateEntityFilterContexts,
+    DashboardsApi_CreateEntityAnalyticalDashboards,
+    DashboardsApi_DeleteEntityAnalyticalDashboards,
+    DashboardsApi_GetAllEntitiesAnalyticalDashboards,
+    DashboardsApi_GetEntityAnalyticalDashboards,
+    DashboardsApi_PatchEntityAnalyticalDashboards,
+    DashboardsApi_UpdateEntityAnalyticalDashboards,
+    EntitiesApi_CreateEntityDashboardPlugins,
+    EntitiesApi_DeleteEntityDashboardPlugins,
+    EntitiesApi_GetAllEntitiesDashboardPlugins,
+    EntitiesApi_GetEntityDashboardPlugins,
+    EntitiesApi_GetEntityWorkspaces,
+    FilterViewsApi_CreateEntityFilterViews,
+    FilterViewsApi_DeleteEntityFilterViews,
+    FilterViewsApi_GetAllEntitiesFilterViews,
+    FilterViewsApi_GetEntityFilterViews,
+    FilterViewsApi_PatchEntityFilterViews,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    ExportApi_CreateDashboardExportRequest,
+    ExportApi_CreateImageExport,
+    ExportApi_CreatePdfExport,
+    ExportApi_CreateRawExport,
+    ExportApi_CreateSlidesExport,
+    ExportApi_GetMetadata,
+    ExportApi_GetSlidesExportMetadata,
+} from "@gooddata/api-client-tiger/export";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
     IDashboardExportImageOptions,
     IDashboardExportPdfOptions,
@@ -118,7 +147,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.entities.getAllEntitiesAnalyticalDashboards,
+                DashboardsApi_GetAllEntitiesAnalyticalDashboards,
                 { workspaceId: this.workspace, metaInclude: ["accessInfo"], ...includeUser },
                 // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
                 // { headers: ValidateRelationsHeader },
@@ -144,7 +173,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const includeUser = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
-            return client.entities.getEntityAnalyticalDashboards(
+            return DashboardsApi_GetEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -230,12 +261,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
         const metadata = await this.authCall((client) => {
             if (type === "slides") {
-                return client.export.getSlidesExportMetadata({
+                return ExportApi_GetSlidesExportMetadata(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     exportId,
                 });
             }
-            return client.export.getMetadata({
+            return ExportApi_GetMetadata(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportId,
             });
@@ -302,8 +333,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        return this.authCall((client) => {
-            return client.entities.getEntityAnalyticalDashboards(
+        return this.authCall((client) =>
+            DashboardsApi_GetEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -313,8 +346,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     headers: jsonApiHeaders,
                 },
-            );
-        }).then((result) => result.data);
+            ).then((result) => result.data),
+        );
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
@@ -365,12 +398,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             enableDashboardSectionHeadersDateDataSet,
         );
         const result = await this.authCall((client) => {
-            return client.entities.createEntityAnalyticalDashboards(
+            return DashboardsApi_CreateEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiAnalyticalDashboardPostOptionalIdDocument: {
                         data: {
-                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
+                            type: "analyticalDashboard",
                             attributes: {
                                 content: dashboardContent,
                                 title: dashboard.title,
@@ -453,14 +488,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         const result = await this.authCall((client) => {
-            return client.entities.updateEntityAnalyticalDashboards(
+            return DashboardsApi_UpdateEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId,
                     jsonApiAnalyticalDashboardInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
+                            type: "analyticalDashboard",
                             attributes: {
                                 content: dashboardContent,
                                 title: updatedDashboard.title,
@@ -491,14 +528,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(updatedDashboard.ref, this.authCall);
 
         const result = await this.authCall((client) => {
-            return client.entities.patchEntityAnalyticalDashboards(
+            return DashboardsApi_PatchEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId,
                     jsonApiAnalyticalDashboardPatchDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
+                            type: "analyticalDashboard",
                             attributes: {
                                 ...(updatedDashboard.title === undefined
                                     ? {}
@@ -532,7 +571,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.entities.deleteEntityAnalyticalDashboards(
+            DashboardsApi_DeleteEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -556,7 +597,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
 
         return this.authCall(async (client) => {
-            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+            const dashboardResponse = await DashboardsApi_GetEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId: dashboardId,
@@ -572,7 +615,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
-            const pdfExport = await client.export.createPdfExport({
+            const pdfExport = await ExportApi_CreatePdfExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportVisualExportRequest: visualExportRequest,
             });
@@ -602,7 +645,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
 
         return this.authCall(async (client) => {
-            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+            const dashboardResponse = await DashboardsApi_GetEntityAnalyticalDashboards(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId: dashboardId,
@@ -628,7 +673,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     hideWidgetTitles: options?.hideWidgetTitles,
                 }),
             };
-            const slideshowExport = await client.export.createSlidesExport({
+            const slideshowExport = await ExportApi_CreateSlidesExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportSlidesExportRequest: slidesExportRequest,
             });
@@ -656,7 +701,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             if (options?.title) {
                 title = options.title;
             } else {
-                const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                const dashboardResponse = await DashboardsApi_GetEntityAnalyticalDashboards(
+                    client.axios,
+                    client.basePath,
                     {
                         workspaceId: this.workspace,
                         objectId: dashboardId,
@@ -672,29 +719,33 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 ? { dashboardFiltersOverride: cloneWithSanitizedIds(options?.dashboardFiltersOverride) }
                 : {};
             const format = options?.format || "XLSX";
-            const tabularExport = await client.export.createDashboardExportRequest({
-                exportDashboardTabularExportRequest: {
-                    fileName: title || "export",
-                    format,
-                    settings: {
-                        ...(format === "XLSX" && {
-                            mergeHeaders: options?.mergeHeaders,
-                            exportInfo: options?.exportInfo,
-                        }),
-                        ...(format === "PDF" && options?.pdfConfiguration
-                            ? {
-                                  pageSize: options.pdfConfiguration.pageSize,
-                                  pageOrientation: options.pdfConfiguration.pageOrientation,
-                                  exportInfo: options.pdfConfiguration.showInfoPage,
-                              }
-                            : {}),
+            const tabularExport = await ExportApi_CreateDashboardExportRequest(
+                client.axios,
+                client.basePath,
+                {
+                    exportDashboardTabularExportRequest: {
+                        fileName: title || "export",
+                        format,
+                        settings: {
+                            ...(format === "XLSX" && {
+                                mergeHeaders: options?.mergeHeaders,
+                                exportInfo: options?.exportInfo,
+                            }),
+                            ...(format === "PDF" && options?.pdfConfiguration
+                                ? {
+                                      pageSize: options.pdfConfiguration.pageSize,
+                                      pageOrientation: options.pdfConfiguration.pageOrientation,
+                                      exportInfo: options.pdfConfiguration.showInfoPage,
+                                  }
+                                : {}),
+                        },
+                        widgetIds: options?.widgetIds,
+                        ...dashboardFiltersOverrideObj,
                     },
-                    widgetIds: options?.widgetIds,
-                    ...dashboardFiltersOverrideObj,
+                    workspaceId: this.workspace,
+                    dashboardId,
                 },
-                workspaceId: this.workspace,
-                dashboardId,
-            });
+            );
 
             return await handleExportResultPolling(
                 client,
@@ -729,7 +780,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         };
 
         return this.authCall(async (client) => {
-            const rawExport = await client.export.createRawExport({
+            const rawExport = await ExportApi_CreateRawExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportRawExportRequest: payload,
             });
@@ -775,7 +826,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 }),
             };
 
-            const imageExport = await client.export.createImageExport({
+            const imageExport = await ExportApi_CreateImageExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportImageExportRequest: imageExportRequest,
             });
@@ -881,12 +932,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const pluginContent = convertDashboardPluginToBackend(plugin);
 
         const result = await this.authCall((client) => {
-            return client.entities.createEntityDashboardPlugins(
+            return EntitiesApi_CreateEntityDashboardPlugins(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiDashboardPluginPostOptionalIdDocument: {
                         data: {
-                            type: JsonApiDashboardPluginInTypeEnum.DASHBOARD_PLUGIN,
+                            type: "dashboardPlugin",
                             attributes: {
                                 content: pluginContent,
                                 title: plugin.name,
@@ -908,7 +961,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.entities.deleteEntityDashboardPlugins(
+            EntitiesApi_DeleteEntityDashboardPlugins(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -929,7 +984,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : {};
         const objectId = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
-            return client.entities.getEntityDashboardPlugins(
+            return EntitiesApi_GetEntityDashboardPlugins(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -953,7 +1010,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.entities.getAllEntitiesDashboardPlugins,
+                EntitiesApi_GetAllEntitiesDashboardPlugins,
                 { workspaceId: this.workspace, ...includeUser },
                 { headers: ValidateRelationsHeader },
             )
@@ -968,18 +1025,18 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public validateDashboardsExistence = async (dashboardRefs: ObjRef[]) => {
         const entitiesGraph = await this.authCall((client) =>
-            client.actions
-                .getDependentEntitiesGraph({
-                    workspaceId: this.workspace,
-                })
-                .then((res) => res.data.graph),
+            ActionsApi_GetDependentEntitiesGraph(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+            }).then((res: any) => res.data.graph),
         );
-        const analyticalDashboards = entitiesGraph.nodes.filter(({ type }) => type === "analyticalDashboard");
+        const analyticalDashboards = entitiesGraph.nodes.filter(
+            ({ type }: { type: string }) => type === "analyticalDashboard",
+        );
 
         // Refs which are not listed in entities graph are non-existent
         const validDashboardRefs = dashboardRefs.filter((ref) => {
             const dashboardId = objRefToString(ref);
-            return analyticalDashboards.some(({ id }) => id === dashboardId);
+            return analyticalDashboards.some(({ id }: { id: string }) => id === dashboardId);
         });
 
         return validDashboardRefs.map((ref) => ({
@@ -993,8 +1050,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         try {
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
             const result = await this.authCall(async (client) => {
-                const profile = await client.profile.getCurrent();
-                return client.entities.getAllEntitiesFilterViews({
+                const profile = await ProfileApi_GetCurrent(client.axios);
+                return FilterViewsApi_GetAllEntitiesFilterViews(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     include: ["user", "analyticalDashboard"],
                     filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId}`,
@@ -1028,8 +1085,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     // a single transaction and the action itself is more performant on UI
                     await this.unsetDashboardDefaultFilterView(client, dashboardId);
                 }
-                const profile = await client.profile.getCurrent();
-                const result = await client.entities.createEntityFilterViews(
+                const profile = await ProfileApi_GetCurrent(client.axios);
+                const result = await FilterViewsApi_CreateEntityFilterViews(
+                    client.axios,
+                    client.basePath,
                     {
                         workspaceId: this.workspace,
                         jsonApiFilterViewInDocument: {
@@ -1088,7 +1147,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         try {
             const id = await objRefToIdentifier(ref, this.authCall);
             await this.authCall((client) =>
-                client.entities.deleteEntityFilterViews({
+                FilterViewsApi_DeleteEntityFilterViews(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     objectId: id,
                 }),
@@ -1114,16 +1173,20 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private unsetDashboardDefaultFilterView = async (
-        client: ITigerClient,
+        client: ITigerClientBase,
         dashboardId: string,
     ): Promise<void> => {
-        const profile = await client.profile.getCurrent();
-        const defaultFilterViewsForDashboard = await client.entities.getAllEntitiesFilterViews({
-            workspaceId: this.workspace,
-            include: ["user", "analyticalDashboard"],
-            filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId};filterView.isDefault==true`,
-            origin: "NATIVE",
-        });
+        const profile = await ProfileApi_GetCurrent(client.axios);
+        const defaultFilterViewsForDashboard = await FilterViewsApi_GetAllEntitiesFilterViews(
+            client.axios,
+            client.basePath,
+            {
+                workspaceId: this.workspace,
+                include: ["user", "analyticalDashboard"],
+                filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId};filterView.isDefault==true`,
+                origin: "NATIVE",
+            },
+        );
         await Promise.all(
             defaultFilterViewsForDashboard.data.data.map((view) =>
                 this.updateFilterViewDefaultStatus(client, view.id, false),
@@ -1132,11 +1195,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private updateFilterViewDefaultStatus = async (
-        client: ITigerClient,
+        client: ITigerClientBase,
         id: string,
         isDefault: boolean,
     ): Promise<void> => {
-        await client.entities.patchEntityFilterViews({
+        await FilterViewsApi_PatchEntityFilterViews(client.axios, client.basePath, {
             workspaceId: this.workspace,
             objectId: id,
             jsonApiFilterViewPatchDocument: {
@@ -1151,16 +1214,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
     private getFilterView = async (
-        client: ITigerClient,
+        client: ITigerClientBase,
         id: string,
     ): Promise<JsonApiFilterViewOutDocument> => {
-        return client.entities
-            .getEntityFilterViews({
-                workspaceId: this.workspace,
-                objectId: id,
-                include: ["analyticalDashboard"],
-            })
-            .then((result) => result.data);
+        return FilterViewsApi_GetEntityFilterViews(client.axios, client.basePath, {
+            workspaceId: this.workspace,
+            objectId: id,
+            include: ["analyticalDashboard"],
+        }).then((result) => result.data);
     };
 
     //
@@ -1179,12 +1240,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         const result = await this.authCall((client) => {
-            return client.entities.createEntityFilterContexts(
+            return ContextFiltersApi_CreateEntityFilterContexts(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiFilterContextPostOptionalIdDocument: {
                         data: {
-                            type: JsonApiFilterContextInTypeEnum.FILTER_CONTEXT,
+                            type: "filterContext",
                             attributes: {
                                 content: tigerFilterContext,
                                 title: filterContext.title || "",
@@ -1205,7 +1268,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getDashboardPermissions = async (ref: ObjRef): Promise<IDashboardPermissions> => {
         try {
             const workspaceWithPermissionsResponse = await this.authCall((client) => {
-                return client.entities.getEntityWorkspaces({
+                return EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
                     id: this.workspace,
                     ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                 });
@@ -1220,7 +1283,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             const dashboardObjectId = await objRefToIdentifier(ref, this.authCall);
             const dashboardWithPermissionsResponse = await this.authCall((client) => {
-                return client.entities.getEntityAnalyticalDashboards({
+                return DashboardsApi_GetEntityAnalyticalDashboards(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     objectId: dashboardObjectId,
                     metaInclude: ["permissions"],
@@ -1280,14 +1343,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
 
         const result = await this.authCall((client) => {
-            return client.entities.updateEntityFilterContexts(
+            return ContextFiltersApi_UpdateEntityFilterContexts(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId,
                     jsonApiFilterContextInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiFilterContextInTypeEnum.FILTER_CONTEXT,
+                            type: "filterContext",
                             attributes: {
                                 content: tigerFilterContext,
                                 title: filterContext.title || "",
@@ -1308,7 +1373,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private getFilterContext = async (filterContextRef: ObjRef) => {
         const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
         const result = await this.authCall((client) => {
-            return client.entities.getEntityFilterContexts(
+            return ContextFiltersApi_GetEntityFilterContexts(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     objectId: filterContextId,

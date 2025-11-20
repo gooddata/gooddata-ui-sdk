@@ -1,8 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
 
-import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
-import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
+import { ApiEntitlement, EntitiesApi_GetEntityUsers } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;
@@ -72,37 +71,44 @@ export interface ProfileApiInterface {
 
 export const tigerProfileClientFactory = (axios: AxiosInstance): ProfileApiInterface => {
     return {
-        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
         getCurrent: async (_detailed?: boolean) => {
-            const response = await axios.get<IUserProfile>("/api/v1/profile");
-            const deployment = response.headers?.["gooddata-deployment"];
-            return {
-                ...response.data,
-                ...(deployment ? { deployment } : {}),
-            };
+            return ProfileApi_GetCurrent(axios, _detailed);
         },
         getCurrentWithDetails: async (_detailed?: boolean) => {
-            const response = await axios.get<IUserProfile>("/api/v1/profile");
-            const profile = response.data;
-            const deployment = response.headers?.["gooddata-deployment"];
-
-            const details = await getUserDetails(axios, profile.userId);
-            return {
-                ...profile,
-                ...details,
-                ...(deployment ? { deployment } : {}),
-            };
+            return ProfileApi_GetCurrentWithDetails(axios, _detailed);
         },
     };
 };
 
+// TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
+export async function ProfileApi_GetCurrent(axios: AxiosInstance, _detailed?: boolean) {
+    const response = await axios.get<IUserProfile>("/api/v1/profile");
+    const deployment = response.headers?.["gooddata-deployment"];
+    return {
+        ...response.data,
+        ...(deployment ? { deployment } : {}),
+    };
+}
+
+export async function ProfileApi_GetCurrentWithDetails(axios: AxiosInstance, _detailed?: boolean) {
+    const response = await axios.get<IUserProfile>("/api/v1/profile");
+    const profile = response.data;
+    const deployment = response.headers?.["gooddata-deployment"];
+
+    const details = await getUserDetails(axios, profile.userId);
+    return {
+        ...profile,
+        ...details,
+        ...(deployment ? { deployment } : {}),
+    };
+}
+
 async function getUserDetails(axios: AxiosInstance, id: string) {
-    const entitiesApi = tigerEntitiesObjectsClientFactory(axios);
-    const user = (
-        await entitiesApi.getEntityUsers({
-            id,
-        })
-    ).data;
+    const response = await EntitiesApi_GetEntityUsers(axios, "", {
+        id,
+    });
+
+    const user = response.data;
 
     const firstName = user.data.attributes?.firstname;
     const lastName = user.data.attributes?.lastname;
