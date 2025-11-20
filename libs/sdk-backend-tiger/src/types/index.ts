@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     DeclarativeSettingTypeEnum,
-    ITigerClient,
+    ITigerClientBase,
     JsonApiOrganizationSettingOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
@@ -12,7 +13,7 @@ import { FilterContextItem } from "@gooddata/sdk-model";
  *
  * @public
  */
-export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClient>;
+export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClientBase>;
 
 /**
  * Tiger AFM types

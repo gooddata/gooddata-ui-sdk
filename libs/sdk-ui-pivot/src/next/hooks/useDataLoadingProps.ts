@@ -30,7 +30,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
     const { setPivotResultColumns } = useSetAgGridPivotResultColumns();
 
     const { rows, measures, sortBy, config, pageSize, onDataView, onExportReady, exportTitle } = props;
-    const { columnHeadersPosition, separators } = config;
+    const { columnHeadersPosition, separators, grandTotalsPosition = "pinnedBottom" } = config;
 
     const { setCurrentDataView } = useCurrentDataView();
 
@@ -43,6 +43,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
                 measures,
                 sortBy: initialSortBy,
                 columnHeadersPosition,
+                grandTotalsPosition,
                 setCurrentDataView,
                 initialExecutionResult,
                 initialDataView,
@@ -61,6 +62,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
             measures,
             initialSortBy,
             columnHeadersPosition,
+            grandTotalsPosition,
             initialExecutionResult,
             initialDataView,
             columnDefinitionByColId,

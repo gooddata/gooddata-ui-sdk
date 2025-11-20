@@ -165,7 +165,10 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.TAB.SWITCHED"
     | "GDC.DASH/EVT.TAB.REPOSITIONED"
     | "GDC.DASH/EVT.TAB.CREATED"
-    | "GDC.DASH/EVT.TAB.DELETED";
+    | "GDC.DASH/EVT.TAB.DELETED"
+    | "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED"
+    | "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED"
+    | "GDC.DASH/EVT.TAB.RENAMED";
 
 /**
  * Base type for all dashboard events.

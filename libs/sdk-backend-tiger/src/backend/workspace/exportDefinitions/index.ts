@@ -5,6 +5,13 @@ import {
     ValidateRelationsHeader,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_CreateEntityExportDefinitions,
+    EntitiesApi_DeleteEntityExportDefinitions,
+    EntitiesApi_GetAllEntitiesExportDefinitions,
+    EntitiesApi_GetEntityExportDefinitions,
+    EntitiesApi_UpdateEntityExportDefinitions,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IExportDefinitionsQuery,
@@ -47,7 +54,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const allExportDefinitions = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.entities.getAllEntitiesExportDefinitions,
+                EntitiesApi_GetAllEntitiesExportDefinitions,
                 requestParameters,
                 { headers: ValidateRelationsHeader },
             )
@@ -128,7 +135,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
             : {};
         const response = await this.authCall((client) =>
-            client.entities.getEntityExportDefinitions(
+            EntitiesApi_GetEntityExportDefinitions(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -157,7 +166,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const createResponse = await this.authCall((client) => {
-            return client.entities.createEntityExportDefinitions(
+            return EntitiesApi_CreateEntityExportDefinitions(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiExportDefinitionPostOptionalIdDocument:
@@ -187,7 +198,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const updateResponse = await this.authCall((client) => {
-            return client.entities.updateEntityExportDefinitions(
+            return EntitiesApi_UpdateEntityExportDefinitions(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -214,7 +227,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.entities.deleteEntityExportDefinitions({
+            EntitiesApi_DeleteEntityExportDefinitions(client.axios, client.basePath, {
                 objectId: id,
                 workspaceId: this.workspace,
             }),

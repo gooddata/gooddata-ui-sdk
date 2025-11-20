@@ -7,6 +7,7 @@ import {
     EntitiesApiGetAllEntitiesWorkspacesRequest,
     JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalWorkspace,
@@ -96,7 +97,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return ServerPaging.for(
             async ({ limit, offset, totalCount }) => {
                 const result = await this.authCall((client) =>
-                    client.entities.getAllEntitiesWorkspaces({
+                    EntitiesApi_GetAllEntitiesWorkspaces(client.axios, client.basePath, {
                         size: limit,
                         page: offset / limit,
                         filter: this.constructFilter(),
@@ -123,7 +124,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return ServerPaging.for(
             async ({ limit, offset, totalCount }) => {
                 const result = await this.authCall((client) =>
-                    client.entities.getAllEntitiesWorkspaces({
+                    EntitiesApi_GetAllEntitiesWorkspaces(client.axios, client.basePath, {
                         size: limit,
                         page: offset / limit,
                         filter: this.constructFilter(),

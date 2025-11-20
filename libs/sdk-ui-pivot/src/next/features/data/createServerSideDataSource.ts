@@ -11,6 +11,7 @@ import { agGridSetLoading } from "./agGridLoadingApi.js";
 import { dataViewToRowData } from "./dataViewToRowData.js";
 import { loadDataView } from "./loadDataView.js";
 import { AgGridApi } from "../../types/agGrid.js";
+import { GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
 import { AgGridRowData, IInitialExecutionData, ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
 import { handleExportReady } from "../exports/exports.js";
@@ -25,6 +26,7 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
     rows: IAttribute[];
     sortBy: ISortItem[];
     columnHeadersPosition: ColumnHeadersPosition;
+    grandTotalsPosition: GrandTotalsPosition;
     separators?: ISeparators;
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     pageSize: number;
@@ -53,6 +55,7 @@ export const createServerSideDataSource = ({
     initialExecutionResult,
     initialDataView,
     columnHeadersPosition,
+    grandTotalsPosition,
     columnDefinitionByColId,
     pageSize,
     setCurrentDataView,
@@ -78,11 +81,17 @@ export const createServerSideDataSource = ({
      * and then triggers another request with the correct sort model.
      */
     function handleExtraSortRequest(params: IServerSideGetRowsParams<AgGridRowData>) {
-        const rowCount = fixRowsCount(initialDataView, measures, rows);
         setPivotResultColumns(params.api);
 
         // Extract grand total rows from initial data view (same as normal first request)
-        const { grandTotalRowData } = dataViewToRowData(initialDataView, columnHeadersPosition, separators);
+        const { grandTotalRowData, grandTotalCount } = dataViewToRowData(
+            initialDataView,
+            columnHeadersPosition,
+            separators,
+            grandTotalsPosition,
+        );
+
+        const rowCount = fixRowsCount(initialDataView, measures, rows, grandTotalsPosition, grandTotalCount);
 
         // Set up grand totals as they may be missing
         setGrandTotalRows(params.api, grandTotalRowData);
@@ -143,15 +152,22 @@ export const createServerSideDataSource = ({
                           endRow: params.request.endRow ?? pageSize,
                       });
 
-                const { rowData, grandTotalRowData } = dataViewToRowData(
+                const { rowData, grandTotalRowData, grandTotalCount } = dataViewToRowData(
                     nextDataView,
                     columnHeadersPosition,
                     separators,
+                    grandTotalsPosition,
                 );
 
                 const successParam: LoadSuccessParams<AgGridRowData> = {
                     rowData,
-                    rowCount: fixRowsCount(nextDataView, measures, rows),
+                    rowCount: fixRowsCount(
+                        nextDataView,
+                        measures,
+                        rows,
+                        grandTotalsPosition,
+                        grandTotalCount,
+                    ),
                 };
 
                 params.success(successParam);
@@ -181,8 +197,27 @@ export const createServerSideDataSource = ({
     };
 };
 
-function fixRowsCount(dataView: DataViewFacade, measures: IMeasure[], rows: IAttribute[]) {
+function fixRowsCount(
+    dataView: DataViewFacade,
+    measures: IMeasure[],
+    rows: IAttribute[],
+    grandTotalsPosition?: GrandTotalsPosition,
+    grandTotalCount?: number,
+) {
     const [rowsCount] = dataView.dataView.totalCount;
-    // // In case of single column attribute, without metrics and rows, backend returns 1 as number of rows, which is not correct.
-    return measures.length === 0 && rows.length === 0 ? 0 : rowsCount;
+    // In case of single column attribute, without metrics and rows, backend returns 1 as number of rows, which is not correct.
+    const baseRowCount = measures.length === 0 && rows.length === 0 ? 0 : rowsCount;
+
+    // When grand totals are in regular row data (not pinned), add them to the row count
+    if (
+        grandTotalCount &&
+        grandTotalCount > 0 &&
+        grandTotalsPosition &&
+        grandTotalsPosition !== "pinnedBottom" &&
+        grandTotalsPosition !== "pinnedTop"
+    ) {
+        return baseRowCount + grandTotalCount;
+    }
+
+    return baseRowCount;
 }

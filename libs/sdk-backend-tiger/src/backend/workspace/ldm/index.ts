@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { LayoutApi_GetLogicalModel } from "@gooddata/api-client-tiger/layout";
 import { IDateDataset, IWorkspaceLogicalModelService } from "@gooddata/sdk-backend-spi";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -12,16 +13,17 @@ export class TigerWorkspaceLogicalModelService implements IWorkspaceLogicalModel
 
     getDatasets(includeParents: boolean): Promise<IDateDataset[]> {
         return this.authCall(async (client) => {
-            return client.declarativeLayout
-                .getLogicalModel({ workspaceId: this.workspace, includeParents })
-                .then(
-                    (response) =>
-                        response?.data?.ldm?.datasets?.map((dataset) => ({
-                            id: dataset.id,
-                            title: dataset.title,
-                            description: dataset.description,
-                        })) || [],
-                );
+            return LayoutApi_GetLogicalModel(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                includeParents,
+            }).then(
+                (response) =>
+                    response?.data?.ldm?.datasets?.map((dataset) => ({
+                        id: dataset.id,
+                        title: dataset.title,
+                        description: dataset.description,
+                    })) || [],
+            );
         });
     }
 }

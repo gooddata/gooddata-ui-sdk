@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
+import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { agGridSetGrandTotalRows } from "../features/aggregations/agGridAggregationsApi.js";
 import { AgGridApi } from "../types/agGrid.js";
 import { AgGridRowData } from "../types/internal.js";
@@ -11,9 +13,15 @@ import { AgGridRowData } from "../types/internal.js";
  * @internal
  */
 export function useGrandTotalRows() {
-    const setGrandTotalRows = useCallback((gridApi: AgGridApi, grandTotalRowData: AgGridRowData[]) => {
-        agGridSetGrandTotalRows({ grandTotalRowData }, gridApi);
-    }, []);
+    const { config } = usePivotTableProps();
+    const { grandTotalsPosition } = config;
+
+    const setGrandTotalRows = useCallback(
+        (gridApi: AgGridApi, grandTotalRowData: AgGridRowData[]) => {
+            agGridSetGrandTotalRows({ grandTotalRowData, grandTotalsPosition }, gridApi);
+        },
+        [grandTotalsPosition],
+    );
 
     return {
         setGrandTotalRows,

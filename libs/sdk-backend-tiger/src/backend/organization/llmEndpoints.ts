@@ -1,6 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_CreateEntityLlmEndpoints,
+    EntitiesApi_DeleteEntityLlmEndpoints,
+    EntitiesApi_GetAllEntitiesLlmEndpoints,
+    EntitiesApi_GetEntityLlmEndpoints,
+    EntitiesApi_PatchEntityLlmEndpoints,
+    EntitiesApi_UpdateEntityLlmEndpoints,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    GenAiApi_ValidateLLMEndpoint,
+    GenAiApi_ValidateLLMEndpointById,
+} from "@gooddata/api-client-tiger/genAI";
 import { IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
 import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch, LlmEndpointTestResults } from "@gooddata/sdk-model";
 
@@ -11,8 +23,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
     public getCount(): Promise<number> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getAllEntitiesLlmEndpoints({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetAllEntitiesLlmEndpoints(client.axios, client.basePath, {
                 size: 1,
                 metaInclude: ["page"],
             });
@@ -21,8 +33,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public getAll(): Promise<ILlmEndpointOpenAI[]> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getAllEntitiesLlmEndpoints({});
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetAllEntitiesLlmEndpoints(client.axios, client.basePath, {});
             const endpoints = result.data?.data || [];
 
             return endpoints.map(convertLlmEndpoint);
@@ -30,8 +42,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getEntityLlmEndpoints({ id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_GetEntityLlmEndpoints(client.axios, client.basePath, { id });
             const endpoint = result.data?.data;
 
             if (!endpoint) {
@@ -43,8 +55,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token: string): Promise<ILlmEndpointOpenAI> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.createEntityLlmEndpoints({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_CreateEntityLlmEndpoints(client.axios, client.basePath, {
                 jsonApiLlmEndpointInDocument: {
                     data: {
                         type: "llmEndpoint",
@@ -71,8 +83,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token: string): Promise<ILlmEndpointOpenAI> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.updateEntityLlmEndpoints({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_UpdateEntityLlmEndpoints(client.axios, client.basePath, {
                 id: endpoint.id,
                 jsonApiLlmEndpointInDocument: {
                     data: {
@@ -100,8 +112,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI> {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.patchEntityLlmEndpoints({
+        return this.authCall(async (client: ITigerClientBase) => {
+            const result = await EntitiesApi_PatchEntityLlmEndpoints(client.axios, client.basePath, {
                 id: endpoint.id,
                 jsonApiLlmEndpointPatchDocument: {
                     data: {
@@ -131,8 +143,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     }
 
     public deleteLlmEndpoint(id: string): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.entities.deleteEntityLlmEndpoints({ id });
+        return this.authCall(async (client: ITigerClientBase) => {
+            await EntitiesApi_DeleteEntityLlmEndpoints(client.axios, client.basePath, { id });
         });
     }
 
@@ -140,9 +152,9 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
         endpoint: Partial<LlmEndpointOpenAIPatch>,
         token?: string,
     ): Promise<LlmEndpointTestResults> {
-        return this.authCall(async (client: ITigerClient) => {
+        return this.authCall(async (client: ITigerClientBase) => {
             if (endpoint.id) {
-                const result = await client.genAI.validateLLMEndpointById({
+                const result = await GenAiApi_ValidateLLMEndpointById(client.axios, client.basePath, {
                     llmEndpointId: endpoint.id,
                     validateLLMEndpointByIdRequest: {
                         ...(endpoint.provider ? { provider: endpoint.provider } : {}),
@@ -158,7 +170,7 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                 };
             }
 
-            const result = await client.genAI.validateLLMEndpoint({
+            const result = await GenAiApi_ValidateLLMEndpoint(client.axios, client.basePath, {
                 validateLLMEndpointRequest: {
                     provider: endpoint.provider ?? "OPENAI",
                     token: token ?? "",

@@ -83,11 +83,10 @@ import {
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import {
     PivotTableTransposeHasC_Left,
-    PivotTableTransposeHasMR_RowLeft,
     PivotTableTransposeHasMR_RowTop,
-    PivotTableTransposeHasM_RowLeft,
-    PivotTableTransposeHasRC_RowLeft,
-    PivotTableTransposeHasR_RowLeft,
+    PivotTableTransposeHasM_RowTop,
+    PivotTableTransposeHasRC_RowTop,
+    PivotTableTransposeHasR_RowTop,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableTransposeScenario";
 import {
     PivotTableOfDatetimeAddWithAllGranularities,
@@ -174,16 +173,14 @@ export const SCENARIO_KEYS = {
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
     VIS_HEADLINE_DRILL: "visualizations/headline/headline-drilling",
     VIS_PIVOT_TABLE_AGG_MENU: "visualizations/pivot-table/pivot-table-aggregations-menu",
-    VIS_PIVOT_TABLE_TRANSPOSED_HAS_MR_ROW_LEFT:
-        "visualizations/pivot-table/pivot-table-transposed-has-mr-row-left",
     VIS_PIVOT_TABLE_TRANSPOSED_HAS_MR_ROW_TOP:
         "visualizations/pivot-table/pivot-table-transposed-has-mr-row-top",
-    VIS_PIVOT_TABLE_TRANSPOSED_HAS_RC_ROW_LEFT:
-        "visualizations/pivot-table/pivot-table-transposed-has-rc-row-left",
-    VIS_PIVOT_TABLE_TRANSPOSED_HAS_R_ROW_LEFT:
-        "visualizations/pivot-table/pivot-table-transposed-has-r-row-left",
-    VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_LEFT:
-        "visualizations/pivot-table/pivot-table-transposed-has-m-row-left",
+    VIS_PIVOT_TABLE_TRANSPOSED_HAS_RC_ROW_TOP:
+        "visualizations/pivot-table/pivot-table-transposed-has-rc-row-top",
+    VIS_PIVOT_TABLE_TRANSPOSED_HAS_R_ROW_TOP:
+        "visualizations/pivot-table/pivot-table-transposed-has-r-row-top",
+    VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_TOP:
+        "visualizations/pivot-table/pivot-table-transposed-has-m-row-top",
     VIS_PIVOT_TABLE_TRANSPOSED_HAS_C_LEFT: "visualizations/pivot-table/pivot-table-transposed-has-c-left",
     VIS_PIVOT_TABLE_ONE_TOTAL_AGG_MENU: "visualizations/pivot-table/pivot-table-one-total-aggregations-menu",
     VIS_PIVOT_TABLE_ALL_TOTAL_AGG_MENU: "visualizations/pivot-table/pivot-table-all-total-aggregations-menu",
@@ -339,11 +336,10 @@ const scenarios = new Map<string, ComponentType>([
         SCENARIO_KEYS.VIS_PIVOT_TABLE_ONE_TOTAL_COLUMN_AGG_MENU,
         PivotTableAggregationsMenuOneColumnTotalScenario,
     ],
-    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_MR_ROW_LEFT, PivotTableTransposeHasMR_RowLeft],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_MR_ROW_TOP, PivotTableTransposeHasMR_RowTop],
-    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_RC_ROW_LEFT, PivotTableTransposeHasRC_RowLeft],
-    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_R_ROW_LEFT, PivotTableTransposeHasR_RowLeft],
-    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_LEFT, PivotTableTransposeHasM_RowLeft],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_RC_ROW_TOP, PivotTableTransposeHasRC_RowTop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_R_ROW_TOP, PivotTableTransposeHasR_RowTop],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_TOP, PivotTableTransposeHasM_RowTop],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_C_LEFT, PivotTableTransposeHasC_Left],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING_RESET, PivotTableComplexResetScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_SIZING_RESET, PivotTableTransposedComplexResetScenario],

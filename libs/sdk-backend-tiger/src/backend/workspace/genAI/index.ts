@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { ActionsApi_MetadataSync } from "@gooddata/api-client-tiger/actions";
 import type {
     IAnalyticsCatalogService,
     IChatThread,
@@ -32,7 +33,7 @@ export class GenAIService implements IGenAIService {
 
     async semanticSearchIndex(): Promise<void> {
         await this.authCall((client) =>
-            client.actions.metadataSync({
+            ActionsApi_MetadataSync(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
             }),
         );

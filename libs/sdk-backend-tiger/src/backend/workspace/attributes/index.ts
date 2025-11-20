@@ -6,12 +6,17 @@ import {
     AfmValidObjectsQuery,
     AttributeItem,
     EntitiesApiGetAllEntitiesAttributesRequest,
-    ITigerClient,
+    ITigerClientBase,
     JsonApiDatasetOutWithLinks,
-    JsonApiDatasetOutWithLinksTypeEnum,
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_GetAllEntitiesAttributes,
+    EntitiesApi_GetAllEntitiesLabels,
+    EntitiesApi_GetEntityAttributes,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
 import {
     IAttributeWithReferences,
     IElementsQueryFactory,
@@ -63,14 +68,18 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     }
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
-        return this.authCall(async (client) => loadAttributeDisplayForm(client, this.workspace, ref));
+        return this.authCall(async (client: ITigerClientBase) =>
+            loadAttributeDisplayForm(client, this.workspace, ref),
+        );
     };
 
     public getAttribute = async (
         ref: ObjRef,
         opts: { include?: ["dataset"] } = {},
     ): Promise<IAttributeMetadataObject> => {
-        return this.authCall(async (client) => loadAttribute(client, this.workspace, ref, opts.include));
+        return this.authCall(async (client: ITigerClientBase) =>
+            loadAttribute(client, this.workspace, ref, opts.include),
+        );
     };
 
     public updateAttributeMeta = async (
@@ -97,7 +106,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
                 .filter(isIdentifierRef)
                 .map((ref) => `id==${ref.identifier}`)
                 .join(",");
-            const allDisplayForms = await client.entities.getAllEntitiesLabels({
+            const allDisplayForms = await EntitiesApi_GetAllEntitiesLabels(client.axios, client.basePath, {
                 include: ["attribute"],
                 workspaceId: this.workspace,
                 origin: "ALL",
@@ -164,7 +173,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
                 .map((ref) => `labels.id==${ref.identifier}`)
                 .join(",");
 
-            const allAttributes = await client.entities.getAllEntitiesAttributes({
+            const allAttributes = await EntitiesApi_GetAllEntitiesAttributes(client.axios, client.basePath, {
                 include: ["labels", "datasets"],
                 workspaceId: this.workspace,
                 origin: "ALL",
@@ -214,7 +223,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         };
 
         const connectedItemsResponse = await this.authCall((client) =>
-            client.validObjects.computeValidObjects({
+            ActionsApi_ComputeValidObjects(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 afmValidObjectsQuery,
             }),
@@ -227,7 +236,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 }
 
 async function loadAttributeDisplayForm(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     ref: ObjRef,
 ): Promise<IAttributeDisplayFormMetadataObject> {
@@ -267,29 +276,29 @@ function findLabelInAttributes(
 }
 
 function loadAttribute(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     ref: ObjRef,
     include?: ["dataset"],
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.entities
-        .getEntityAttributes(
-            {
-                workspaceId,
-                objectId: ref.identifier,
-                include: ["labels", "defaultView", ...(include ?? [])],
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        )
-        .then((res) => convertAttributeWithSideloadedLabels(res.data));
+    return EntitiesApi_GetEntityAttributes(
+        client.axios,
+        "",
+        {
+            workspaceId,
+            objectId: ref.identifier,
+            include: ["labels", "defaultView", ...(include ?? [])],
+        },
+        {
+            headers: jsonApiHeaders,
+        },
+    ).then((res: any) => convertAttributeWithSideloadedLabels(res.data));
 }
 
 function loadAttributeByDisplayForm(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     ref: ObjRef,
 ): Promise<IAttributeMetadataObject> {
@@ -313,8 +322,8 @@ function loadAttributeByDisplayForm(
     });
 }
 
-function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
-    return MetadataUtilities.getAllPagesOfParallel(client, client.entities.getAllEntitiesAttributes, {
+function loadAttributes(client: ITigerClientBase, workspaceId: string): Promise<IAttributeMetadataObject[]> {
+    return MetadataUtilities.getAllPagesOfParallel(client, EntitiesApi_GetAllEntitiesAttributes, {
         workspaceId,
         include: ["labels"],
     })
@@ -323,46 +332,48 @@ function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAtt
 }
 
 function loadAttributeDataset(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspace: string,
     ref: ObjRef,
 ): Promise<IDataSetMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.entities
-        .getEntityAttributes(
-            {
-                workspaceId: workspace,
-                objectId: ref.identifier,
-                include: ["datasets"],
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        )
-        .then((res) => {
-            // if this happens then its either bad query parameterization or the backend is hosed badly
-            invariant(
-                res.data.included && res.data.included.length > 0,
-                "server returned that attribute does not belong to any dataset",
-            );
-            const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
-                return include.type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
-            });
-
-            return convertDatasetWithLinks(datasets[0]);
+    return EntitiesApi_GetEntityAttributes(
+        client.axios,
+        "",
+        {
+            workspaceId: workspace,
+            objectId: ref.identifier,
+            include: ["datasets"],
+        },
+        {
+            headers: jsonApiHeaders,
+        },
+    ).then((res) => {
+        // if this happens then its either bad query parameterization or the backend is hosed badly
+        invariant(
+            res.data.included && res.data.included.length > 0,
+            "server returned that attribute does not belong to any dataset",
+        );
+        const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
+            return include.type === "dataset";
         });
+
+        return convertDatasetWithLinks(datasets[0]);
+    });
 }
 
 function getAllEntitiesAttributesWithFilter(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     ref: ObjRef,
     includes: EntitiesApiGetAllEntitiesAttributesRequest["include"],
 ) {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.entities.getAllEntitiesAttributes(
+    return EntitiesApi_GetAllEntitiesAttributes(
+        client.axios,
+        client.basePath,
         {
             workspaceId,
             // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside it

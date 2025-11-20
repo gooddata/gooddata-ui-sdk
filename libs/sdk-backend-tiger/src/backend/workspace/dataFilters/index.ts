@@ -2,11 +2,19 @@
 
 import { v4 as uuid } from "uuid";
 
-import {
-    ITigerClient,
-    JsonApiDatasetOutMetaOriginOriginTypeEnum,
+import type {
+    ITigerClientBase,
     JsonApiWorkspaceDataFilterSettingOutWithLinks,
 } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
+    EntitiesApi_CreateEntityWorkspaceDataFilters,
+    EntitiesApi_DeleteEntityWorkspaceDataFilterSettings,
+    EntitiesApi_DeleteEntityWorkspaceDataFilters,
+    EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings,
+    EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
+    EntitiesApi_PatchEntityWorkspaceDataFilters,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import {
     IWorkspaceDataFilter,
@@ -28,7 +36,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
     public async getDataFilters(): Promise<IWorkspaceDataFilter[]> {
         return this.authCall(async (client) => {
             const [entitiesResult, settingsResult] = await Promise.all([
-                client.entities.getAllEntitiesWorkspaceDataFilters({
+                EntitiesApi_GetAllEntitiesWorkspaceDataFilters(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     // For now, we don't expect there will be many data filters.
                     // Possibly all pages must be fetched or API must return paged result that already
@@ -36,7 +44,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     // on client.
                     size: 1000,
                 }),
-                client.entities.getAllEntitiesWorkspaceDataFilterSettings({
+                EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings(client.axios, client.basePath, {
                     workspaceId: this.workspace,
                     include: ["workspaceDataFilter"],
                     size: 1000, // see comment above
@@ -51,9 +59,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         title: filter.attributes?.title,
                         columnName: filter.attributes?.columnName,
                         settings: settingsMap[filter.id] || [],
-                        isInherited:
-                            filter.meta?.origin?.originType ===
-                            JsonApiDatasetOutMetaOriginOriginTypeEnum.PARENT,
+                        isInherited: filter.meta?.origin?.originType === "PARENT",
                     };
                 }) || []
             );
@@ -78,8 +84,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     ref: idRef(setting.id, "workspaceDataFilterSetting"),
                     title: setting.attributes?.title,
                     filterValues: setting.attributes?.filterValues || [],
-                    isInherited:
-                        setting.meta?.origin?.originType === JsonApiDatasetOutMetaOriginOriginTypeEnum.PARENT,
+                    isInherited: setting.meta?.origin?.originType === "PARENT",
                 });
             }
             return result;
@@ -90,7 +95,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
         newDataFilter: IWorkspaceDataFilterDefinition,
     ): Promise<IWorkspaceDataFilter> => {
         return this.authCall(async (client) => {
-            const result = await client.entities.createEntityWorkspaceDataFilters({
+            const result = await EntitiesApi_CreateEntityWorkspaceDataFilters(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiWorkspaceDataFilterInDocument: {
                     data: {
@@ -119,7 +124,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
     ): Promise<IWorkspaceDataFilter> => {
         return this.authCall(async (client) => {
             const objectId = await objRefToIdentifier(updatedDataFilter.ref, this.authCall);
-            await client.entities.patchEntityWorkspaceDataFilters({
+            await EntitiesApi_PatchEntityWorkspaceDataFilters(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
                 jsonApiWorkspaceDataFilterPatchDocument: {
@@ -142,7 +147,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
             const dataFilterId = await objRefToIdentifier(dataFilter, this.authCall);
             await this.deleteExistingSettings(client, dataFilterId);
 
-            await client.entities.createEntityWorkspaceDataFilterSettings({
+            await EntitiesApi_CreateEntityWorkspaceDataFilterSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiWorkspaceDataFilterSettingInDocument: {
                     data: {
@@ -165,20 +170,21 @@ export class TigerDataFiltersService implements IDataFiltersService {
         });
     };
 
-    private deleteExistingSettings = async (client: ITigerClient, dataFilterId: string) => {
-        const existingSettings = await client.entities.getAllEntitiesWorkspaceDataFilterSettings({
-            workspaceId: this.workspace,
-            filter: `workspaceDataFilter.id==${dataFilterId}`,
-            include: ["workspaceDataFilter"],
-        });
+    private deleteExistingSettings = async (client: ITigerClientBase, dataFilterId: string) => {
+        const existingSettings = await EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings(
+            client.axios,
+            client.basePath,
+            {
+                workspaceId: this.workspace,
+                filter: `workspaceDataFilter.id==${dataFilterId}`,
+                include: ["workspaceDataFilter"],
+            },
+        );
         await Promise.all(
             existingSettings.data.data
-                .filter(
-                    (setting) =>
-                        setting.meta?.origin?.originType === JsonApiDatasetOutMetaOriginOriginTypeEnum.NATIVE,
-                )
+                .filter((setting) => setting.meta?.origin?.originType === "NATIVE")
                 .map((setting) =>
-                    client.entities.deleteEntityWorkspaceDataFilterSettings({
+                    EntitiesApi_DeleteEntityWorkspaceDataFilterSettings(client.axios, client.basePath, {
                         workspaceId: this.workspace,
                         objectId: setting.id,
                     }),
@@ -189,7 +195,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
     public deleteDataFilter = async (ref: ObjRef): Promise<void> => {
         return this.authCall(async (client) => {
             const objectId = await objRefToIdentifier(ref, this.authCall);
-            await client.entities.deleteEntityWorkspaceDataFilters({
+            await EntitiesApi_DeleteEntityWorkspaceDataFilters(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
             });

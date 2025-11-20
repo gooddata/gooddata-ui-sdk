@@ -1,5 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import { AssigneeIdentifierTypeEnum, AvailableAssignees } from "@gooddata/api-client-tiger";
+
+import { AvailableAssignees, ManageDashboardPermissionsRequestInner } from "@gooddata/api-client-tiger";
+import {
+    ActionsApi_AvailableAssignees,
+    ActionsApi_DashboardPermissions,
+    ActionsApi_ManageDashboardPermissions,
+} from "@gooddata/api-client-tiger/actions";
 import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import {
     AccessGranteeDetail,
@@ -28,9 +34,10 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
     public async getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const permissions = await this.authCall((client) => {
-            return client.actions
-                .dashboardPermissions({ workspaceId: this.workspace, dashboardId: objectId })
-                .then((result) => result.data);
+            return ActionsApi_DashboardPermissions(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                dashboardId: objectId,
+            }).then((result: any) => result.data);
         });
 
         return [
@@ -55,36 +62,34 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
 
     public async changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
-        const manageDashboardPermissionsRequestInner = await Promise.all(
-            grantees.map(async (grantee) => {
-                if (grantee.type === "allWorkspaceUsers") {
+        //ivec investigate
+        const manageDashboardPermissionsRequestInner: ManageDashboardPermissionsRequestInner[] =
+            await Promise.all(
+                grantees.map(async (grantee) => {
+                    if (grantee.type === "allWorkspaceUsers") {
+                        return {
+                            assigneeRule: {
+                                type: grantee.type,
+                            },
+                            permissions: grantee.permissions,
+                        };
+                    }
                     return {
-                        assigneeRule: {
-                            type: grantee.type,
+                        assigneeIdentifier: {
+                            id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
+                            type: isGranularUserAccessGrantee(grantee) ? "user" : "userGroup",
                         },
                         permissions: grantee.permissions,
                     };
-                }
-                return {
-                    assigneeIdentifier: {
-                        id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
-                        type: isGranularUserAccessGrantee(grantee)
-                            ? AssigneeIdentifierTypeEnum.USER
-                            : AssigneeIdentifierTypeEnum.USER_GROUP,
-                    },
-                    permissions: grantee.permissions,
-                };
-            }),
-        );
+                }),
+            );
 
         await this.authCall((client) => {
-            return client.actions
-                .manageDashboardPermissions({
-                    workspaceId: this.workspace,
-                    dashboardId: objectId,
-                    manageDashboardPermissionsRequestInner,
-                })
-                .then((result) => result.data);
+            return ActionsApi_ManageDashboardPermissions(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                dashboardId: objectId,
+                manageDashboardPermissionsRequestInner,
+            }).then((result: any) => result.data);
         });
     }
 
@@ -94,13 +99,14 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
     ): Promise<IAvailableAccessGrantee[]> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const availableGrantees = await this.authCall((client) => {
-            return client.actions
-                .availableAssignees({
-                    workspaceId: this.workspace,
-                    dashboardId: objectId,
-                })
-                .then((result) => result.data)
-                .then((assignees) => (search ? filterAssignees(assignees, search) : assignees));
+            return ActionsApi_AvailableAssignees(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                dashboardId: objectId,
+            })
+                .then((result: any) => result.data)
+                .then((assignees: AvailableAssignees) =>
+                    search ? filterAssignees(assignees, search) : assignees,
+                );
         });
 
         return [

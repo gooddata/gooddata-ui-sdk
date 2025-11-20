@@ -1,6 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    AutomationApi_MarkAsReadNotification,
+    AutomationApi_MarkAsReadNotificationAll,
+} from "@gooddata/api-client-tiger/automation";
 import { INotificationsQuery, IOrganizationNotificationService } from "@gooddata/sdk-backend-spi";
 
 import { NotificationsQuery } from "./notificationsQuery.js";
@@ -18,8 +22,8 @@ export class OrganizationNotificationService implements IOrganizationNotificatio
      * @beta
      */
     public markNotificationAsRead(notificationId: string): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.automation.markAsReadNotification({ notificationId });
+        return this.authCall(async (client: ITigerClientBase) => {
+            await AutomationApi_MarkAsReadNotification(client.axios, client.basePath, { notificationId });
         });
     }
 
@@ -31,8 +35,8 @@ export class OrganizationNotificationService implements IOrganizationNotificatio
      * @beta
      */
     public markAllNotificationsAsRead(): Promise<void> {
-        return this.authCall(async (client: ITigerClient) => {
-            await client.automation.markAsReadNotificationAll({});
+        return this.authCall(async (client: ITigerClientBase) => {
+            await AutomationApi_MarkAsReadNotificationAll(client.axios, client.basePath, {});
         });
     }
 

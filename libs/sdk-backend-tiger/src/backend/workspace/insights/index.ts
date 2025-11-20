@@ -5,7 +5,6 @@ import {
     EntitiesApiGetEntityVisualizationObjectsRequest,
     JsonApiAttributeOutWithLinks,
     JsonApiMetricOutIncludes,
-    JsonApiVisualizationObjectInTypeEnum,
     JsonApiVisualizationObjectOutDocument,
     MetadataUtilities,
     VisualizationObjectModelV1,
@@ -17,6 +16,16 @@ import {
     isMetricItem,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import { ActionsApi_GetDependentEntitiesGraphFromEntryPoints } from "@gooddata/api-client-tiger/actions";
+import {
+    EntitiesApi_CreateEntityVisualizationObjects,
+    EntitiesApi_DeleteEntityVisualizationObjects,
+    EntitiesApi_GetAllEntitiesAttributes,
+    EntitiesApi_GetAllEntitiesVisualizationObjects,
+    EntitiesApi_GetEntityVisualizationObjects,
+    EntitiesApi_PatchEntityVisualizationObjects,
+    EntitiesApi_UpdateEntityVisualizationObjects,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IGetInsightOptions,
@@ -100,7 +109,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                       }
                     : {};
                 return await this.authCall((client) =>
-                    client.entities.getAllEntitiesVisualizationObjects({
+                    EntitiesApi_GetAllEntitiesVisualizationObjects(client.axios, client.basePath, {
                         ...requestParameters,
                         metaInclude: ["page"],
                         ...filterObj,
@@ -158,34 +167,40 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             ...attrs.map((attr) => `id==${attr}`),
         ].join(",");
         const response = await this.authCall((client) => {
-            return client.entities
-                .getAllEntitiesAttributes(
-                    {
-                        workspaceId: this.workspace,
-                        filter,
-                        include: ["labels", "defaultView", "dataset"],
-                    },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                )
-                .then((res) => res.data);
+            return EntitiesApi_GetAllEntitiesAttributes(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    filter,
+                    include: ["labels", "defaultView", "dataset"],
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ).then((res: any) => res.data);
         });
 
-        const attributes: ICatalogAttribute[] = response.data.map((item: JsonApiAttributeOutWithLinks) => {
-            const includedItems = response.included || [];
-            const labels = (item.relationships?.labels?.data ?? []).map((label) => label.id);
-            const dataset = item.relationships?.dataset?.data?.id;
+        const attributes: ICatalogAttribute[] = (response as any).data.map(
+            (item: JsonApiAttributeOutWithLinks) => {
+                const includedItems = (response as any).included || [];
+                const labels = (item.relationships?.labels?.data ?? []).map((label) => label.id);
+                const dataset = item.relationships?.dataset?.data?.id;
 
-            const relatedLabels = includedItems
-                .filter((item) => labels.includes(item.id))
-                .filter(isLabelItem);
-            const relatedDataset = includedItems.filter((item) => item.id === dataset).filter(isDataSetItem);
-            const primaryRelatedLabel = relatedLabels.find((label) => label.attributes?.primary);
-            const geoLabels = relatedLabels.filter((label) => label.attributes?.valueType?.match(/GEO/));
-            const defaultLabel = primaryRelatedLabel ?? relatedLabels[0];
-            return convertAttribute(item, defaultLabel, geoLabels, relatedLabels, relatedDataset[0]);
-        });
+                const relatedLabels = includedItems
+                    .filter((item: any) => labels.includes(item.id))
+                    .filter(isLabelItem);
+                const relatedDataset = includedItems
+                    .filter((item: any) => item.id === dataset)
+                    .filter(isDataSetItem);
+                const primaryRelatedLabel = relatedLabels.find((label: any) => label.attributes?.primary);
+                const geoLabels = relatedLabels.filter((label: any) =>
+                    label.attributes?.valueType?.match(/GEO/),
+                );
+                const defaultLabel = primaryRelatedLabel ?? relatedLabels[0];
+                return convertAttribute(item, defaultLabel, geoLabels, relatedLabels, relatedDataset[0]);
+            },
+        );
 
         return attributes;
     };
@@ -231,7 +246,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
         const includeObj = references.length ? { include: references } : {};
         const response = await this.authCall((client) =>
-            client.entities.getEntityVisualizationObjects(
+            EntitiesApi_GetEntityVisualizationObjects(
+                client.axios,
+                client.basePath,
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -254,12 +271,14 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((client) => {
-            return client.entities.createEntityVisualizationObjects(
+            return EntitiesApi_CreateEntityVisualizationObjects(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectPostOptionalIdDocument: {
                         data: {
-                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
+                            type: "visualizationObject",
                             attributes: {
                                 description: insightSummary(insight),
                                 content: convertInsight(insight),
@@ -291,14 +310,16 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((client) => {
-            return client.entities.updateEntityVisualizationObjects(
+            return EntitiesApi_UpdateEntityVisualizationObjects(
+                client.axios,
+                client.basePath,
                 {
                     objectId: insightId(insight),
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: insightId(insight),
-                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
+                            type: "visualizationObject",
                             attributes: {
                                 description: insightSummary(insight),
                                 content: convertInsight(insight),
@@ -321,14 +342,16 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     ): Promise<IInsight> => {
         const objectId = await objRefToIdentifier(insightMeta.ref, this.authCall);
         const response = await this.authCall((client) => {
-            return client.entities.patchEntityVisualizationObjects(
+            return EntitiesApi_PatchEntityVisualizationObjects(
+                client.axios,
+                client.basePath,
                 {
                     objectId,
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectPatchDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
+                            type: "visualizationObject",
                             attributes: {
                                 ...(insightMeta.title === undefined ? {} : { title: insightMeta.title }),
                                 ...(insightMeta.description === undefined
@@ -356,7 +379,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.entities.deleteEntityVisualizationObjects({
+            EntitiesApi_DeleteEntityVisualizationObjects(client.axios, client.basePath, {
                 objectId: id,
                 workspaceId: this.workspace,
             }),
@@ -372,23 +395,21 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-        const entitiesGraph = await this.authCall((client) =>
-            client.actions
-                .getDependentEntitiesGraphFromEntryPoints({
-                    workspaceId: this.workspace,
-                    dependentEntitiesRequest: {
-                        identifiers: [
-                            {
-                                id,
-                                type: "visualizationObject",
-                            },
-                        ],
-                    },
-                })
-                .then((res) => res.data.graph),
-        );
+        const entitiesGraph = (await this.authCall((client) =>
+            ActionsApi_GetDependentEntitiesGraphFromEntryPoints(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                dependentEntitiesRequest: {
+                    identifiers: [
+                        {
+                            id,
+                            type: "visualizationObject",
+                        },
+                    ],
+                },
+            }).then((res: any) => res.data.graph),
+        )) as any;
         const analyticalDashboards = entitiesGraph.nodes
-            .filter(({ type }) => type === "analyticalDashboard")
+            .filter(({ type }: { type: string }) => type === "analyticalDashboard")
             .map(convertGraphEntityNodeToAnalyticalDashboard);
 
         return { analyticalDashboards };

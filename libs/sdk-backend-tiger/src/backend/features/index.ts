@@ -1,15 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { LRUCache } from "lru-cache";
 
 import {
     ApiEntitlement,
-    ApiEntitlementNameEnum,
     DeclarativeWorkspace,
     FeatureContext,
     ILiveFeatures,
     IStaticFeatures,
     IUserProfile,
 } from "@gooddata/api-client-tiger";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
@@ -45,7 +46,7 @@ export class TigerFeaturesService {
             return cachedResponse;
         }
         const response = this.authCall(async (client) => {
-            const prof = profile || (await client.profile.getCurrent());
+            const prof = profile || (await ProfileApi_GetCurrent(client.axios));
             const results = await loadFeatures(prof, contextWithVersion);
 
             return {
@@ -115,16 +116,14 @@ export function pickContext(
 }
 
 export const getOrganizationTier = (entitlements: ApiEntitlement[] = []) => {
-    const tierEntitlement = entitlements.find(
-        (entitlement) => entitlement.name === ApiEntitlementNameEnum.TIER,
-    );
+    const tierEntitlement = entitlements.find((entitlement) => entitlement.name === "Tier");
 
     return tierEntitlement?.value;
 };
 
 export const getControlledFeatureRollout = (entitlements: ApiEntitlement[] = []) => {
     const controlledFeatureRolloutEntitlement = entitlements.find(
-        (entitlement) => entitlement.name === ApiEntitlementNameEnum.CONTROLLED_FEATURE_ROLLOUT,
+        (entitlement) => entitlement.name === "ControlledFeatureRollout",
     );
 
     return !!controlledFeatureRolloutEntitlement;

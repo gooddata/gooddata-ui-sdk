@@ -49,6 +49,7 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
 export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
 export type {
+    ApiEntitlementNameEnum,
     DeclarativeModel,
     GenerateLdmRequest,
     ApiEntitlement,
@@ -62,7 +63,7 @@ export type {
     ActionsApiProcessInvitationRequest,
     Invitation,
 } from "@gooddata/api-client-tiger";
-export { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
+
 export type {
     SetJwtCallback,
     JwtIsAboutToExpireHandler,

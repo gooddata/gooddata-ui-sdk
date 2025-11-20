@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
+import type { JsonApiAutomationOutIncludes } from "@gooddata/api-client-tiger";
 import {
-    AutomationOrganizationViewControllerApi,
-    AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
-    JsonApiAutomationOutIncludes,
-} from "@gooddata/api-client-tiger";
+    type AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
+    AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     AutomationFilterType,
@@ -179,12 +179,11 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                     };
 
                 const items = await this.authCall((client) => {
-                    const orgController = new AutomationOrganizationViewControllerApi(
-                        undefined,
-                        "",
+                    return AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations(
                         client.axios,
+                        client.basePath,
+                        requestParams,
                     );
-                    return orgController.getAllAutomationsWorkspaceAutomations(requestParams);
                 })
                     .then((res) => {
                         const totalCount = res.data.meta?.page?.totalElements;

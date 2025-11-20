@@ -2,6 +2,11 @@
 
 import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
 import {
+    EntitiesApi_GetEntityOrganizations,
+    EntitiesApi_PatchEntityOrganizations,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+import {
     IOrganization,
     IOrganizationAutomationService,
     IOrganizationLlmEndpointsService,
@@ -45,7 +50,7 @@ export class TigerOrganization implements IOrganization {
 
         if (includeAdditionalDetails) {
             const result = await this.authCall((client) =>
-                client.entities.getEntityOrganizations({
+                EntitiesApi_GetEntityOrganizations(client.axios, client.basePath, {
                     id: this.organizationId,
                     // we are interested only in these for now (can be extended in future)
                     include: ["bootstrapUser", "bootstrapUserGroup", "identityProvider"],
@@ -83,7 +88,7 @@ export class TigerOrganization implements IOrganization {
         }
 
         const { organizationName, organizationId } = await this.authCall((client) =>
-            client.profile.getCurrent(),
+            ProfileApi_GetCurrent(client.axios),
         );
         return {
             id: organizationId,
@@ -95,7 +100,7 @@ export class TigerOrganization implements IOrganization {
         descriptor: IOrganizationDescriptorUpdate,
     ): Promise<IOrganizationDescriptor> {
         const result = await this.authCall((client) =>
-            client.entities.patchEntityOrganizations({
+            EntitiesApi_PatchEntityOrganizations(client.axios, client.basePath, {
                 id: this.organizationId,
                 include: ["bootstrapUser", "bootstrapUserGroup"],
                 jsonApiOrganizationPatchDocument: {
@@ -176,7 +181,7 @@ export class TigerOrganizations implements IOrganizations {
 
     public async getCurrentOrganization(): Promise<IOrganization> {
         const { organizationName, organizationId } = await this.authCall((client) =>
-            client.profile.getCurrent(),
+            ProfileApi_GetCurrent(client.axios),
         );
         return new TigerOrganization(this.authCall, organizationId, organizationName);
     }

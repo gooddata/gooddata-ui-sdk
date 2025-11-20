@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { ActionsApi_ListWorkspaceUsers } from "@gooddata/api-client-tiger/actions";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IWorkspaceUsersQuery,
@@ -44,7 +45,7 @@ export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const items = await this.authCall((client) =>
-                    client.actions.listWorkspaceUsers({
+                    ActionsApi_ListWorkspaceUsers(client.axios, client.basePath, {
                         workspaceId: this.workspaceId,
                         page: offset / limit,
                         size: limit,

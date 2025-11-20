@@ -1,6 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
+    ActionsApi_DeleteOrganizationAutomations,
+    ActionsApi_PauseOrganizationAutomations,
+    ActionsApi_UnpauseOrganizationAutomations,
+    ActionsApi_UnsubscribeOrganizationAutomations,
+} from "@gooddata/api-client-tiger/actions";
+import {
     IGetAutomationsQueryOptions,
     IOrganizationAutomationService,
     IOrganizationAutomationsQuery,
@@ -27,7 +33,7 @@ export class TigerOrganizationAutomationService implements IOrganizationAutomati
 
     public deleteAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.deleteOrganizationAutomations({
+            await ActionsApi_DeleteOrganizationAutomations(client.axios, client.basePath, {
                 organizationAutomationManagementBulkRequest: {
                     automations,
                 },
@@ -41,7 +47,7 @@ export class TigerOrganizationAutomationService implements IOrganizationAutomati
 
     public pauseAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.pauseOrganizationAutomations({
+            await ActionsApi_PauseOrganizationAutomations(client.axios, client.basePath, {
                 organizationAutomationManagementBulkRequest: {
                     automations,
                 },
@@ -55,7 +61,7 @@ export class TigerOrganizationAutomationService implements IOrganizationAutomati
 
     public resumeAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.unpauseOrganizationAutomations({
+            await ActionsApi_UnpauseOrganizationAutomations(client.axios, client.basePath, {
                 organizationAutomationManagementBulkRequest: {
                     automations,
                 },
@@ -69,7 +75,7 @@ export class TigerOrganizationAutomationService implements IOrganizationAutomati
 
     public unsubscribeAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void> {
         return this.authCall(async (client) => {
-            await client.actions.unsubscribeOrganizationAutomations({
+            await ActionsApi_UnsubscribeOrganizationAutomations(client.axios, client.basePath, {
                 organizationAutomationManagementBulkRequest: {
                     automations,
                 },

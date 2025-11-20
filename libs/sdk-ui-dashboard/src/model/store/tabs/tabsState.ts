@@ -37,6 +37,12 @@ export interface TabState {
     attributeFilterConfigs?: AttributeFilterConfigsState;
     filterContext?: FilterContextState;
     layout?: LayoutState;
+
+    /**
+     * UI-only flag indicating the tab is currently being renamed.
+     * @internal
+     */
+    isRenaming?: boolean;
 }
 
 /**

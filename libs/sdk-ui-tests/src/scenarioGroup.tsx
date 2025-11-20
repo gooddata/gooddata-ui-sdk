@@ -216,7 +216,20 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         m: ScenarioModification<T> = (v) => v,
     ): ScenarioGroup<T> {
         fromGroup.scenarioList.forEach((scenario) => {
-            this.addScenarios(scenario.name, scenario.props, customizer, m);
+            // Preserve existing scenario tags and also apply this group's default tags as a base.
+            const baseTags = [...scenario.tags, ...this.defaultTags];
+
+            const variants = customizer(scenario.name, scenario.props, baseTags);
+
+            variants.forEach(([name, props, tags]) => {
+                this.addScenario(name, props, (builder) => {
+                    if (tags) {
+                        builder.withTags(...tags);
+                    }
+
+                    return m(builder);
+                });
+            });
         });
 
         return this;

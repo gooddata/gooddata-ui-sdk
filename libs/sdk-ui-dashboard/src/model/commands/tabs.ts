@@ -115,6 +115,10 @@ export interface CreateDashboardTabPayload {
      * Optional index at which the new tab should be inserted. Defaults to the end of the list.
      */
     readonly index?: number;
+    /**
+     * Optional flag to indicate whether the new tab should be started in renaming mode.
+     */
+    readonly shouldStartRenaming?: boolean;
 }
 
 /**
@@ -138,6 +142,7 @@ export interface CreateDashboardTab extends IDashboardCommand {
  *
  * @param title - optional title for the new tab
  * @param index - optional position to insert tab (defaults to end)
+ * @param shouldStartRenaming - optional flag to indicate whether the new tab should be started in renaming mode
  * @param correlationId - specify correlation id to use for this command
  * @returns create dashboard tab command
  *
@@ -146,6 +151,7 @@ export interface CreateDashboardTab extends IDashboardCommand {
 export function createDashboardTab(
     title?: string,
     index?: number,
+    shouldStartRenaming?: boolean,
     correlationId?: string,
 ): CreateDashboardTab {
     return {
@@ -154,6 +160,7 @@ export function createDashboardTab(
         payload: {
             title,
             index,
+            shouldStartRenaming,
         },
     };
 }
@@ -201,5 +208,121 @@ export function deleteDashboardTab(tabId: string, correlationId?: string): Delet
         payload: {
             tabId,
         },
+    };
+}
+
+/**
+ * Payload of the {@link StartRenamingDashboardTab} command.
+ * @alpha
+ */
+export interface StartRenamingDashboardTabPayload {
+    /**
+     * Optional identifier of the tab to start renaming. If not provided, the active tab is used.
+     */
+    readonly tabId?: string;
+    /**
+     * Optional flag to indicate whether the tab should be auto-selected before starting renaming.
+     * Defaults to true.
+     */
+    readonly shouldSelectTab?: boolean;
+}
+
+/**
+ * Command to start renaming mode for a tab.
+ * @alpha
+ */
+export interface StartRenamingDashboardTab extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.START";
+    readonly payload: StartRenamingDashboardTabPayload;
+}
+
+/**
+ * Creates the StartRenamingDashboardTab command.
+ * @alpha
+ */
+export function startRenamingDashboardTab(
+    tabId?: string,
+    correlationId?: string,
+    shouldSelectTab?: boolean,
+): StartRenamingDashboardTab {
+    return {
+        type: "GDC.DASH/CMD.TAB.RENAME_MODE.START",
+        correlationId,
+        payload: { tabId, shouldSelectTab },
+    };
+}
+
+/**
+ * Payload of the {@link CancelRenamingDashboardTab} command.
+ * @alpha
+ */
+export interface CancelRenamingDashboardTabPayload {
+    /**
+     * Optional identifier of the tab to cancel renaming. If not provided, the active tab is used.
+     */
+    readonly tabId?: string;
+}
+
+/**
+ * Command to cancel renaming mode for a tab.
+ * @alpha
+ */
+export interface CancelRenamingDashboardTab extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL";
+    readonly payload: CancelRenamingDashboardTabPayload;
+}
+
+/**
+ * Creates the CancelRenamingDashboardTab command.
+ * @alpha
+ */
+export function cancelRenamingDashboardTab(
+    tabId?: string,
+    correlationId?: string,
+): CancelRenamingDashboardTab {
+    return {
+        type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL",
+        correlationId,
+        payload: { tabId },
+    };
+}
+
+/**
+ * Payload of the {@link RenameDashboardTab} command.
+ * @alpha
+ */
+export interface RenameDashboardTabPayload {
+    /**
+     * New title for the tab.
+     */
+    readonly title: string;
+    /**
+     * Optional identifier of the tab to rename. If not provided, the active tab is used.
+     */
+    readonly tabId?: string;
+}
+
+/**
+ * Command to rename a dashboard tab.
+ * @alpha
+ */
+export interface RenameDashboardTab extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.RENAME";
+    readonly payload: RenameDashboardTabPayload;
+}
+
+/**
+ * Creates the RenameDashboardTab command.
+ * @alpha
+ */
+export function renameDashboardTab(
+    title: string,
+    tabId?: string,
+    correlationId?: string,
+): RenameDashboardTab {
+    return {
+        type: "GDC.DASH/CMD.TAB.RENAME",
+        correlationId,
+        payload: { title, tabId },
     };
 }

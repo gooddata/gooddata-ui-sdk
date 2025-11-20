@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesAutomations } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     AutomationFilterType,
@@ -128,7 +129,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                 const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? false;
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesAutomations({
+                    EntitiesApi_GetAllEntitiesAutomations(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...filterObj,

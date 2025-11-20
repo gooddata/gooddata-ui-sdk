@@ -7,10 +7,10 @@ import { AttributeDisplayFormType } from "@gooddata/sdk-model";
 import { convertLabelType } from "../fromBackend/LabelTypeConverter.js";
 
 const mapping: [JsonApiLabelOutAttributesValueTypeEnum, AttributeDisplayFormType][] = [
-    [JsonApiLabelOutAttributesValueTypeEnum.HYPERLINK, "GDC.link"],
-    [JsonApiLabelOutAttributesValueTypeEnum.GEO, "GDC.geo.pin"],
-    [JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE, "GDC.geo.pin_latitude"],
-    [JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE, "GDC.geo.pin_longitude"],
+    ["HYPERLINK", "GDC.link"],
+    ["GEO", "GDC.geo.pin"],
+    ["GEO_LATITUDE", "GDC.geo.pin_latitude"],
+    ["GEO_LONGITUDE", "GDC.geo.pin_longitude"],
 ];
 
 describe("LabelTypeConverter", () => {

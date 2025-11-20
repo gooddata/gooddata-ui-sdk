@@ -210,7 +210,7 @@ const granularityMap: { [key in GenAIDateGranularity]: DateAttributeGranularity 
     MINUTE: "GDC.time.minute",
     HOUR: "GDC.time.hour",
     DAY: "GDC.time.date",
-    WEEK: "GDC.time.week",
+    WEEK: "GDC.time.week_us",
     MONTH: "GDC.time.month",
     QUARTER: "GDC.time.quarter",
     YEAR: "GDC.time.year",

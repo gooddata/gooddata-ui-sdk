@@ -9,6 +9,16 @@ import {
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_CreateEntityColorPalettes,
+    EntitiesApi_CreateEntityThemes,
+    EntitiesApi_DeleteEntityColorPalettes,
+    EntitiesApi_DeleteEntityThemes,
+    EntitiesApi_GetAllEntitiesColorPalettes,
+    EntitiesApi_GetAllEntitiesThemes,
+    EntitiesApi_UpdateEntityColorPalettes,
+    EntitiesApi_UpdateEntityThemes,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import {
     IColorPaletteDefinition,
@@ -45,7 +55,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async getThemes(): Promise<IThemeMetadataObject[]> {
         return await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesThemes, {
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesThemes, {
                 sort: ["name"],
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
@@ -72,18 +82,18 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject> {
         return await this.authCall((client) =>
-            client.entities
-                .createEntityThemes(
-                    {
-                        jsonApiThemeInDocument: {
-                            data: convertThemeToBackend(theme.id || uuidv4(), theme),
-                        },
+            EntitiesApi_CreateEntityThemes(
+                client.axios,
+                client.basePath,
+                {
+                    jsonApiThemeInDocument: {
+                        data: convertThemeToBackend(theme.id || uuidv4(), theme),
                     },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                )
-                .then(this.parseResult),
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ).then(this.parseResult),
         );
     }
 
@@ -93,19 +103,19 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         }
         const id = await objRefToIdentifier(theme.ref, this.authCall);
         return await this.authCall((client) =>
-            client.entities
-                .updateEntityThemes(
-                    {
-                        id,
-                        jsonApiThemeInDocument: {
-                            data: convertThemeToBackend(id, theme),
-                        },
+            EntitiesApi_UpdateEntityThemes(
+                client.axios,
+                client.basePath,
+                {
+                    id,
+                    jsonApiThemeInDocument: {
+                        data: convertThemeToBackend(id, theme),
                     },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                )
-                .then(this.parseResult),
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ).then(this.parseResult),
         );
     }
 
@@ -116,7 +126,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     public async deleteTheme(themeRef: ObjRef): Promise<void> {
         const id = await objRefToIdentifier(themeRef, this.authCall);
         await this.authCall((client) =>
-            client.entities.deleteEntityThemes({
+            EntitiesApi_DeleteEntityThemes(client.axios, client.basePath, {
                 id,
             }),
         );
@@ -124,7 +134,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
         return await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesColorPalettes, {
+            MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesColorPalettes, {
                 sort: ["name"],
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
@@ -154,18 +164,18 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     ): Promise<IColorPaletteMetadataObject> {
         if (isValidColorPalette(colorPalette.colorPalette)) {
             return await this.authCall((client) =>
-                client.entities
-                    .createEntityColorPalettes(
-                        {
-                            jsonApiColorPaletteInDocument: {
-                                data: convertColorPaletteToBackend(colorPalette.id || uuidv4(), colorPalette),
-                            },
+                EntitiesApi_CreateEntityColorPalettes(
+                    client.axios,
+                    client.basePath,
+                    {
+                        jsonApiColorPaletteInDocument: {
+                            data: convertColorPaletteToBackend(colorPalette.id || uuidv4(), colorPalette),
                         },
-                        {
-                            headers: jsonApiHeaders,
-                        },
-                    )
-                    .then(this.parseColorPaletteResult),
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                ).then(this.parseColorPaletteResult),
             );
         }
         throw new Error("Invalid color palette format");
@@ -180,19 +190,19 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         if (isValidColorPalette(colorPalette.colorPalette)) {
             const id = await objRefToIdentifier(colorPalette.ref, this.authCall);
             return await this.authCall((client) =>
-                client.entities
-                    .updateEntityColorPalettes(
-                        {
-                            id,
-                            jsonApiColorPaletteInDocument: {
-                                data: convertColorPaletteToBackend(id, colorPalette),
-                            },
+                EntitiesApi_UpdateEntityColorPalettes(
+                    client.axios,
+                    client.basePath,
+                    {
+                        id,
+                        jsonApiColorPaletteInDocument: {
+                            data: convertColorPaletteToBackend(id, colorPalette),
                         },
-                        {
-                            headers: jsonApiHeaders,
-                        },
-                    )
-                    .then(this.parseColorPaletteResult),
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                ).then(this.parseColorPaletteResult),
             );
         }
         throw new Error("Invalid color palette format");
@@ -200,7 +210,9 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async deleteColorPalette(colorPaletteRef: ObjRef): Promise<void> {
         const id = await objRefToIdentifier(colorPaletteRef, this.authCall);
-        await this.authCall((client) => client.entities.deleteEntityColorPalettes({ id }));
+        await this.authCall((client) =>
+            EntitiesApi_DeleteEntityColorPalettes(client.axios, client.basePath, { id }),
+        );
     }
 
     private parseColorPaletteResult(

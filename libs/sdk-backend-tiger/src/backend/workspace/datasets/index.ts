@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { EntitiesApi_GetAllEntitiesDatasets } from "@gooddata/api-client-tiger/entitiesObjects";
 import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import {
     IDataSetMetadataObject,
@@ -35,7 +36,7 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
                 .filter(isIdentifierRef)
                 .map((ref) => `id==${ref.identifier}`)
                 .join(",");
-            const dataSets = await client.entities.getAllEntitiesDatasets({
+            const dataSets = await EntitiesApi_GetAllEntitiesDatasets(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 filter,
             });

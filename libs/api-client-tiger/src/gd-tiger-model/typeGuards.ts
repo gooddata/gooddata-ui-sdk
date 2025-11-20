@@ -12,21 +12,13 @@ import {
 } from "../generated/afm-rest-api/index.js";
 import {
     JsonApiAttributeOutWithLinks,
-    JsonApiAttributeOutWithLinksTypeEnum,
     JsonApiDashboardPluginOutWithLinks,
-    JsonApiDashboardPluginOutWithLinksTypeEnum,
     JsonApiDatasetOutWithLinks,
-    JsonApiDatasetOutWithLinksTypeEnum,
     JsonApiFactOutWithLinks,
-    JsonApiFactOutWithLinksTypeEnum,
     JsonApiFilterContextIn,
-    JsonApiFilterContextInTypeEnum,
     JsonApiLabelOutWithLinks,
-    JsonApiLabelOutWithLinksTypeEnum,
     JsonApiMetricOutWithLinks,
-    JsonApiMetricOutWithLinksTypeEnum,
     JsonApiVisualizationObjectOutWithLinks,
-    JsonApiVisualizationObjectOutWithLinksTypeEnum,
 } from "../generated/metadata-json-api/index.js";
 
 /**
@@ -82,17 +74,14 @@ export function isResultTotalHeader(header: ExecutionResultHeader): header is To
 export function isVisualizationObjectsItem(
     visualizationObject: unknown,
 ): visualizationObject is JsonApiVisualizationObjectOutWithLinks {
-    return (
-        (visualizationObject as JsonApiVisualizationObjectOutWithLinks).type ===
-        JsonApiVisualizationObjectOutWithLinksTypeEnum.VISUALIZATION_OBJECT
-    );
+    return (visualizationObject as JsonApiVisualizationObjectOutWithLinks).type === "visualizationObject";
 }
 
 /**
  * @public
  */
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn {
-    return (filterContext as JsonApiFilterContextIn).type === JsonApiFilterContextInTypeEnum.FILTER_CONTEXT;
+    return (filterContext as JsonApiFilterContextIn).type === "filterContext";
 }
 
 /**
@@ -101,45 +90,40 @@ export function isFilterContextData(filterContext: unknown): filterContext is Js
 export function isDashboardPluginsItem(
     dashboardPlugin: unknown,
 ): dashboardPlugin is JsonApiDashboardPluginOutWithLinks {
-    return (
-        (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type ===
-        JsonApiDashboardPluginOutWithLinksTypeEnum.DASHBOARD_PLUGIN
-    );
+    return (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type === "dashboardPlugin";
 }
 
 /**
  * @public
  */
 export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks {
-    return (dataSet as JsonApiDatasetOutWithLinks).type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
+    return (dataSet as JsonApiDatasetOutWithLinks).type === "dataset";
 }
 
 /**
  * @public
  */
 export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks {
-    return (label as JsonApiLabelOutWithLinks).type === JsonApiLabelOutWithLinksTypeEnum.LABEL;
+    return (label as JsonApiLabelOutWithLinks).type === "label";
 }
 
 /**
  * @public
  */
 export function isAttributeItem(attribute: unknown): attribute is JsonApiAttributeOutWithLinks {
-    return (
-        (attribute as JsonApiAttributeOutWithLinks).type === JsonApiAttributeOutWithLinksTypeEnum.ATTRIBUTE
-    );
+    return (attribute as JsonApiAttributeOutWithLinks).type === "attribute";
 }
 
 /**
  * @public
  */
 export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks {
-    return (fact as JsonApiFactOutWithLinks).type === JsonApiFactOutWithLinksTypeEnum.FACT;
+    return (fact as JsonApiFactOutWithLinks).type === "fact";
 }
 
 /**
  * @public
  */
 export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks {
-    return (metric as JsonApiMetricOutWithLinks).type === JsonApiMetricOutWithLinksTypeEnum.METRIC;
+    return (metric as JsonApiMetricOutWithLinks).type === "metric";
 }

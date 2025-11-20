@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { AxiosInstance } from "axios";
 
 import { tigerActionsClientFactory } from "./actions.js";
@@ -66,7 +67,7 @@ export type {
 };
 export {
     tigerExecutionClientFactory,
-    tigerEntitiesObjectsClientFactory,
+    //    tigerEntitiesObjectsClientFactory,
     tigerExecutionResultClientFactory,
     tigerLabelElementsClientFactory,
     tigerValidObjectsClientFactory,
@@ -93,8 +94,25 @@ export {
     ScanModelBaseApi,
 };
 
-export interface ITigerClient {
+export interface ITigerClientBase {
     axios: AxiosInstance;
+    basePath: string;
+    /**
+     * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
+     * requests.
+     *
+     * @remarks This is a convenience method that ultimately calls {@link setAxiosAuthorizationToken}.
+     * @param token - token to set, if undefined, it will reset
+     */
+    setApiToken: (token: string | undefined) => void;
+}
+
+/**
+ * Tiger client interface that contains all the factories of the tiger API.
+ * This is not tree shakable client, use direct import of the api endpoints instead.
+ * @deprecated Use direct import of the api endpoints instead.
+ */
+export interface ITigerClient extends ITigerClientBase {
     automation: ReturnType<typeof tigerAutomationClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
@@ -135,6 +153,7 @@ export interface ITigerClient {
 /**
  * Tiger execution client
  *
+ * @deprecated Use direct import of the api endpoints instead.
  */
 export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const execution = tigerExecutionClientFactory(axios);
@@ -158,6 +177,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
 
     return {
         axios,
+        basePath: "",
         automation,
         execution,
         executionResult,
@@ -179,5 +199,21 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         export: exportFactory,
         smartFunctions,
         genAI,
+    };
+};
+
+/**
+ * Creates a base tiger client that can be used to create a tiger client. This factory is used than in
+ * SDK-Backend-Tiger using this factory allow tree shaking of the client.
+ * @param axios - axios instance
+ * @returns ITigerClientBase
+ */
+export const tigerClientBaseFactory = (axios: AxiosInstance, basePath: string = ""): ITigerClientBase => {
+    return {
+        axios,
+        basePath,
+        setApiToken: (token: string | undefined): void => {
+            setAxiosAuthorizationToken(axios, token);
+        },
     };
 };

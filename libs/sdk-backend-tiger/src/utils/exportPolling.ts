@@ -2,7 +2,14 @@
 
 import { AxiosError, AxiosPromise, AxiosRequestConfig } from "axios";
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    ExportApi_GetExportedFile,
+    ExportApi_GetImageExport,
+    ExportApi_GetRawExport,
+    ExportApi_GetSlidesExport,
+    ExportApi_GetTabularExport,
+} from "@gooddata/api-client-tiger/export";
 import {
     DataTooLargeError,
     DataTooLargeResponseBody,
@@ -33,13 +40,18 @@ This approach ensures the correct `this` is bound and the whole thing is much sa
  */
 const EXPORT_GETTERS: Record<
     string,
-    (client: ITigerClient, payload: IPayloadBase, options?: AxiosRequestConfig) => AxiosPromise<File>
+    (client: ITigerClientBase, payload: IPayloadBase, options?: AxiosRequestConfig) => AxiosPromise<File>
 > = {
-    getExportedFile: (client, payload, options) => client.export.getExportedFile(payload, options),
-    getImageExport: (client, payload, options) => client.export.getImageExport(payload, options),
-    getRawExport: (client, payload, options) => client.export.getRawExport(payload, options),
-    getSlidesExport: (client, payload, options) => client.export.getSlidesExport(payload, options),
-    getTabularExport: (client, payload, options) => client.export.getTabularExport(payload, options),
+    getExportedFile: (client, payload, options) =>
+        ExportApi_GetExportedFile(client.axios, client.basePath, payload, options),
+    getImageExport: (client, payload, options) =>
+        ExportApi_GetImageExport(client.axios, client.basePath, payload, options),
+    getRawExport: (client, payload, options) =>
+        ExportApi_GetRawExport(client.axios, client.basePath, payload, options),
+    getSlidesExport: (client, payload, options) =>
+        ExportApi_GetSlidesExport(client.axios, client.basePath, payload, options),
+    getTabularExport: (client, payload, options) =>
+        ExportApi_GetTabularExport(client.axios, client.basePath, payload, options),
 };
 
 type ExportGetter = keyof typeof EXPORT_GETTERS;
@@ -48,7 +60,7 @@ type ExportGetter = keyof typeof EXPORT_GETTERS;
  * Handles the polling for export results including timeout handling, error parsing and more.
  */
 export async function handleExportResultPolling(
-    client: ITigerClient,
+    client: ITigerClientBase,
     payload: IPayloadBase,
     exportGetter: ExportGetter,
     timeout = DEFAULT_POLL_TIMEOUT_MS,

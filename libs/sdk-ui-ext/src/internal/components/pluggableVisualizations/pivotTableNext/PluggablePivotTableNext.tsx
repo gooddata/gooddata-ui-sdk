@@ -62,6 +62,7 @@ import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnHeadersPositionFromProperties,
     getColumnWidthsFromProperties,
+    getGrandTotalsPositionFromProperties,
     getMeasureGroupDimensionFromProperties,
     getPivotTableProperties,
     getReferencePointWithSupportedProperties,
@@ -389,6 +390,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 growToFit,
             },
             textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
+            grandTotalsPosition: getGrandTotalsPositionFromProperties(insightProperties(insight)),
             enableCellSelection: !isInEditMode,
         };
 

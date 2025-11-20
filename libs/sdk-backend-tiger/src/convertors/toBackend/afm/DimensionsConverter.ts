@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -37,10 +38,10 @@ function merge(dims: Dimension[], sorting: SortKey[][]): Dimension[] {
 
 function convertSortDirection(direction: SortDirection): SortKeyAttributeAttributeDirectionEnum {
     if (direction === "asc") {
-        return SortKeyAttributeAttributeDirectionEnum.ASC;
+        return "ASC";
     }
 
-    return SortKeyAttributeAttributeDirectionEnum.DESC;
+    return "DESC";
 }
 
 /**
@@ -53,9 +54,7 @@ function convertSortDirection(direction: SortDirection): SortKeyAttributeAttribu
  * For area sort it just uses SortType.AREA to use this sort by numerical sum in execution.
  */
 function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttributeSortTypeEnum {
-    return isAttributeAreaSort(sortItem)
-        ? SortKeyAttributeAttributeSortTypeEnum.AREA
-        : SortKeyAttributeAttributeSortTypeEnum.DEFAULT;
+    return isAttributeAreaSort(sortItem) ? "AREA" : "DEFAULT";
 }
 
 /**
@@ -139,7 +138,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
                 attribute: {
                     attributeIdentifier,
                     // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
-                    ...(direction === SortKeyAttributeAttributeDirectionEnum.ASC ? {} : { direction }),
+                    ...(direction === "ASC" ? {} : { direction }),
                     sortType: convertAttributeSortType(sortItem),
                 },
             };

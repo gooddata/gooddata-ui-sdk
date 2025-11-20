@@ -4,6 +4,10 @@ import { sortBy, uniqBy } from "lodash-es";
 
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
+    EntitiesApi_GetAllEntitiesFacts,
+    EntitiesApi_GetAllEntitiesMetrics,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
@@ -160,7 +164,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const measures = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, params, {
+            return MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesMetrics, params, {
                 headers: ValidateRelationsHeader,
                 signal: this.signal,
             })
@@ -180,7 +184,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const facts = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, params, {
+            return MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesFacts, params, {
                 signal: this.signal,
             }).then(MetadataUtilities.mergeEntitiesResults);
         });

@@ -119,9 +119,12 @@ import {
 } from "./scheduledEmail.js";
 import { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
 import {
+    CancelRenamingDashboardTab,
     CreateDashboardTab,
     DeleteDashboardTab,
+    RenameDashboardTab,
     RepositionDashboardTab,
+    StartRenamingDashboardTab,
     SwitchDashboardTab,
 } from "./tabs.js";
 import { LoadAllWorkspaceUsers } from "./users.js";
@@ -562,12 +565,21 @@ export type {
     RepositionDashboardTabPayload,
     DeleteDashboardTab,
     DeleteDashboardTabPayload,
+    StartRenamingDashboardTab,
+    StartRenamingDashboardTabPayload,
+    CancelRenamingDashboardTab,
+    CancelRenamingDashboardTabPayload,
+    RenameDashboardTab,
+    RenameDashboardTabPayload,
 } from "./tabs.js";
 export {
     switchDashboardTab,
     repositionDashboardTab,
     createDashboardTab,
     deleteDashboardTab,
+    startRenamingDashboardTab,
+    cancelRenamingDashboardTab,
+    renameDashboardTab,
 } from "./tabs.js";
 
 /**
@@ -692,6 +704,9 @@ export type DashboardCommands =
     | CreateDashboardTab
     | RepositionDashboardTab
     | DeleteDashboardTab
+    | StartRenamingDashboardTab
+    | CancelRenamingDashboardTab
+    | RenameDashboardTab
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers

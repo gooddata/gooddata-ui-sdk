@@ -592,7 +592,7 @@
                         "example": "customer_id"
                     },
                     "description": {
-                        "maxLength": 255,
+                        "maxLength": 10000,
                         "type": "string",
                         "description": "Column description/comment from database",
                         "example": "Customer unique identifier"

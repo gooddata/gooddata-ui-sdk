@@ -1,6 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClient, PermissionsAssignment } from "@gooddata/api-client-tiger";
+import { ITigerClientBase, PermissionsAssignment } from "@gooddata/api-client-tiger";
+import { ActionsApi_ManageOrganizationPermissions } from "@gooddata/api-client-tiger/actions";
+import { LayoutApi_GetOrganizationPermissions } from "@gooddata/api-client-tiger/layout";
+import {
+    UserManagementApi_AssignPermissions,
+    UserManagementApi_ListPermissionsForUser,
+    UserManagementApi_ListPermissionsForUserGroup,
+    UserManagementApi_RevokePermissions,
+} from "@gooddata/api-client-tiger/userManagement";
 import { IOrganizationPermissionService, IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
 import {
     IDataSourcePermissionAssignment,
@@ -15,9 +23,8 @@ import {
 } from "./fromBackend/userConvertor.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
-const fetchOrganizationPermissions = async (client: ITigerClient, userId: string) => {
-    return client.declarativeLayout
-        .getOrganizationPermissions()
+const fetchOrganizationPermissions = async (client: ITigerClientBase, userId: string) => {
+    return LayoutApi_GetOrganizationPermissions(client.axios, client.basePath)
         .then((response) => response.data)
         .then((permissions) =>
             permissions
@@ -36,8 +43,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         dataSourcePermissions: IDataSourcePermissionAssignment[];
     }> => {
         return this.authCall(async (client) => {
-            return client.userManagement
-                .listPermissionsForUser({ userId })
+            return UserManagementApi_ListPermissionsForUser(client.axios, client.basePath, { userId })
                 .then((response) => response.data)
                 .then((response) => ({
                     workspacePermissions: response.workspaces.map((assignment) =>
@@ -57,8 +63,9 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         dataSourcePermissions: IDataSourcePermissionAssignment[];
     }> => {
         return this.authCall(async (client) => {
-            return client.userManagement
-                .listPermissionsForUserGroup({ userGroupId })
+            return UserManagementApi_ListPermissionsForUserGroup(client.axios, client.basePath, {
+                userGroupId,
+            })
                 .then((response) => response.data)
                 .then((response) => ({
                     workspacePermissions: response.workspaces.map((assignment) =>
@@ -91,7 +98,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         permissionAssignments: IOrganizationPermissionAssignment[],
     ): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.actions.manageOrganizationPermissions({
+            await ActionsApi_ManageOrganizationPermissions(client.axios, client.basePath, {
                 organizationPermissionAssignment: permissionAssignments,
             });
         });
@@ -99,7 +106,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
 
     public assignPermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
         return this.authCall(async (client) => {
-            await client.userManagement.assignPermissions({
+            await UserManagementApi_AssignPermissions(client.axios, client.basePath, {
                 permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
             });
         });
@@ -107,7 +114,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
 
     public revokePermissions(permissionsAsignment: IPermissionsAssignment): Promise<void> {
         return this.authCall(async (client) => {
-            await client.userManagement.revokePermissions({
+            await UserManagementApi_RevokePermissions(client.axios, client.basePath, {
                 permissionsAssignment: convertPermissionsAssignment(permissionsAsignment),
             });
         });

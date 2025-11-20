@@ -238,7 +238,7 @@ export type {
     QualityIssuesCalculationStatusResponseStatusEnum as AfmQualityIssuesCalculationStatusResponseStatusEnum,
     ChangeAnalysisRequest as AfmChangeAnalysisRequest,
 } from "./generated/afm-rest-api/api.js";
-export {
+export type {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,
     AfmObjectIdentifierCoreIdentifierTypeEnum as AfmModelObjectIdentifierCoreIdentifierTypeEnum,
     AfmObjectIdentifierDatasetIdentifierTypeEnum as AfmModelObjectIdentifierDatasetIdentifierTypeEnum,
@@ -260,9 +260,6 @@ export {
     SortKeyValueValueDirectionEnum,
     SortKeyAttributeAttributeDirectionEnum,
     SortKeyAttributeAttributeSortTypeEnum,
-    ActionsApiAxiosParamCreator as AfmActionsApiAxiosParamCreator,
-    ActionsApiFp as AfmActionsApiFp,
-    ActionsApiFactory as AfmActionsApiFactory,
     ActionsApi as AfmActionsApi,
     TotalFunctionEnum,
     ElementsResponseGranularityEnum,
@@ -279,7 +276,7 @@ export type {
     ActionsApiProcessInvitationRequest,
     Invitation,
 } from "./generated/auth-json-api/api.js";
-export { ActionsApiFactory as AuthActionsApiFactory } from "./generated/auth-json-api/api.js";
+// export { ActionsApiFactory as AuthActionsApiFactory } from "./generated/auth-json-api/api.js";
 export type { ConfigurationParameters } from "./generated/auth-json-api/configuration.js";
 export { Configuration } from "./generated/auth-json-api/configuration.js";
 export type {
@@ -442,11 +439,8 @@ export type {
     ActionsAutomationTestExistingNotificationChannelRequest,
     NotificationChannelsAutomationTestExistingNotificationChannelRequest,
 } from "./generated/automation-json-api/index.js";
-export {
+export type {
     ActionsAutomation,
-    ActionsAutomationFactory,
-    ActionsAutomationFp,
-    ActionsAutomationAxiosParamCreator,
     AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum,
     AutomationAfmObjectIdentifierCoreIdentifierTypeEnum,
     AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum,
@@ -480,19 +474,19 @@ export {
     AutomationRelativeBoundedDateFilterGranularityEnum,
     AutomationRelativeDateFilterRelativeDateFilterGranularityEnum,
     AutomationsAutomation,
-    AutomationsAutomationFactory,
-    AutomationsAutomationAxiosParamCreator,
-    AutomationsAutomationFp,
+    //AutomationsAutomationFactory,
+    //    AutomationsAutomationAxiosParamCreator,
+    //    AutomationsAutomationFp,
     AutomationSlidesExportRequestFormatEnum,
     AutomationSmtpPortEnum,
     AutomationSmtpTypeEnum,
     AutomationTabularExportRequestFormatEnum,
     AutomationWebhookTypeEnum,
     AutomationSimpleMeasureDefinitionMeasureAggregationEnum,
-    NotificationChannelsAutomationAxiosParamCreator,
-    NotificationChannelsAutomationFactory,
+    //NotificationChannelsAutomationAxiosParamCreator,
+    // NotificationChannelsAutomationFactory,
     NotificationChannelsAutomation,
-    NotificationChannelsAutomationFp,
+    //NotificationChannelsAutomationFp,
 } from "./generated/automation-json-api/index.js";
 export type {
     Configuration as AutomationConfiguration,
@@ -541,7 +535,7 @@ export type {
     FrequencyProperties,
     ColumnStatisticsRequestFrom,
 } from "./generated/scan-json-api/api.js";
-export {
+export type {
     DeclarativeColumnDataTypeEnum as ScanModelDeclarativeColumnDataTypeEnum,
     TestDefinitionRequestTypeEnum,
     SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
@@ -587,7 +581,7 @@ export type {
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
 } from "./generated/result-json-api/api.js";
-export { GdStorageFileTypeEnum } from "./generated/result-json-api/api.js";
+export type { GdStorageFileTypeEnum } from "./generated/result-json-api/api.js";
 
 export * from "./generated/export-json-api/index.js";
 export type {

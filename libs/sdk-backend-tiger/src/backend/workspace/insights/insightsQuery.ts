@@ -4,6 +4,7 @@ import {
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesVisualizationObjects } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IFilterBaseOptions, IInsightsQuery, IInsightsQueryResult } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
@@ -73,7 +74,7 @@ export class InsightsQuery implements IInsightsQuery {
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesVisualizationObjects({
+                    EntitiesApi_GetAllEntitiesVisualizationObjects(client.axios, client.basePath, {
                         ...this.requestParameters,
                         ...metaIncludeObj,
                         ...this.sort,

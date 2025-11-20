@@ -22,6 +22,7 @@ export type {
     PivotTableNextFormattingConfig,
     PivotTableNextExecutionCancellingConfig,
     PivotTableNextLayoutConfig,
+    PivotTableNextGrandTotalsPositionConfig,
     PivotTableNextCellSelectionConfig,
     PivotTableNextAgGridLicenseConfig,
     PivotTableNextExperimentalConfig,
@@ -32,6 +33,7 @@ export type {
     IColumnTextWrappingItem,
     MeasureGroupDimension as MeasureGroupDimensionNext,
     ColumnHeadersPosition as ColumnHeadersPositionNext,
+    GrandTotalsPosition as GrandTotalsPositionNext,
     ColumnWidthItem as ColumnWidthItemNext,
     DefaultColumnWidth as DefaultColumnWidthNext,
     IAttributeColumnWidthItem as IAttributeColumnWidthItemNext,
@@ -70,6 +72,7 @@ export type {
     IMenu,
     MeasureGroupDimension,
     ColumnHeadersPosition,
+    GrandTotalsPosition,
 } from "./publicTypes.js";
 
 export type {

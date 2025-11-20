@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ITigerClientBase, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
 
 import { ObjectMeta } from "../../base/types.js";
 
@@ -12,12 +13,12 @@ import { ObjectMeta } from "../../base/types.js";
  * @param workspaceId - workspace id
  */
 export async function loadAnalyticalDashboards(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
 ): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.entities.getAllEntitiesAnalyticalDashboards,
+        DashboardsApi_GetAllEntitiesAnalyticalDashboards,
         { workspaceId },
         // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
         // { headers: ValidateRelationsHeader },
@@ -25,7 +26,7 @@ export async function loadAnalyticalDashboards(
         .then(MetadataUtilities.mergeEntitiesResults)
         .then(MetadataUtilities.filterValidEntities);
 
-    return result.data.map((dashboard) => {
+    return result.data.map((dashboard: any) => {
         return {
             title: dashboard.attributes?.title ?? dashboard.id,
             identifier: dashboard.id,

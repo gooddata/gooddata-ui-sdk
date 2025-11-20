@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import { PivotTableNext, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot";
 
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
@@ -10,31 +10,31 @@ const measures = [ReferenceMd.Amount];
 const attributes = [ReferenceMd.Product.Name];
 const columns = [ReferenceMd.ForecastCategory];
 
-export const transposeConfigWithRowLeft: IPivotTableConfig = {
+export const transposeConfigWithRowLeft: PivotTableNextConfig = {
     measureGroupDimension: "rows",
     columnHeadersPosition: "left",
 };
 
-const transposeConfigWithRowTop: IPivotTableConfig = {
+const transposeConfigWithRowTop: PivotTableNextConfig = {
     measureGroupDimension: "rows",
     columnHeadersPosition: "top",
 };
 
-export const transposeConfigWithColumnLeft: IPivotTableConfig = {
+export const transposeConfigWithColumnLeft: PivotTableNextConfig = {
     measureGroupDimension: "columns",
     columnHeadersPosition: "left",
 };
 
-export const transposeConfigWithColumnTop: IPivotTableConfig = {
+export const transposeConfigWithColumnTop: PivotTableNextConfig = {
     measureGroupDimension: "columns",
     columnHeadersPosition: "top",
 };
 
-export const transposeConfigWithRow: IPivotTableConfig = {
+export const transposeConfigWithRow: PivotTableNextConfig = {
     measureGroupDimension: "rows",
 };
 
-export const transposeConfigWithLeft: IPivotTableConfig = {
+export const transposeConfigWithLeft: PivotTableNextConfig = {
     columnHeadersPosition: "left",
 };
 
@@ -42,38 +42,17 @@ export interface IPivotTableTransposeCoreProps {
     measure?: IMeasure<IMeasureDefinition>[] | undefined;
     row?: IAttribute[] | undefined;
     column?: IAttribute[] | undefined;
-    config: IPivotTableConfig;
+    config?: PivotTableNextConfig;
 }
 
 function PivotTableTranspose({ measure, row, column, config }: IPivotTableTransposeCoreProps) {
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
-
     return (
         <div
             style={{ width: 1000, height: 300, marginTop: 20, resize: "both", overflow: "scroll" }}
             className="s-table-component-transpose"
         >
-            <PivotTable
-                backend={backend}
-                workspace={workspace}
-                measures={measure}
-                rows={row}
-                columns={column}
-                config={config}
-            />
+            <PivotTableNext measures={measure} rows={row} columns={column} config={config} />
         </div>
-    );
-}
-
-export function PivotTableTransposeHasMR_RowLeft() {
-    return (
-        <PivotTableTranspose
-            measure={measures}
-            row={attributes}
-            column={undefined}
-            config={transposeConfigWithRowLeft}
-        />
     );
 }
 
@@ -88,35 +67,35 @@ export function PivotTableTransposeHasMR_RowTop() {
     );
 }
 
-export function PivotTableTransposeHasRC_RowLeft() {
+export function PivotTableTransposeHasRC_RowTop() {
     return (
         <PivotTableTranspose
             measure={undefined}
             row={attributes}
             column={columns}
-            config={transposeConfigWithRowLeft}
+            config={transposeConfigWithRowTop}
         />
     );
 }
 
-export function PivotTableTransposeHasR_RowLeft() {
+export function PivotTableTransposeHasR_RowTop() {
     return (
         <PivotTableTranspose
             measure={undefined}
             row={attributes}
             column={undefined}
-            config={transposeConfigWithRowLeft}
+            config={transposeConfigWithRowTop}
         />
     );
 }
 
-export function PivotTableTransposeHasM_RowLeft() {
+export function PivotTableTransposeHasM_RowTop() {
     return (
         <PivotTableTranspose
             measure={measures}
             row={undefined}
             column={undefined}
-            config={transposeConfigWithRowLeft}
+            config={transposeConfigWithRowTop}
         />
     );
 }

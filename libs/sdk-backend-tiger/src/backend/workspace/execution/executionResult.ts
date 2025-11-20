@@ -9,6 +9,16 @@ import {
     TabularExportRequest,
     TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
+import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/execution";
+import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/export";
+import {
+    SmartFunctionsApi_AnomalyDetection,
+    SmartFunctionsApi_AnomalyDetectionResult,
+    SmartFunctionsApi_Clustering,
+    SmartFunctionsApi_ClusteringResult,
+    SmartFunctionsApi_Forecast,
+    SmartFunctionsApi_ForecastResult,
+} from "@gooddata/api-client-tiger/smartFunctions";
 import {
     IAnomalyDetectionConfig,
     IAnomalyDetectionResult,
@@ -46,8 +56,10 @@ import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
-function isTabularExportFormat(format: string = ""): format is keyof typeof TabularExportRequestFormatEnum {
-    return format in TabularExportRequestFormatEnum;
+const TABULAR_EXPORT_FORMATS: TabularExportRequestFormatEnum[] = ["CSV", "XLSX", "HTML", "PDF"];
+
+function isTabularExportFormat(format: string = ""): format is TabularExportRequestFormatEnum {
+    return TABULAR_EXPORT_FORMATS.includes(format as TabularExportRequestFormatEnum);
 }
 
 function sanitizeOffset(offset: number[]): number[] {
@@ -103,15 +115,15 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async readAll(): Promise<IDataView> {
         const executionResultPromise = this.authCall((client) =>
-            client.executionResult
-                .retrieveResult(
-                    {
-                        workspaceId: this.workspace,
-                        resultId: this.resultId,
-                    },
-                    this.enrichClientWithCancelOptions(),
-                )
-                .then(({ data }) => data),
+            ExecutionResultAPI_RetrieveResult(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    resultId: this.resultId,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
         );
 
         return this.asDataView(executionResultPromise);
@@ -122,28 +134,28 @@ export class TigerExecutionResult implements IExecutionResult {
         const resultId = this.resultId;
 
         const forecast = await this.authCall((client) =>
-            client.smartFunctions
-                .forecast(
-                    {
-                        forecastRequest: forecastConfig,
-                        workspaceId: workspace,
-                        resultId: resultId,
-                    },
-                    this.enrichClientWithCancelOptions(),
-                )
-                .then(({ data }) => data),
+            SmartFunctionsApi_Forecast(
+                client.axios,
+                client.basePath,
+                {
+                    forecastRequest: forecastConfig,
+                    workspaceId: workspace,
+                    resultId: resultId,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
         );
 
         return this.authCall((client) =>
-            client.smartFunctions
-                .forecastResult(
-                    {
-                        workspaceId: workspace,
-                        resultId: forecast.links.executionResult,
-                    },
-                    this.enrichClientWithCancelOptions(),
-                )
-                .then(({ data }) => data),
+            SmartFunctionsApi_ForecastResult(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: workspace,
+                    resultId: forecast.links.executionResult,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
         );
     }
 
@@ -153,7 +165,9 @@ export class TigerExecutionResult implements IExecutionResult {
         const sensitivity = config.sensitivity;
 
         const anomalyDetection = await this.authCall((client) =>
-            client.smartFunctions.anomalyDetection(
+            SmartFunctionsApi_AnomalyDetection(
+                client.axios,
+                client.basePath,
                 {
                     anomalyDetectionRequest: {
                         sensitivity,
@@ -166,7 +180,9 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         const anomalyResult = await this.authCall((client) =>
-            client.smartFunctions.anomalyDetectionResult(
+            SmartFunctionsApi_AnomalyDetectionResult(
+                client.axios,
+                client.basePath,
                 {
                     resultId: anomalyDetection.data.links.executionResult,
                     workspaceId: this.workspace,
@@ -185,7 +201,9 @@ export class TigerExecutionResult implements IExecutionResult {
         const threshold = clusteringConfig.threshold ? { threshold: clusteringConfig.threshold } : {};
 
         const clustering = await this.authCall((client) =>
-            client.smartFunctions.clustering(
+            SmartFunctionsApi_Clustering(
+                client.axios,
+                client.basePath,
                 {
                     clusteringRequest: {
                         numberOfClusters,
@@ -199,7 +217,9 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         const clusteringResult = await this.authCall((client) =>
-            client.smartFunctions.clusteringResult(
+            SmartFunctionsApi_ClusteringResult(
+                client.axios,
+                client.basePath,
                 {
                     resultId: clustering.data.links.executionResult,
                     workspaceId: this.workspace,
@@ -223,17 +243,17 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneSize = sanitizeSize(size);
 
         const executionResultPromise = this.authCall((client) =>
-            client.executionResult
-                .retrieveResult(
-                    {
-                        workspaceId: this.workspace,
-                        resultId: this.resultId,
-                        limit: saneSize,
-                        offset: saneOffset,
-                    },
-                    this.enrichClientWithCancelOptions(),
-                )
-                .then(({ data }) => data),
+            ExecutionResultAPI_RetrieveResult(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    resultId: this.resultId,
+                    limit: saneSize,
+                    offset: saneOffset,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
         );
 
         return this.asDataView(executionResultPromise);
@@ -245,17 +265,15 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async export(options: IExportConfig): Promise<IExportResult> {
         const uppercaseFormat = options.format?.toUpperCase();
-        const format = isTabularExportFormat(uppercaseFormat)
-            ? TabularExportRequestFormatEnum[uppercaseFormat]
-            : TabularExportRequestFormatEnum.CSV;
+        const format = isTabularExportFormat(uppercaseFormat) ? uppercaseFormat : "CSV";
         const settings: Settings = {
-            ...(format === TabularExportRequestFormatEnum.XLSX
+            ...(format === "XLSX"
                 ? {
                       mergeHeaders: Boolean(options.mergeHeaders),
                       exportInfo: Boolean(options.showFilters),
                   }
                 : {}),
-            ...(format === TabularExportRequestFormatEnum.PDF
+            ...(format === "PDF"
                 ? {
                       pageSize: options.pdfConfiguration?.pageSize,
                       pageOrientation: options.pdfConfiguration?.pageOrientation,
@@ -280,7 +298,7 @@ export class TigerExecutionResult implements IExecutionResult {
         };
 
         return this.authCall(async (client) => {
-            const tabularExport = await client.export.createTabularExport({
+            const tabularExport = await ExportApi_CreateTabularExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportTabularExportRequest: payload,
             });

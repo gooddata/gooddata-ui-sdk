@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     JsonApiAttributeOutAttributesGranularityEnum,
     RelativeDateFilterRelativeDateFilterGranularityEnum,
@@ -35,23 +36,23 @@ type SdkToTiger = {
  */
 
 const TigerToSdkGranularityMap: TigerToSdk = {
-    [JsonApiAttributeOutAttributesGranularityEnum.YEAR]: "GDC.time.year",
-    [JsonApiAttributeOutAttributesGranularityEnum.QUARTER]: "GDC.time.quarter",
-    [JsonApiAttributeOutAttributesGranularityEnum.MONTH]: "GDC.time.month",
-    [JsonApiAttributeOutAttributesGranularityEnum.WEEK]: "GDC.time.week_us",
-    [JsonApiAttributeOutAttributesGranularityEnum.DAY]: "GDC.time.date",
-    [JsonApiAttributeOutAttributesGranularityEnum.HOUR]: "GDC.time.hour",
-    [JsonApiAttributeOutAttributesGranularityEnum.MINUTE]: "GDC.time.minute",
+    ["YEAR"]: "GDC.time.year",
+    ["QUARTER"]: "GDC.time.quarter",
+    ["MONTH"]: "GDC.time.month",
+    ["WEEK"]: "GDC.time.week_us",
+    ["DAY"]: "GDC.time.date",
+    ["HOUR"]: "GDC.time.hour",
+    ["MINUTE"]: "GDC.time.minute",
 
-    [JsonApiAttributeOutAttributesGranularityEnum.QUARTER_OF_YEAR]: "GDC.time.quarter_in_year",
-    [JsonApiAttributeOutAttributesGranularityEnum.MONTH_OF_YEAR]: "GDC.time.month_in_year",
-    [JsonApiAttributeOutAttributesGranularityEnum.WEEK_OF_YEAR]: "GDC.time.week_in_year",
-    [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_YEAR]: "GDC.time.day_in_year",
-    [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_QUARTER]: "GDC.time.day_in_quarter",
-    [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_MONTH]: "GDC.time.day_in_month",
-    [JsonApiAttributeOutAttributesGranularityEnum.DAY_OF_WEEK]: "GDC.time.day_in_week",
-    [JsonApiAttributeOutAttributesGranularityEnum.HOUR_OF_DAY]: "GDC.time.hour_in_day",
-    [JsonApiAttributeOutAttributesGranularityEnum.MINUTE_OF_HOUR]: "GDC.time.minute_in_hour",
+    ["QUARTER_OF_YEAR"]: "GDC.time.quarter_in_year",
+    ["MONTH_OF_YEAR"]: "GDC.time.month_in_year",
+    ["WEEK_OF_YEAR"]: "GDC.time.week_in_year",
+    ["DAY_OF_YEAR"]: "GDC.time.day_in_year",
+    ["DAY_OF_QUARTER"]: "GDC.time.day_in_quarter",
+    ["DAY_OF_MONTH"]: "GDC.time.day_in_month",
+    ["DAY_OF_WEEK"]: "GDC.time.day_in_week",
+    ["HOUR_OF_DAY"]: "GDC.time.hour_in_day",
+    ["MINUTE_OF_HOUR"]: "GDC.time.minute_in_hour",
 };
 
 /**
@@ -66,24 +67,24 @@ export function toSdkGranularity(
 }
 
 const SdkToTigerGranularityMap: SdkToTiger = {
-    "GDC.time.year": RelativeDateFilterRelativeDateFilterGranularityEnum.YEAR,
-    "GDC.time.quarter": RelativeDateFilterRelativeDateFilterGranularityEnum.QUARTER,
-    "GDC.time.month": RelativeDateFilterRelativeDateFilterGranularityEnum.MONTH,
-    "GDC.time.week_us": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK,
-    "GDC.time.week": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK,
-    "GDC.time.date": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY,
-    "GDC.time.hour": RelativeDateFilterRelativeDateFilterGranularityEnum.HOUR,
-    "GDC.time.minute": RelativeDateFilterRelativeDateFilterGranularityEnum.MINUTE,
+    "GDC.time.year": "YEAR",
+    "GDC.time.quarter": "QUARTER",
+    "GDC.time.month": "MONTH",
+    "GDC.time.week_us": "WEEK",
+    "GDC.time.week": "WEEK",
+    "GDC.time.date": "DAY",
+    "GDC.time.hour": "HOUR",
+    "GDC.time.minute": "MINUTE",
 
-    "GDC.time.quarter_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.QUARTER_OF_YEAR,
-    "GDC.time.month_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.MONTH_OF_YEAR,
-    "GDC.time.week_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK_OF_YEAR,
-    "GDC.time.day_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_YEAR,
-    "GDC.time.day_in_quarter": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_QUARTER,
-    "GDC.time.day_in_month": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_MONTH,
-    "GDC.time.day_in_week": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_WEEK,
-    "GDC.time.hour_in_day": RelativeDateFilterRelativeDateFilterGranularityEnum.HOUR_OF_DAY,
-    "GDC.time.minute_in_hour": RelativeDateFilterRelativeDateFilterGranularityEnum.MINUTE_OF_HOUR,
+    "GDC.time.quarter_in_year": "QUARTER_OF_YEAR",
+    "GDC.time.month_in_year": "MONTH_OF_YEAR",
+    "GDC.time.week_in_year": "WEEK_OF_YEAR",
+    "GDC.time.day_in_year": "DAY_OF_YEAR",
+    "GDC.time.day_in_quarter": "DAY_OF_QUARTER",
+    "GDC.time.day_in_month": "DAY_OF_MONTH",
+    "GDC.time.day_in_week": "DAY_OF_WEEK",
+    "GDC.time.hour_in_day": "HOUR_OF_DAY",
+    "GDC.time.minute_in_hour": "MINUTE_OF_HOUR",
 
     "GDC.time.day_in_euweek": undefined,
     "GDC.time.euweek_in_quarter": undefined,

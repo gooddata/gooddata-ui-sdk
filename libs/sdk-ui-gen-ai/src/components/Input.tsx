@@ -14,6 +14,7 @@ import { makeTextContents, makeUserMessage } from "../model.js";
 import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
 import { RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
+import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {
     autofocus?: boolean;
@@ -107,7 +108,11 @@ function InputComponent({
     );
 
     const handleSubmit = () => {
-        newMessage(makeUserMessage([makeTextContents(value, collectReferences(value, used.current))]));
+        newMessage(
+            makeUserMessage([
+                makeTextContents(escapeMarkdown(value), collectReferences(value, used.current)),
+            ]),
+        );
         setValue("");
     };
 

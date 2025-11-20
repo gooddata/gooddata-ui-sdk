@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages, messages } from "../../locales.js";
@@ -170,6 +171,13 @@ export const metricsPositionDropdownItems: IDropdownItem[] = [
 export const columnHeadersPositionDropdownItems: IDropdownItem[] = [
     { title: messages["columnHeaderPositionTop"].id, value: "top" },
     { title: messages["columnHeaderPositionLeft"].id, value: "left" },
+];
+
+export const grandTotalsPositionDropdownItems: IDropdownItem[] = [
+    { title: messages["grandTotalsPositionPinnedBottom"].id, value: "pinnedBottom" },
+    { title: messages["grandTotalsPositionBottom"].id, value: "bottom" },
+    { title: messages["grandTotalsPositionPinnedTop"].id, value: "pinnedTop" },
+    { title: messages["grandTotalsPositionTop"].id, value: "top" },
 ];
 
 export const calculationDropdownItems: IDropdownItem[] = [

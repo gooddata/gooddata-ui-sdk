@@ -6,7 +6,6 @@ import { isEmpty, uniq } from "lodash-es";
 
 import {
     ActionsApiProcessInvitationRequest,
-    ActionsApiReadCsvFileManifestsRequest,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ApiEntitlement,
@@ -19,35 +18,29 @@ import {
     GdStorageFile,
     GenerateLdmRequest,
     HierarchyObjectIdentification,
-    ITigerClient,
+    ITigerClientBase,
     IdentifierDuplications,
     ImportCsvRequest,
     ImportCsvResponse,
     JsonApiApiTokenInDocument,
-    JsonApiApiTokenInTypeEnum,
     JsonApiApiTokenOutList,
     JsonApiCspDirectiveInDocument,
-    JsonApiCspDirectiveInTypeEnum,
     JsonApiCustomApplicationSettingOut,
-    JsonApiCustomApplicationSettingOutTypeEnum,
     JsonApiDataSourceIdentifierOutDocument,
     JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
     JsonApiDataSourceInAttributesTypeEnum,
     JsonApiDataSourceInDocument,
-    JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceOutAttributesAuthenticationTypeEnum,
     JsonApiDataSourceOutDocument,
     JsonApiDatasetOutList,
     JsonApiNotificationChannelOut,
     JsonApiOrganizationOutMetaPermissionsEnum,
-    JsonApiOrganizationPatchTypeEnum,
     JsonApiWorkspaceDataFilterInDocument,
     JsonApiWorkspaceDataFilterOutDocument,
     JsonApiWorkspaceDataFilterSettingInDocument,
     JsonApiWorkspaceDataFilterSettingOutDocument,
     JsonApiWorkspaceInDocument,
-    JsonApiWorkspaceInTypeEnum,
     LayoutApiPutWorkspaceLayoutRequest,
     MetadataUtilities,
     OrganizationUtilities,
@@ -59,6 +52,74 @@ import {
     UploadFileResponse,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import {
+    ActionsApi_AllPlatformUsage,
+    ActionsApi_CheckEntityOverrides,
+    ActionsApi_GenerateLogicalModel,
+    ActionsApi_GetDependentEntitiesGraph,
+    ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
+    ActionsApi_RegisterUploadNotification,
+    ActionsApi_ResolveAllEntitlements,
+} from "@gooddata/api-client-tiger/actions";
+import { AuthApi_ProcessInvitation } from "@gooddata/api-client-tiger/authActions";
+import {
+    EntitiesApi_CreateEntityApiTokens,
+    EntitiesApi_CreateEntityCspDirectives,
+    EntitiesApi_CreateEntityCustomApplicationSettings,
+    EntitiesApi_CreateEntityDataSources,
+    EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
+    EntitiesApi_CreateEntityWorkspaceDataFilters,
+    EntitiesApi_CreateEntityWorkspaces,
+    EntitiesApi_DeleteEntityApiTokens,
+    EntitiesApi_DeleteEntityCspDirectives,
+    EntitiesApi_DeleteEntityCustomApplicationSettings,
+    EntitiesApi_DeleteEntityDataSources,
+    EntitiesApi_DeleteEntityWorkspaces,
+    EntitiesApi_GetAllEntitiesApiTokens,
+    EntitiesApi_GetAllEntitiesCspDirectives,
+    EntitiesApi_GetAllEntitiesCustomApplicationSettings,
+    EntitiesApi_GetAllEntitiesDataSourceIdentifiers,
+    EntitiesApi_GetAllEntitiesDataSources,
+    EntitiesApi_GetAllEntitiesDatasets,
+    EntitiesApi_GetAllEntitiesEntitlements,
+    EntitiesApi_GetAllEntitiesWorkspaces,
+    EntitiesApi_GetEntityCspDirectives,
+    EntitiesApi_GetEntityCustomApplicationSettings,
+    EntitiesApi_GetEntityDataSourceIdentifiers,
+    EntitiesApi_GetEntityDataSources,
+    EntitiesApi_GetEntityOrganizations,
+    EntitiesApi_GetEntityUsers,
+    EntitiesApi_GetEntityWorkspaceDataFilterSettings,
+    EntitiesApi_GetEntityWorkspaceDataFilters,
+    EntitiesApi_PatchEntityDataSources,
+    EntitiesApi_PatchEntityOrganizations,
+    EntitiesApi_PatchEntityWorkspaces,
+    EntitiesApi_UpdateEntityCspDirectives,
+    EntitiesApi_UpdateEntityDataSources,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    LayoutApi_GetLogicalModel,
+    LayoutApi_GetWorkspaceDataFiltersLayout,
+    LayoutApi_PutWorkspaceLayout,
+    LayoutApi_SetLogicalModel,
+    LayoutApi_SetWorkspaceDataFiltersLayout,
+} from "@gooddata/api-client-tiger/layout";
+import {
+    type ResultApiReadCsvFileManifestsRequest,
+    ResultApi_AnalyzeCsv,
+    ResultApi_DeleteFiles,
+    ResultApi_ImportCsv,
+    ResultApi_ListFiles,
+    ResultApi_ReadCsvFileManifests,
+    ResultApi_StagingUpload,
+} from "@gooddata/api-client-tiger/result";
+import {
+    ScanModelApi_GetDataSourceSchemata,
+    ScanModelApi_ScanDataSource,
+    ScanModelApi_ScanSql,
+    ScanModelApi_TestDataSource,
+    ScanModelApi_TestDataSourceDefinition,
+} from "@gooddata/api-client-tiger/scanModel";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import {
     ErrorConverter,
@@ -648,14 +709,16 @@ const customAppSettingResponseAsICustomApplicationSetting = (
 export const buildTigerSpecificFunctions = (
     backend: IAnalyticalBackend,
     authApiCall: <T>(
-        call: AuthenticatedAsyncCall<ITigerClient, T>,
+        call: AuthenticatedAsyncCall<ITigerClientBase, T>,
         errorConverter?: ErrorConverter,
     ) => Promise<T>,
 ): TigerSpecificFunctions => ({
     isCommunityEdition: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const response = await sdk.entities.getAllEntitiesWorkspaces(
+                const response = await EntitiesApi_GetAllEntitiesWorkspaces(
+                    sdk.axios,
+                    "",
                     { page: 0, size: 1 },
                     { headers: jsonApiHeaders },
                 );
@@ -671,7 +734,7 @@ export const buildTigerSpecificFunctions = (
         try {
             const orgPermissions = await authApiCall(async (sdk) => {
                 const { organizationId } = await backend.organizations().getCurrentOrganization();
-                const response = await sdk.entities.getEntityOrganizations({
+                const response = await EntitiesApi_GetEntityOrganizations(sdk.axios, sdk.basePath, {
                     id: organizationId,
                     metaInclude: ["permissions"],
                 });
@@ -686,7 +749,7 @@ export const buildTigerSpecificFunctions = (
     organizationExpiredDate: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const response = await sdk.entities.getAllEntitiesEntitlements({});
+                const response = await EntitiesApi_GetAllEntitiesEntitlements(sdk.axios, sdk.basePath, {});
                 const contractEntitlement = response.data.data.find((item) => item.id === "Contract");
                 return contractEntitlement?.attributes?.expiry || "";
             });
@@ -697,7 +760,9 @@ export const buildTigerSpecificFunctions = (
     getOrganizationAllowedOrigins: async (organizationId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityOrganizations({ id: organizationId });
+                const result = await EntitiesApi_GetEntityOrganizations(sdk.axios, sdk.basePath, {
+                    id: organizationId,
+                });
                 return result.data?.data?.attributes?.allowedOrigins || [];
             });
         } catch {
@@ -707,7 +772,7 @@ export const buildTigerSpecificFunctions = (
     getOrganizationPermissions: async (organizationId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityOrganizations({
+                const result = await EntitiesApi_GetEntityOrganizations(sdk.axios, sdk.basePath, {
                     id: organizationId,
                     metaInclude: ["permissions"],
                 });
@@ -732,12 +797,12 @@ export const buildTigerSpecificFunctions = (
         };
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.patchEntityOrganizations({
+                const result = await EntitiesApi_PatchEntityOrganizations(sdk.axios, sdk.basePath, {
                     id: organizationId,
                     jsonApiOrganizationPatchDocument: {
                         data: {
                             id: organizationId,
-                            type: JsonApiOrganizationPatchTypeEnum.ORGANIZATION,
+                            type: "organization",
                             attributes: {
                                 allowedOrigins: updatedOrigins,
                             },
@@ -778,7 +843,7 @@ export const buildTigerSpecificFunctions = (
         };
         try {
             return await authApiCall(async (sdk) => {
-                return await MetadataUtilities.getAllPagesOf(sdk, sdk.entities.getAllEntitiesApiTokens, {
+                return await MetadataUtilities.getAllPagesOf(sdk, EntitiesApi_GetAllEntitiesApiTokens, {
                     userId,
                 })
                     .then(MetadataUtilities.mergeEntitiesResults)
@@ -794,10 +859,10 @@ export const buildTigerSpecificFunctions = (
                 const apiTokenDocument: JsonApiApiTokenInDocument = {
                     data: {
                         id: tokenId,
-                        type: JsonApiApiTokenInTypeEnum.API_TOKEN,
+                        type: "apiToken",
                     },
                 };
-                const result = await sdk.entities.createEntityApiTokens({
+                const result = await EntitiesApi_CreateEntityApiTokens(sdk.axios, sdk.basePath, {
                     userId: userId,
                     jsonApiApiTokenInDocument: apiTokenDocument,
                 });
@@ -813,7 +878,10 @@ export const buildTigerSpecificFunctions = (
     deleteApiToken: async (userId: string, tokenId: string) => {
         try {
             await authApiCall(async (sdk) => {
-                await sdk.entities.deleteEntityApiTokens({ userId: userId, id: tokenId });
+                await EntitiesApi_DeleteEntityApiTokens(sdk.axios, sdk.basePath, {
+                    userId: userId,
+                    id: tokenId,
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -822,9 +890,8 @@ export const buildTigerSpecificFunctions = (
     someDataSourcesExists: async (filter?: string) => {
         return await authApiCall(async (sdk) => {
             const requestParams = filter ? { filter } : {};
-            return sdk.entities
-                .getAllEntitiesDataSources(requestParams)
-                .then((axiosResponse) => axiosResponse.data.data?.length > 0)
+            return EntitiesApi_GetAllEntitiesDataSources(sdk.axios, sdk.basePath, requestParams)
+                .then((axiosResponse: any) => axiosResponse.data.data?.length > 0)
                 .catch(() => {
                     return false;
                 });
@@ -833,12 +900,10 @@ export const buildTigerSpecificFunctions = (
     generateLogicalModel: async (dataSourceId: string, generateLdmRequest: GenerateLdmRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.actions
-                    .generateLogicalModel({
-                        dataSourceId,
-                        generateLdmRequest,
-                    })
-                    .then((axiosResponse) => axiosResponse.data);
+                return ActionsApi_GenerateLogicalModel(sdk.axios, sdk.basePath, {
+                    dataSourceId,
+                    generateLdmRequest,
+                }).then((axiosResponse) => axiosResponse.data);
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -847,14 +912,12 @@ export const buildTigerSpecificFunctions = (
     scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.scanModel
-                    .scanDataSource({
-                        dataSourceId,
-                        scanRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ScanModelApi_ScanDataSource(sdk.axios, sdk.basePath, {
+                    dataSourceId,
+                    scanRequest,
+                }).then((res) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -863,7 +926,7 @@ export const buildTigerSpecificFunctions = (
     createDemoWorkspace: async (sampleWorkspace: WorkspaceDefinition) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.createEntityWorkspaces({
+                const result = await EntitiesApi_CreateEntityWorkspaces(sdk.axios, sdk.basePath, {
                     jsonApiWorkspaceInDocument: sampleWorkspace,
                 });
                 return result.data.data.id;
@@ -875,7 +938,7 @@ export const buildTigerSpecificFunctions = (
     createDemoDataSource: async (sampleDataSource: JsonApiDataSourceInDocument) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.createEntityDataSources({
+                const result = await EntitiesApi_CreateEntityDataSources(sdk.axios, sdk.basePath, {
                     jsonApiDataSourceInDocument: sampleDataSource,
                 });
                 return result.data.data.id;
@@ -887,20 +950,20 @@ export const buildTigerSpecificFunctions = (
     createWorkspace: async (id: string, name: string, parentId?: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.createEntityWorkspaces({
+                const result = await EntitiesApi_CreateEntityWorkspaces(sdk.axios, sdk.basePath, {
                     jsonApiWorkspaceInDocument: {
                         data: {
                             attributes: {
                                 name,
                             },
                             id,
-                            type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                            type: "workspace",
                             relationships: parentId
                                 ? {
                                       parent: {
                                           data: {
                                               id: parentId,
-                                              type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                                              type: "workspace",
                                           },
                                       },
                                   }
@@ -917,7 +980,7 @@ export const buildTigerSpecificFunctions = (
     updateWorkspaceTitle: async (id: string, name: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.patchEntityWorkspaces({
+                await EntitiesApi_PatchEntityWorkspaces(sdk.axios, sdk.basePath, {
                     id,
                     jsonApiWorkspacePatchDocument: {
                         data: {
@@ -925,7 +988,7 @@ export const buildTigerSpecificFunctions = (
                                 name,
                             },
                             id,
-                            type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                            type: "workspace",
                         },
                     },
                 });
@@ -937,7 +1000,7 @@ export const buildTigerSpecificFunctions = (
     deleteWorkspace: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.deleteEntityWorkspaces({ id });
+                await EntitiesApi_DeleteEntityWorkspaces(sdk.axios, sdk.basePath, { id });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -947,7 +1010,7 @@ export const buildTigerSpecificFunctions = (
         try {
             return await authApiCall(async (sdk) => {
                 const childWorkspaces = (
-                    await sdk.entities.getAllEntitiesWorkspaces({
+                    await EntitiesApi_GetAllEntitiesWorkspaces(sdk.axios, sdk.basePath, {
                         include: ["workspaces"],
                         filter: `parent.id==${id}`,
                     })
@@ -961,7 +1024,10 @@ export const buildTigerSpecificFunctions = (
     getWorkspaceLogicalModel: async (workspaceId: string, includeParents: boolean = false) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.declarativeLayout.getLogicalModel({ workspaceId, includeParents });
+                const result = await LayoutApi_GetLogicalModel(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    includeParents,
+                });
                 return result.data;
             });
         } catch (error: any) {
@@ -971,7 +1037,9 @@ export const buildTigerSpecificFunctions = (
     getWorkspaceEntitiesDatasets: async (workspaceId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getAllEntitiesDatasets({ workspaceId });
+                const result = await EntitiesApi_GetAllEntitiesDatasets(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                });
                 return result.data;
             });
         } catch (error: any) {
@@ -981,7 +1049,7 @@ export const buildTigerSpecificFunctions = (
     putWorkspaceLayout: async (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.declarativeLayout.putWorkspaceLayout(requestParameters);
+                await LayoutApi_PutWorkspaceLayout(sdk.axios, sdk.basePath, requestParameters);
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -990,7 +1058,7 @@ export const buildTigerSpecificFunctions = (
     getEntitlements: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getAllEntitiesEntitlements({});
+                const result = await EntitiesApi_GetAllEntitiesEntitlements(sdk.axios, sdk.basePath, {});
                 return result.data.data.map((entitlement) => ({
                     id: entitlement.id,
                     value: entitlement.attributes?.value,
@@ -1004,13 +1072,11 @@ export const buildTigerSpecificFunctions = (
     getDataSourceById: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.entities
-                    .getEntityDataSources({
-                        id,
-                    })
-                    .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
-                    }));
+                return EntitiesApi_GetEntityDataSources(sdk.axios, sdk.basePath, {
+                    id,
+                }).then((axiosResponse: any) => ({
+                    data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                }));
             });
         } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -1019,13 +1085,11 @@ export const buildTigerSpecificFunctions = (
     getDataSourceIdentifierById: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.entities
-                    .getEntityDataSourceIdentifiers({
-                        id,
-                    })
-                    .then((axiosResponse) => ({
-                        data: dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo(axiosResponse.data),
-                    }));
+                return EntitiesApi_GetEntityDataSourceIdentifiers(sdk.axios, sdk.basePath, {
+                    id,
+                }).then((axiosResponse: any) => ({
+                    data: dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo(axiosResponse.data),
+                }));
             });
         } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -1050,33 +1114,31 @@ export const buildTigerSpecificFunctions = (
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.entities
-                    .createEntityDataSources({
-                        jsonApiDataSourceInDocument: {
-                            data: {
-                                attributes: {
-                                    name,
-                                    password,
-                                    schema,
-                                    token,
-                                    type,
-                                    url,
-                                    username,
-                                    parameters,
-                                    cacheStrategy,
-                                    privateKey,
-                                    privateKeyPassphrase,
-                                    clientId,
-                                    clientSecret,
-                                },
-                                id,
-                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                return EntitiesApi_CreateEntityDataSources(sdk.axios, sdk.basePath, {
+                    jsonApiDataSourceInDocument: {
+                        data: {
+                            attributes: {
+                                name,
+                                password,
+                                schema,
+                                token,
+                                type,
+                                url,
+                                username,
+                                parameters,
+                                cacheStrategy,
+                                privateKey,
+                                privateKeyPassphrase,
+                                clientId,
+                                clientSecret,
                             },
+                            id,
+                            type: "dataSource",
                         },
-                    })
-                    .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
-                    }));
+                    },
+                }).then((axiosResponse: any) => ({
+                    data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                }));
             });
         } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -1101,34 +1163,32 @@ export const buildTigerSpecificFunctions = (
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.entities
-                    .updateEntityDataSources({
-                        id,
-                        jsonApiDataSourceInDocument: {
-                            data: {
-                                attributes: {
-                                    name,
-                                    password,
-                                    schema,
-                                    token,
-                                    type,
-                                    url,
-                                    username,
-                                    parameters,
-                                    cacheStrategy,
-                                    privateKey,
-                                    privateKeyPassphrase,
-                                    clientId,
-                                    clientSecret,
-                                },
-                                id: requestDataId,
-                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                return EntitiesApi_UpdateEntityDataSources(sdk.axios, sdk.basePath, {
+                    id,
+                    jsonApiDataSourceInDocument: {
+                        data: {
+                            attributes: {
+                                name,
+                                password,
+                                schema,
+                                token,
+                                type,
+                                url,
+                                username,
+                                parameters,
+                                cacheStrategy,
+                                privateKey,
+                                privateKeyPassphrase,
+                                clientId,
+                                clientSecret,
                             },
+                            id: requestDataId,
+                            type: "dataSource",
                         },
-                    })
-                    .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
-                    }));
+                    },
+                }).then((axiosResponse: any) => ({
+                    data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                }));
             });
         } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -1153,34 +1213,32 @@ export const buildTigerSpecificFunctions = (
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.entities
-                    .patchEntityDataSources({
-                        id,
-                        jsonApiDataSourcePatchDocument: {
-                            data: {
-                                attributes: {
-                                    name,
-                                    password,
-                                    schema,
-                                    token,
-                                    type,
-                                    url,
-                                    username,
-                                    parameters,
-                                    cacheStrategy,
-                                    privateKey,
-                                    privateKeyPassphrase,
-                                    clientId,
-                                    clientSecret,
-                                },
-                                id: requestDataId,
-                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                return EntitiesApi_PatchEntityDataSources(sdk.axios, sdk.basePath, {
+                    id,
+                    jsonApiDataSourcePatchDocument: {
+                        data: {
+                            attributes: {
+                                name,
+                                password,
+                                schema,
+                                token,
+                                type,
+                                url,
+                                username,
+                                parameters,
+                                cacheStrategy,
+                                privateKey,
+                                privateKeyPassphrase,
+                                clientId,
+                                clientSecret,
                             },
+                            id: requestDataId,
+                            type: "dataSource",
                         },
-                    })
-                    .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
-                    }));
+                    },
+                }).then((axiosResponse: any) => ({
+                    data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                }));
             });
         } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -1189,7 +1247,7 @@ export const buildTigerSpecificFunctions = (
     deleteDataSource: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.deleteEntityDataSources({
+                await EntitiesApi_DeleteEntityDataSources(sdk.axios, sdk.basePath, {
                     id,
                 });
                 return { successful: true };
@@ -1202,11 +1260,11 @@ export const buildTigerSpecificFunctions = (
         try {
             return await authApiCall(async (sdk) => {
                 const promise = id
-                    ? sdk.scanModel.testDataSource({
+                    ? ScanModelApi_TestDataSource(sdk.axios, sdk.basePath, {
                           dataSourceId: id,
                           testRequest: connectionData,
                       })
-                    : sdk.scanModel.testDataSourceDefinition({
+                    : ScanModelApi_TestDataSourceDefinition(sdk.axios, sdk.basePath, {
                           testDefinitionRequest: connectionData,
                       });
                 return await promise.then((axiosResponse) => axiosResponse.data);
@@ -1220,30 +1278,28 @@ export const buildTigerSpecificFunctions = (
     },
     getDataSourceSchemata: async (dataSourceId: string) => {
         return await authApiCall(async (sdk) => {
-            return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res) => {
+            return await ScanModelApi_GetDataSourceSchemata(sdk.axios, sdk.basePath, {
+                dataSourceId,
+            }).then((res) => {
                 return res?.data.schemaNames;
             });
         });
     },
     getAllDataSources: async () => {
         return await authApiCall(async (sdk) => {
-            return OrganizationUtilities.getAllPagesOf(
-                sdk,
-                sdk.entities.getAllEntitiesDataSourceIdentifiers,
-                {
-                    sort: ["name"],
-                    metaInclude: ["permissions"],
-                },
-            )
+            return OrganizationUtilities.getAllPagesOf(sdk, EntitiesApi_GetAllEntitiesDataSourceIdentifiers, {
+                sort: ["name"],
+                metaInclude: ["permissions"],
+            })
                 .then(OrganizationUtilities.mergeEntitiesResults)
-                .then((res) => {
+                .then((res: any) => {
                     return res.data.map(dataSourceIdentifierOutWithLinksAsDataSourceConnectionInfo);
                 });
         });
     },
     publishLogicalModel: async (workspaceId: string, declarativeModel: DeclarativeModel) => {
         return await authApiCall(async (sdk) => {
-            await sdk.declarativeLayout.setLogicalModel({
+            await LayoutApi_SetLogicalModel(sdk.axios, sdk.basePath, {
                 workspaceId,
                 declarativeModel,
             });
@@ -1252,13 +1308,11 @@ export const buildTigerSpecificFunctions = (
     getDependentEntitiesGraph: async (workspaceId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.actions
-                    .getDependentEntitiesGraph({
-                        workspaceId,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ActionsApi_GetDependentEntitiesGraph(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                }).then((res) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1270,49 +1324,53 @@ export const buildTigerSpecificFunctions = (
     ) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.actions
-                    .getDependentEntitiesGraphFromEntryPoints({
-                        workspaceId,
-                        dependentEntitiesRequest: dependentEntitiesGraphRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ActionsApi_GetDependentEntitiesGraphFromEntryPoints(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    dependentEntitiesRequest: dependentEntitiesGraphRequest,
+                }).then((res) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
         }
     },
     resolveAllEntitlements: async () => {
-        return authApiCall(async (sdk) => sdk.actions.resolveAllEntitlements().then((res) => res.data));
+        return authApiCall(async (sdk) =>
+            ActionsApi_ResolveAllEntitlements(sdk.axios, sdk.basePath).then((res) => res.data),
+        );
     },
     getAllPlatformUsage: async () => {
-        return authApiCall(async (sdk) => sdk.actions.allPlatformUsage().then((res) => res.data));
+        return authApiCall(async (sdk) =>
+            ActionsApi_AllPlatformUsage(sdk.axios, sdk.basePath).then((res) => res.data),
+        );
     },
     inviteUser: async (
         requestParameters: ActionsApiProcessInvitationRequest,
         options?: AxiosRequestConfig,
     ) => {
         return authApiCall(async (sdk) => {
-            return sdk.authActions.processInvitation(requestParameters, options).then((res) => {
-                if (res.status == 204) {
-                    return {
-                        successful: true,
-                    } as IInvitationUserResponse;
-                } else {
-                    return {
-                        successful: false,
-                        errorMessage: res?.data,
-                    } as IInvitationUserResponse;
-                }
-            });
+            return AuthApi_ProcessInvitation(sdk.axios, sdk.basePath, requestParameters, options).then(
+                (res) => {
+                    if (res.status == 204) {
+                        return {
+                            successful: true,
+                        } as IInvitationUserResponse;
+                    } else {
+                        return {
+                            successful: false,
+                            errorMessage: res?.data,
+                        } as IInvitationUserResponse;
+                    }
+                },
+            );
         });
     },
 
     getWorkspaceDataFiltersLayout: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.declarativeLayout.getWorkspaceDataFiltersLayout();
+                const result = await LayoutApi_GetWorkspaceDataFiltersLayout(sdk.axios, sdk.basePath);
                 return result.data;
             });
         } catch (error: any) {
@@ -1322,7 +1380,7 @@ export const buildTigerSpecificFunctions = (
 
     setWorkspaceDataFiltersLayout: async (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => {
         return await authApiCall(async (sdk) => {
-            await sdk.declarativeLayout.setWorkspaceDataFiltersLayout({
+            await LayoutApi_SetWorkspaceDataFiltersLayout(sdk.axios, sdk.basePath, {
                 declarativeWorkspaceDataFilters: workspaceDataFiltersLayout,
             });
         });
@@ -1334,7 +1392,7 @@ export const buildTigerSpecificFunctions = (
     ): Promise<WorkspaceDataFilterResult> => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityWorkspaceDataFilters({
+                const result = await EntitiesApi_GetEntityWorkspaceDataFilters(sdk.axios, sdk.basePath, {
                     workspaceId,
                     objectId,
                 });
@@ -1350,7 +1408,7 @@ export const buildTigerSpecificFunctions = (
         workspaceDataFilter: WorkspaceDataFilter,
     ): Promise<void> => {
         return authApiCall(async (sdk) => {
-            await sdk.entities.createEntityWorkspaceDataFilters({
+            await EntitiesApi_CreateEntityWorkspaceDataFilters(sdk.axios, sdk.basePath, {
                 workspaceId,
                 jsonApiWorkspaceDataFilterInDocument: workspaceDataFilter,
             });
@@ -1363,10 +1421,14 @@ export const buildTigerSpecificFunctions = (
     ): Promise<WorkspaceDataFilterSettingResult> => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityWorkspaceDataFilterSettings({
-                    workspaceId,
-                    objectId,
-                });
+                const result = await EntitiesApi_GetEntityWorkspaceDataFilterSettings(
+                    sdk.axios,
+                    sdk.basePath,
+                    {
+                        workspaceId,
+                        objectId,
+                    },
+                );
                 return result.data;
             });
         } catch (error: any) {
@@ -1379,7 +1441,7 @@ export const buildTigerSpecificFunctions = (
         workspaceDataFilterSetting: WorkspaceDataFilterSetting,
     ): Promise<void> => {
         return await authApiCall(async (sdk) => {
-            await sdk.entities.createEntityWorkspaceDataFilterSettings({
+            await EntitiesApi_CreateEntityWorkspaceDataFilterSettings(sdk.axios, sdk.basePath, {
                 workspaceId,
                 jsonApiWorkspaceDataFilterSettingInDocument: workspaceDataFilterSetting,
             });
@@ -1389,7 +1451,7 @@ export const buildTigerSpecificFunctions = (
     getAllCSPDirectives: async (): Promise<Array<ICSPDirective>> => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getAllEntitiesCspDirectives({});
+                const result = await EntitiesApi_GetAllEntitiesCspDirectives(sdk.axios, sdk.basePath, {});
                 return result.data?.data || [];
             });
         } catch {
@@ -1399,7 +1461,9 @@ export const buildTigerSpecificFunctions = (
     getCSPDirective: async (directiveId: string): Promise<ICSPDirective> => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityCspDirectives({ id: directiveId });
+                const result = await EntitiesApi_GetEntityCspDirectives(sdk.axios, sdk.basePath, {
+                    id: directiveId,
+                });
                 return result.data?.data;
             });
         } catch (error: any) {
@@ -1412,11 +1476,11 @@ export const buildTigerSpecificFunctions = (
                 const jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument = {
                     data: {
                         id: requestData.id,
-                        type: JsonApiCspDirectiveInTypeEnum.CSP_DIRECTIVE,
+                        type: "cspDirective",
                         attributes: requestData.attributes,
                     },
                 };
-                const result = await sdk.entities.createEntityCspDirectives({
+                const result = await EntitiesApi_CreateEntityCspDirectives(sdk.axios, sdk.basePath, {
                     jsonApiCspDirectiveInDocument,
                 });
 
@@ -1438,11 +1502,11 @@ export const buildTigerSpecificFunctions = (
                 const jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument = {
                     data: {
                         id: requestData.id,
-                        type: JsonApiCspDirectiveInTypeEnum.CSP_DIRECTIVE,
+                        type: "cspDirective",
                         attributes: requestData.attributes,
                     },
                 };
-                const result = await sdk.entities.updateEntityCspDirectives({
+                const result = await EntitiesApi_UpdateEntityCspDirectives(sdk.axios, sdk.basePath, {
                     id: directiveId,
                     jsonApiCspDirectiveInDocument,
                 });
@@ -1462,7 +1526,9 @@ export const buildTigerSpecificFunctions = (
     deleteCSPDirective: async (directiveId: string) => {
         try {
             await authApiCall(async (sdk) => {
-                await sdk.entities.deleteEntityCspDirectives({ id: directiveId });
+                await EntitiesApi_DeleteEntityCspDirectives(sdk.axios, sdk.basePath, {
+                    id: directiveId,
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1470,9 +1536,13 @@ export const buildTigerSpecificFunctions = (
     },
     getWorkspaceCustomAppSettings: async (workspaceId: string, applicationName?: string) => {
         return await authApiCall(async (sdk) => {
-            const result = await sdk.entities.getAllEntitiesCustomApplicationSettings({
-                workspaceId,
-            });
+            const result = await EntitiesApi_GetAllEntitiesCustomApplicationSettings(
+                sdk.axios,
+                sdk.basePath,
+                {
+                    workspaceId,
+                },
+            );
             const responseData = result.data;
             if (applicationName) {
                 responseData.data = responseData.data.filter(
@@ -1487,7 +1557,7 @@ export const buildTigerSpecificFunctions = (
     getWorkspaceCustomAppSetting: async (workspaceId: string, settingId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityCustomApplicationSettings({
+                const result = await EntitiesApi_GetEntityCustomApplicationSettings(sdk.axios, sdk.basePath, {
                     objectId: settingId,
                     workspaceId,
                 });
@@ -1505,11 +1575,11 @@ export const buildTigerSpecificFunctions = (
         settingId?: string,
     ) => {
         return await authApiCall(async (sdk) => {
-            const result = await sdk.entities.createEntityCustomApplicationSettings({
+            const result = await EntitiesApi_CreateEntityCustomApplicationSettings(sdk.axios, sdk.basePath, {
                 workspaceId,
                 jsonApiCustomApplicationSettingPostOptionalIdDocument: {
                     data: {
-                        type: JsonApiCustomApplicationSettingOutTypeEnum.CUSTOM_APPLICATION_SETTING,
+                        type: "customApplicationSetting",
                         id: settingId,
                         attributes: {
                             applicationName,
@@ -1525,7 +1595,7 @@ export const buildTigerSpecificFunctions = (
     deleteWorkspaceCustomAppSetting: async (workspaceId: string, settingId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.deleteEntityCustomApplicationSettings({
+                await EntitiesApi_DeleteEntityCustomApplicationSettings(sdk.axios, sdk.basePath, {
                     objectId: settingId,
                     workspaceId,
                 });
@@ -1538,7 +1608,7 @@ export const buildTigerSpecificFunctions = (
     getEntityUser: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getEntityUsers({
+                const result = await EntitiesApi_GetEntityUsers(sdk.axios, sdk.basePath, {
                     id,
                 });
                 const { firstname, lastname, ...userInfo } = result.data?.data.attributes || {};
@@ -1555,7 +1625,7 @@ export const buildTigerSpecificFunctions = (
 
     registerUploadNotification: async (dataSourceId: string) => {
         return await authApiCall(async (sdk) => {
-            await sdk.actions.registerUploadNotification({
+            await ActionsApi_RegisterUploadNotification(sdk.axios, sdk.basePath, {
                 dataSourceId,
             });
         });
@@ -1564,7 +1634,10 @@ export const buildTigerSpecificFunctions = (
     scanSql: async (dataSourceId: string, sql: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.scanModel.scanSql({ dataSourceId, scanSqlRequest: { sql } }).then((response) => {
+                return ScanModelApi_ScanSql(sdk.axios, sdk.basePath, {
+                    dataSourceId,
+                    scanSqlRequest: { sql },
+                }).then((response) => {
                     return response.data as ScanSqlResult;
                 });
             });
@@ -1579,11 +1652,12 @@ export const buildTigerSpecificFunctions = (
     ) => {
         try {
             return await authApiCall(async (sdk) => {
-                return sdk.actions
-                    .checkEntityOverrides({ workspaceId, hierarchyObjectIdentification })
-                    .then((response) => {
-                        return response.data as Array<IdentifierDuplications>;
-                    });
+                return ActionsApi_CheckEntityOverrides(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    hierarchyObjectIdentification,
+                }).then((response) => {
+                    return response.data as Array<IdentifierDuplications>;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1599,13 +1673,11 @@ export const buildTigerSpecificFunctions = (
 
         const body = async () =>
             await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .stagingUpload({
-                        file,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ResultApi_StagingUpload(sdk.axios, sdk.basePath, {
+                    file,
+                }).then((res: any) => {
+                    return res?.data;
+                });
             });
 
         try {
@@ -1635,13 +1707,11 @@ export const buildTigerSpecificFunctions = (
     analyzeCsv: async (analyzeCsvRequest: AnalyzeCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .analyzeCsv({
-                        analyzeCsvRequest: analyzeCsvRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ResultApi_AnalyzeCsv(sdk.axios, sdk.basePath, {
+                    analyzeCsvRequest: analyzeCsvRequest,
+                }).then((res: any) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1651,14 +1721,12 @@ export const buildTigerSpecificFunctions = (
     importCsv: async (dataSourceId: string, importCsvRequest: ImportCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .importCsv({
-                        dataSourceId: dataSourceId,
-                        importCsvRequest: importCsvRequest,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ResultApi_ImportCsv(sdk.axios, sdk.basePath, {
+                    dataSourceId: dataSourceId,
+                    importCsvRequest: importCsvRequest,
+                }).then((res: any) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1668,13 +1736,11 @@ export const buildTigerSpecificFunctions = (
     listFiles: async (dataSourceId: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .listFiles({
-                        dataSourceId: dataSourceId,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
+                return await ResultApi_ListFiles(sdk.axios, sdk.basePath, {
+                    dataSourceId: dataSourceId,
+                }).then((res: any) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1684,7 +1750,7 @@ export const buildTigerSpecificFunctions = (
     deleteFiles: async (dataSourceId: string, fileNames: string[]) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.result.deleteFiles({
+                await ResultApi_DeleteFiles(sdk.axios, sdk.basePath, {
                     dataSourceId: dataSourceId,
                     deleteFilesRequest: {
                         fileNames: fileNames,
@@ -1699,7 +1765,7 @@ export const buildTigerSpecificFunctions = (
     readFileManifests: async (dataSourceId, fileNames) => {
         try {
             return await authApiCall(async (sdk) => {
-                const request: ActionsApiReadCsvFileManifestsRequest = {
+                const request: ResultApiReadCsvFileManifestsRequest = {
                     dataSourceId: dataSourceId,
                     readCsvFileManifestsRequest: {
                         manifestRequests: fileNames.map((fileName) => ({
@@ -1707,7 +1773,7 @@ export const buildTigerSpecificFunctions = (
                         })),
                     },
                 };
-                return await sdk.result.readCsvFileManifests(request).then((res) => {
+                return await ResultApi_ReadCsvFileManifests(sdk.axios, sdk.basePath, request).then((res) => {
                     return res?.data;
                 });
             });

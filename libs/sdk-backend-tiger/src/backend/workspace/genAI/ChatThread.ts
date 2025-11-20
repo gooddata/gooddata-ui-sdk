@@ -9,6 +9,11 @@ import {
     SearchResultObject,
 } from "@gooddata/api-client-tiger";
 import {
+    GenAiApi_AiChat,
+    GenAiApi_AiChatHistory,
+    GenAiApi_AiChatStream,
+} from "@gooddata/api-client-tiger/genAI";
+import {
     IChatThread,
     IChatThreadHistory,
     IChatThreadQuery,
@@ -49,7 +54,9 @@ export class ChatThreadService implements IChatThread {
         options?: { signal?: AbortSignal },
     ): Promise<IChatThreadHistory> {
         const response = await this.authCall((client) => {
-            return client.genAI.aiChatHistory(
+            return GenAiApi_AiChatHistory(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.workspaceId,
                     chatHistoryRequest: {
@@ -65,7 +72,7 @@ export class ChatThreadService implements IChatThread {
 
     async reset(): Promise<void> {
         await this.authCall((client) => {
-            return client.genAI.aiChatHistory({
+            return GenAiApi_AiChatHistory(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 chatHistoryRequest: {
                     reset: true,
@@ -80,7 +87,7 @@ export class ChatThreadService implements IChatThread {
         userTextFeedback?: string,
     ): Promise<void> {
         await this.authCall((client) => {
-            return client.genAI.aiChatHistory({
+            return GenAiApi_AiChatHistory(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 chatHistoryRequest: {
                     chatHistoryInteractionId,
@@ -96,7 +103,7 @@ export class ChatThreadService implements IChatThread {
         savedVisualization: GenAIChatInteractionUserVisualisation,
     ): Promise<void> {
         await this.authCall((client) => {
-            return client.genAI.aiChatHistory({
+            return GenAiApi_AiChatHistory(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 chatHistoryRequest: {
                     chatHistoryInteractionId,
@@ -114,7 +121,7 @@ export class ChatThreadService implements IChatThread {
         responseState: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
     ): Promise<void> {
         await this.authCall((client) => {
-            return client.genAI.aiChatHistory({
+            return GenAiApi_AiChatHistory(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 chatHistoryRequest: {
                     chatHistoryInteractionId,
@@ -185,7 +192,9 @@ export class ChatThreadQuery implements IChatThreadQuery {
 
     async query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation> {
         const response = await this.authCall((client) =>
-            client.genAI.aiChat(
+            GenAiApi_AiChat(
+                client.axios,
+                client.basePath,
                 {
                     workspaceId: this.config.workspaceId,
                     chatRequest: {
@@ -214,7 +223,9 @@ export class ChatThreadQuery implements IChatThreadQuery {
         const textStream = new ReadableStream<string>({
             start(controller) {
                 authCall((client) =>
-                    client.genAI.aiChatStream(
+                    GenAiApi_AiChatStream(
+                        client.axios,
+                        client.basePath,
                         {
                             workspaceId: config.workspaceId,
                             chatRequest: {

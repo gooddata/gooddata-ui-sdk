@@ -2,7 +2,7 @@
 
 import { AxiosInstance } from "axios";
 
-import { ActionsApiFactory, ActionsApiInterface } from "./generated/metadata-json-api/index.js";
+import { ActionsApi, ActionsApiInterface } from "./generated/metadata-json-api/index.js";
 
 export const tigerActionsClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
-    ActionsApiFactory(undefined, "", axios);
+    new ActionsApi(undefined, "", axios);

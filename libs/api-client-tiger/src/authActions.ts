@@ -2,7 +2,7 @@
 
 import { AxiosInstance } from "axios";
 
-import { ActionsApiFactory, ActionsApiInterface } from "./generated/auth-json-api/index.js";
+import { ActionsApi, ActionsApiInterface } from "./generated/auth-json-api/index.js";
 
 export const tigerAuthActionsClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
-    ActionsApiFactory(undefined, "", axios);
+    new ActionsApi(undefined, "", axios);

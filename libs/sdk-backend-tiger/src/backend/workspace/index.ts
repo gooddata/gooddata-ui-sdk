@@ -1,5 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { ActionsApi_InheritedEntityPrefixes } from "@gooddata/api-client-tiger/actions";
+import {
+    EntitiesApi_GetEntityWorkspaces,
+    EntitiesApi_PatchEntityWorkspaces,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import {
     IAnalyticalWorkspace,
     IAttributeHierarchiesService,
@@ -70,7 +75,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
             return workspaceConverter(
                 (
                     await this.authCall(async (client) => {
-                        return client.entities.getEntityWorkspaces({
+                        return EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
                             id: this.workspace,
                             ...GET_OPTIMIZED_WORKSPACE_PARAMS,
                         });
@@ -79,7 +84,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                 includeParentPrefixes
                     ? (
                           await this.authCall(async (client) => {
-                              return client.actions.inheritedEntityPrefixes({
+                              return ActionsApi_InheritedEntityPrefixes(client.axios, client.basePath, {
                                   workspaceId: this.workspace,
                               });
                           })
@@ -92,7 +97,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public async updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor> {
         const result = await this.authCall(async (client) => {
-            return client.entities.patchEntityWorkspaces({
+            return EntitiesApi_PatchEntityWorkspaces(client.axios, client.basePath, {
                 id: this.workspace,
                 jsonApiWorkspacePatchDocument: {
                     data: convertWorkspaceUpdate(descriptor, this.workspace),

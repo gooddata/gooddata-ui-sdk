@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
+import { ITigerClientBase, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetAllEntitiesVisualizationObjects } from "@gooddata/api-client-tiger/entitiesObjects";
 
 import { ObjectMeta } from "../../base/types.js";
 
@@ -11,17 +12,17 @@ import { ObjectMeta } from "../../base/types.js";
  * @param client - tiger client to use for communication
  * @param workspaceId - workspace id
  */
-export async function loadInsights(client: ITigerClient, workspaceId: string): Promise<ObjectMeta[]> {
+export async function loadInsights(client: ITigerClientBase, workspaceId: string): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.entities.getAllEntitiesVisualizationObjects,
+        EntitiesApi_GetAllEntitiesVisualizationObjects,
         { workspaceId },
         { headers: ValidateRelationsHeader },
     )
         .then(MetadataUtilities.mergeEntitiesResults)
         .then(MetadataUtilities.filterValidEntities);
 
-    return result.data.map((vis) => {
+    return result.data.map((vis: any) => {
         return {
             title: vis.attributes?.title ?? vis.id,
             identifier: vis.id,

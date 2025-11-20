@@ -1199,6 +1199,30 @@
         "value": "Wrap text",
         "comment": "Title for cells wrap text configuration section"
     },
+    "properties.cells.grandTotals.title": {
+        "value": "Grand Total Row",
+        "comment": "Label for grand totals configuration section in table"
+    },
+    "properties.cells.grandTotals.position.label": {
+        "value": "Position",
+        "comment": "Label for grand totals position dropdown"
+    },
+    "properties.cells.grandTotals.position.pinnedBottom": {
+        "value": "bottom pinned (default)",
+        "comment": "Option to pin grand totals at bottom (always visible)"
+    },
+    "properties.cells.grandTotals.position.bottom": {
+        "value": "bottom",
+        "comment": "Option to place grand totals at end of table data (scrolls)"
+    },
+    "properties.cells.grandTotals.position.pinnedTop": {
+        "value": "top pinned",
+        "comment": "Option to pin grand totals at top (always visible)"
+    },
+    "properties.cells.grandTotals.position.top": {
+        "value": "top",
+        "comment": "Option to place grand totals at beginning of table data (scrolls)"
+    },
     "dashboard.bucket.table.subtitle.columns": {
         "value": "in columns",
         "comment": "Subtitle indicating table data is arranged in columns"

@@ -1,6 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_GetAllEntitiesNotificationChannelIdentifiers,
+    EntitiesApi_GetAllEntitiesNotificationChannels,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     INotificationChannelIdentifiersQueryResult,
@@ -73,7 +77,7 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                 const filterObj = this.constructFilter();
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesNotificationChannels({
+                    EntitiesApi_GetAllEntitiesNotificationChannels(client.axios, client.basePath, {
                         ...metaIncludeObj,
                         ...filterObj,
                         ...this.sort,
@@ -120,7 +124,7 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                 const filterObj = this.constructFilter();
 
                 const items = await this.authCall((client) =>
-                    client.entities.getAllEntitiesNotificationChannelIdentifiers({
+                    EntitiesApi_GetAllEntitiesNotificationChannelIdentifiers(client.axios, client.basePath, {
                         ...metaIncludeObj,
                         ...filterObj,
                         ...this.sort,

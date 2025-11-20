@@ -1,5 +1,3 @@
-// (C) 2025 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -45,12 +43,14 @@ export interface AFM {
      */
     auxMeasures?: Array<MeasureItem>;
 }
+
 /**
  * A datetime filter specifying exact from and to values.
  */
 export interface AbsoluteDateFilter {
     absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
 }
+
 export interface AbsoluteDateFilterAbsoluteDateFilter {
     from: string;
     to: string;
@@ -58,6 +58,7 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     applyOnResult?: boolean;
     dataset: AfmObjectIdentifierDataset;
 }
+
 /**
  * @type AbstractMeasureValueFilter
  */
@@ -83,6 +84,7 @@ export interface ActiveObjectIdentification {
      */
     workspaceId: string;
 }
+
 /**
  * Any information related to cancellation.
  */
@@ -92,17 +94,20 @@ export interface AfmCancelTokens {
      */
     resultIdToCancelTokenPairs: { [key: string]: string };
 }
+
 export interface AfmExecution {
     execution: AFM;
     resultSpec: ResultSpec;
     settings?: ExecutionSettings;
 }
+
 /**
  * Response to AFM execution request
  */
 export interface AfmExecutionResponse {
     executionResponse: ExecutionResponse;
 }
+
 /**
  * @type AfmIdentifier
  * Reference to the attribute label to which the filter should be applied.
@@ -112,29 +117,27 @@ export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
 export interface AfmLocalIdentifier {
     localIdentifier: string;
 }
+
 /**
  * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
  */
 export interface AfmObjectIdentifier {
     identifier: AfmObjectIdentifierIdentifier;
 }
+
 /**
  * Reference to the date attribute to use.
  */
 export interface AfmObjectIdentifierAttribute {
     identifier: AfmObjectIdentifierAttributeIdentifier;
 }
+
 export interface AfmObjectIdentifierAttributeIdentifier {
     id: string;
     type: AfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
-export const AfmObjectIdentifierAttributeIdentifierTypeEnum = {
-    ATTRIBUTE: "attribute",
-} as const;
-
-export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
-    (typeof AfmObjectIdentifierAttributeIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
+export type AfmObjectIdentifierAttributeIdentifierTypeEnum = "attribute";
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
@@ -142,20 +145,13 @@ export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
 export interface AfmObjectIdentifierCore {
     identifier: AfmObjectIdentifierCoreIdentifier;
 }
+
 export interface AfmObjectIdentifierCoreIdentifier {
     id: string;
     type: AfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
-export const AfmObjectIdentifierCoreIdentifierTypeEnum = {
-    ATTRIBUTE: "attribute",
-    LABEL: "label",
-    FACT: "fact",
-    METRIC: "metric",
-} as const;
-
-export type AfmObjectIdentifierCoreIdentifierTypeEnum =
-    (typeof AfmObjectIdentifierCoreIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
+export type AfmObjectIdentifierCoreIdentifierTypeEnum = "attribute" | "label" | "fact" | "metric";
 
 /**
  * Reference to the date dataset to which the filter should be applied.
@@ -163,53 +159,41 @@ export type AfmObjectIdentifierCoreIdentifierTypeEnum =
 export interface AfmObjectIdentifierDataset {
     identifier: AfmObjectIdentifierDatasetIdentifier;
 }
+
 export interface AfmObjectIdentifierDatasetIdentifier {
     id: string;
     type: AfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
-export const AfmObjectIdentifierDatasetIdentifierTypeEnum = {
-    DATASET: "dataset",
-} as const;
-
-export type AfmObjectIdentifierDatasetIdentifierTypeEnum =
-    (typeof AfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
+export type AfmObjectIdentifierDatasetIdentifierTypeEnum = "dataset";
 
 export interface AfmObjectIdentifierIdentifier {
     type: AfmObjectIdentifierIdentifierTypeEnum;
     id: string;
 }
 
-export const AfmObjectIdentifierIdentifierTypeEnum = {
-    ANALYTICAL_DASHBOARD: "analyticalDashboard",
-    ATTRIBUTE: "attribute",
-    DASHBOARD_PLUGIN: "dashboardPlugin",
-    DATASET: "dataset",
-    FACT: "fact",
-    LABEL: "label",
-    METRIC: "metric",
-    PROMPT: "prompt",
-    VISUALIZATION_OBJECT: "visualizationObject",
-    FILTER_CONTEXT: "filterContext",
-} as const;
-
 export type AfmObjectIdentifierIdentifierTypeEnum =
-    (typeof AfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
+    | "analyticalDashboard"
+    | "attribute"
+    | "dashboardPlugin"
+    | "dataset"
+    | "fact"
+    | "label"
+    | "metric"
+    | "prompt"
+    | "visualizationObject"
+    | "filterContext";
 
 export interface AfmObjectIdentifierLabel {
     identifier: AfmObjectIdentifierLabelIdentifier;
 }
+
 export interface AfmObjectIdentifierLabelIdentifier {
     type: AfmObjectIdentifierLabelIdentifierTypeEnum;
     id: string;
 }
 
-export const AfmObjectIdentifierLabelIdentifierTypeEnum = {
-    LABEL: "label",
-} as const;
-
-export type AfmObjectIdentifierLabelIdentifierTypeEnum =
-    (typeof AfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
+export type AfmObjectIdentifierLabelIdentifierTypeEnum = "label";
 
 /**
  * Entity describing the valid descendants request.
@@ -220,6 +204,7 @@ export interface AfmValidDescendantsQuery {
      */
     attributes: Array<AfmObjectIdentifierAttribute>;
 }
+
 /**
  * Entity describing the valid descendants response.
  */
@@ -229,6 +214,7 @@ export interface AfmValidDescendantsResponse {
      */
     validDescendants: { [key: string]: Array<AfmObjectIdentifierAttribute> };
 }
+
 /**
  * Entity holding AFM and list of object types whose validity should be computed.
  */
@@ -237,14 +223,7 @@ export interface AfmValidObjectsQuery {
     afm: AFM;
 }
 
-export const AfmValidObjectsQueryTypesEnum = {
-    FACTS: "facts",
-    ATTRIBUTES: "attributes",
-    MEASURES: "measures",
-} as const;
-
-export type AfmValidObjectsQueryTypesEnum =
-    (typeof AfmValidObjectsQueryTypesEnum)[keyof typeof AfmValidObjectsQueryTypesEnum];
+export type AfmValidObjectsQueryTypesEnum = "facts" | "attributes" | "measures";
 
 /**
  * All objects of specified types valid with respect to given AFM.
@@ -252,6 +231,7 @@ export type AfmValidObjectsQueryTypesEnum =
 export interface AfmValidObjectsResponse {
     items: Array<RestApiIdentifier>;
 }
+
 export interface AnalyticsCatalogCreatedBy {
     /**
      * Users who created any object in the catalog
@@ -262,9 +242,11 @@ export interface AnalyticsCatalogCreatedBy {
      */
     reasoning: string;
 }
+
 export interface AnalyticsCatalogTags {
     tags: Array<string>;
 }
+
 /**
  * Users who created any object in the catalog
  */
@@ -282,23 +264,27 @@ export interface AnalyticsCatalogUser {
      */
     lastname: string;
 }
+
 export interface AnomalyDetectionRequest {
     /**
      * Anomaly detection sensitivity.
      */
     sensitivity: number;
 }
+
 export interface AnomalyDetectionResult {
     attribute: Array<string>;
     values: Array<number | null>;
     anomalyFlag: Array<boolean | null>;
 }
+
 /**
  * Metric representing arithmetics between other metrics.
  */
 export interface ArithmeticMeasureDefinition {
     arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
 }
+
 export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     /**
      * List of metrics to apply arithmetic operation by chosen operator.
@@ -310,20 +296,17 @@ export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
 
-export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
-    SUM: "SUM",
-    DIFFERENCE: "DIFFERENCE",
-    MULTIPLICATION: "MULTIPLICATION",
-    RATIO: "RATIO",
-    CHANGE: "CHANGE",
-} as const;
-
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
-    (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+    | "SUM"
+    | "DIFFERENCE"
+    | "MULTIPLICATION"
+    | "RATIO"
+    | "CHANGE";
 
 export interface AttributeExecutionResultHeader {
     attributeHeader: AttributeResultHeader;
 }
+
 /**
  * @type AttributeFilter
  * Abstract filter definition type attributes
@@ -339,6 +322,7 @@ export interface AttributeFilterElements {
      */
     values: Array<string | null>;
 }
+
 /**
  * Attribute format describes formatting information to effectively format attribute values when needed.
  */
@@ -356,9 +340,11 @@ export interface AttributeFormat {
      */
     timezone?: string;
 }
+
 export interface AttributeHeader {
     attributeHeader: AttributeHeaderAttributeHeader;
 }
+
 export interface AttributeHeaderAttributeHeader {
     /**
      * Local identifier of the attribute this header relates to.
@@ -386,39 +372,31 @@ export interface AttributeHeaderAttributeHeader {
     valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
 
-export const AttributeHeaderAttributeHeaderGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type AttributeHeaderAttributeHeaderGranularityEnum =
-    (typeof AttributeHeaderAttributeHeaderGranularityEnum)[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
-export const AttributeHeaderAttributeHeaderValueTypeEnum = {
-    TEXT: "TEXT",
-    HYPERLINK: "HYPERLINK",
-    GEO: "GEO",
-    GEO_LONGITUDE: "GEO_LONGITUDE",
-    GEO_LATITUDE: "GEO_LATITUDE",
-    GEO_AREA: "GEO_AREA",
-    IMAGE: "IMAGE",
-} as const;
-
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 export type AttributeHeaderAttributeHeaderValueTypeEnum =
-    (typeof AttributeHeaderAttributeHeaderValueTypeEnum)[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
+    | "TEXT"
+    | "HYPERLINK"
+    | "GEO"
+    | "GEO_LONGITUDE"
+    | "GEO_LATITUDE"
+    | "GEO_AREA"
+    | "IMAGE";
 
 export interface AttributeItem {
     /**
@@ -431,14 +409,17 @@ export interface AttributeItem {
      */
     showAllValues?: boolean;
 }
+
 export interface AttributeNegativeFilter {
     using: string;
     exclude: Array<string>;
 }
+
 export interface AttributePositiveFilter {
     using: string;
     include: Array<string>;
 }
+
 /**
  * Header containing the information related to attributes.
  */
@@ -452,6 +433,7 @@ export interface AttributeResultHeader {
      */
     primaryLabelValue: string;
 }
+
 /**
  * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
  */
@@ -470,27 +452,23 @@ export interface BoundedFilter {
     to?: number | null;
 }
 
-export const BoundedFilterGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type BoundedFilterGranularityEnum =
-    (typeof BoundedFilterGranularityEnum)[keyof typeof BoundedFilterGranularityEnum];
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 
 /**
  * Change analysis specification.
@@ -523,6 +501,7 @@ export interface ChangeAnalysisParams {
      */
     useSmartAttributeSelection: boolean;
 }
+
 /**
  * Request for change analysis computation
  */
@@ -554,6 +533,7 @@ export interface ChangeAnalysisRequest {
      */
     useSmartAttributeSelection?: boolean;
 }
+
 /**
  * @type ChangeAnalysisRequestFiltersInner
  */
@@ -568,6 +548,7 @@ export type ChangeAnalysisRequestFiltersInner =
 export interface ChangeAnalysisResponse {
     links: ExecutionLinks;
 }
+
 /**
  * Result of a change analysis execution.
  */
@@ -577,6 +558,7 @@ export interface ChangeAnalysisResult {
      */
     data: Array<MetricValueChange>;
 }
+
 /**
  * List of chat history interactions.
  */
@@ -615,14 +597,7 @@ export interface ChatHistoryInteraction {
     userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
 }
 
-export const ChatHistoryInteractionUserFeedbackEnum = {
-    POSITIVE: "POSITIVE",
-    NEGATIVE: "NEGATIVE",
-    NONE: "NONE",
-} as const;
-
-export type ChatHistoryInteractionUserFeedbackEnum =
-    (typeof ChatHistoryInteractionUserFeedbackEnum)[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+export type ChatHistoryInteractionUserFeedbackEnum = "POSITIVE" | "NEGATIVE" | "NONE";
 
 export interface ChatHistoryRequest {
     /**
@@ -652,26 +627,15 @@ export interface ChatHistoryRequest {
     userTextFeedback?: string;
 }
 
-export const ChatHistoryRequestUserFeedbackEnum = {
-    POSITIVE: "POSITIVE",
-    NEGATIVE: "NEGATIVE",
-    NONE: "NONE",
-} as const;
-
-export type ChatHistoryRequestUserFeedbackEnum =
-    (typeof ChatHistoryRequestUserFeedbackEnum)[keyof typeof ChatHistoryRequestUserFeedbackEnum];
-export const ChatHistoryRequestResponseStateEnum = {
-    SUCCESSFUL: "SUCCESSFUL",
-    UNEXPECTED_ERROR: "UNEXPECTED_ERROR",
-    NOT_FOUND_ATTRIBUTES: "NOT_FOUND_ATTRIBUTES",
-    TOO_MANY_DATA_POINTS: "TOO_MANY_DATA_POINTS",
-    NO_DATA: "NO_DATA",
-    NO_RESULTS: "NO_RESULTS",
-    OUT_OF_TOPIC: "OUT_OF_TOPIC",
-} as const;
-
+export type ChatHistoryRequestUserFeedbackEnum = "POSITIVE" | "NEGATIVE" | "NONE";
 export type ChatHistoryRequestResponseStateEnum =
-    (typeof ChatHistoryRequestResponseStateEnum)[keyof typeof ChatHistoryRequestResponseStateEnum];
+    | "SUCCESSFUL"
+    | "UNEXPECTED_ERROR"
+    | "NOT_FOUND_ATTRIBUTES"
+    | "TOO_MANY_DATA_POINTS"
+    | "NO_DATA"
+    | "NO_RESULTS"
+    | "OUT_OF_TOPIC";
 
 export interface ChatHistoryResult {
     /**
@@ -683,6 +647,7 @@ export interface ChatHistoryResult {
      */
     threadId: string;
 }
+
 export interface ChatRequest {
     /**
      * User question
@@ -727,19 +692,15 @@ export interface ChatRequest {
     objectTypes?: Array<ChatRequestObjectTypesEnum>;
 }
 
-export const ChatRequestObjectTypesEnum = {
-    ATTRIBUTE: "attribute",
-    METRIC: "metric",
-    FACT: "fact",
-    LABEL: "label",
-    DATE: "date",
-    DATASET: "dataset",
-    VISUALIZATION: "visualization",
-    DASHBOARD: "dashboard",
-} as const;
-
 export type ChatRequestObjectTypesEnum =
-    (typeof ChatRequestObjectTypesEnum)[keyof typeof ChatRequestObjectTypesEnum];
+    | "attribute"
+    | "metric"
+    | "fact"
+    | "label"
+    | "date"
+    | "dataset"
+    | "visualization"
+    | "dashboard";
 
 export interface ChatResult {
     routing?: RouteResult;
@@ -763,6 +724,7 @@ export interface ChatResult {
      */
     chatHistoryInteractionId?: string;
 }
+
 export interface ChatUsageResponse {
     /**
      * Number of interactions in the time window
@@ -777,6 +739,7 @@ export interface ChatUsageResponse {
      */
     timeWindowHours: number;
 }
+
 export interface ClusteringRequest {
     /**
      * Number of clusters to create
@@ -787,6 +750,7 @@ export interface ClusteringRequest {
      */
     threshold?: number;
 }
+
 export interface ClusteringResult {
     attribute: Array<object>;
     xCoord?: Array<number | null>;
@@ -795,12 +759,14 @@ export interface ClusteringResult {
     xcoord: Array<number>;
     ycoord: Array<number>;
 }
+
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  */
 export interface ComparisonMeasureValueFilter {
     comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
+
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
@@ -817,17 +783,13 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     measure: AfmIdentifier;
 }
 
-export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = {
-    GREATER_THAN: "GREATER_THAN",
-    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
-    LESS_THAN: "LESS_THAN",
-    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
-    EQUAL_TO: "EQUAL_TO",
-    NOT_EQUAL_TO: "NOT_EQUAL_TO",
-} as const;
-
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
-    (typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
 
 /**
  * List of created visualization objects
@@ -867,17 +829,13 @@ export interface CreatedVisualization {
     savedVisualizationId?: string;
 }
 
-export const CreatedVisualizationVisualizationTypeEnum = {
-    TABLE: "TABLE",
-    HEADLINE: "HEADLINE",
-    BAR: "BAR",
-    LINE: "LINE",
-    PIE: "PIE",
-    COLUMN: "COLUMN",
-} as const;
-
 export type CreatedVisualizationVisualizationTypeEnum =
-    (typeof CreatedVisualizationVisualizationTypeEnum)[keyof typeof CreatedVisualizationVisualizationTypeEnum];
+    | "TABLE"
+    | "HEADLINE"
+    | "BAR"
+    | "LINE"
+    | "PIE"
+    | "COLUMN";
 
 /**
  * @type CreatedVisualizationFiltersInner
@@ -906,6 +864,7 @@ export interface CreatedVisualizations {
      */
     suggestions: Array<Suggestion>;
 }
+
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
  */
@@ -915,6 +874,7 @@ export interface DataColumnLocator {
      */
     properties: { [key: string]: string };
 }
+
 /**
  * Data column locators for the values.
  */
@@ -924,11 +884,13 @@ export interface DataColumnLocators {
      */
     properties?: { [key: string]: DataColumnLocator };
 }
+
 export interface DateAbsoluteFilter {
     using: string;
     from: string;
     to: string;
 }
+
 /**
  * @type DateFilter
  * Abstract filter definition type for dates.
@@ -942,27 +904,23 @@ export interface DateRelativeFilter {
     to: number;
 }
 
-export const DateRelativeFilterGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type DateRelativeFilterGranularityEnum =
-    (typeof DateRelativeFilterGranularityEnum)[keyof typeof DateRelativeFilterGranularityEnum];
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 
 /**
  * Filter definition type specified by label and values.
@@ -981,12 +939,14 @@ export interface DependsOn {
      */
     complementFilter?: boolean;
 }
+
 /**
  * Filter definition type for dates.
  */
 export interface DependsOnDateFilter {
     dateFilter: DateFilter;
 }
+
 /**
  * List of attributes representing the dimensionality of the new visualization
  */
@@ -1005,11 +965,7 @@ export interface DimAttribute {
     title: string;
 }
 
-export const DimAttributeTypeEnum = {
-    ATTRIBUTE: "attribute",
-} as const;
-
-export type DimAttributeTypeEnum = (typeof DimAttributeTypeEnum)[keyof typeof DimAttributeTypeEnum];
+export type DimAttributeTypeEnum = "attribute";
 
 /**
  * Single dimension description.
@@ -1028,6 +984,7 @@ export interface Dimension {
      */
     sorting?: Array<SortKey>;
 }
+
 /**
  * Contains the dimension-specific header information.
  */
@@ -1037,6 +994,7 @@ export interface DimensionHeader {
      */
     headerGroups: Array<HeaderGroup>;
 }
+
 /**
  * List of returned elements.
  */
@@ -1050,6 +1008,7 @@ export interface Element {
      */
     primaryTitle: string | null;
 }
+
 export interface ElementsRequest {
     /**
      * Requested label.
@@ -1095,13 +1054,7 @@ export interface ElementsRequest {
     cacheId?: string;
 }
 
-export const ElementsRequestSortOrderEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type ElementsRequestSortOrderEnum =
-    (typeof ElementsRequestSortOrderEnum)[keyof typeof ElementsRequestSortOrderEnum];
+export type ElementsRequestSortOrderEnum = "ASC" | "DESC";
 
 /**
  * @type ElementsRequestDependsOnInner
@@ -1129,27 +1082,23 @@ export interface ElementsResponse {
     cacheId?: string;
 }
 
-export const ElementsResponseGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type ElementsResponseGranularityEnum =
-    (typeof ElementsResponseGranularityEnum)[keyof typeof ElementsResponseGranularityEnum];
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 
 /**
  * Links to the execution result.
@@ -1160,6 +1109,7 @@ export interface ExecutionLinks {
      */
     executionResult: string;
 }
+
 /**
  * Response to AFM execution request body
  */
@@ -1170,6 +1120,7 @@ export interface ExecutionResponse {
     dimensions: Array<ResultDimension>;
     links: ExecutionLinks;
 }
+
 /**
  * Contains the result of an AFM execution.
  */
@@ -1186,6 +1137,7 @@ export interface ExecutionResult {
     paging: ExecutionResultPaging;
     metadata: ExecutionResultMetadata;
 }
+
 /**
  * A piece of extra information related to the results (e.g. debug information, warnings, etc.).
  */
@@ -1207,6 +1159,7 @@ export interface ExecutionResultDataSourceMessage {
      */
     data?: object;
 }
+
 /**
  * Contains the data of grand totals with the same dimensions.
  */
@@ -1224,6 +1177,7 @@ export interface ExecutionResultGrandTotal {
      */
     totalDimensions: Array<string>;
 }
+
 /**
  * @type ExecutionResultHeader
  * Abstract execution result header
@@ -1242,6 +1196,7 @@ export interface ExecutionResultMetadata {
      */
     dataSourceMessages: Array<ExecutionResultDataSourceMessage>;
 }
+
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
  */
@@ -1259,6 +1214,7 @@ export interface ExecutionResultPaging {
      */
     total: Array<number>;
 }
+
 /**
  * Various settings affecting the process of AFM execution or its result
  */
@@ -1272,6 +1228,7 @@ export interface ExecutionSettings {
      */
     timestamp?: string;
 }
+
 /**
  * Specifies what is used for filtering.
  */
@@ -1282,12 +1239,7 @@ export interface FilterBy {
     labelType?: FilterByLabelTypeEnum;
 }
 
-export const FilterByLabelTypeEnum = {
-    PRIMARY: "PRIMARY",
-    REQUESTED: "REQUESTED",
-} as const;
-
-export type FilterByLabelTypeEnum = (typeof FilterByLabelTypeEnum)[keyof typeof FilterByLabelTypeEnum];
+export type FilterByLabelTypeEnum = "PRIMARY" | "REQUESTED";
 
 /**
  * @type FilterDefinition
@@ -1323,6 +1275,7 @@ export interface ForecastRequest {
      */
     seasonal?: boolean;
 }
+
 export interface ForecastResult {
     attribute: Array<string>;
     origin: Array<number | null>;
@@ -1330,6 +1283,7 @@ export interface ForecastResult {
     lowerBound: Array<number | null>;
     upperBound: Array<number | null>;
 }
+
 /**
  * List of objects found by similarity search and post-processed by LLM.
  */
@@ -1343,6 +1297,7 @@ export interface FoundObjects {
      */
     reasoning: string;
 }
+
 export interface GetQualityIssuesResponse {
     /**
      * List of quality issues found in the workspace
@@ -1358,15 +1313,7 @@ export interface GetQualityIssuesResponse {
     status: GetQualityIssuesResponseStatusEnum;
 }
 
-export const GetQualityIssuesResponseStatusEnum = {
-    RUNNING: "RUNNING",
-    COMPLETED: "COMPLETED",
-    FAILED: "FAILED",
-    NOT_FOUND: "NOT_FOUND",
-} as const;
-
-export type GetQualityIssuesResponseStatusEnum =
-    (typeof GetQualityIssuesResponseStatusEnum)[keyof typeof GetQualityIssuesResponseStatusEnum];
+export type GetQualityIssuesResponseStatusEnum = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
 
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1377,12 +1324,14 @@ export interface HeaderGroup {
      */
     headers: Array<ExecutionResultHeader>;
 }
+
 /**
  * Filter in form of direct MAQL query.
  */
 export interface InlineFilterDefinition {
     inline: InlineFilterDefinitionInline;
 }
+
 export interface InlineFilterDefinitionInline {
     /**
      * MAQL query representing the filter.
@@ -1391,18 +1340,21 @@ export interface InlineFilterDefinitionInline {
     localIdentifier?: string;
     applyOnResult?: boolean;
 }
+
 /**
  * Metric defined by the raw MAQL query.
  */
 export interface InlineMeasureDefinition {
     inline: InlineMeasureDefinitionInline;
 }
+
 export interface InlineMeasureDefinitionInline {
     /**
      * MAQL query defining the metric.
      */
     maql: string;
 }
+
 export interface KeyDriversDimension {
     label: RestApiIdentifier;
     labelName: string;
@@ -1413,39 +1365,31 @@ export interface KeyDriversDimension {
     valueType?: KeyDriversDimensionValueTypeEnum;
 }
 
-export const KeyDriversDimensionGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type KeyDriversDimensionGranularityEnum =
-    (typeof KeyDriversDimensionGranularityEnum)[keyof typeof KeyDriversDimensionGranularityEnum];
-export const KeyDriversDimensionValueTypeEnum = {
-    TEXT: "TEXT",
-    HYPERLINK: "HYPERLINK",
-    GEO: "GEO",
-    GEO_LONGITUDE: "GEO_LONGITUDE",
-    GEO_LATITUDE: "GEO_LATITUDE",
-    GEO_AREA: "GEO_AREA",
-    IMAGE: "IMAGE",
-} as const;
-
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 export type KeyDriversDimensionValueTypeEnum =
-    (typeof KeyDriversDimensionValueTypeEnum)[keyof typeof KeyDriversDimensionValueTypeEnum];
+    | "TEXT"
+    | "HYPERLINK"
+    | "GEO"
+    | "GEO_LONGITUDE"
+    | "GEO_LATITUDE"
+    | "GEO_AREA"
+    | "IMAGE";
 
 export interface KeyDriversRequest {
     metric: MeasureItem;
@@ -1459,21 +1403,17 @@ export interface KeyDriversRequest {
     sortDirection?: KeyDriversRequestSortDirectionEnum;
 }
 
-export const KeyDriversRequestSortDirectionEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type KeyDriversRequestSortDirectionEnum =
-    (typeof KeyDriversRequestSortDirectionEnum)[keyof typeof KeyDriversRequestSortDirectionEnum];
+export type KeyDriversRequestSortDirectionEnum = "ASC" | "DESC";
 
 export interface KeyDriversResponse {
     dimensions: Array<KeyDriversDimension>;
     links: ExecutionLinks;
 }
+
 export interface KeyDriversResult {
     data: object;
 }
+
 /**
  * @type MeasureDefinition
  * Abstract metric definition type
@@ -1487,12 +1427,14 @@ export type MeasureDefinition =
 export interface MeasureExecutionResultHeader {
     measureHeader: MeasureResultHeader;
 }
+
 /**
  * Measure group headers
  */
 export interface MeasureGroupHeaders {
     measureGroupHeaders?: Array<MeasureHeader>;
 }
+
 export interface MeasureHeader {
     /**
      * Local identifier of the measure this header relates to.
@@ -1507,6 +1449,7 @@ export interface MeasureHeader {
      */
     name?: string;
 }
+
 /**
  * Metric is a quantity that is calculated from the data.
  */
@@ -1517,6 +1460,7 @@ export interface MeasureItem {
     localIdentifier: string;
     definition: MeasureDefinition;
 }
+
 /**
  * Header containing the information related to metrics.
  */
@@ -1526,6 +1470,7 @@ export interface MeasureResultHeader {
      */
     measureIndex: number;
 }
+
 /**
  * @type MeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
@@ -1542,6 +1487,7 @@ export interface MemoryItemCreatedByUsers {
      */
     reasoning: string;
 }
+
 /**
  * Users who created memory item
  */
@@ -1559,6 +1505,7 @@ export interface MemoryItemUser {
      */
     lastname: string;
 }
+
 /**
  * List of metrics to be used in the new visualization
  */
@@ -1581,23 +1528,8 @@ export interface Metric {
     aggFunction?: MetricAggFunctionEnum;
 }
 
-export const MetricTypeEnum = {
-    METRIC: "metric",
-    FACT: "fact",
-    ATTRIBUTE: "attribute",
-} as const;
-
-export type MetricTypeEnum = (typeof MetricTypeEnum)[keyof typeof MetricTypeEnum];
-export const MetricAggFunctionEnum = {
-    COUNT: "COUNT",
-    SUM: "SUM",
-    MIN: "MIN",
-    MAX: "MAX",
-    AVG: "AVG",
-    MEDIAN: "MEDIAN",
-} as const;
-
-export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof MetricAggFunctionEnum];
+export type MetricTypeEnum = "metric" | "fact" | "attribute";
+export type MetricAggFunctionEnum = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 /**
  * Individual change analysis data item
@@ -1648,18 +1580,21 @@ export interface MetricValueChange {
      */
     overallMetricValueInReferencePeriod: number;
 }
+
 /**
  * Filter able to limit element values by label and related selected negated elements.
  */
 export interface NegativeAttributeFilter {
     negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
 }
+
 export interface NegativeAttributeFilterNegativeAttributeFilter {
     notIn: AttributeFilterElements;
     localIdentifier?: string;
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
+
 /**
  * Current page description.
  */
@@ -1681,6 +1616,7 @@ export interface Paging {
      */
     next?: string;
 }
+
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
  */
@@ -1691,12 +1627,14 @@ export interface PopDataset {
      */
     periodsAgo: number;
 }
+
 /**
  * Previous period type of metric.
  */
 export interface PopDatasetMeasureDefinition {
     previousPeriodMeasure: PopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
+
 export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
     measureIdentifier: AfmLocalIdentifier;
     /**
@@ -1704,6 +1642,7 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
      */
     dateDatasets: Array<PopDataset>;
 }
+
 /**
  * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
  */
@@ -1714,12 +1653,14 @@ export interface PopDate {
      */
     periodsAgo: number;
 }
+
 /**
  * Period over period type of metric.
  */
 export interface PopDateMeasureDefinition {
     overPeriodMeasure: PopDateMeasureDefinitionOverPeriodMeasure;
 }
+
 export interface PopDateMeasureDefinitionOverPeriodMeasure {
     measureIdentifier: AfmLocalIdentifier;
     /**
@@ -1727,6 +1668,7 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
      */
     dateAttributes: Array<PopDate>;
 }
+
 /**
  * @type PopMeasureDefinition
  */
@@ -1738,12 +1680,14 @@ export type PopMeasureDefinition = PopDatasetMeasureDefinition | PopDateMeasureD
 export interface PositiveAttributeFilter {
     positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
 }
+
 export interface PositiveAttributeFilterPositiveAttributeFilter {
     in: AttributeFilterElements;
     localIdentifier?: string;
     applyOnResult?: boolean;
     label: AfmIdentifier;
 }
+
 /**
  * List of quality issues (available when status is COMPLETED)
  */
@@ -1770,13 +1714,7 @@ export interface QualityIssue {
     detail: { [key: string]: object };
 }
 
-export const QualityIssueSeverityEnum = {
-    WARNING: "WARNING",
-    INFO: "INFO",
-} as const;
-
-export type QualityIssueSeverityEnum =
-    (typeof QualityIssueSeverityEnum)[keyof typeof QualityIssueSeverityEnum];
+export type QualityIssueSeverityEnum = "WARNING" | "INFO";
 
 /**
  * List of objects affected by this quality issue
@@ -1799,6 +1737,7 @@ export interface QualityIssueObject {
      */
     title: string;
 }
+
 export interface QualityIssuesCalculationStatusResponse {
     /**
      * Current status of the calculation
@@ -1814,15 +1753,11 @@ export interface QualityIssuesCalculationStatusResponse {
     error?: string;
 }
 
-export const QualityIssuesCalculationStatusResponseStatusEnum = {
-    RUNNING: "RUNNING",
-    COMPLETED: "COMPLETED",
-    FAILED: "FAILED",
-    NOT_FOUND: "NOT_FOUND",
-} as const;
-
 export type QualityIssuesCalculationStatusResponseStatusEnum =
-    (typeof QualityIssuesCalculationStatusResponseStatusEnum)[keyof typeof QualityIssuesCalculationStatusResponseStatusEnum];
+    | "RUNNING"
+    | "COMPLETED"
+    | "FAILED"
+    | "NOT_FOUND";
 
 /**
  * Filter the result by comparing specified metric to given range of values.
@@ -1830,6 +1765,7 @@ export type QualityIssuesCalculationStatusResponseStatusEnum =
 export interface RangeMeasureValueFilter {
     rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
 }
+
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
@@ -1847,13 +1783,7 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     measure: AfmIdentifier;
 }
 
-export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = {
-    BETWEEN: "BETWEEN",
-    NOT_BETWEEN: "NOT_BETWEEN",
-} as const;
-
-export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
-    (typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
@@ -1861,6 +1791,7 @@ export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
 export interface RankingFilter {
     rankingFilter: RankingFilterRankingFilter;
 }
+
 export interface RankingFilterRankingFilter {
     /**
      * References to the attributes to be used when filtering.
@@ -1882,13 +1813,7 @@ export interface RankingFilterRankingFilter {
     applyOnResult?: boolean;
 }
 
-export const RankingFilterRankingFilterOperatorEnum = {
-    TOP: "TOP",
-    BOTTOM: "BOTTOM",
-} as const;
-
-export type RankingFilterRankingFilterOperatorEnum =
-    (typeof RankingFilterRankingFilterOperatorEnum)[keyof typeof RankingFilterRankingFilterOperatorEnum];
+export type RankingFilterRankingFilterOperatorEnum = "TOP" | "BOTTOM";
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -1896,6 +1821,7 @@ export type RankingFilterRankingFilterOperatorEnum =
 export interface RelativeDateFilter {
     relativeDateFilter: RelativeDateFilterRelativeDateFilter;
 }
+
 export interface RelativeDateFilterRelativeDateFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
@@ -1915,27 +1841,23 @@ export interface RelativeDateFilterRelativeDateFilter {
     dataset: AfmObjectIdentifierDataset;
 }
 
-export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
 export type RelativeDateFilterRelativeDateFilterGranularityEnum =
-    (typeof RelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_QUARTER"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
 
 export interface ResolvedLlmEndpoint {
     /**
@@ -1947,9 +1869,11 @@ export interface ResolvedLlmEndpoint {
      */
     title: string;
 }
+
 export interface ResolvedLlmEndpoints {
     data: Array<ResolvedLlmEndpoint>;
 }
+
 /**
  * Object identifier.
  */
@@ -1957,6 +1881,7 @@ export interface RestApiIdentifier {
     id: string;
     type: string;
 }
+
 /**
  * All execution result\'s metadata used for calculation including ExecutionResponse
  */
@@ -1966,6 +1891,7 @@ export interface ResultCacheMetadata {
     resultSpec: ResultSpec;
     resultSize: number;
 }
+
 /**
  * Single result dimension
  */
@@ -1976,6 +1902,7 @@ export interface ResultDimension {
      */
     localIdentifier: string;
 }
+
 /**
  * @type ResultDimensionHeader
  * One of the headers in a result dimension.
@@ -1989,6 +1916,7 @@ export interface ResultSpec {
     dimensions: Array<Dimension>;
     totals?: Array<Total>;
 }
+
 /**
  * Question -> Use Case routing. May contain final answer is a special use case is not required.
  */
@@ -2003,17 +1931,14 @@ export interface RouteResult {
     reasoning: string;
 }
 
-export const RouteResultUseCaseEnum = {
-    INVALID: "INVALID",
-    GENERAL: "GENERAL",
-    SEARCH: "SEARCH",
-    CREATE_VISUALIZATION: "CREATE_VISUALIZATION",
-    EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION",
-    HOWTO: "HOWTO",
-    CHANGE_ANALYSIS: "CHANGE_ANALYSIS",
-} as const;
-
-export type RouteResultUseCaseEnum = (typeof RouteResultUseCaseEnum)[keyof typeof RouteResultUseCaseEnum];
+export type RouteResultUseCaseEnum =
+    | "INVALID"
+    | "GENERAL"
+    | "SEARCH"
+    | "CREATE_VISUALIZATION"
+    | "EXTEND_VISUALIZATION"
+    | "HOWTO"
+    | "CHANGE_ANALYSIS";
 
 /**
  * Created and saved visualization IDs.
@@ -2028,6 +1953,7 @@ export interface SavedVisualization {
      */
     savedVisualizationId: string;
 }
+
 export interface SearchRelationshipObject {
     /**
      * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
@@ -2062,6 +1988,7 @@ export interface SearchRelationshipObject {
      */
     targetObjectTitle: string;
 }
+
 export interface SearchRequest {
     /**
      * Keyword/sentence is input for search.
@@ -2093,19 +2020,15 @@ export interface SearchRequest {
     includeHidden?: boolean;
 }
 
-export const SearchRequestObjectTypesEnum = {
-    ATTRIBUTE: "attribute",
-    METRIC: "metric",
-    FACT: "fact",
-    LABEL: "label",
-    DATE: "date",
-    DATASET: "dataset",
-    VISUALIZATION: "visualization",
-    DASHBOARD: "dashboard",
-} as const;
-
 export type SearchRequestObjectTypesEnum =
-    (typeof SearchRequestObjectTypesEnum)[keyof typeof SearchRequestObjectTypesEnum];
+    | "attribute"
+    | "metric"
+    | "fact"
+    | "label"
+    | "date"
+    | "dataset"
+    | "visualization"
+    | "dashboard";
 
 export interface SearchResult {
     results: Array<SearchResultObject>;
@@ -2115,6 +2038,7 @@ export interface SearchResult {
      */
     reasoning: string;
 }
+
 export interface SearchResultObject {
     /**
      * Object ID.
@@ -2170,12 +2094,14 @@ export interface SearchResultObject {
      */
     isHidden?: boolean;
 }
+
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  */
 export interface SimpleMeasureDefinition {
     measure: SimpleMeasureDefinitionMeasure;
 }
+
 export interface SimpleMeasureDefinitionMeasure {
     item: AfmObjectIdentifierCore;
     /**
@@ -2192,23 +2118,20 @@ export interface SimpleMeasureDefinitionMeasure {
     filters?: Array<FilterDefinitionForSimpleMeasure>;
 }
 
-export const SimpleMeasureDefinitionMeasureAggregationEnum = {
-    SUM: "SUM",
-    COUNT: "COUNT",
-    AVG: "AVG",
-    MIN: "MIN",
-    MAX: "MAX",
-    MEDIAN: "MEDIAN",
-    RUNSUM: "RUNSUM",
-    APPROXIMATE_COUNT: "APPROXIMATE_COUNT",
-} as const;
-
 export type SimpleMeasureDefinitionMeasureAggregationEnum =
-    (typeof SimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
+    | "SUM"
+    | "COUNT"
+    | "AVG"
+    | "MIN"
+    | "MAX"
+    | "MEDIAN"
+    | "RUNSUM"
+    | "APPROXIMATE_COUNT";
 
 export interface SmartFunctionResponse {
     links: ExecutionLinks;
 }
+
 /**
  * @type SortKey
  */
@@ -2220,6 +2143,7 @@ export type SortKey = SortKeyAttribute | SortKeyTotal | SortKeyValue;
 export interface SortKeyAttribute {
     attribute: SortKeyAttributeAttribute;
 }
+
 export interface SortKeyAttributeAttribute {
     /**
      * Item reference (to \'itemIdentifiers\') referencing, which item should be used for sorting. Only references to attributes are allowed.
@@ -2235,22 +2159,8 @@ export interface SortKeyAttributeAttribute {
     direction?: SortKeyAttributeAttributeDirectionEnum;
 }
 
-export const SortKeyAttributeAttributeSortTypeEnum = {
-    DEFAULT: "DEFAULT",
-    LABEL: "LABEL",
-    ATTRIBUTE: "ATTRIBUTE",
-    AREA: "AREA",
-} as const;
-
-export type SortKeyAttributeAttributeSortTypeEnum =
-    (typeof SortKeyAttributeAttributeSortTypeEnum)[keyof typeof SortKeyAttributeAttributeSortTypeEnum];
-export const SortKeyAttributeAttributeDirectionEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type SortKeyAttributeAttributeDirectionEnum =
-    (typeof SortKeyAttributeAttributeDirectionEnum)[keyof typeof SortKeyAttributeAttributeDirectionEnum];
+export type SortKeyAttributeAttributeSortTypeEnum = "DEFAULT" | "LABEL" | "ATTRIBUTE" | "AREA";
+export type SortKeyAttributeAttributeDirectionEnum = "ASC" | "DESC";
 
 /**
  * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
@@ -2258,6 +2168,7 @@ export type SortKeyAttributeAttributeDirectionEnum =
 export interface SortKeyTotal {
     total: SortKeyTotalTotal;
 }
+
 export interface SortKeyTotalTotal {
     /**
      * Local identifier of the total to sort by.
@@ -2270,13 +2181,7 @@ export interface SortKeyTotalTotal {
     direction?: SortKeyTotalTotalDirectionEnum;
 }
 
-export const SortKeyTotalTotalDirectionEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type SortKeyTotalTotalDirectionEnum =
-    (typeof SortKeyTotalTotalDirectionEnum)[keyof typeof SortKeyTotalTotalDirectionEnum];
+export type SortKeyTotalTotalDirectionEnum = "ASC" | "DESC";
 
 /**
  * Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified.
@@ -2284,6 +2189,7 @@ export type SortKeyTotalTotalDirectionEnum =
 export interface SortKeyValue {
     value: SortKeyValueValue;
 }
+
 export interface SortKeyValueValue {
     dataColumnLocators: DataColumnLocators;
     /**
@@ -2292,13 +2198,7 @@ export interface SortKeyValueValue {
     direction?: SortKeyValueValueDirectionEnum;
 }
 
-export const SortKeyValueValueDirectionEnum = {
-    ASC: "ASC",
-    DESC: "DESC",
-} as const;
-
-export type SortKeyValueValueDirectionEnum =
-    (typeof SortKeyValueValueDirectionEnum)[keyof typeof SortKeyValueValueDirectionEnum];
+export type SortKeyValueValueDirectionEnum = "ASC" | "DESC";
 
 /**
  * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
@@ -2313,6 +2213,7 @@ export interface Suggestion {
      */
     label: string;
 }
+
 /**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  */
@@ -2332,16 +2233,7 @@ export interface Total {
     totalDimensions: Array<TotalDimension>;
 }
 
-export const TotalFunctionEnum = {
-    SUM: "SUM",
-    MIN: "MIN",
-    MAX: "MAX",
-    AVG: "AVG",
-    MED: "MED",
-    NAT: "NAT",
-} as const;
-
-export type TotalFunctionEnum = (typeof TotalFunctionEnum)[keyof typeof TotalFunctionEnum];
+export type TotalFunctionEnum = "SUM" | "MIN" | "MAX" | "AVG" | "MED" | "NAT";
 
 /**
  * A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result.
@@ -2356,15 +2248,18 @@ export interface TotalDimension {
      */
     totalDimensionItems: Array<string>;
 }
+
 export interface TotalExecutionResultHeader {
     totalHeader: TotalResultHeader;
 }
+
 /**
  * Header containing the information related to a subtotal.
  */
 export interface TotalResultHeader {
     function: string;
 }
+
 export interface TriggerQualityIssuesCalculationResponse {
     /**
      * Process ID for tracking the calculation status
@@ -2376,14 +2271,7 @@ export interface TriggerQualityIssuesCalculationResponse {
     status: TriggerQualityIssuesCalculationResponseStatusEnum;
 }
 
-export const TriggerQualityIssuesCalculationResponseStatusEnum = {
-    RUNNING: "RUNNING",
-    COMPLETED: "COMPLETED",
-    FAILED: "FAILED",
-} as const;
-
-export type TriggerQualityIssuesCalculationResponseStatusEnum =
-    (typeof TriggerQualityIssuesCalculationResponseStatusEnum)[keyof typeof TriggerQualityIssuesCalculationResponseStatusEnum];
+export type TriggerQualityIssuesCalculationResponseStatusEnum = "RUNNING" | "COMPLETED" | "FAILED";
 
 /**
  * User context, which can affect the behavior of the underlying AI features.
@@ -2391,6 +2279,7 @@ export type TriggerQualityIssuesCalculationResponseStatusEnum =
 export interface UserContext {
     activeObject: ActiveObjectIdentification;
 }
+
 export interface ValidateByItem {
     /**
      * Specifies entity used for valid elements computation.
@@ -2401,6 +2290,7 @@ export interface ValidateByItem {
      */
     type: string;
 }
+
 export interface ValidateLLMEndpointByIdRequest {
     /**
      * Provider for the LLM endpoint validation
@@ -2423,6 +2313,7 @@ export interface ValidateLLMEndpointByIdRequest {
      */
     llmModel?: string;
 }
+
 export interface ValidateLLMEndpointRequest {
     /**
      * Provider for the LLM endpoint validation
@@ -2445,6 +2336,7 @@ export interface ValidateLLMEndpointRequest {
      */
     llmModel?: string;
 }
+
 export interface ValidateLLMEndpointResponse {
     /**
      * Whether the LLM endpoint validation was successful
@@ -2456,2978 +2348,2675 @@ export interface ValidateLLMEndpointResponse {
     message: string;
 }
 
+// ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * ActionsApi - axios parameter creator
- * @export
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatRequest} chatRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChat: async (
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChat", "workspaceId", workspaceId);
-            // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists("aiChat", "chatRequest", chatRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-                : chatRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatHistoryRequest} chatHistoryRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatHistory: async (
-            workspaceId: string,
-            chatHistoryRequest: ChatHistoryRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatHistory", "workspaceId", workspaceId);
-            // verify required parameter 'chatHistoryRequest' is not null or undefined
-            assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatHistoryRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
-                : chatHistoryRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatStream: async (
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatStream", "workspaceId", workspaceId);
-            // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists("aiChatStream", "chatRequest", chatRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-                : chatRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatUsage: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatUsage", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchRequest} searchRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearch: async (
-            workspaceId: string,
-            searchRequest: SearchRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiSearch", "workspaceId", workspaceId);
-            // verify required parameter 'searchRequest' is not null or undefined
-            assertParamExists("aiSearch", "searchRequest", searchRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof searchRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
-                : searchRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetection: async (
-            workspaceId: string,
-            resultId: string,
-            anomalyDetectionRequest: AnomalyDetectionRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("anomalyDetection", "resultId", resultId);
-            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
-            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof anomalyDetectionRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
-                : anomalyDetectionRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetectionResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("anomalyDetectionResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
-         * @summary Applies all the given cancel tokens.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmCancelTokens} afmCancelTokens
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cancelExecutions: async (
-            workspaceId: string,
-            afmCancelTokens: AfmCancelTokens,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("cancelExecutions", "workspaceId", workspaceId);
-            // verify required parameter 'afmCancelTokens' is not null or undefined
-            assertParamExists("cancelExecutions", "afmCancelTokens", afmCancelTokens);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmCancelTokens !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
-                : afmCancelTokens || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChangeAnalysisRequest} changeAnalysisRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysis: async (
-            workspaceId: string,
-            changeAnalysisRequest: ChangeAnalysisRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("changeAnalysis", "workspaceId", workspaceId);
-            // verify required parameter 'changeAnalysisRequest' is not null or undefined
-            assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof changeAnalysisRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
-                : changeAnalysisRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysisResult: async (
-            workspaceId: string,
-            resultId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("changeAnalysisResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ClusteringRequest} clusteringRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clustering: async (
-            workspaceId: string,
-            resultId: string,
-            clusteringRequest: ClusteringRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("clustering", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("clustering", "resultId", resultId);
-            // verify required parameter 'clusteringRequest' is not null or undefined
-            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof clusteringRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
-                : clusteringRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clusteringResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("clusteringResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("clusteringResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {string} workspaceId Workspace identifier
-         * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElementsPost: async (
-            workspaceId: string,
-            elementsRequest: ElementsRequest,
-            offset?: number,
-            limit?: number,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
-            // verify required parameter 'elementsRequest' is not null or undefined
-            assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof elementsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
-                : elementsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeReport: async (
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            skipCache?: boolean,
-            timestamp?: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeReport", "workspaceId", workspaceId);
-            // verify required parameter 'afmExecution' is not null or undefined
-            assertParamExists("computeReport", "afmExecution", afmExecution);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            if (timestamp !== undefined && timestamp !== null) {
-                localVarHeaderParameter["timestamp"] = String(timestamp);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmExecution !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
-                : afmExecution || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidDescendants: async (
-            workspaceId: string,
-            afmValidDescendantsQuery: AfmValidDescendantsQuery,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
-            // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
-            assertParamExists(
-                "computeValidDescendants",
-                "afmValidDescendantsQuery",
-                afmValidDescendantsQuery,
-            );
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmValidDescendantsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
-                : afmValidDescendantsQuery || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects: async (
-            workspaceId: string,
-            afmValidObjectsQuery: AfmValidObjectsQuery,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeValidObjects", "workspaceId", workspaceId);
-            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
-            assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmValidObjectsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
-                : afmValidObjectsQuery || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createdBy: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("createdBy", "workspaceId", workspaceId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM: async (
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            explainType?:
-                | "MAQL"
-                | "GRPC_MODEL"
-                | "GRPC_MODEL_SVG"
-                | "WDF"
-                | "QT"
-                | "QT_SVG"
-                | "OPT_QT"
-                | "OPT_QT_SVG"
-                | "SQL"
-                | "SETTINGS"
-                | "COMPRESSED_SQL",
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("explainAFM", "workspaceId", workspaceId);
-            // verify required parameter 'afmExecution' is not null or undefined
-            assertParamExists("explainAFM", "afmExecution", afmExecution);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (explainType !== undefined) {
-                localVarQueryParameter["explainType"] = explainType;
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmExecution !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
-                : afmExecution || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ForecastRequest} forecastRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecast: async (
-            workspaceId: string,
-            resultId: string,
-            forecastRequest: ForecastRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("forecast", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("forecast", "resultId", resultId);
-            // verify required parameter 'forecastRequest' is not null or undefined
-            assertParamExists("forecast", "forecastRequest", forecastRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof forecastRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
-                : forecastRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecastResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("forecastResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("forecastResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssues: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getQualityIssues", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} processId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssuesCalculationStatus: async (
-            workspaceId: string,
-            processId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
-            // verify required parameter 'processId' is not null or undefined
-            assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
-                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {KeyDriversRequest} keyDriversRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysis: async (
-            workspaceId: string,
-            keyDriversRequest: KeyDriversRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
-            // verify required parameter 'keyDriversRequest' is not null or undefined
-            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof keyDriversRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
-                : keyDriversRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysisResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        memoryCreatedByUsers: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resolveLlmEndpoints: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveExecutionMetadata: async (
-            workspaceId: string,
-            resultId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
-         * @param {string} [xGDCCANCELTOKEN]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: Array<number>,
-            limit?: Array<number>,
-            excludedTotalDimensions?: Array<string>,
-            xGDCCANCELTOKEN?: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("retrieveResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("retrieveResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset) {
-                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
-            }
-
-            if (limit) {
-                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
-            }
-
-            if (excludedTotalDimensions) {
-                localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
-                    COLLECTION_FORMATS.csv,
-                );
-            }
-
-            if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
-                localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tags: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("tags", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        triggerQualityIssuesCalculation: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpoint: async (
-            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
-            assertParamExists(
-                "validateLLMEndpoint",
-                "validateLLMEndpointRequest",
-                validateLLMEndpointRequest,
-            );
-            const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof validateLLMEndpointRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
-                : validateLLMEndpointRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {string} llmEndpointId
-         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpointById: async (
-            llmEndpointId: string,
-            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'llmEndpointId' is not null or undefined
-            assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
-            const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
-                `{${"llmEndpointId"}}`,
-                encodeURIComponent(String(llmEndpointId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof validateLLMEndpointByIdRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {},
-                  )
-                : validateLLMEndpointByIdRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ActionsApi - functional programming interface
- * @export
- */
-export const ActionsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChat(
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
-                workspaceId,
-                chatRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatHistoryRequest} chatHistoryRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatHistory(
-            workspaceId: string,
-            chatHistoryRequest: ChatHistoryRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatHistory(
-                workspaceId,
-                chatHistoryRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatStream(
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
-                workspaceId,
-                chatRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatUsage(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatUsageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatUsage(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchRequest} searchRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiSearch(
-            workspaceId: string,
-            searchRequest: SearchRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
-                workspaceId,
-                searchRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async anomalyDetection(
-            workspaceId: string,
-            resultId: string,
-            anomalyDetectionRequest: AnomalyDetectionRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
-                workspaceId,
-                resultId,
-                anomalyDetectionRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async anomalyDetectionResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
-         * @summary Applies all the given cancel tokens.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmCancelTokens} afmCancelTokens
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cancelExecutions(
-            workspaceId: string,
-            afmCancelTokens: AfmCancelTokens,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmCancelTokens>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelExecutions(
-                workspaceId,
-                afmCancelTokens,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChangeAnalysisRequest} changeAnalysisRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async changeAnalysis(
-            workspaceId: string,
-            changeAnalysisRequest: ChangeAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysis(
-                workspaceId,
-                changeAnalysisRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async changeAnalysisResult(
-            workspaceId: string,
-            resultId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysisResult(
-                workspaceId,
-                resultId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ClusteringRequest} clusteringRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async clustering(
-            workspaceId: string,
-            resultId: string,
-            clusteringRequest: ClusteringRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
-                workspaceId,
-                resultId,
-                clusteringRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async clusteringResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {string} workspaceId Workspace identifier
-         * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeLabelElementsPost(
-            workspaceId: string,
-            elementsRequest: ElementsRequest,
-            offset?: number,
-            limit?: number,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeLabelElementsPost(
-                workspaceId,
-                elementsRequest,
-                offset,
-                limit,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeReport(
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            skipCache?: boolean,
-            timestamp?: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeReport(
-                workspaceId,
-                afmExecution,
-                skipCache,
-                timestamp,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeValidDescendants(
-            workspaceId: string,
-            afmValidDescendantsQuery: AfmValidDescendantsQuery,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidDescendants(
-                workspaceId,
-                afmValidDescendantsQuery,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeValidObjects(
-            workspaceId: string,
-            afmValidObjectsQuery: AfmValidObjectsQuery,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidObjects(
-                workspaceId,
-                afmValidObjectsQuery,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createdBy(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogCreatedBy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createdBy(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async explainAFM(
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            explainType?:
-                | "MAQL"
-                | "GRPC_MODEL"
-                | "GRPC_MODEL_SVG"
-                | "WDF"
-                | "QT"
-                | "QT_SVG"
-                | "OPT_QT"
-                | "OPT_QT_SVG"
-                | "SQL"
-                | "SETTINGS"
-                | "COMPRESSED_SQL",
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
-                workspaceId,
-                afmExecution,
-                explainType,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ForecastRequest} forecastRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async forecast(
-            workspaceId: string,
-            resultId: string,
-            forecastRequest: ForecastRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
-                workspaceId,
-                resultId,
-                forecastRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async forecastResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getQualityIssues(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssues(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} processId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getQualityIssuesCalculationStatus(
-            workspaceId: string,
-            processId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<QualityIssuesCalculationStatusResponse>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssuesCalculationStatus(
-                workspaceId,
-                processId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {KeyDriversRequest} keyDriversRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async keyDriverAnalysis(
-            workspaceId: string,
-            keyDriversRequest: KeyDriversRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
-                workspaceId,
-                keyDriversRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async keyDriverAnalysisResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async memoryCreatedByUsers(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItemCreatedByUsers>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.memoryCreatedByUsers(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async resolveLlmEndpoints(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveLlmEndpoints(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async retrieveExecutionMetadata(
-            workspaceId: string,
-            resultId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveExecutionMetadata(
-                workspaceId,
-                resultId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
-         * @param {string} [xGDCCANCELTOKEN]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async retrieveResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: Array<number>,
-            limit?: Array<number>,
-            excludedTotalDimensions?: Array<string>,
-            xGDCCANCELTOKEN?: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                excludedTotalDimensions,
-                xGDCCANCELTOKEN,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async tags(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async triggerQualityIssuesCalculation(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (
-                axios?: AxiosInstance,
-                basePath?: string,
-            ) => AxiosPromise<TriggerQualityIssuesCalculationResponse>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerQualityIssuesCalculation(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async validateLLMEndpoint(
-            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpoint(
-                validateLLMEndpointRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {string} llmEndpointId
-         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async validateLLMEndpointById(
-            llmEndpointId: string,
-            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpointById(
-                llmEndpointId,
-                validateLLMEndpointByIdRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ActionsApi - factory interface
- * @export
- */
-export const ActionsApiFactory = function (
+export async function ActionsApiAxiosParamCreator_AiChat(
+    workspaceId: string,
+    chatRequest: ChatRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ActionsApiFp(configuration);
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChat(
-            requestParameters: ActionsApiAiChatRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatResult> {
-            return localVarFp
-                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatHistory(
-            requestParameters: ActionsApiAiChatHistoryRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatHistoryResult> {
-            return localVarFp
-                .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatStream(
-            requestParameters: ActionsApiAiChatStreamRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<object>> {
-            return localVarFp
-                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatUsage(
-            requestParameters: ActionsApiAiChatUsageRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatUsageResponse> {
-            return localVarFp
-                .aiChatUsage(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearch(
-            requestParameters: ActionsApiAiSearchRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SearchResult> {
-            return localVarFp
-                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetection(
-            requestParameters: ActionsApiAnomalyDetectionRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .anomalyDetection(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.anomalyDetectionRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetectionResult(
-            requestParameters: ActionsApiAnomalyDetectionResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnomalyDetectionResult> {
-            return localVarFp
-                .anomalyDetectionResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
-         * @summary Applies all the given cancel tokens.
-         * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cancelExecutions(
-            requestParameters: ActionsApiCancelExecutionsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmCancelTokens> {
-            return localVarFp
-                .cancelExecutions(requestParameters.workspaceId, requestParameters.afmCancelTokens, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysis(
-            requestParameters: ActionsApiChangeAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChangeAnalysisResponse> {
-            return localVarFp
-                .changeAnalysis(
-                    requestParameters.workspaceId,
-                    requestParameters.changeAnalysisRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {ActionsApiChangeAnalysisResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysisResult(
-            requestParameters: ActionsApiChangeAnalysisResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChangeAnalysisResult> {
-            return localVarFp
-                .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clustering(
-            requestParameters: ActionsApiClusteringRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .clustering(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.clusteringRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clusteringResult(
-            requestParameters: ActionsApiClusteringResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ClusteringResult> {
-            return localVarFp
-                .clusteringResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {ActionsApiComputeLabelElementsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElementsPost(
-            requestParameters: ActionsApiComputeLabelElementsPostRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ElementsResponse> {
-            return localVarFp
-                .computeLabelElementsPost(
-                    requestParameters.workspaceId,
-                    requestParameters.elementsRequest,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {ActionsApiComputeReportRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeReport(
-            requestParameters: ActionsApiComputeReportRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmExecutionResponse> {
-            return localVarFp
-                .computeReport(
-                    requestParameters.workspaceId,
-                    requestParameters.afmExecution,
-                    requestParameters.skipCache,
-                    requestParameters.timestamp,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidDescendants(
-            requestParameters: ActionsApiComputeValidDescendantsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmValidDescendantsResponse> {
-            return localVarFp
-                .computeValidDescendants(
-                    requestParameters.workspaceId,
-                    requestParameters.afmValidDescendantsQuery,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {ActionsApiComputeValidObjectsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects(
-            requestParameters: ActionsApiComputeValidObjectsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmValidObjectsResponse> {
-            return localVarFp
-                .computeValidObjects(
-                    requestParameters.workspaceId,
-                    requestParameters.afmValidObjectsQuery,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createdBy(
-            requestParameters: ActionsApiCreatedByRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnalyticsCatalogCreatedBy> {
-            return localVarFp
-                .createdBy(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM(
-            requestParameters: ActionsApiExplainAFMRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<File> {
-            return localVarFp
-                .explainAFM(
-                    requestParameters.workspaceId,
-                    requestParameters.afmExecution,
-                    requestParameters.explainType,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {ActionsApiForecastRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecast(
-            requestParameters: ActionsApiForecastRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .forecast(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.forecastRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecastResult(
-            requestParameters: ActionsApiForecastResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ForecastResult> {
-            return localVarFp
-                .forecastResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssues(
-            requestParameters: ActionsApiGetQualityIssuesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<GetQualityIssuesResponse> {
-            return localVarFp
-                .getQualityIssues(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {ActionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssuesCalculationStatus(
-            requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
-            return localVarFp
-                .getQualityIssuesCalculationStatus(
-                    requestParameters.workspaceId,
-                    requestParameters.processId,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysis(
-            requestParameters: ActionsApiKeyDriverAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<KeyDriversResponse> {
-            return localVarFp
-                .keyDriverAnalysis(
-                    requestParameters.workspaceId,
-                    requestParameters.keyDriversRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysisResult(
-            requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<KeyDriversResult> {
-            return localVarFp
-                .keyDriverAnalysisResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        memoryCreatedByUsers(
-            requestParameters: ActionsApiMemoryCreatedByUsersRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<MemoryItemCreatedByUsers> {
-            return localVarFp
-                .memoryCreatedByUsers(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resolveLlmEndpoints(
-            requestParameters: ActionsApiResolveLlmEndpointsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ResolvedLlmEndpoints> {
-            return localVarFp
-                .resolveLlmEndpoints(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveExecutionMetadata(
-            requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ResultCacheMetadata> {
-            return localVarFp
-                .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveResult(
-            requestParameters: ActionsApiRetrieveResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ExecutionResult> {
-            return localVarFp
-                .retrieveResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    requestParameters.excludedTotalDimensions,
-                    requestParameters.xGDCCANCELTOKEN,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {ActionsApiTagsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tags(
-            requestParameters: ActionsApiTagsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnalyticsCatalogTags> {
-            return localVarFp
-                .tags(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        triggerQualityIssuesCalculation(
-            requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
-            return localVarFp
-                .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpoint(
-            requestParameters: ActionsApiValidateLLMEndpointRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ValidateLLMEndpointResponse> {
-            return localVarFp
-                .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpointById(
-            requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ValidateLLMEndpointResponse> {
-            return localVarFp
-                .validateLLMEndpointById(
-                    requestParameters.llmEndpointId,
-                    requestParameters.validateLLMEndpointByIdRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChat", "workspaceId", workspaceId);
+    // verify required parameter 'chatRequest' is not null or undefined
+    assertParamExists("aiChat", "chatRequest", chatRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof chatRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+        : chatRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+ * @summary (BETA) Get Chat History
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatHistoryRequest} chatHistoryRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AiChatHistory(
+    workspaceId: string,
+    chatHistoryRequest: ChatHistoryRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatHistory", "workspaceId", workspaceId);
+    // verify required parameter 'chatHistoryRequest' is not null or undefined
+    assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof chatHistoryRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
+        : chatHistoryRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatRequest} chatRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AiChatStream(
+    workspaceId: string,
+    chatRequest: ChatRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatStream", "workspaceId", workspaceId);
+    // verify required parameter 'chatRequest' is not null or undefined
+    assertParamExists("aiChatStream", "chatRequest", chatRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof chatRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+        : chatRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns usage statistics of chat for a user in a workspace.
+ * @summary Get Chat Usage
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AiChatUsage(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatUsage", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {string} workspaceId Workspace identifier
+ * @param {SearchRequest} searchRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AiSearch(
+    workspaceId: string,
+    searchRequest: SearchRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiSearch", "workspaceId", workspaceId);
+    // verify required parameter 'searchRequest' is not null or undefined
+    assertParamExists("aiSearch", "searchRequest", searchRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof searchRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+        : searchRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes anomaly detection.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AnomalyDetection(
+    workspaceId: string,
+    resultId: string,
+    anomalyDetectionRequest: AnomalyDetectionRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("anomalyDetection", "resultId", resultId);
+    // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+    assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof anomalyDetectionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+        : anomalyDetectionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets anomalies.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_AnomalyDetectionResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("anomalyDetectionResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+ * @summary Applies all the given cancel tokens.
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmCancelTokens} afmCancelTokens
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CancelExecutions(
+    workspaceId: string,
+    afmCancelTokens: AfmCancelTokens,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("cancelExecutions", "workspaceId", workspaceId);
+    // verify required parameter 'afmCancelTokens' is not null or undefined
+    assertParamExists("cancelExecutions", "afmCancelTokens", afmCancelTokens);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmCancelTokens !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
+        : afmCancelTokens || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Computes change analysis for the provided execution definition.
+ * @summary Compute change analysis
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChangeAnalysisRequest} changeAnalysisRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ChangeAnalysis(
+    workspaceId: string,
+    changeAnalysisRequest: ChangeAnalysisRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("changeAnalysis", "workspaceId", workspaceId);
+    // verify required parameter 'changeAnalysisRequest' is not null or undefined
+    assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof changeAnalysisRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
+        : changeAnalysisRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Gets change analysis result.
+ * @summary Get change analysis result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ChangeAnalysisResult(
+    workspaceId: string,
+    resultId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("changeAnalysisResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {ClusteringRequest} clusteringRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_Clustering(
+    workspaceId: string,
+    resultId: string,
+    clusteringRequest: ClusteringRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("clustering", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("clustering", "resultId", resultId);
+    // verify required parameter 'clusteringRequest' is not null or undefined
+    assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof clusteringRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+        : clusteringRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets clustering result.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ClusteringResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("clusteringResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("clusteringResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+ * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+ * @param {string} workspaceId Workspace identifier
+ * @param {ElementsRequest} elementsRequest
+ * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+ * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ComputeLabelElementsPost(
+    workspaceId: string,
+    elementsRequest: ElementsRequest,
+    offset?: number,
+    limit?: number,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
+    // verify required parameter 'elementsRequest' is not null or undefined
+    assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof elementsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
+        : elementsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+ * @summary Executes analytical request and returns link to the result
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmExecution} afmExecution
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {string} [timestamp]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ComputeReport(
+    workspaceId: string,
+    afmExecution: AfmExecution,
+    skipCache?: boolean,
+    timestamp?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeReport", "workspaceId", workspaceId);
+    // verify required parameter 'afmExecution' is not null or undefined
+    assertParamExists("computeReport", "afmExecution", afmExecution);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    if (timestamp !== undefined && timestamp !== null) {
+        localVarHeaderParameter["timestamp"] = String(timestamp);
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+        : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+ * @summary (BETA) Valid descendants
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ComputeValidDescendants(
+    workspaceId: string,
+    afmValidDescendantsQuery: AfmValidDescendantsQuery,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
+    // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
+    assertParamExists("computeValidDescendants", "afmValidDescendantsQuery", afmValidDescendantsQuery);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
+            `{${"workspaceId"}}`,
+            encodeURIComponent(String(workspaceId)),
+        );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmValidDescendantsQuery !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
+        : afmValidDescendantsQuery || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+ * @summary Valid objects
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ComputeValidObjects(
+    workspaceId: string,
+    afmValidObjectsQuery: AfmValidObjectsQuery,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeValidObjects", "workspaceId", workspaceId);
+    // verify required parameter 'afmValidObjectsQuery' is not null or undefined
+    assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmValidObjectsQuery !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
+        : afmValidObjectsQuery || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns a list of Users who created any object for this workspace
+ * @summary Get Analytics Catalog CreatedBy Users
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CreatedBy(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("createdBy", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * The resource provides static structures needed for investigation of a problem with given AFM.
+ * @summary AFM explain resource.
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmExecution} afmExecution
+ * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ExplainAFM(
+    workspaceId: string,
+    afmExecution: AfmExecution,
+    explainType?:
+        | "MAQL"
+        | "GRPC_MODEL"
+        | "GRPC_MODEL_SVG"
+        | "WDF"
+        | "QT"
+        | "QT_SVG"
+        | "OPT_QT"
+        | "OPT_QT_SVG"
+        | "SQL"
+        | "SETTINGS"
+        | "COMPRESSED_SQL",
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("explainAFM", "workspaceId", workspaceId);
+    // verify required parameter 'afmExecution' is not null or undefined
+    assertParamExists("explainAFM", "afmExecution", afmExecution);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (explainType !== undefined) {
+        localVarQueryParameter["explainType"] = explainType;
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+        : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Computes forecasted data points from the provided execution result and parameters.
+ * @summary (BETA) Smart functions - Forecast
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {ForecastRequest} forecastRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_Forecast(
+    workspaceId: string,
+    resultId: string,
+    forecastRequest: ForecastRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("forecast", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("forecast", "resultId", resultId);
+    // verify required parameter 'forecastRequest' is not null or undefined
+    assertParamExists("forecast", "forecastRequest", forecastRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof forecastRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+        : forecastRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Gets forecast result.
+ * @summary (BETA) Smart functions - Forecast Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ForecastResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("forecastResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("forecastResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns metadata quality issues detected by the platform linter.
+ * @summary Get Quality Issues
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetQualityIssues(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("getQualityIssues", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns the status of a quality issues calculation process identified by process ID.
+ * @summary Get Quality Issues Calculation Status
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} processId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
+    workspaceId: string,
+    processId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
+    // verify required parameter 'processId' is not null or undefined
+    assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+ * @summary (EXPERIMENTAL) Compute key driver analysis
+ * @param {string} workspaceId Workspace identifier
+ * @param {KeyDriversRequest} keyDriversRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_KeyDriverAnalysis(
+    workspaceId: string,
+    keyDriversRequest: KeyDriversRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+    // verify required parameter 'keyDriversRequest' is not null or undefined
+    assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof keyDriversRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+        : keyDriversRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets key driver analysis.
+ * @summary (EXPERIMENTAL) Get key driver analysis result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_KeyDriverAnalysisResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns a list of Users who created any memory item for this workspace
+ * @summary Get AI Memory CreatedBy Users
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_MemoryCreatedByUsers(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns a list of available LLM Endpoints
+ * @summary Get Active LLM Endpoints for this workspace
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+ * @summary Get a single execution result\'s metadata.
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
+    workspaceId: string,
+    resultId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Gets a single execution result.
+ * @summary Get a single execution result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+ * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+ * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+ * @param {string} [xGDCCANCELTOKEN]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: Array<number>,
+    limit?: Array<number>,
+    excludedTotalDimensions?: Array<string>,
+    xGDCCANCELTOKEN?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("retrieveResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("retrieveResult", "resultId", resultId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset) {
+        localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (limit) {
+        localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (excludedTotalDimensions) {
+        localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
+            COLLECTION_FORMATS.csv,
+        );
+    }
+
+    if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+        localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Returns a list of tags for this workspace
+ * @summary Get Analytics Catalog Tags
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_Tags(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("tags", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+ * @summary Trigger Quality Issues Calculation
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculation(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Validates LLM endpoint with provided parameters.
+ * @summary Validate LLM Endpoint
+ * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
+    validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
+    assertParamExists("validateLLMEndpoint", "validateLLMEndpointRequest", validateLLMEndpointRequest);
+    const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateLLMEndpointRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
+        : validateLLMEndpointRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * @summary Validate LLM Endpoint By Id
+ * @param {string} llmEndpointId
+ * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
+    llmEndpointId: string,
+    validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'llmEndpointId' is not null or undefined
+    assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
+    const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
+        `{${"llmEndpointId"}}`,
+        encodeURIComponent(String(llmEndpointId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateLLMEndpointByIdRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {})
+        : validateLLMEndpointByIdRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AiChat(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAiChatRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChat(
+        requestParameters.workspaceId,
+        requestParameters.chatRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+ * @summary (BETA) Get Chat History
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AiChatHistory(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAiChatHistoryRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatHistoryResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatHistory(
+        requestParameters.workspaceId,
+        requestParameters.chatHistoryRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AiChatStream(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAiChatStreamRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<object>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatStream(
+        requestParameters.workspaceId,
+        requestParameters.chatRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns usage statistics of chat for a user in a workspace.
+ * @summary Get Chat Usage
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AiChatUsage(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAiChatUsageRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatUsageResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiChatUsage(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AiSearch(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAiSearchRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SearchResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AiSearch(
+        requestParameters.workspaceId,
+        requestParameters.searchRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes anomaly detection.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AnomalyDetection(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAnomalyDetectionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AnomalyDetection(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.anomalyDetectionRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Gets anomalies.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AnomalyDetectionResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAnomalyDetectionResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnomalyDetectionResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AnomalyDetectionResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+ * @summary Applies all the given cancel tokens.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CancelExecutions(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiCancelExecutionsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmCancelTokens> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelExecutions(
+        requestParameters.workspaceId,
+        requestParameters.afmCancelTokens,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Computes change analysis for the provided execution definition.
+ * @summary Compute change analysis
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ChangeAnalysis(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiChangeAnalysisRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChangeAnalysisResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ChangeAnalysis(
+        requestParameters.workspaceId,
+        requestParameters.changeAnalysisRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Gets change analysis result.
+ * @summary Get change analysis result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiChangeAnalysisResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ChangeAnalysisResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiChangeAnalysisResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChangeAnalysisResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ChangeAnalysisResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_Clustering(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiClusteringRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_Clustering(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.clusteringRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Gets clustering result.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ClusteringResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiClusteringResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ClusteringResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ClusteringResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+ * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiComputeLabelElementsPostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ComputeLabelElementsPost(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiComputeLabelElementsPostRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ElementsResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeLabelElementsPost(
+        requestParameters.workspaceId,
+        requestParameters.elementsRequest,
+        requestParameters.offset,
+        requestParameters.limit,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+ * @summary Executes analytical request and returns link to the result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiComputeReportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ComputeReport(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiComputeReportRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmExecutionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeReport(
+        requestParameters.workspaceId,
+        requestParameters.afmExecution,
+        requestParameters.skipCache,
+        requestParameters.timestamp,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+ * @summary (BETA) Valid descendants
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ComputeValidDescendants(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiComputeValidDescendantsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmValidDescendantsResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeValidDescendants(
+        requestParameters.workspaceId,
+        requestParameters.afmValidDescendantsQuery,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+ * @summary Valid objects
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiComputeValidObjectsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ComputeValidObjects(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiComputeValidObjectsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmValidObjectsResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeValidObjects(
+        requestParameters.workspaceId,
+        requestParameters.afmValidObjectsQuery,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns a list of Users who created any object for this workspace
+ * @summary Get Analytics Catalog CreatedBy Users
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CreatedBy(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiCreatedByRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnalyticsCatalogCreatedBy> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CreatedBy(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * The resource provides static structures needed for investigation of a problem with given AFM.
+ * @summary AFM explain resource.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiExplainAFMRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ExplainAFM(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiExplainAFMRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ExplainAFM(
+        requestParameters.workspaceId,
+        requestParameters.afmExecution,
+        requestParameters.explainType,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Computes forecasted data points from the provided execution result and parameters.
+ * @summary (BETA) Smart functions - Forecast
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_Forecast(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiForecastRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_Forecast(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.forecastRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Gets forecast result.
+ * @summary (BETA) Smart functions - Forecast Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ForecastResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiForecastResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ForecastResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ForecastResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns metadata quality issues detected by the platform linter.
+ * @summary Get Quality Issues
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetQualityIssues(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiGetQualityIssuesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GetQualityIssuesResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetQualityIssues(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns the status of a quality issues calculation process identified by process ID.
+ * @summary Get Quality Issues Calculation Status
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetQualityIssuesCalculationStatus(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<QualityIssuesCalculationStatusResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
+        requestParameters.workspaceId,
+        requestParameters.processId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+ * @summary (EXPERIMENTAL) Compute key driver analysis
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_KeyDriverAnalysis(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiKeyDriverAnalysisRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KeyDriversResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_KeyDriverAnalysis(
+        requestParameters.workspaceId,
+        requestParameters.keyDriversRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (EXPERIMENTAL) Gets key driver analysis.
+ * @summary (EXPERIMENTAL) Get key driver analysis result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_KeyDriverAnalysisResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KeyDriversResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_KeyDriverAnalysisResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns a list of Users who created any memory item for this workspace
+ * @summary Get AI Memory CreatedBy Users
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_MemoryCreatedByUsers(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiMemoryCreatedByUsersRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<MemoryItemCreatedByUsers> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_MemoryCreatedByUsers(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns a list of available LLM Endpoints
+ * @summary Get Active LLM Endpoints for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ResolveLlmEndpoints(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiResolveLlmEndpointsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResolvedLlmEndpoints> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+ * @summary Get a single execution result\'s metadata.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveExecutionMetadata(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResultCacheMetadata> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Gets a single execution result.
+ * @summary Get a single execution result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiRetrieveResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ExecutionResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        requestParameters.excludedTotalDimensions,
+        requestParameters.xGDCCANCELTOKEN,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Returns a list of tags for this workspace
+ * @summary Get Analytics Catalog Tags
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTagsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_Tags(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiTagsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnalyticsCatalogTags> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_Tags(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+ * @summary Trigger Quality Issues Calculation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_TriggerQualityIssuesCalculation(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculation(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Validates LLM endpoint with provided parameters.
+ * @summary Validate LLM Endpoint
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ValidateLLMEndpoint(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiValidateLLMEndpointRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateLLMEndpointResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
+        requestParameters.validateLLMEndpointRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * @summary Validate LLM Endpoint By Id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ValidateLLMEndpointById(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateLLMEndpointResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
+        requestParameters.llmEndpointId,
+        requestParameters.validateLLMEndpointByIdRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ActionsApi - interface
@@ -6670,9 +6259,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AiChat(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6684,9 +6271,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AiChatHistory(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6698,9 +6289,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AiChatStream(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6712,9 +6307,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiChatUsage(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AiChatUsage(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6726,9 +6325,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AiSearch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6743,15 +6340,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiAnomalyDetectionRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .anomalyDetection(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.anomalyDetectionRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AnomalyDetection(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6766,15 +6361,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiAnomalyDetectionResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .anomalyDetectionResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AnomalyDetectionResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6789,9 +6382,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiCancelExecutionsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .cancelExecutions(requestParameters.workspaceId, requestParameters.afmCancelTokens, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_CancelExecutions(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6803,9 +6400,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .changeAnalysis(requestParameters.workspaceId, requestParameters.changeAnalysisRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ChangeAnalysis(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6820,9 +6421,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiChangeAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ChangeAnalysisResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6834,15 +6439,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .clustering(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.clusteringRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_Clustering(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6857,15 +6460,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiClusteringResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .clusteringResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ClusteringResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6880,16 +6481,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiComputeLabelElementsPostRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .computeLabelElementsPost(
-                requestParameters.workspaceId,
-                requestParameters.elementsRequest,
-                requestParameters.offset,
-                requestParameters.limit,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ComputeLabelElementsPost(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6901,15 +6499,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .computeReport(
-                requestParameters.workspaceId,
-                requestParameters.afmExecution,
-                requestParameters.skipCache,
-                requestParameters.timestamp,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ComputeReport(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6924,13 +6520,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiComputeValidDescendantsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .computeValidDescendants(
-                requestParameters.workspaceId,
-                requestParameters.afmValidDescendantsQuery,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ComputeValidDescendants(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6945,13 +6541,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiComputeValidObjectsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .computeValidObjects(
-                requestParameters.workspaceId,
-                requestParameters.afmValidObjectsQuery,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ComputeValidObjects(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6963,9 +6559,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .createdBy(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_CreatedBy(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6977,14 +6577,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .explainAFM(
-                requestParameters.workspaceId,
-                requestParameters.afmExecution,
-                requestParameters.explainType,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ExplainAFM(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -6996,15 +6595,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .forecast(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.forecastRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_Forecast(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -7016,15 +6607,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .forecastResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ForecastResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7039,9 +6628,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiGetQualityIssuesRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .getQualityIssues(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_GetQualityIssues(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7056,13 +6649,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .getQualityIssuesCalculationStatus(
-                requestParameters.workspaceId,
-                requestParameters.processId,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_GetQualityIssuesCalculationStatus(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7077,14 +6670,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiKeyDriverAnalysisRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .keyDriverAnalysis(
-                requestParameters.workspaceId,
-                requestParameters.keyDriversRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_KeyDriverAnalysis(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7099,15 +6691,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .keyDriverAnalysisResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_KeyDriverAnalysisResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7122,9 +6712,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiMemoryCreatedByUsersRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .memoryCreatedByUsers(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_MemoryCreatedByUsers(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7139,9 +6733,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiResolveLlmEndpointsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .resolveLlmEndpoints(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ResolveLlmEndpoints(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7156,9 +6754,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_RetrieveExecutionMetadata(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7170,17 +6772,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .retrieveResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                requestParameters.excludedTotalDimensions,
-                requestParameters.xGDCCANCELTOKEN,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_RetrieveResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7192,9 +6790,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .tags(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_Tags(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -7209,9 +6805,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_TriggerQualityIssuesCalculation(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7226,9 +6826,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiValidateLLMEndpointRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ValidateLLMEndpoint(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -7243,1172 +6847,1000 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .validateLLMEndpointById(
-                requestParameters.llmEndpointId,
-                requestParameters.validateLLMEndpointByIdRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ValidateLLMEndpointById(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// ComputationApi FP - ComputationApiAxiosParamCreator
 /**
- * ComputationApi - axios parameter creator
- * @export
+ * Computes change analysis for the provided execution definition.
+ * @summary Compute change analysis
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChangeAnalysisRequest} changeAnalysisRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChangeAnalysisRequest} changeAnalysisRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysis: async (
-            workspaceId: string,
-            changeAnalysisRequest: ChangeAnalysisRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("changeAnalysis", "workspaceId", workspaceId);
-            // verify required parameter 'changeAnalysisRequest' is not null or undefined
-            assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof changeAnalysisRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
-                : changeAnalysisRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysisResult: async (
-            workspaceId: string,
-            resultId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("changeAnalysisResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {string} workspaceId Workspace identifier
-         * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElementsPost: async (
-            workspaceId: string,
-            elementsRequest: ElementsRequest,
-            offset?: number,
-            limit?: number,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
-            // verify required parameter 'elementsRequest' is not null or undefined
-            assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof elementsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
-                : elementsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeReport: async (
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            skipCache?: boolean,
-            timestamp?: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeReport", "workspaceId", workspaceId);
-            // verify required parameter 'afmExecution' is not null or undefined
-            assertParamExists("computeReport", "afmExecution", afmExecution);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            if (timestamp !== undefined && timestamp !== null) {
-                localVarHeaderParameter["timestamp"] = String(timestamp);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmExecution !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
-                : afmExecution || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidDescendants: async (
-            workspaceId: string,
-            afmValidDescendantsQuery: AfmValidDescendantsQuery,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
-            // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
-            assertParamExists(
-                "computeValidDescendants",
-                "afmValidDescendantsQuery",
-                afmValidDescendantsQuery,
-            );
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmValidDescendantsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
-                : afmValidDescendantsQuery || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects: async (
-            workspaceId: string,
-            afmValidObjectsQuery: AfmValidObjectsQuery,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("computeValidObjects", "workspaceId", workspaceId);
-            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
-            assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmValidObjectsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
-                : afmValidObjectsQuery || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM: async (
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            explainType?:
-                | "MAQL"
-                | "GRPC_MODEL"
-                | "GRPC_MODEL_SVG"
-                | "WDF"
-                | "QT"
-                | "QT_SVG"
-                | "OPT_QT"
-                | "OPT_QT_SVG"
-                | "SQL"
-                | "SETTINGS"
-                | "COMPRESSED_SQL",
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("explainAFM", "workspaceId", workspaceId);
-            // verify required parameter 'afmExecution' is not null or undefined
-            assertParamExists("explainAFM", "afmExecution", afmExecution);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (explainType !== undefined) {
-                localVarQueryParameter["explainType"] = explainType;
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof afmExecution !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
-                : afmExecution || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {KeyDriversRequest} keyDriversRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysis: async (
-            workspaceId: string,
-            keyDriversRequest: KeyDriversRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
-            // verify required parameter 'keyDriversRequest' is not null or undefined
-            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof keyDriversRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
-                : keyDriversRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysisResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveExecutionMetadata: async (
-            workspaceId: string,
-            resultId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
-         * @param {string} [xGDCCANCELTOKEN]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: Array<number>,
-            limit?: Array<number>,
-            excludedTotalDimensions?: Array<string>,
-            xGDCCANCELTOKEN?: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("retrieveResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("retrieveResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset) {
-                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
-            }
-
-            if (limit) {
-                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
-            }
-
-            if (excludedTotalDimensions) {
-                localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
-                    COLLECTION_FORMATS.csv,
-                );
-            }
-
-            if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
-                localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ComputationApi - functional programming interface
- * @export
- */
-export const ComputationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChangeAnalysisRequest} changeAnalysisRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async changeAnalysis(
-            workspaceId: string,
-            changeAnalysisRequest: ChangeAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysis(
-                workspaceId,
-                changeAnalysisRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async changeAnalysisResult(
-            workspaceId: string,
-            resultId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeAnalysisResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changeAnalysisResult(
-                workspaceId,
-                resultId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {string} workspaceId Workspace identifier
-         * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeLabelElementsPost(
-            workspaceId: string,
-            elementsRequest: ElementsRequest,
-            offset?: number,
-            limit?: number,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeLabelElementsPost(
-                workspaceId,
-                elementsRequest,
-                offset,
-                limit,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {string} [timestamp]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeReport(
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            skipCache?: boolean,
-            timestamp?: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeReport(
-                workspaceId,
-                afmExecution,
-                skipCache,
-                timestamp,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeValidDescendants(
-            workspaceId: string,
-            afmValidDescendantsQuery: AfmValidDescendantsQuery,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidDescendantsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidDescendants(
-                workspaceId,
-                afmValidDescendantsQuery,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async computeValidObjects(
-            workspaceId: string,
-            afmValidObjectsQuery: AfmValidObjectsQuery,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.computeValidObjects(
-                workspaceId,
-                afmValidObjectsQuery,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {string} workspaceId Workspace identifier
-         * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async explainAFM(
-            workspaceId: string,
-            afmExecution: AfmExecution,
-            explainType?:
-                | "MAQL"
-                | "GRPC_MODEL"
-                | "GRPC_MODEL_SVG"
-                | "WDF"
-                | "QT"
-                | "QT_SVG"
-                | "OPT_QT"
-                | "OPT_QT_SVG"
-                | "SQL"
-                | "SETTINGS"
-                | "COMPRESSED_SQL",
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
-                workspaceId,
-                afmExecution,
-                explainType,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {string} workspaceId Workspace identifier
-         * @param {KeyDriversRequest} keyDriversRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async keyDriverAnalysis(
-            workspaceId: string,
-            keyDriversRequest: KeyDriversRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
-                workspaceId,
-                keyDriversRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async keyDriverAnalysisResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async retrieveExecutionMetadata(
-            workspaceId: string,
-            resultId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveExecutionMetadata(
-                workspaceId,
-                resultId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
-         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
-         * @param {string} [xGDCCANCELTOKEN]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async retrieveResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: Array<number>,
-            limit?: Array<number>,
-            excludedTotalDimensions?: Array<string>,
-            xGDCCANCELTOKEN?: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                excludedTotalDimensions,
-                xGDCCANCELTOKEN,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ComputationApi - factory interface
- * @export
- */
-export const ComputationApiFactory = function (
+export async function ComputationApiAxiosParamCreator_ChangeAnalysis(
+    workspaceId: string,
+    changeAnalysisRequest: ChangeAnalysisRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ComputationApiFp(configuration);
-    return {
-        /**
-         * Computes change analysis for the provided execution definition.
-         * @summary Compute change analysis
-         * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysis(
-            requestParameters: ComputationApiChangeAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChangeAnalysisResponse> {
-            return localVarFp
-                .changeAnalysis(
-                    requestParameters.workspaceId,
-                    requestParameters.changeAnalysisRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Gets change analysis result.
-         * @summary Get change analysis result
-         * @param {ComputationApiChangeAnalysisResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAnalysisResult(
-            requestParameters: ComputationApiChangeAnalysisResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChangeAnalysisResult> {
-            return localVarFp
-                .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
-         * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElementsPost(
-            requestParameters: ComputationApiComputeLabelElementsPostRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ElementsResponse> {
-            return localVarFp
-                .computeLabelElementsPost(
-                    requestParameters.workspaceId,
-                    requestParameters.elementsRequest,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
-         * @summary Executes analytical request and returns link to the result
-         * @param {ComputationApiComputeReportRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeReport(
-            requestParameters: ComputationApiComputeReportRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmExecutionResponse> {
-            return localVarFp
-                .computeReport(
-                    requestParameters.workspaceId,
-                    requestParameters.afmExecution,
-                    requestParameters.skipCache,
-                    requestParameters.timestamp,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
-         * @summary (BETA) Valid descendants
-         * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidDescendants(
-            requestParameters: ComputationApiComputeValidDescendantsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmValidDescendantsResponse> {
-            return localVarFp
-                .computeValidDescendants(
-                    requestParameters.workspaceId,
-                    requestParameters.afmValidDescendantsQuery,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeValidObjects(
-            requestParameters: ComputationApiComputeValidObjectsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AfmValidObjectsResponse> {
-            return localVarFp
-                .computeValidObjects(
-                    requestParameters.workspaceId,
-                    requestParameters.afmValidObjectsQuery,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * The resource provides static structures needed for investigation of a problem with given AFM.
-         * @summary AFM explain resource.
-         * @param {ComputationApiExplainAFMRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        explainAFM(
-            requestParameters: ComputationApiExplainAFMRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<File> {
-            return localVarFp
-                .explainAFM(
-                    requestParameters.workspaceId,
-                    requestParameters.afmExecution,
-                    requestParameters.explainType,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
-         * @summary (EXPERIMENTAL) Compute key driver analysis
-         * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysis(
-            requestParameters: ComputationApiKeyDriverAnalysisRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<KeyDriversResponse> {
-            return localVarFp
-                .keyDriverAnalysis(
-                    requestParameters.workspaceId,
-                    requestParameters.keyDriversRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets key driver analysis.
-         * @summary (EXPERIMENTAL) Get key driver analysis result
-         * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        keyDriverAnalysisResult(
-            requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<KeyDriversResult> {
-            return localVarFp
-                .keyDriverAnalysisResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
-         * @summary Get a single execution result\'s metadata.
-         * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveExecutionMetadata(
-            requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ResultCacheMetadata> {
-            return localVarFp
-                .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Gets a single execution result.
-         * @summary Get a single execution result
-         * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        retrieveResult(
-            requestParameters: ComputationApiRetrieveResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ExecutionResult> {
-            return localVarFp
-                .retrieveResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    requestParameters.excludedTotalDimensions,
-                    requestParameters.xGDCCANCELTOKEN,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("changeAnalysis", "workspaceId", workspaceId);
+    // verify required parameter 'changeAnalysisRequest' is not null or undefined
+    assertParamExists("changeAnalysis", "changeAnalysisRequest", changeAnalysisRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof changeAnalysisRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(changeAnalysisRequest !== undefined ? changeAnalysisRequest : {})
+        : changeAnalysisRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * Gets change analysis result.
+ * @summary Get change analysis result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ChangeAnalysisResult(
+    workspaceId: string,
+    resultId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("changeAnalysisResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("changeAnalysisResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/computeChangeAnalysis/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+ * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+ * @param {string} workspaceId Workspace identifier
+ * @param {ElementsRequest} elementsRequest
+ * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+ * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ComputeLabelElementsPost(
+    workspaceId: string,
+    elementsRequest: ElementsRequest,
+    offset?: number,
+    limit?: number,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
+    // verify required parameter 'elementsRequest' is not null or undefined
+    assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof elementsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(elementsRequest !== undefined ? elementsRequest : {})
+        : elementsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+ * @summary Executes analytical request and returns link to the result
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmExecution} afmExecution
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {string} [timestamp]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ComputeReport(
+    workspaceId: string,
+    afmExecution: AfmExecution,
+    skipCache?: boolean,
+    timestamp?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeReport", "workspaceId", workspaceId);
+    // verify required parameter 'afmExecution' is not null or undefined
+    assertParamExists("computeReport", "afmExecution", afmExecution);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    if (timestamp !== undefined && timestamp !== null) {
+        localVarHeaderParameter["timestamp"] = String(timestamp);
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+        : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+ * @summary (BETA) Valid descendants
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmValidDescendantsQuery} afmValidDescendantsQuery
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ComputeValidDescendants(
+    workspaceId: string,
+    afmValidDescendantsQuery: AfmValidDescendantsQuery,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeValidDescendants", "workspaceId", workspaceId);
+    // verify required parameter 'afmValidDescendantsQuery' is not null or undefined
+    assertParamExists("computeValidDescendants", "afmValidDescendantsQuery", afmValidDescendantsQuery);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidDescendants`.replace(
+            `{${"workspaceId"}}`,
+            encodeURIComponent(String(workspaceId)),
+        );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmValidDescendantsQuery !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmValidDescendantsQuery !== undefined ? afmValidDescendantsQuery : {})
+        : afmValidDescendantsQuery || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+ * @summary Valid objects
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ComputeValidObjects(
+    workspaceId: string,
+    afmValidObjectsQuery: AfmValidObjectsQuery,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("computeValidObjects", "workspaceId", workspaceId);
+    // verify required parameter 'afmValidObjectsQuery' is not null or undefined
+    assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmValidObjectsQuery !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
+        : afmValidObjectsQuery || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * The resource provides static structures needed for investigation of a problem with given AFM.
+ * @summary AFM explain resource.
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmExecution} afmExecution
+ * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ExplainAFM(
+    workspaceId: string,
+    afmExecution: AfmExecution,
+    explainType?:
+        | "MAQL"
+        | "GRPC_MODEL"
+        | "GRPC_MODEL_SVG"
+        | "WDF"
+        | "QT"
+        | "QT_SVG"
+        | "OPT_QT"
+        | "OPT_QT_SVG"
+        | "SQL"
+        | "SETTINGS"
+        | "COMPRESSED_SQL",
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("explainAFM", "workspaceId", workspaceId);
+    // verify required parameter 'afmExecution' is not null or undefined
+    assertParamExists("explainAFM", "afmExecution", afmExecution);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (explainType !== undefined) {
+        localVarQueryParameter["explainType"] = explainType;
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
+        : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+ * @summary (EXPERIMENTAL) Compute key driver analysis
+ * @param {string} workspaceId Workspace identifier
+ * @param {KeyDriversRequest} keyDriversRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_KeyDriverAnalysis(
+    workspaceId: string,
+    keyDriversRequest: KeyDriversRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+    // verify required parameter 'keyDriversRequest' is not null or undefined
+    assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof keyDriversRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+        : keyDriversRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets key driver analysis.
+ * @summary (EXPERIMENTAL) Get key driver analysis result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_KeyDriverAnalysisResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+ * @summary Get a single execution result\'s metadata.
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_RetrieveExecutionMetadata(
+    workspaceId: string,
+    resultId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * Gets a single execution result.
+ * @summary Get a single execution result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+ * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+ * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+ * @param {string} [xGDCCANCELTOKEN]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_RetrieveResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: Array<number>,
+    limit?: Array<number>,
+    excludedTotalDimensions?: Array<string>,
+    xGDCCANCELTOKEN?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("retrieveResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("retrieveResult", "resultId", resultId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset) {
+        localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (limit) {
+        localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (excludedTotalDimensions) {
+        localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
+            COLLECTION_FORMATS.csv,
+        );
+    }
+
+    if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+        localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi Api FP
+/**
+ * Computes change analysis for the provided execution definition.
+ * @summary Compute change analysis
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ChangeAnalysis(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiChangeAnalysisRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChangeAnalysisResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ChangeAnalysis(
+        requestParameters.workspaceId,
+        requestParameters.changeAnalysisRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * Gets change analysis result.
+ * @summary Get change analysis result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiChangeAnalysisResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ChangeAnalysisResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiChangeAnalysisResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChangeAnalysisResult> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ChangeAnalysisResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+ * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiComputeLabelElementsPostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ComputeLabelElementsPost(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiComputeLabelElementsPostRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ElementsResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ComputeLabelElementsPost(
+        requestParameters.workspaceId,
+        requestParameters.elementsRequest,
+        requestParameters.offset,
+        requestParameters.limit,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+ * @summary Executes analytical request and returns link to the result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiComputeReportRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ComputeReport(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiComputeReportRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmExecutionResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ComputeReport(
+        requestParameters.workspaceId,
+        requestParameters.afmExecution,
+        requestParameters.skipCache,
+        requestParameters.timestamp,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
+ * @summary (BETA) Valid descendants
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ComputeValidDescendants(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiComputeValidDescendantsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmValidDescendantsResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ComputeValidDescendants(
+        requestParameters.workspaceId,
+        requestParameters.afmValidDescendantsQuery,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
+ * @summary Valid objects
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiComputeValidObjectsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ComputeValidObjects(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiComputeValidObjectsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmValidObjectsResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ComputeValidObjects(
+        requestParameters.workspaceId,
+        requestParameters.afmValidObjectsQuery,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * The resource provides static structures needed for investigation of a problem with given AFM.
+ * @summary AFM explain resource.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiExplainAFMRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ExplainAFM(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiExplainAFMRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ExplainAFM(
+        requestParameters.workspaceId,
+        requestParameters.afmExecution,
+        requestParameters.explainType,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+ * @summary (EXPERIMENTAL) Compute key driver analysis
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_KeyDriverAnalysis(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiKeyDriverAnalysisRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KeyDriversResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_KeyDriverAnalysis(
+        requestParameters.workspaceId,
+        requestParameters.keyDriversRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * (EXPERIMENTAL) Gets key driver analysis.
+ * @summary (EXPERIMENTAL) Get key driver analysis result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_KeyDriverAnalysisResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KeyDriversResult> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_KeyDriverAnalysisResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+ * @summary Get a single execution result\'s metadata.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_RetrieveExecutionMetadata(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResultCacheMetadata> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_RetrieveExecutionMetadata(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * Gets a single execution result.
+ * @summary Get a single execution result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_RetrieveResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiRetrieveResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ExecutionResult> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_RetrieveResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        requestParameters.excludedTotalDimensions,
+        requestParameters.xGDCCANCELTOKEN,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ComputationApi - interface
@@ -8912,9 +8344,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiChangeAnalysisRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .changeAnalysis(requestParameters.workspaceId, requestParameters.changeAnalysisRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ChangeAnalysis(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -8929,9 +8365,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiChangeAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .changeAnalysisResult(requestParameters.workspaceId, requestParameters.resultId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ChangeAnalysisResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -8946,16 +8386,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiComputeLabelElementsPostRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .computeLabelElementsPost(
-                requestParameters.workspaceId,
-                requestParameters.elementsRequest,
-                requestParameters.offset,
-                requestParameters.limit,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ComputeLabelElementsPost(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -8970,15 +8407,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiComputeReportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .computeReport(
-                requestParameters.workspaceId,
-                requestParameters.afmExecution,
-                requestParameters.skipCache,
-                requestParameters.timestamp,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ComputeReport(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -8993,13 +8428,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiComputeValidDescendantsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .computeValidDescendants(
-                requestParameters.workspaceId,
-                requestParameters.afmValidDescendantsQuery,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ComputeValidDescendants(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9014,13 +8449,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiComputeValidObjectsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .computeValidObjects(
-                requestParameters.workspaceId,
-                requestParameters.afmValidObjectsQuery,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ComputeValidObjects(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9032,14 +8467,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      * @memberof ComputationApi
      */
     public explainAFM(requestParameters: ComputationApiExplainAFMRequest, options?: AxiosRequestConfig) {
-        return ComputationApiFp(this.configuration)
-            .explainAFM(
-                requestParameters.workspaceId,
-                requestParameters.afmExecution,
-                requestParameters.explainType,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_ExplainAFM(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9054,14 +8488,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiKeyDriverAnalysisRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .keyDriverAnalysis(
-                requestParameters.workspaceId,
-                requestParameters.keyDriversRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_KeyDriverAnalysis(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9076,15 +8509,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .keyDriverAnalysisResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_KeyDriverAnalysisResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9099,9 +8530,13 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiRetrieveExecutionMetadataRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_RetrieveExecutionMetadata(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -9116,1781 +8551,1617 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         requestParameters: ComputationApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
-            .retrieveResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                requestParameters.excludedTotalDimensions,
-                requestParameters.xGDCCANCELTOKEN,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ComputationApi_RetrieveResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * SmartFunctionsApi - axios parameter creator
- * @export
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatRequest} chatRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChat: async (
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChat", "workspaceId", workspaceId);
-            // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists("aiChat", "chatRequest", chatRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-                : chatRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatHistoryRequest} chatHistoryRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatHistory: async (
-            workspaceId: string,
-            chatHistoryRequest: ChatHistoryRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatHistory", "workspaceId", workspaceId);
-            // verify required parameter 'chatHistoryRequest' is not null or undefined
-            assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatHistoryRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
-                : chatHistoryRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatStream: async (
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatStream", "workspaceId", workspaceId);
-            // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists("aiChatStream", "chatRequest", chatRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof chatRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
-                : chatRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatUsage: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiChatUsage", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchRequest} searchRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearch: async (
-            workspaceId: string,
-            searchRequest: SearchRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiSearch", "workspaceId", workspaceId);
-            // verify required parameter 'searchRequest' is not null or undefined
-            assertParamExists("aiSearch", "searchRequest", searchRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof searchRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
-                : searchRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetection: async (
-            workspaceId: string,
-            resultId: string,
-            anomalyDetectionRequest: AnomalyDetectionRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("anomalyDetection", "resultId", resultId);
-            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
-            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof anomalyDetectionRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
-                : anomalyDetectionRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetectionResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("anomalyDetectionResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ClusteringRequest} clusteringRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clustering: async (
-            workspaceId: string,
-            resultId: string,
-            clusteringRequest: ClusteringRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("clustering", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("clustering", "resultId", resultId);
-            // verify required parameter 'clusteringRequest' is not null or undefined
-            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof clusteringRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
-                : clusteringRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clusteringResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("clusteringResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("clusteringResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createdBy: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("createdBy", "workspaceId", workspaceId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ForecastRequest} forecastRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecast: async (
-            workspaceId: string,
-            resultId: string,
-            forecastRequest: ForecastRequest,
-            skipCache?: boolean,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("forecast", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("forecast", "resultId", resultId);
-            // verify required parameter 'forecastRequest' is not null or undefined
-            assertParamExists("forecast", "forecastRequest", forecastRequest);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof forecastRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
-                : forecastRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecastResult: async (
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("forecastResult", "workspaceId", workspaceId);
-            // verify required parameter 'resultId' is not null or undefined
-            assertParamExists("forecastResult", "resultId", resultId);
-            const localVarPath =
-                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
-                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssues: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getQualityIssues", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} processId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssuesCalculationStatus: async (
-            workspaceId: string,
-            processId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
-            // verify required parameter 'processId' is not null or undefined
-            assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
-                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        memoryCreatedByUsers: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resolveLlmEndpoints: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tags: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("tags", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        triggerQualityIssuesCalculation: async (
-            workspaceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpoint: async (
-            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
-            assertParamExists(
-                "validateLLMEndpoint",
-                "validateLLMEndpointRequest",
-                validateLLMEndpointRequest,
-            );
-            const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof validateLLMEndpointRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
-                : validateLLMEndpointRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {string} llmEndpointId
-         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpointById: async (
-            llmEndpointId: string,
-            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'llmEndpointId' is not null or undefined
-            assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
-            const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
-                `{${"llmEndpointId"}}`,
-                encodeURIComponent(String(llmEndpointId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof validateLLMEndpointByIdRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {},
-                  )
-                : validateLLMEndpointByIdRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * SmartFunctionsApi - functional programming interface
- * @export
- */
-export const SmartFunctionsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChat(
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
-                workspaceId,
-                chatRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatHistoryRequest} chatHistoryRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatHistory(
-            workspaceId: string,
-            chatHistoryRequest: ChatHistoryRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatHistory(
-                workspaceId,
-                chatHistoryRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {string} workspaceId Workspace identifier
-         * @param {ChatRequest} chatRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatStream(
-            workspaceId: string,
-            chatRequest: ChatRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
-                workspaceId,
-                chatRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiChatUsage(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatUsageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatUsage(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchRequest} searchRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiSearch(
-            workspaceId: string,
-            searchRequest: SearchRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
-                workspaceId,
-                searchRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async anomalyDetection(
-            workspaceId: string,
-            resultId: string,
-            anomalyDetectionRequest: AnomalyDetectionRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
-                workspaceId,
-                resultId,
-                anomalyDetectionRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async anomalyDetectionResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ClusteringRequest} clusteringRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async clustering(
-            workspaceId: string,
-            resultId: string,
-            clusteringRequest: ClusteringRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
-                workspaceId,
-                resultId,
-                clusteringRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async clusteringResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createdBy(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogCreatedBy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createdBy(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Input result ID to be used in the computation
-         * @param {ForecastRequest} forecastRequest
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async forecast(
-            workspaceId: string,
-            resultId: string,
-            forecastRequest: ForecastRequest,
-            skipCache?: boolean,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
-                workspaceId,
-                resultId,
-                forecastRequest,
-                skipCache,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} resultId Result ID
-         * @param {number} [offset]
-         * @param {number} [limit]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async forecastResult(
-            workspaceId: string,
-            resultId: string,
-            offset?: number,
-            limit?: number,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
-                workspaceId,
-                resultId,
-                offset,
-                limit,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getQualityIssues(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQualityIssuesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssues(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} processId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getQualityIssuesCalculationStatus(
-            workspaceId: string,
-            processId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<QualityIssuesCalculationStatusResponse>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQualityIssuesCalculationStatus(
-                workspaceId,
-                processId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async memoryCreatedByUsers(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryItemCreatedByUsers>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.memoryCreatedByUsers(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async resolveLlmEndpoints(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolvedLlmEndpoints>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveLlmEndpoints(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async tags(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsCatalogTags>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tags(workspaceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {string} workspaceId Workspace identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async triggerQualityIssuesCalculation(
-            workspaceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (
-                axios?: AxiosInstance,
-                basePath?: string,
-            ) => AxiosPromise<TriggerQualityIssuesCalculationResponse>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerQualityIssuesCalculation(
-                workspaceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async validateLLMEndpoint(
-            validateLLMEndpointRequest: ValidateLLMEndpointRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpoint(
-                validateLLMEndpointRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {string} llmEndpointId
-         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async validateLLMEndpointById(
-            llmEndpointId: string,
-            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpointById(
-                llmEndpointId,
-                validateLLMEndpointByIdRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * SmartFunctionsApi - factory interface
- * @export
- */
-export const SmartFunctionsApiFactory = function (
+export async function SmartFunctionsApiAxiosParamCreator_AiChat(
+    workspaceId: string,
+    chatRequest: ChatRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = SmartFunctionsApiFp(configuration);
-    return {
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChat(
-            requestParameters: SmartFunctionsApiAiChatRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatResult> {
-            return localVarFp
-                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
-         * @summary (BETA) Get Chat History
-         * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatHistory(
-            requestParameters: SmartFunctionsApiAiChatHistoryRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatHistoryResult> {
-            return localVarFp
-                .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Combines multiple use cases such as search, create visualizations, ...
-         * @summary (BETA) Chat with AI
-         * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatStream(
-            requestParameters: SmartFunctionsApiAiChatStreamRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<object>> {
-            return localVarFp
-                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns usage statistics of chat for a user in a workspace.
-         * @summary Get Chat Usage
-         * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiChatUsage(
-            requestParameters: SmartFunctionsApiAiChatUsageRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ChatUsageResponse> {
-            return localVarFp
-                .aiChatUsage(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata
-         * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearch(
-            requestParameters: SmartFunctionsApiAiSearchRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SearchResult> {
-            return localVarFp
-                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes anomaly detection.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
-         * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetection(
-            requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .anomalyDetection(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.anomalyDetectionRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets anomalies.
-         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
-         * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        anomalyDetectionResult(
-            requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnomalyDetectionResult> {
-            return localVarFp
-                .anomalyDetectionResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering
-         * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clustering(
-            requestParameters: SmartFunctionsApiClusteringRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .clustering(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.clusteringRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (EXPERIMENTAL) Gets clustering result.
-         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
-         * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        clusteringResult(
-            requestParameters: SmartFunctionsApiClusteringResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ClusteringResult> {
-            return localVarFp
-                .clusteringResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of Users who created any object for this workspace
-         * @summary Get Analytics Catalog CreatedBy Users
-         * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createdBy(
-            requestParameters: SmartFunctionsApiCreatedByRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnalyticsCatalogCreatedBy> {
-            return localVarFp
-                .createdBy(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Computes forecasted data points from the provided execution result and parameters.
-         * @summary (BETA) Smart functions - Forecast
-         * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecast(
-            requestParameters: SmartFunctionsApiForecastRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SmartFunctionResponse> {
-            return localVarFp
-                .forecast(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.forecastRequest,
-                    requestParameters.skipCache,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Gets forecast result.
-         * @summary (BETA) Smart functions - Forecast Result
-         * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        forecastResult(
-            requestParameters: SmartFunctionsApiForecastResultRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ForecastResult> {
-            return localVarFp
-                .forecastResult(
-                    requestParameters.workspaceId,
-                    requestParameters.resultId,
-                    requestParameters.offset,
-                    requestParameters.limit,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns metadata quality issues detected by the platform linter.
-         * @summary Get Quality Issues
-         * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssues(
-            requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<GetQualityIssuesResponse> {
-            return localVarFp
-                .getQualityIssues(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the status of a quality issues calculation process identified by process ID.
-         * @summary Get Quality Issues Calculation Status
-         * @param {SmartFunctionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQualityIssuesCalculationStatus(
-            requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
-            return localVarFp
-                .getQualityIssuesCalculationStatus(
-                    requestParameters.workspaceId,
-                    requestParameters.processId,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of Users who created any memory item for this workspace
-         * @summary Get AI Memory CreatedBy Users
-         * @param {SmartFunctionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        memoryCreatedByUsers(
-            requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<MemoryItemCreatedByUsers> {
-            return localVarFp
-                .memoryCreatedByUsers(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of available LLM Endpoints
-         * @summary Get Active LLM Endpoints for this workspace
-         * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resolveLlmEndpoints(
-            requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ResolvedLlmEndpoints> {
-            return localVarFp
-                .resolveLlmEndpoints(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a list of tags for this workspace
-         * @summary Get Analytics Catalog Tags
-         * @param {SmartFunctionsApiTagsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tags(
-            requestParameters: SmartFunctionsApiTagsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<AnalyticsCatalogTags> {
-            return localVarFp
-                .tags(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
-         * @summary Trigger Quality Issues Calculation
-         * @param {SmartFunctionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        triggerQualityIssuesCalculation(
-            requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
-            return localVarFp
-                .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Validates LLM endpoint with provided parameters.
-         * @summary Validate LLM Endpoint
-         * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpoint(
-            requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ValidateLLMEndpointResponse> {
-            return localVarFp
-                .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
-         * @summary Validate LLM Endpoint By Id
-         * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateLLMEndpointById(
-            requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<ValidateLLMEndpointResponse> {
-            return localVarFp
-                .validateLLMEndpointById(
-                    requestParameters.llmEndpointId,
-                    requestParameters.validateLLMEndpointByIdRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChat", "workspaceId", workspaceId);
+    // verify required parameter 'chatRequest' is not null or undefined
+    assertParamExists("aiChat", "chatRequest", chatRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof chatRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+        : chatRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+ * @summary (BETA) Get Chat History
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatHistoryRequest} chatHistoryRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
+    workspaceId: string,
+    chatHistoryRequest: ChatHistoryRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatHistory", "workspaceId", workspaceId);
+    // verify required parameter 'chatHistoryRequest' is not null or undefined
+    assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof chatHistoryRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
+        : chatHistoryRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {string} workspaceId Workspace identifier
+ * @param {ChatRequest} chatRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
+    workspaceId: string,
+    chatRequest: ChatRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatStream", "workspaceId", workspaceId);
+    // verify required parameter 'chatRequest' is not null or undefined
+    assertParamExists("aiChatStream", "chatRequest", chatRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof chatRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+        : chatRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns usage statistics of chat for a user in a workspace.
+ * @summary Get Chat Usage
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AiChatUsage(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiChatUsage", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {string} workspaceId Workspace identifier
+ * @param {SearchRequest} searchRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AiSearch(
+    workspaceId: string,
+    searchRequest: SearchRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("aiSearch", "workspaceId", workspaceId);
+    // verify required parameter 'searchRequest' is not null or undefined
+    assertParamExists("aiSearch", "searchRequest", searchRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof searchRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+        : searchRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes anomaly detection.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AnomalyDetection(
+    workspaceId: string,
+    resultId: string,
+    anomalyDetectionRequest: AnomalyDetectionRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("anomalyDetection", "resultId", resultId);
+    // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+    assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof anomalyDetectionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+        : anomalyDetectionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets anomalies.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_AnomalyDetectionResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("anomalyDetectionResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {ClusteringRequest} clusteringRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_Clustering(
+    workspaceId: string,
+    resultId: string,
+    clusteringRequest: ClusteringRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("clustering", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("clustering", "resultId", resultId);
+    // verify required parameter 'clusteringRequest' is not null or undefined
+    assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof clusteringRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+        : clusteringRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (EXPERIMENTAL) Gets clustering result.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ClusteringResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("clusteringResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("clusteringResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns a list of Users who created any object for this workspace
+ * @summary Get Analytics Catalog CreatedBy Users
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_CreatedBy(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("createdBy", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/createdBy`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (BETA) Computes forecasted data points from the provided execution result and parameters.
+ * @summary (BETA) Smart functions - Forecast
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Input result ID to be used in the computation
+ * @param {ForecastRequest} forecastRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_Forecast(
+    workspaceId: string,
+    resultId: string,
+    forecastRequest: ForecastRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("forecast", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("forecast", "resultId", resultId);
+    // verify required parameter 'forecastRequest' is not null or undefined
+    assertParamExists("forecast", "forecastRequest", forecastRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof forecastRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+        : forecastRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * (BETA) Gets forecast result.
+ * @summary (BETA) Smart functions - Forecast Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ForecastResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("forecastResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("forecastResult", "resultId", resultId);
+    const localVarPath =
+        `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+            .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+            .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns metadata quality issues detected by the platform linter.
+ * @summary Get Quality Issues
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_GetQualityIssues(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("getQualityIssues", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns the status of a quality issues calculation process identified by process ID.
+ * @summary Get Quality Issues Calculation Status
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} processId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
+    workspaceId: string,
+    processId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("getQualityIssuesCalculationStatus", "workspaceId", workspaceId);
+    // verify required parameter 'processId' is not null or undefined
+    assertParamExists("getQualityIssuesCalculationStatus", "processId", processId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns a list of Users who created any memory item for this workspace
+ * @summary Get AI Memory CreatedBy Users
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_MemoryCreatedByUsers(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("memoryCreatedByUsers", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns a list of available LLM Endpoints
+ * @summary Get Active LLM Endpoints for this workspace
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("resolveLlmEndpoints", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Returns a list of tags for this workspace
+ * @summary Get Analytics Catalog Tags
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_Tags(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("tags", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+ * @summary Trigger Quality Issues Calculation
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_TriggerQualityIssuesCalculation(
+    workspaceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("triggerQualityIssuesCalculation", "workspaceId", workspaceId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/triggerCheck`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Validates LLM endpoint with provided parameters.
+ * @summary Validate LLM Endpoint
+ * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
+    validateLLMEndpointRequest: ValidateLLMEndpointRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
+    assertParamExists("validateLLMEndpoint", "validateLLMEndpointRequest", validateLLMEndpointRequest);
+    const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateLLMEndpointRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
+        : validateLLMEndpointRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * @summary Validate LLM Endpoint By Id
+ * @param {string} llmEndpointId
+ * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById(
+    llmEndpointId: string,
+    validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'llmEndpointId' is not null or undefined
+    assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
+    const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
+        `{${"llmEndpointId"}}`,
+        encodeURIComponent(String(llmEndpointId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateLLMEndpointByIdRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {})
+        : validateLLMEndpointByIdRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AiChat(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAiChatRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChat(
+        requestParameters.workspaceId,
+        requestParameters.chatRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+ * @summary (BETA) Get Chat History
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AiChatHistory(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAiChatHistoryRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatHistoryResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatHistory(
+        requestParameters.workspaceId,
+        requestParameters.chatHistoryRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Combines multiple use cases such as search, create visualizations, ...
+ * @summary (BETA) Chat with AI
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AiChatStream(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAiChatStreamRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<object>> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatStream(
+        requestParameters.workspaceId,
+        requestParameters.chatRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns usage statistics of chat for a user in a workspace.
+ * @summary Get Chat Usage
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AiChatUsage(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAiChatUsageRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ChatUsageResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiChatUsage(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary (BETA) Semantic Search in Metadata
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AiSearch(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAiSearchRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SearchResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AiSearch(
+        requestParameters.workspaceId,
+        requestParameters.searchRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes anomaly detection.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AnomalyDetection(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AnomalyDetection(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.anomalyDetectionRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (EXPERIMENTAL) Gets anomalies.
+ * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_AnomalyDetectionResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnomalyDetectionResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_AnomalyDetectionResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_Clustering(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiClusteringRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_Clustering(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.clusteringRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (EXPERIMENTAL) Gets clustering result.
+ * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ClusteringResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiClusteringResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ClusteringResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ClusteringResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns a list of Users who created any object for this workspace
+ * @summary Get Analytics Catalog CreatedBy Users
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiCreatedByRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_CreatedBy(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiCreatedByRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnalyticsCatalogCreatedBy> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_CreatedBy(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Computes forecasted data points from the provided execution result and parameters.
+ * @summary (BETA) Smart functions - Forecast
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_Forecast(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiForecastRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SmartFunctionResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_Forecast(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.forecastRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * (BETA) Gets forecast result.
+ * @summary (BETA) Smart functions - Forecast Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ForecastResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiForecastResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ForecastResult> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ForecastResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns metadata quality issues detected by the platform linter.
+ * @summary Get Quality Issues
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_GetQualityIssues(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GetQualityIssuesResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_GetQualityIssues(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns the status of a quality issues calculation process identified by process ID.
+ * @summary Get Quality Issues Calculation Status
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiGetQualityIssuesCalculationStatusRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_GetQualityIssuesCalculationStatus(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<QualityIssuesCalculationStatusResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
+        requestParameters.workspaceId,
+        requestParameters.processId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns a list of Users who created any memory item for this workspace
+ * @summary Get AI Memory CreatedBy Users
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_MemoryCreatedByUsers(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<MemoryItemCreatedByUsers> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_MemoryCreatedByUsers(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns a list of available LLM Endpoints
+ * @summary Get Active LLM Endpoints for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ResolveLlmEndpoints(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResolvedLlmEndpoints> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Returns a list of tags for this workspace
+ * @summary Get Analytics Catalog Tags
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiTagsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_Tags(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiTagsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AnalyticsCatalogTags> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_Tags(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
+ * @summary Trigger Quality Issues Calculation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_TriggerQualityIssuesCalculation(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_TriggerQualityIssuesCalculation(
+        requestParameters.workspaceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Validates LLM endpoint with provided parameters.
+ * @summary Validate LLM Endpoint
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ValidateLLMEndpoint(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateLLMEndpointResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
+        requestParameters.validateLLMEndpointRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// SmartFunctionsApi Api FP
+/**
+ * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * @summary Validate LLM Endpoint By Id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ValidateLLMEndpointById(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateLLMEndpointResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById(
+        requestParameters.llmEndpointId,
+        requestParameters.validateLLMEndpointByIdRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * SmartFunctionsApi - interface
@@ -11623,9 +10894,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public aiChat(requestParameters: SmartFunctionsApiAiChatRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AiChat(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11640,9 +10915,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiAiChatHistoryRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AiChatHistory(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11657,9 +10936,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiAiChatStreamRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AiChatStream(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11671,9 +10954,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiChatUsage(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AiChatUsage(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11685,9 +10972,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AiSearch(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11702,15 +10993,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .anomalyDetection(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.anomalyDetectionRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AnomalyDetection(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11725,15 +11014,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .anomalyDetectionResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_AnomalyDetectionResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11745,15 +11032,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public clustering(requestParameters: SmartFunctionsApiClusteringRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .clustering(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.clusteringRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_Clustering(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11768,15 +11053,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiClusteringResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .clusteringResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_ClusteringResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11788,9 +11071,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public createdBy(requestParameters: SmartFunctionsApiCreatedByRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .createdBy(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_CreatedBy(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11802,15 +11089,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public forecast(requestParameters: SmartFunctionsApiForecastRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .forecast(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.forecastRequest,
-                requestParameters.skipCache,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_Forecast(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11825,15 +11110,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .forecastResult(
-                requestParameters.workspaceId,
-                requestParameters.resultId,
-                requestParameters.offset,
-                requestParameters.limit,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_ForecastResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11848,9 +11131,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiGetQualityIssuesRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .getQualityIssues(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_GetQualityIssues(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11865,13 +11152,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiGetQualityIssuesCalculationStatusRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .getQualityIssuesCalculationStatus(
-                requestParameters.workspaceId,
-                requestParameters.processId,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_GetQualityIssuesCalculationStatus(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11886,9 +11173,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .memoryCreatedByUsers(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_MemoryCreatedByUsers(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11903,9 +11194,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .resolveLlmEndpoints(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_ResolveLlmEndpoints(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11917,9 +11212,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @memberof SmartFunctionsApi
      */
     public tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApiFp(this.configuration)
-            .tags(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_Tags(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11934,9 +11233,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .triggerQualityIssuesCalculation(requestParameters.workspaceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_TriggerQualityIssuesCalculation(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11951,9 +11254,13 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_ValidateLLMEndpoint(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -11968,12 +11275,12 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
         requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .validateLLMEndpointById(
-                requestParameters.llmEndpointId,
-                requestParameters.validateLLMEndpointByIdRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return SmartFunctionsApi_ValidateLLMEndpointById(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }

@@ -1523,6 +1523,10 @@
         "value": "Link reflects current filters. Only accessible to users with dashboard access.",
         "comment": "Helper text shown below the share link input in the share dialog."
     },
+    "shareDialog.share.link.helperTextWithTabs": {
+        "value": "Link reflects current filters on active tab. Only accessible to users with dashboard access.",
+        "comment": "Helper text shown below the share link input in the share dialog."
+    },
     "shareDialog.share.link.title": {
         "value": "Link",
         "comment": "Title shown above the share link input in the share dialog."

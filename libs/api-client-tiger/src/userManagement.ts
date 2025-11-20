@@ -2,7 +2,7 @@
 
 import { AxiosInstance } from "axios";
 
-import { UserManagementApiFactory, UserManagementApiInterface } from "./generated/metadata-json-api/index.js";
+import { UserManagementApi, UserManagementApiInterface } from "./generated/metadata-json-api/index.js";
 
 export const tigerUserManagementClientFactory = (axios: AxiosInstance): UserManagementApiInterface =>
-    UserManagementApiFactory(undefined, "", axios);
+    new UserManagementApi(undefined, "", axios);

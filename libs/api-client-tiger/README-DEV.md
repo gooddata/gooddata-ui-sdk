@@ -4,6 +4,61 @@ Client is generated with [openapi-generator](https://github.com/OpenAPITools/ope
 
 It means the client is generated based on code on running backend api and stored and versioned in this repository.
 
+## Package Structure and Exports
+
+### API Endpoints Structure
+
+The package uses a modular structure with individual API endpoint modules located in `/src/api-endpoints/`. Each endpoint module provides tree-shakeable exports for specific API functionality:
+
+- **actions** - Workspace and organization management actions
+- **authActions** - Authentication and authorization actions
+- **automation** - Automation and workflow management
+- **entitiesObjects** - Metadata entities (dashboards, visualizations, filters, etc.)
+- **execution** - AFM execution and analysis APIs
+- **explain** - AFM explain functionality
+- **export** - Data export functionality
+- **genAI** - Generative AI features
+- **labelElements** - Label elements computation
+- **layout** - Declarative layout management
+- **profile** - User profile and feature flags
+- **result** - Execution result management
+- **scanModel** - Model scanning and analysis
+- **smartFunctions** - Smart functions and calculations
+- **userManagement** - User and group management
+- **validDescendants** - Valid descendants computation
+- **validObjects** - Valid objects computation
+
+### Export Methods
+
+The package exports API endpoints via individual entry points in `package.json` to enable tree-shaking:
+
+```json
+{
+  "exports": {
+    "./execution": "./esm/api-endpoints/execution/index.js",
+    "./entitiesObjects": "./esm/api-endpoints/entitiesObjects/index.js",
+    // ... other endpoints
+  }
+}
+```
+
+**Preferred usage** - Import from specific endpoint modules:
+
+```typescript
+// ✅ Tree-shakeable - only imports execution API
+import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/execution";
+import { tigerExecutionClientFactory } from "@gooddata/api-client-tiger/execution";
+```
+
+**Obsolete usage** - Main package exports are kept for backward compatibility only:
+
+```typescript
+// ❌ Not tree-shakeable - imports entire client
+import { tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
+```
+
+See [`src/api-endpoints/readme.md`](src/api-endpoints/readme.md) for more details about the endpoint structure and tree-shaking benefits.
+
 ## How to generate client
 
 1. You need to install Java runtime environment (because openapi-generator is a java based tool).
@@ -17,7 +72,7 @@ It means the client is generated based on code on running backend api and stored
 
 4. run `rush build`
 
-5. Sometimes you need to add missing exports to `/src/index.ts` and rerun `rush build`
+5. **Note**: Adding missing exports to `/src/index.ts` is obsolete and kept only for backward compatibility. For new code, add exports to the appropriate endpoint module in `/src/api-endpoints/{endpoint}/index.ts` instead. The main `/src/index.ts` exports are maintained for legacy support but should not be extended.
 
 ## License
 

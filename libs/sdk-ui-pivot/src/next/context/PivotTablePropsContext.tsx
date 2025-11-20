@@ -95,6 +95,7 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
             ...props.config,
             measureGroupDimension: props.config?.measureGroupDimension ?? "columns",
             columnHeadersPosition: props.config?.columnHeadersPosition ?? "top",
+            grandTotalsPosition: props.config?.grandTotalsPosition ?? "pinnedBottom",
             columnSizing: {
                 ...(props.config?.columnSizing ?? {}),
                 columnWidths: props.config?.columnSizing?.columnWidths ?? EMPTY_COLUMN_WIDTHS,

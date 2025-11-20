@@ -69,6 +69,12 @@ export type DefaultColumnWidthNext = "unset" | "autoresizeAll" | "viewport";
 // @public
 export function getPivotTableDimensions(buckets: IBucket[], isTransposed: boolean): IDimension[];
 
+// @public
+export type GrandTotalsPosition = "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+
+// @public
+export type GrandTotalsPositionNext = "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {
     // (undocumented)
@@ -322,6 +328,7 @@ export interface IPivotTableConfig {
     columnHeadersPosition?: ColumnHeadersPosition;
     columnSizing?: IColumnSizing;
     enableExecutionCancelling?: boolean;
+    grandTotalsPosition?: GrandTotalsPosition;
     groupRows?: boolean;
     maxHeight?: number;
     // @alpha
@@ -520,7 +527,7 @@ export type PivotTableNextColumnsSizingConfig = {
 };
 
 // @public
-export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextExperimentalConfig;
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextExperimentalConfig;
 
 // @public
 export interface PivotTableNextExecutionCancellingConfig {
@@ -535,6 +542,11 @@ export interface PivotTableNextExperimentalConfig {
 // @public
 export interface PivotTableNextFormattingConfig {
     separators?: ISeparators;
+}
+
+// @public
+export interface PivotTableNextGrandTotalsPositionConfig {
+    grandTotalsPosition?: GrandTotalsPositionNext;
 }
 
 // @public

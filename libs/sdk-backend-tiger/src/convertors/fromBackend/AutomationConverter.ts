@@ -3,7 +3,6 @@
 import { compact } from "lodash-es";
 
 import {
-    ArithmeticMeasureOperatorEnum,
     AutomationAutomationAlert,
     AutomationAutomationExternalRecipient,
     ComparisonWrapper,
@@ -374,7 +373,7 @@ const convertAlert = (
                         format: relative.measure.right.format ?? undefined,
                     },
                 },
-                ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
+                ...(relative.measure.operator === "CHANGE"
                     ? {
                           threshold: fixNumber(relative.threshold.value * 100),
                       }

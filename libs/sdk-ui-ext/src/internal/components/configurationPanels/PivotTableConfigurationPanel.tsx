@@ -22,6 +22,7 @@ import CellsControl from "../configurationControls/CellsControl.js";
 import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 import ConfigSection from "../configurationControls/ConfigSection.js";
+import GrandTotalsControl from "../configurationControls/GrandTotalsControl.js";
 import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
@@ -110,7 +111,14 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
                 />
 
                 {enableNewPivotTable ? (
-                    <CellsControl properties={properties} pushData={pushData} isDisabled={isLoading} />
+                    <>
+                        <CellsControl properties={properties} pushData={pushData} isDisabled={isLoading} />
+                        <GrandTotalsControl
+                            properties={properties}
+                            pushData={pushData}
+                            isDisabled={isLoading}
+                        />
+                    </>
                 ) : null}
             </ConfigDummySection>
         );

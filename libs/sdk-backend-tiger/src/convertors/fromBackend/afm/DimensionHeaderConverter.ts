@@ -45,20 +45,33 @@ type DateAttributeFormatProps = {
     };
 };
 
-const supportedSuffixes: string[] = Object.keys(JsonApiAttributeOutAttributesGranularityEnum)
-    .filter((item) => isNaN(Number(item)))
-    .map(
-        (key) =>
-            JsonApiAttributeOutAttributesGranularityEnum[
-                key as keyof typeof JsonApiAttributeOutAttributesGranularityEnum
-            ],
-    );
+//ivec investigate
+const supportedSuffixes: JsonApiAttributeOutAttributesGranularityEnum[] = [
+    "MINUTE",
+    "HOUR",
+    "DAY",
+    "WEEK",
+    "MONTH",
+    "QUARTER",
+    "YEAR",
+    "MINUTE_OF_HOUR",
+    "HOUR_OF_DAY",
+    "DAY_OF_WEEK",
+    "DAY_OF_MONTH",
+    "DAY_OF_QUARTER",
+    "DAY_OF_YEAR",
+    "WEEK_OF_YEAR",
+    "MONTH_OF_YEAR",
+    "QUARTER_OF_YEAR",
+];
 
 function getDateFormatProps(header: IDimensionItemDescriptor): DateAttributeFormatProps | undefined {
     if (
         !isAttributeDescriptor(header) ||
         !header.attributeHeader.granularity ||
-        !supportedSuffixes.includes(header.attributeHeader.granularity) ||
+        !supportedSuffixes.includes(
+            header.attributeHeader.granularity as JsonApiAttributeOutAttributesGranularityEnum,
+        ) ||
         !header.attributeHeader.format
     ) {
         return undefined;

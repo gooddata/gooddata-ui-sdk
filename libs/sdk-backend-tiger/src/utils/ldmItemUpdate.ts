@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { DeclarativeAttribute, DeclarativeFact, ITigerClient } from "@gooddata/api-client-tiger";
+import { DeclarativeAttribute, DeclarativeFact, ITigerClientBase } from "@gooddata/api-client-tiger";
+import { LayoutApi_GetLogicalModel, LayoutApi_SetLogicalModel } from "@gooddata/api-client-tiger/layout";
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { IMetadataObjectBase, IMetadataObjectIdentity, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -11,11 +12,11 @@ import { IMetadataObjectBase, IMetadataObjectIdentity, ObjRef, areObjRefsEqual }
  * very not performant and should be replaced as soon as possible.
  */
 export async function ldmItemUpdate(
-    client: ITigerClient,
+    client: ITigerClientBase,
     workspaceId: string,
     updated: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
 ) {
-    const result = await client.declarativeLayout.getLogicalModel({ workspaceId });
+    const result = await LayoutApi_GetLogicalModel(client.axios, client.basePath, { workspaceId });
 
     const { ldm } = result.data;
     if (!ldm) {
@@ -37,7 +38,7 @@ export async function ldmItemUpdate(
         throw new UnexpectedResponseError("Attribute or fact with provided ref not found", 404, updated.ref);
     }
 
-    await client.declarativeLayout.setLogicalModel({
+    await LayoutApi_SetLogicalModel(client.axios, client.basePath, {
         workspaceId,
         declarativeModel: {
             ldm,

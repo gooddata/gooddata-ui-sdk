@@ -1,5 +1,3 @@
-// (C) 2025 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -33,6 +31,7 @@ export interface AnalyzeCsvRequest {
      */
     analyzeRequests: Array<AnalyzeCsvRequestItem>;
 }
+
 /**
  * CSV analysis request.
  */
@@ -43,6 +42,7 @@ export interface AnalyzeCsvRequestItem {
     location: string;
     config?: AnalyzeCsvRequestItemConfig;
 }
+
 /**
  * CSV analysis request config.
  */
@@ -64,6 +64,7 @@ export interface AnalyzeCsvRequestItemConfig {
      */
     delimiters?: Array<string>;
 }
+
 /**
  * Describes the results of a CSV analysis of a single file.
  */
@@ -82,6 +83,7 @@ export interface AnalyzeCsvResponse {
     previewData: Array<Array<object>>;
     config?: AnalyzeCsvResponseConfig;
 }
+
 /**
  * Describes the result column.
  */
@@ -99,6 +101,7 @@ export interface AnalyzeCsvResponseColumn {
      */
     detectedDateFormats?: Array<string>;
 }
+
 /**
  * Config used to process the CSV file.
  */
@@ -107,6 +110,7 @@ export interface AnalyzeCsvResponseConfig {
     parseOptions?: CsvParseOptions;
     convertOptions?: CsvConvertOptions;
 }
+
 /**
  * Information about a period in time and how much cached data was removed.
  */
@@ -124,6 +128,7 @@ export interface CacheRemovalInterval {
      */
     removed: number;
 }
+
 /**
  * Result of scan of data source physical model.
  */
@@ -134,6 +139,7 @@ export interface CacheUsageData {
      */
     workspaceCacheUsages: { [key: string]: WorkspaceCacheUsage };
 }
+
 /**
  * Options for converting CSV files when reading.
  */
@@ -191,6 +197,7 @@ export interface CsvConvertOptions {
      */
     timestampParsers?: Array<string>;
 }
+
 /**
  * Information about a certain column in the table.
  */
@@ -208,6 +215,7 @@ export interface CsvConvertOptionsColumnType {
      */
     nullable?: boolean;
 }
+
 /**
  * Body of the CSV manifest.
  */
@@ -224,6 +232,7 @@ export interface CsvManifestBody {
      */
     read_method?: string;
 }
+
 /**
  * Options for parsing CSV files.
  */
@@ -253,6 +262,7 @@ export interface CsvParseOptions {
      */
     ignoreEmptyLines?: boolean;
 }
+
 /**
  * Options for reading CSV files.
  */
@@ -286,6 +296,7 @@ export interface CsvReadOptions {
      */
     encoding?: string;
 }
+
 /**
  * Request to delete files from the storage.
  */
@@ -295,6 +306,7 @@ export interface DeleteFilesRequest {
      */
     fileNames: Array<string>;
 }
+
 /**
  * File stored in GD Storage.
  */
@@ -317,11 +329,7 @@ export interface GdStorageFile {
     type: GdStorageFileTypeEnum;
 }
 
-export const GdStorageFileTypeEnum = {
-    CSV: "CSV",
-} as const;
-
-export type GdStorageFileTypeEnum = (typeof GdStorageFileTypeEnum)[keyof typeof GdStorageFileTypeEnum];
+export type GdStorageFileTypeEnum = "CSV";
 
 /**
  * GeoJSON Feature
@@ -332,6 +340,7 @@ export interface GeoJsonFeature {
     geometry?: GeoJsonGeometry;
     properties: { [key: string]: object };
 }
+
 /**
  * GeoJSON FeatureCollection
  */
@@ -340,6 +349,7 @@ export interface GeoJsonFeatureCollection {
     features: Array<GeoJsonFeature>;
     bbox?: Array<number>;
 }
+
 /**
  * GeoJSON Geometry
  */
@@ -347,6 +357,7 @@ export interface GeoJsonGeometry {
     type: string;
     coordinates: object;
 }
+
 /**
  * Request containing the information necessary to import one or more CSV files from the staging area.
  */
@@ -356,6 +367,7 @@ export interface ImportCsvRequest {
      */
     tables: Array<ImportCsvRequestTable>;
 }
+
 /**
  * Information about a particular table.
  */
@@ -366,6 +378,7 @@ export interface ImportCsvRequestTable {
     name: string;
     source: ImportCsvRequestTableSource;
 }
+
 /**
  * Information about source data for a particular table.
  */
@@ -376,6 +389,7 @@ export interface ImportCsvRequestTableSource {
     location: string;
     config: ImportCsvRequestTableSourceConfig;
 }
+
 /**
  * Config to use when accessing the data for executions, etc.
  */
@@ -388,6 +402,7 @@ export interface ImportCsvRequestTableSourceConfig {
      */
     columnDateFormats?: { [key: string]: string };
 }
+
 /**
  * Response containing the information about the imported CSV file.
  */
@@ -401,6 +416,7 @@ export interface ImportCsvResponse {
      */
     version: number;
 }
+
 /**
  * Settings for organization cache.
  */
@@ -410,6 +426,7 @@ export interface OrganizationCacheSettings {
      */
     extraCacheBudget: number;
 }
+
 /**
  * Data about the whole organization\'s cache usage.
  */
@@ -421,6 +438,7 @@ export interface OrganizationCacheUsage {
      */
     removalIntervals: Array<CacheRemovalInterval>;
 }
+
 /**
  * Current cache usage of the organization.
  */
@@ -438,6 +456,7 @@ export interface OrganizationCurrentCacheUsage {
      */
     removedSinceStart: number;
 }
+
 /**
  * Request to read the manifests of the specified CSV files.
  */
@@ -447,6 +466,7 @@ export interface ReadCsvFileManifestsRequest {
      */
     manifestRequests: Array<ReadCsvFileManifestsRequestItem>;
 }
+
 /**
  * Request to read the manifest of a single CSV file.
  */
@@ -460,6 +480,7 @@ export interface ReadCsvFileManifestsRequestItem {
      */
     version?: number;
 }
+
 /**
  * Describes the results of a CSV manifest read of a single file.
  */
@@ -474,6 +495,7 @@ export interface ReadCsvFileManifestsResponse {
     version: number;
     manifest: CsvManifestBody;
 }
+
 /**
  * Information related to the file uploaded to the staging area.
  */
@@ -483,6 +505,7 @@ export interface UploadFileResponse {
      */
     location: string;
 }
+
 /**
  * Cache settings for the workspace.
  */
@@ -492,6 +515,7 @@ export interface WorkspaceCacheSettings {
      */
     extraCache: number;
 }
+
 /**
  * Data about a particular workspace cache usage.
  */
@@ -503,6 +527,7 @@ export interface WorkspaceCacheUsage {
      */
     removalIntervals: Array<CacheRemovalInterval>;
 }
+
 /**
  * Current cache usage of the workspace.
  */
@@ -525,573 +550,536 @@ export interface WorkspaceCurrentCacheUsage {
     removedSinceStart: number;
 }
 
+// ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * ActionsApi - axios parameter creator
- * @export
+ * Analyzes CSV files at the given locations
+ * @summary Analyze CSV
+ * @param {AnalyzeCsvRequest} analyzeCsvRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {AnalyzeCsvRequest} analyzeCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyzeCsv: async (
-            analyzeCsvRequest: AnalyzeCsvRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'analyzeCsvRequest' is not null or undefined
-            assertParamExists("analyzeCsv", "analyzeCsvRequest", analyzeCsvRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeCsv`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof analyzeCsvRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(analyzeCsvRequest !== undefined ? analyzeCsvRequest : {})
-                : analyzeCsvRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        collectCacheUsage: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/actions/collectCacheUsage`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {string} dataSourceId
-         * @param {DeleteFilesRequest} deleteFilesRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFiles: async (
-            dataSourceId: string,
-            deleteFilesRequest: DeleteFilesRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
-            // verify required parameter 'deleteFilesRequest' is not null or undefined
-            assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof deleteFilesRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
-                : deleteFilesRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {string} dataSourceId
-         * @param {ImportCsvRequest} importCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        importCsv: async (
-            dataSourceId: string,
-            importCsvRequest: ImportCsvRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("importCsv", "dataSourceId", dataSourceId);
-            // verify required parameter 'importCsvRequest' is not null or undefined
-            assertParamExists("importCsv", "importCsvRequest", importCsvRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof importCsvRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(importCsvRequest !== undefined ? importCsvRequest : {})
-                : importCsvRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listFiles: async (dataSourceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("listFiles", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {string} dataSourceId
-         * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readCsvFileManifests: async (
-            dataSourceId: string,
-            readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("readCsvFileManifests", "dataSourceId", dataSourceId);
-            // verify required parameter 'readCsvFileManifestsRequest' is not null or undefined
-            assertParamExists(
-                "readCsvFileManifests",
-                "readCsvFileManifestsRequest",
-                readCsvFileManifestsRequest,
-            );
-            const localVarPath =
-                `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests`.replace(
-                    `{${"dataSourceId"}}`,
-                    encodeURIComponent(String(dataSourceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof readCsvFileManifestsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(readCsvFileManifestsRequest !== undefined ? readCsvFileManifestsRequest : {})
-                : readCsvFileManifestsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {File} file The file to upload.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stagingUpload: async (file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'file' is not null or undefined
-            assertParamExists("stagingUpload", "file", file);
-            const localVarPath = `/api/v1/actions/fileStorage/staging/upload`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            if (file !== undefined) {
-                localVarFormParams.append("file", file as any);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "multipart/form-data";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * ActionsApi - functional programming interface
- * @export
- */
-export const ActionsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {AnalyzeCsvRequest} analyzeCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async analyzeCsv(
-            analyzeCsvRequest: AnalyzeCsvRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AnalyzeCsvResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeCsv(analyzeCsvRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async collectCacheUsage(
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheUsageData>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.collectCacheUsage(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {string} dataSourceId
-         * @param {DeleteFilesRequest} deleteFilesRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteFiles(
-            dataSourceId: string,
-            deleteFilesRequest: DeleteFilesRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFiles(
-                dataSourceId,
-                deleteFilesRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {string} dataSourceId
-         * @param {ImportCsvRequest} importCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async importCsv(
-            dataSourceId: string,
-            importCsvRequest: ImportCsvRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImportCsvResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.importCsv(
-                dataSourceId,
-                importCsvRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listFiles(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GdStorageFile>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listFiles(dataSourceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {string} dataSourceId
-         * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async readCsvFileManifests(
-            dataSourceId: string,
-            readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReadCsvFileManifestsResponse>>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readCsvFileManifests(
-                dataSourceId,
-                readCsvFileManifestsRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {File} file The file to upload.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async stagingUpload(
-            file: File,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stagingUpload(file, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * ActionsApi - factory interface
- * @export
- */
-export const ActionsApiFactory = function (
+export async function ActionsApiAxiosParamCreator_AnalyzeCsv(
+    analyzeCsvRequest: AnalyzeCsvRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = ActionsApiFp(configuration);
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {ActionsApiAnalyzeCsvRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyzeCsv(
-            requestParameters: ActionsApiAnalyzeCsvRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<AnalyzeCsvResponse>> {
-            return localVarFp
-                .analyzeCsv(requestParameters.analyzeCsvRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData> {
-            return localVarFp.collectCacheUsage(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {ActionsApiDeleteFilesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFiles(
-            requestParameters: ActionsApiDeleteFilesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
-            return localVarFp
-                .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        importCsv(
-            requestParameters: ActionsApiImportCsvRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<ImportCsvResponse>> {
-            return localVarFp
-                .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {ActionsApiListFilesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listFiles(
-            requestParameters: ActionsApiListFilesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<GdStorageFile>> {
-            return localVarFp
-                .listFiles(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {ActionsApiReadCsvFileManifestsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readCsvFileManifests(
-            requestParameters: ActionsApiReadCsvFileManifestsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<ReadCsvFileManifestsResponse>> {
-            return localVarFp
-                .readCsvFileManifests(
-                    requestParameters.dataSourceId,
-                    requestParameters.readCsvFileManifestsRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stagingUpload(
-            requestParameters: ActionsApiStagingUploadRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<UploadFileResponse> {
-            return localVarFp
-                .stagingUpload(requestParameters.file, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'analyzeCsvRequest' is not null or undefined
+    assertParamExists("analyzeCsv", "analyzeCsvRequest", analyzeCsvRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeCsv`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof analyzeCsvRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeCsvRequest !== undefined ? analyzeCsvRequest : {})
+        : analyzeCsvRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
+ * @summary Collect data about the current cache usage
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CollectCacheUsage(
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/collectCacheUsage`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Delete the files in the given data source.
+ * @summary Delete datasource files
+ * @param {string} dataSourceId
+ * @param {DeleteFilesRequest} deleteFilesRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_DeleteFiles(
+    dataSourceId: string,
+    deleteFilesRequest: DeleteFilesRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
+    // verify required parameter 'deleteFilesRequest' is not null or undefined
+    assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof deleteFilesRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
+        : deleteFilesRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Import the CSV files at the given locations in the staging area to the final location.
+ * @summary Import CSV
+ * @param {string} dataSourceId
+ * @param {ImportCsvRequest} importCsvRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ImportCsv(
+    dataSourceId: string,
+    importCsvRequest: ImportCsvRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("importCsv", "dataSourceId", dataSourceId);
+    // verify required parameter 'importCsvRequest' is not null or undefined
+    assertParamExists("importCsv", "importCsvRequest", importCsvRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof importCsvRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(importCsvRequest !== undefined ? importCsvRequest : {})
+        : importCsvRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * List all the files in the given data source.
+ * @summary List datasource files
+ * @param {string} dataSourceId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ListFiles(
+    dataSourceId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("listFiles", "dataSourceId", dataSourceId);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Read the manifests of the CSV files in the given data source.
+ * @summary Read CSV file manifests
+ * @param {string} dataSourceId
+ * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ReadCsvFileManifests(
+    dataSourceId: string,
+    readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("readCsvFileManifests", "dataSourceId", dataSourceId);
+    // verify required parameter 'readCsvFileManifestsRequest' is not null or undefined
+    assertParamExists("readCsvFileManifests", "readCsvFileManifestsRequest", readCsvFileManifestsRequest);
+    const localVarPath =
+        `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests`.replace(
+            `{${"dataSourceId"}}`,
+            encodeURIComponent(String(dataSourceId)),
+        );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof readCsvFileManifestsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(readCsvFileManifestsRequest !== undefined ? readCsvFileManifestsRequest : {})
+        : readCsvFileManifestsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Provides a location for uploading staging files.
+ * @summary Upload a file to the staging area
+ * @param {File} file The file to upload.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_StagingUpload(
+    file: File,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'file' is not null or undefined
+    assertParamExists("stagingUpload", "file", file);
+    const localVarPath = `/api/v1/actions/fileStorage/staging/upload`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+    if (file !== undefined) {
+        localVarFormParams.append("file", file as any);
+    }
+
+    localVarHeaderParameter["Content-Type"] = "multipart/form-data";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi Api FP
+/**
+ * Analyzes CSV files at the given locations
+ * @summary Analyze CSV
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiAnalyzeCsvRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_AnalyzeCsv(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiAnalyzeCsvRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AnalyzeCsvResponse>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_AnalyzeCsv(
+        requestParameters.analyzeCsvRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
+ * @summary Collect data about the current cache usage
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CollectCacheUsage(
+    axios: AxiosInstance,
+    basePath: string,
+
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<CacheUsageData> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CollectCacheUsage(
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Delete the files in the given data source.
+ * @summary Delete datasource files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiDeleteFilesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_DeleteFiles(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiDeleteFilesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_DeleteFiles(
+        requestParameters.dataSourceId,
+        requestParameters.deleteFilesRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Import the CSV files at the given locations in the staging area to the final location.
+ * @summary Import CSV
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ImportCsv(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiImportCsvRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ImportCsvResponse>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ImportCsv(
+        requestParameters.dataSourceId,
+        requestParameters.importCsvRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * List all the files in the given data source.
+ * @summary List datasource files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiListFilesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ListFiles(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiListFilesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<GdStorageFile>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ListFiles(
+        requestParameters.dataSourceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Read the manifests of the CSV files in the given data source.
+ * @summary Read CSV file manifests
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiReadCsvFileManifestsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ReadCsvFileManifests(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiReadCsvFileManifestsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ReadCsvFileManifestsResponse>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ReadCsvFileManifests(
+        requestParameters.dataSourceId,
+        requestParameters.readCsvFileManifestsRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * Provides a location for uploading staging files.
+ * @summary Upload a file to the staging area
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_StagingUpload(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiStagingUploadRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<UploadFileResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_StagingUpload(
+        requestParameters.file,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * ActionsApi - interface
@@ -1308,9 +1296,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .analyzeCsv(requestParameters.analyzeCsvRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_AnalyzeCsv(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1321,9 +1313,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public collectCacheUsage(options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .collectCacheUsage(options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_CollectCacheUsage(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
@@ -1335,9 +1325,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_DeleteFiles(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1349,9 +1343,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ImportCsv(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1363,9 +1361,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .listFiles(requestParameters.dataSourceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ListFiles(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1380,13 +1382,13 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         requestParameters: ActionsApiReadCsvFileManifestsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .readCsvFileManifests(
-                requestParameters.dataSourceId,
-                requestParameters.readCsvFileManifestsRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_ReadCsvFileManifests(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 
     /**
@@ -1398,96 +1400,76 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @memberof ActionsApi
      */
     public stagingUpload(requestParameters: ActionsApiStagingUploadRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .stagingUpload(requestParameters.file, options)
-            .then((request) => request(this.axios, this.basePath));
+        return ActionsApi_StagingUpload(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// CacheUsageApi FP - CacheUsageApiAxiosParamCreator
 /**
- * CacheUsageApi - axios parameter creator
- * @export
+ * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
+ * @summary Collect data about the current cache usage
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const CacheUsageApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        collectCacheUsage: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/actions/collectCacheUsage`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * CacheUsageApi - functional programming interface
- * @export
- */
-export const CacheUsageApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = CacheUsageApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async collectCacheUsage(
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CacheUsageData>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.collectCacheUsage(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * CacheUsageApi - factory interface
- * @export
- */
-export const CacheUsageApiFactory = function (
+export async function CacheUsageApiAxiosParamCreator_CollectCacheUsage(
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = CacheUsageApiFp(configuration);
-    return {
-        /**
-         * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
-         * @summary Collect data about the current cache usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData> {
-            return localVarFp.collectCacheUsage(options).then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/actions/collectCacheUsage`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// CacheUsageApi Api FP
+/**
+ * Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.
+ * @summary Collect data about the current cache usage
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function CacheUsageApi_CollectCacheUsage(
+    axios: AxiosInstance,
+    basePath: string,
+
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<CacheUsageData> {
+    const localVarAxiosArgs = await CacheUsageApiAxiosParamCreator_CollectCacheUsage(
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * CacheUsageApi - interface
@@ -1520,118 +1502,84 @@ export class CacheUsageApi extends BaseAPI implements CacheUsageApiInterface {
      * @memberof CacheUsageApi
      */
     public collectCacheUsage(options?: AxiosRequestConfig) {
-        return CacheUsageApiFp(this.configuration)
-            .collectCacheUsage(options)
-            .then((request) => request(this.axios, this.basePath));
+        return CacheUsageApi_CollectCacheUsage(this.axios, this.basePath, options, this.configuration);
     }
 }
 
+// DataSourceFilesAnalysisApi FP - DataSourceFilesAnalysisApiAxiosParamCreator
 /**
- * DataSourceFilesAnalysisApi - axios parameter creator
- * @export
+ * Analyzes CSV files at the given locations
+ * @summary Analyze CSV
+ * @param {AnalyzeCsvRequest} analyzeCsvRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceFilesAnalysisApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {AnalyzeCsvRequest} analyzeCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyzeCsv: async (
-            analyzeCsvRequest: AnalyzeCsvRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'analyzeCsvRequest' is not null or undefined
-            assertParamExists("analyzeCsv", "analyzeCsvRequest", analyzeCsvRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeCsv`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof analyzeCsvRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(analyzeCsvRequest !== undefined ? analyzeCsvRequest : {})
-                : analyzeCsvRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceFilesAnalysisApi - functional programming interface
- * @export
- */
-export const DataSourceFilesAnalysisApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceFilesAnalysisApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {AnalyzeCsvRequest} analyzeCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async analyzeCsv(
-            analyzeCsvRequest: AnalyzeCsvRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AnalyzeCsvResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeCsv(analyzeCsvRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceFilesAnalysisApi - factory interface
- * @export
- */
-export const DataSourceFilesAnalysisApiFactory = function (
+export async function DataSourceFilesAnalysisApiAxiosParamCreator_AnalyzeCsv(
+    analyzeCsvRequest: AnalyzeCsvRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceFilesAnalysisApiFp(configuration);
-    return {
-        /**
-         * Analyzes CSV files at the given locations
-         * @summary Analyze CSV
-         * @param {DataSourceFilesAnalysisApiAnalyzeCsvRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyzeCsv(
-            requestParameters: DataSourceFilesAnalysisApiAnalyzeCsvRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<AnalyzeCsvResponse>> {
-            return localVarFp
-                .analyzeCsv(requestParameters.analyzeCsvRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'analyzeCsvRequest' is not null or undefined
+    assertParamExists("analyzeCsv", "analyzeCsvRequest", analyzeCsvRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/staging/analyzeCsv`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof analyzeCsvRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeCsvRequest !== undefined ? analyzeCsvRequest : {})
+        : analyzeCsvRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceFilesAnalysisApi Api FP
+/**
+ * Analyzes CSV files at the given locations
+ * @summary Analyze CSV
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesAnalysisApiAnalyzeCsvRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesAnalysisApi_AnalyzeCsv(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceFilesAnalysisApiAnalyzeCsvRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AnalyzeCsvResponse>> {
+    const localVarAxiosArgs = await DataSourceFilesAnalysisApiAxiosParamCreator_AnalyzeCsv(
+        requestParameters.analyzeCsvRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceFilesAnalysisApi - interface
@@ -1686,131 +1634,98 @@ export class DataSourceFilesAnalysisApi extends BaseAPI implements DataSourceFil
         requestParameters: DataSourceFilesAnalysisApiAnalyzeCsvRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceFilesAnalysisApiFp(this.configuration)
-            .analyzeCsv(requestParameters.analyzeCsvRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceFilesAnalysisApi_AnalyzeCsv(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// DataSourceFilesDeletionApi FP - DataSourceFilesDeletionApiAxiosParamCreator
 /**
- * DataSourceFilesDeletionApi - axios parameter creator
- * @export
+ * Delete the files in the given data source.
+ * @summary Delete datasource files
+ * @param {string} dataSourceId
+ * @param {DeleteFilesRequest} deleteFilesRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceFilesDeletionApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {string} dataSourceId
-         * @param {DeleteFilesRequest} deleteFilesRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFiles: async (
-            dataSourceId: string,
-            deleteFilesRequest: DeleteFilesRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
-            // verify required parameter 'deleteFilesRequest' is not null or undefined
-            assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof deleteFilesRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
-                : deleteFilesRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceFilesDeletionApi - functional programming interface
- * @export
- */
-export const DataSourceFilesDeletionApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceFilesDeletionApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {string} dataSourceId
-         * @param {DeleteFilesRequest} deleteFilesRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteFiles(
-            dataSourceId: string,
-            deleteFilesRequest: DeleteFilesRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFiles(
-                dataSourceId,
-                deleteFilesRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceFilesDeletionApi - factory interface
- * @export
- */
-export const DataSourceFilesDeletionApiFactory = function (
+export async function DataSourceFilesDeletionApiAxiosParamCreator_DeleteFiles(
+    dataSourceId: string,
+    deleteFilesRequest: DeleteFilesRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceFilesDeletionApiFp(configuration);
-    return {
-        /**
-         * Delete the files in the given data source.
-         * @summary Delete datasource files
-         * @param {DataSourceFilesDeletionApiDeleteFilesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFiles(
-            requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
-            return localVarFp
-                .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
+    // verify required parameter 'deleteFilesRequest' is not null or undefined
+    assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof deleteFilesRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
+        : deleteFilesRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceFilesDeletionApi Api FP
+/**
+ * Delete the files in the given data source.
+ * @summary Delete datasource files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesDeletionApiDeleteFilesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesDeletionApi_DeleteFiles(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await DataSourceFilesDeletionApiAxiosParamCreator_DeleteFiles(
+        requestParameters.dataSourceId,
+        requestParameters.deleteFilesRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceFilesDeletionApi - interface
@@ -1872,131 +1787,98 @@ export class DataSourceFilesDeletionApi extends BaseAPI implements DataSourceFil
         requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceFilesDeletionApiFp(this.configuration)
-            .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceFilesDeletionApi_DeleteFiles(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// DataSourceFilesImportApi FP - DataSourceFilesImportApiAxiosParamCreator
 /**
- * DataSourceFilesImportApi - axios parameter creator
- * @export
+ * Import the CSV files at the given locations in the staging area to the final location.
+ * @summary Import CSV
+ * @param {string} dataSourceId
+ * @param {ImportCsvRequest} importCsvRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceFilesImportApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {string} dataSourceId
-         * @param {ImportCsvRequest} importCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        importCsv: async (
-            dataSourceId: string,
-            importCsvRequest: ImportCsvRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("importCsv", "dataSourceId", dataSourceId);
-            // verify required parameter 'importCsvRequest' is not null or undefined
-            assertParamExists("importCsv", "importCsvRequest", importCsvRequest);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof importCsvRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(importCsvRequest !== undefined ? importCsvRequest : {})
-                : importCsvRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceFilesImportApi - functional programming interface
- * @export
- */
-export const DataSourceFilesImportApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceFilesImportApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {string} dataSourceId
-         * @param {ImportCsvRequest} importCsvRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async importCsv(
-            dataSourceId: string,
-            importCsvRequest: ImportCsvRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImportCsvResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.importCsv(
-                dataSourceId,
-                importCsvRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceFilesImportApi - factory interface
- * @export
- */
-export const DataSourceFilesImportApiFactory = function (
+export async function DataSourceFilesImportApiAxiosParamCreator_ImportCsv(
+    dataSourceId: string,
+    importCsvRequest: ImportCsvRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceFilesImportApiFp(configuration);
-    return {
-        /**
-         * Import the CSV files at the given locations in the staging area to the final location.
-         * @summary Import CSV
-         * @param {DataSourceFilesImportApiImportCsvRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        importCsv(
-            requestParameters: DataSourceFilesImportApiImportCsvRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<ImportCsvResponse>> {
-            return localVarFp
-                .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("importCsv", "dataSourceId", dataSourceId);
+    // verify required parameter 'importCsvRequest' is not null or undefined
+    assertParamExists("importCsv", "importCsvRequest", importCsvRequest);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof importCsvRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(importCsvRequest !== undefined ? importCsvRequest : {})
+        : importCsvRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceFilesImportApi Api FP
+/**
+ * Import the CSV files at the given locations in the staging area to the final location.
+ * @summary Import CSV
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesImportApiImportCsvRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesImportApi_ImportCsv(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceFilesImportApiImportCsvRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ImportCsvResponse>> {
+    const localVarAxiosArgs = await DataSourceFilesImportApiAxiosParamCreator_ImportCsv(
+        requestParameters.dataSourceId,
+        requestParameters.importCsvRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceFilesImportApi - interface
@@ -2058,110 +1940,85 @@ export class DataSourceFilesImportApi extends BaseAPI implements DataSourceFiles
         requestParameters: DataSourceFilesImportApiImportCsvRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceFilesImportApiFp(this.configuration)
-            .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceFilesImportApi_ImportCsv(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// DataSourceFilesListingApi FP - DataSourceFilesListingApiAxiosParamCreator
 /**
- * DataSourceFilesListingApi - axios parameter creator
- * @export
+ * List all the files in the given data source.
+ * @summary List datasource files
+ * @param {string} dataSourceId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceFilesListingApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listFiles: async (dataSourceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("listFiles", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceFilesListingApi - functional programming interface
- * @export
- */
-export const DataSourceFilesListingApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceFilesListingApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listFiles(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GdStorageFile>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listFiles(dataSourceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceFilesListingApi - factory interface
- * @export
- */
-export const DataSourceFilesListingApiFactory = function (
+export async function DataSourceFilesListingApiAxiosParamCreator_ListFiles(
+    dataSourceId: string,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceFilesListingApiFp(configuration);
-    return {
-        /**
-         * List all the files in the given data source.
-         * @summary List datasource files
-         * @param {DataSourceFilesListingApiListFilesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listFiles(
-            requestParameters: DataSourceFilesListingApiListFilesRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<GdStorageFile>> {
-            return localVarFp
-                .listFiles(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("listFiles", "dataSourceId", dataSourceId);
+    const localVarPath = `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles`.replace(
+        `{${"dataSourceId"}}`,
+        encodeURIComponent(String(dataSourceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceFilesListingApi Api FP
+/**
+ * List all the files in the given data source.
+ * @summary List datasource files
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesListingApiListFilesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesListingApi_ListFiles(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceFilesListingApiListFilesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<GdStorageFile>> {
+    const localVarAxiosArgs = await DataSourceFilesListingApiAxiosParamCreator_ListFiles(
+        requestParameters.dataSourceId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceFilesListingApi - interface
@@ -2216,142 +2073,99 @@ export class DataSourceFilesListingApi extends BaseAPI implements DataSourceFile
         requestParameters: DataSourceFilesListingApiListFilesRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceFilesListingApiFp(this.configuration)
-            .listFiles(requestParameters.dataSourceId, options)
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceFilesListingApi_ListFiles(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// DataSourceFilesManifestReadApi FP - DataSourceFilesManifestReadApiAxiosParamCreator
 /**
- * DataSourceFilesManifestReadApi - axios parameter creator
- * @export
+ * Read the manifests of the CSV files in the given data source.
+ * @summary Read CSV file manifests
+ * @param {string} dataSourceId
+ * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceFilesManifestReadApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {string} dataSourceId
-         * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readCsvFileManifests: async (
-            dataSourceId: string,
-            readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("readCsvFileManifests", "dataSourceId", dataSourceId);
-            // verify required parameter 'readCsvFileManifestsRequest' is not null or undefined
-            assertParamExists(
-                "readCsvFileManifests",
-                "readCsvFileManifestsRequest",
-                readCsvFileManifestsRequest,
-            );
-            const localVarPath =
-                `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests`.replace(
-                    `{${"dataSourceId"}}`,
-                    encodeURIComponent(String(dataSourceId)),
-                );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof readCsvFileManifestsRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(readCsvFileManifestsRequest !== undefined ? readCsvFileManifestsRequest : {})
-                : readCsvFileManifestsRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceFilesManifestReadApi - functional programming interface
- * @export
- */
-export const DataSourceFilesManifestReadApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceFilesManifestReadApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {string} dataSourceId
-         * @param {ReadCsvFileManifestsRequest} readCsvFileManifestsRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async readCsvFileManifests(
-            dataSourceId: string,
-            readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReadCsvFileManifestsResponse>>
-        > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readCsvFileManifests(
-                dataSourceId,
-                readCsvFileManifestsRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceFilesManifestReadApi - factory interface
- * @export
- */
-export const DataSourceFilesManifestReadApiFactory = function (
+export async function DataSourceFilesManifestReadApiAxiosParamCreator_ReadCsvFileManifests(
+    dataSourceId: string,
+    readCsvFileManifestsRequest: ReadCsvFileManifestsRequest,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceFilesManifestReadApiFp(configuration);
-    return {
-        /**
-         * Read the manifests of the CSV files in the given data source.
-         * @summary Read CSV file manifests
-         * @param {DataSourceFilesManifestReadApiReadCsvFileManifestsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readCsvFileManifests(
-            requestParameters: DataSourceFilesManifestReadApiReadCsvFileManifestsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<ReadCsvFileManifestsResponse>> {
-            return localVarFp
-                .readCsvFileManifests(
-                    requestParameters.dataSourceId,
-                    requestParameters.readCsvFileManifestsRequest,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists("readCsvFileManifests", "dataSourceId", dataSourceId);
+    // verify required parameter 'readCsvFileManifestsRequest' is not null or undefined
+    assertParamExists("readCsvFileManifests", "readCsvFileManifestsRequest", readCsvFileManifestsRequest);
+    const localVarPath =
+        `/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests`.replace(
+            `{${"dataSourceId"}}`,
+            encodeURIComponent(String(dataSourceId)),
+        );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    const needsSerialization =
+        typeof readCsvFileManifestsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(readCsvFileManifestsRequest !== undefined ? readCsvFileManifestsRequest : {})
+        : readCsvFileManifestsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceFilesManifestReadApi Api FP
+/**
+ * Read the manifests of the CSV files in the given data source.
+ * @summary Read CSV file manifests
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceFilesManifestReadApiReadCsvFileManifestsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceFilesManifestReadApi_ReadCsvFileManifests(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceFilesManifestReadApiReadCsvFileManifestsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ReadCsvFileManifestsResponse>> {
+    const localVarAxiosArgs = await DataSourceFilesManifestReadApiAxiosParamCreator_ReadCsvFileManifests(
+        requestParameters.dataSourceId,
+        requestParameters.readCsvFileManifestsRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceFilesManifestReadApi - interface
@@ -2416,119 +2230,90 @@ export class DataSourceFilesManifestReadApi
         requestParameters: DataSourceFilesManifestReadApiReadCsvFileManifestsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceFilesManifestReadApiFp(this.configuration)
-            .readCsvFileManifests(
-                requestParameters.dataSourceId,
-                requestParameters.readCsvFileManifestsRequest,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceFilesManifestReadApi_ReadCsvFileManifests(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// DataSourceStagingLocationApi FP - DataSourceStagingLocationApiAxiosParamCreator
 /**
- * DataSourceStagingLocationApi - axios parameter creator
- * @export
+ * Provides a location for uploading staging files.
+ * @summary Upload a file to the staging area
+ * @param {File} file The file to upload.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const DataSourceStagingLocationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {File} file The file to upload.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stagingUpload: async (file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'file' is not null or undefined
-            assertParamExists("stagingUpload", "file", file);
-            const localVarPath = `/api/v1/actions/fileStorage/staging/upload`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            if (file !== undefined) {
-                localVarFormParams.append("file", file as any);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "multipart/form-data";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * DataSourceStagingLocationApi - functional programming interface
- * @export
- */
-export const DataSourceStagingLocationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataSourceStagingLocationApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {File} file The file to upload.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async stagingUpload(
-            file: File,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stagingUpload(file, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * DataSourceStagingLocationApi - factory interface
- * @export
- */
-export const DataSourceStagingLocationApiFactory = function (
+export async function DataSourceStagingLocationApiAxiosParamCreator_StagingUpload(
+    file: File,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = DataSourceStagingLocationApiFp(configuration);
-    return {
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Upload a file to the staging area
-         * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stagingUpload(
-            requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<UploadFileResponse> {
-            return localVarFp
-                .stagingUpload(requestParameters.file, options)
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'file' is not null or undefined
+    assertParamExists("stagingUpload", "file", file);
+    const localVarPath = `/api/v1/actions/fileStorage/staging/upload`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+    if (file !== undefined) {
+        localVarFormParams.append("file", file as any);
+    }
+
+    localVarHeaderParameter["Content-Type"] = "multipart/form-data";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// DataSourceStagingLocationApi Api FP
+/**
+ * Provides a location for uploading staging files.
+ * @summary Upload a file to the staging area
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceStagingLocationApi_StagingUpload(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<UploadFileResponse> {
+    const localVarAxiosArgs = await DataSourceStagingLocationApiAxiosParamCreator_StagingUpload(
+        requestParameters.file,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * DataSourceStagingLocationApi - interface
@@ -2583,169 +2368,120 @@ export class DataSourceStagingLocationApi extends BaseAPI implements DataSourceS
         requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
         options?: AxiosRequestConfig,
     ) {
-        return DataSourceStagingLocationApiFp(this.configuration)
-            .stagingUpload(requestParameters.file, options)
-            .then((request) => request(this.axios, this.basePath));
+        return DataSourceStagingLocationApi_StagingUpload(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }
 
+// OGCAPIFeaturesApi FP - OGCAPIFeaturesApiAxiosParamCreator
 /**
- * OGCAPIFeaturesApi - axios parameter creator
- * @export
+ * Retrieve features from a GeoParquet collection as GeoJSON
+ * @summary Get collection features
+ * @param {string} collectionId Collection identifier
+ * @param {number} [limit] Maximum number of features to return
+ * @param {string} [bbox] Bounding box filter (minx,miny,maxx,maxy)
+ * @param {string} [datetime] Datetime filter (ISO 8601)
+ * @param {string} [matchingProperty] Property to match against collection features
+ * @param {Array<string>} [values] List of values to filter features by
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
  */
-export const OGCAPIFeaturesApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Retrieve features from a GeoParquet collection as GeoJSON
-         * @summary Get collection features
-         * @param {string} collectionId Collection identifier
-         * @param {number} [limit] Maximum number of features to return
-         * @param {string} [bbox] Bounding box filter (minx,miny,maxx,maxy)
-         * @param {string} [datetime] Datetime filter (ISO 8601)
-         * @param {string} [matchingProperty] Property to match against collection features
-         * @param {Array<string>} [values] List of values to filter features by
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCollectionItems: async (
-            collectionId: string,
-            limit?: number,
-            bbox?: string,
-            datetime?: string,
-            matchingProperty?: string,
-            values?: Array<string>,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'collectionId' is not null or undefined
-            assertParamExists("getCollectionItems", "collectionId", collectionId);
-            const localVarPath = `/api/v1/location/collections/{collectionId}/items`.replace(
-                `{${"collectionId"}}`,
-                encodeURIComponent(String(collectionId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
-            }
-
-            if (bbox !== undefined) {
-                localVarQueryParameter["bbox"] = bbox;
-            }
-
-            if (datetime !== undefined) {
-                localVarQueryParameter["datetime"] = datetime;
-            }
-
-            if (matchingProperty !== undefined) {
-                localVarQueryParameter["matchingProperty"] = matchingProperty;
-            }
-
-            if (values) {
-                localVarQueryParameter["values"] = values;
-            }
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    };
-};
-
-/**
- * OGCAPIFeaturesApi - functional programming interface
- * @export
- */
-export const OGCAPIFeaturesApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = OGCAPIFeaturesApiAxiosParamCreator(configuration);
-    return {
-        /**
-         * Retrieve features from a GeoParquet collection as GeoJSON
-         * @summary Get collection features
-         * @param {string} collectionId Collection identifier
-         * @param {number} [limit] Maximum number of features to return
-         * @param {string} [bbox] Bounding box filter (minx,miny,maxx,maxy)
-         * @param {string} [datetime] Datetime filter (ISO 8601)
-         * @param {string} [matchingProperty] Property to match against collection features
-         * @param {Array<string>} [values] List of values to filter features by
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCollectionItems(
-            collectionId: string,
-            limit?: number,
-            bbox?: string,
-            datetime?: string,
-            matchingProperty?: string,
-            values?: Array<string>,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeoJsonFeatureCollection>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCollectionItems(
-                collectionId,
-                limit,
-                bbox,
-                datetime,
-                matchingProperty,
-                values,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    };
-};
-
-/**
- * OGCAPIFeaturesApi - factory interface
- * @export
- */
-export const OGCAPIFeaturesApiFactory = function (
+export async function OGCAPIFeaturesApiAxiosParamCreator_GetCollectionItems(
+    collectionId: string,
+    limit?: number,
+    bbox?: string,
+    datetime?: string,
+    matchingProperty?: string,
+    values?: Array<string>,
+    options: AxiosRequestConfig = {},
     configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    const localVarFp = OGCAPIFeaturesApiFp(configuration);
-    return {
-        /**
-         * Retrieve features from a GeoParquet collection as GeoJSON
-         * @summary Get collection features
-         * @param {OGCAPIFeaturesApiGetCollectionItemsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCollectionItems(
-            requestParameters: OGCAPIFeaturesApiGetCollectionItemsRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<GeoJsonFeatureCollection> {
-            return localVarFp
-                .getCollectionItems(
-                    requestParameters.collectionId,
-                    requestParameters.limit,
-                    requestParameters.bbox,
-                    requestParameters.datetime,
-                    requestParameters.matchingProperty,
-                    requestParameters.values,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
+): Promise<RequestArgs> {
+    // verify required parameter 'collectionId' is not null or undefined
+    assertParamExists("getCollectionItems", "collectionId", collectionId);
+    const localVarPath = `/api/v1/location/collections/{collectionId}/items`.replace(
+        `{${"collectionId"}}`,
+        encodeURIComponent(String(collectionId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    if (bbox !== undefined) {
+        localVarQueryParameter["bbox"] = bbox;
+    }
+
+    if (datetime !== undefined) {
+        localVarQueryParameter["datetime"] = datetime;
+    }
+
+    if (matchingProperty !== undefined) {
+        localVarQueryParameter["matchingProperty"] = matchingProperty;
+    }
+
+    if (values) {
+        localVarQueryParameter["values"] = values;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
     };
-};
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// OGCAPIFeaturesApi Api FP
+/**
+ * Retrieve features from a GeoParquet collection as GeoJSON
+ * @summary Get collection features
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {OGCAPIFeaturesApiGetCollectionItemsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function OGCAPIFeaturesApi_GetCollectionItems(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: OGCAPIFeaturesApiGetCollectionItemsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GeoJsonFeatureCollection> {
+    const localVarAxiosArgs = await OGCAPIFeaturesApiAxiosParamCreator_GetCollectionItems(
+        requestParameters.collectionId,
+        requestParameters.limit,
+        requestParameters.bbox,
+        requestParameters.datetime,
+        requestParameters.matchingProperty,
+        requestParameters.values,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 /**
  * OGCAPIFeaturesApi - interface
@@ -2835,16 +2571,12 @@ export class OGCAPIFeaturesApi extends BaseAPI implements OGCAPIFeaturesApiInter
         requestParameters: OGCAPIFeaturesApiGetCollectionItemsRequest,
         options?: AxiosRequestConfig,
     ) {
-        return OGCAPIFeaturesApiFp(this.configuration)
-            .getCollectionItems(
-                requestParameters.collectionId,
-                requestParameters.limit,
-                requestParameters.bbox,
-                requestParameters.datetime,
-                requestParameters.matchingProperty,
-                requestParameters.values,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
+        return OGCAPIFeaturesApi_GetCollectionItems(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
     }
 }

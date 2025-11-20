@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 
+import { GenAiApi_CreatedBy, GenAiApi_Tags } from "@gooddata/api-client-tiger/genAI";
 import type {
     IAnalyticsCatalogCreatedBy,
     IAnalyticsCatalogService,
@@ -24,14 +25,14 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
      */
     async getTags(): Promise<IAnalyticsCatalogTags> {
         const response = await this.authCall((client) =>
-            client.genAI.tags({ workspaceId: this.workspaceId }),
+            GenAiApi_Tags(client.axios, client.basePath, { workspaceId: this.workspaceId }),
         );
         return response.data;
     }
 
     async getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy> {
         const response = await this.authCall((client) =>
-            client.genAI.createdBy({ workspaceId: this.workspaceId }),
+            GenAiApi_CreatedBy(client.axios, client.basePath, { workspaceId: this.workspaceId }),
         );
         return convertAnalyticsCatalogCreatedBy(response.data);
     }

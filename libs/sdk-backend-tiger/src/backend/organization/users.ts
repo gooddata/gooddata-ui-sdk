@@ -1,6 +1,22 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { ActionsUtilities } from "@gooddata/api-client-tiger";
+import {
+    EntitiesApi_CreateEntityUserGroups,
+    EntitiesApi_CreateEntityUsers,
+    EntitiesApi_GetAllEntitiesUsers,
+    EntitiesApi_GetEntityUserGroups,
+    EntitiesApi_GetEntityUsers,
+    EntitiesApi_PatchEntityUserGroups,
+    EntitiesApi_PatchEntityUsers,
+} from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    UserManagementApi_AddGroupMembers,
+    UserManagementApi_ListUserGroups,
+    UserManagementApi_ListUsers,
+    UserManagementApi_RemoveGroupMembers,
+    UserManagementApi_RemoveUsersUserGroups,
+} from "@gooddata/api-client-tiger/userManagement";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IOrganizationUserGroupsQuery,
@@ -36,8 +52,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public getUser = async (id: string): Promise<IUser | undefined> => {
         return this.authCall(async (client) => {
-            return client.entities
-                .getEntityUsers({ id })
+            return EntitiesApi_GetEntityUsers(client.axios, client.basePath, { id })
                 .then((response) => response.data)
                 .then((user) => convertUser(user));
         });
@@ -45,7 +60,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public createUser(user: IUser): Promise<IUser> {
         return this.authCall(async (client) => {
-            const createdUser = await client.entities.createEntityUsers({
+            const createdUser = await EntitiesApi_CreateEntityUsers(client.axios, client.basePath, {
                 jsonApiUserInDocument: {
                     data: {
                         id: user.login,
@@ -66,17 +81,16 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public getUserGroup = async (id: string): Promise<IUserGroup | undefined> => {
         return this.authCall(async (client) => {
-            return client.entities
-                .getEntityUserGroups({ id })
-                .then((response) => response.data)
-                .then((userGroup) => convertUserGroup(userGroup));
+            return EntitiesApi_GetEntityUserGroups(client.axios, client.basePath, { id })
+                .then((response: any) => response.data)
+                .then((userGroup: any) => convertUserGroup(userGroup));
         });
     };
 
     public updateUser = async (user: IUser): Promise<void> => {
         return this.authCall(async (client) => {
             const { login, firstName, lastName, email } = user;
-            await client.entities.patchEntityUsers({
+            await EntitiesApi_PatchEntityUsers(client.axios, client.basePath, {
                 id: login,
                 jsonApiUserPatchDocument: {
                     data: {
@@ -96,7 +110,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public createUserGroup = async (group: IUserGroup): Promise<void> => {
         return this.authCall(async (client) => {
             const { id, name } = group;
-            await client.entities.createEntityUserGroups({
+            await EntitiesApi_CreateEntityUserGroups(client.axios, client.basePath, {
                 jsonApiUserGroupInDocument: {
                     data: {
                         type: "userGroup",
@@ -113,7 +127,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public updateUserGroup = async (group: IUserGroup): Promise<void> => {
         return this.authCall(async (client) => {
             const { id, name } = group;
-            await client.entities.patchEntityUserGroups({
+            await EntitiesApi_PatchEntityUserGroups(client.axios, client.basePath, {
                 id: id!,
                 jsonApiUserGroupPatchDocument: {
                     data: {
@@ -130,7 +144,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUsers = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.userManagement.removeUsersUserGroups({
+            await UserManagementApi_RemoveUsersUserGroups(client.axios, client.basePath, {
                 assigneeIdentifier: ids.map((id) => ({ id, type: "user" })),
             });
         });
@@ -138,7 +152,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public deleteUserGroups = async (ids: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            await client.userManagement.removeUsersUserGroups({
+            await UserManagementApi_RemoveUsersUserGroups(client.axios, client.basePath, {
                 assigneeIdentifier: ids.map((id) => ({ id, type: "userGroup" })),
             });
         });
@@ -147,9 +161,9 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUsers = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.userManagement
-                    .listUsers({ page, size })
-                    .then((response) => response.data.users.map(convertOrganizationUser)),
+                UserManagementApi_ListUsers(client.axios, client.basePath, { page, size }).then((response) =>
+                    response.data.users.map(convertOrganizationUser),
+                ),
             );
         });
     };
@@ -157,17 +171,18 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUsersSummary = async (): Promise<IOrganizationUser[]> => {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.entities
-                    .getAllEntitiesUsers({ page, size })
-                    .then((response) => response.data.data.map(convertEntityUserToOrganizationUser)),
+                EntitiesApi_GetAllEntitiesUsers(client.axios, client.basePath, { page, size }).then(
+                    (response) => response.data.data.map(convertEntityUserToOrganizationUser),
+                ),
             );
         });
     };
 
     public getUsersByEmail = async (email: string): Promise<IUser[]> => {
         return this.authCall(async (client) => {
-            return client.entities
-                .getAllEntitiesUsers({ filter: `email==${rsqlQuote(email)}` })
+            return EntitiesApi_GetAllEntitiesUsers(client.axios, client.basePath, {
+                filter: `email==${rsqlQuote(email)}`,
+            })
                 .then((response) => response.data.data)
                 .then((users) => users.map(convertIncludedUser));
         });
@@ -184,20 +199,19 @@ export class OrganizationUsersService implements IOrganizationUserService {
     public getUserGroups = async (): Promise<IOrganizationUserGroup[]> => {
         return this.authCall(async (client) => {
             return ActionsUtilities.loadAllPages(({ page, size }) =>
-                client.userManagement
-                    .listUserGroups({ page, size })
-                    .then((response) => response.data.userGroups.map(convertOrganizationUserGroup)),
+                UserManagementApi_ListUserGroups(client.axios, client.basePath, { page, size }).then(
+                    (response) => response.data.userGroups.map(convertOrganizationUserGroup),
+                ),
             );
         });
     };
 
     public getUserGroupsOfUser = async (userId: string): Promise<IUserGroup[]> => {
         return this.authCall(async (client) => {
-            return client.entities
-                .getEntityUsers({
-                    id: userId,
-                    include: ["userGroups"],
-                })
+            return EntitiesApi_GetEntityUsers(client.axios, client.basePath, {
+                id: userId,
+                include: ["userGroups"],
+            })
                 .then((response) => response.data)
                 .then((groups) => groups.included?.map(convertIncludedUserGroup) || []);
         });
@@ -205,12 +219,11 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public getUsersOfUserGroup = async (userGroupId: string): Promise<IUser[]> => {
         return this.authCall(async (client) => {
-            return client.entities
-                .getAllEntitiesUsers({
-                    include: ["userGroups"],
-                    filter: `userGroups.id==${rsqlQuote(userGroupId)}`,
-                    size: 1000,
-                })
+            return EntitiesApi_GetAllEntitiesUsers(client.axios, client.basePath, {
+                include: ["userGroups"],
+                filter: `userGroups.id==${rsqlQuote(userGroupId)}`,
+                size: 1000,
+            })
                 .then((response) => response.data)
                 .then((users) => users.data.map(convertIncludedUser) || []);
         });
@@ -220,8 +233,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
         return this.authCall(async (client) => {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
-                    // this is not ideal, but this can be replaced when new API is created
-                    return client.userManagement.addGroupMembers({
+                    return UserManagementApi_AddGroupMembers(client.axios, client.basePath, {
                         userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -236,8 +248,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
         return this.authCall(async (client) => {
             await Promise.all(
                 userGroupIds.map((userGroupId) => {
-                    // this is not ideal, but this can be replaced when new API is created
-                    return client.userManagement.removeGroupMembers({
+                    return UserManagementApi_RemoveGroupMembers(client.axios, client.basePath, {
                         userGroupId: userGroupId,
                         userManagementUserGroupMembers: {
                             members: userIds.map((id) => ({ id })),
@@ -280,7 +291,11 @@ export class OrganizationUsersQuery implements IOrganizationUsersQuery {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const result = await this.authCall((client) =>
-                    client.userManagement.listUsers({ size: limit, page: offset / limit, ...this.filter }),
+                    UserManagementApi_ListUsers(client.axios, client.basePath, {
+                        size: limit,
+                        page: offset / limit,
+                        ...this.filter,
+                    }),
                 );
 
                 return {
@@ -324,7 +339,7 @@ export class OrganizationUserGroupsQuery implements IOrganizationUserGroupsQuery
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const result = await this.authCall((client) =>
-                    client.userManagement.listUserGroups({
+                    UserManagementApi_ListUserGroups(client.axios, client.basePath, {
                         size: limit,
                         page: offset / limit,
                         ...this.filter,

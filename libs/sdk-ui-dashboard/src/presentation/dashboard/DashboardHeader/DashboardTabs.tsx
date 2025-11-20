@@ -1,28 +1,46 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useRef } from "react";
+import { KeyboardEventHandler, ReactElement, useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { IDashboardTab } from "@gooddata/sdk-model";
-import { IUiTab, UiIcon, UiIconButton, UiTabs, bemFactory, separatorStaticItem } from "@gooddata/sdk-ui-kit";
+import { usePropState } from "@gooddata/sdk-ui";
+import {
+    DefaultUiTabsTabValue,
+    IUiTab,
+    IUiTabComponentProps,
+    InputPure,
+    SELECT_ITEM_ACTION,
+    UiFocusManager,
+    UiIcon,
+    UiIconButton,
+    UiTabs,
+    bemFactory,
+    separatorStaticItem,
+    useScopedIdOptional,
+} from "@gooddata/sdk-ui-kit";
 
 import {
-    ExtendedDashboardWidget,
+    TabState,
+    cancelRenamingDashboardTab,
     createDashboardTab,
     deleteDashboardTab,
+    renameDashboardTab,
     repositionDashboardTab,
     selectActiveTabLocalIdentifier,
     selectEnableDashboardTabs,
     selectIsInEditMode,
     selectTabs,
+    startRenamingDashboardTab,
     switchDashboardTab,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
 
-const EMPTY_TABS: IDashboardTab<ExtendedDashboardWidget>[] = [];
+const EMPTY_TABS: TabState[] = [];
+
+type IDashboardUiTab = IUiTab<{ isRenaming?: boolean }>;
 
 export function useDashboardTabsProps(): IDashboardTabsProps {
     const intl = useIntl();
@@ -37,7 +55,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     const defaultTabIdRef = useRef<string>(uuid());
 
     const handleTabSelect = useCallback(
-        (tab: IUiTab) => {
+        (tab: IDashboardUiTab) => {
             if (tab.id !== activeTabLocalIdentifier) {
                 dispatch(switchDashboardTab(tab.id));
             }
@@ -45,7 +63,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         [activeTabLocalIdentifier, dispatch],
     );
 
-    const uiTabs = useMemo<IUiTab[]>(() => {
+    const uiTabs = useMemo<IDashboardUiTab[]>(() => {
         const isOnlyOneTab = tabs.length < 2;
 
         const mappedTabs =
@@ -54,8 +72,18 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                     ({
                         id: tab.localIdentifier,
                         label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
+                        isRenaming: tab.isRenaming,
                         actions: isEditMode
                             ? [
+                                  {
+                                      id: "rename",
+                                      label: intl.formatMessage({ id: "dashboard.tabs.rename" }),
+                                      iconLeft: <UiIcon type={"pencil"} ariaHidden size={12} />,
+                                      isDisabled: tab.isRenaming,
+                                      onSelect: () =>
+                                          dispatch(startRenamingDashboardTab(tab.localIdentifier)),
+                                      closeOnSelect: "all" as const,
+                                  },
                                   index > 0 && {
                                       id: "moveLeft",
                                       label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
@@ -98,7 +126,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                         ]),
                               ].filter((x) => !!x)
                             : [],
-                    }) satisfies IUiTab,
+                    }) satisfies IDashboardUiTab,
             ) ?? [];
 
         // In edit mode, if tabs feature is enabled but no tabs exist, create a default "Untitled" tab
@@ -108,6 +136,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                     id: defaultTabIdRef.current,
                     label: intl.formatMessage({ id: "dashboard.tabs.default.label" }),
                     variant: "placeholder",
+                    isRenaming: true,
                 },
             ];
         }
@@ -136,8 +165,8 @@ const tabsBem = bemFactory("gd-dash-tabs");
 interface IDashboardTabsProps {
     enableDashboardTabs: boolean;
     activeTabLocalIdentifier?: string;
-    uiTabs: IUiTab[];
-    handleTabSelect: (tab: IUiTab) => void;
+    uiTabs: IDashboardUiTab[];
+    handleTabSelect: (tab: IDashboardUiTab) => void;
 }
 /**
  * @internal
@@ -184,6 +213,7 @@ export function DashboardTabs({
                     selectedTabId={activeTabLocalIdentifier ?? uiTabs[0].id}
                     accessibilityConfig={ACCESSIBILITY_CONFIG}
                     maxLabelLength={255}
+                    TabValue={RenamableTabValue}
                 />
             </div>
             {isCreateEnabled ? (
@@ -199,5 +229,74 @@ export function DashboardTabs({
                 </div>
             ) : null}
         </div>
+    );
+}
+
+function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiTab>) {
+    const { location, tab } = props;
+
+    const dispatch = useDashboardDispatch();
+    const returnFocusId = useScopedIdOptional(tab, SELECT_ITEM_ACTION);
+
+    const handleRename = useCallback(
+        (newName: string) => {
+            if (tab.variant === "placeholder") {
+                dispatch(createDashboardTab(newName, undefined, false));
+                return;
+            }
+
+            dispatch(renameDashboardTab(newName, tab.id));
+        },
+        [dispatch, tab.id, tab.variant],
+    );
+
+    const handleCancel = useCallback(() => {
+        if (tab.variant === "placeholder") {
+            return;
+        }
+
+        dispatch(cancelRenamingDashboardTab(tab.id));
+    }, [dispatch, tab.id, tab.variant]);
+
+    const preventPropagateKeydown = useCallback<KeyboardEventHandler>((e) => e.stopPropagation(), []);
+
+    if (location === "allList" || !tab.isRenaming) {
+        return <DefaultUiTabsTabValue {...props} />;
+    }
+
+    return (
+        <div onKeyDown={preventPropagateKeydown} className={tabsBem.e("rename-wrapper")}>
+            <UiFocusManager enableAutofocus enableReturnFocusOnUnmount={{ returnFocusTo: returnFocusId }}>
+                <RenamingTabValue
+                    initialName={tab.label}
+                    onRename={handleRename}
+                    onCancel={handleCancel}
+                    isSubmitOnBlur={tab.variant !== "placeholder"}
+                />
+            </UiFocusManager>
+        </div>
+    );
+}
+
+function RenamingTabValue(props: {
+    initialName: string;
+    onRename: (newName: string) => void;
+    onCancel: () => void;
+    isSubmitOnBlur?: boolean;
+}) {
+    const { initialName, isSubmitOnBlur, onCancel, onRename } = props;
+    const [name, setName] = usePropState(initialName);
+
+    const handleChange = useCallback((newValue: string | number) => setName(String(newValue)), [setName]);
+    const handleSubmit = useCallback(() => onRename(name), [name, onRename]);
+
+    return (
+        <InputPure
+            value={name}
+            onChange={handleChange}
+            onEscKeyPress={onCancel}
+            onEnterKeyPress={handleSubmit}
+            onBlur={isSubmitOnBlur ? handleSubmit : undefined}
+        />
     );
 }
