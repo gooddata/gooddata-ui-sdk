@@ -1,6 +1,39 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 13 Nov 2025 07:39:54 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Nov 2025 08:13:37 GMT and should not be manually modified.
+
+## 11.10.0
+
+Thu, 20 Nov 2025 08:13:37 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Fix date filter initialization from automation id.
+- sdk-ui-pivot: Fix error handling in pivot table.
+- sdk-ui-semantic-search: Add additional automation test IDs.
+- sdk-ui-gen-ai: should disable KDA for the chart from chatbot using unsupported granularity
+- sdk-ui-gen-ai: possible to define custom landing screen
+- sdk-ui-gen-ai: repair of triggering KDA fails with “Invalid time value”
+- sdk-ui-gen-ai: Visual formatting error when text starts with a hashtag (#)
+- sdk-ui-gen-ai: can't open viz from chatbot if using this week date filter
+- sdk-ui-gen-ai: ai chatbot hangs when clicking 'Reset' during response
+- sdk-ui-dashboard: date period change in key driver analysis not work
+- sdk-ui-dashboard: attribute filter is not display properly in chatbot
+- sdk-ui-gen-ai: ai negative feedback textarea not rendered correctly
+- sdk-ui-gen-ai: Adjust the SDK for AI Assistant to be able to define object types to be included in search UC
+- sdk-ui-dashboard: Add ability to rename dashboard tabs.
+- sdk-backend-tiger: All export types can now override the default timeout.
+- sdk-backend-tiger: Make the export result timeout configurable
+- api-client-tiger: Generated client now exports individual core API methods (e.g., EntitiesApi_GetEntityWorkspaceDataFilters, DashboardsApi_GetAllEntitiesAnalyticalDashboards) directly via the entry point. These core methods are tree-shakable and represent the preferred way to use the API. Factory methods (e.g., tigerEntitiesObjectsClientFactory) remain available for backward compatibility.
+- api-client-tiger: Migrate enums from const objects to typed string unions. All enum types (e.g., ApiEntitlementNameEnum) are now defined as string union types (e.g., type Enum = "value1" | "value2") instead of const objects with derived types.
+- sdk-ui-dashboard: Move filters to the second tab of Alert dialog
+- gdc-ui-all: Handle missing date filter config in all cases
+- sdk-ui-all: Rename two properties related to the dashboard tabs.
+- sdk-ui-pivot: Introduce grand total rows position option to pivot table next.
+- sdk-ui-dashboard: change dashboard component app state to reflect changes related to dashboard tabs
+- sdk-backend-tiger: allow to save multiple filter context for dashboard tabs
+- Change dashboard component app state to reflect changes related to the dashboard tabs
+- AI feedback fixes
 
 ## 11.9.0
 

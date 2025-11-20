@@ -80,26 +80,28 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                             content={thumbsUpLabel}
                         />
                         <FeedbackPopup
-                            anchor={
-                                <UiTooltip
-                                    triggerBy={["focus", "hover"]}
-                                    arrowPlacement="bottom"
-                                    anchor={
-                                        <UiIconButton
-                                            icon="thumbsDown"
-                                            variant="tertiary"
-                                            isActive={message.feedback === "NEGATIVE"}
-                                            onClick={handleNegativeFeedbackClick}
-                                            accessibilityConfig={{
-                                                ariaLabel: thumbsDownLabel,
-                                                ariaPressed:
-                                                    message.feedback === "NEGATIVE" ? "true" : "false",
-                                            }}
-                                        />
-                                    }
-                                    content={thumbsDownLabel}
-                                />
-                            }
+                            anchor={(opened) => {
+                                return (
+                                    <UiTooltip
+                                        triggerBy={["focus", "hover"]}
+                                        arrowPlacement="bottom"
+                                        anchor={
+                                            <UiIconButton
+                                                icon="thumbsDown"
+                                                variant="tertiary"
+                                                isActive={message.feedback === "NEGATIVE" || opened}
+                                                onClick={handleNegativeFeedbackClick}
+                                                accessibilityConfig={{
+                                                    ariaLabel: thumbsDownLabel,
+                                                    ariaPressed:
+                                                        message.feedback === "NEGATIVE" ? "true" : "false",
+                                                }}
+                                            />
+                                        }
+                                        content={thumbsDownLabel}
+                                    />
+                                );
+                            }}
                             onSubmit={handleFeedbackSubmit}
                         />
                     </div>
