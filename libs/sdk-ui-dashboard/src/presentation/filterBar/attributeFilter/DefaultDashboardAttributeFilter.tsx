@@ -80,6 +80,15 @@ export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilter
     return <DefaultDashboardAttributeFilterInner {...props} />;
 }
 
+/**
+ * @internal
+ */
+export function StandaloneDashboardAttributeFilter(
+    props: IDashboardAttributeFilterProps,
+): ReactElement | null {
+    return <DefaultDashboardAttributeFilterInner {...props} />;
+}
+
 function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterProps): ReactElement | null {
     const {
         filter,

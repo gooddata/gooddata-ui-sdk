@@ -67,10 +67,6 @@
         "value": "Please, describe what happened",
         "comment": "Label for the description text area in the feedback popup"
     },
-    "gd.gen-ai.feedback.popup.description-placeholder": {
-        "value": " ",
-        "comment": "Placeholder text for the description text area in the feedback popup"
-    },
     "gd.gen-ai.feedback.popup.cancel": {
         "value": "Cancel",
         "comment": "Cancel button label in the feedback popup"

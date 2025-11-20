@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { EditableLabel, UiButton, UiCheckbox, UiPopover, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 export interface IFeedbackPopupProps {
-    anchor: ReactElement<any>;
+    anchor: (opened: boolean) => ReactElement<any>;
     onSubmit?: (feedback: IFeedbackData) => void;
 }
 
@@ -21,6 +21,7 @@ export interface IFeedbackData {
  */
 export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
     const intl = useIntl();
+    const [opened, setOpened] = useState(false);
     const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
     const [description, setDescription] = useState("");
     const textareaWrapperId = useIdPrefixed("feedback-textarea-wrapper");
@@ -56,10 +57,11 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
         }
     };
 
-    const handleCancel = (onClose: () => void) => {
+    const handleCancel = (onClose?: () => void) => {
         setSelectedReasons([]);
         setDescription("");
-        onClose();
+        setOpened(false);
+        onClose?.();
     };
 
     const handleSubmit = (onClose: () => void) => {
@@ -72,11 +74,17 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
 
     return (
         <UiPopover
-            anchor={anchor}
+            anchor={anchor(opened)}
             title={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.title" })}
             closeVisible
             closeText={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.close" })}
             width={260}
+            onClose={() => {
+                handleCancel();
+            }}
+            onOpen={() => {
+                setOpened(true);
+            }}
             content={() => (
                 <div className="gd-gen-ai-feedback-popup__body">
                     <div className="gd-gen-ai-feedback-popup__section">
@@ -110,18 +118,15 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
                     {selectedReasons.includes("other") && (
                         <div id={textareaWrapperId} className="gd-gen-ai-feedback-popup__section">
                             <EditableLabel
+                                autofocus
                                 value={description}
                                 onChange={setDescription}
                                 onSubmit={setDescription}
-                                placeholder={intl.formatMessage({
-                                    id: "gd.gen-ai.feedback.popup.description-placeholder",
-                                })}
                                 maxRows={4}
                                 ariaLabel={intl.formatMessage({
                                     id: "gd.gen-ai.feedback.popup.description-label",
                                 })}
-                                className="gd-input-field"
-                                textareaInOverlay
+                                className="gd-input-field gd-gen-ai-feedback-popup__textarea"
                             />
                         </div>
                     )}
