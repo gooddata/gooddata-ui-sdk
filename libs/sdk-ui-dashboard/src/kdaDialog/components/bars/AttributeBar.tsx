@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
+import { StandaloneDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 
 interface IAttributeBarProps {
     attribute: IDashboardAttributeFilter;
@@ -80,7 +80,7 @@ function KdaAttributeFilterWrapper({
     );
 
     return (
-        <DefaultDashboardAttributeFilter
+        <StandaloneDashboardAttributeFilter
             filter={filter}
             displayAsLabel={displayAsLabel}
             overlayPositionType={overlayPositionType}
