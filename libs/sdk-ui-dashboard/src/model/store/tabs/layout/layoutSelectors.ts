@@ -594,3 +594,34 @@ export const selectWidgetIgnoreCrossFiltering: (ref: ObjRef) => DashboardSelecto
             return widget?.ignoreCrossFiltering ?? false;
         }),
     );
+
+/**
+ * Selects the local identifier of the tab that contains the specified widget.
+ * Returns undefined if the widget is not found in any tab.
+ *
+ * @param ref - widget reference to search for
+ * @returns local identifier of the tab containing the widget, or undefined if not found
+ *
+ * @alpha
+ */
+export const selectTabLocalIdentifierByWidgetRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<string | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectTabs, (tabs): string | undefined => {
+        if (!ref || !tabs) {
+            return undefined;
+        }
+
+        // Search through all tabs to find which one contains the widget
+        for (const tab of tabs) {
+            if (tab.layout?.layout) {
+                const widgetCoordinates = getWidgetCoordinates(tab.layout.layout, ref);
+                if (widgetCoordinates) {
+                    return tab.localIdentifier;
+                }
+            }
+        }
+
+        return undefined;
+    }),
+);

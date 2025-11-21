@@ -37,6 +37,8 @@ import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
 import { InitializeAutomations } from "../../commands/scheduledEmail.js";
+import { switchDashboardTab } from "../../commands/tabs.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import {
     selectAutomationsIsInitialized,
     selectAutomationsIsLoading,
@@ -57,12 +59,17 @@ import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import {
+    selectTabLocalIdentifierByWidgetRef,
+    selectWidgetByRef,
+} from "../../store/tabs/layout/layoutSelectors.js";
+import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
+import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -131,6 +138,23 @@ export function* initializeAutomationsHandler(
         if (automationId) {
             const targetAutomation = automations.find((a) => a.id === automationId);
             const targetWidget = targetAutomation?.metadata?.widget;
+
+            // Switch to the tab containing the target widget if necessary
+            if (targetWidget) {
+                const widgetRef = idRef(targetWidget);
+                const widgetTabId: ReturnType<ReturnType<typeof selectTabLocalIdentifierByWidgetRef>> =
+                    yield select(selectTabLocalIdentifierByWidgetRef(widgetRef));
+                const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+                    selectActiveTabLocalIdentifier,
+                );
+
+                // If widget is on a different tab, switch to it before continuing
+                if (widgetTabId && widgetTabId !== currentActiveTabId) {
+                    const switchTabCmd = switchDashboardTab(widgetTabId);
+                    const switchedEvent = yield call(switchDashboardTabHandler, ctx, switchTabCmd);
+                    yield dispatchDashboardEvent(switchedEvent);
+                }
+            }
 
             const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
                 selectInsightByWidgetRef(targetWidget ? idRef(targetWidget) : undefined),

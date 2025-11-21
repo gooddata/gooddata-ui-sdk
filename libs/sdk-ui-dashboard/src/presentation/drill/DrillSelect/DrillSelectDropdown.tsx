@@ -13,6 +13,7 @@ import {
     IListedDashboard,
     IWidget,
     ObjRef,
+    areObjRefsEqual,
     insightTitle,
     isAttributeDescriptor,
     isCrossFiltering,
@@ -34,6 +35,7 @@ import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
+    selectEnableDashboardTabs,
     selectInsightsMap,
     selectWidgetByRef,
     useDashboardSelector,
@@ -73,6 +75,7 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -139,6 +142,7 @@ export function DrillSelectDropdown({
                 attributeDisplayForms,
                 intl,
                 widget: widget as IWidget,
+                enableDashboardTabs,
             }),
         [
             drillDefinitions,
@@ -149,6 +153,7 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
+            enableDashboardTabs,
         ],
     );
 
@@ -229,6 +234,7 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
+    enableDashboardTabs,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -238,6 +244,7 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    enableDashboardTabs: boolean;
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -283,9 +290,23 @@ export const createDrillSelectItems = ({
             const title = drillDefinition.target
                 ? getDashboardTitle(drillDefinition.target, dashboardList)
                 : dashboardTitle;
+
+            // If targetTab is specified, append tab name to the title
+            let fullTitle = title;
+            if (drillDefinition.targetTabLocalIdentifier && enableDashboardTabs) {
+                const dashboard = dashboardList.find((d) => areObjRefsEqual(d.ref, drillDefinition.target));
+                const tabTitle =
+                    dashboard?.tabs?.find(
+                        (t) => t.localIdentifier === drillDefinition.targetTabLocalIdentifier,
+                    )?.title ?? undefined;
+                if (dashboard?.tabs?.length && dashboard?.tabs?.length > 1 && tabTitle) {
+                    fullTitle = `${title} / ${tabTitle}`;
+                }
+            }
+
             return {
                 type: DrillType.DRILL_TO_DASHBOARD,
-                name: title!,
+                name: fullTitle!,
                 drillDefinition,
                 id: stringify(drillDefinition) || "undefined",
             };

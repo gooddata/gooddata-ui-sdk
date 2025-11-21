@@ -36,6 +36,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         loadNextPage,
         setSelectedItemIds,
         onSearch,
+        renderToolbarCustomElement,
         accessibilityConfig,
     } = props;
 
@@ -53,6 +54,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 isMobileView={isMobileView}
                 width={width}
                 onSearch={onSearch}
+                renderToolbarCustomElement={renderToolbarCustomElement}
                 accessibilityConfig={accessibilityConfig}
             />
 

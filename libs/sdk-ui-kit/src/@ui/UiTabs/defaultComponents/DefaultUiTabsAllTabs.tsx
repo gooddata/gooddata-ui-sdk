@@ -5,6 +5,7 @@ import { RefObject, useCallback, useState } from "react";
 import { EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
+import { useMediaQuery } from "../../../responsive/index.js";
 import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
 import {
     SELECT_ITEM_ACTION,
@@ -33,6 +34,7 @@ export function DefaultUiTabsAllTabs<
             "useActionListener",
         ]);
 
+    const isMobile = useMediaQuery("mobileDevice");
     const [isOpen, setIsOpen] = useState(false);
 
     useActionListener(({ action }) => {
@@ -87,7 +89,7 @@ export function DefaultUiTabsAllTabs<
                     renderBody={({ ariaAttributes }) => (
                         <ScopedIdStore value={scopedIdStoreValue}>
                             <div
-                                className={UiTabsBem.e("tab-list")}
+                                className={UiTabsBem.e("tab-list", { mobile: isMobile })}
                                 role="grid"
                                 ref={containerRef as RefObject<HTMLDivElement>}
                                 onKeyDown={onKeyboardNavigation}
@@ -156,11 +158,18 @@ function TabListItem<
     const isFocused = !!focusedAction;
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
+    const [isActionsOpen, setIsActionsOpen] = useState(false);
+    const handleToggleActionsOpen = useCallback(
+        (desiredState?: boolean) => setIsActionsOpen((wasOpen) => desiredState ?? !wasOpen),
+        [setIsActionsOpen],
+    );
+
     return (
         <div
             className={UiTabsBem.e("tab-list-item", {
                 focused: isFocused,
                 "select-item": focusedAction === SELECT_ITEM_ACTION,
+                "actions-open": isActionsOpen,
             })}
             role="row"
             aria-rowindex={index + 1}
@@ -178,7 +187,9 @@ function TabListItem<
             </div>
             {(item.actions ?? []).length ? (
                 <div
-                    className={UiTabsBem.e("tab-list-item-actions", { focused: isFocused })}
+                    className={UiTabsBem.e("tab-list-item-actions", {
+                        focused: isFocused,
+                    })}
                     role={"gridcell"}
                 >
                     <TabActions
@@ -186,6 +197,8 @@ function TabListItem<
                         location={"allList"}
                         tabIndex={-1}
                         id={makeId?.({ item, specifier: "selectTabActions" })}
+                        isOpen={isActionsOpen}
+                        onToggleOpen={handleToggleActionsOpen}
                     />
                 </div>
             ) : null}

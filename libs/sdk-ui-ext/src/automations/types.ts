@@ -49,6 +49,7 @@ export interface IAutomationsProps {
     isMobileView?: boolean;
     enableBulkActions?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    renderToolbarCustomElement?: () => ReactNode;
     onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
@@ -182,6 +183,7 @@ export interface IAutomationsCoreProps {
     enableBulkActions: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     locale: string;
+    renderToolbarCustomElement?: () => ReactNode;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
@@ -356,7 +358,7 @@ export type AutomationsPendingActionType =
     | "bulkPause"
     | "bulkResume";
 
-export type CellValueType = "text" | "date" | "number";
+export type CellValueType = "text" | "date" | "slash-date" | "number";
 
 export interface IUseAutomationsSmallLayoutProps {
     searchHandler: (search: string) => void;
@@ -385,4 +387,5 @@ export interface IAutomationIconProps {
     type: AutomationsType | IAutomationLastRunStatus | "automationDetails";
     automation?: IAutomationMetadataObject;
     state?: IAutomationState;
+    timezone?: string;
 }

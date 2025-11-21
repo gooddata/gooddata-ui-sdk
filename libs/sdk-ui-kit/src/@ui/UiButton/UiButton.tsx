@@ -41,8 +41,10 @@ export interface UiButtonProps {
         | VariantTooltip
         | VariantLink;
     iconBefore?: IconType;
+    iconBeforeSize?: number;
     badgeAfter?: number;
     iconAfter?: IconType;
+    iconAfterSize?: number;
     label: string;
     isDisabled?: boolean;
     isLoading?: boolean;
@@ -78,7 +80,9 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             isSelected,
             isLoading,
             iconBefore,
+            iconBeforeSize: iconBeforeSizeProp,
             iconAfter,
+            iconAfterSize: iconAfterSizeProp,
             badgeAfter,
             onClick,
             onKeyDown,
@@ -89,7 +93,8 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
         },
         ref,
     ) => {
-        const iconSize = size === "small" ? 16 : 18;
+        const iconBeforeSize = iconBeforeSizeProp ?? (size === "small" ? 16 : 18);
+        const iconAfterSize = iconAfterSizeProp ?? (size === "small" ? 16 : 18);
         const hasIconBefore = !!iconBefore;
         const hasIconAfter = !!iconAfter;
 
@@ -116,7 +121,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 {iconBefore ? (
                     <UiIcon
                         type={iconBefore}
-                        size={iconSize}
+                        size={iconBeforeSize}
                         ariaHidden={accessibilityConfig?.iconAriaHidden}
                     />
                 ) : null}
@@ -127,7 +132,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 {iconAfter ? (
                     <UiIcon
                         type={iconAfter}
-                        size={iconSize}
+                        size={iconAfterSize}
                         ariaHidden={accessibilityConfig?.iconAriaHidden}
                     />
                 ) : null}

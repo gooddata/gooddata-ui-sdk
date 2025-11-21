@@ -3,6 +3,25 @@
 import { GenAIObjectType } from "./common.js";
 
 /**
+ * Semantic search result payload.
+ * @beta
+ */
+export interface ISemanticSearchResult {
+    /**
+     * List of found objects.
+     */
+    results: ISemanticSearchResultItem[];
+    /**
+     * Relationships tying the found objects together.
+     */
+    relationships: ISemanticSearchRelationship[];
+    /**
+     * Assistant reasoning describing the search outcome.
+     */
+    reasoning?: string;
+}
+
+/**
  * A single search result returned by semantic search.
  * @beta
  */

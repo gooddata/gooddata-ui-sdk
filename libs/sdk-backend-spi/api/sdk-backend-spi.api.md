@@ -12,9 +12,9 @@ import { DataValue } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
-import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
-import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
-import { GenAIObjectType } from '@gooddata/sdk-model';
+import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
+import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
+import type { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
@@ -70,12 +70,12 @@ import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
-import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
-import { IGenAIChatInteraction } from '@gooddata/sdk-model';
-import { IGenAIChatRouting } from '@gooddata/sdk-model';
-import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
-import { IGenAIFoundObjects } from '@gooddata/sdk-model';
-import { IGenAIUserContext } from '@gooddata/sdk-model';
+import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
+import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import type { IGenAIChatRouting } from '@gooddata/sdk-model';
+import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
+import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
+import type { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -84,8 +84,8 @@ import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
-import { IMemoryItemDefinition } from '@gooddata/sdk-model';
-import { IMemoryItemMetadataObject } from '@gooddata/sdk-model';
+import type { IMemoryItemDefinition } from '@gooddata/sdk-model';
+import type { IMemoryItemMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
@@ -108,10 +108,9 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
-import { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
-import { ISemanticQualityReport } from '@gooddata/sdk-model';
-import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
-import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import type { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
+import type { ISemanticQualityReport } from '@gooddata/sdk-model';
+import type { ISemanticSearchResult } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -134,7 +133,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmEndpointTestResults } from '@gooddata/sdk-model';
-import { MemoryItemStrategy } from '@gooddata/sdk-model';
+import type { MemoryItemStrategy } from '@gooddata/sdk-model';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectOrigin } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -988,10 +987,12 @@ export interface IGenAIChatEvaluation {
     createdVisualizations?: IGenAICreatedVisualizations;
     // (undocumented)
     errorResponse?: string;
-    // (undocumented)
+    // @deprecated (undocumented)
     foundObjects?: IGenAIFoundObjects;
     // (undocumented)
     routing?: IGenAIChatRouting;
+    // (undocumented)
+    semanticSearch?: ISemanticSearchResult;
     // (undocumented)
     textResponse?: string;
 }
@@ -1558,15 +1559,7 @@ export interface ISemanticSearchQuery {
     withQuestion(question: string): ISemanticSearchQuery;
 }
 
-// @beta
-export interface ISemanticSearchResult {
-    // (undocumented)
-    reasoning?: string;
-    // (undocumented)
-    relationships: ISemanticSearchRelationship[];
-    // (undocumented)
-    results: ISemanticSearchResultItem[];
-}
+export { ISemanticSearchResult }
 
 // @public
 export function isLimitReached(obj: unknown): obj is LimitReached;

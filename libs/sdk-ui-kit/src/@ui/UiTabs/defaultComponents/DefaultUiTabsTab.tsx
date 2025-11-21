@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { useCallback, useState } from "react";
+
 import { EmptyObject } from "@gooddata/util";
 
 import { SELECT_ITEM_ACTION } from "../../hooks/useListWithActionsKeyboardNavigation.js";
@@ -28,6 +30,12 @@ export function DefaultUiTabsTab<
 
     const isOverflowing = tab.label.length > maxLabelLength;
 
+    const [isActionsOpen, setIsActionsOpen] = useState(false);
+    const handleToggleActionsOpen = useCallback(
+        (desiredState?: boolean) => setIsActionsOpen((wasOpen) => desiredState ?? !wasOpen),
+        [setIsActionsOpen],
+    );
+
     const tabButton = (
         <button
             className={UiTabsBem.e("item", { selected: isSelected })}
@@ -47,6 +55,8 @@ export function DefaultUiTabsTab<
             className={UiTabsBem.e("tab-wrapper", {
                 selected: isSelected,
                 variant: tab.variant ?? "default",
+                focused: !!focusedAction,
+                "actions-open": isActionsOpen,
             })}
             id={makeId?.({ item: tab, specifier: "container" })}
         >
@@ -63,12 +73,16 @@ export function DefaultUiTabsTab<
                 tabButton
             )}
 
-            <TabActions
-                tab={tab}
-                location={"tabs"}
-                id={makeId?.({ item: tab, specifier: "selectTabActions" })}
-                tabIndex={focusedAction === "selectTabActions" ? 0 : -1}
-            />
+            <div className={UiTabsBem.e("tabs-actions")}>
+                <TabActions
+                    tab={tab}
+                    location={"tabs"}
+                    id={makeId?.({ item: tab, specifier: "selectTabActions" })}
+                    tabIndex={focusedAction === "selectTabActions" ? 0 : -1}
+                    isOpen={isActionsOpen}
+                    onToggleOpen={handleToggleActionsOpen}
+                />
+            </div>
         </div>
     );
 }

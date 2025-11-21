@@ -125,6 +125,14 @@
             background-color: variables.$is-focused-background;
             color: variables.$is-focused-color;
         }
+        #{$root}--controlType-mouse &:hover:not(&--isDisabled)#{$root}__item--isDestructive {
+            background-color: var(--gd-palette-error-dimmed);
+            color: var(--gd-palette-error-base);
+
+            & svg {
+                fill: var(--gd-palette-error-base);
+            }
+        }
 
         &--isDisabled {
             color: variables.$gd-color-disabled;

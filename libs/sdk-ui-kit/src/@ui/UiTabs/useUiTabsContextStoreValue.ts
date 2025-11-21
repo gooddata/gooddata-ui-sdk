@@ -51,6 +51,7 @@ export function useUiTabsContextStoreValue<
     size = "medium",
     maxLabelLength,
     accessibilityConfig: accessibilityConfigProp,
+    disableBottomBorder,
     Container = DefaultUiTabsContainer,
     Tab = DefaultUiTabsTab,
     TabValue = DefaultUiTabsTabValue,
@@ -114,6 +115,7 @@ export function useUiTabsContextStoreValue<
             onTabSelect,
             size,
             maxLabelLength,
+            disableBottomBorder,
 
             accessibilityConfig,
 
@@ -137,6 +139,7 @@ export function useUiTabsContextStoreValue<
             onTabSelect,
             size,
             maxLabelLength,
+            disableBottomBorder,
             accessibilityConfig,
             onActionTriggered,
             useActionListener,

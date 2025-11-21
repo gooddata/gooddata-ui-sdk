@@ -108,7 +108,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, invalidateItemsRef, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -399,6 +399,8 @@ export interface IAutomationsProps {
     pageSize?: number;
     // (undocumented)
     preselectedFilters?: AutomationsPreselectedFilters;
+    // (undocumented)
+    renderToolbarCustomElement?: () => ReactNode;
     // (undocumented)
     scope: AutomationsScope;
     // (undocumented)

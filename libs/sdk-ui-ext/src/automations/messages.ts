@@ -266,6 +266,12 @@ export const messages = defineMessages({
     automationIconTooltipTraceId: {
         id: "automations.icon.tooltip.traceId",
     },
+    automationIconTooltipStartsOn: {
+        id: "automations.icon.tooltip.startsOn",
+    },
+    automationIconTooltipRepeats: {
+        id: "automations.icon.tooltip.repeats",
+    },
     // Confirm Dialog messages
     confirmDialogDeleteScheduleHeadline: {
         id: "automations.confirmDialog.delete.schedule.headline",

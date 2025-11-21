@@ -33,7 +33,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
-import { buildSearchOverlayItems } from "./itemsBuilder.js";
+import { buildSemanticSearchTreeViewItems } from "./itemsBuilder.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
 import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
@@ -330,16 +330,14 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                 }
 
                 if (searchStatus === "success") {
-                    const items = buildSearchOverlayItems(
-                        {
-                            workspace: effectiveWorkspace,
-                            searchResults,
-                            relationships,
-                            threshold,
-                            canEdit,
-                        },
+                    const items = buildSemanticSearchTreeViewItems({
                         intl,
-                    );
+                        workspace: effectiveWorkspace,
+                        searchResults,
+                        relationships,
+                        threshold,
+                        canEdit,
+                    });
 
                     if (!items.length) {
                         return (

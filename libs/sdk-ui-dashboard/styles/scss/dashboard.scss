@@ -35,8 +35,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 .gd-dash-tabs {
     $root: &;
 
-    padding-left: 6px;
-    padding-right: 6px;
+    max-width: 100vw;
     overflow: hidden;
     display: flex;
 
@@ -44,6 +43,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         flex-grow: 1;
         flex-shrink: 1;
         min-width: 0;
+        padding: 0 var(--gd-spacing-5px);
     }
 
     &__add-wrapper {

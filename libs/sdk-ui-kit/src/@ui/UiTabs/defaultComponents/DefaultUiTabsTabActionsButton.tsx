@@ -21,7 +21,6 @@ export function DefaultUiTabsTabActionsButton<
     ariaAttributes,
     tabIndex,
     id,
-    isOpen,
 }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>) {
     const intl = useIntl();
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
@@ -35,7 +34,7 @@ export function DefaultUiTabsTabActionsButton<
         <UiIconButton
             icon={"ellipsisVertical"}
             size={size === "large" ? "small" : "xsmall"}
-            variant={isOpen ? "secondary" : "tertiary"}
+            variant={"tertiary"}
             accessibilityConfig={{
                 ariaLabel: intl.formatMessage(messages["actions"]),
             }}

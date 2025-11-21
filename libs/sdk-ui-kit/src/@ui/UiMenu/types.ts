@@ -37,6 +37,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    isDestructive?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;

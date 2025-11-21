@@ -29,7 +29,7 @@ export const FILTER_ITEMS_OFFSET = 10;
  */
 export const SCROLLBAR_WIDTH = 10;
 
-export const FILTER_CHIP_MAX_WIDTH = 150;
+export const FILTER_CHIP_MAX_WIDTH = 300;
 
 export const FILTER_OPTION_ALL_VALUE = "__ALL__";
 

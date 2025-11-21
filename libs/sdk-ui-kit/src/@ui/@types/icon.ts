@@ -43,6 +43,7 @@ export type IconType =
     | "dropDown"
     | "dropRight"
     | "clock"
+    | "clockPaused"
     | "questionMark"
     | "upload"
     | "expandRectangle"

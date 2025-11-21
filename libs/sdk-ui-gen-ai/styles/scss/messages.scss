@@ -225,6 +225,18 @@
     }
 }
 
+.gd-gen-ai-chat__messages__content--semantic-search {
+    display: grid;
+
+    .gd-ui-kit-treeview {
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0;
+    }
+}
+
 .gd-gen-ai-chat__messages__message--cancelled .gd-gen-ai-chat__messages__content {
     &,
     & p,

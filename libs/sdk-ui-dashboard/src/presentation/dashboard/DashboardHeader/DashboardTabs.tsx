@@ -78,7 +78,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                   {
                                       id: "rename",
                                       label: intl.formatMessage({ id: "dashboard.tabs.rename" }),
-                                      iconLeft: <UiIcon type={"pencil"} ariaHidden size={12} />,
+                                      iconLeft: (
+                                          <UiIcon
+                                              type={"pencil"}
+                                              ariaHidden
+                                              size={14}
+                                              color={"complementary-5"}
+                                          />
+                                      ),
                                       isDisabled: tab.isRenaming,
                                       onSelect: () =>
                                           dispatch(startRenamingDashboardTab(tab.localIdentifier)),
@@ -87,7 +94,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                   index > 0 && {
                                       id: "moveLeft",
                                       label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
-                                      iconLeft: <UiIcon type={"arrowLeft"} ariaHidden size={12} />,
+                                      iconLeft: (
+                                          <UiIcon
+                                              type={"arrowLeft"}
+                                              ariaHidden
+                                              size={14}
+                                              color={"complementary-5"}
+                                          />
+                                      ),
                                       onSelect: () => {
                                           if (index <= 0) {
                                               return;
@@ -100,7 +114,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                   index < tabs.length - 1 && {
                                       id: "moveRight",
                                       label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
-                                      iconLeft: <UiIcon type={"arrowRight"} ariaHidden size={12} />,
+                                      iconLeft: (
+                                          <UiIcon
+                                              type={"arrowRight"}
+                                              ariaHidden
+                                              size={14}
+                                              color={"complementary-5"}
+                                          />
+                                      ),
                                       onSelect: () => {
                                           if (index >= tabs.length - 1) {
                                               return;
@@ -111,19 +132,23 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                       closeOnSelect: false as const,
                                   },
 
-                                  ...(isOnlyOneTab
-                                      ? []
-                                      : [
-                                            separatorStaticItem,
+                                  separatorStaticItem,
 
-                                            {
-                                                id: "delete",
-                                                label: intl.formatMessage({ id: "delete" }),
-                                                iconLeft: <UiIcon type={"trash"} ariaHidden size={12} />,
-                                                onSelect: () =>
-                                                    dispatch(deleteDashboardTab(tab.localIdentifier)),
-                                            },
-                                        ]),
+                                  {
+                                      id: "delete",
+                                      label: intl.formatMessage({ id: "delete" }),
+                                      isDisabled: isOnlyOneTab,
+                                      iconLeft: (
+                                          <UiIcon
+                                              type={"trash"}
+                                              ariaHidden
+                                              size={14}
+                                              color={"complementary-5"}
+                                          />
+                                      ),
+                                      isDestructive: true,
+                                      onSelect: () => dispatch(deleteDashboardTab(tab.localIdentifier)),
+                                  },
                               ].filter((x) => !!x)
                             : [],
                     }) satisfies IDashboardUiTab,
@@ -224,6 +249,11 @@ export function DashboardTabs({
                             size={"large"}
                             variant={"tertiary"}
                             onClick={() => dispatch(createDashboardTab())}
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({
+                                    id: "dashboard.tabs.accessibility.add-button-label",
+                                }),
+                            }}
                         />
                     </div>
                 </div>

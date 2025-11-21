@@ -9,7 +9,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { IDashboardFilterView, idRef } from "@gooddata/sdk-model";
 
-import { convertFilterContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
+import { convertFilterViewContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 
 /**
  * Convert filter view from API response.
@@ -30,7 +30,7 @@ export function convertFilterView(
     invariant(relationships?.user.data, "User is missing from response.");
     invariant(included);
     invariant(
-        AnalyticalDashboardModelV2.isFilterContext(content),
+        AnalyticalDashboardModelV2.isFilterContextWithTab(content),
         "Entity content is not of FilterContextType",
     );
 
@@ -45,8 +45,9 @@ export function convertFilterView(
         filterContext: {
             title: "",
             description: "",
-            filters: convertFilterContextFilters(content),
+            filters: convertFilterViewContextFilters(content),
         },
         isDefault: isDefault ?? false,
+        tabLocalIdentifier: content.tabLocalIdentifier,
     };
 }

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
+    DateAttributeGranularity,
     IAttribute,
     IDashboardAttributeFilter,
     IFilter,
@@ -32,20 +33,21 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
             content.params.filters
                 .map(getDashboardAttributeFilter)
                 .filter(Boolean) as IDashboardAttributeFilter[],
-            content.params.referencePeriod,
-            content.params.analyzedPeriod,
+            content.params.normalizedReferencePeriod,
+            content.params.normalizedAnalyzedPeriod,
             locale ?? intl.locale,
-            getFormatByGranularity(content.params.dateAttribute) ?? format,
+            getFormatByGranularity(content.params.dateGranularity) ?? format,
         );
     }, [
-        content.params.analyzedPeriod,
-        content.params.filters,
-        content.params.referencePeriod,
-        content.params.dateAttribute,
-        format,
-        intl.locale,
-        locale,
         measure,
+        content.params.dateAttribute,
+        content.params.filters,
+        content.params.normalizedReferencePeriod,
+        content.params.normalizedAnalyzedPeriod,
+        content.params.dateGranularity,
+        locale,
+        intl.locale,
+        format,
     ]);
 
     return def;
@@ -163,40 +165,37 @@ export function getDashboardAttributeFilter(f: IFilter) {
     return null;
 }
 
-function getFormatByGranularity(attr: IAttribute) {
-    const ref = objRefToString(attr.attribute.displayForm);
-    const granularity = ref.split(".")[1];
-
+function getFormatByGranularity(granularity: DateAttributeGranularity) {
     switch (granularity) {
-        case "day":
+        case "GDC.time.date":
             return "dd/MM/yyyy";
-        case "dayOfMonth":
+        case "GDC.time.day_in_month":
             return "d";
-        case "dayOfWeek":
+        case "GDC.time.day_in_week":
             return "ccc";
-        case "dayOfYear":
+        case "GDC.time.day_in_year":
             return "D";
-        case "hour":
+        case "GDC.time.hour":
             return "M/d/y, h a";
-        case "hourOfDay":
+        case "GDC.time.hour_in_day":
             return "h a";
-        case "minute":
+        case "GDC.time.minute":
             return "M/d/y, h:mm a";
-        case "minuteOfHour":
+        case "GDC.time.minute_in_hour":
             return "m";
-        case "month":
+        case "GDC.time.month":
             return "MMM y";
-        case "monthOfYear":
+        case "GDC.time.month_in_year":
             return "LLL";
-        case "quarter":
+        case "GDC.time.quarter":
             return "QQQ y";
-        case "quarterOfYear":
+        case "GDC.time.quarter_in_year":
             return "qqq";
-        case "week":
+        case "GDC.time.week_us":
             return "w/Y";
-        case "weekOfYear":
+        case "GDC.time.week_in_year":
             return "w";
-        case "year":
+        case "GDC.time.year":
             return "y";
         default:
             return undefined;

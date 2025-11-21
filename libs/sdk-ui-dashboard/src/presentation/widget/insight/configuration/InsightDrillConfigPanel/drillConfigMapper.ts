@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { defineMessage } from "react-intl";
 
 import {
@@ -117,6 +118,7 @@ const createDashboardConfig = (
         localIdentifier: drillData.localIdentifier!,
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
         dashboard: drillData.target,
+        dashboardTab: drillData.targetTabLocalIdentifier,
         complete: true,
         widgetRef: widgetRef,
         drillIntersectionIgnoredAttributes: drillData.drillIntersectionIgnoredAttributes,

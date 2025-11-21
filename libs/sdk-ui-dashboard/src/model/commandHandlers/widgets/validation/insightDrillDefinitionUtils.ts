@@ -3,6 +3,7 @@
 import {
     IAttribute,
     IAttributeDisplayFormMetadataObject,
+    IDashboardTab,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
@@ -12,6 +13,7 @@ import {
     InsightDrillDefinition,
     LocalIdRef,
     ObjRef,
+    areObjRefsEqual,
     idRef,
     isDrillFromAttribute,
     isDrillFromMeasure,
@@ -19,6 +21,7 @@ import {
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
+    isListedDashboard,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -156,6 +159,8 @@ export interface InsightDrillDefinitionValidationData {
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
     availableDrillTargets: IAvailableDrillTargets;
     inaccessibleDashboardsMap: ObjRefMap<IInaccessibleDashboard>;
+    currentDashboardRef: ObjRef | undefined;
+    currentDashboardTabs: IDashboardTab[] | undefined;
 }
 
 export function validateInsightDrillDefinition(
@@ -185,7 +190,7 @@ function validateDrillToDashboardDefinition(
     drillDefinition: IDrillToDashboard,
     validationContext: InsightDrillDefinitionValidationData,
 ): IDrillToDashboard {
-    const { target, drillIntersectionIgnoredAttributes } = drillDefinition;
+    const { target, drillIntersectionIgnoredAttributes, targetTabLocalIdentifier } = drillDefinition;
     if (target) {
         let result: IDrillToDashboard | undefined = undefined;
         const targetDashboard =
@@ -193,6 +198,30 @@ function validateDrillToDashboardDefinition(
             validationContext.inaccessibleDashboardsMap.get(target);
 
         if (targetDashboard) {
+            // Check if drilling to the same dashboard
+            const isDrillingToSelf =
+                validationContext.currentDashboardRef &&
+                areObjRefsEqual(validationContext.currentDashboardRef, target);
+
+            // Validate targetTab exists if specified
+            if (targetTabLocalIdentifier) {
+                // Use current dashboard tabs if drilling to self, otherwise use accessible dashboards tabs
+                const tabsToCheck = isDrillingToSelf
+                    ? validationContext.currentDashboardTabs
+                    : isListedDashboard(targetDashboard)
+                      ? targetDashboard.tabs
+                      : undefined;
+
+                const tabExists = tabsToCheck?.some(
+                    (tab: IDashboardTab) => tab.localIdentifier === targetTabLocalIdentifier,
+                );
+                if (!tabExists) {
+                    throw new Error(
+                        `Target tab "${targetTabLocalIdentifier}" not found in dashboard "${targetDashboard.title}"`,
+                    );
+                }
+            }
+
             // normalize ref take the value from state ...
             // md object has to be identifier
             result = {

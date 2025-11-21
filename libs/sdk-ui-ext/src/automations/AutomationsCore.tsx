@@ -67,6 +67,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 onSearch={setSearch}
                 isMobileView={props.isMobileView}
                 accessibilityConfig={accessibilityConfig}
+                renderToolbarCustomElement={props.renderToolbarCustomElement}
                 renderEmptyState={() => (
                     <AutomationsEmptyState
                         type={props.type}

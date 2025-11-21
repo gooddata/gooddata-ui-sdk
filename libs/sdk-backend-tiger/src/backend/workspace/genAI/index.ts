@@ -15,16 +15,18 @@ import { ChatThreadService } from "./ChatThread.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
+import { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
+        private readonly dateNormalizer: DateNormalizer,
     ) {}
 
     getChatThread(): IChatThread {
-        return new ChatThreadService(this.authCall, this.workspaceId);
+        return new ChatThreadService(this.authCall, this.workspaceId, this.dateNormalizer);
     }
 
     getSemanticSearchQuery(): ISemanticSearchQuery {

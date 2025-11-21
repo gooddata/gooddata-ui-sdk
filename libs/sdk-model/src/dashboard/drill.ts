@@ -247,6 +247,14 @@ export interface IDrillToDashboard extends IDrill {
      * to the department that the clicked column represents.
      */
     target?: ObjRef;
+
+    /**
+     * Target tab identifier within the dashboard. When specified, the drill will navigate
+     * to the specific tab. If not specified, the dashboard will open with its default/first tab.
+     *
+     * @alpha
+     */
+    targetTabLocalIdentifier?: string;
 }
 
 /**

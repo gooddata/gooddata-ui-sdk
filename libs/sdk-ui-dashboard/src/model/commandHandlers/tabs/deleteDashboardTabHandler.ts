@@ -9,8 +9,10 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardTabDeleted, DashboardTabSwitched, dashboardTabDeleted } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
+import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
+import { validateDrills } from "../common/validateDrills.js";
 
 /**
  * @internal
@@ -70,6 +72,10 @@ export function* deleteDashboardTabHandler(
 
     // Remove the tab
     yield put(tabsActions.removeTabById(tabId));
+
+    // Validate drills after tab deletion to check if any widgets drill to the deleted tab
+    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
+    yield call(validateDrills, ctx, cmd, widgets);
 
     // Emit deleted event
     return dashboardTabDeleted(ctx, tabId, index, nextActiveTabLocalIdentifier, cmd.correlationId);

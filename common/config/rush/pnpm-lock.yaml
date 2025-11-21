@@ -3986,6 +3986,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
@@ -12093,7 +12096,7 @@ packages:
       '@typescript-eslint/utils': 8.46.0(eslint@8.57.1)(typescript@5.8.3)
       eslint: 8.57.1
       typescript: 5.8.3
-      vitest: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
+      vitest: 3.2.4(happy-dom@18.0.1)(sass@1.70.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -21744,7 +21747,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.17.21
       redent: 4.0.0
-      vitest: 3.2.4(@types/node@22.18.5)(happy-dom@18.0.1)
+      vitest: 3.2.4(happy-dom@18.0.1)(sass@1.70.0)
     dev: true
 
   /vitest@3.2.4(@types/node@22.18.5)(happy-dom@18.0.1):

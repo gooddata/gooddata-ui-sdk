@@ -70,6 +70,9 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     //search
     onSearch?: (search: string) => void;
 
+    //toolbar custom element
+    renderToolbarCustomElement?: () => ReactNode;
+
     //bulk actions
     bulkActions?: Array<UiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;
@@ -227,6 +230,7 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     isMobileView?: boolean;
     width?: number;
     onSearch?: (search: string) => void;
+    renderToolbarCustomElement?: () => ReactNode;
     accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
 }
 

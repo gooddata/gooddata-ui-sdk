@@ -69,7 +69,7 @@ export function DrillTargets(props: IDrillTargetsProps) {
         props.onSetup(drillConfigItem, { ...item, insightRef: targetItem.insight.ref });
     };
 
-    const onDashboardTargetSelect = (targetItem: IDrillableDashboardListItem) => {
+    const onDashboardTargetSelect = (targetItem: IDrillableDashboardListItem, selectedTab?: string) => {
         const dashboard = idRef(targetItem.identifier, "analyticalDashboard");
         const drillConfigItem: IDrillToDashboard = {
             localIdentifier: item.localIdentifier,
@@ -77,9 +77,10 @@ export function DrillTargets(props: IDrillTargetsProps) {
             origin: getOrigin(item),
             type: "drillToDashboard",
             target: dashboard,
+            targetTabLocalIdentifier: selectedTab,
             drillIntersectionIgnoredAttributes: item.drillIntersectionIgnoredAttributes,
         };
-        props.onSetup(drillConfigItem, { ...item, dashboard });
+        props.onSetup(drillConfigItem, { ...item, dashboard, dashboardTab: selectedTab });
     };
 
     const onCustomUrlTargetSelect = (urlDrillTarget: UrlDrillTarget) => {
@@ -115,6 +116,7 @@ export function DrillTargets(props: IDrillTargetsProps) {
             return (
                 <DrillTargetDashboardItem
                     selected={isDrillToDashboardConfig(item) ? item.dashboard : undefined}
+                    selectedTab={isDrillToDashboardConfig(item) ? item.dashboardTab : undefined}
                     onSelect={onDashboardTargetSelect}
                 />
             );

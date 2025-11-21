@@ -65,7 +65,9 @@ export const useAutomationColumns = ({
                     formatCellValue(formatAutomationSubtitle(item, intl)),
                 ],
                 renderSuffixIcon: isSmall
-                    ? (item) => <AutomationIcon type="automationDetails" automation={item} />
+                    ? (item) => (
+                          <AutomationIcon type="automationDetails" automation={item} timezone={timezone} />
+                      )
                     : undefined,
                 sortable: true,
                 width: DEFAULT_COLUMN_WIDTHS.NAME,
@@ -121,7 +123,10 @@ export const useAutomationColumns = ({
                     return intl.formatMessage(messages.cellLastRunNever);
                 },
                 renderPrefixIcon: (item) => {
-                    return AutomationIcon({ type: item.lastRun?.status, automation: item });
+                    const lastRunStatus = item.lastRun?.status;
+                    return lastRunStatus === "FAILED"
+                        ? AutomationIcon({ type: lastRunStatus, automation: item })
+                        : null;
                 },
                 width: DEFAULT_COLUMN_WIDTHS.LAST_SENT,
             },

@@ -391,10 +391,10 @@ export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = Empt
 export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, focusedAction }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen, }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, isOpen, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
 export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected }: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
@@ -1671,7 +1671,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
+export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -5447,6 +5447,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    isDestructive?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;
@@ -5582,6 +5583,7 @@ export type IUiTabAction<TTabProps extends Record<any, any> = EmptyObject, TTabA
     id: string;
     label: string;
     isDisabled?: boolean;
+    isDestructive?: boolean;
     onSelect?: (context: {
         tab: IUiTab<TTabProps, TTabActionProps>;
     }) => void;
@@ -5617,6 +5619,8 @@ export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, T
     TabActions: ComponentType<{
         tab: IUiTab<TTabProps, TTabActionProps>;
         location: "tabs" | "allList";
+        isOpen: boolean;
+        onToggleOpen: (desiredState?: boolean) => void;
         tabIndex?: number;
         id?: string;
     }>;
@@ -5639,7 +5643,7 @@ export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, T
 };
 
 // @internal (undocumented)
-export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = Pick<IUiTabsProps<TTabProps, TTabActionProps>, "tabs" | "selectedTabId" | "onTabSelect" | "size" | "accessibilityConfig" | "maxLabelLength"> & {
+export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = Pick<IUiTabsProps<TTabProps, TTabActionProps>, "tabs" | "selectedTabId" | "onTabSelect" | "size" | "accessibilityConfig" | "maxLabelLength" | "disableBottomBorder"> & {
     isOverflowing: boolean;
     containerRef: RefCallback<Element>;
     onActionTriggered: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void;
@@ -5660,6 +5664,7 @@ export type IUiTabsProps<TTabProps extends Record<any, any> = EmptyObject, TTabA
     size?: SizeSmall | SizeMedium | SizeLarge;
     maxLabelLength?: number;
     accessibilityConfig?: IUiTabsAccessibilityConfig;
+    disableBottomBorder?: boolean;
 } & Partial<IUiTabComponents<TTabProps, TTabActionProps>>;
 
 // @internal (undocumented)
@@ -6595,6 +6600,8 @@ export interface UiAsyncTableProps<T extends {
     // (undocumented)
     renderItem?: (item: T) => ReactNode;
     // (undocumented)
+    renderToolbarCustomElement?: () => ReactNode;
+    // (undocumented)
     scrollToIndex?: number;
     // (undocumented)
     selectedItemIds?: Array<string>;
@@ -6680,7 +6687,11 @@ export interface UiButtonProps {
     // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
+    iconAfterSize?: number;
+    // (undocumented)
     iconBefore?: IconType;
+    // (undocumented)
+    iconBeforeSize?: number;
     // (undocumented)
     id?: string;
     // (undocumented)
@@ -7523,7 +7534,7 @@ export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLE
 export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: KeyboardEvent_2) => void) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton, }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
+export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton, }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
 
 // @internal (undocumented)
 export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;

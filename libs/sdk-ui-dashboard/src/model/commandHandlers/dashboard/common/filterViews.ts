@@ -142,11 +142,44 @@ export function applyDefaultFilterView(
     filterViews: IDashboardFilterView[],
     settings: ISettings,
 ): IDashboard {
-    // find first default filter view (in case metadata are not consistent and there are more than one)
-    const defaultFilterView = filterViews.find((view) => view.isDefault);
     const areFilterViewsEnabled = settings.enableDashboardFilterViews;
+    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
 
-    return areFilterViewsEnabled && defaultFilterView && isFilterContext(dashboard.filterContext)
+    if (!areFilterViewsEnabled) {
+        return dashboard;
+    }
+
+    // If tabs are enabled and dashboard has tabs, apply default views per tab
+    if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
+        const updatedTabs = dashboard.tabs.map((tab) => {
+            // Find default view specific to this tab, or use global default
+            const tabDefaultView = filterViews.find(
+                (view) => view.isDefault && view.tabLocalIdentifier === tab.localIdentifier,
+            );
+
+            if (tabDefaultView && tab.filterContext && isFilterContext(tab.filterContext)) {
+                return {
+                    ...tab,
+                    filterContext: changeFilterContextSelection(
+                        tab.filterContext,
+                        tabDefaultView.filterContext.filters,
+                    ),
+                };
+            }
+
+            return tab;
+        });
+
+        return {
+            ...dashboard,
+            tabs: updatedTabs,
+        };
+    }
+
+    // Legacy behavior: apply default view to root-level filter context
+    const defaultFilterView = filterViews.find((view) => view.isDefault);
+
+    return defaultFilterView && isFilterContext(dashboard.filterContext)
         ? {
               ...dashboard,
               filterContext: changeFilterContextSelection(

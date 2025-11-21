@@ -35,7 +35,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
     return (
         <div
             onClick={() => onClick?.(item)}
-            className={e("row", { large: isLarge, focused: isRowFocused })}
+            className={e("row", { large: isLarge, focused: isRowFocused, active: !!onClick })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
             aria-labelledby={getRowLabelId(itemIndex)}

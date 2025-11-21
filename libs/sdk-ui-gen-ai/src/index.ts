@@ -16,6 +16,7 @@ export type {
     Contents,
     TextContents,
     SearchContents,
+    SemanticSearchContents,
     RoutingContents,
     VisualizationContents,
     ChangeAnalysisContents,

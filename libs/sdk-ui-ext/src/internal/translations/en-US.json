@@ -1895,6 +1895,14 @@
         "value": "Trace ID",
         "comment": "Trace ID label for automation icon tooltip"
     },
+    "automations.icon.tooltip.startsOn": {
+        "value": "Starts on",
+        "comment": "Label for automation icon tooltip section: Starts on"
+    },
+    "automations.icon.tooltip.repeats": {
+        "value": "Repeats",
+        "comment": "Label for automation icon tooltip section: Repeats"
+    },
     "automations.menu.copyId": {
         "value": "Copy ID",
         "comment": "Menu item for copying an automation ID"

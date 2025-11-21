@@ -1100,7 +1100,11 @@ export type {
     IMemoryItemMetadataObject,
     MemoryItemStrategy,
 } from "./ldm/metadata/memoryItem/index.js";
-export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
+export type {
+    ISemanticSearchResult,
+    ISemanticSearchResultItem,
+    ISemanticSearchRelationship,
+} from "./genAI/semanticSearch.js";
 export { isSemanticSearchResultItem, isSemanticSearchRelationship } from "./genAI/semanticSearch.js";
 
 export type {

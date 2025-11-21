@@ -176,6 +176,19 @@ export function convertFilterContextToBackend(
     };
 }
 
+export function convertFilterViewContextToBackend(
+    filterContext: IFilterContextDefinition,
+    useDateFilterLocalIdentifiers?: boolean,
+    tabLocalIdentifier?: string,
+): AnalyticalDashboardModelV2.IFilterContextWithTab {
+    const updatedFilterContext = convertFilterContextToBackend(filterContext, useDateFilterLocalIdentifiers);
+
+    return {
+        ...updatedFilterContext,
+        tabLocalIdentifier,
+    };
+}
+
 export function convertDashboardPluginToBackend(
     plugin: IDashboardPluginDefinition,
 ): AnalyticalDashboardModelV2.IDashboardPlugin {

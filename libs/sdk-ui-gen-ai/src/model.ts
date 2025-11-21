@@ -2,11 +2,13 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import {
+import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatRoutingUseCase,
     IGenAIChangeAnalysisParams,
     IGenAIVisualization,
+    ISemanticSearchRelationship,
+    ISemanticSearchResult,
     ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 
@@ -96,6 +98,35 @@ export const makeSearchContents = (
 /**
  * @public
  */
+export type SemanticSearchContents = {
+    type: "semanticSearch";
+    text: string;
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
+};
+
+/**
+ * @internal
+ */
+export function isSemanticSearchContents(contents: Contents): contents is SemanticSearchContents {
+    return contents.type === "semanticSearch";
+}
+
+/**
+ * @internal
+ */
+export function makeSemanticSearchContents(result: ISemanticSearchResult): SemanticSearchContents {
+    return {
+        type: "semanticSearch",
+        text: result.reasoning ?? "",
+        searchResults: result.results,
+        relationships: result.relationships,
+    };
+}
+
+/**
+ * @public
+ */
 export type VisualizationContents = {
     type: "visualization";
     text: string;
@@ -170,6 +201,7 @@ export type Contents =
     | TextContents
     | RoutingContents
     | SearchContents
+    | SemanticSearchContents
     | VisualizationContents
     | ChangeAnalysisContents
     | ErrorContents;

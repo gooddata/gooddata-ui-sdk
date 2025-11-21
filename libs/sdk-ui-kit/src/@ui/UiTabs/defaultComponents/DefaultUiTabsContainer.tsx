@@ -29,6 +29,7 @@ export function DefaultUiTabsContainer<
         onTabSelect,
         containerRef: resizeContainerRef,
         AllTabs,
+        disableBottomBorder,
     } = store.useContextStoreValues([
         "Tab",
         "accessibilityConfig",
@@ -38,6 +39,7 @@ export function DefaultUiTabsContainer<
         "onTabSelect",
         "containerRef",
         "AllTabs",
+        "disableBottomBorder",
     ]);
 
     const handleSelectTab = useCallback(
@@ -66,16 +68,18 @@ export function DefaultUiTabsContainer<
         scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
 
+    const focusedItemContainerId = scopedIdStoreValue.makeId({ item: focusedItem, specifier: "container" });
+
     useEffect(() => {
         // We currently cannot use the smooth scrolling, since the actions dropdown uses the Bubble component
         // which does not reposition itself once opened. So with the smooth animation, it becomes detached.
         document
-            .getElementById(scopedIdStoreValue.makeId({ item: focusedItem, specifier: "container" }))
+            .getElementById(focusedItemContainerId)
             ?.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
-    }, [focusedItem, scopedIdStoreValue, selectedTabId]);
+    }, [focusedItemContainerId, selectedTabId]);
 
     return (
-        <div className={UiTabsBem.b({ size, overflow: true })}>
+        <div className={UiTabsBem.b({ size, overflow: true, "disable-border": disableBottomBorder })}>
             <div
                 className={UiTabsBem.e("container")}
                 ref={useCombineRefs(resizeContainerRef, focusContainerRef)}
@@ -98,7 +102,7 @@ export function DefaultUiTabsContainer<
                                 key={tab.id}
                                 tab={tab}
                                 isSelected={isSelected}
-                                focusedAction={isSelected ? focusedAction : undefined}
+                                focusedAction={focusedItem === tab ? focusedAction : undefined}
                                 onSelect={onSelect}
                             />
                         );

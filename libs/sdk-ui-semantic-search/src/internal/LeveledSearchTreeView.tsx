@@ -10,24 +10,26 @@ import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
 export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRelationship];
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
 
-type Props = {
+export type LeveledSearchTreeViewProps = {
     id: string;
     items: SearchTreeViewItem[];
+    maxHeight?: number;
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
-    onFocus: (nodeId?: string) => void;
+    onFocus?: (nodeId?: string) => void;
 };
 
 /**
  * A tree view component for semantic search results.
  * @internal
  */
-export function LeveledSearchTreeView({ id, onSelect, onFocus, items }: Props) {
+export function LeveledSearchTreeView(props: LeveledSearchTreeViewProps) {
+    const { id, items, maxHeight = 500, onSelect, onFocus } = props;
     const intl = useIntl();
 
     return (
         <UiLeveledTreeview
             items={items}
-            maxHeight={500}
+            maxHeight={maxHeight}
             ariaAttributes={{
                 id,
                 tabIndex: -1,
