@@ -36,6 +36,7 @@ import {
 } from "../../../converters/index.js";
 import { IDashboardFilter } from "../../../types.js";
 import { DrillToDashboard } from "../../commands/drill.js";
+import { switchDashboardTab } from "../../commands/tabs.js";
 import {
     DashboardDrillToDashboardResolved,
     drillToDashboardRequested,
@@ -149,6 +150,11 @@ export function* drillToDashboardHandler(
 
     // concat everything, order is important – drill filters must go first
     const resultingFilters = compact([commonDateFilter, ...intersectionFilters, ...dashboardFilters]);
+
+    const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
+    if (targetTabLocalIdentifier) {
+        yield put(switchDashboardTab(targetTabLocalIdentifier));
+    }
 
     // put end event
     return drillToDashboardResolved(

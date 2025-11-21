@@ -54,7 +54,8 @@ export const DEFAULT_MAX_HEIGHT = 500;
 export const DEFAULT_PAGE_SIZE = 30;
 
 export const DATE_LOCALE = "en-US";
-export const DATE_FORMAT = "yyyy-MM-DD HH:mm";
+export const DATE_FORMAT_HYPHEN = "yyyy-MM-DD HH:mm";
+export const DATE_FORMAT_SLASH = "MM/DD/yyyy HH:mm";
 
 const DEFAULT_GENERAL_COLUMN_WIDTH = 225;
 const DEFAULT_LARGE_COLUMN_WIDTH = 270;
@@ -86,6 +87,7 @@ export const EMPTY_CELL_VALUES: Record<CellValueType, string> = {
     text: "",
     date: "",
     number: "",
+    "slash-date": "",
 } as const;
 
 export const AUTOMATION_FILTER_EXCLUDE_THRESHOLD = 10;
@@ -162,7 +164,7 @@ export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
         ...titleIconProps,
     },
     schedulePAUSED: {
-        type: "pauseCircle",
+        type: "clockPaused",
         ...titleIconProps,
     },
     alertPAUSED: {
@@ -171,11 +173,11 @@ export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
     },
     automationDetails: {
         type: "questionMark",
-        backgroundSize: 16,
-        color: "complementary-7",
-        backgroundColor: "complementary-7",
+        backgroundSize: 14,
+        color: "complementary-6",
+        backgroundColor: "complementary-6",
         backgroundType: "border",
-        size: 10,
+        size: 9,
     },
     SUCCESS: {
         type: "checkCircle",

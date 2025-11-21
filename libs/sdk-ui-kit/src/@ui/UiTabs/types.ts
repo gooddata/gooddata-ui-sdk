@@ -20,6 +20,7 @@ export type IUiTabAction<
     id: string;
     label: string;
     isDisabled?: boolean;
+    isDestructive?: boolean;
     onSelect?: (context: { tab: IUiTab<TTabProps, TTabActionProps> }) => void;
     /**
      * Whether to close the dropdown when the action is selected.
@@ -72,6 +73,8 @@ export type IUiTabComponents<
     TabActions: ComponentType<{
         tab: IUiTab<TTabProps, TTabActionProps>;
         location: "tabs" | "allList";
+        isOpen: boolean;
+        onToggleOpen: (desiredState?: boolean) => void;
         tabIndex?: number;
         id?: string;
     }>;
@@ -122,7 +125,13 @@ export type IUiTabContext<
     TTabActionProps extends Record<any, any> = EmptyObject,
 > = Pick<
     IUiTabsProps<TTabProps, TTabActionProps>,
-    "tabs" | "selectedTabId" | "onTabSelect" | "size" | "accessibilityConfig" | "maxLabelLength"
+    | "tabs"
+    | "selectedTabId"
+    | "onTabSelect"
+    | "size"
+    | "accessibilityConfig"
+    | "maxLabelLength"
+    | "disableBottomBorder"
 > & {
     isOverflowing: boolean;
     containerRef: RefCallback<Element>;
@@ -143,6 +152,12 @@ export type IUiTabsProps<
     size?: SizeSmall | SizeMedium | SizeLarge;
     maxLabelLength?: number;
     accessibilityConfig?: IUiTabsAccessibilityConfig;
+    /**
+     * When true, disables the gray bottom border line.
+     *
+     * @defaultValue false
+     */
+    disableBottomBorder?: boolean;
 } & Partial<IUiTabComponents<TTabProps, TTabActionProps>>;
 
 /**

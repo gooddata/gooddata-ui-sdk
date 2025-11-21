@@ -31,7 +31,8 @@ export function* loadColorPalette() {
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
 
-        const colorPaletteCall = backend.workspace(workspace).styling().getColorPalette;
+        const stylingService = backend.workspace(workspace).styling();
+        const colorPaletteCall = stylingService.getColorPalette.bind(stylingService);
 
         const results: Awaited<ReturnType<typeof colorPaletteCall>> = yield call(colorPaletteCall);
 
@@ -41,9 +42,9 @@ export function* loadColorPalette() {
                 colorPalette: results,
             }),
         );
-    } catch {
-        //TODO: handle error somehow? Default color palette will be used in this case
+    } catch (e) {
         options.setColorPalette(undefined);
+        console.error("Failed to load color palette", e);
         yield put(
             setColorPaletteAction({
                 colorPalette: undefined,

@@ -10,6 +10,7 @@ import { getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 
 type BuildSearchOverlayItemsProps = {
+    intl: IntlShape;
     searchResults: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
     workspace?: string;
@@ -17,16 +18,14 @@ type BuildSearchOverlayItemsProps = {
     canEdit?: boolean;
 };
 
-export function buildSearchOverlayItems(
-    {
-        workspace = "",
-        searchResults,
-        relationships,
-        threshold = 0.8,
-        canEdit = false,
-    }: BuildSearchOverlayItemsProps,
-    intl: IntlShape,
-): SearchTreeViewItem[] {
+export function buildSemanticSearchTreeViewItems({
+    intl,
+    workspace = "",
+    searchResults,
+    relationships,
+    threshold = 0.8,
+    canEdit = false,
+}: BuildSearchOverlayItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter(thresholdFilter(threshold))
         .map((item): SearchTreeViewItem => {

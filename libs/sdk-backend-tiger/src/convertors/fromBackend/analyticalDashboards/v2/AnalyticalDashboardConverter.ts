@@ -326,6 +326,12 @@ export function convertFilterContextFilters(
     return sanitizeSelectionMode(cloneWithSanitizedIds(content.filters));
 }
 
+export function convertFilterViewContextFilters(
+    content: AnalyticalDashboardModelV2.IFilterContextWithTab,
+): FilterContextItem[] {
+    return sanitizeSelectionMode(cloneWithSanitizedIds(content.filters));
+}
+
 export function convertDashboardPlugin({
     data,
     links,

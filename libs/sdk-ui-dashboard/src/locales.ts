@@ -24,6 +24,7 @@ export const messages = defineMessages({
     scheduleManagementDeleteError: { id: "dialogs.schedule.management.delete.error" },
     scheduleManagementNoSchedules: { id: "dialogs.schedule.management.noSchedules" },
     scheduleManagementCreate: { id: "dialogs.schedule.management.create" },
+    scheduleManagementCreateNew: { id: "dialogs.schedule.management.create.new" },
     scheduleManagementCreateTooMany: { id: "dialogs.schedule.management.create.tooManyMessage" },
     scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
     scheduleManagementExecutionTimestampMode: { id: "dialogs.schedule.email.save.executionTimestampMode" },
@@ -41,6 +42,7 @@ export const messages = defineMessages({
     alertingManagementListTitle: { id: "dialogs.alerting.management.list.title" },
     alertingManagementNoAlerts: { id: "dialogs.alerting.management.noAlerts" },
     alertingManagementCreate: { id: "dialogs.alerting.management.create" },
+    alertingManagementCreateNew: { id: "dialogs.alerting.management.create.new" },
     alertingDeleteSuccess: { id: "dialogs.alerting.delete.success" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },

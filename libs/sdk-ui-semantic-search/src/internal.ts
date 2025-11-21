@@ -10,3 +10,6 @@
 export * from "./FooterButtonAiAssistant.js";
 export * from "./internal/SearchOverlay.js";
 export * from "./hooks/useSearchMetrics.js";
+export { LeveledSearchTreeView, type LeveledSearchTreeViewProps } from "./internal/LeveledSearchTreeView.js";
+export { buildSemanticSearchTreeViewItems } from "./internal/itemsBuilder.js";
+export { IntlWrapper as SemanticSearchIntlProvider } from "./localization/IntlWrapper.js";

@@ -42,8 +42,13 @@ import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
 import { createDateValueStringifier } from "../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
+import { createDateValueNormalizer } from "../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
-import { DateFormatter, DateStringifier } from "../convertors/fromBackend/dateFormatting/types.js";
+import {
+    DateFormatter,
+    DateNormalizer,
+    DateStringifier,
+} from "../convertors/fromBackend/dateFormatting/types.js";
 import { convertApiError } from "../utils/errorHandling.js";
 
 const CAPABILITIES: IBackendCapabilities = {
@@ -128,6 +133,12 @@ export type TigerBackendConfig = {
      * If not specified, a default date stringifier will be used.
      */
     dateStringifier?: DateStringifier;
+
+    /**
+     * Function used to normalize date (ISO) values for a given granularity. It is given a parsed Date value and an appropriate granularity.
+     * If not specified, a default date normalizer will be used.
+     */
+    dateNormalizer?: DateNormalizer;
 };
 
 /**
@@ -151,6 +162,7 @@ export class TigerBackend implements IAnalyticalBackend {
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
     private readonly dateStringifier: DateStringifier;
+    private readonly dateNormalizer: DateNormalizer;
 
     constructor(
         config: IAnalyticalBackendConfig = {},
@@ -164,6 +176,7 @@ export class TigerBackend implements IAnalyticalBackend {
         this.authProvider = authProvider || new AnonymousAuthProvider();
         this.dateFormatter = implConfig.dateFormatter ?? defaultDateFormatter;
         this.dateStringifier = implConfig.dateStringifier ?? createDateValueStringifier();
+        this.dateNormalizer = implConfig.dateNormalizer ?? createDateValueNormalizer();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
@@ -238,11 +251,22 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         invariant(typeof id === "string", `Invalid workspaceId, expected a string, got: ${id}`);
-        return new TigerWorkspace(this.authApiCall, id, this.dateFormatter, this.dateStringifier);
+        return new TigerWorkspace(
+            this.authApiCall,
+            id,
+            this.dateFormatter,
+            this.dateStringifier,
+            this.dateNormalizer,
+        );
     }
 
     public workspaces(): IWorkspacesQueryFactory {
-        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter, this.dateStringifier);
+        return new TigerWorkspaceQueryFactory(
+            this.authApiCall,
+            this.dateFormatter,
+            this.dateStringifier,
+            this.dateNormalizer,
+        );
     }
 
     public isAuthenticated = async (): Promise<IAuthenticatedPrincipal | null> => {

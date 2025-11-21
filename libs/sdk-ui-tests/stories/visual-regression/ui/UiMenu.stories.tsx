@@ -12,8 +12,15 @@ import { wrapWithTheme } from "../themeWrapper.js";
 const interactiveItems: IUiMenuItem[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
-    { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
+    { type: "interactive", id: "item3", stringTitle: "Item 3 (disabled)", isDisabled: true, data: "data3" },
     { type: "interactive", id: "item4", stringTitle: "Item 4", data: "data4" },
+    {
+        type: "interactive",
+        id: "item5",
+        stringTitle: "Item 5 (destructive)",
+        isDestructive: true,
+        data: "data5",
+    },
 ];
 
 const staticItem: IUiMenuItem = {

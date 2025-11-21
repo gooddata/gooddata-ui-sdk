@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { IDashboardObjectIdentity } from "./common.js";
@@ -611,6 +612,7 @@ export interface IDashboardFilterView {
     readonly user: ObjRef;
     readonly filterContext: IFilterContextDefinition;
     readonly isDefault?: boolean;
+    readonly tabLocalIdentifier?: string;
 }
 /**
  * Interface that represents an entity provided to SPI function that creates a new dashboard filter view
@@ -623,4 +625,5 @@ export interface IDashboardFilterViewSaveRequest {
     readonly dashboard: ObjRef;
     readonly filterContext: IFilterContextDefinition;
     readonly isDefault?: boolean;
+    readonly tabLocalIdentifier?: string;
 }

@@ -215,6 +215,7 @@ export type IDrillConfigItemTarget =
 
 export interface IDrillToDashboardConfigTarget {
     dashboard?: ObjRef;
+    dashboardTab?: string;
 }
 
 export type IDrillToDashboardConfig = IDrillConfigItemBase & IDrillToDashboardConfigTarget;

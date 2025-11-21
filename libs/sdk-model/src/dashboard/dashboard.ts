@@ -588,6 +588,18 @@ export interface IListedDashboard
      * States if dashboard is shared with the user and fully accessible or if it is hidden but accessible via link if user knows it.
      */
     readonly availability: ListedDashboardAvailability;
+
+    /**
+     * Tabs configuration for multi-tabbed dashboards.
+     *
+     * @remarks
+     * When present, indicates the dashboard supports tabbed navigation with each tab having its own
+     * layout and filter context. This property is only populated when querying dashboard listings,
+     * providing quick access to tab metadata without loading the full dashboard definition.
+     *
+     * @alpha
+     */
+    readonly tabs?: IDashboardTab[];
 }
 
 /**

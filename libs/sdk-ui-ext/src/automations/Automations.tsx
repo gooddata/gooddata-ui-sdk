@@ -44,6 +44,7 @@ export function Automations({
     isMobileView = false,
     enableBulkActions = true,
     invalidateItemsRef,
+    renderToolbarCustomElement,
     dashboardUrlBuilder = buildDashboardUrl,
     widgetUrlBuilder = buildWidgetUrl,
     editAutomation = defaultEditAutomation,
@@ -74,6 +75,7 @@ export function Automations({
                                         editAutomation={editAutomation}
                                         onLoad={onLoad}
                                         invalidateItemsRef={invalidateItemsRef}
+                                        renderToolbarCustomElement={renderToolbarCustomElement}
                                         locale={locale}
                                     />
                                 </ToastsCenterContextProvider>

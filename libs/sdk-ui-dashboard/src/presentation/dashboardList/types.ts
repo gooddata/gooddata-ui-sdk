@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { IDashboardTab, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -16,6 +16,7 @@ export interface IDrillableDashboardListItem {
     ref: ObjRef;
     selected?: boolean;
     accessibilityLimitation?: DashboardAccessibilityLimitation;
+    tabs?: IDashboardTab[];
 }
 
 /**

@@ -1947,6 +1947,7 @@ declare namespace AnalyticalDashboardModelV2 {
     export {
         isAnalyticalDashboard_2 as isAnalyticalDashboard,
         isFilterContext_2 as isFilterContext,
+        isFilterContextWithTab,
         isDashboardPlugin,
         isDashboardPluginLink,
         isDashboardTab,
@@ -1954,6 +1955,7 @@ declare namespace AnalyticalDashboardModelV2 {
         IDashboardTab,
         IAnalyticalDashboard_2 as IAnalyticalDashboard,
         IFilterContext_3 as IFilterContext,
+        IFilterContextWithTab,
         IDashboardPlugin,
         IDashboardPluginLink
     }
@@ -12327,6 +12329,12 @@ interface IFilterContext_3 {
     version: "2";
 }
 
+// @alpha (undocumented)
+interface IFilterContextWithTab extends IFilterContext_3 {
+    // (undocumented)
+    tabLocalIdentifier?: string;
+}
+
 // @public (undocumented)
 export interface ILiveFeatures {
     // (undocumented)
@@ -12575,6 +12583,9 @@ function isFilterContext_2(filterContext: unknown): filterContext is IFilterCont
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
+
+// @alpha (undocumented)
+function isFilterContextWithTab(filterContext: unknown): filterContext is IFilterContextWithTab;
 
 // @public (undocumented)
 export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks;

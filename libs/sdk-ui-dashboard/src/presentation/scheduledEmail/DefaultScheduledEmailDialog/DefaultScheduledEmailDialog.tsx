@@ -480,6 +480,7 @@ export function ScheduledMailDialogRenderer({
                                             id: "dialogs.schedule.email.accessibilityTitle",
                                         }),
                                     }}
+                                    disableBottomBorder
                                 />
                             ) : null}
                             <ScrollablePanel

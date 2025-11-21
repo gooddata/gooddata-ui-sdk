@@ -7,7 +7,9 @@ import { useIntl } from "react-intl";
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 import { EmptyObject } from "@gooddata/util";
 
+import { useMediaQuery } from "../../../responsive/index.js";
 import { UiButton } from "../../UiButton/UiButton.js";
+import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { messages } from "../messages.js";
 import { IUiTabComponentProps } from "../types.js";
 
@@ -19,12 +21,24 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
     ref: RefObject<HTMLElement>,
 ) {
     const intl = useIntl();
+    const isMobile = useMediaQuery("mobileDevice");
 
-    return (
+    return isMobile ? (
+        <UiIconButton
+            icon={isOpen ? "navigateUp" : "navigateDown"}
+            variant={"tertiary"}
+            label={intl.formatMessage(messages["all"])}
+            accessibilityConfig={{
+                ariaLabel: intl.formatMessage(messages["showAllTabs"]),
+                ariaExpanded: isOpen,
+            }}
+            onClick={onClick}
+            ref={ref as RefObject<HTMLButtonElement>}
+        />
+    ) : (
         <UiButton
             label={intl.formatMessage(messages["all"])}
-            iconAfter={isOpen ? "chevronUp" : "chevronDown"}
-            size={"small"}
+            iconAfter={isOpen ? "navigateUp" : "navigateDown"}
             variant="tertiary"
             accessibilityConfig={{
                 ariaLabel: intl.formatMessage(messages["showAllTabs"]),

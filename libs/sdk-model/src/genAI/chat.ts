@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { GenAIObjectType } from "./common.js";
-import { ISemanticSearchResultItem } from "./semanticSearch.js";
-import { IAttribute } from "../execution/attribute/index.js";
-import { IFilter } from "../execution/filter/index.js";
-import { IMeasure } from "../execution/measure/index.js";
+import type { GenAIObjectType } from "./common.js";
+import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
+import type { DateAttributeGranularity } from "../base/dateGranularities.js";
+import type { IAttribute } from "../execution/attribute/index.js";
+import type { IFilter } from "../execution/filter/index.js";
+import type { IMeasure } from "../execution/measure/index.js";
 
 /**
  * Role of the chat interaction.
@@ -321,8 +322,13 @@ export interface IGenAIChatInteraction {
     textResponse?: string;
     /**
      * A list of found objects for the interaction.
+     * @deprecated Use `semanticSearch` property instead.
      */
     foundObjects?: IGenAIFoundObjects;
+    /**
+     * Semantic search results for the interaction.
+     */
+    semanticSearch?: ISemanticSearchResult;
     /**
      * A list of created visualizations for the interaction.
      */
@@ -389,6 +395,10 @@ export interface IGenAIChangeAnalysisParams {
      */
     dateAttribute: IAttribute;
     /**
+     * Date attribute granularity
+     */
+    dateGranularity: DateAttributeGranularity;
+    /**
      * Attributes to apply
      */
     attributes: IAttribute[];
@@ -397,9 +407,17 @@ export interface IGenAIChangeAnalysisParams {
      */
     referencePeriod: string;
     /**
+     * Reference period normalized to ISO string
+     */
+    normalizedReferencePeriod: string;
+    /**
      * Analyzed period
      */
     analyzedPeriod: string;
+    /**
+     * Analyzed period normalized to ISO string
+     */
+    normalizedAnalyzedPeriod: string;
     /**
      * Filters to apply
      */

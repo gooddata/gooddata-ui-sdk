@@ -16,7 +16,7 @@ import { IAutomationIconProps } from "../types.js";
 
 const { e } = bem("gd-ui-ext-automation-icon-tooltip");
 
-export function AutomationIcon({ type, automation, state }: IAutomationIconProps) {
+export function AutomationIcon({ type, automation, state, timezone }: IAutomationIconProps) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
 
@@ -68,20 +68,35 @@ export function AutomationIcon({ type, automation, state }: IAutomationIconProps
     }
 
     if (type === "automationDetails") {
+        const subtitle = formatCellValue(formatAutomationSubtitle(automation, intl));
         return (
             <AutomationIconTooltip
                 header={formatCellValue(automation.title)}
-                content={formatCellValue(formatAutomationSubtitle(automation, intl))}
-                sections={
-                    automation.recipients?.length
+                sections={[
+                    ...(automation.created
+                        ? [
+                              {
+                                  header: intl.formatMessage(messages.automationIconTooltipStartsOn),
+                                  content: (
+                                      <TooltipStartsOnSection automation={automation} timezone={timezone} />
+                                  ),
+                              },
+                          ]
+                        : []),
+                    {
+                        header: intl.formatMessage(messages.automationIconTooltipRepeats),
+                        content: subtitle,
+                    },
+
+                    ...(automation.recipients?.length
                         ? [
                               {
                                   header: intl.formatMessage(messages.columnRecipients),
                                   content: <TooltipRecipientsList automation={automation} />,
                               },
                           ]
-                        : []
-                }
+                        : []),
+                ]}
             >
                 <UiIcon {...props} layout="block" />
             </AutomationIconTooltip>
@@ -99,6 +114,23 @@ function TooltipRecipientsList({ automation }: { automation: IAutomationMetadata
                     {recipient.name}
                 </span>
             ))}
+        </div>
+    );
+}
+
+function TooltipStartsOnSection({
+    automation,
+    timezone,
+}: {
+    automation: IAutomationMetadataObject;
+    timezone: string;
+}) {
+    const [date, time] = formatCellValue(automation.created, "date", timezone)?.split(" ") ?? [];
+
+    return (
+        <div className={e("starts-on")}>
+            <span>{date}</span>
+            <span>{`${time} ${timezone}`}</span>
         </div>
     );
 }

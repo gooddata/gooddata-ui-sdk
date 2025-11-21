@@ -56,7 +56,11 @@ import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
-import { DateFormatter, DateStringifier } from "../../convertors/fromBackend/dateFormatting/types.js";
+import {
+    DateFormatter,
+    DateNormalizer,
+    DateStringifier,
+} from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -67,6 +71,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         public readonly workspace: string,
         private readonly dateFormatter: DateFormatter,
         private readonly dateStringifier: DateStringifier,
+        private readonly dateNormalizer: DateNormalizer,
         private readonly descriptor?: IWorkspaceDescriptor,
     ) {}
 
@@ -116,6 +121,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                 descriptor.parentWorkspace,
                 this.dateFormatter,
                 this.dateStringifier,
+                this.dateNormalizer,
             );
         }
         return undefined;
@@ -206,6 +212,6 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public genAI(): IGenAIService {
-        return new GenAIService(this.authCall, this.workspace);
+        return new GenAIService(this.authCall, this.workspace, this.dateNormalizer);
     }
 }

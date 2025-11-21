@@ -31,7 +31,8 @@ export function* loadSettings() {
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
 
-        const settingsCall = backend.workspace(workspace).settings().getSettingsForCurrentUser;
+        const settingsService = backend.workspace(workspace).settings();
+        const settingsCall = settingsService.getSettingsForCurrentUser.bind(settingsService);
 
         const results: Awaited<ReturnType<typeof settingsCall>> = yield call(settingsCall);
 
@@ -41,8 +42,9 @@ export function* loadSettings() {
                 settings: results,
             }),
         );
-    } catch {
+    } catch (e) {
         options.setSettings(undefined);
+        console.error("Failed to load settings", e);
         yield put(
             setSettingsAction({
                 settings: undefined,

@@ -1475,6 +1475,8 @@ export interface IDashboardFilterView {
     // (undocumented)
     readonly ref: ObjRef;
     // (undocumented)
+    readonly tabLocalIdentifier?: string;
+    // (undocumented)
     readonly user: ObjRef;
 }
 
@@ -1488,6 +1490,8 @@ export interface IDashboardFilterViewSaveRequest {
     readonly isDefault?: boolean;
     // (undocumented)
     readonly name: string;
+    // (undocumented)
+    readonly tabLocalIdentifier?: string;
 }
 
 // @public
@@ -1871,6 +1875,8 @@ export interface IDrillToCustomUrlTarget {
 // @public
 export interface IDrillToDashboard extends IDrill {
     target?: ObjRef;
+    // @alpha
+    targetTabLocalIdentifier?: string;
     transition: "in-place";
     type: "drillToDashboard";
 }
@@ -2090,8 +2096,11 @@ export interface IGenAIChangeAnalysisParams {
     analyzedPeriod: string;
     attributes: IAttribute[];
     dateAttribute: IAttribute;
+    dateGranularity: DateAttributeGranularity;
     filters: IFilter[];
     measure: IMeasure;
+    normalizedAnalyzedPeriod: string;
+    normalizedReferencePeriod: string;
     referencePeriod: string;
 }
 
@@ -2101,10 +2110,12 @@ export interface IGenAIChatInteraction {
     chatHistoryInteractionId: string;
     createdVisualizations?: IGenAICreatedVisualizations;
     errorResponse?: string;
+    // @deprecated
     foundObjects?: IGenAIFoundObjects;
     interactionFinished: boolean;
     question: string;
     routing: IGenAIChatRouting;
+    semanticSearch?: ISemanticSearchResult;
     textResponse?: string;
     userFeedback?: GenAIChatInteractionUserFeedback;
 }
@@ -2383,6 +2394,7 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
+    readonly tabs?: IDashboardTab[];
     readonly tags?: string[];
     readonly title: string;
     readonly uri: string;
@@ -3555,6 +3567,13 @@ export interface ISemanticSearchRelationship {
     targetObjectTitle: string;
     targetObjectType: GenAIObjectType;
     targetWorkspaceId: string;
+}
+
+// @beta
+export interface ISemanticSearchResult {
+    reasoning?: string;
+    relationships: ISemanticSearchRelationship[];
+    results: ISemanticSearchResultItem[];
 }
 
 // @beta

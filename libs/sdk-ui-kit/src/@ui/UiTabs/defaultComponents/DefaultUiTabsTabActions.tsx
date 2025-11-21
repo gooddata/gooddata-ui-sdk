@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 import { EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
+import { useScopedId } from "../../hooks/useScopedId.js";
 import { isSeparator } from "../../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 import { IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
@@ -25,17 +26,21 @@ type IMenuItemType<
 export function DefaultUiTabsTabActions<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
->({ tab, location, id, tabIndex }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>) {
+>({
+    tab,
+    location,
+    id,
+    tabIndex,
+    isOpen,
+    onToggleOpen,
+}: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>) {
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { TabActionsButton, onActionTriggered } = store.useContextStoreValues([
         "TabActionsButton",
         "onActionTriggered",
     ]);
 
-    const [isOpen, setIsOpen] = useState(false);
-    const handleToggleOpen = useCallback((desiredState?: boolean) => {
-        setIsOpen((wasOpen) => desiredState ?? !wasOpen);
-    }, []);
+    const tabElementId = useScopedId(tab, "container");
 
     const menuItems: IMenuItemType<TTabProps, TTabActionProps>[] = useMemo(
         () =>
@@ -47,6 +52,7 @@ export function DefaultUiTabsTabActions<
                           id: action.id,
                           stringTitle: action.label,
                           isDisabled: action.isDisabled,
+                          isDestructive: action.isDestructive,
                           iconLeft: action.iconLeft,
                           iconRight: action.iconRight,
                           data: {
@@ -54,13 +60,22 @@ export function DefaultUiTabsTabActions<
                                   action.onSelect(ctx);
                                   onActionTriggered({ action, tab, location });
                                   if (action.closeOnSelect !== false) {
-                                      setIsOpen(false);
+                                      onToggleOpen(false);
                                   }
+
+                                  // Scroll to the tab after the tabs are redrawn
+                                  window.setTimeout(() => {
+                                      document.getElementById(tabElementId)?.scrollIntoView({
+                                          inline: "nearest",
+                                          block: "nearest",
+                                          behavior: "instant",
+                                      });
+                                  }, 50);
                               }) as IUiTabAction<TTabProps, TTabActionProps>["onSelect"],
                           },
                       };
             }) ?? [],
-        [tab, onActionTriggered, location],
+        [tab, onActionTriggered, location, tabElementId, onToggleOpen],
     );
 
     const handleItemSelected = useCallback(
@@ -113,7 +128,7 @@ export function DefaultUiTabsTabActions<
                 popupRole: "listbox",
             }}
             isOpen={isOpen}
-            onToggle={handleToggleOpen}
+            onToggle={onToggleOpen}
         />
     );
 }

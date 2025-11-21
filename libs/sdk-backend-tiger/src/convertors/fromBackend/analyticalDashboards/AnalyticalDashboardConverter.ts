@@ -50,6 +50,10 @@ export const convertAnalyticalDashboard = (
     const { createdAt, modifiedAt } = attributes;
     const isPrivate = meta?.accessInfo?.private ?? false;
 
+    // Use type guard for safer access to dashboard content
+    const content = attributes?.content;
+    const tabs = AnalyticalDashboardModelV2.isAnalyticalDashboard(content) ? (content.tabs ?? []) : [];
+
     return {
         ref: idRef(id, "analyticalDashboard"),
         uri: links!.self,
@@ -66,6 +70,7 @@ export const convertAnalyticalDashboard = (
         sharePermissions: meta?.permissions,
         isUnderStrictControl: true,
         availability: "full",
+        ...(tabs.length > 0 ? { tabs } : {}),
     };
 };
 

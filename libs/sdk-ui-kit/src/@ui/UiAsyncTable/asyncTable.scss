@@ -18,6 +18,10 @@
             height: var(--gd-table-row-height-large);
         }
 
+        &--active {
+            cursor: pointer;
+        }
+
         &:hover {
             #{$root}__cell {
                 background-color: var(--gd-palette-complementary-2);
@@ -278,6 +282,10 @@
         max-width: 200px;
     }
 
+    &__toolbar-custom-element {
+        margin-left: auto;
+    }
+
     &__dropdown-item-container {
         &--underlined {
             margin-top: -10px;
@@ -291,6 +299,7 @@
         font-size: var(--gd-table-dropdown-item-font-size);
         cursor: pointer;
         height: var(--gd-table-dropdown-item-height);
+        -webkit-font-smoothing: antialiased;
 
         &:hover {
             background-color: var(--gd-palette-complementary-2);
@@ -388,13 +397,14 @@
         justify-content: center;
         align-items: center;
         height: 300px;
+        gap: var(--gd-spacing-10px);
         color: var(--gd-palette-complementary-6);
     }
 
     &__empty-state-title {
         font-size: 20px;
         font-weight: 700;
-        margin-top: var(--gd-spacing-15px);
+        margin-top: var(--gd-spacing-10px);
     }
 
     &__empty-state-description {

@@ -403,11 +403,29 @@
                 left: -6px;
             }
         }
+
+        .gd-drill-target-tab-selector-container {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: flex-start;
+            max-width: 100%;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            .gd-tabs-dropdown-button {
+                max-width: 130px;
+            }
+        }
     }
 
     .gd-button-small {
         margin-top: 5px;
     }
+}
+
+.gd-tab-select_list-item.gd-list-item {
+    height: 28px;
 }
 
 .drill-config-item-target {

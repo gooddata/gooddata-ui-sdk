@@ -147,6 +147,37 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                         availableFilters={availableFilters}
                         locale={locale}
                         invalidateItemsRef={invalidateItemsRef}
+                        renderToolbarCustomElement={() =>
+                            canCreateAutomation ? (
+                                <UiTooltip
+                                    optimalPlacement
+                                    anchor={
+                                        <Button
+                                            onClick={onAdd}
+                                            disabled={isAddButtonDisabled}
+                                            value={intl.formatMessage({
+                                                id: messages.scheduleManagementCreateNew.id!,
+                                            })}
+                                            size="small"
+                                            className="gd-button-action"
+                                        />
+                                    }
+                                    disabled={!maxAutomationsReached}
+                                    triggerBy={["hover"]}
+                                    content={
+                                        maxAutomationsReached
+                                            ? intl.formatMessage({
+                                                  id: messages.scheduleManagementCreateTooMany.id!,
+                                              })
+                                            : isExecutionTimestampMode
+                                              ? intl.formatMessage({
+                                                    id: messages.scheduleManagementExecutionTimestampMode.id!,
+                                                })
+                                              : undefined
+                                    }
+                                />
+                            ) : null
+                        }
                         selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                     />
                 </div>
@@ -165,34 +196,6 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                             className="gd-button-secondary s-close-button"
                             value={intl.formatMessage({ id: "close" })}
                         />
-                        {canCreateAutomation ? (
-                            <UiTooltip
-                                optimalPlacement
-                                anchor={
-                                    <Button
-                                        onClick={onAdd}
-                                        disabled={isAddButtonDisabled}
-                                        value={intl.formatMessage({
-                                            id: messages.scheduleManagementCreate.id!,
-                                        })}
-                                        className="gd-button-action"
-                                    />
-                                }
-                                disabled={!maxAutomationsReached}
-                                triggerBy={["hover"]}
-                                content={
-                                    maxAutomationsReached
-                                        ? intl.formatMessage({
-                                              id: messages.scheduleManagementCreateTooMany.id!,
-                                          })
-                                        : isExecutionTimestampMode
-                                          ? intl.formatMessage({
-                                                id: messages.scheduleManagementExecutionTimestampMode.id!,
-                                            })
-                                          : undefined
-                                }
-                            />
-                        ) : null}
                     </div>
                 </div>
             </OverlayControllerProvider>

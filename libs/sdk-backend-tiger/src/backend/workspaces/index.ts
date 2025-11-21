@@ -20,7 +20,11 @@ import {
     IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
-import { DateFormatter, DateStringifier } from "../../convertors/fromBackend/dateFormatting/types.js";
+import {
+    DateFormatter,
+    DateNormalizer,
+    DateStringifier,
+} from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerWorkspace } from "../workspace/index.js";
@@ -30,14 +34,26 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
         private readonly dateStringifier: DateStringifier,
+        private readonly dateNormalizer: DateNormalizer,
     ) {}
 
     public forUser(userId: string): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.dateStringifier, userId);
+        return new TigerWorkspaceQuery(
+            this.authCall,
+            this.dateFormatter,
+            this.dateStringifier,
+            this.dateNormalizer,
+            userId,
+        );
     }
 
     public forCurrentUser(): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.dateStringifier);
+        return new TigerWorkspaceQuery(
+            this.authCall,
+            this.dateFormatter,
+            this.dateStringifier,
+            this.dateNormalizer,
+        );
     }
 }
 
@@ -58,6 +74,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
         private readonly dateStringifier: DateStringifier,
+        private readonly dateNormalizer: DateNormalizer,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         private readonly userId?: string,
@@ -165,6 +182,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             descriptor.id,
             this.dateFormatter,
             this.dateStringifier,
+            this.dateNormalizer,
             descriptor,
         );
 

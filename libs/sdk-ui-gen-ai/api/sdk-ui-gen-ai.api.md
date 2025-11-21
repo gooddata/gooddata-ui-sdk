@@ -9,14 +9,15 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { FC } from 'react';
-import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
-import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
+import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
+import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
-import { IGenAIVisualization } from '@gooddata/sdk-model';
-import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
+import type { IGenAIVisualization } from '@gooddata/sdk-model';
+import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
+import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
@@ -133,7 +134,7 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
 
 // @public (undocumented)
-export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
+export type Contents = TextContents | RoutingContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
 export const DefaultLandingQuestion: FC<LandingQuestionProps>;
@@ -239,7 +240,7 @@ export interface LandingTitleProps {
 
 // @public (undocumented)
 export type LinkHandlerEvent = {
-    type: "visualization" | "setting";
+    type: "setting" | GenAIObjectType;
     id: string;
     workspaceId: string;
     newTab: boolean;
@@ -272,6 +273,14 @@ export type SearchContents = {
     type: "search";
     text: string;
     searchResults: ISemanticSearchResultItem[];
+};
+
+// @public (undocumented)
+export type SemanticSearchContents = {
+    type: "semanticSearch";
+    text: string;
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
 };
 
 // @public (undocumented)

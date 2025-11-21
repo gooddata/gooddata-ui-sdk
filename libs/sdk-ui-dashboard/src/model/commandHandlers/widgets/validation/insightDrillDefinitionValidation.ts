@@ -5,6 +5,7 @@ import { SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
     IAttribute,
+    IDashboardTab,
     IListedDashboard,
     InsightDrillDefinition,
     ObjRef,
@@ -27,6 +28,8 @@ import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drill
 import { IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef } from "../../../store/insights/insightsSelectors.js";
+import { selectDashboardRef } from "../../../store/meta/metaSelectors.js";
+import { selectTabs } from "../../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
 import {
@@ -68,6 +71,8 @@ export function validateDrillDefinition(
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
         availableDrillTargets: validationData.drillTargets.availableDrillTargets!,
         inaccessibleDashboardsMap: validationData.inaccessibleDashboardsMap,
+        currentDashboardRef: validationData.currentDashboardRef,
+        currentDashboardTabs: validationData.currentDashboardTabs,
     };
 
     try {
@@ -87,6 +92,8 @@ export interface DrillDefinitionValidationData {
     resolvedDisplayForms: DisplayFormResolutionResult;
     accessibleDashboardMap: ObjRefMap<IListedDashboard>;
     inaccessibleDashboardsMap: ObjRefMap<IInaccessibleDashboard>;
+    currentDashboardRef: ObjRef | undefined;
+    currentDashboardTabs: IDashboardTab[] | undefined;
 }
 
 export function* getValidationData(
@@ -111,6 +118,14 @@ export function* getValidationData(
         selectInaccessibleDashboardsMap,
     );
 
+    const currentDashboardRef: ReturnType<typeof selectDashboardRef> = yield select(selectDashboardRef);
+    const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+    // Convert TabState to minimal IDashboardTab structure needed for validation
+    const currentDashboardTabs: IDashboardTab[] | undefined = tabs?.map((tab) => ({
+        localIdentifier: tab.localIdentifier,
+        title: tab.title ?? "",
+    }));
+
     const insightRefs = extractInsightRefs(drillsToModify);
     const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
         resolveInsights,
@@ -132,5 +147,7 @@ export function* getValidationData(
         resolvedInsights,
         resolvedDisplayForms,
         inaccessibleDashboardsMap,
+        currentDashboardRef,
+        currentDashboardTabs,
     };
 }

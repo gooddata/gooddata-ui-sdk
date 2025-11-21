@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
-import { CatalogItem } from "@gooddata/sdk-model";
+import { CatalogItem, type GenAIObjectType } from "@gooddata/sdk-model";
 
 export type ConfigContext = {
     allowNativeLinks: boolean;
@@ -17,7 +17,7 @@ export type ConfigContext = {
  * @public
  */
 export type LinkHandlerEvent = {
-    type: "visualization" | "setting";
+    type: "setting" | GenAIObjectType;
     id: string;
     workspaceId: string;
     newTab: boolean;

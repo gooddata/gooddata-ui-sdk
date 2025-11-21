@@ -3,6 +3,7 @@
 .gd-ui-kit-tabs {
     $root: &;
 
+    background: var(--gd-palette-complementary-0);
     font-family: var(--gd-font-family);
     display: flex;
     align-items: flex-end;
@@ -18,6 +19,10 @@
         height: 1px;
         background: var(--gd-palette-complementary-3);
         bottom: 0;
+    }
+
+    &--disable-border::after {
+        display: none;
     }
 
     &__container {
@@ -43,23 +48,37 @@
         align-self: stretch;
         flex-shrink: 0;
         border-left: 1px solid var(--gd-palette-complementary-3);
+        margin-right: calc(-1 * var(--gd-spacing-5px));
     }
 
     &__dropdown {
         display: flex;
-        padding-left: var(--gd-spacing-10px);
         border-bottom: 1px solid transparent;
     }
 
     &__dropdown .gd-dropdown-button-wrapper {
         height: 100%;
+        width: 100%;
+    }
+
+    &__dropdown .gd-ui-kit-button,
+    &__dropdown .gd-ui-kit-icon-button {
+        height: 100%;
+        width: 100%;
+        color: var(--gd-palette-complementary-7);
     }
 
     &__dropdown .gd-ui-kit-button {
-        height: 100%;
+        padding-left: var(--gd-spacing-10px);
+        padding-right: var(--gd-spacing-10px);
+    }
+
+    &__dropdown .gd-ui-kit-icon-button {
+        width: 45px;
     }
 
     &__tab-wrapper {
+        position: relative;
         display: flex;
         align-items: center;
         gap: var(--gd-spacing-10px);
@@ -95,6 +114,7 @@
     }
 
     &__tab-list-item {
+        position: relative;
         display: flex;
         cursor: pointer;
         align-items: center;
@@ -104,9 +124,43 @@
             background-color: var(--gd-palette-complementary-2);
         }
 
-        &:hover #{$root}__label {
-            transition: color 0.2s;
-            color: var(--gd-palette-complementary-9);
+        & #{$root}__label {
+            color: var(--gd-palette-complementary-8);
+        }
+
+        & #{$root}__label--selected {
+            font-weight: 700;
+            color: var(--gd-palette-primary-base);
+        }
+    }
+
+    &__tab-list-item:has(*:focus-visible)#{$root}__tab-list-item--focused,
+    &__tab-list-item--actions-open,
+    &__tab-list-item:hover {
+        #{$root}__tab-list-item-actions {
+            opacity: 1;
+        }
+    }
+
+    &__tab-wrapper:has(*:focus-visible)#{$root}__tab-wrapper--focused,
+    &__tab-wrapper--actions-open,
+    &__tab-wrapper:hover {
+        #{$root}__tabs-actions {
+            opacity: 1;
+        }
+    }
+
+    &__tabs-actions {
+        opacity: 0;
+        transition: opacity 0.2s;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+
+        & .gd-ui-kit-icon-button {
+            align-items: center;
+            justify-items: end;
         }
     }
 
@@ -119,13 +173,20 @@
     &__tab-list-item-actions {
         flex-grow: 0;
         flex-shrink: 0;
-        margin-right: calc(-0.5 * var(--gd-spacing-10px));
+        opacity: 0;
+        transition: opacity 0.2s;
     }
 
     &__tab-list {
         width: 250px;
         max-height: 400px;
         overflow-y: auto;
+        overflow-x: hidden;
+
+        &--mobile {
+            width: unset;
+            height: unset;
+        }
     }
 
     &__actions-wrapper {
@@ -137,7 +198,7 @@
         color: var(--gd-palette-complementary-8);
     }
 
-    &__label {
+    &__container #{$root}__label {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -150,7 +211,7 @@
             color: var(--gd-palette-complementary-7);
         }
 
-        &--variant-default#{&}--selected {
+        &--variant-default#{$root}__label--selected {
             color: var(--gd-palette-complementary-8);
         }
 
@@ -158,7 +219,7 @@
             color: var(--gd-palette-complementary-3);
         }
 
-        &--variant-placeholder#{&}--selected {
+        &--variant-placeholder#{$root}__label--selected {
             color: var(--gd-palette-complementary-3);
         }
     }
@@ -167,11 +228,8 @@
         &-large {
             #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-L, 56px);
-                padding: var(--gd-spacing-16px) var(--gd-spacing-10px) var(--gd-spacing-14px)
-                    var(--gd-spacing-10px);
-            }
-            #{$root}__actions-wrapper {
-                margin-right: calc(-0.5 * var(--gd-spacing-10px));
+                padding: var(--gd-spacing-16px) var(--gd-spacing-20px) var(--gd-spacing-14px)
+                    var(--gd-spacing-20px);
             }
             #{$root}__label {
                 font-size: 14px;

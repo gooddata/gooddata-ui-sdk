@@ -2,10 +2,12 @@
 
 import { EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import {
+import type {
     ChatHistoryInteraction,
     ChatHistoryResult,
     CreatedVisualization,
+    SearchRelationshipObject,
+    SearchResult,
     SearchResultObject,
 } from "@gooddata/api-client-tiger";
 import {
@@ -13,30 +15,37 @@ import {
     GenAiApi_AiChatHistory,
     GenAiApi_AiChatStream,
 } from "@gooddata/api-client-tiger/genAI";
-import {
+import type {
     IChatThread,
     IChatThreadHistory,
     IChatThreadQuery,
     IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
 import {
-    GenAIChatInteractionUserFeedback,
-    GenAIChatInteractionUserVisualisation,
-    GenAIFilter,
-    GenAIObjectType,
-    IGenAIChangeAnalysisParams,
-    IGenAIChatInteraction,
-    IGenAIChatRouting,
-    IGenAICreatedVisualizations,
-    IGenAIFoundObjects,
-    IGenAIUserContext,
-    IGenAIVisualization,
-    ISemanticSearchResultItem,
+    type DateAttributeGranularity,
+    type GenAIChatInteractionUserFeedback,
+    type GenAIChatInteractionUserVisualisation,
+    type GenAIFilter,
+    type GenAIObjectType,
+    type IAttribute,
+    type IGenAIChangeAnalysisParams,
+    type IGenAIChatInteraction,
+    type IGenAIChatRouting,
+    type IGenAICreatedVisualizations,
+    type IGenAIFoundObjects,
+    type IGenAIUserContext,
+    type IGenAIVisualization,
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResult,
+    type ISemanticSearchResultItem,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import { convertFilter } from "../../../convertors/fromBackend/afm/FilterConverter.js";
 import { convertMeasure } from "../../../convertors/fromBackend/afm/MeasureConverter.js";
 import { convertAttribute } from "../../../convertors/fromBackend/AttributeConvertor.js";
+import { FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
+import { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
@@ -47,6 +56,7 @@ export class ChatThreadService implements IChatThread {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
+        private readonly dateNormalizer: DateNormalizer,
     ) {}
 
     async loadHistory(
@@ -67,7 +77,7 @@ export class ChatThreadService implements IChatThread {
             );
         });
 
-        return convertChatHistoryResult(response.data);
+        return convertChatHistoryResult(this.dateNormalizer, response.data);
     }
 
     async reset(): Promise<void> {
@@ -132,7 +142,7 @@ export class ChatThreadService implements IChatThread {
     }
 
     query(userMessage: string): IChatThreadQuery {
-        return new ChatThreadQuery(this.authCall, {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
             workspaceId: this.workspaceId,
             userQuestion: userMessage,
         });
@@ -159,32 +169,33 @@ export type ChatThreadQueryConfig = {
 export class ChatThreadQuery implements IChatThreadQuery {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
+        private readonly dateNormalizer: DateNormalizer,
         private readonly config: ChatThreadQueryConfig,
     ) {}
 
     withSearchLimit(limitSearch: number): IChatThreadQuery {
-        return new ChatThreadQuery(this.authCall, {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
             ...this.config,
             limitSearch,
         });
     }
 
     withCreateLimit(limitCreate: number): IChatThreadQuery {
-        return new ChatThreadQuery(this.authCall, {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
             ...this.config,
             limitCreate,
         });
     }
 
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery {
-        return new ChatThreadQuery(this.authCall, {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
             ...this.config,
             userContext,
         });
     }
 
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery {
-        return new ChatThreadQuery(this.authCall, {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
             ...this.config,
             objectTypes,
         });
@@ -264,7 +275,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
         return textStream
             .pipeThrough(new EventSourceParserStream())
             .pipeThrough(new ServerSentEventsDataParser())
-            .pipeThrough(new ServerSentEventsDataConverter());
+            .pipeThrough(new ServerSentEventsDataConverter(this.dateNormalizer));
     }
 }
 
@@ -295,23 +306,35 @@ class ServerSentEventsDataConverter extends TransformStream<
     Partial<ChatHistoryInteraction>,
     IGenAIChatEvaluation
 > {
-    constructor() {
+    constructor(dateNormalizer: DateNormalizer, locale?: FormattingLocale, timezone?: string) {
         super({
             transform(event, controller) {
-                controller.enqueue(convertChatEvaluation(event));
+                controller.enqueue(convertChatEvaluation(dateNormalizer, event, locale, timezone));
             },
         });
     }
 }
 
-function convertChatHistoryResult(data: ChatHistoryResult): IChatThreadHistory {
+function convertChatHistoryResult(
+    dateNormalizer: DateNormalizer,
+    data: ChatHistoryResult,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatThreadHistory {
     return {
         ...data,
-        interactions: data.interactions.map(convertChatHistoryInteraction),
+        interactions: data.interactions.map((i) =>
+            convertChatHistoryInteraction(dateNormalizer, i, locale, timezone),
+        ),
     };
 }
 
-function convertChatHistoryInteraction(data: ChatHistoryInteraction): IGenAIChatInteraction {
+function convertChatHistoryInteraction(
+    dateNormalizer: DateNormalizer,
+    data: ChatHistoryInteraction,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IGenAIChatInteraction {
     return {
         question: data.question,
         chatHistoryInteractionId: data.chatHistoryInteractionId,
@@ -325,6 +348,12 @@ function convertChatHistoryInteraction(data: ChatHistoryInteraction): IGenAIChat
                   foundObjects: convertFoundObjects(data.foundObjects),
               }
             : {}),
+        // NOTE: Remove type check once client is updated.
+        ...("semanticSearch" in data && data.semanticSearch
+            ? {
+                  semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
+              }
+            : {}),
         ...(data.createdVisualizations
             ? {
                   createdVisualizations: convertCreatedVisualizations(data.createdVisualizations),
@@ -332,13 +361,23 @@ function convertChatHistoryInteraction(data: ChatHistoryInteraction): IGenAIChat
             : {}),
         ...(data.changeAnalysisParams
             ? {
-                  changeAnalysisParams: convertChangeAnalysisParams(data.changeAnalysisParams),
+                  changeAnalysisParams: convertChangeAnalysisParams(
+                      dateNormalizer,
+                      data.changeAnalysisParams,
+                      locale,
+                      timezone,
+                  ),
               }
             : {}),
     };
 }
 
-function convertChatEvaluation(data: Partial<ChatHistoryInteraction>): IGenAIChatEvaluation {
+function convertChatEvaluation(
+    dateNormalizer: DateNormalizer,
+    data: Partial<ChatHistoryInteraction>,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IGenAIChatEvaluation {
     return {
         ...(data.routing
             ? {
@@ -360,6 +399,12 @@ function convertChatEvaluation(data: Partial<ChatHistoryInteraction>): IGenAICha
                   foundObjects: convertFoundObjects(data.foundObjects),
               }
             : {}),
+        // NOTE: Remove type check once client is updated.
+        ...("semanticSearch" in data && data.semanticSearch
+            ? {
+                  semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
+              }
+            : {}),
         ...(data.createdVisualizations
             ? {
                   createdVisualizations: convertCreatedVisualizations(data.createdVisualizations),
@@ -367,7 +412,12 @@ function convertChatEvaluation(data: Partial<ChatHistoryInteraction>): IGenAICha
             : {}),
         ...(data.changeAnalysisParams
             ? {
-                  changeAnalysisParams: convertChangeAnalysisParams(data.changeAnalysisParams),
+                  changeAnalysisParams: convertChangeAnalysisParams(
+                      dateNormalizer,
+                      data.changeAnalysisParams,
+                      locale,
+                      timezone,
+                  ),
               }
             : {}),
         ...(data.errorResponse
@@ -397,14 +447,35 @@ function convertRouting(data: ChatHistoryInteraction["routing"]): IGenAIChatRout
 function convertFoundObjects(data: Required<ChatHistoryInteraction>["foundObjects"]): IGenAIFoundObjects {
     return {
         reasoning: data.reasoning,
-        objects: data.objects?.map(convertFoundObject) ?? [],
+        objects: data.objects?.map(convertSemanticSearchResultItem) ?? [],
     };
 }
 
-function convertFoundObject(data: SearchResultObject): ISemanticSearchResultItem {
+function convertSemanticSearch(data: SearchResult): ISemanticSearchResult {
+    return {
+        reasoning: data.reasoning,
+        results: data.results?.map(convertSemanticSearchResultItem) ?? [],
+        relationships: data.relationships?.map(convertSemanticSearchRelationship) ?? [],
+    };
+}
+
+function convertSemanticSearchResultItem(data: SearchResultObject): ISemanticSearchResultItem {
     return {
         ...data,
         type: data.type as GenAIObjectType,
+    };
+}
+
+function convertSemanticSearchRelationship(data: SearchRelationshipObject): ISemanticSearchRelationship {
+    return {
+        sourceWorkspaceId: data.sourceWorkspaceId,
+        sourceObjectId: data.sourceObjectId,
+        sourceObjectType: data.sourceObjectType as GenAIObjectType,
+        sourceObjectTitle: data.sourceObjectTitle,
+        targetWorkspaceId: data.targetWorkspaceId,
+        targetObjectId: data.targetObjectId,
+        targetObjectType: data.targetObjectType as GenAIObjectType,
+        targetObjectTitle: data.targetObjectTitle,
     };
 }
 
@@ -428,16 +499,65 @@ function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualiz
 }
 
 function convertChangeAnalysisParams(
+    dateNormalizer: DateNormalizer,
     data: Required<ChatHistoryInteraction>["changeAnalysisParams"],
+    locale?: FormattingLocale,
+    timezone?: string,
 ): IGenAIChangeAnalysisParams {
     const measure = convertMeasure(data.measure);
     measure.measure.title = data.measureTitle;
 
+    const dateAttribute = convertAttribute(data.dateAttribute);
+    const dateGranularity = getFormatByGranularity(dateAttribute);
+
     return {
         ...data,
         measure,
-        dateAttribute: convertAttribute(data.dateAttribute),
+        dateAttribute,
+        dateGranularity,
+        normalizedAnalyzedPeriod: dateNormalizer(data.analyzedPeriod, dateGranularity, locale, timezone),
+        normalizedReferencePeriod: dateNormalizer(data.referencePeriod, dateGranularity, locale, timezone),
         attributes: data.attributes?.map(convertAttribute) ?? [],
         filters: data.filters?.map(convertFilter) ?? [],
     };
+}
+
+function getFormatByGranularity(attr: IAttribute): DateAttributeGranularity {
+    const ref = objRefToString(attr.attribute.displayForm);
+    const granularity = ref.split(".")[1];
+
+    switch (granularity) {
+        case "day":
+            return "GDC.time.date";
+        case "dayOfMonth":
+            return "GDC.time.day_in_month";
+        case "dayOfWeek":
+            return "GDC.time.day_in_week";
+        case "dayOfYear":
+            return "GDC.time.day_in_year";
+        case "hour":
+            return "GDC.time.hour";
+        case "hourOfDay":
+            return "GDC.time.hour_in_day";
+        case "minute":
+            return "GDC.time.minute";
+        case "minuteOfHour":
+            return "GDC.time.minute_in_hour";
+        case "month":
+            return "GDC.time.month";
+        case "monthOfYear":
+            return "GDC.time.month_in_year";
+        case "quarter":
+            return "GDC.time.quarter";
+        case "quarterOfYear":
+            return "GDC.time.quarter_in_year";
+        case "week":
+            return "GDC.time.week_us";
+        case "weekOfYear":
+            return "GDC.time.week_in_year";
+        case "year":
+            return "GDC.time.year";
+        default:
+            throw new Error(`Unsupported granularity: ${granularity}`);
+    }
 }

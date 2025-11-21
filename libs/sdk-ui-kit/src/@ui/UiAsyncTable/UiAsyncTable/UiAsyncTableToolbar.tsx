@@ -17,7 +17,8 @@ import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
-    const { hasContent, renderBulkActions, renderFilters, renderSearch } = useAsyncTableToolbar(props);
+    const { hasContent, renderBulkActions, renderFilters, renderSearch, renderCustomElement } =
+        useAsyncTableToolbar(props);
 
     const { isMobileView } = props;
 
@@ -26,6 +27,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
             {renderBulkActions()}
             {renderFilters()}
             {renderSearch()}
+            {renderCustomElement()}
         </div>
     ) : null;
 }
@@ -42,6 +44,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     isMobileView,
     width,
     onSearch,
+    renderToolbarCustomElement,
     accessibilityConfig,
 }: UiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
@@ -151,6 +154,12 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         ) : null;
     }, [filters, intl, isFiltersTooLarge, variant, isMobileView, width]);
 
+    const renderCustomElement = useCallback(() => {
+        return renderToolbarCustomElement ? (
+            <div className={e("toolbar-custom-element")}>{renderToolbarCustomElement()}</div>
+        ) : null;
+    }, [renderToolbarCustomElement]);
+
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
         return onSearch ? (
@@ -181,5 +190,6 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         renderBulkActions,
         renderFilters,
         renderSearch,
+        renderCustomElement,
     };
 };

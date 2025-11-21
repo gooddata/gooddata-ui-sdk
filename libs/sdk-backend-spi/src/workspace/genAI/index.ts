@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import {
+import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
@@ -12,17 +12,16 @@ import {
     IGenAIUserContext,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
-    type ISemanticQualityIssuesCalculation,
-    type ISemanticQualityReport,
-    ISemanticSearchRelationship,
-    ISemanticSearchResultItem,
-    type IUser,
+    ISemanticQualityIssuesCalculation,
+    ISemanticQualityReport,
+    ISemanticSearchResult,
+    IUser,
     MemoryItemStrategy,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
 
 /**
  * GenAI-powered features.
@@ -95,14 +94,11 @@ export interface ISemanticSearchQuery {
 }
 
 /**
- * A single search result returned by semantic search.
+ * Semantic search result payload.
  * @beta
+ * @deprecated Use `ISemanticSearchResult` from \@gooddata/sdk-model instead.
  */
-export interface ISemanticSearchResult {
-    results: ISemanticSearchResultItem[];
-    relationships: ISemanticSearchRelationship[];
-    reasoning?: string;
-}
+export type { ISemanticSearchResult };
 
 /**
  * Chatbot thread.
@@ -230,7 +226,9 @@ export interface IMemoryItemsService {
 export interface IGenAIChatEvaluation {
     routing?: IGenAIChatRouting;
     textResponse?: string;
+    /** @deprecated Use `semanticSearch` property instead. */
     foundObjects?: IGenAIFoundObjects;
+    semanticSearch?: ISemanticSearchResult;
     createdVisualizations?: IGenAICreatedVisualizations;
     changeAnalysisParams?: IGenAIChangeAnalysisParams;
     errorResponse?: string;

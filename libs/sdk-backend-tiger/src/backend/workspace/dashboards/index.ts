@@ -122,6 +122,7 @@ import {
     convertAnalyticalDashboard,
     convertDashboardPluginToBackend,
     convertFilterContextToBackend,
+    convertFilterViewContextToBackend,
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
@@ -1073,7 +1074,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filterView: IDashboardFilterViewSaveRequest,
     ): Promise<IDashboardFilterView> => {
         try {
-            const { name, dashboard, isDefault, filterContext } = filterView;
+            const { name, dashboard, isDefault, filterContext, tabLocalIdentifier } = filterView;
 
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
@@ -1098,9 +1099,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 attributes: {
                                     isDefault,
                                     title: name,
-                                    content: convertFilterContextToBackend(
+                                    content: convertFilterViewContextToBackend(
                                         filterContext,
                                         useDateFilterLocalIdentifiers,
+                                        tabLocalIdentifier,
                                     ),
                                 },
                                 relationships: {

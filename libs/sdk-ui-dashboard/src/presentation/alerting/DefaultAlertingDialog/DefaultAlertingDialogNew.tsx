@@ -395,6 +395,7 @@ export function AlertingDialogRenderer({
                                             id: "dialogs.alert.accessibility.label.title",
                                         }),
                                     }}
+                                    disableBottomBorder
                                 />
                             ) : null}
                             <ScrollablePanel

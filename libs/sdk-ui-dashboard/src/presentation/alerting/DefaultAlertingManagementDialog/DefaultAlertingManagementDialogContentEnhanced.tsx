@@ -128,6 +128,18 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         availableFilters={availableFilters}
                         locale={intl.locale}
                         invalidateItemsRef={invalidateItemsRef}
+                        renderToolbarCustomElement={() =>
+                            managementDialogContext.widgetRef && canCreateAutomation ? (
+                                <Button
+                                    onClick={onAdd}
+                                    size="small"
+                                    className="gd-button-action s-add-alert-button"
+                                    value={intl.formatMessage({
+                                        id: messages.alertingManagementCreateNew.id!,
+                                    })}
+                                />
+                            ) : null
+                        }
                         selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                     />
                 </div>
@@ -146,13 +158,6 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                             className="gd-button-secondary s-close-button"
                             value={intl.formatMessage({ id: "close" })}
                         />
-                        {managementDialogContext.widgetRef && canCreateAutomation ? (
-                            <Button
-                                onClick={onAdd}
-                                className="gd-button-action s-add-alert-button"
-                                value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
-                            />
-                        ) : null}
                     </div>
                 </div>
             </OverlayControllerProvider>

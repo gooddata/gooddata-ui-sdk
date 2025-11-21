@@ -74,6 +74,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         e("item-wrapper", {
             isFocused,
             isDisabled: !!item.isDisabled,
+            isDestructive: !!item.isDestructive,
         }),
         typeof itemClassName === "function" ? itemClassName(item) : itemClassName,
     );
@@ -113,6 +114,7 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
                 isFocused,
                 isSelected: !!item.isSelected,
                 isDisabled: !!item.isDisabled,
+                isDestructive: !!item.isDestructive,
                 size,
             })}
         >

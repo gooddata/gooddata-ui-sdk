@@ -779,6 +779,10 @@
         "value": "Create",
         "comment": "Button label to create a new scheduled export"
     },
+    "dialogs.schedule.management.create.new": {
+        "value": "Create new",
+        "comment": "Button label to create a new scheduled export"
+    },
     "dialogs.schedule.management.create.tooManyMessage": {
         "value": "Your organization has reached the limit of scheduled exports. Contact your administrator to create more.",
         "comment": "Error message shown when organization has reached maximum scheduled exports limit"
@@ -945,6 +949,10 @@
     },
     "dialogs.alerting.management.create": {
         "value": "Create",
+        "comment": "Button label to create a new alert"
+    },
+    "dialogs.alerting.management.create.new": {
+        "value": "Create new",
         "comment": "Button label to create a new alert"
     },
     "dialogs.alerting.footer.title": {
@@ -1502,6 +1510,10 @@
     "configurationPanel.drillConfig.selectDashboard": {
         "value": "Choose dashboard…",
         "comment": "Placeholder text in dashboard selector for drill configuration"
+    },
+    "configurationPanel.drillConfig.targetTab": {
+        "value": "to tab",
+        "comment": "Label for tab selector in drill to dashboard configuration"
     },
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": {
         "value": "Search all dashboards…",
@@ -2930,5 +2942,9 @@
     "dashboard.tabs.accessibility.label": {
         "value": "Dashboard tabs",
         "comment": "Accessibility label for dashboard tabs"
+    },
+    "dashboard.tabs.accessibility.add-button-label": {
+        "value": "Add new tab",
+        "comment": "Accessibility label for a button that adds a new tab"
     }
 }

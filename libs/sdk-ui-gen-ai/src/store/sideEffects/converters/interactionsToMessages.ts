@@ -1,16 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
-import { IGenAIChatInteraction } from "@gooddata/sdk-model";
+import type { IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
+import type { IGenAIChatInteraction } from "@gooddata/sdk-model";
 
 import {
-    Contents,
-    Message,
+    type Contents,
+    type Message,
     makeAssistantMessage,
     makeChangeAnalysisContents,
     makeErrorContents,
     makeRoutingContents,
     makeSearchContents,
+    makeSemanticSearchContents,
     makeTextContents,
     makeUserMessage,
     makeVisualizationContents,
@@ -59,7 +60,9 @@ export const processContents = (
         contents.push(makeTextContents(item.textResponse, []));
     }
 
-    if (item.foundObjects?.reasoning) {
+    if (item.semanticSearch) {
+        contents.push(makeSemanticSearchContents(item.semanticSearch));
+    } else if (item.foundObjects?.reasoning) {
         contents.push(makeSearchContents(item.foundObjects.reasoning, item.foundObjects.objects));
     }
 

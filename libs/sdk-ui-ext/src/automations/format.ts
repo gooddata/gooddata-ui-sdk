@@ -17,7 +17,12 @@ import {
 } from "@gooddata/sdk-model";
 import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
-import { ARITHMETIC_OPERATORS, DATE_FORMAT, EMPTY_CELL_VALUES } from "./constants.js";
+import {
+    ARITHMETIC_OPERATORS,
+    DATE_FORMAT_HYPHEN,
+    DATE_FORMAT_SLASH,
+    EMPTY_CELL_VALUES,
+} from "./constants.js";
 import { messages } from "./messages.js";
 import { CellValueType } from "./types.js";
 import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
@@ -85,10 +90,10 @@ export const formatAutomationUser = (user?: IUser) => {
     return "";
 };
 
-export const formatDate = (date: string, timeZone: string) => {
+export const formatDate = (date: string, timeZone: string, format = DATE_FORMAT_HYPHEN) => {
     if (!date) return "";
 
-    return moment(date).tz(timeZone).format(DATE_FORMAT);
+    return moment(date).tz(timeZone).format(format);
 };
 
 export function formatCellValue(
@@ -101,9 +106,14 @@ export function formatCellValue(
     }
 
     switch (type) {
+        case "slash-date":
         case "date":
             try {
-                return formatDate(String(value), timezone);
+                return formatDate(
+                    String(value),
+                    timezone,
+                    type === "slash-date" ? DATE_FORMAT_SLASH : DATE_FORMAT_HYPHEN,
+                );
             } catch {
                 return EMPTY_CELL_VALUES[type];
             }

@@ -33,7 +33,10 @@ import {
     filterViewDeletionFailed,
     filterViewDeletionSucceeded,
 } from "../../events/filters.js";
-import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDashboardTabs,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+} from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -41,7 +44,7 @@ import {
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { tabsActions } from "../../store/tabs/index.js";
+import { selectActiveTabLocalIdentifier, tabsActions } from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
@@ -58,6 +61,13 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
     if (!ctx.dashboardRef) {
         throw Error("Dashboard ref must be provided.");
     }
+
+    // Get active tab ID and tabs feature flag
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
 
     const appliedFilterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
         selectFilterContextDefinition,
@@ -89,6 +99,10 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
         dashboard: ctx.dashboardRef,
         filterContext: sanitizedFilterContext,
         isDefault: cmd.payload.isDefault,
+        // Include tabId if tabs are enabled and there's an active tab
+        ...(enableDashboardTabs && activeTabLocalIdentifier
+            ? { tabLocalIdentifier: activeTabLocalIdentifier }
+            : {}),
     };
 
     try {

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.11.0-alpha.0",
+    "version": "11.11.0-alpha.1",
     "description": "GoodData GenAI SDK",
     "repository": {
         "type": "git",
@@ -77,6 +77,7 @@
         "@gooddata/sdk-ui-filters": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/util": "workspace:*",
         "@reduxjs/toolkit": "2.9.0",
         "@types/mdast": "^4.0.4",

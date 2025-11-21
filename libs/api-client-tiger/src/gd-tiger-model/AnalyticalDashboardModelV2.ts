@@ -107,6 +107,13 @@ export interface IFilterContext {
 }
 
 /**
+ * @alpha
+ */
+export interface IFilterContextWithTab extends IFilterContext {
+    tabLocalIdentifier?: string;
+}
+
+/**
  * @public
  */
 export interface IDashboardPlugin {
@@ -135,6 +142,18 @@ export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyti
  */
 export function isFilterContext(filterContext: unknown): filterContext is IFilterContext {
     return !isEmpty(filterContext) && (filterContext as IFilterContext).version === "2";
+}
+
+/**
+ * @alpha
+ */
+export function isFilterContextWithTab(filterContext: unknown): filterContext is IFilterContextWithTab {
+    return (
+        (!isEmpty(filterContext) &&
+            (filterContext as IFilterContextWithTab).version === "2" &&
+            typeof (filterContext as IFilterContextWithTab).tabLocalIdentifier === "string") ||
+        (filterContext as IFilterContextWithTab).tabLocalIdentifier === undefined
+    );
 }
 
 /**

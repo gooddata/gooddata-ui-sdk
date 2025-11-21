@@ -8,6 +8,7 @@ import { ChangeAnalysisContentsComponent } from "./contents/ChangeAnalysisConten
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";
 import { SearchContentsComponent } from "./contents/SearchContents.js";
+import { SemanticSearchContentsComponent } from "./contents/SemanticSearchContents.js";
 import { TextContentsComponent } from "./contents/TextContents.js";
 import { VisualizationContentsComponent } from "./contents/VisualizationContents.js";
 import { Contents } from "../../model.js";
@@ -47,6 +48,14 @@ export function MessageContents({
                     case "search":
                         return (
                             <SearchContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
+                        );
+                    case "semanticSearch":
+                        return (
+                            <SemanticSearchContentsComponent
+                                key={index}
+                                content={item}
+                                useMarkdown={useMarkdown}
+                            />
                         );
                     case "visualization":
                         return (
