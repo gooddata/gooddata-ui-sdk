@@ -44,6 +44,7 @@ export const messages = defineMessages({
     alertingManagementCreate: { id: "dialogs.alerting.management.create" },
     alertingManagementCreateNew: { id: "dialogs.alerting.management.create.new" },
     alertingDeleteSuccess: { id: "dialogs.alerting.delete.success" },
+    alertingCreateNoMeasureTooltip: { id: "dialogs.alerting.create.noMeasure.tooltip" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },
     saveAsNewAlertsMessage: { id: "dialogs.save.as.new.alertsMessage" },

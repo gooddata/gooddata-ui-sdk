@@ -16,12 +16,12 @@
     ],
     "tags": [
         {
-            "name": "OGC API Features",
-            "description": "OGC API Features implementation for GeoParquet collections"
-        },
-        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
+        },
+        {
+            "name": "OGC API Features",
+            "description": "OGC API Features implementation for GeoCollections collections"
         }
     ],
     "paths": {
@@ -275,7 +275,7 @@
             "get": {
                 "tags": ["OGC API Features"],
                 "summary": "Get collection features",
-                "description": "Retrieve features from a GeoParquet collection as GeoJSON",
+                "description": "Retrieve features from a GeoCollections collection as GeoJSON",
                 "operationId": "getCollectionItems",
                 "parameters": [
                     {
@@ -294,7 +294,7 @@
                         "description": "Maximum number of features to return",
                         "required": false,
                         "schema": {
-                            "maximum": 10000,
+                            "maximum": 100,
                             "minimum": 1,
                             "type": "integer"
                         },
@@ -309,27 +309,6 @@
                             "type": "string"
                         },
                         "example": "-180,-90,180,90"
-                    },
-                    {
-                        "name": "datetime",
-                        "in": "query",
-                        "description": "Datetime filter (ISO 8601)",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "2020-01-01T00:00:00Z/2020-12-31T23:59:59Z"
-                    },
-                    {
-                        "name": "matchingProperty",
-                        "in": "query",
-                        "description": "Property to match against collection features",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "id"
-                        },
-                        "example": "ISO_A3"
                     },
                     {
                         "name": "values",

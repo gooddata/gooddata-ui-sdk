@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Add @alpha support for GeoJSON features retrieval in sdk-model, api-client-tiger, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger and sdk-ui.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

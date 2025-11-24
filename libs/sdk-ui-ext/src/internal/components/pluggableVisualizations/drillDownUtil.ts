@@ -126,15 +126,17 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
 
             const hasColumnWidths = columns.length > 0;
             const hasTextWrapping = value?.textWrapping !== undefined;
+            const hasGrandTotalsPosition = value?.grandTotalsPosition !== undefined;
 
-            // If neither property is present, keep original controls as-is
-            if (!hasColumnWidths && !hasTextWrapping) {
+            // If no properties need to be preserved, keep original controls as-is
+            if (!hasColumnWidths && !hasTextWrapping && !hasGrandTotalsPosition) {
                 return acc;
             }
 
             acc[key] = {
                 ...(hasColumnWidths ? { columnWidths: columns } : {}),
                 ...(hasTextWrapping ? { textWrapping: value!.textWrapping } : {}),
+                ...(hasGrandTotalsPosition ? { grandTotalsPosition: value!.grandTotalsPosition } : {}),
             };
 
             return acc;

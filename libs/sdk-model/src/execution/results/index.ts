@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+import type { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { isEmpty } from "lodash-es";
 
 import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
@@ -23,6 +24,12 @@ export type DataValue = null | string | number;
  * @beta
  */
 export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: DataValue; loading: boolean };
+
+/**
+ * GeoJSON feature result.
+ * @alpha
+ */
+export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties & { key: string }>;
 
 /**
  * Descriptor of the measure and its contents.
@@ -587,4 +594,14 @@ export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): st
  */
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string {
     return descriptor.attributeHeader.formOf.name;
+}
+
+/**
+ * Returns key of the geo feature.
+ *
+ * @param feature - geo feature, must be specified
+ * @alpha
+ */
+export function geoFeatureKey(feature: IGeoJsonFeature): string {
+    return feature.properties!["key"] as string;
 }

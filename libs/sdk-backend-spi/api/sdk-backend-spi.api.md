@@ -76,6 +76,7 @@ import type { IGenAIChatRouting } from '@gooddata/sdk-model';
 import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
+import { IGeoJsonFeature } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -570,6 +571,21 @@ export interface IClusteringResult {
     ycoord: Array<number | null>;
 }
 
+// @alpha
+export interface ICollectionItemsConfig {
+    bbox?: string;
+    collectionId: string;
+    limit?: number;
+    values?: string[];
+}
+
+// @alpha
+export interface ICollectionItemsResult {
+    bbox?: number[];
+    features: IGeoJsonFeature[];
+    type: string;
+}
+
 // @public
 export interface ICommentExpressionToken {
     type: "comment";
@@ -696,6 +712,8 @@ export interface IDataView {
     // @alpha
     readonly metadata: IExecutionResultMetadata;
     readonly offset: number[];
+    // @alpha
+    readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult>;
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue[][][];

@@ -2,7 +2,7 @@
 
 import {
     FeatureContext,
-    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    JsonApiDatasetOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
@@ -93,7 +93,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;

@@ -138,4 +138,9 @@ export interface ISemanticQualityIssuesCalculation {
  * Available statuses for a semantic quality issues calculation.
  * @internal
  */
-export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
+export type SemanticQualityIssuesCalculationStatus =
+    | "RUNNING"
+    | "COMPLETED"
+    | "FAILED"
+    | "NOT_FOUND"
+    | "DISABLED";

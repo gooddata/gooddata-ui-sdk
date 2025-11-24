@@ -11,6 +11,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/execution";
 import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/export";
+import { ResultApi_GetCollectionItems } from "@gooddata/api-client-tiger/result";
 import {
     SmartFunctionsApi_AnomalyDetection,
     SmartFunctionsApi_AnomalyDetectionResult,
@@ -24,6 +25,8 @@ import {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
@@ -37,7 +40,13 @@ import {
     NoDataError,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { DataValue, IDimensionDescriptor, IExecutionDefinition, IResultHeader } from "@gooddata/sdk-model";
+import {
+    DataValue,
+    IDimensionDescriptor,
+    IExecutionDefinition,
+    IGeoJsonFeature,
+    IResultHeader,
+} from "@gooddata/sdk-model";
 
 import { resolveCustomOverride } from "./utils.js";
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
@@ -334,11 +343,11 @@ export class TigerExecutionResult implements IExecutionResult {
             if (isEmptyDataResult(result)) {
                 throw new NoDataError(
                     "The execution resulted in no data to display.",
-                    new TigerDataView(this, result, this.dateFormatter),
+                    new TigerDataView(this, result, this.dateFormatter, this.authCall),
                 );
             }
 
-            return new TigerDataView(this, result, this.dateFormatter);
+            return new TigerDataView(this, result, this.dateFormatter, this.authCall);
         });
     };
 
@@ -377,11 +386,13 @@ class TigerDataView implements IDataView {
     private readonly _fingerprint: string;
     private readonly _execResult: ExecutionResult;
     private readonly _dateFormatter: DateFormatter;
+    private readonly _authCall: TigerAuthenticatedCallGuard;
 
     constructor(
         result: IExecutionResult,
         execResult: ExecutionResult,
         dateFormatter: DateFormatter,
+        authCall: TigerAuthenticatedCallGuard,
         forecastConfig?: IForecastConfig,
         forecastResult?: IForecastResult,
         clusteringConfig?: IClusteringConfig,
@@ -396,6 +407,7 @@ class TigerDataView implements IDataView {
 
         this._execResult = execResult;
         this._dateFormatter = dateFormatter;
+        this._authCall = authCall;
 
         const transformDimensionHeaders = getTransformDimensionHeaders(
             result.dimensions,
@@ -475,6 +487,7 @@ class TigerDataView implements IDataView {
             this.result,
             this._execResult,
             this._dateFormatter,
+            this._authCall,
             normalizedConfig,
             result,
             this.clusteringConfig,
@@ -487,11 +500,40 @@ class TigerDataView implements IDataView {
             this.result,
             this._execResult,
             this._dateFormatter,
+            this._authCall,
             this.forecastConfig,
             this.forecastResult,
             config,
             result,
         );
+    }
+
+    public async readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        const response = await this._authCall((client) =>
+            ResultApi_GetCollectionItems(
+                client.axios,
+                client.basePath,
+                {
+                    collectionId: config.collectionId,
+                    limit: config.limit,
+                    bbox: config.bbox,
+                    values: config.values,
+                },
+                {
+                    headers: {
+                        Accept: "application/geo+json",
+                    },
+                },
+            ),
+        );
+
+        const { data } = response;
+
+        return {
+            type: data.type,
+            features: (data.features as IGeoJsonFeature[]) ?? [],
+            bbox: data.bbox,
+        };
     }
 }
 

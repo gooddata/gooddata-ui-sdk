@@ -1,18 +1,36 @@
 // (C) 2007-2025 GoodData Corporation
-import { describe, expect, it } from "vitest";
+
+import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
+    IDataView,
+    IElementsQueryResult,
+    IExecutionResult,
+    IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IAttributeOrMeasure,
     IBucket,
+    IGeoJsonFeature,
     ObjRef,
+    geoFeatureKey,
     newBucket,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
 
+import {
+    DecoratedDataView,
+    DecoratedExecutionFactory,
+    DecoratedExecutionResult,
+    DecoratedPreparedExecution,
+} from "../../decoratedBackend/execution.js";
+import { decoratedBackend } from "../../decoratedBackend/index.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
 import { CacheControl, withCaching } from "../index.js";
@@ -28,6 +46,7 @@ function withCachingForTests(
         maxCatalogOptions: 1,
         maxExecutions: 1,
         maxResultWindows: 1,
+        maxGeoCollectionItemsPerResult: 50,
         maxSecuritySettingsOrgs: 1,
         maxSecuritySettingsOrgUrls: 1,
         maxSecuritySettingsOrgUrlsAge: 300_000,
@@ -75,6 +94,33 @@ function doGetAttributeByDisplayForm(
 
 function doGetAttributeElements(backend: IAnalyticalBackend, ref: ObjRef): Promise<IElementsQueryResult> {
     return backend.workspace("test").attributes().elements().forDisplayForm(ref).query();
+}
+
+type CollectionItemsProvider = (config: ICollectionItemsConfig) => Promise<ICollectionItemsResult>;
+
+function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return decoratedBackend(backend, {
+        execution: (factory) =>
+            new DecoratedExecutionFactory(
+                factory,
+                (execution) => new GeoPreparedExecution(execution, provider),
+            ),
+    });
+}
+
+function createGeoFeature(value: string): IGeoJsonFeature {
+    return {
+        type: "Feature",
+        properties: {
+            key: value,
+        },
+        geometry: {
+            type: "Point",
+            coordinates: [0, 0],
+        },
+    };
 }
 
 describe("withCaching", () => {
@@ -326,6 +372,83 @@ describe("withCaching", () => {
         const second = backend.workspace("test").catalog().load();
 
         expect(second).not.toBe(first);
+    });
+
+    describe("collection items caching", () => {
+        const collectionBaseConfig = {
+            collectionId: "geo-collection",
+        };
+
+        it("reuses cached geo collection values for overlapping requests", async () => {
+            const provider = vi.fn(async (config: ICollectionItemsConfig) => {
+                const features = config.values?.map((value) => createGeoFeature(value)) ?? [];
+
+                return {
+                    type: "FeatureCollection",
+                    features,
+                    bbox: [0, 0, 0, 0],
+                };
+            });
+
+            const backend = withCachingForTests(createGeoCollectionBackend(provider));
+            const result = await doExecution(backend, [ReferenceMd.Won]);
+            const dataView = await result.readAll();
+
+            const first = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["alpha", "beta"],
+            });
+
+            expect(first.features.map(geoFeatureKey)).toEqual(["alpha", "beta"]);
+
+            const second = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["beta", "gamma"],
+            });
+
+            expect(provider).toHaveBeenCalledTimes(2);
+            expect(provider.mock.calls[0][0].values).toEqual(["alpha", "beta"]);
+            expect(provider.mock.calls[1][0].values).toEqual(["gamma"]);
+            expect(second.features.map(geoFeatureKey)).toEqual(["beta", "gamma"]);
+
+            await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["gamma"],
+            });
+
+            expect(provider).toHaveBeenCalledTimes(2);
+        });
+
+        it("remembers empty geo collection responses per value", async () => {
+            const provider = vi.fn(async (config: ICollectionItemsConfig) => {
+                const features =
+                    config.values
+                        ?.filter((value) => value === "alpha")
+                        .map((value) => createGeoFeature(value)) ?? [];
+
+                return {
+                    type: "FeatureCollection",
+                    features,
+                };
+            });
+
+            const backend = withCachingForTests(createGeoCollectionBackend(provider));
+            const result = await doExecution(backend, [ReferenceMd.Won]);
+            const dataView = await result.readAll();
+
+            await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["alpha", "missing"],
+            });
+
+            const second = await dataView.readCollectionItems({
+                ...collectionBaseConfig,
+                values: ["missing"],
+            });
+
+            expect(second.features).toHaveLength(0);
+            expect(provider).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe("security settings", () => {
@@ -733,3 +856,57 @@ describe("withCaching", () => {
         });
     });
 });
+
+class GeoPreparedExecution extends DecoratedPreparedExecution {
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated);
+    }
+
+    public override async execute(): Promise<IExecutionResult> {
+        const result = await this.decorated.execute();
+        return new GeoExecutionResult(result, this.provider);
+    }
+
+    protected createNew(decorated: IPreparedExecution): IPreparedExecution {
+        return new GeoPreparedExecution(decorated, this.provider);
+    }
+}
+
+class GeoExecutionResult extends DecoratedExecutionResult {
+    constructor(
+        decorated: IExecutionResult,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated, (execution) => new GeoPreparedExecution(execution, provider));
+    }
+
+    public override async readAll(): Promise<IDataView> {
+        const dataView = await super.readAll();
+        return new GeoDataView(dataView, this.provider);
+    }
+
+    public override async readWindow(offset: number[], size: number[]): Promise<IDataView> {
+        const dataView = await super.readWindow(offset, size);
+        return new GeoDataView(dataView, this.provider);
+    }
+
+    protected createNew(decorated: IExecutionResult): IExecutionResult {
+        return new GeoExecutionResult(decorated, this.provider);
+    }
+}
+
+class GeoDataView extends DecoratedDataView {
+    constructor(
+        decorated: IDataView,
+        private readonly provider: CollectionItemsProvider,
+    ) {
+        super(decorated);
+    }
+
+    public override readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        return this.provider(config);
+    }
+}

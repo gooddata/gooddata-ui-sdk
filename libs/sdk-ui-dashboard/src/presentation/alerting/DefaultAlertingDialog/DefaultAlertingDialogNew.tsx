@@ -202,6 +202,10 @@ export function AlertingDialogRenderer({
     });
 
     const handleSaveAlert = () => {
+        if (!editedAutomation) {
+            return;
+        }
+
         const title = getDescription(
             intl,
             supportedMeasures,
@@ -364,7 +368,7 @@ export function AlertingDialogRenderer({
                             headline={undefined}
                             headerLeftButtonRenderer={() => (
                                 <AlertingDialogHeader
-                                    title={editedAutomation.title ?? ""}
+                                    title={editedAutomation?.title ?? ""}
                                     onChange={onTitleChange}
                                     onCancel={onCancel}
                                     placeholder={intl.formatMessage({
@@ -559,7 +563,7 @@ export function AlertingDialogRenderer({
                                                     <AlertDestinationSelect
                                                         id="alert.destination"
                                                         selectedDestination={
-                                                            editedAutomation.notificationChannel!
+                                                            editedAutomation?.notificationChannel
                                                         }
                                                         onDestinationChange={onDestinationChange}
                                                         destinations={notificationChannels}
@@ -594,8 +598,8 @@ export function AlertingDialogRenderer({
                                                     loggedUser={defaultUser}
                                                     users={users}
                                                     usersError={usersError}
-                                                    value={editedAutomation.recipients ?? []}
-                                                    originalValue={originalAutomation.recipients || []}
+                                                    value={editedAutomation?.recipients ?? []}
+                                                    originalValue={originalAutomation?.recipients || []}
                                                     onChange={onRecipientsChange}
                                                     allowEmptySelection
                                                     allowOnlyLoggedUserRecipients={
@@ -605,7 +609,7 @@ export function AlertingDialogRenderer({
                                                     maxRecipients={maxAutomationsRecipients}
                                                     notificationChannels={notificationChannels}
                                                     notificationChannelId={
-                                                        editedAutomation.notificationChannel
+                                                        editedAutomation?.notificationChannel
                                                     }
                                                     showLabel={false}
                                                     externalRecipientOverride={externalRecipientOverride}

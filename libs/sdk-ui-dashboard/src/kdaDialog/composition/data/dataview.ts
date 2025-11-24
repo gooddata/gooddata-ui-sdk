@@ -128,6 +128,12 @@ export function createDataView(
         }),
         withForecast: () => view,
         withClustering: () => view,
+        readCollectionItems: () =>
+            Promise.resolve({
+                type: "FeatureCollection",
+                features: [],
+                bbox: undefined,
+            }),
     };
 
     return {

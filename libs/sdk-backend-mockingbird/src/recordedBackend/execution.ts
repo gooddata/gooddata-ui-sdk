@@ -9,6 +9,8 @@ import {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
@@ -416,6 +418,10 @@ class RecordedDataView implements IDataView {
             config,
             result,
         );
+    }
+
+    public readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        throw new NotSupported("readCollectionItems is not supported by the recorded backend.");
     }
 }
 

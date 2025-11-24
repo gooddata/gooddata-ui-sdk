@@ -20,6 +20,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
+import { ICollectionItemsResult } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -199,6 +200,14 @@ export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
 // @internal
 export function clusterTitleFromIntl(intl: IntlShape): string;
 
+// @alpha (undocumented)
+export type CollectionItemsRequestOptions = {
+    collectionId: string;
+    limit?: number;
+    bbox?: string;
+    datetime?: string;
+};
+
 // @public
 export function composedFromIdentifier(identifier: string): IHeaderPredicate;
 
@@ -352,6 +361,8 @@ export class DataViewFacade {
     // (undocumented)
     static for(dataView: IDataView): DataViewFacade;
     static forResult(result: IExecutionResult): DataViewFacade;
+    // @alpha
+    getCollectionItemsForAttribute(attribute: IAttribute | string, options: CollectionItemsRequestOptions): Promise<ICollectionItemsResult>;
     // @internal (undocumented)
     meta(): IResultMetaMethods;
     // @internal (undocumented)
@@ -1216,7 +1227,7 @@ export interface ILoadingState {
 }
 
 // @public
-export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR";
+export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI";
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;

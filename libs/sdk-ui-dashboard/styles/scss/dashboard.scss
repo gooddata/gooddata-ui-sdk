@@ -38,6 +38,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     max-width: 100vw;
     overflow: hidden;
     display: flex;
+    background-color: variables.$gd-dashboards-filterBar-backgroundColor;
 
     &__list {
         flex-grow: 1;

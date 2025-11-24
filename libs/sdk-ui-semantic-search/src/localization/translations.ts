@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { merge } from "lodash-es";
 
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
@@ -21,6 +22,7 @@ import { pl_PL } from "./bundles/pl-PL.localization-bundle.js";
 import { pt_BR } from "./bundles/pt-BR.localization-bundle.js";
 import { pt_PT } from "./bundles/pt-PT.localization-bundle.js";
 import { ru_RU } from "./bundles/ru-RU.localization-bundle.js";
+import { sl_SI } from "./bundles/sl-SI.localization-bundle.js";
 import { tr_TR } from "./bundles/tr-TR.localization-bundle.js";
 import { zh_Hans } from "./bundles/zh-Hans.localization-bundle.js";
 import { zh_Hant } from "./bundles/zh-Hant.localization-bundle.js";
@@ -48,6 +50,7 @@ const packageTranslations: { [locale: string]: Record<string, string> } = {
     "tr-TR": tr_TR,
     "pl-PL": pl_PL,
     "ko-KR": ko_KR,
+    "sl-SI": sl_SI,
 };
 
 /**

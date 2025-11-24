@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
     IAlertComparisonOperator,
     IAutomationAlertCondition,
@@ -20,7 +21,7 @@ import { AlertMetric } from "../../types.js";
 export function createDefaultAlert(
     filters: IFilter[],
     metrics: AlertMetric[],
-    measure: AlertMetric,
+    measure: AlertMetric | undefined,
     notificationChannelId: string,
     currentUser: IAutomationRecipient,
     measureFormatMap: IMeasureFormatMap,
@@ -30,7 +31,11 @@ export function createDefaultAlert(
     widgetLocalId?: string,
     dashboardId?: string,
     widgetName?: string,
-): IAutomationMetadataObjectDefinition {
+): IAutomationMetadataObjectDefinition | undefined {
+    if (!measure) {
+        return undefined;
+    }
+
     const condition: IAutomationAlertCondition = {
         type: "comparison",
         left: {

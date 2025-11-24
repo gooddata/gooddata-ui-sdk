@@ -14,6 +14,7 @@ import {
     OverlayController,
     OverlayControllerProvider,
     Typography,
+    UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
 
@@ -24,10 +25,12 @@ import {
     selectDashboardTitle,
     selectEnableAccessibilityMode,
     selectExternalRecipient,
+    selectInsightByWidgetRef,
     selectIsAlertingDialogOpen,
     selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
     selectTimezone,
+    selectWidgetByRef,
     useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -38,6 +41,7 @@ import {
 } from "../../../presentation/constants/index.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
+import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -71,6 +75,14 @@ export function DefaultAlertingManagementDialogContentEnhanced({
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
     const isMobile = isMobileView();
+
+    // Check if widget has metrics for alert creation
+    const widget = useDashboardSelector(selectWidgetByRef(managementDialogContext.widgetRef));
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
+    const supportedMeasures = useGetSupportedMeasures(
+        managementDialogContext.widgetRef ? insight : undefined,
+    );
+    const hasMetrics = supportedMeasures.length > 0;
 
     const availableFilters = externalRecipientOverride
         ? (["dashboard", "status"] as AutomationsAvailableFilters)
@@ -130,12 +142,14 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         invalidateItemsRef={invalidateItemsRef}
                         renderToolbarCustomElement={() =>
                             managementDialogContext.widgetRef && canCreateAutomation ? (
-                                <Button
+                                <CreateButton
                                     onClick={onAdd}
-                                    size="small"
-                                    className="gd-button-action s-add-alert-button"
-                                    value={intl.formatMessage({
+                                    hasMetrics={hasMetrics}
+                                    label={intl.formatMessage({
                                         id: messages.alertingManagementCreateNew.id!,
+                                    })}
+                                    tooltipContent={intl.formatMessage({
+                                        id: messages.alertingCreateNoMeasureTooltip.id!,
                                     })}
                                 />
                             ) : null
@@ -162,5 +176,32 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                 </div>
             </OverlayControllerProvider>
         </Dialog>
+    );
+}
+
+interface ICreateButtonProps {
+    onClick?: () => void;
+    hasMetrics: boolean;
+    label: string;
+    tooltipContent: string;
+}
+
+function CreateButton({ onClick, hasMetrics, label, tooltipContent }: ICreateButtonProps) {
+    return (
+        <UiTooltip
+            optimalPlacement
+            anchor={
+                <Button
+                    onClick={onClick}
+                    size="small"
+                    className="gd-button-action s-add-alert-button"
+                    value={label}
+                    disabled={!hasMetrics}
+                />
+            }
+            disabled={hasMetrics}
+            triggerBy={["hover"]}
+            content={tooltipContent}
+        />
     );
 }

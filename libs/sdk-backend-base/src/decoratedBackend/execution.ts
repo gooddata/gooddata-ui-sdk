@@ -7,6 +7,8 @@ import {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
@@ -309,5 +311,9 @@ export abstract class DecoratedDataView implements IDataView {
 
     withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
         return this.decorated.withClustering(config, result);
+    }
+
+    public readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        return this.decorated.readCollectionItems(config);
     }
 }

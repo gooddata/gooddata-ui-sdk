@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute/index.js";
 import {
     AttributeDisplayFormType,
+    IAttributeDisplayFormGeoAreaConfig,
     IAttributeDisplayFormMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
@@ -43,6 +45,7 @@ export type {
     IMetadataObjectIdentity,
     IAttributeMetadataObject,
     IAttributeDisplayFormMetadataObject,
+    IAttributeDisplayFormGeoAreaConfig,
     AttributeDisplayFormType,
     IFactMetadataObject,
     IMeasureMetadataObject,

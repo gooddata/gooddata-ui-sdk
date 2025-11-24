@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsResult,
     IDataView,
     IExecutionResult,
     IExecutionResultDataSourceMessage,
@@ -9,14 +11,28 @@ import {
     IForecastResult,
     IForecastView,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, IResultWarning, defFingerprint } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IExecutionDefinition,
+    IResultWarning,
+    defFingerprint,
+    isResultAttributeHeader,
+} from "@gooddata/sdk-model";
 
 import { IDataAccessMethods } from "./dataAccess.js";
 import { DataAccessConfig } from "./dataAccessConfig.js";
+import {
+    type CollectionItemsRequestOptions,
+    describeAttribute,
+    fetchCollectionItems,
+    findAttributeCoordinates,
+} from "./internal/collectionItemsHelpers.js";
 import { newDataAccessMethods } from "./internal/dataAccessMethods.js";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods.js";
 import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
+
+export type { CollectionItemsRequestOptions } from "./internal/collectionItemsHelpers.js";
 
 /**
  * Wrapper for {@link @gooddata/sdk-backend-spi#IDataView}.
@@ -101,6 +117,45 @@ export class DataViewFacade {
      */
     public warnings(): IResultWarning[] {
         return this.dataView.warnings ?? [];
+    }
+
+    /**
+     * Retrieves collection items (geospatial features) for a specific attribute contained in this data view.
+     *
+     * @param attribute - attribute definition or local identifier string
+     * @param options - configuration of the collection items request
+     * @returns promise of collection items result with GeoJSON features
+     * @alpha
+     */
+    public async getCollectionItemsForAttribute(
+        attribute: IAttribute | string,
+        options: CollectionItemsRequestOptions,
+    ): Promise<ICollectionItemsResult> {
+        const { dimensionIndex, headerIndex } = findAttributeCoordinates(this.dataView, attribute);
+
+        if (dimensionIndex === -1 || headerIndex === -1) {
+            throw new Error(
+                `Attribute '${describeAttribute(attribute)}' not found in execution result dimensions.`,
+            );
+        }
+
+        const headerSlice = this.dataView.headerItems[dimensionIndex]?.[headerIndex] ?? [];
+        const values = headerSlice.flatMap((header) => {
+            if (!isResultAttributeHeader(header)) {
+                return [];
+            }
+
+            const { attributeHeaderItem } = header;
+            if (attributeHeaderItem.name) {
+                return [attributeHeaderItem.name];
+            }
+
+            return [];
+        });
+
+        const uniqueValues = Array.from(new Set(values));
+
+        return fetchCollectionItems(this.dataView, uniqueValues, options);
     }
 
     /**
@@ -248,6 +303,13 @@ export function emptyDataViewForResult(
                 clusteringConfig,
                 clusteringResult,
             );
+        },
+        readCollectionItems(): Promise<ICollectionItemsResult> {
+            return Promise.resolve({
+                type: "FeatureCollection",
+                features: [],
+                bbox: undefined,
+            });
         },
     };
 }

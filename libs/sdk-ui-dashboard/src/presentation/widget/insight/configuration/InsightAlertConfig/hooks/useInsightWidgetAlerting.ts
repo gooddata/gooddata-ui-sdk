@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
@@ -206,23 +207,24 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             defaultNotificationChannelId &&
             !defaultAlert
         ) {
-            setDefaultAlert(
-                createDefaultAlert(
-                    widgetFilters,
-                    supportedMeasures,
-                    defaultMeasure,
-                    defaultNotificationChannelId,
-                    convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
-                    measureFormatMap,
-                    undefined,
-                    descriptor.evaluationFrequency
-                        ? {
-                              cron: descriptor.evaluationFrequency,
-                              timezone: settings.alertDefault?.defaultTimezone,
-                          }
-                        : undefined,
-                ),
+            const alert = createDefaultAlert(
+                widgetFilters,
+                supportedMeasures,
+                defaultMeasure,
+                defaultNotificationChannelId,
+                convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
+                measureFormatMap,
+                undefined,
+                descriptor.evaluationFrequency
+                    ? {
+                          cron: descriptor.evaluationFrequency,
+                          timezone: settings.alertDefault?.defaultTimezone,
+                      }
+                    : undefined,
             );
+            if (alert) {
+                setDefaultAlert(alert);
+            }
         } else if ((widgetFiltersStatus === "error" || usersStatus === "error") && !defaultAlert) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);

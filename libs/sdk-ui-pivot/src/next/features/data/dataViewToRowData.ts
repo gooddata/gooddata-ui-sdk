@@ -15,6 +15,8 @@ import { columnDefinitionToColId } from "../columns/colId.js";
  * @param columnHeadersPosition - Position of column headers (top or left)
  * @param separators - Number formatting separators
  * @param grandTotalsPosition - Position of grand totals rows (pinnedBottom, pinnedTop, bottom, top)
+ * @param isFirstPage - Whether this is the first page of data (for "top" positioning)
+ * @param isLastPage - Whether this is the last page of data (for "bottom" positioning)
  *
  * @internal
  */
@@ -23,6 +25,8 @@ export function dataViewToRowData(
     columnHeadersPosition: ColumnHeadersPosition,
     separators?: ISeparators,
     grandTotalsPosition: GrandTotalsPosition = "pinnedBottom",
+    isFirstPage?: boolean,
+    isLastPage?: boolean,
 ): {
     rowData: AgGridRowData[];
     grandTotalRowData: AgGridRowData[];
@@ -57,11 +61,17 @@ export function dataViewToRowData(
             // For pinned positions, keep grand totals separate
             grandTotalRowData.push(...tempGrandTotalRows);
         } else if (grandTotalsPosition === "top") {
-            // For non-pinned top, prepend grand totals to rowData
-            rowData.unshift(...tempGrandTotalRows);
+            // For non-pinned top, only include grand totals on the first page
+            // to avoid duplicates when loading more data
+            if (isFirstPage) {
+                rowData.unshift(...tempGrandTotalRows);
+            }
         } else {
-            // For non-pinned bottom (default), append grand totals to rowData
-            rowData.push(...tempGrandTotalRows);
+            // For non-pinned bottom, only include grand totals on the last page
+            // to avoid duplicates when loading more data
+            if (isLastPage) {
+                rowData.push(...tempGrandTotalRows);
+            }
         }
     }
 

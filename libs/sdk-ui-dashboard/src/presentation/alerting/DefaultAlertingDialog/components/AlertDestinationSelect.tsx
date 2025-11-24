@@ -16,7 +16,7 @@ import {
 
 export interface IAlertDestinationSelectProps {
     id: string;
-    selectedDestination: string;
+    selectedDestination: string | undefined;
     onDestinationChange: (destinationId: string) => void;
     destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     overlayPositionType?: OverlayPositionType;

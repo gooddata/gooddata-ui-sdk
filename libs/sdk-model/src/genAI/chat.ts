@@ -39,6 +39,7 @@ export type GenAIChatInteractionUserVisualisation = {
  * @internal
  */
 export type GenAIChatRoutingUseCase =
+    | "ALERT"
     | "SEARCH"
     | "HOWTO"
     | "CHANGE_ANALYSIS"

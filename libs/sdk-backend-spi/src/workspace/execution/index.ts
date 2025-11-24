@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     DataValue,
     DimensionGenerator,
@@ -8,6 +9,7 @@ import {
     IDimensionDescriptor,
     IExecutionConfig,
     IExecutionDefinition,
+    IGeoJsonFeature,
     IInsight,
     IInsightDefinition,
     INullableFilter,
@@ -90,6 +92,50 @@ export interface IClusteringResult {
     clusters: Array<number | null>;
     xcoord: Array<number | null>;
     ycoord: Array<number | null>;
+}
+
+/**
+ * Configuration for retrieving collection items (geospatial features).
+ * @alpha
+ */
+export interface ICollectionItemsConfig {
+    /**
+     * Collection identifier.
+     */
+    collectionId: string;
+    /**
+     * List of values to filter features by.
+     */
+    values?: string[];
+    /**
+     * Maximum number of features to return.
+     */
+    limit?: number;
+    /**
+     * Bounding box filter (minx,miny,maxx,maxy).
+     */
+    bbox?: string;
+}
+
+/**
+ * Result from collection items retrieval containing GeoJSON features.
+ * @alpha
+ */
+export interface ICollectionItemsResult {
+    /**
+     * Collection type (typically "FeatureCollection").
+     */
+    type: string;
+
+    /**
+     * List of GeoJSON features.
+     */
+    features: IGeoJsonFeature[];
+
+    /**
+     * Optional bounding box for all features.
+     */
+    bbox?: number[];
 }
 
 /**
@@ -701,6 +747,16 @@ export interface IDataView {
      * @returns new data view with clustering enabled
      */
     withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
+
+    /**
+     * Retrieves collection items (geospatial features) using provided configuration.
+     *
+     *
+     * @param config - configuration including collection identifier and optional filters
+     * @returns promise of collection items result with GeoJSON features
+     * @alpha
+     */
+    readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult>;
 }
 
 /**

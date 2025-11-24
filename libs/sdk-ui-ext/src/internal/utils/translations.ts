@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { merge } from "lodash-es";
 import { IntlShape } from "react-intl";
 
@@ -23,6 +24,7 @@ import { pl_PL } from "../translations/pl-PL.localization-bundle.js";
 import { pt_BR } from "../translations/pt-BR.localization-bundle.js";
 import { pt_PT } from "../translations/pt-PT.localization-bundle.js";
 import { ru_RU } from "../translations/ru-RU.localization-bundle.js";
+import { sl_SI } from "../translations/sl-SI.localization-bundle.js";
 import { tr_TR } from "../translations/tr-TR.localization-bundle.js";
 import { zh_Hans } from "../translations/zh-Hans.localization-bundle.js";
 import { zh_Hant } from "../translations/zh-Hant.localization-bundle.js";
@@ -66,6 +68,7 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "tr-TR": tr_TR,
     "pl-PL": pl_PL,
     "ko-KR": ko_KR,
+    "sl-SI": sl_SI,
 };
 
 /**

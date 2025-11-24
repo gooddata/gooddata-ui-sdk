@@ -707,6 +707,7 @@ export {
 
 export type {
     IAttributeDisplayFormMetadataObject,
+    IAttributeDisplayFormGeoAreaConfig,
     AttributeDisplayFormType,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
@@ -928,6 +929,7 @@ export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/i
 export type {
     DataValue,
     ForecastDataValue,
+    IGeoJsonFeature,
     IMeasureDescriptor,
     IMeasureDescriptorObject,
     IMeasureDescriptorItem,
@@ -962,6 +964,7 @@ export {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
+    geoFeatureKey,
 } from "./execution/results/index.js";
 
 export type {
