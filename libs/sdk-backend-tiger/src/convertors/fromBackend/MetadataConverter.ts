@@ -164,6 +164,7 @@ function convertLabelWithLinks(
     isDefault: boolean,
     isPrimary: boolean,
 ): IAttributeDisplayFormMetadataObject {
+    const geoCollectionId = label.attributes?.geoAreaConfig?.collection.id;
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
         m
             .id(label.id)
@@ -173,7 +174,14 @@ function convertLabelWithLinks(
             .attribute(idRef(attributeId, "attribute"))
             .isDefault(isDefault)
             .isPrimary(isPrimary)
-            .displayFormType(convertLabelType(label.attributes?.valueType)),
+            .displayFormType(convertLabelType(label.attributes?.valueType))
+            .geoAreaConfig(
+                geoCollectionId
+                    ? {
+                          collectionId: geoCollectionId,
+                      }
+                    : undefined,
+            ),
     );
 }
 

@@ -41,6 +41,29 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
 }
 
 /**
+ * Determines if the current page is the first or last page of data.
+ * Used for non-pinned grand totals positioning to avoid duplicates.
+ *
+ * @internal
+ */
+function getPageFlags(
+    dataView: DataViewFacade,
+    measures: IMeasure[],
+    rows: IAttribute[],
+    startRow: number,
+    endRow: number,
+): { isFirstPage: boolean; isLastPage: boolean } {
+    const [totalRowCount] = dataView.dataView.totalCount;
+    // In case of single column attribute, without metrics and rows, backend returns 1 as number of rows, which is not correct.
+    const actualRowCount = measures.length === 0 && rows.length === 0 ? 0 : totalRowCount;
+
+    return {
+        isFirstPage: startRow === 0,
+        isLastPage: endRow >= actualRowCount,
+    };
+}
+
+/**
  * Creates ag-grid server side data source for pivot table, that handles infinite-scrolling.
  * 
  * Handles also sorting changes, so component does not need to be fully re-initialized,
@@ -84,11 +107,23 @@ export const createServerSideDataSource = ({
         setPivotResultColumns(params.api);
 
         // Extract grand total rows from initial data view (same as normal first request)
+        // Determine page flags for proper grand totals positioning
+        const { isFirstPage, isLastPage } = getPageFlags(
+            initialDataView,
+            measures,
+            rows,
+            params.request.startRow ?? 0,
+            params.request.endRow ?? pageSize,
+        );
+
+        // This is the first page, but returns empty rowData
         const { grandTotalRowData, grandTotalCount } = dataViewToRowData(
             initialDataView,
             columnHeadersPosition,
             separators,
             grandTotalsPosition,
+            isFirstPage,
+            isLastPage,
         );
 
         const rowCount = fixRowsCount(initialDataView, measures, rows, grandTotalsPosition, grandTotalCount);
@@ -144,19 +179,33 @@ export const createServerSideDataSource = ({
 
                 const executionResult = await applyChangedSortToExecutionResult(params);
 
+                const startRow = params.request.startRow ?? 0;
+                const endRow = params.request.endRow ?? pageSize;
+
                 const nextDataView = isFirstRequest
                     ? initialDataView
                     : await loadDataView({
                           executionResult,
-                          startRow: params.request.startRow ?? 0,
-                          endRow: params.request.endRow ?? pageSize,
+                          startRow,
+                          endRow,
                       });
+
+                // Determine if this is the first or last page for non-pinned grand totals
+                const { isFirstPage, isLastPage } = getPageFlags(
+                    nextDataView,
+                    measures,
+                    rows,
+                    startRow,
+                    endRow,
+                );
 
                 const { rowData, grandTotalRowData, grandTotalCount } = dataViewToRowData(
                     nextDataView,
                     columnHeadersPosition,
                     separators,
                     grandTotalsPosition,
+                    isFirstPage,
+                    isLastPage,
                 );
 
                 const successParam: LoadSuccessParams<AgGridRowData> = {

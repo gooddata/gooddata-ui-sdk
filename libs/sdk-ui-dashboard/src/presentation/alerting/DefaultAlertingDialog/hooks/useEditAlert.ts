@@ -160,7 +160,7 @@ export function useEditAlert({
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const [isTitleValid, setIsTitleValid] = useState(true);
 
-    const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
+    const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition | undefined>(
         alertToEdit ??
             createDefaultAlert(
                 getAppliedWidgetFilters(
@@ -204,7 +204,7 @@ export function useEditAlert({
     );
 
     const selectedNotificationChannel = notificationChannels.find(
-        (channel) => channel.id === editedAutomation.notificationChannel,
+        (channel) => channel.id === editedAutomation?.notificationChannel,
     );
 
     const allowExternalRecipients =
@@ -222,18 +222,20 @@ export function useEditAlert({
     //
     const onTitleChange = (value: string, isValid: boolean) => {
         setIsTitleValid(isValid);
-        setEditedAutomation((s) => ({ ...s, title: value }));
+        setEditedAutomation((s) => (s ? { ...s, title: value } : undefined));
     };
 
     const onMeasureChange = useCallback(
         (measure: AlertMetric) => {
             setEditedAutomation((alert) =>
-                transformAlertByMetric(
-                    supportedMeasures,
-                    alert as IAutomationMetadataObject,
-                    measure,
-                    measureFormatMap,
-                ),
+                alert
+                    ? transformAlertByMetric(
+                          supportedMeasures,
+                          alert as IAutomationMetadataObject,
+                          measure,
+                          measureFormatMap,
+                      )
+                    : undefined,
             );
         },
         [measureFormatMap, supportedMeasures],
@@ -250,30 +252,36 @@ export function useEditAlert({
                 | undefined,
         ) => {
             setEditedAutomation((alert) =>
-                transformAlertByAttribute(
-                    supportedAttributes,
-                    alert as IAutomationMetadataObject,
-                    attribute,
-                    value,
-                ),
+                alert
+                    ? transformAlertByAttribute(
+                          supportedAttributes,
+                          alert as IAutomationMetadataObject,
+                          attribute,
+                          value,
+                      )
+                    : undefined,
             );
         },
         [supportedAttributes],
     );
 
     const onValueChange = useCallback((value: number) => {
-        setEditedAutomation((alert) => transformAlertByValue(alert as IAutomationMetadataObject, value));
+        setEditedAutomation((alert) =>
+            alert ? transformAlertByValue(alert as IAutomationMetadataObject, value) : undefined,
+        );
     }, []);
 
     const onComparisonOperatorChange = useCallback(
         (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
             setEditedAutomation((alert) =>
-                transformAlertByComparisonOperator(
-                    supportedMeasures,
-                    alert as IAutomationMetadataObject,
-                    measure,
-                    comparisonOperator,
-                ),
+                alert
+                    ? transformAlertByComparisonOperator(
+                          supportedMeasures,
+                          alert as IAutomationMetadataObject,
+                          measure,
+                          comparisonOperator,
+                      )
+                    : undefined,
             );
         },
         [supportedMeasures],
@@ -286,14 +294,16 @@ export function useEditAlert({
             arithmeticOperator: IAlertRelativeArithmeticOperator,
         ) => {
             setEditedAutomation((alert) =>
-                transformAlertByRelativeOperator(
-                    supportedMeasures,
-                    alert as IAutomationMetadataObject,
-                    measure,
-                    relativeOperator,
-                    arithmeticOperator,
-                    measureFormatMap,
-                ),
+                alert
+                    ? transformAlertByRelativeOperator(
+                          supportedMeasures,
+                          alert as IAutomationMetadataObject,
+                          measure,
+                          relativeOperator,
+                          arithmeticOperator,
+                          measureFormatMap,
+                      )
+                    : undefined,
             );
         },
         [measureFormatMap, supportedMeasures],
@@ -310,15 +320,17 @@ export function useEditAlert({
             }
             const [relativeOperatorValue, arithmeticOperator] = relativeOperator;
             setEditedAutomation((alert) =>
-                transformAlertByRelativeOperator(
-                    supportedMeasures,
-                    alert as IAutomationMetadataObject,
-                    measure,
-                    relativeOperatorValue,
-                    arithmeticOperator,
-                    measureFormatMap,
-                    comparisonType,
-                ),
+                alert
+                    ? transformAlertByRelativeOperator(
+                          supportedMeasures,
+                          alert as IAutomationMetadataObject,
+                          measure,
+                          relativeOperatorValue,
+                          arithmeticOperator,
+                          measureFormatMap,
+                          comparisonType,
+                      )
+                    : undefined,
             );
         },
         [measureFormatMap, supportedMeasures],
@@ -353,36 +365,48 @@ export function useEditAlert({
                     : undefined;
 
             setEditedAutomation((alert) =>
-                transformAlertByDestination(
-                    alert as IAutomationMetadataObject,
-                    destinationId,
-                    updatedRecipients,
-                ),
+                alert
+                    ? transformAlertByDestination(
+                          alert as IAutomationMetadataObject,
+                          destinationId,
+                          updatedRecipients,
+                      )
+                    : undefined,
             );
         },
         [alertToEdit?.notificationChannel, currentUser, notificationChannels, intl, users],
     );
 
     const onTriggerModeChange = useCallback((triggerMode: IAlertTriggerMode) => {
-        setEditedAutomation(
-            (s): IAutomationMetadataObjectDefinition => ({
-                ...s,
-                alert: { ...s.alert!, trigger: { ...s.alert!.trigger, mode: triggerMode } },
-            }),
+        setEditedAutomation((s): IAutomationMetadataObjectDefinition | undefined =>
+            s
+                ? {
+                      ...s,
+                      alert: { ...s.alert!, trigger: { ...s.alert!.trigger, mode: triggerMode } },
+                  }
+                : undefined,
         );
     }, []);
 
     const onRecipientsChange = useCallback((updatedRecipients: IAutomationRecipient[]): void => {
-        setEditedAutomation((s) => ({
-            ...s,
-            recipients: updatedRecipients,
-        }));
+        setEditedAutomation((s) =>
+            s
+                ? {
+                      ...s,
+                      recipients: updatedRecipients,
+                  }
+                : undefined,
+        );
     }, []);
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[]) => {
             setEditedAutomationFilters(filters);
             setEditedAutomation((s) => {
+                if (!s) {
+                    return undefined;
+                }
+
                 const appliedFilters = getAppliedWidgetFilters(
                     filters,
                     dashboardHiddenFilters,
@@ -471,34 +495,35 @@ export function useEditAlert({
         selectedValue,
     );
 
-    const hasValidThreshold = isAlertValueDefined(editedAutomation.alert);
+    const hasValidThreshold = isAlertValueDefined(editedAutomation?.alert);
 
     const validationErrorMessage = isOriginalAutomationValid
         ? undefined
         : intl.formatMessage({ id: "insightAlert.config.invalidWidget" });
 
-    const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
+    const hasRecipients = (editedAutomation?.recipients?.length ?? 0) > 0;
     const hasValidExternalRecipients = allowExternalRecipients
         ? true
-        : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
+        : !editedAutomation?.recipients?.some(isAutomationExternalUserRecipient);
 
     const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
-        ? editedAutomation.recipients?.length === 1 &&
-          editedAutomation.recipients[0].id === defaultRecipient.id
+        ? editedAutomation?.recipients?.length === 1 &&
+          editedAutomation?.recipients[0].id === defaultRecipient.id
         : true;
 
-    const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
+    const hasNoUnknownRecipients = !editedAutomation?.recipients?.some(isAutomationUnknownUserRecipient);
 
-    const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const respectsRecipientsLimit = (editedAutomation?.recipients?.length ?? 0) <= maxAutomationsRecipients;
 
     const hasFilledEmails =
         selectedNotificationChannel?.destinationType === "smtp"
-            ? editedAutomation.recipients?.every((recipient) =>
+            ? editedAutomation?.recipients?.every((recipient) =>
                   isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
               )
             : true;
 
     const isValid =
+        !!editedAutomation &&
         hasRecipients &&
         respectsRecipientsLimit &&
         hasValidExternalRecipients &&

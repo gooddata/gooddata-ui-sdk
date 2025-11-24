@@ -388,6 +388,12 @@
                                     "type": "string",
                                     "format": "binary"
                                 }
+                            },
+                            "application/zip": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
                             }
                         }
                     },
@@ -395,6 +401,12 @@
                         "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
                         "content": {
                             "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/zip": {
                                 "schema": {
                                     "type": "string",
                                     "format": "binary"
@@ -604,6 +616,12 @@
                                 }
                             },
                             "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/zip": {
                                 "schema": {
                                     "type": "string",
                                     "format": "binary"

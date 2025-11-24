@@ -4,6 +4,10 @@
 
 ```ts
 
+import type { Feature } from 'geojson';
+import type { GeoJsonProperties } from 'geojson';
+import type { Geometry } from 'geojson';
+
 // @public
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter, includeDataSet?: boolean): IAbsoluteDateFilterValues;
 
@@ -564,7 +568,7 @@ export type GenAIChatInteractionUserVisualisation = {
 export type GenAIChatRole = "USER" | "AI";
 
 // @internal
-export type GenAIChatRoutingUseCase = "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
+export type GenAIChatRoutingUseCase = "ALERT" | "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
 // @internal
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
@@ -611,6 +615,9 @@ export type GenAIRelativeDateFilter = {
 
 // @internal
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+
+// @alpha
+export function geoFeatureKey(feature: IGeoJsonFeature): string;
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -820,10 +827,17 @@ export interface IAttributeDescriptorBody {
     uri: string;
 }
 
+// @alpha
+export interface IAttributeDisplayFormGeoAreaConfig {
+    collectionId?: string;
+}
+
 // @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
     displayFormType?: AttributeDisplayFormType | string;
+    // @alpha
+    geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
     isDefault?: boolean;
     isPrimary?: boolean;
     // (undocumented)
@@ -2177,6 +2191,11 @@ export interface IGenAIVisualizationMetric {
     title?: string;
     type: GenAIMetricType;
 }
+
+// @alpha
+export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties & {
+    key: string;
+}>;
 
 // @public
 export interface IGranteeGranularity {
@@ -5217,7 +5236,7 @@ export const SemanticQualityIssueCodeValues: {
 };
 
 // @internal
-export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
+export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "DISABLED";
 
 // @internal
 export type SemanticQualityIssueSeverity = "WARNING" | "INFO";

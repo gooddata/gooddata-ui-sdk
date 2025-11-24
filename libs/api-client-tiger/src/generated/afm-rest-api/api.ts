@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1313,7 +1315,12 @@ export interface GetQualityIssuesResponse {
     status: GetQualityIssuesResponseStatusEnum;
 }
 
-export type GetQualityIssuesResponseStatusEnum = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND";
+export type GetQualityIssuesResponseStatusEnum =
+    | "RUNNING"
+    | "COMPLETED"
+    | "FAILED"
+    | "NOT_FOUND"
+    | "DISABLED";
 
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1757,7 +1764,8 @@ export type QualityIssuesCalculationStatusResponseStatusEnum =
     | "RUNNING"
     | "COMPLETED"
     | "FAILED"
-    | "NOT_FOUND";
+    | "NOT_FOUND"
+    | "DISABLED";
 
 /**
  * Filter the result by comparing specified metric to given range of values.
@@ -1938,7 +1946,8 @@ export type RouteResultUseCaseEnum =
     | "CREATE_VISUALIZATION"
     | "EXTEND_VISUALIZATION"
     | "HOWTO"
-    | "CHANGE_ANALYSIS";
+    | "CHANGE_ANALYSIS"
+    | "ALERT";
 
 /**
  * Created and saved visualization IDs.
@@ -2271,7 +2280,11 @@ export interface TriggerQualityIssuesCalculationResponse {
     status: TriggerQualityIssuesCalculationResponseStatusEnum;
 }
 
-export type TriggerQualityIssuesCalculationResponseStatusEnum = "RUNNING" | "COMPLETED" | "FAILED";
+export type TriggerQualityIssuesCalculationResponseStatusEnum =
+    | "RUNNING"
+    | "COMPLETED"
+    | "FAILED"
+    | "DISABLED";
 
 /**
  * User context, which can affect the behavior of the underlying AI features.

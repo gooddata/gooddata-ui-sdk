@@ -15,4 +15,6 @@ export {
     type ActionsApiReadCsvFileManifestsRequest as ResultApiReadCsvFileManifestsRequest,
     ActionsApi_StagingUpload as ResultApi_StagingUpload,
     type ActionsApiStagingUploadRequest as ResultApiStagingUploadRequest,
+    OGCAPIFeaturesApi_GetCollectionItems as ResultApi_GetCollectionItems,
+    type OGCAPIFeaturesApiGetCollectionItemsRequest as ResultApiGetCollectionItemsRequest,
 } from "../../generated/result-json-api/api.js";

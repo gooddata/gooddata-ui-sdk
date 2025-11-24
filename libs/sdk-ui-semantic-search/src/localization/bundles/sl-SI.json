@@ -1,0 +1,19 @@
+{
+    "semantic-search.error.title": "Naša storitev iskanja je začasno nedosegljiva.",
+    "semantic-search.error.text": "Trudimo se odpraviti težavo.",
+    "semantic-search.no-results": "Rezultati za “{query}” niso bili najdeni.",
+    "semantic-search.results.count": "{count, plural, one {# rezultat} two {# rezultata} few {# rezultati} other {# rezultatov}}",
+    "semantic-search.label": "Išči nadzorne plošče ali vizualizacije",
+    "semantic-search.placeholder": "Išči nadzorne plošče ali vizualizacije…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Oznake",
+    "semantic-search.match": "{score}% ujemanje",
+    "semantic-search.previous-search": "Prejšnje iskanje: {query}",
+    "semantic-search.tree": "Drevo semantičnega iskanja",
+    "semantic-search.tree.history": "Zgodovina semantičnega iskalnega drevesa",
+    "semantic-search.edit": "Uredi",
+    "semantic-search.date.at": "ob",
+    "semantic-search.ask.ai.assistant": "Vprašaj AI asistenta",
+    "gs.date.today": "Danes",
+    "gs.date.yesterday": "Včeraj"
+}

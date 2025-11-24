@@ -14,6 +14,8 @@ import {
     IAutomationsQuery,
     IAutomationsQueryResult,
     IBackendCapabilities,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataView,
     IElementsQuery,
     IElementsQueryAttributeFilter,
@@ -49,6 +51,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IExecutionDefinition,
+    IGeoJsonFeature,
     IMeasure,
     IMeasureDefinitionType,
     IMetadataObject,
@@ -59,6 +62,7 @@ import {
     ObjRef,
     ObjectType,
     areObjRefsEqual,
+    geoFeatureKey,
     idRef,
     isIdentifierRef,
     isUriRef,
@@ -119,6 +123,14 @@ type AutomationCacheEntry = {
     automations: LRUCache<string, Promise<IAutomationMetadataObject[]>>;
     queries: LRUCache<string, Promise<IAutomationsQueryResult>>;
 };
+
+type CollectionItemsCacheEntry = {
+    values: LRUCache<string, IGeoJsonFeature[]>;
+    bbox?: number[];
+    type?: string;
+};
+
+type CollectionItemsCache = LRUCache<string, CollectionItemsCacheEntry>;
 
 type WorkspaceSettingsCacheEntry = {
     userWorkspaceSettings: LRUCache<string, Promise<IUserWorkspaceSettings>>;
@@ -241,6 +253,100 @@ class DefinitionSanitizingDataView extends DecoratedDataView {
     }
 }
 
+class WithCollectionItemsCachingDataView extends DecoratedDataView {
+    constructor(
+        decorated: IDataView,
+        private readonly collectionItemsCache: CollectionItemsCache,
+        private readonly maxValuesPerFilter: number,
+    ) {
+        super(decorated);
+    }
+
+    public override async readCollectionItems(
+        config: ICollectionItemsConfig,
+    ): Promise<ICollectionItemsResult> {
+        const values = config.values?.filter((value): value is string => Boolean(value));
+        if (!values?.length) {
+            return super.readCollectionItems(config);
+        }
+
+        const normalizedValues = Array.from(new Set(values));
+        const filterKey = collectionItemsFilterKey(config);
+
+        let cacheEntry = this.collectionItemsCache.get(filterKey);
+        if (!cacheEntry) {
+            cacheEntry = this.createCollectionItemsCacheEntry();
+            this.collectionItemsCache.set(filterKey, cacheEntry);
+        }
+
+        const cachedFeatures: IGeoJsonFeature[] = [];
+        const missingValues: string[] = [];
+
+        for (const value of normalizedValues) {
+            if (!cacheEntry.values.has(value)) {
+                missingValues.push(value);
+                continue;
+            }
+
+            const cached = cacheEntry.values.get(value);
+            if (cached?.length) {
+                cachedFeatures.push(...cached);
+            }
+        }
+
+        if (!missingValues.length) {
+            return {
+                type: cacheEntry.type ?? "FeatureCollection",
+                features: cachedFeatures,
+                bbox: cacheEntry.bbox,
+            };
+        }
+
+        const fetchConfig: ICollectionItemsConfig = {
+            ...config,
+            values: missingValues,
+            limit: Math.max(config.limit ?? missingValues.length, missingValues.length),
+        };
+
+        const freshResult = await super.readCollectionItems(fetchConfig);
+        const { index, unmatched } = buildFeatureIndexByIdentifiers(freshResult.features ?? []);
+
+        const newlyFetched: IGeoJsonFeature[] = [];
+
+        for (const value of missingValues) {
+            const featuresForValue = index.get(value);
+            if (featuresForValue && featuresForValue.length > 0) {
+                cacheEntry.values.set(value, featuresForValue);
+                newlyFetched.push(...featuresForValue);
+            } else {
+                cacheEntry.values.set(value, []);
+            }
+        }
+
+        if (freshResult.bbox) {
+            cacheEntry.bbox = mergeBbox(cacheEntry.bbox, freshResult.bbox);
+        }
+
+        if (freshResult.type) {
+            cacheEntry.type = freshResult.type;
+        }
+
+        return {
+            type: cacheEntry.type ?? freshResult.type ?? "FeatureCollection",
+            features: [...cachedFeatures, ...newlyFetched, ...unmatched],
+            bbox: cacheEntry.bbox ?? freshResult.bbox,
+        };
+    }
+
+    private createCollectionItemsCacheEntry(): CollectionItemsCacheEntry {
+        return {
+            values: new LRUCache({
+                max: this.maxValuesPerFilter,
+            }),
+        };
+    }
+}
+
 /**
  * This ExecutionResult decorator makes sure that definitions used throughout the result are set
  * to the definitionOverride provided. This is useful with caching because different definitions may yield
@@ -295,11 +401,18 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         private allForecastConfig: IForecastConfig | undefined = undefined,
         private allForecastData: Promise<IForecastResult> | undefined = undefined,
         private windows: LRUCache<string, Promise<IDataView>> | undefined = undefined,
+        private collectionItemsCache: CollectionItemsCache | undefined = undefined,
     ) {
         super(decorated, execWrapper);
 
         if (cachingEnabled(this.ctx.config.maxResultWindows) && !this.windows) {
             this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows! });
+        }
+
+        if (cachingEnabled(this.ctx.config.maxGeoCollectionItemsPerResult) && !this.collectionItemsCache) {
+            this.collectionItemsCache = new LRUCache({
+                max: this.ctx.config.maxGeoCollectionItemsPerResult!,
+            });
         }
     }
 
@@ -307,7 +420,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         if (this.signal && (!this.allData || this.signal.aborted)) {
             try {
                 const allData = await super.readAll();
-                this.allData = Promise.resolve(allData);
+                this.allData = Promise.resolve(this.wrapDataView(allData));
             } catch (err) {
                 // If result was canceled, we need to delete also the execution cache entry,
                 // to avoid 404 on result next time it's called,
@@ -320,10 +433,13 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
                 throw err;
             }
         } else if (!this.allData) {
-            this.allData = super.readAll().catch((e) => {
-                this.allData = undefined;
-                throw e;
-            });
+            this.allData = super
+                .readAll()
+                .then((dataView) => this.wrapDataView(dataView))
+                .catch((e) => {
+                    this.allData = undefined;
+                    throw e;
+                });
         }
 
         return this.allData;
@@ -344,7 +460,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
 
     public override readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         if (!this.windows) {
-            return super.readWindow(offset, size);
+            return super.readWindow(offset, size).then((dataView) => this.wrapDataView(dataView));
         }
 
         const cacheKey = windowKey(offset, size);
@@ -360,16 +476,19 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
 
                 throw e;
             });
-            window = Promise.resolve(result);
+            window = Promise.resolve(this.wrapDataView(result));
             this.windows.set(cacheKey, window);
         } else if (!window) {
-            window = super.readWindow(offset, size).catch((e) => {
-                if (this.windows) {
-                    this.windows.delete(cacheKey);
-                }
+            window = super
+                .readWindow(offset, size)
+                .then((dataView) => this.wrapDataView(dataView))
+                .catch((e) => {
+                    if (this.windows) {
+                        this.windows.delete(cacheKey);
+                    }
 
-                throw e;
-            });
+                    throw e;
+                });
             this.windows.set(cacheKey, window);
         }
 
@@ -386,6 +505,23 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
             this.allForecastConfig,
             this.allForecastData,
             this.windows,
+            this.collectionItemsCache,
+        );
+    };
+
+    private wrapDataView = (dataView: IDataView): IDataView => {
+        if (
+            !this.collectionItemsCache ||
+            !cachingEnabled(this.ctx.config.maxGeoCollectionItemsPerResult) ||
+            dataView instanceof WithCollectionItemsCachingDataView
+        ) {
+            return dataView;
+        }
+
+        return new WithCollectionItemsCachingDataView(
+            dataView,
+            this.collectionItemsCache,
+            this.ctx.config.maxGeoCollectionItemsPerResult!,
         );
     };
 }
@@ -1408,6 +1544,60 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 //
 //
 
+function collectionItemsFilterKey(config: ICollectionItemsConfig): string {
+    return (
+        stringify({
+            collectionId: config.collectionId,
+            bbox: config.bbox,
+        }) || "collectionItems"
+    );
+}
+
+function buildFeatureIndexByIdentifiers(features: IGeoJsonFeature[]): {
+    index: Map<string, IGeoJsonFeature[]>;
+    unmatched: IGeoJsonFeature[];
+} {
+    const index = new Map<string, IGeoJsonFeature[]>();
+    const unmatched: IGeoJsonFeature[] = [];
+
+    for (const feature of features) {
+        const identifier = geoFeatureKey(feature);
+
+        if (!identifier) {
+            unmatched.push(feature);
+            continue;
+        }
+
+        const existingIndexEntry = index.get(identifier);
+        if (existingIndexEntry) {
+            existingIndexEntry.push(feature);
+        } else {
+            index.set(identifier, [feature]);
+        }
+    }
+
+    return { index, unmatched };
+}
+
+function mergeBbox(a?: number[], b?: number[]): number[] | undefined {
+    if (!a) {
+        return b ? [...b] : undefined;
+    }
+
+    if (!b) {
+        return [...a];
+    }
+
+    const length = Math.min(a.length, b.length);
+    const merged = a.slice(0, length);
+
+    for (let i = 0; i < length; i++) {
+        merged[i] = i < length / 2 ? Math.min(a[i], b[i]) : Math.max(a[i], b[i]);
+    }
+
+    return merged;
+}
+
 function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
     return (original: IExecutionFactory) =>
         new DecoratedExecutionFactory(original, (execution) => new WithExecutionCaching(execution, ctx));
@@ -1550,6 +1740,18 @@ export type CachingConfiguration = {
      * Note: this option has no effect if execution caching is disabled.
      */
     maxResultWindows?: number;
+
+    /**
+     * Maximum number of cached geo collection items per execution result.
+     *
+     * @remarks
+     * This limits how many unique combinations of collection filters and attribute values can be stored when
+     * caching responses from {@link @gooddata/sdk-backend-spi#IDataView.readCollectionItems}. Once the number of
+     * cached entries grows beyond this size, least recently used entries will be evicted.
+     *
+     * When non-positive number is specified, caching of collection items will be disabled.
+     */
+    maxGeoCollectionItemsPerResult?: number;
 
     /**
      * Maximum number of workspaces for which to cache catalogs. The workspace identifier is used as cache key. For
@@ -1735,6 +1937,7 @@ function assertPositiveOrUndefined(value: number | undefined, valueName: string)
 export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxExecutions: 10,
     maxResultWindows: 5,
+    maxGeoCollectionItemsPerResult: 200,
     maxCatalogs: 1,
     maxCatalogOptions: 50,
     maxSecuritySettingsOrgs: 3,
@@ -1762,6 +1965,7 @@ export function withCaching(
     config: CachingConfiguration,
 ): IAnalyticalBackend {
     assertPositiveOrUndefined(config.maxCatalogOptions, "maxCatalogOptions");
+    assertPositiveOrUndefined(config.maxGeoCollectionItemsPerResult, "maxGeoCollectionItemsPerResult");
     assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
     assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrlsAge, "maxSecuritySettingsOrgUrlsAge");
 

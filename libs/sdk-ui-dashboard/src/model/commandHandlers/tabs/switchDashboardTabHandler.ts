@@ -10,6 +10,7 @@ import { SwitchDashboardTab } from "../../commands/tabs.js";
 import { DashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -45,8 +46,9 @@ export function* switchDashboardTabHandler(
     // Apply default filter view for the new tab if one exists, otherwise reset to original
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const areFilterViewsEnabled = settings.enableDashboardFilterViews;
+    const isViewMode = yield select(selectIsInViewMode);
 
-    if (areFilterViewsEnabled && newTab.filterContext) {
+    if (areFilterViewsEnabled && newTab.filterContext && isViewMode) {
         const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
         const tabDefaultView = filterViews.find(
             (view) => view.isDefault && view.tabLocalIdentifier === tabId,

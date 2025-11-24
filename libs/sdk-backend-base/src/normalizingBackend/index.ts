@@ -6,6 +6,8 @@ import {
     IAnalyticalBackend,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
@@ -300,6 +302,10 @@ class DenormalizedDataView implements IDataView {
             normalizedDataView.clusteringConfig,
             normalizedDataView.clusteringResult,
         );
+    }
+
+    public readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        return this.normalizedDataView.readCollectionItems(config);
     }
 }
 

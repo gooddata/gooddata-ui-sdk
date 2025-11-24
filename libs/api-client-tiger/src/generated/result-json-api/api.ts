@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -2380,13 +2382,11 @@ export class DataSourceStagingLocationApi extends BaseAPI implements DataSourceS
 
 // OGCAPIFeaturesApi FP - OGCAPIFeaturesApiAxiosParamCreator
 /**
- * Retrieve features from a GeoParquet collection as GeoJSON
+ * Retrieve features from a GeoCollections collection as GeoJSON
  * @summary Get collection features
  * @param {string} collectionId Collection identifier
  * @param {number} [limit] Maximum number of features to return
  * @param {string} [bbox] Bounding box filter (minx,miny,maxx,maxy)
- * @param {string} [datetime] Datetime filter (ISO 8601)
- * @param {string} [matchingProperty] Property to match against collection features
  * @param {Array<string>} [values] List of values to filter features by
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -2396,8 +2396,6 @@ export async function OGCAPIFeaturesApiAxiosParamCreator_GetCollectionItems(
     collectionId: string,
     limit?: number,
     bbox?: string,
-    datetime?: string,
-    matchingProperty?: string,
     values?: Array<string>,
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
@@ -2426,14 +2424,6 @@ export async function OGCAPIFeaturesApiAxiosParamCreator_GetCollectionItems(
         localVarQueryParameter["bbox"] = bbox;
     }
 
-    if (datetime !== undefined) {
-        localVarQueryParameter["datetime"] = datetime;
-    }
-
-    if (matchingProperty !== undefined) {
-        localVarQueryParameter["matchingProperty"] = matchingProperty;
-    }
-
     if (values) {
         localVarQueryParameter["values"] = values;
     }
@@ -2454,7 +2444,7 @@ export async function OGCAPIFeaturesApiAxiosParamCreator_GetCollectionItems(
 
 // OGCAPIFeaturesApi Api FP
 /**
- * Retrieve features from a GeoParquet collection as GeoJSON
+ * Retrieve features from a GeoCollections collection as GeoJSON
  * @summary Get collection features
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -2474,8 +2464,6 @@ export async function OGCAPIFeaturesApi_GetCollectionItems(
         requestParameters.collectionId,
         requestParameters.limit,
         requestParameters.bbox,
-        requestParameters.datetime,
-        requestParameters.matchingProperty,
         requestParameters.values,
         options || {},
         configuration,
@@ -2490,7 +2478,7 @@ export async function OGCAPIFeaturesApi_GetCollectionItems(
  */
 export interface OGCAPIFeaturesApiInterface {
     /**
-     * Retrieve features from a GeoParquet collection as GeoJSON
+     * Retrieve features from a GeoCollections collection as GeoJSON
      * @summary Get collection features
      * @param {OGCAPIFeaturesApiGetCollectionItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2531,20 +2519,6 @@ export interface OGCAPIFeaturesApiGetCollectionItemsRequest {
     readonly bbox?: string;
 
     /**
-     * Datetime filter (ISO 8601)
-     * @type {string}
-     * @memberof OGCAPIFeaturesApiGetCollectionItems
-     */
-    readonly datetime?: string;
-
-    /**
-     * Property to match against collection features
-     * @type {string}
-     * @memberof OGCAPIFeaturesApiGetCollectionItems
-     */
-    readonly matchingProperty?: string;
-
-    /**
      * List of values to filter features by
      * @type {Array<string>}
      * @memberof OGCAPIFeaturesApiGetCollectionItems
@@ -2560,7 +2534,7 @@ export interface OGCAPIFeaturesApiGetCollectionItemsRequest {
  */
 export class OGCAPIFeaturesApi extends BaseAPI implements OGCAPIFeaturesApiInterface {
     /**
-     * Retrieve features from a GeoParquet collection as GeoJSON
+     * Retrieve features from a GeoCollections collection as GeoJSON
      * @summary Get collection features
      * @param {OGCAPIFeaturesApiGetCollectionItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

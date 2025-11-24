@@ -14,17 +14,17 @@ import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
 
 export const useAlertValidation = (
-    alert: IAutomationMetadataObject,
+    alert: IAutomationMetadataObject | undefined,
     isNewAlert?: boolean,
 ): { isValid: boolean; invalidityReason: AlertInvalidityReason | undefined } => {
-    const widgetLocalId = alert.metadata?.widget;
+    const widgetLocalId = alert?.metadata?.widget;
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const supportedMeasures = getSupportedInsightMeasuresByInsight(insight, dateDatasets);
-    const selectedMeasureExists = getAlertMeasure(supportedMeasures, alert.alert);
+    const selectedMeasureExists = alert ? getAlertMeasure(supportedMeasures, alert.alert) : undefined;
 
     const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);
 

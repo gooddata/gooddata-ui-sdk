@@ -19,6 +19,7 @@ import {
     pt,
     ptBR,
     ru,
+    sl,
     tr,
     zhCN,
 } from "date-fns/locale";
@@ -80,6 +81,7 @@ const localeConversions = {
     "tr-TR": tr,
     "pl-PL": pl,
     "ko-KR": ko,
+    "sl-SI": sl,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;

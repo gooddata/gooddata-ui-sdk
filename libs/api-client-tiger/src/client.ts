@@ -36,7 +36,11 @@ import {
     isStaticFeatures,
     tigerProfileClientFactory,
 } from "./profile.js";
-import { ResultActionsApiInterface, tigerResultClientFactory } from "./result.js";
+import {
+    ResultActionsApiInterface,
+    tigerGeoCollectionsClientFactory,
+    tigerResultClientFactory,
+} from "./result.js";
 import {
     ScanModelActionsApiInterface,
     ScanModelBaseApi,
@@ -128,6 +132,7 @@ export interface ITigerClient extends ITigerClientBase {
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     export: ReturnType<typeof tigerExportClientFactory>;
     result: ReturnType<typeof tigerResultClientFactory>;
+    geoCollections: ReturnType<typeof tigerGeoCollectionsClientFactory>;
     userManagement: ReturnType<typeof tigerUserManagementClientFactory>;
 
     /**
@@ -174,6 +179,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const smartFunctions = tigerSmartFunctionsClientFactory(axios);
     const genAI = tigerGenAIClientFactory(axios);
     const automation = tigerAutomationClientFactory(axios);
+    const geoCollections = tigerGeoCollectionsClientFactory(axios);
 
     return {
         axios,
@@ -199,6 +205,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         export: exportFactory,
         smartFunctions,
         genAI,
+        geoCollections,
     };
 };
 

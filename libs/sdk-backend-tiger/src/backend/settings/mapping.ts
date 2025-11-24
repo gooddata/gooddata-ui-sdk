@@ -71,6 +71,10 @@ export function mapTypeToKey(
         case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
         case "DATA_LOCALE":
         case "LDM_DEFAULT_LOCALE":
+        case "ENABLE_DRILL_TO_URL_BY_DEFAULT":
+        case "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS":
+        case "SORT_CASE_SENSITIVE":
+        case "FISCAL_YEAR":
         case undefined:
             return fallback;
         default:

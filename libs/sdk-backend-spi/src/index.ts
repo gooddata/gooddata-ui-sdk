@@ -45,6 +45,8 @@ export type {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IExecutionResultMetadata,
     IExecutionResultDataSourceMessage,
 } from "./workspace/execution/index.js";

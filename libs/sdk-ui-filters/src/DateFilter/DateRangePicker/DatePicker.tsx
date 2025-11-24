@@ -20,6 +20,7 @@ import {
     pt,
     ptBR,
     ru,
+    sl,
     tr,
     zhCN,
 } from "date-fns/locale";
@@ -55,6 +56,7 @@ const convertedLocales: Record<string, Locale> = {
     "tr-TR": tr,
     "pl-PL": pl,
     "ko-KR": ko,
+    "sl-SI": sl,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];

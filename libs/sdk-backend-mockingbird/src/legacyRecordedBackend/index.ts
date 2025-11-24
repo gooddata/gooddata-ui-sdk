@@ -14,6 +14,8 @@ import {
     IAuthenticationProvider,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataFiltersService,
     IDataSourcesService,
     IDataView,
@@ -348,6 +350,9 @@ function recordedDataView(
         },
         withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
             throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
+        },
+        readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+            throw new NotSupported("readCollectionItems is not supported by the legacy recorded backend.");
         },
     };
 }

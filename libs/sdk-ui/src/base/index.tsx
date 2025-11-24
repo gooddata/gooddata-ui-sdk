@@ -392,6 +392,7 @@ export { OverTimeComparisonTypes } from "./interfaces/OverTimeComparison.js";
  */
 
 export { DataViewFacade } from "./results/facade.js";
+export type { CollectionItemsRequestOptions } from "./results/facade.js";
 export type { IExecutionDefinitionMethods } from "./results/internal/definitionMethods.js";
 export type { IResultDataMethods } from "./results/internal/resultDataMethods.js";
 export type { IResultMetaMethods } from "./results/internal/resultMetaMethods.js";

@@ -987,6 +987,10 @@
         "value": "Success! Your alert was deleted.",
         "comment": "Success message after alert is deleted"
     },
+    "dialogs.alerting.create.noMeasure.tooltip": {
+        "value": "Creating an alert requires a metric. Use a widget with at least one metric.",
+        "comment": "Tooltip shown on the create alert button when the visualization does not contain any metrics/measures"
+    },
     "alerting.alert.menu.delete": {
         "value": "Delete",
         "comment": "Menu option to delete an alert"

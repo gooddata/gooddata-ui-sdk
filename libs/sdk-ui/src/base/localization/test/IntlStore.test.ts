@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { getIntl, getTranslation } from "../IntlStore.js";
@@ -53,6 +54,7 @@ describe("IntlStore", () => {
                 "tr-TR",
                 "pl-PL",
                 "ko-KR",
+                "sl-SI",
             ];
 
             it("should return message for simple translation key", () => {

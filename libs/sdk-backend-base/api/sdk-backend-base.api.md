@@ -23,6 +23,7 @@ import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionResult } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormGeoAreaConfig } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
@@ -195,6 +196,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     // (undocumented)
     displayFormType(type: string | undefined): this;
     // (undocumented)
+    geoAreaConfig(config: IAttributeDisplayFormGeoAreaConfig | undefined): this;
+    // (undocumented)
     isDefault(value: boolean | undefined): this;
     // (undocumented)
     isPrimary(value: boolean | undefined): this;
@@ -283,6 +286,7 @@ export type CacheControl = {
 export type CachingConfiguration = {
     maxExecutions?: number;
     maxResultWindows?: number;
+    maxGeoCollectionItemsPerResult?: number;
     maxCatalogs?: number;
     maxCatalogOptions?: number;
     onCacheReady?: (cacheControl: CacheControl) => void;

@@ -351,6 +351,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "@types/geojson",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/history",
       "allowedCategories": [ "examples" ]
     },

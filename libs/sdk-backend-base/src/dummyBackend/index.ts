@@ -21,6 +21,8 @@ import {
     IChatThread,
     IClusteringConfig,
     IClusteringResult,
+    ICollectionItemsConfig,
+    ICollectionItemsResult,
     IDataFiltersService,
     IDataSourcesService,
     IDataView,
@@ -320,6 +322,9 @@ export function dummyDataView(
         },
         withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
             throw new NotSupported("clustering is not supported in this dummy backend");
+        },
+        readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+            throw new NotSupported("readCollectionItems is not supported in this dummy backend");
         },
     };
 }

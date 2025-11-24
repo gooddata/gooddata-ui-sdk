@@ -7,7 +7,7 @@ import {
     AutomationAutomationExternalRecipient,
     ComparisonWrapper,
     JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiAutomationOutAttributesStateEnum,
+    JsonApiAutomationInAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutRelationships,
@@ -310,7 +310,7 @@ export const convertAutomationListToAutomations = (
 
 const convertAlert = (
     alert: AutomationAutomationAlert | undefined,
-    state: JsonApiAutomationOutAttributesStateEnum | undefined,
+    state?: JsonApiAutomationInAttributesStateEnum,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;
