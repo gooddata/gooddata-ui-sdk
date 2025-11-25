@@ -306,8 +306,10 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
             return bucketLocalIdentifier !== BucketNames.VIEW;
 
         case VisualizationTypes.PUSHPIN:
+        case VisualizationTypes.CHOROPLETH:
             return (
                 bucketLocalIdentifier !== BucketNames.LOCATION &&
+                bucketLocalIdentifier !== BucketNames.AREA &&
                 bucketLocalIdentifier !== BucketNames.SEGMENT
             );
 

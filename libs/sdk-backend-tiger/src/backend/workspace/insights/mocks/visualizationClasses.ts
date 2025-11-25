@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { sortBy } from "lodash-es";
 
 import { IVisualizationClass } from "@gooddata/sdk-model";
@@ -243,6 +244,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 title: "Geo Pushpin",
                 identifier: "gdc.visualization.pushpin",
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:choropleth",
+                orderIndex: 20.1,
+                iconSelected: "local:choropleth.selected",
+                url: "local:choropleth",
+                title: "Geo Area chart",
+                identifier: "gdc.visualization.choropleth",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1004",
             },
         },
         {

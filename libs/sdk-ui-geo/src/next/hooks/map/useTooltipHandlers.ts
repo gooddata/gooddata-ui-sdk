@@ -32,12 +32,13 @@ export function useTooltipHandlers(
     config: IMapConfig | undefined,
     drillablePredicates: IHeaderPredicate[],
     intl: IntlShape,
+    layerId?: string,
 ): void {
     useEffect(() => {
         if (!map || !tooltip || !config) {
             return undefined;
         }
 
-        return setupTooltipHandlers(map, tooltip, config, drillablePredicates, intl);
-    }, [map, tooltip, config, drillablePredicates, intl]);
+        return setupTooltipHandlers(map, tooltip, config, drillablePredicates, intl, layerId);
+    }, [map, tooltip, config, drillablePredicates, intl, layerId]);
 }

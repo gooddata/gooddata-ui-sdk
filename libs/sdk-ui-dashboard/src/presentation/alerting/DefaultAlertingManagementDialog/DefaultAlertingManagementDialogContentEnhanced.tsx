@@ -11,6 +11,7 @@ import {
     ContentDivider,
     Dialog,
     Hyperlink,
+    IButtonAccessibilityConfig,
     OverlayController,
     OverlayControllerProvider,
     Typography,
@@ -39,6 +40,7 @@ import {
     AUTOMATIONS_MAX_HEIGHT,
     DASHBOARD_DIALOG_OVERS_Z_INDEX,
 } from "../../../presentation/constants/index.js";
+import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
@@ -151,6 +153,10 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                                     tooltipContent={intl.formatMessage({
                                         id: messages.alertingCreateNoMeasureTooltip.id!,
                                     })}
+                                    accessibilityConfig={{
+                                        ariaHaspopup: "dialog",
+                                        ariaControls: ALERTING_DIALOG_ID,
+                                    }}
                                 />
                             ) : null
                         }
@@ -184,6 +190,7 @@ interface ICreateButtonProps {
     hasMetrics: boolean;
     label: string;
     tooltipContent: string;
+    accessibilityConfig?: IButtonAccessibilityConfig;
 }
 
 function CreateButton({ onClick, hasMetrics, label, tooltipContent }: ICreateButtonProps) {

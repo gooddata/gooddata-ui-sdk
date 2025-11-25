@@ -688,6 +688,7 @@ function VisualizationContentsComponentCore({
                             key={suggestion.label}
                             label={suggestion.label}
                             variant="secondary"
+                            size="small"
                             onClick={() => {
                                 dispatch(
                                     newMessageAction(

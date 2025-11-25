@@ -47,11 +47,7 @@
         "value": "<b>Some interactions were removed</b>",
         "comment": "Warning notification title when dashboard interactions were removed due to changes in data"
     },
-    "messages.dashboard.invalidDrills.body.modern._measure": {
-        "value": "One or more dashboard/visualization/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
-        "comment": "Warning message details for invalid drill interactions with list of affected widgets"
-    },
-    "messages.dashboard.invalidDrills.body.modern._metric": {
+    "messages.dashboard.invalidDrills.body.modern": {
         "value": "One or more dashboard/visualization/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "comment": "Warning message details for invalid drill interactions using metrics with list of affected widgets"
     },
@@ -1115,11 +1111,7 @@
         "value": "Not enough space for visualization",
         "comment": "Warning shown when there is insufficient space to properly display a visualization during export"
     },
-    "options.menu.unsupported.error._measure": {
-        "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
-        "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, measures or attributes."
-    },
-    "options.menu.unsupported.error._metric": {
+    "options.menu.unsupported.error": {
         "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
         "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, metrics or attributes."
     },
@@ -1607,11 +1599,7 @@
         "value": "When I click on",
         "comment": "First part of the drill interaction configuration sentence. Example in sentence: \"WHEN I CLICK ON on value of measure 'Number of user accounts', drill into detail.\""
     },
-    "configurationPanel.drillConfig.measureValue._measure": {
-        "value": "Value of measure",
-        "comment": "Label for selecting measure value as drill target in configuration. Example in sentence: \"When I click on VALUE OF MEASURE 'Number of user accounts', drill into detail.\""
-    },
-    "configurationPanel.drillConfig.measureValue._metric": {
+    "configurationPanel.drillConfig.measureValue": {
         "value": "Value of metric",
         "comment": "Label for selecting metric value as drill target in configuration. Example in sentence: \"When I click on VALUE OF METRIC 'Number of user accounts', drill into detail.\""
     },
@@ -1711,19 +1699,11 @@
         "value": "None",
         "comment": "Option to hide description completely"
     },
-    "configurationPanel.visualprops.includeMetrics._measure": {
-        "value": "Include measure descriptions",
-        "comment": "Checkbox label for option to show measure descriptions"
-    },
-    "configurationPanel.visualprops.includeMetrics._metric": {
+    "configurationPanel.visualprops.includeMetrics": {
         "value": "Include metric descriptions",
         "comment": "Checkbox label for option to show metric descriptions"
     },
-    "configurationPanel.visualprops.includeMetricsHelp._measure": {
-        "value": "Display section with list of visualization’s measures and their description.",
-        "comment": "Help text explaining the option to show measure descriptions in visualization"
-    },
-    "configurationPanel.visualprops.includeMetricsHelp._metric": {
+    "configurationPanel.visualprops.includeMetricsHelp": {
         "value": "Display section with list of visualization’s metrics and their description.",
         "comment": "Help text explaining the option to show metric descriptions in visualization"
     },

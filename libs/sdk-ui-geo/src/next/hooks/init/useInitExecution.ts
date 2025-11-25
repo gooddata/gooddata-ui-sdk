@@ -16,7 +16,14 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import { IGeoAreaChartProps } from "../../types/areaPublic.js";
 import { IGeoPushpinChartNextResolvedProps } from "../../types/internal.js";
+
+type GeoExecutionProps = IGeoPushpinChartNextResolvedProps | IGeoAreaChartProps;
+
+function isAreaProps(props: GeoExecutionProps): props is IGeoAreaChartProps {
+    return (props as IGeoAreaChartProps).area !== undefined;
+}
 
 /**
  * Creates dimensions for geo chart execution.
@@ -38,7 +45,7 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
  * the chart is using location mode (single attribute) or lat/lng mode (two attributes).
  *
  * Buckets created:
- * - LOCATION: Contains either location attribute or lat/lng attributes
+ * - AREA: Contains area attribute (or LOCATION/LATITUDE/LONGITUDE for pushpin)
  * - SIZE: Contains size measure/attribute
  * - COLOR: Contains color measure/attribute
  * - SEGMENT: Contains segmentBy attribute
@@ -49,39 +56,38 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
  *
  * @alpha
  */
-export function useInitExecution(props: IGeoPushpinChartNextResolvedProps): IPreparedExecution {
-    const {
-        location,
-        latitude,
-        longitude,
-        segmentBy,
-        size,
-        color,
-        config,
-        filters = [],
-        sortBy = [],
-        execConfig,
-    } = props;
+export function useInitExecution(props: GeoExecutionProps): IPreparedExecution {
+    const { segmentBy, color, config, filters = [], sortBy = [], execConfig } = props;
 
     const backend = useBackendStrict(props.backend, "useInitExecution");
     const workspace = useWorkspaceStrict(props.workspace, "useInitExecution");
 
     const { tooltipText } = config ?? {};
+    const area = isAreaProps(props);
+    const areaArea = area ? props.area : undefined;
+    const pushpinLocation = area ? undefined : (props as IGeoPushpinChartNextResolvedProps).location;
+    const pushpinLatitude = area ? undefined : (props as IGeoPushpinChartNextResolvedProps).latitude;
+    const pushpinLongitude = area ? undefined : (props as IGeoPushpinChartNextResolvedProps).longitude;
+    const pushpinSize = area ? undefined : (props as IGeoPushpinChartNextResolvedProps).size;
 
     return useMemo(() => {
         const buckets = [];
 
-        // Location bucket - either single location or lat/lng pair
-        if (latitude && longitude) {
-            buckets.push(newBucket(BucketNames.LATITUDE, latitude));
-            buckets.push(newBucket(BucketNames.LONGITUDE, longitude));
-        } else if (location) {
-            buckets.push(newBucket(BucketNames.LOCATION, location));
-        }
+        if (area) {
+            if (areaArea) {
+                buckets.push(newBucket(BucketNames.AREA, areaArea));
+            }
+        } else {
+            if (pushpinLatitude && pushpinLongitude) {
+                buckets.push(newBucket(BucketNames.LATITUDE, pushpinLatitude));
+                buckets.push(newBucket(BucketNames.LONGITUDE, pushpinLongitude));
+            } else if (pushpinLocation) {
+                buckets.push(newBucket(BucketNames.LOCATION, pushpinLocation));
+            }
 
-        // Size bucket
-        if (size) {
-            buckets.push(newBucket(BucketNames.SIZE, size));
+            if (pushpinSize) {
+                buckets.push(newBucket(BucketNames.SIZE, pushpinSize));
+            }
         }
 
         // Color bucket
@@ -114,11 +120,13 @@ export function useInitExecution(props: IGeoPushpinChartNextResolvedProps): IPre
     }, [
         backend,
         workspace,
-        location,
-        latitude,
-        longitude,
+        area,
+        areaArea,
+        pushpinLocation,
+        pushpinLatitude,
+        pushpinLongitude,
         segmentBy,
-        size,
+        pushpinSize,
         color,
         tooltipText,
         filters,

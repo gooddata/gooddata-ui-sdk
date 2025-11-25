@@ -55,7 +55,7 @@ export function Legend({
     const legendDetails = useLegendDetails(config, geoData, chartContainerRect);
 
     // Check if legend should be shown at all
-    const { hasCategoryLegend, hasColorLegend, hasSizeLegend } = availableLegends;
+    const { hasCategoryLegend, hasColorLegend, hasSizeLegend = false } = availableLegends;
     const hasAnyLegend = hasCategoryLegend || hasColorLegend || hasSizeLegend;
 
     if (!legendConfig.enabled || !hasAnyLegend) {

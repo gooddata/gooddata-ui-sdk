@@ -13,6 +13,7 @@ import { ComboChartDescriptorDeprecated } from "./pluggableVisualizations/comboC
 import { DependencyWheelChartDescriptor } from "./pluggableVisualizations/dependencyWheelChart/DependencyWheelChartDescriptor.js";
 import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor.js";
 import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor.js";
+import { GeoAreaChartDescriptor } from "./pluggableVisualizations/geoAreaChart/GeoAreaChartDescriptor.js";
 import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor.js";
 import { GeoPushpinChartNextDescriptor } from "./pluggableVisualizations/geoChartNext/GeoPushpinChartNextDescriptor.js";
 import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor.js";
@@ -177,6 +178,7 @@ const DefaultVisualizations = {
     repeater: RepeaterDescriptor,
     tablenext: PivotTableNextDescriptor,
     pushpinnext: GeoPushpinChartNextDescriptor,
+    choropleth: GeoAreaChartDescriptor,
 };
 
 /**

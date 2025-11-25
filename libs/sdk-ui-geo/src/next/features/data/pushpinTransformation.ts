@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    DataValue,
     IAttributeDescriptor,
     IAttributeOrMeasure,
     IMeasureDescriptor,
@@ -20,14 +19,15 @@ import {
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
+import { dataValueAsFloat, getLocation, parseCoordinate } from "./transformationCommon.js";
 import {
     IAvailableLegends,
     IGeoAttributeItem,
-    IGeoData,
     IGeoLngLat,
-    IGeoLocationItem,
     IGeoMeasureItem,
     IGeoSegmentItem,
+    IPushpinGeoData,
+    IPushpinLocationItem,
 } from "../../types/shared.js";
 import { getMinMax } from "../size/calculations.js";
 
@@ -48,10 +48,10 @@ interface ISegmentData {
     data: string[];
 }
 
-interface IGeoDataBuckets {
-    location?: IGeoLocationItem;
-    latitude?: IGeoLocationItem;
-    longitude?: IGeoLocationItem;
+interface IPushpinGeoDataBuckets {
+    location?: IPushpinLocationItem;
+    latitude?: IPushpinLocationItem;
+    longitude?: IPushpinLocationItem;
     size?: IGeoMeasureItem;
     color?: IGeoMeasureItem;
     segment?: IGeoSegmentItem;
@@ -61,7 +61,7 @@ interface IGeoDataBuckets {
 type BucketInfos = { [localId: string]: IBucketItemInfo | null };
 
 type BucketItemInfo = {
-    [key in keyof IGeoDataBuckets]: {
+    [key in keyof IPushpinGeoDataBuckets]: {
         index: number;
         name: string;
         data?: string[] | number[] | IGeoLngLat[];
@@ -71,79 +71,11 @@ type BucketItemInfo = {
 };
 
 /**
- * Converts a data value to a float
- *
- * @param value - Data value from execution result
- * @returns Parsed float value, or NaN if parsing fails
- *
- * @internal
- */
-export function dataValueAsFloat(value: DataValue): number {
-    if (value === null) {
-        return NaN;
-    }
-
-    const parsedNumber = typeof value === "string" ? parseFloat(value) : value;
-
-    if (isNaN(parsedNumber)) {
-        console.warn(`SDK: dataValueAsFloat: ${value} is not a number`);
-    }
-    return parsedNumber;
-}
-
-/**
- * Parses a location string in "lat;lng" format into coordinates
- *
- * @param latlng - Location string in "latitude;longitude" format
- * @returns Coordinate object or null if invalid
- *
- * @internal
- */
-export function getLocation(latlng: string | null): IGeoLngLat | null {
-    if (!latlng) {
-        return null;
-    }
-
-    const [latitude, longitude] = latlng.split(";").map(dataValueAsFloat);
-    if (isNaN(latitude) || isNaN(longitude)) {
-        console.warn("GeoPushpinChartNext: Invalid location format", latlng);
-        return null;
-    }
-
-    return {
-        lat: latitude,
-        lng: longitude,
-    };
-}
-
-/**
- * Parses a coordinate string into a number
- *
- * @param coordinate - Coordinate string
- * @returns Parsed number or null if invalid
- *
- * @internal
- */
-export function parseCoordinate(coordinate: string | null): number | null {
-    if (!coordinate) {
-        return null;
-    }
-
-    const numericalCoordinate = dataValueAsFloat(coordinate);
-    if (isNaN(numericalCoordinate)) {
-        console.warn("GeoPushpinChartNext: Invalid coordinate", coordinate);
-        return null;
-    }
-
-    return numericalCoordinate;
-}
-
-/**
  * Gets attribute header items from data view for geo data
  *
  * @internal
  */
-function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {
+function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IPushpinGeoData): IResultHeader[][] {
     const { color, size } = geoData;
     const hasColorMeasure = color !== undefined;
     const hasSizeMeasure = size !== undefined;
@@ -320,7 +252,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
 }
 
 /**
- * Transforms data view into geo data structure
+ * Transforms data view into pushpin geo data structure
  *
  * @remarks
  * This is the main data transformation function that extracts and structures
@@ -333,13 +265,13 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
  *
  * @internal
  */
-export function getGeoData(
+export function getPushpinGeoData(
     dv: DataViewFacade,
     emptyHeaderString: string,
     nullHeaderString: string,
-): IGeoData {
+): IPushpinGeoData {
     const geoData = getBucketItemNameAndDataIndex(dv);
-    const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData as IGeoData);
+    const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData as IPushpinGeoData);
 
     const locationIndex = geoData.location?.index;
     const latitudeIndex = geoData.latitude?.index;
@@ -413,11 +345,11 @@ export function getGeoData(
         geoData[BucketNames.COLOR]!.format = getFormatFromExecutionResponse(dv, colorIndex);
     }
 
-    return geoData as IGeoData;
+    return geoData as IPushpinGeoData;
 }
 
 /**
- * Determines which legends should be available based on data
+ * Determines which legends should be available based on pushpin data
  *
  * @remarks
  * Analyzes geo data to determine which legend types are applicable:
@@ -431,9 +363,9 @@ export function getGeoData(
  *
  * @internal
  */
-export function getAvailableLegends(
+export function getPushpinAvailableLegends(
     categoryItems: IPushpinCategoryLegendItem[],
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
 ): IAvailableLegends {
     const { color: { data: colorData = [] } = {}, size: { data: sizeData = [] } = {} } = geoData;
 
@@ -454,12 +386,24 @@ export function getAvailableLegends(
 /**
  * Parses a GeoJSON property item from JSON string
  */
-function parseGeoPropertyItem(item: string): GeoJSON.GeoJsonProperties {
-    try {
-        return JSON.parse(item);
-    } catch {
+function parseGeoPropertyItem(item: unknown): GeoJSON.GeoJsonProperties {
+    if (item === null || item === undefined) {
         return {};
     }
+
+    if (typeof item === "string") {
+        try {
+            return JSON.parse(item);
+        } catch {
+            return {};
+        }
+    }
+
+    if (typeof item === "object") {
+        return item as GeoJSON.GeoJsonProperties;
+    }
+
+    return {};
 }
 
 /**
@@ -473,7 +417,7 @@ function parseGeoPropertyItem(item: string): GeoJSON.GeoJsonProperties {
  *
  * @internal
  */
-export function parseGeoProperties(properties: GeoJSON.GeoJsonProperties): GeoJSON.GeoJsonProperties {
+export function parsePushpinGeoProperties(properties: GeoJSON.GeoJsonProperties): GeoJSON.GeoJsonProperties {
     const { locationName = "{}", color = "{}", size = "{}", segment = "{}" } = properties || {};
     return {
         locationName: parseGeoPropertyItem(locationName),
@@ -486,17 +430,17 @@ export function parseGeoProperties(properties: GeoJSON.GeoJsonProperties): GeoJS
 /**
  * Attribute information with header items
  */
-export type AttributeInfo = IAttributeDescriptor["attributeHeader"] & {
+export type IPushpinAttributeInfo = IAttributeDescriptor["attributeHeader"] & {
     items: IResultHeader[];
 };
 
 /**
  * Geo attributes in dimension
  */
-export interface IGeoAttributesInDimension {
-    locationAttribute: AttributeInfo;
-    segmentByAttribute: AttributeInfo | undefined;
-    tooltipTextAttribute: AttributeInfo | undefined;
+export interface IPushpinAttributesInDimension {
+    locationAttribute: IPushpinAttributeInfo;
+    segmentByAttribute: IPushpinAttributeInfo | undefined;
+    tooltipTextAttribute: IPushpinAttributeInfo | undefined;
 }
 
 /**
@@ -508,10 +452,10 @@ export interface IGeoAttributesInDimension {
  *
  * @internal
  */
-export function findGeoAttributesInDimension(
+export function findPushpinAttributesInDimension(
     dv: DataViewFacade,
-    geoData: IGeoData,
-): IGeoAttributesInDimension {
+    geoData: IPushpinGeoData,
+): IPushpinAttributesInDimension {
     const { color, location, segment, size, tooltipText } = geoData;
     const locationIndex = location?.index ?? 0;
     const headers = dv.meta().allHeaders();
@@ -521,19 +465,19 @@ export function findGeoAttributesInDimension(
     const attributeDescriptors: IAttributeDescriptor[] = dv.meta().attributeDescriptors();
     const attributeResultHeaderItems: IResultHeader[][] = headers[attrDimensionIndex];
 
-    const locationAttribute: AttributeInfo = {
+    const locationAttribute: IPushpinAttributeInfo = {
         ...attributeDescriptors[locationIndex].attributeHeader,
         items: attributeResultHeaderItems[locationIndex],
     };
 
-    const segmentByAttribute: AttributeInfo | undefined = segment?.data.length
+    const segmentByAttribute: IPushpinAttributeInfo | undefined = segment?.data.length
         ? {
               ...attributeDescriptors[segment.index].attributeHeader,
               items: attributeResultHeaderItems[segment.index],
           }
         : undefined;
 
-    const tooltipTextAttribute: AttributeInfo | undefined = tooltipText?.data.length
+    const tooltipTextAttribute: IPushpinAttributeInfo | undefined = tooltipText?.data.length
         ? {
               ...attributeDescriptors[tooltipText.index].attributeHeader,
               items: attributeResultHeaderItems[tooltipText.index],

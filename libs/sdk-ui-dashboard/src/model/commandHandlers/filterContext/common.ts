@@ -20,6 +20,7 @@ import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attribut
 import { selectEffectiveDateFilterOptions } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectFilterContextDefinition } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* dispatchFilterContextChanged(
@@ -68,7 +69,11 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
         selectCrossFilteringFiltersLocalIdentifiers,
     );
     yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
-    yield put(drillActions.resetCrossFiltering());
+
+    const activeTabId: ReturnType<typeof selectActiveOrDefaultTabLocalIdentifier> = yield select(
+        selectActiveOrDefaultTabLocalIdentifier,
+    );
+    yield put(drillActions.resetCrossFiltering(activeTabId));
 }
 
 export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashboardCommand) {

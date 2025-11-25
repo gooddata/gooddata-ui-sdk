@@ -239,6 +239,7 @@ export interface IBucketItem {
 
     dfRef?: ObjRef;
     locationDisplayFormRef?: ObjRef;
+    areaDisplayFormRef?: ObjRef;
     dateDatasetRef?: ObjRef;
     displayForms?: IDisplayForm[];
 }

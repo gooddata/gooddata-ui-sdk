@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+import { messagesMap } from "@gooddata/sdk-ui";
 
 import { UiNavigationBypass } from "../UiNavigationBypass.js";
 
@@ -20,7 +20,7 @@ describe("UiNavigationBypass", () => {
         const DefaultLocale = "en-US";
         const onItemClick = vi.fn();
 
-        const messages = pickCorrectWording(messagesMap[DefaultLocale]);
+        const messages = messagesMap[DefaultLocale];
 
         const res = render(
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>

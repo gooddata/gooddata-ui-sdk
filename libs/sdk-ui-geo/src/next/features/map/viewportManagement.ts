@@ -64,6 +64,42 @@ function normalizeBounds(bounds: LngLatBoundsLike | undefined): IMapViewport["bo
 }
 
 /**
+ * Convert GeoJSON bbox array to viewport bounds.
+ *
+ * @remarks
+ * Accepts 2D or 3D bbox arrays returned from collection metadata. Only
+ * longitude/latitude values are used, extra coordinates are ignored.
+ *
+ * @param bbox - Array in the form [minLng, minLat, maxLng, maxLat, ...]
+ * @returns Viewport containing normalized bounds or null if invalid
+ *
+ * @alpha
+ */
+export function bboxToViewport(bbox?: number[]): Partial<IMapViewport> | null {
+    if (!bbox || bbox.length < 4) {
+        return null;
+    }
+
+    const [minLng, minLat, maxLng, maxLat] = bbox;
+    const coords = [minLng, minLat, maxLng, maxLat];
+
+    if (!coords.every((value) => Number.isFinite(value))) {
+        return null;
+    }
+
+    const bounds = normalizeBounds([
+        [minLng as number, minLat as number],
+        [maxLng as number, maxLat as number],
+    ]);
+
+    if (!bounds) {
+        return null;
+    }
+
+    return { bounds };
+}
+
+/**
  * Calculate optimal viewport for data points
  *
  * @remarks

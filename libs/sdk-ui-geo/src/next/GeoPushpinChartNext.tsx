@@ -7,8 +7,8 @@ import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
-import { GeoDataProvider } from "./context/GeoDataContext.js";
 import { GeoLegendProvider } from "./context/GeoLegendContext.js";
+import { GeoPushpinDataProvider } from "./context/GeoPushpinDataContext.js";
 import { GeoPushpinPropsProvider } from "./context/GeoPushpinPropsContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { MapInstanceProvider } from "./context/MapInstanceContext.js";
@@ -61,11 +61,11 @@ function GeoPushpinChartNextWithInitialization(): ReactElement {
 
     return (
         <InitialExecutionContextProvider initialDataView={dataView}>
-            <GeoDataProvider>
+            <GeoPushpinDataProvider>
                 <GeoLegendProvider>
                     <RenderGeoPushpinChart />
                 </GeoLegendProvider>
-            </GeoDataProvider>
+            </GeoPushpinDataProvider>
         </InitialExecutionContextProvider>
     );
 }

@@ -1,15 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useMemo } from "react";
 
 import { CustomFormats, IntlProvider } from "react-intl";
 
-import {
-    DefaultLocale,
-    ITranslationsCustomizationProviderProps,
-    TranslationsCustomizationProvider,
-    resolveLocaleDefaultMessages,
-} from "@gooddata/sdk-ui";
+import { DefaultLocale, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
 
 import { translations } from "./translations.js";
 
@@ -45,18 +40,11 @@ export interface IIntlWrapperProps {
  * @internal
  */
 export function IntlWrapper({ children, locale = DefaultLocale }: IIntlWrapperProps) {
-    const render = useCallback<ITranslationsCustomizationProviderProps["render"]>(
-        (modifiedTranslations) => (
-            <IntlProvider locale={locale} messages={modifiedTranslations} formats={formats}>
-                {children}
-            </IntlProvider>
-        ),
-        [locale, children],
-    );
+    const messages = useMemo(() => resolveLocaleDefaultMessages(locale, translations), [locale]);
+
     return (
-        <TranslationsCustomizationProvider
-            translations={resolveLocaleDefaultMessages(locale, translations)}
-            render={render}
-        />
+        <IntlProvider locale={locale} messages={messages} formats={formats}>
+            {children}
+        </IntlProvider>
     );
 }

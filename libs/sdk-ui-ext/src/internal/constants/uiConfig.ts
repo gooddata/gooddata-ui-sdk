@@ -758,6 +758,34 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
     },
 };
 
+export const GEO_AREA_CHART_UICONFIG: IUiConfig = {
+    buckets: {
+        area: {
+            ...geoAttributesBase,
+            accepts: [GEO_ATTRIBUTE],
+            itemsLimit: 1,
+        },
+        color: {
+            ...measuresBase,
+            allowsReordering: false,
+            itemsLimit: 1,
+            isShowInPercentVisible: false,
+            canAddItems: true,
+        },
+        segment: {
+            ...geoAttributesBase,
+            itemsLimit: 1,
+        },
+        ...defaultFilters,
+    },
+    supportedLocationIcon: { supported: true },
+    ...defaultRootUiConfigProperties,
+    ...enabledNoMetricConfig,
+    recommendations: {
+        supportsFilteringRecommendation: false,
+    },
+};
+
 export const DEFAULT_SANKEY_UI_CONFIG: IUiConfig = {
     buckets: {
         measures: {

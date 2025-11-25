@@ -62,7 +62,6 @@ import { ISeparators } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
-import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
@@ -151,6 +150,7 @@ export const BucketNames: {
     readonly SEGMENT: "segment";
     readonly COLUMNS: "columns";
     readonly LOCATION: "location";
+    readonly AREA: "area";
     readonly LONGITUDE: "longitude";
     readonly LATITUDE: "latitude";
     readonly SIZE: "size";
@@ -187,7 +187,7 @@ export class CancelledSdkError extends GoodDataSdkError {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "choropleth" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
 
 // @alpha
 export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps): JSX.Element;
@@ -1906,22 +1906,6 @@ export interface ITranslationsComponentProps {
     numericSymbols: string[];
 }
 
-// @beta (undocumented)
-export interface ITranslationsCustomizationContextProviderProps {
-    children?: ReactNode;
-    translations: Record<string, string>;
-    translationsCustomizationIsLoading: boolean;
-}
-
-// @beta (undocumented)
-export interface ITranslationsCustomizationProviderProps {
-    backend?: IAnalyticalBackend;
-    customize?(translations: Record<string, string>, settings?: IWorkspaceSettings): Record<string, string>;
-    render(translations: Record<string, string>): ReactElement;
-    translations: Record<string, string>;
-    workspace?: string;
-}
-
 // @internal (undocumented)
 export interface ITranslationsProviderOwnProps {
     // (undocumented)
@@ -2162,15 +2146,6 @@ export const OverTimeComparisonTypes: {
     NOTHING: "nothing";
 };
 
-// @beta
-export const pickCorrectMetricWording: (translations: Record<string, string>) => Record<string, string>;
-
-// @internal (undocumented)
-export const pickCorrectMetricWordingInner: (translations: Record<string, string>) => Record<string, string>;
-
-// @beta (undocumented)
-export const pickCorrectWording: (translations: Record<string, string>) => Record<string, string>;
-
 // @public
 export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 
@@ -2203,9 +2178,6 @@ export type PushDataCallback = (data: IPushData) => void;
 
 // @public
 export const RawExecute: ComponentType<IRawExecuteProps>;
-
-// @beta
-export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;
 
 // @alpha
 export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers): JSX.Element;
@@ -2249,12 +2221,6 @@ export function totalColumnTitleFromIntl(intl: IntlShape): string;
 
 // @public
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
-
-// @beta (undocumented)
-export function TranslationsCustomizationContextProvider({ children, translationsCustomizationIsLoading, translations, }: ITranslationsCustomizationContextProviderProps): JSX.Element;
-
-// @beta
-export function TranslationsCustomizationProvider({ render, customize, translations: translationsParam, backend: backendParam, workspace: workspaceParam, }: ITranslationsCustomizationProviderProps): JSX.Element;
 
 // @internal (undocumented)
 export const TranslationsProvider: NamedExoticComponent<ITranslationsProviderProps>;
@@ -2496,6 +2462,7 @@ export const VisualizationTypes: {
     HEATMAP: "heatmap";
     GEO: "geo";
     PUSHPIN: "pushpin";
+    CHOROPLETH: "choropleth";
     COMBO: "combo";
     COMBO2: "combo2";
     HISTOGRAM: "histogram";
@@ -2545,9 +2512,6 @@ export type WithLoadingResult = {
     isLoading: boolean;
     reload: () => void;
 };
-
-// @beta (undocumented)
-export function withTranslationsCustomization<T>(Component: ComponentType<T>): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">>;
 
 // @internal
 export function withWorkspace<T extends {

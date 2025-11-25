@@ -68,6 +68,7 @@ import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDial
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { IAlertingDialogProps } from "../types.js";
+import { ALERTING_DIALOG_ID } from "./constants.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -339,6 +340,7 @@ export function AlertingDialogRenderer({
                                     ariaLabel: intl.formatMessage({ id: "dialogs.alert.closeLabel" }),
                                 },
                                 titleElementId,
+                                dialogId: ALERTING_DIALOG_ID,
                             }}
                             showProgressIndicator={isSavingAlert}
                             returnFocusAfterClose={!enableAutomationManagement}

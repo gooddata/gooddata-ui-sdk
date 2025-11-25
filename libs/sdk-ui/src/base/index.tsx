@@ -241,19 +241,6 @@ export {
     clusterTitleFromIntl,
     resolveLocaleDefaultMessages,
 } from "./localization/intlUtils.js";
-export type {
-    ITranslationsCustomizationContextProviderProps,
-    ITranslationsCustomizationProviderProps,
-} from "./localization/TranslationsCustomizationProvider/index.js";
-export {
-    TranslationsCustomizationContextProvider,
-    withTranslationsCustomization,
-    TranslationsCustomizationProvider,
-    pickCorrectMetricWording,
-    pickCorrectMetricWordingInner,
-    pickCorrectWording,
-    removeAllWordingTranslationsWithSpecialSuffix,
-} from "./localization/TranslationsCustomizationProvider/index.js";
 
 /*
  * Header matching & predicates

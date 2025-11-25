@@ -25,7 +25,7 @@ import {
 } from "../../constants/geoChart.js";
 import { getMinMax } from "../../features/size/calculations.js";
 import { IGeoPointsConfigNext, IGeoPushpinChartNextConfig } from "../../types/config.js";
-import { IGeoData } from "../../types/shared.js";
+import { IPushpinGeoData } from "../../types/shared.js";
 
 const DEFAULT_CLUSTER_POINT_BORDERS = {
     "circle-stroke-color": [
@@ -84,7 +84,7 @@ function getPointSize(minSizeInPixel: number, base: number, exponent: number): n
  * @internal
  */
 function createPushpinSizeOptions(
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
     geoPointsConfig: IGeoPointsConfigNext,
 ): ExpressionSpecification | number {
     const { size } = geoData;
@@ -154,7 +154,7 @@ export function createPushpinFilter(selectedSegmentItems: string[]): FilterSpeci
  */
 export function createPushpinDataLayer(
     dataSourceName: string,
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
     config: IGeoPushpinChartNextConfig,
 ): CircleLayerSpecification {
     const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};

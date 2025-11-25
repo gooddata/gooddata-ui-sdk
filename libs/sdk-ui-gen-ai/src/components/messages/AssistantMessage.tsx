@@ -69,6 +69,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                 <UiIconButton
                                     icon="thumbsUp"
                                     variant="tertiary"
+                                    size="small"
                                     isActive={message.feedback === "POSITIVE"}
                                     onClick={handlePositiveFeedbackClick}
                                     accessibilityConfig={{
@@ -89,6 +90,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                             <UiIconButton
                                                 icon="thumbsDown"
                                                 variant="tertiary"
+                                                size="small"
                                                 isActive={message.feedback === "NEGATIVE" || opened}
                                                 onClick={handleNegativeFeedbackClick}
                                                 accessibilityConfig={{

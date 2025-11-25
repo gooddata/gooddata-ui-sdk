@@ -9,16 +9,36 @@ import { ICrossFilteringItem } from "./types.js";
 
 type DrillReducer<A extends Action> = CaseReducer<DrillState, A>;
 
-const setDrillableItems: DrillReducer<PayloadAction<ExplicitDrill[]>> = (state, action) => {
-    state.drillableItems = action.payload;
+type SetDrillableItemsPayload = { items: ExplicitDrill[]; tabId: string };
+
+const setDrillableItems: DrillReducer<PayloadAction<SetDrillableItemsPayload>> = (state, action) => {
+    const { items, tabId } = action.payload;
+
+    if (!state.drillableItems[tabId]) {
+        state.drillableItems[tabId] = [];
+    }
+    state.drillableItems[tabId] = items;
 };
 
-const crossFilterByWidget: DrillReducer<PayloadAction<ICrossFilteringItem>> = (state, action) => {
-    state.crossFiltering = [action.payload];
+type CrossFilterByWidgetPayload = { item: ICrossFilteringItem; tabId: string };
+
+const crossFilterByWidget: DrillReducer<PayloadAction<CrossFilterByWidgetPayload>> = (state, action) => {
+    const { item, tabId } = action.payload;
+
+    if (!state.crossFiltering[tabId]) {
+        state.crossFiltering[tabId] = [];
+    }
+    state.crossFiltering[tabId] = [item];
 };
 
-const resetCrossFiltering: DrillReducer<Action> = (state) => {
-    state.crossFiltering = [];
+const resetCrossFiltering: DrillReducer<PayloadAction<string | undefined>> = (state, action) => {
+    if (action.payload) {
+        state.crossFiltering[action.payload] = [];
+    }
+
+    Object.keys(state.crossFiltering).forEach((tabId) => {
+        state.crossFiltering[tabId] = [];
+    });
 };
 
 export const drillReducers = {

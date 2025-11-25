@@ -28,6 +28,7 @@ import {
 import { drillActions } from "../../store/drill/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextDraggableFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
@@ -140,15 +141,19 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     // Handle new cross-filtering state
     const effectiveFiltersLength = currentFilters.length - currentVirtualFiltersLocalIdentifiers.length;
-    yield put(
-        drillActions.crossFilterByWidget({
-            widgetRef,
-            filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
-            selectedPoints: cmd.payload.drillEvent.drillContext.intersection
-                ? [cmd.payload.drillEvent.drillContext.intersection]
-                : undefined,
-        }),
+    const activeTabId: ReturnType<typeof selectActiveOrDefaultTabLocalIdentifier> = yield select(
+        selectActiveOrDefaultTabLocalIdentifier,
     );
+
+    const crossFilteringItem = {
+        widgetRef,
+        filterLocalIdentifiers: virtualFilters.map((vf) => vf.attributeFilter.localIdentifier!),
+        selectedPoints: cmd.payload.drillEvent.drillContext.intersection
+            ? [cmd.payload.drillEvent.drillContext.intersection]
+            : undefined,
+    };
+
+    yield put(drillActions.crossFilterByWidget({ item: crossFilteringItem, tabId: activeTabId }));
     yield all(
         virtualFilters.map((vf, index) => {
             const isExistingVirtualFilter = currentVirtualFiltersLocalIdentifiers.includes(

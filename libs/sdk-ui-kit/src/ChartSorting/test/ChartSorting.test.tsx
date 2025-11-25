@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+import { messagesMap } from "@gooddata/sdk-ui";
 
 import {
     multipleAttributesSortConfig,
@@ -42,7 +42,7 @@ const bucketItems: IBucketItemDescriptors = {
 
 const DefaultLocale = "en-US";
 
-const messages = pickCorrectWording(messagesMap[DefaultLocale]);
+const messages = messagesMap[DefaultLocale];
 
 const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {
