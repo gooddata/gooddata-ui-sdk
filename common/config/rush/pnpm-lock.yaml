@@ -2569,9 +2569,6 @@ importers:
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
-      default-import:
-        specifier: 1.1.5
-        version: 1.1.5
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
@@ -2587,9 +2584,6 @@ importers:
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
-      memoize-one:
-        specifier: ^6.0.0
-        version: 6.0.0
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.2
@@ -4255,6 +4249,9 @@ importers:
       '@testing-library/react':
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12

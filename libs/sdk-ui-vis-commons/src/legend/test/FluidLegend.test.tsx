@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
-import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+import { messagesMap } from "@gooddata/sdk-ui";
 
 import { FluidLegend } from "../FluidLegend.js";
 import { ISeriesItem } from "../types.js";
@@ -12,7 +12,7 @@ import { ISeriesItem } from "../types.js";
 describe("FluidLegend", () => {
     // Define locale and messages
     const DefaultLocale = "en-US";
-    const messages = pickCorrectWording(messagesMap[DefaultLocale]);
+    const messages = messagesMap[DefaultLocale];
 
     function renderComponent(customProps: any = {}) {
         const props = {

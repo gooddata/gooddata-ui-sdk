@@ -13,6 +13,7 @@ import {
     ContentDivider,
     Dialog,
     Hyperlink,
+    IButtonAccessibilityConfig,
     OverlayController,
     OverlayControllerProvider,
     Typography,
@@ -43,6 +44,7 @@ import {
     AUTOMATIONS_MAX_HEIGHT,
     DASHBOARD_DIALOG_OVERS_Z_INDEX,
 } from "../../constants/index.js";
+import { SCHEDULED_EMAIL_DIALOG_ID } from "../DefaultScheduledEmailDialog/constants.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
 
@@ -149,22 +151,13 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                         invalidateItemsRef={invalidateItemsRef}
                         renderToolbarCustomElement={() =>
                             canCreateAutomation ? (
-                                <UiTooltip
-                                    optimalPlacement
-                                    anchor={
-                                        <Button
-                                            onClick={onAdd}
-                                            disabled={isAddButtonDisabled}
-                                            value={intl.formatMessage({
-                                                id: messages.scheduleManagementCreateNew.id!,
-                                            })}
-                                            size="small"
-                                            className="gd-button-action"
-                                        />
-                                    }
-                                    disabled={!maxAutomationsReached}
-                                    triggerBy={["hover"]}
-                                    content={
+                                <CreateButton
+                                    onClick={onAdd}
+                                    isDisabled={isAddButtonDisabled}
+                                    label={intl.formatMessage({
+                                        id: messages.scheduleManagementCreateNew.id!,
+                                    })}
+                                    tooltipContent={
                                         maxAutomationsReached
                                             ? intl.formatMessage({
                                                   id: messages.scheduleManagementCreateTooMany.id!,
@@ -175,6 +168,11 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                                                 })
                                               : undefined
                                     }
+                                    isTooltipDisabled={!maxAutomationsReached && !isExecutionTimestampMode}
+                                    accessibilityConfig={{
+                                        ariaHaspopup: "dialog",
+                                        ariaControls: SCHEDULED_EMAIL_DIALOG_ID,
+                                    }}
                                 />
                             ) : null
                         }
@@ -200,5 +198,42 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                 </div>
             </OverlayControllerProvider>
         </Dialog>
+    );
+}
+
+interface ICreateButtonProps {
+    onClick?: () => void;
+    isDisabled: boolean;
+    label: string;
+    tooltipContent: string | undefined;
+    isTooltipDisabled: boolean;
+    accessibilityConfig?: IButtonAccessibilityConfig;
+}
+
+function CreateButton({
+    onClick,
+    isDisabled,
+    label,
+    tooltipContent,
+    isTooltipDisabled,
+    accessibilityConfig,
+}: ICreateButtonProps) {
+    return (
+        <UiTooltip
+            optimalPlacement
+            anchor={
+                <Button
+                    onClick={onClick}
+                    disabled={isDisabled}
+                    value={label}
+                    size="small"
+                    className="gd-button-action"
+                    accessibilityConfig={accessibilityConfig}
+                />
+            }
+            disabled={isTooltipDisabled}
+            triggerBy={["hover"]}
+            content={tooltipContent}
+        />
     );
 }

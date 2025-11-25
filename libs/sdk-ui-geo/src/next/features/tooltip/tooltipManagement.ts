@@ -35,21 +35,26 @@ export function setupTooltipHandlers(
     config: IMapConfig,
     drillableItems?: IHeaderPredicate[],
     intl?: IntlShape,
+    layerId: string = DEFAULT_LAYER_NAME,
 ): () => void {
-    const layerId = DEFAULT_LAYER_NAME;
-
     const handleMouseMove = (e: MapMouseEvent) => {
+        if (!map.getLayer(layerId)) {
+            // Layer not yet present in the style; avoid querying MapLibre to prevent errors like
+            // "The layer '<layerId>' does not exist" and ensure tooltip is hidden if previously open.
+            if (tooltip.isOpen()) {
+                handlePushpinMouseLeave(e, map, tooltip, config);
+            }
+            return;
+        }
+
         const features = map.queryRenderedFeatures(e.point, {
             layers: [layerId],
         });
 
         if (features && features.length > 0) {
             handlePushpinMouseEnter(e, map, tooltip, config, drillableItems, intl);
-        } else {
-            // Mouse not over any pushpin, hide tooltip if showing
-            if (tooltip.isOpen()) {
-                handlePushpinMouseLeave(e, map, tooltip, config);
-            }
+        } else if (tooltip.isOpen()) {
+            handlePushpinMouseLeave(e, map, tooltip, config);
         }
     };
 

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-chartconfig",
-    "version": "11.11.0-alpha.2",
+    "version": "11.11.0-alpha.3",
     "private": false,
     "description": "This interactive example demonstrates how to manipulate the chart config.",
     "license": "LicenseRef-LICENSE",

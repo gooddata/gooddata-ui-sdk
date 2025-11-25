@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -6,6 +7,7 @@ import { ExplicitDrill, IDrillEventIntersectionElement } from "@gooddata/sdk-ui"
 
 import { ICrossFilteringItem } from "./types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../tabs/index.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -14,23 +16,29 @@ const selectSelf = createSelector(
 );
 
 /**
- * Returns drillable items that are currently set.
+ * Returns drillable items for the active tab (when tabs enabled) or default tab (when tabs disabled).
  *
  * @alpha
  */
 export const selectDrillableItems: DashboardSelector<ExplicitDrill[]> = createSelector(
     selectSelf,
-    (state) => {
-        return state.drillableItems;
+    selectActiveOrDefaultTabLocalIdentifier,
+    (drillState, activeTabId) => {
+        return drillState.drillableItems[activeTabId] ?? [];
     },
 );
 
 /**
+ * Returns cross filtering items for the active tab (when tabs enabled) or default tab (when tabs disabled).
+ *
  * @beta
  */
 export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]> = createSelector(
     selectSelf,
-    (state) => state.crossFiltering,
+    selectActiveOrDefaultTabLocalIdentifier,
+    (drillState, activeTabId) => {
+        return drillState.crossFiltering[activeTabId] ?? [];
+    },
 );
 
 /**

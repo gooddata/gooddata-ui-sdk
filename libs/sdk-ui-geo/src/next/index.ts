@@ -18,3 +18,8 @@ export type {
     PushpinSizeOptionNext,
     IGeoLegendConfigNext,
 } from "./types/config.js";
+
+export { GeoAreaChart, GeoAreaChartImplementation } from "./GeoAreaChart.js";
+export type { IGeoAreaChartBaseProps, IGeoAreaChartProps } from "./types/areaPublic.js";
+export type { ICoreGeoAreaChartProps } from "./types/areaInternal.js";
+export type { IGeoAreaChartConfig, IGeoAreasConfig } from "./types/areaConfig.js";

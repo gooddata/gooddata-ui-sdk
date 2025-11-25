@@ -7,7 +7,6 @@ import { IntlProvider } from "react-intl";
 import { resolveLocaleDefaultMessages } from "./intlUtils.js";
 import { DefaultLocale } from "./Locale.js";
 import { messagesMap } from "./messagesMap.js";
-import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils.js";
 
 /**
  * @internal
@@ -21,10 +20,7 @@ export interface IIntlWrapperProps {
  * @internal
  */
 export function IntlWrapper({ locale = DefaultLocale, children }: IIntlWrapperProps) {
-    const messages = useMemo(
-        () => pickCorrectWording(resolveLocaleDefaultMessages(locale, messagesMap)),
-        [locale],
-    );
+    const messages = useMemo(() => resolveLocaleDefaultMessages(locale, messagesMap), [locale]);
 
     return (
         <IntlProvider locale={locale} messages={messages}>

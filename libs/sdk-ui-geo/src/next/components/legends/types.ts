@@ -2,13 +2,13 @@
 
 import { ILegendDetails, IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
-import { IAvailableLegends, IGeoData } from "../../types/shared.js";
+import { IAvailableLegends, IGeoCommonData } from "../../types/shared.js";
 
 export interface ILegendBodyProps {
     containerId: string;
     legendDetails: ILegendDetails | null;
     categoryItems: IPushpinCategoryLegendItem[];
-    geoData: IGeoData | null;
+    geoData: IGeoCommonData | null;
     availableLegends: IAvailableLegends;
     colorLegendValue: string | null;
     legendWidth: number;

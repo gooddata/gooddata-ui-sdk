@@ -56,7 +56,7 @@ export function Automations({
                 <WorkspaceProvider workspace={workspace}>
                     <UserProvider scope={scope}>
                         <FilterOptionsProvider scope={scope}>
-                            <InternalIntlWrapper locale={locale} workspace={workspace}>
+                            <InternalIntlWrapper locale={locale}>
                                 <ToastsCenterContextProvider>
                                     <AutomationsCore
                                         selectedColumnDefinitions={selectedColumnDefinitions}

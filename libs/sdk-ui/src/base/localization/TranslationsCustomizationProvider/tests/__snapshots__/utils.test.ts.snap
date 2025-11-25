@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`pickCorrectMetricWording > should return translations with metric 1`] = `
-{
-  "mock.translation": "Metric",
-  "mock.translation._measure": "Measure",
-  "mock.translation._metric": "Metric",
-}
-`;

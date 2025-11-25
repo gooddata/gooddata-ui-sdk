@@ -10,7 +10,7 @@ import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { updateMapLayers } from "../../features/map/layerManagement.js";
 import { applyViewportSafely, calculateViewport } from "../../features/map/viewportManagement.js";
 import { IMapConfig } from "../../types/mapProvider.js";
-import { IGeoData, IGeoLngLat } from "../../types/shared.js";
+import { IGeoLngLat, IPushpinGeoData } from "../../types/shared.js";
 
 /**
  * Filter out invalid coordinates
@@ -76,7 +76,7 @@ function isViewportFrozen(config: IMapConfig): boolean {
  */
 export function useMapDataSync(
     map: MapLibreMap | null,
-    geoData: IGeoData | null,
+    geoData: IPushpinGeoData | null,
     config: IMapConfig | null,
     colorStrategy: IColorStrategy | null,
     isMapReady: boolean,

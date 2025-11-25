@@ -16,7 +16,7 @@ import {
     createUnclusterPoints,
 } from "../../providers/maplibre/maplibreDataLayers.js";
 import { IMapConfig } from "../../types/mapProvider.js";
-import { IGeoData } from "../../types/shared.js";
+import { IPushpinGeoData } from "../../types/shared.js";
 import { isClusteringAllowed } from "../clustering/clustering.js";
 import { createGeoDataSource } from "../data/dataSourceManagement.js";
 
@@ -40,7 +40,7 @@ import { createGeoDataSource } from "../data/dataSourceManagement.js";
 export function addPushpinLayers(
     map: MapLibreMap,
     dataSourceId: string,
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
     config: IMapConfig,
     hasClustering: boolean,
 ): void {
@@ -103,7 +103,7 @@ export function removeGeoLayers(map: MapLibreMap): void {
  */
 export function updateMapLayers(
     map: MapLibreMap,
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
     config: IMapConfig,
     colorStrategy: IColorStrategy,
 ): void {

@@ -14,8 +14,11 @@ import {
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoData } from "../../types/shared.js";
-import { IGeoAttributesInDimension, findGeoAttributesInDimension } from "../data/transformation.js";
+import { IPushpinGeoData } from "../../types/shared.js";
+import {
+    IPushpinAttributesInDimension,
+    findPushpinAttributesInDimension,
+} from "../data/pushpinTransformation.js";
 
 /**
  * Color strategy for GeoPushpinChartNext
@@ -125,13 +128,11 @@ class GeoChartColorStrategy extends ColorStrategy {
 export function getColorStrategy(
     colorPalette: IColorPalette,
     colorMapping: IColorMapping[],
-    geoData: IGeoData,
+    geoData: IPushpinGeoData,
     dv: DataViewFacade,
 ): IColorStrategy {
-    const { locationAttribute, segmentByAttribute }: IGeoAttributesInDimension = findGeoAttributesInDimension(
-        dv,
-        geoData,
-    );
+    const { locationAttribute, segmentByAttribute }: IPushpinAttributesInDimension =
+        findPushpinAttributesInDimension(dv, geoData);
 
     const locationAttributeHeader: IAttributeDescriptor = {
         attributeHeader: omit(locationAttribute, "items"),

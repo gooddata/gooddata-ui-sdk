@@ -23,6 +23,7 @@ import {
     filterContextSelectionReseted,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
+    selectActiveTabLocalIdentifier,
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
     selectEnableDateFilterIdentifiers,
@@ -75,6 +76,7 @@ export const useResetFiltersButton = (): {
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
+    const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
     const dispatch = useDashboardDispatch();
     const dispatchEvent = useDashboardEventDispatch();
@@ -185,7 +187,7 @@ export const useResetFiltersButton = (): {
             !disableCrossFilteringByConfig
         ) {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
-            dispatch(drillActions.resetCrossFiltering());
+            dispatch(drillActions.resetCrossFiltering(activeTabId));
         }
         dispatchEvent(filterContextSelectionReseted());
         // Report the reset as user interaction

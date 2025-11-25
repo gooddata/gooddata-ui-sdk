@@ -4,7 +4,7 @@ import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { IGeoDataSourceProps, createPushpinDataSource } from "../../providers/maplibre/maplibreDataSource.js";
 import { IMapConfig } from "../../types/mapProvider.js";
-import { IGeoData } from "../../types/shared.js";
+import { IPushpinGeoData } from "../../types/shared.js";
 import { isClusteringAllowed } from "../clustering/clustering.js";
 
 /**
@@ -22,7 +22,11 @@ import { isClusteringAllowed } from "../clustering/clustering.js";
  *
  * @internal
  */
-export function createGeoDataSource(geoData: IGeoData, colorStrategy: IColorStrategy, config: IMapConfig) {
+export function createGeoDataSource(
+    geoData: IPushpinGeoData,
+    colorStrategy: IColorStrategy,
+    config: IMapConfig,
+) {
     const { points: geoPointsConfig = {} } = config;
     const hasClustering = isClusteringAllowed(geoData, geoPointsConfig.groupNearbyPoints);
 

@@ -3793,9 +3793,15 @@ export enum DRILL_TO_URL_PLACEHOLDER {
 
 // @internal (undocumented)
 export const drillActions: {
-    setDrillableItems: ActionCreatorWithPayload<ExplicitDrill[], "drill/setDrillableItems">;
-    crossFilterByWidget: ActionCreatorWithPayload<ICrossFilteringItem, "drill/crossFilterByWidget">;
-    resetCrossFiltering: ActionCreatorWithoutPayload<"drill/resetCrossFiltering">;
+    setDrillableItems: ActionCreatorWithPayload<    {
+    items: ExplicitDrill[];
+    tabId: string;
+    }, "drill/setDrillableItems">;
+    crossFilterByWidget: ActionCreatorWithPayload<    {
+    item: ICrossFilteringItem;
+    tabId: string;
+    }, "drill/crossFilterByWidget">;
+    resetCrossFiltering: ActionCreatorWithOptionalPayload<string | undefined, "drill/resetCrossFiltering">;
 };
 
 // @alpha (undocumented)
@@ -3825,9 +3831,9 @@ export interface DrillPayload {
 // @beta (undocumented)
 export interface DrillState {
     // (undocumented)
-    crossFiltering: ICrossFilteringItem[];
+    crossFiltering: Record<string, ICrossFilteringItem[]>;
     // (undocumented)
-    drillableItems: ExplicitDrill[];
+    drillableItems: Record<string, ExplicitDrill[]>;
 }
 
 // @beta (undocumented)
@@ -9072,7 +9078,7 @@ export const selectCrossFilteringFiltersLocalIdentifiersByWidgetRef: (ref: ObjRe
 // @beta (undocumented)
 export const selectCrossFilteringItemByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<ICrossFilteringItem | undefined>;
 
-// @beta (undocumented)
+// @beta
 export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>;
 
 // @beta (undocumented)

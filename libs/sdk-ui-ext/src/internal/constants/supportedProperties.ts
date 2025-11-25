@@ -360,6 +360,16 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "chartConfigOverride",
 ];
 
+export const GEOAREA_SUPPORTED_PROPERTIES = [
+    "tooltipText",
+    "legend",
+    "viewport.area",
+    "colorMapping",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
+];
+
 export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "columnWidths",
     "measureGroupDimension",

@@ -126,7 +126,7 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
  *
  * @alpha
  */
-export interface IGeoLocationItem extends IGeoDataItem {
+export interface IPushpinLocationItem extends IGeoDataItem {
     /**
      * Array of coordinates for each location
      */
@@ -150,25 +150,13 @@ export interface IGeoMeasureItem extends IGeoDataItem {
 }
 
 /**
- * Complete geo data structure
- *
- * @remarks
- * Contains all data needed to render the geo pushpin chart including
- * locations, sizes, colors, segments, and tooltip text
+ * Common subset of geo data used by legends
  *
  * @alpha
  */
-export interface IGeoData {
+export interface IGeoCommonData {
     /**
-     * Location coordinates for pushpins
-     */
-    location?: IGeoLocationItem;
-    /**
-     * Size measure data (determines pushpin size)
-     */
-    size?: IGeoMeasureItem;
-    /**
-     * Color measure data (determines pushpin color)
+     * Color measure data (determines pushpin or area color)
      */
     color?: IGeoMeasureItem;
     /**
@@ -179,6 +167,26 @@ export interface IGeoData {
      * Additional tooltip text attribute
      */
     tooltipText?: IGeoAttributeItem;
+}
+
+/**
+ * Complete geo data structure
+ *
+ * @remarks
+ * Contains all data needed to render the geo pushpin chart including
+ * locations, sizes, colors, segments, and tooltip text
+ *
+ * @alpha
+ */
+export interface IPushpinGeoData extends IGeoCommonData {
+    /**
+     * Location coordinates for pushpins
+     */
+    location?: IPushpinLocationItem;
+    /**
+     * Size measure data (determines pushpin size)
+     */
+    size?: IGeoMeasureItem;
 }
 
 /**
@@ -200,23 +208,54 @@ export interface IAvailableLegends {
     hasColorLegend: boolean;
     /**
      * Whether to show size legend (based on size measure)
+     *
+     * @remarks
+     * Optional because area charts never expose size data.
      */
-    hasSizeLegend: boolean;
+    hasSizeLegend?: boolean;
 }
 
 /**
- * Callback function invoked when map center position changes
+ * Represents a geographic area item with polygon/boundary data
  *
- * @param center - New center coordinates
+ * @alpha
+ */
+export interface IGeoAreaItem extends IGeoDataItem {
+    /**
+     * Geographic identifiers for areas (e.g., ISO country codes, region IDs)
+     */
+    data: string[];
+    /**
+     * URIs corresponding to area values for drilling functionality
+     */
+    uris: string[];
+}
+
+/**
+ * Complete area geo data structure
+ *
+ * @remarks
+ * Contains all data needed to render the geo area chart including
+ * geographic areas, color values, segments, and tooltip text
+ *
+ * @alpha
+ */
+export interface IAreaGeoData extends IGeoCommonData {
+    /**
+     * Geographic area identifiers
+     */
+    area?: IGeoAreaItem;
+}
+
+/**
+ * Callback function invoked when map center position changes.
  *
  * @alpha
  */
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 /**
- * Callback function invoked when map zoom level changes
- *
- * @param zoom - New zoom level (0-22)
+ * Callback function invoked when map zoom level changes.
  *
  * @alpha
  */

@@ -6,7 +6,7 @@ import { IColorStrategy, IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis
 
 import { useGeoData } from "../../context/GeoDataContext.js";
 import { IGeoPushpinChartNextConfig } from "../../types/config.js";
-import { IGeoData } from "../../types/shared.js";
+import { IPushpinGeoData } from "../../types/shared.js";
 
 /**
  * Props for legend renderer components.
@@ -17,7 +17,7 @@ export interface ILegendProps {
     /**
      * Geographic data for rendering color and size legends
      */
-    geoData: IGeoData | null;
+    geoData: IPushpinGeoData | null;
 
     /**
      * Category items for rendering category legend
@@ -67,7 +67,7 @@ export function useLegendProps(
     config: IGeoPushpinChartNextConfig | undefined,
     categoryItems: IPushpinCategoryLegendItem[],
 ): ILegendProps {
-    const { geoData } = useGeoData();
+    const { geoData } = useGeoData<IPushpinGeoData>();
 
     return useMemo(() => {
         const colorFormat = geoData?.color?.format;

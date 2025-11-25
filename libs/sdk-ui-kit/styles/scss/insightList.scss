@@ -6,8 +6,8 @@
 $base-path: "@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types:
     area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline, heatmap, line, pie,
-    scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel, sankey, waterfall,
-    repeater;
+    scatter, table, treemap, unknown, xirr, pushpin, region, choropleth, bullet, dependencywheel, sankey,
+    waterfall, repeater;
 
 %visualisation-icon {
     display: inline-block;
@@ -37,7 +37,18 @@ $visualization-types:
     .gd-vis-type-#{$icon} {
         @extend %visualisation-icon;
 
-        background-image: url($base-path + $icon + ".svg"), url($base-path + $icon + "-active.svg");
+        @if $icon == pushpin {
+            background-image:
+                url($base-path + "pushpin-legacy.svg"), url($base-path + "pushpin-legacy-active.svg");
+        } @else {
+            background-image: url($base-path + $icon + ".svg"), url($base-path + $icon + "-active.svg");
+        }
+    }
+}
+
+.adi-visualization-picker--new-pushpin {
+    .gd-vis-type-pushpin {
+        background-image: url($base-path + "pushpin.svg"), url($base-path + "pushpin-active.svg");
     }
 }
 

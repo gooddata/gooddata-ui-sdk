@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
@@ -102,3 +103,4 @@ export const SEPARATOR: OperatorItemType<string> = {
 export const DROPDOWN_ITEM_HEIGHT = 28;
 export const DROPDOWN_SEPARATOR_ITEM_HEIGHT = 10;
 export const DEFAULT_MEASURE_FORMAT = "#,##0.00";
+export const ALERTING_DIALOG_ID = "alerting-dialog";

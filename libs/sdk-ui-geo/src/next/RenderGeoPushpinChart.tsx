@@ -26,6 +26,7 @@ import { useMapInitialization } from "./hooks/map/useMapInitialization.js";
 import { useMapResize } from "./hooks/map/useMapResize.js";
 import { useTooltipHandlers } from "./hooks/map/useTooltipHandlers.js";
 import { usePushData } from "./hooks/shared/usePushData.js";
+import { IPushpinGeoData } from "./types/shared.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -56,7 +57,7 @@ export function RenderGeoPushpinChart(): ReactElement {
     const [chartContainerRect, setChartContainerRect] = useState<ContentRect | null>(null);
 
     // Get all computed data from context (no transformations needed here)
-    const { geoData, colorStrategy, baseLegendItems, colorPalette } = useGeoData();
+    const { geoData, colorStrategy, baseLegendItems, colorPalette } = useGeoData<IPushpinGeoData>();
 
     // Calculate viewport from data
     // This is used for initial map setup and for updating viewport on resize

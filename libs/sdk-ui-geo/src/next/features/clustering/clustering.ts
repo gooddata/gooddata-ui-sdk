@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoData } from "../../types/shared.js";
+import { IPushpinGeoData } from "../../types/shared.js";
 
 /**
  * Clustering functionality for GeoPushpinChartNext
@@ -23,7 +23,7 @@ import { IGeoData } from "../../types/shared.js";
  *
  * @internal
  */
-export function isClusteringAllowed(geoData: IGeoData, groupNearbyPoints = true): boolean {
+export function isClusteringAllowed(geoData: IPushpinGeoData, groupNearbyPoints = true): boolean {
     const { color, location, segment, size } = geoData;
     return Boolean(groupNearbyPoints && location && !(color || segment || size));
 }

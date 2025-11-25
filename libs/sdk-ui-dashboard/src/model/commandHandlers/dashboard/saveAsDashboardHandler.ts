@@ -114,7 +114,6 @@ function processExistingTabsForSaveAs(tabs: TabState[]): IDashboardTab[] {
 
         const filterContext = tab.filterContext?.filterContextDefinition
             ? ({
-                  ...(tab.filterContext?.filterContextIdentity || {}),
                   ...tab.filterContext.filterContextDefinition,
               } as IFilterContext | ITempFilterContext)
             : undefined;

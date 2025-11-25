@@ -46,7 +46,7 @@ import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDia
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
-import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
+import { DEFAULT_MAX_RECIPIENTS, SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
@@ -420,6 +420,7 @@ export function ScheduledMailDialogRenderer({
                                     }),
                                 },
                                 titleElementId,
+                                dialogId: SCHEDULED_EMAIL_DIALOG_ID,
                             }}
                             showProgressIndicator={isSavingScheduledEmail}
                             returnFocusTo={returnFocusTo}

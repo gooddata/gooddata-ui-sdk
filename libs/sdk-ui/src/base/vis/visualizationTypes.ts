@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 /**
  * @internal
@@ -17,6 +17,7 @@ export const VisualizationTypes = {
     HEATMAP: "heatmap" as const,
     GEO: "geo" as const,
     PUSHPIN: "pushpin" as const,
+    CHOROPLETH: "choropleth" as const,
     COMBO: "combo" as const,
     COMBO2: "combo2" as const,
     HISTOGRAM: "histogram" as const,
@@ -48,6 +49,7 @@ export type ChartType =
     | "heatmap"
     | "geo"
     | "pushpin"
+    | "choropleth"
     | "combo"
     | "combo2"
     | "histogram"

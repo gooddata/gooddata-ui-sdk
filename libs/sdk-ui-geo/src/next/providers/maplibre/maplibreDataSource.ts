@@ -12,7 +12,7 @@ import {
 import { getPushpinColors } from "../../features/coloring/palette.js";
 import { getMinMax } from "../../features/size/calculations.js";
 import { IGeoPointsConfigNext, IGeoPushpinChartNextConfig } from "../../types/config.js";
-import { IGeoData, IGeoLngLat, IPushpinColor } from "../../types/shared.js";
+import { IGeoLngLat, IPushpinColor, IPushpinGeoData } from "../../types/shared.js";
 
 /**
  * Properties for creating a geo data source
@@ -22,7 +22,7 @@ import { IGeoData, IGeoLngLat, IPushpinColor } from "../../types/shared.js";
 export interface IGeoDataSourceProps {
     colorStrategy: IColorStrategy;
     config: IGeoPushpinChartNextConfig;
-    geoData: IGeoData;
+    geoData: IPushpinGeoData;
     hasClustering: boolean;
 }
 

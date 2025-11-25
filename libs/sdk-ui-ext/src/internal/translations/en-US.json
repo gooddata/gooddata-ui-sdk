@@ -3,91 +3,47 @@
         "value": "or",
         "comment": "Connects two or more conditions in a filter expression, e.g., 'Product is Shoes or Product is Socks'. Appears in filter components."
     },
-    "dashboard.bucket.measures_title.column._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.column._metric": {
+    "dashboard.bucket.measures_title.column": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.bar._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.bar._metric": {
+    "dashboard.bucket.measures_title.bar": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.line._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.line._metric": {
+    "dashboard.bucket.measures_title.line": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.area._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.area._metric": {
+    "dashboard.bucket.measures_title.area": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.pie._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.pie._metric": {
+    "dashboard.bucket.measures_title.pie": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.funnel._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.funnel._metric": {
+    "dashboard.bucket.measures_title.funnel": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.pyramid._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.pyramid._metric": {
+    "dashboard.bucket.measures_title.pyramid": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.treemap._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.treemap._metric": {
+    "dashboard.bucket.measures_title.treemap": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.donut._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.donut._metric": {
+    "dashboard.bucket.measures_title.donut": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.heatmap._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.heatmap._metric": {
+    "dashboard.bucket.measures_title.heatmap": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.headline._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.headline._metric": {
+    "dashboard.bucket.measures_title.headline": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -95,11 +51,7 @@
         "value": "primary",
         "comment": "Label for the primary measures subtitle in headline chart"
     },
-    "dashboard.bucket.secondary_measures_title.headline._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.secondary_measures_title.headline._metric": {
+    "dashboard.bucket.secondary_measures_title.headline": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -107,19 +59,11 @@
         "value": "secondary",
         "comment": "Label for the secondary measures subtitle in headline chart"
     },
-    "dashboard.bucket.measures_title.scatter._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.scatter._metric": {
+    "dashboard.bucket.measures_title.scatter": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.secondary_measures_title.scatter._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.secondary_measures_title.scatter._metric": {
+    "dashboard.bucket.secondary_measures_title.scatter": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -139,11 +83,7 @@
         "value": "Segment by",
         "comment": "Label for the segment bucket in scatter chart"
     },
-    "dashboard.bucket.measures_title.combo._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.combo._metric": {
+    "dashboard.bucket.measures_title.combo": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -151,11 +91,7 @@
         "value": "Column",
         "comment": "Label for the column subtitle in combo chart"
     },
-    "dashboard.bucket.secondary_measures_title.combo._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.secondary_measures_title.combo._metric": {
+    "dashboard.bucket.secondary_measures_title.combo": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -163,19 +99,11 @@
         "value": "Line",
         "comment": "Label for the line subtitle in combo chart"
     },
-    "dashboard.bucket.measures_title.xirr._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.xirr._metric": {
+    "dashboard.bucket.measures_title.xirr": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.waterfall._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.waterfall._metric": {
+    "dashboard.bucket.measures_title.waterfall": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -227,27 +155,15 @@
         "value": "as areas",
         "comment": "Display measures in area chart 'as areas'."
     },
-    "dashboard.bucket.measures_title.bubble._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.bubble._metric": {
+    "dashboard.bucket.measures_title.bubble": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.secondary_measures_title.bubble._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.secondary_measures_title.bubble._metric": {
+    "dashboard.bucket.secondary_measures_title.bubble": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.tertiary_measures_title.bubble._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.tertiary_measures_title.bubble._metric": {
+    "dashboard.bucket.tertiary_measures_title.bubble": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -267,11 +183,11 @@
         "value": "Location",
         "comment": "Position of a pin pushed to a map."
     },
-    "dashboard.bucket.size_title.pushpin._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
+    "dashboard.bucket.area_title.choropleth": {
+        "value": "Area",
+        "comment": "Geo area chart bucket title for the attribute that defines colored map regions."
     },
-    "dashboard.bucket.size_title.pushpin._metric": {
+    "dashboard.bucket.size_title.pushpin": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -279,11 +195,7 @@
         "value": "Size",
         "comment": "Size of a pin pushed to a map"
     },
-    "dashboard.bucket.color_title.pushpin._measure": {
-        "value": "Measure",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.color_title.pushpin._metric": {
+    "dashboard.bucket.color_title.pushpin": {
         "value": "Metric",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -375,35 +287,19 @@
         "value": "Segment by",
         "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
-    "dashboard.bucket.metric_segment_by_warning._measure": {
-        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
-        "comment": "Warning message about measure limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
-    },
-    "dashboard.bucket.metric_segment_by_warning._metric": {
+    "dashboard.bucket.metric_segment_by_warning": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
         "comment": "Warning message about metric limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
     },
-    "dashboard.bucket.metric_stack_by_warning._measure": {
-        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "comment": "Warning message about measure limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
-    },
-    "dashboard.bucket.metric_stack_by_warning._metric": {
+    "dashboard.bucket.metric_stack_by_warning": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
         "comment": "Warning message about metric limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
     },
-    "dashboard.bucket.metric_view_by_warning._measure": {
-        "value": "To add additional measure, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
-        "comment": "Warning message about measure limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
-    },
-    "dashboard.bucket.metric_view_by_warning._metric": {
+    "dashboard.bucket.metric_view_by_warning": {
         "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
         "comment": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
     },
-    "dashboard.bucket.category_view_by_warning._measure": {
-        "value": "To view by another attribute, an visualization can have only one measure",
-        "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
-    },
-    "dashboard.bucket.category_view_by_warning._metric": {
+    "dashboard.bucket.category_view_by_warning": {
         "value": "To view by another attribute, an visualization can have only one metric",
         "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
     },
@@ -411,11 +307,7 @@
         "value": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
-    "dashboard.bucket.category_stack_by_warning._measure": {
-        "value": "To stack by, an visualization can have only one measure",
-        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
-    },
-    "dashboard.bucket.category_stack_by_warning._metric": {
+    "dashboard.bucket.category_stack_by_warning": {
         "value": "To stack by, an visualization can have only one metric",
         "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
@@ -423,19 +315,11 @@
         "value": "To stack by, an visualization can have only one attribute in view by",
         "comment": "Warning message explaining Stack By limitations when using View By"
     },
-    "dashboard.bucket.measure_stack_by_warning._measure": {
-        "value": "To stack by an attribute, an visualization can have only one measure",
-        "comment": "Warning message explaining that stacking requires limiting to one measure in insights"
-    },
-    "dashboard.bucket.measure_stack_by_warning._metric": {
+    "dashboard.bucket.measure_stack_by_warning": {
         "value": "To stack by an attribute, an visualization can have only one metric",
         "comment": "Warning message explaining that stacking requires limiting to one metric in insights"
     },
-    "dashboard.bucket.category_columns_warning._measure": {
-        "value": "Cannot add columns: limit is {oldLimit} measures and {oldRowsLimit} rows. Follow the limits to add more",
-        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 measures and 20 rows. Follow the limits to add more'."
-    },
-    "dashboard.bucket.category_columns_warning._metric": {
+    "dashboard.bucket.category_columns_warning": {
         "value": "Cannot add columns: limit is {oldLimit} metrics and {oldRowsLimit} rows. Follow the limits to add more",
         "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 metrics and 20 rows. Follow the limits to add more'."
     },
@@ -443,43 +327,23 @@
         "value": "To add up to {limit} more, remove all items from columns section",
         "comment": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'."
     },
-    "dashboard.bucket.category_category_by_warning._measure": {
-        "value": "To view by, an visualization can have only one measure",
-        "comment": "Warning message explaining that 'View by' requires limiting to one measure in insights"
-    },
-    "dashboard.bucket.category_category_by_warning._metric": {
+    "dashboard.bucket.category_category_by_warning": {
         "value": "To view by, an visualization can have only one metric",
         "comment": "Warning message explaining that 'View by' requires limiting to one metric in insights"
     },
-    "dashboard.bucket.category_segment_by_warning._measure": {
-        "value": "To segment by, an visualization can have only one measure",
-        "comment": "Warning message explaining that 'Segment by' requires limiting to one measure in insights"
-    },
-    "dashboard.bucket.category_segment_by_warning._metric": {
+    "dashboard.bucket.category_segment_by_warning": {
         "value": "To segment by, an visualization can have only one metric",
         "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in insights"
     },
-    "dashboard.bucket.measures_title.table._measure": {
-        "value": "Measures",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.table._metric": {
+    "dashboard.bucket.measures_title.table": {
         "value": "Metrics",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.sankey._measure": {
-        "value": "MEASURE",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.sankey._metric": {
+    "dashboard.bucket.measures_title.sankey": {
         "value": "METRIC",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
-    "dashboard.bucket.measures_title.dependencywheel._measure": {
-        "value": "MEASURE",
-        "comment": "Label for quantitative data values calculated from your data (e.g., Sum of Revenue, Count of Orders)"
-    },
-    "dashboard.bucket.measures_title.dependencywheel._metric": {
+    "dashboard.bucket.measures_title.dependencywheel": {
         "value": "METRIC",
         "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
@@ -503,19 +367,11 @@
         "value": "Columns",
         "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
-    "dashboard.error.missing_primary_bucket_item.heading._measure": {
-        "value": "No primary measure in your visualization",
-        "comment": "Error message shown when a required data item is missing from a visualization or report"
-    },
-    "dashboard.error.missing_primary_bucket_item.heading._metric": {
+    "dashboard.error.missing_primary_bucket_item.heading": {
         "value": "No primary metric in your visualization",
         "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
-    "dashboard.error.missing_primary_bucket_item.text._measure": {
-        "value": "Add a primary measure to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
-        "comment": "Instructional message explaining how to fix a missing primary measure error in a visualization"
-    },
-    "dashboard.error.missing_primary_bucket_item.text._metric": {
+    "dashboard.error.missing_primary_bucket_item.text": {
         "value": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "Instructional message explaining how to fix a missing primary metric error in a visualization"
     },
@@ -523,11 +379,7 @@
         "value": "Incomplete configuration",
         "comment": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)"
     },
-    "dashboard.xirr.error.invalid_buckets.text._measure": {
-        "value": "Make sure you have selected one measure and one date attribute",
-        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the visualization"
-    },
-    "dashboard.xirr.error.invalid_buckets.text._metric": {
+    "dashboard.xirr.error.invalid_buckets.text": {
         "value": "Make sure you have selected one metric and one date attribute",
         "comment": "The user should be instructed to review that they have added one metric and one date attribute to the visualization"
     },
@@ -851,11 +703,7 @@
         "value": "inherit",
         "comment": "Axis format option to inherit formatting from used measure."
     },
-    "properties.axis.format.info.inherit._measure": {
-        "value": "The format is inherited from the first measure in the visualization.",
-        "comment": "Info text for axis format option."
-    },
-    "properties.axis.format.info.inherit._metric": {
+    "properties.axis.format.info.inherit": {
         "value": "The format is inherited from the first metric in the visualization.",
         "comment": "Info text for axis format option."
     },
@@ -1103,27 +951,15 @@
         "value": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
         "comment": "Message when insight visualization doesn't support custom colors"
     },
-    "dashboard.bucket.measures_title.bullet._measure": {
-        "value": "Measure",
-        "comment": "Label for primary measure bucket in bullet chart"
-    },
-    "dashboard.bucket.measures_title.bullet._metric": {
+    "dashboard.bucket.measures_title.bullet": {
         "value": "Metric",
         "comment": "Label for primary metric bucket in bullet chart"
     },
-    "dashboard.bucket.secondary_measures_title.bullet._measure": {
-        "value": "Measure",
-        "comment": "Label for secondary measure bucket in bullet chart"
-    },
-    "dashboard.bucket.secondary_measures_title.bullet._metric": {
+    "dashboard.bucket.secondary_measures_title.bullet": {
         "value": "Metric",
         "comment": "Label for secondary metric bucket in bullet chart"
     },
-    "dashboard.bucket.tertiary_measures_title.bullet._measure": {
-        "value": "Measure",
-        "comment": "Label for tertiary measure bucket in bullet chart"
-    },
-    "dashboard.bucket.tertiary_measures_title.bullet._metric": {
+    "dashboard.bucket.tertiary_measures_title.bullet": {
         "value": "Metric",
         "comment": "Label for tertiary metric bucket in bullet chart"
     },
@@ -1143,19 +979,11 @@
         "value": "Sorting is not possible for this visualization configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
-    "sorting.disabled.explanation.measure._measure": {
-        "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Measures section to change their position in the visualization.",
-        "comment": "Explains why sort button is disabled. Shown as tooltip"
-    },
-    "sorting.disabled.explanation.measure._metric": {
+    "sorting.disabled.explanation.measure": {
         "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
         "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
-    "properties.metrics.title._measure": {
-        "value": "Measures",
-        "comment": "Title for measures section in table properties"
-    },
-    "properties.metrics.title._metric": {
+    "properties.metrics.title": {
         "value": "Metrics",
         "comment": "Title for metrics section in table properties"
     },
@@ -1311,36 +1139,20 @@
         "value": "Change (difference)",
         "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values."
     },
-    "properties.comparison.calculationType.as.change.tooltip.useIn._metric": {
+    "properties.comparison.calculationType.as.change.tooltip.useIn": {
         "value": "Calculates the relative change between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the change calculation."
     },
-    "properties.comparison.calculationType.as.change.tooltip.useIn._measure": {
-        "value": "Calculates the relative change between primary and secondary measure values.",
-        "comment": "The content describes the pertinent scenarios for the change calculation."
-    },
-    "properties.comparison.calculationType.as.ratio.tooltip.useIn._metric": {
+    "properties.comparison.calculationType.as.ratio.tooltip.useIn": {
         "value": "Quantifies the share of the primary metric value in the secondary metric value.",
         "comment": "The content describes the pertinent scenarios for the ratio calculation."
     },
-    "properties.comparison.calculationType.as.ratio.tooltip.useIn._measure": {
-        "value": "Quantifies the share of the primary measure value in the secondary measure value.",
-        "comment": "The content describes the pertinent scenarios for the ratio calculation."
-    },
-    "properties.comparison.calculationType.as.difference.tooltip.useIn._metric": {
+    "properties.comparison.calculationType.as.difference.tooltip.useIn": {
         "value": "Calculates the absolute difference between primary and secondary metric values.",
         "comment": "The content describes the pertinent scenarios for the difference calculation."
     },
-    "properties.comparison.calculationType.as.difference.tooltip.useIn._measure": {
-        "value": "Calculates the absolute difference between primary and secondary measure values.",
-        "comment": "The content describes the pertinent scenarios for the difference calculation."
-    },
-    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._metric": {
+    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": {
         "value": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
-        "comment": "The content describes the pertinent scenarios for the change (difference) calculation."
-    },
-    "properties.comparison.calculationType.as.changeDifference.tooltip.useIn._measure": {
-        "value": "Calculates both the relative change and absolute difference between primary and secondary measure values.",
         "comment": "The content describes the pertinent scenarios for the change (difference) calculation."
     },
     "properties.comparison.calculationType.tooltip.formula.section": {

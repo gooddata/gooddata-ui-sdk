@@ -2,7 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { TabState } from "./tabsState.js";
+import { DEFAULT_TAB_ID, TabState } from "./tabsState.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -38,6 +38,18 @@ export const selectActiveTabLocalIdentifier: DashboardSelector<string | undefine
     selectSelf,
     (tabsState) => {
         return tabsState.activeTabLocalIdentifier;
+    },
+);
+
+/**
+ * Returns the local identifier of the currently active tab or the default tab id
+ *
+ * @alpha
+ */
+export const selectActiveOrDefaultTabLocalIdentifier: DashboardSelector<string> = createSelector(
+    selectSelf,
+    (tabsState) => {
+        return tabsState.activeTabLocalIdentifier ?? DEFAULT_TAB_ID;
     },
 );
 

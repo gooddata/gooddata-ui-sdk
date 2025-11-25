@@ -67,6 +67,9 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     attribute_repeater: { id: "dashboard.bucket.attribute_title.repeater" },
     columns_repeater: { id: "dashboard.bucket.columns_title.repeater" },
     view_repeater: { id: "dashboard.bucket.view_title.repeater" },
+    area_choropleth: { id: "dashboard.bucket.area_title.choropleth" },
+    segment_choropleth: { id: "dashboard.bucket.segment_title.pushpin" },
+    color_choropleth: { id: "dashboard.bucket.color_title.pushpin" },
 });
 
 export const subtitles: Record<string, MessageDescriptor> = defineMessages({
@@ -88,6 +91,7 @@ export const subtitles: Record<string, MessageDescriptor> = defineMessages({
     attribute_to_dependencywheel: { id: "dashboard.bucket.attribute_to_subtitle.dependencywheel" },
     size_pushpin: { id: "dashboard.bucket.size_subtitle.pushpin" },
     color_pushpin: { id: "dashboard.bucket.color_subtitle.pushpin" },
+    color_choropleth: { id: "dashboard.bucket.color_subtitle.pushpin" },
 });
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({

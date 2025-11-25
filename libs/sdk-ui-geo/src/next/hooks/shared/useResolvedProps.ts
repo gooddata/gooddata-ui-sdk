@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useResolveValuesWithPlaceholders } from "@gooddata/sdk-ui";
-
+import { useResolvedPlaceholderValues } from "./useResolvedPlaceholderValues.js";
 import { IGeoPushpinChartNextResolvedProps } from "../../types/internal.js";
 import {
     IGeoPushpinChartNextProps,
@@ -24,19 +23,16 @@ export function useResolvedProps(props: IGeoPushpinChartNextProps): IGeoPushpinC
     const isLatLngMode = isGeoPushpinChartNextLatitudeLongitudeProps(props);
 
     const [location, latitude, longitude, segmentBy, size, color, filters, sortBy] =
-        useResolveValuesWithPlaceholders(
-            [
-                isLatLngMode ? undefined : props.location,
-                isLatLngMode ? props.latitude : undefined,
-                isLatLngMode ? props.longitude : undefined,
-                props.segmentBy,
-                props.size,
-                props.color,
-                props.filters,
-                props.sortBy,
-            ],
-            undefined,
-        );
+        useResolvedPlaceholderValues([
+            isLatLngMode ? undefined : props.location,
+            isLatLngMode ? props.latitude : undefined,
+            isLatLngMode ? props.longitude : undefined,
+            props.segmentBy,
+            props.size,
+            props.color,
+            props.filters,
+            props.sortBy,
+        ]);
 
     return {
         ...props,

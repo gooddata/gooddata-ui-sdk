@@ -8,7 +8,7 @@ import { ISeparators } from "@gooddata/sdk-model";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "../../constants/geoChart.js";
-import { parseGeoProperties } from "../../features/data/transformation.js";
+import { parsePushpinGeoProperties } from "../../features/data/pushpinTransformation.js";
 import { formatValueForTooltip, getTooltipContentWidth } from "../../features/tooltip/formatting.js";
 import { IGeoPushpinChartNextConfig } from "../../types/config.js";
 import { IGeoTooltipItem } from "../../types/shared.js";
@@ -169,7 +169,7 @@ export const handlePushpinMouseEnter = (
 
     const [feature] = features;
     const { properties } = feature;
-    const parsedProps = parseGeoProperties(properties);
+    const parsedProps = parsePushpinGeoProperties(properties);
 
     if (!shouldShowTooltip(parsedProps)) {
         return;
@@ -178,8 +178,12 @@ export const handlePushpinMouseEnter = (
     const canvas = map.getCanvas();
     canvas.style.cursor = "pointer";
 
-    const coordinates = (feature.geometry as GeoJSON.Point).coordinates.slice() as [number, number];
-    const tooltipStroke = parsedProps?.["color"]?.background ?? DEFAULT_PUSHPIN_COLOR_VALUE;
+    const coordinates = resolveTooltipCoordinates(feature.geometry, e);
+    if (!coordinates) {
+        return;
+    }
+
+    const tooltipStroke = (parsedProps?.["color"]?.fill as string | undefined) ?? DEFAULT_PUSHPIN_COLOR_VALUE;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const chartWidth: number = canvas.clientWidth;
     const maxTooltipContentWidth: number = getTooltipContentWidth(
@@ -198,6 +202,25 @@ export const handlePushpinMouseEnter = (
 
     tooltip.setLngLat(coordinates).setHTML(tooltipHtml).setMaxWidth(`${maxTooltipContentWidth}px`).addTo(map);
 };
+
+function resolveTooltipCoordinates(
+    geometry: GeoJSON.Geometry | null | undefined,
+    event: MapMouseEvent,
+): [number, number] | undefined {
+    if (geometry && geometry.type === "Point") {
+        const coords = (geometry as GeoJSON.Point).coordinates.slice(0, 2);
+        if (coords.length === 2 && Number.isFinite(coords[0]) && Number.isFinite(coords[1])) {
+            return coords as [number, number];
+        }
+    }
+
+    const lngLat = event.lngLat;
+    if (lngLat) {
+        return [lngLat.lng, lngLat.lat];
+    }
+
+    return undefined;
+}
 
 /**
  * Handle pushpin mouse leave event to hide tooltip

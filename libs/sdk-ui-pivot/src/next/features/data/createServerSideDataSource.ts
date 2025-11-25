@@ -64,6 +64,41 @@ function getPageFlags(
 }
 
 /**
+ * Calculates the backend row offset for loading data.
+ *
+ * For non-pinned "top" position, grand totals are prepended to the first page,
+ * which shifts all data rows by the grand total count. AG grid then tries to call
+ * new rows from position X + total count, which skips some values. At the same time,
+ * AG grid needs to have final row count, so it can know when to stop loading
+ * and what to render. This function adjusts the start and end row
+ * to compensate for this shift.
+ *
+ * @internal
+ */
+function getBackendRowOffset(
+    agGridStartRow: number,
+    agGridEndRow: number,
+    grandTotalsPosition: GrandTotalsPosition,
+    isFirstRequest: boolean,
+    grandTotalCount: number,
+): { backendStartRow: number; backendEndRow: number } {
+    // For non-pinned "top" position, adjust backend offset after first page
+    const needsOffsetAdjustment = grandTotalsPosition === "top" && !isFirstRequest && grandTotalCount > 0;
+
+    if (needsOffsetAdjustment) {
+        return {
+            backendStartRow: agGridStartRow - grandTotalCount,
+            backendEndRow: agGridEndRow - grandTotalCount,
+        };
+    }
+
+    return {
+        backendStartRow: agGridStartRow,
+        backendEndRow: agGridEndRow,
+    };
+}
+
+/**
  * Creates ag-grid server side data source for pivot table, that handles infinite-scrolling.
  * 
  * Handles also sorting changes, so component does not need to be fully re-initialized,
@@ -97,6 +132,8 @@ export const createServerSideDataSource = ({
     let lastSortBy = sortBy;
     // Keep track of the current execution result to ensure consistency across getRows calls
     let currentExecutionResult: IExecutionResult = initialExecutionResult;
+    // Track grand total count for offset adjustment in non-pinned "top" position
+    let cachedGrandTotalCount = 0;
 
     /**
      * There is 1 additional request when sorting + pivoting.
@@ -125,6 +162,9 @@ export const createServerSideDataSource = ({
             isFirstPage,
             isLastPage,
         );
+
+        // Cache grand total count for offset calculations
+        cachedGrandTotalCount = grandTotalCount;
 
         const rowCount = fixRowsCount(initialDataView, measures, rows, grandTotalsPosition, grandTotalCount);
 
@@ -182,12 +222,20 @@ export const createServerSideDataSource = ({
                 const startRow = params.request.startRow ?? 0;
                 const endRow = params.request.endRow ?? pageSize;
 
+                const { backendStartRow, backendEndRow } = getBackendRowOffset(
+                    startRow,
+                    endRow,
+                    grandTotalsPosition,
+                    isFirstRequest,
+                    cachedGrandTotalCount,
+                );
+
                 const nextDataView = isFirstRequest
                     ? initialDataView
                     : await loadDataView({
                           executionResult,
-                          startRow,
-                          endRow,
+                          startRow: backendStartRow,
+                          endRow: backendEndRow,
                       });
 
                 // Determine if this is the first or last page for non-pinned grand totals
@@ -207,6 +255,11 @@ export const createServerSideDataSource = ({
                     isFirstPage,
                     isLastPage,
                 );
+
+                // Cache grand total count on first request for offset calculations
+                if (isFirstRequest) {
+                    cachedGrandTotalCount = grandTotalCount;
+                }
 
                 const successParam: LoadSuccessParams<AgGridRowData> = {
                     rowData,
@@ -257,7 +310,10 @@ function fixRowsCount(
     // In case of single column attribute, without metrics and rows, backend returns 1 as number of rows, which is not correct.
     const baseRowCount = measures.length === 0 && rows.length === 0 ? 0 : rowsCount;
 
-    // When grand totals are in regular row data (not pinned), add them to the row count
+    // When grand totals are in regular row data (not pinned), add them to the row count.
+    // This tells AG Grid the total number of row indices including grand totals when non-pinned.
+    // For "top" position: grand totals are prepended to first page.
+    // For "bottom" position: grand totals are appended to last page.
     if (
         grandTotalCount &&
         grandTotalCount > 0 &&

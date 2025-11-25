@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { IGeoPushpinChartNextConfig } from "../../types/config.js";
-import { IGeoData } from "../../types/shared.js";
+import { IGeoCommonData } from "../../types/shared.js";
 
 /**
  * Hook to extract legend details from configuration.
@@ -37,7 +37,7 @@ import { IGeoData } from "../../types/shared.js";
  */
 export function useLegendDetails(
     config: IGeoPushpinChartNextConfig | undefined,
-    geoData: IGeoData | null,
+    geoData: IGeoCommonData | null,
     contentRect: ContentRect | undefined,
 ): ILegendDetails | null {
     return useMemo(() => {

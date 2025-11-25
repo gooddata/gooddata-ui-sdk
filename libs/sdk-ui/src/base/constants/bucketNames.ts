@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
 const TERTIARY_MEASURES = "tertiary_measures";
@@ -12,6 +13,7 @@ const TREND = "trend";
 const SEGMENT = "segment";
 const COLUMNS = "columns";
 const LOCATION = "location";
+const AREA = "area";
 const LONGITUDE = "longitude";
 const LATITUDE = "latitude";
 const SIZE = "size";
@@ -36,6 +38,7 @@ export const BucketNames = {
     SEGMENT,
     COLUMNS,
     LOCATION,
+    AREA,
     LONGITUDE,
     LATITUDE,
     SIZE,

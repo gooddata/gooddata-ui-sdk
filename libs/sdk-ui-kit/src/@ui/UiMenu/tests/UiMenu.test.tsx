@@ -5,7 +5,7 @@ import cx from "classnames";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+import { messagesMap } from "@gooddata/sdk-ui";
 
 import { typedUiMenuContextStore } from "../context.js";
 import { b } from "../menuBem.js";
@@ -49,7 +49,7 @@ describe("UiMenu", () => {
 
     const DefaultLocale = "en-US";
 
-    const messages = pickCorrectWording(messagesMap[DefaultLocale]);
+    const messages = messagesMap[DefaultLocale];
 
     const renderMenu = (props: Partial<UiMenuProps> = {}) => {
         const defaultAriaAttributes = {
