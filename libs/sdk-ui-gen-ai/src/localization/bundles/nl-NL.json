@@ -62,8 +62,8 @@
     "gd.gen-ai.skip-navigation": "Navigatie overslaan",
     "gd.gen-ai.messages.label": "Chatberichten",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen.",
-    "gd.gen-ai.visualisation.toggle.table": "Tabel weergeven",
-    "gd.gen-ai.visualisation.toggle.original": "Origineel weergeven",
+    "gd.gen-ai.visualisation.toggle.table": "Als tabel weergeven",
+    "gd.gen-ai.visualisation.toggle.original": "Toon originele visualisatie",
     "gd.gen-ai.feedback.popup.title": "We hebben uw feedback",
     "gd.gen-ai.feedback.popup.reasons-label": "Vertel ons wat er fout ging",
     "gd.gen-ai.feedback.popup.description-label": "Beschrijf wat er is gebeurd",
@@ -76,5 +76,13 @@
     "gd.gen-ai.feedback.reason.other": "Overige",
     "gd.gen-ai.changeAnalysis.default_message": "Hier is de analyse van de verandering voor <metric>{title}</metric> tussen <b>{range}</b>.",
     "gd.gen-ai.changeAnalysis.splitter": "en",
-    "gd.gen-ai.changeAnalysis.explain_the_change": "Open de analyse"
+    "gd.gen-ai.changeAnalysis.explain_the_change": "Open de analyse",
+    "gd.gen-ai.semantic-search.title": "Zoeken",
+    "gd.gen-ai.drill_modal_picker.label": "Boor modal picker",
+    "drill.kda.from": "van",
+    "drill.kda.in": "in",
+    "drill.kda.drop": "Druppel {where} {title}",
+    "drill.kda.increase": "Verhogen {where} {title}",
+    "drill.kda.no_change": "Oudbakken {where} {title}",
+    "drill.kda.year_to_year": "Verandering van jaar tot jaar"
 }

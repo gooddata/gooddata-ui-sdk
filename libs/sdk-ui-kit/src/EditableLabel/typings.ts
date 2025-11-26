@@ -8,6 +8,7 @@ import { ReactNode } from "react";
 export interface IEditableLabelProps {
     children?: ReactNode;
     className?: string;
+    id?: string;
     maxLength?: number;
     maxRows?: number;
     onCancel?: (value: string) => void;

@@ -1,6 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IAttributeFilterConfigs, IInsightDefinition, VisualizationProperties } from "./index.js";
+import {
+    IAttributeFilterConfigs,
+    IInsightDefinition,
+    IInsightLayerDefinition,
+    VisualizationProperties,
+} from "./index.js";
 import { ISortItem } from "../execution/base/sort.js";
 import { IBucket } from "../execution/buckets/index.js";
 import { IFilter } from "../execution/filter/index.js";
@@ -84,6 +89,12 @@ export class InsightDefinitionBuilder {
 
     public properties = (properties: VisualizationProperties): InsightDefinitionBuilder => {
         this.insight.properties = properties;
+
+        return this;
+    };
+
+    public layers = (layers: IInsightLayerDefinition[]): InsightDefinitionBuilder => {
+        this.insight.layers = layers;
 
         return this;
     };

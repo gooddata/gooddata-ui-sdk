@@ -2987,6 +2987,10 @@
         "value": "You can’t delete the last tab. Tab navigation won’t be visible in view mode when only one tab remains.",
         "comment": "The tooltip shown when the user tries to delete the last tab"
     },
+    "dashboard.tabs.add-button-tooltip": {
+        "value": "Add new tab",
+        "comment": "Tooltip for a button that adds a new tab"
+    },
     "dashboard.tabs.rename": {
         "value": "Rename",
         "comment": "Label for the action that toggles the tab to renaming mode"

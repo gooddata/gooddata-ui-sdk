@@ -34,6 +34,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const {
         children = false,
         className = "",
+        id,
         maxLength = 100000,
         maxRows = 1,
         onSubmit,
@@ -239,6 +240,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
                 defaultValue={props.value}
                 placeholder={placeholder}
                 ref={textareaRef}
+                id={id}
                 aria-label={ariaLabel}
                 autoComplete={autocomplete}
             />

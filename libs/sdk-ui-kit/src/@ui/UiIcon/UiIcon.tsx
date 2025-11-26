@@ -16,6 +16,7 @@ export interface UiIconProps {
     label?: string;
     size?: number;
     ariaHidden?: boolean;
+    disableAnimation?: boolean;
     //background
     backgroundSize?: number;
     backgroundColor?: ThemeColor;
@@ -36,6 +37,7 @@ export function UiIcon({
     label,
     color,
     layout = "inline",
+    disableAnimation,
     ariaHidden,
     size = 20,
     backgroundSize,
@@ -51,7 +53,7 @@ export function UiIcon({
             shape={backgroundShape}
         >
             <svg
-                className={b({ color, layout })}
+                className={b({ color, layout, disableAnimation })}
                 width={size}
                 height={size}
                 viewBox="0 0 20 20"

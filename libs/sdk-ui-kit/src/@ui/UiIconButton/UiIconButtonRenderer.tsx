@@ -29,6 +29,8 @@ export interface UiIconButtonPublicProps {
     label?: string;
     size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
 
+    disableAnimation?: boolean;
+
     variant?:
         | VariantPrimary
         | VariantSecondary
@@ -65,6 +67,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
             icon,
             iconAfter,
             iconAfterSize = "xsmall",
+            disableAnimation,
             label,
             size = "medium",
             variant = "secondary",
@@ -104,7 +107,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
                 {...ariaAttributes}
             >
-                <UiIcon type={icon} size={iconSize} ariaHidden />
+                <UiIcon type={icon} size={iconSize} ariaHidden disableAnimation={disableAnimation} />
                 {iconAfter ? (
                     <UiIcon type={iconAfter} size={getButtonIconSize(iconAfterSize)} ariaHidden />
                 ) : null}

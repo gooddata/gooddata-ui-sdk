@@ -4,7 +4,8 @@ import { useIntl } from "react-intl";
 
 import { EmptyObject } from "@gooddata/util";
 
-import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import { UiIcon } from "../../UiIcon/UiIcon.js";
+import { UiLink } from "../../UiLink/UiLink.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { messages } from "../messages.js";
 import { IUiTabComponentProps } from "../types.js";
@@ -31,17 +32,22 @@ export function DefaultUiTabsTabActionsButton<
     }
 
     return (
-        <UiIconButton
-            icon={"ellipsisVertical"}
-            size={size === "large" ? "small" : "xsmall"}
-            variant={"tertiary"}
-            accessibilityConfig={{
-                ariaLabel: intl.formatMessage(messages["actions"]),
-            }}
-            ariaAttributes={ariaAttributes}
+        <UiLink
+            variant={"secondary"}
+            role={"button"}
+            aria-label={intl.formatMessage(messages["actions"])}
+            {...ariaAttributes}
             onClick={onClick}
             tabIndex={tabIndex}
             id={id}
-        />
+        >
+            <UiIcon
+                type={"ellipsisVertical"}
+                size={size === "large" ? 18 : 14}
+                layout={"block"}
+                ariaHidden
+                color={"complementary-5"}
+            />
+        </UiLink>
     );
 }

@@ -62,8 +62,8 @@
     "gd.gen-ai.skip-navigation": "탐색 건너뛰기",
     "gd.gen-ai.messages.label": "채팅 메시지",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "시각화를 열기 전에 저장하라는 메시지가 표시됩니다.",
-    "gd.gen-ai.visualisation.toggle.table": "표 표시",
-    "gd.gen-ai.visualisation.toggle.original": "원본 보기",
+    "gd.gen-ai.visualisation.toggle.table": "표로 표시",
+    "gd.gen-ai.visualisation.toggle.original": "원본 시각화 보기",
     "gd.gen-ai.feedback.popup.title": "귀하의 피드백을 받았습니다",
     "gd.gen-ai.feedback.popup.reasons-label": "문제가 무엇인지 알려주세요",
     "gd.gen-ai.feedback.popup.description-label": "무슨 일이 있었는지 설명해 주세요",
@@ -76,5 +76,13 @@
     "gd.gen-ai.feedback.reason.other": "기타",
     "gd.gen-ai.changeAnalysis.default_message": "<metric>{title}</metric>에 대한 변화 분석입니다 <b>{range}</b> 사이의",
     "gd.gen-ai.changeAnalysis.splitter": "및",
-    "gd.gen-ai.changeAnalysis.explain_the_change": "분석 열기"
+    "gd.gen-ai.changeAnalysis.explain_the_change": "분석 열기",
+    "gd.gen-ai.semantic-search.title": "검색",
+    "gd.gen-ai.drill_modal_picker.label": "드릴 모달 선택기",
+    "drill.kda.from": "시작일",
+    "drill.kda.in": "(시간/장소)",
+    "drill.kda.drop": "드롭 {where} {title}",
+    "drill.kda.increase": "증가 {where} {title}",
+    "drill.kda.no_change": "오래된 {where} {title}",
+    "drill.kda.year_to_year": "전년 대비 변화"
 }

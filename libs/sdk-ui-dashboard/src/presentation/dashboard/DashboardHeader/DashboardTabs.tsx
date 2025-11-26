@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEventHandler, ReactElement, useCallback, useMemo, useRef } from "react";
+import { ChangeEventHandler, KeyboardEventHandler, ReactElement, useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -10,14 +10,15 @@ import {
     DefaultUiTabsTabValue,
     IUiTab,
     IUiTabComponentProps,
-    InputPure,
     SELECT_ITEM_ACTION,
     UiFocusManager,
     UiIcon,
     UiIconButton,
     UiTabs,
+    UiTooltip,
     bemFactory,
     separatorStaticItem,
+    useId,
     useScopedIdOptional,
 } from "@gooddata/sdk-ui-kit";
 
@@ -248,16 +249,23 @@ export function DashboardTabs({
             {isCreateEnabled ? (
                 <div className={tabsBem.e("add-wrapper")}>
                     <div className={tabsBem.e("add")}>
-                        <UiIconButton
-                            icon={"plus"}
-                            size={"large"}
-                            variant={"tertiary"}
-                            onClick={handleCreateTab}
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({
-                                    id: "dashboard.tabs.accessibility.add-button-label",
-                                }),
-                            }}
+                        <UiTooltip
+                            anchor={
+                                <UiIconButton
+                                    icon={"plus"}
+                                    size={"large"}
+                                    variant={"tertiary"}
+                                    onClick={handleCreateTab}
+                                    accessibilityConfig={{
+                                        ariaLabel: intl.formatMessage({
+                                            id: "dashboard.tabs.accessibility.add-button-label",
+                                        }),
+                                    }}
+                                />
+                            }
+                            content={intl.formatMessage({ id: "dashboard.tabs.add-button-tooltip" })}
+                            triggerBy={["hover"]}
+                            arrowPlacement={"bottom"}
                         />
                     </div>
                 </div>
@@ -272,12 +280,14 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
     const dispatch = useDashboardDispatch();
     const returnFocusId = useScopedIdOptional(tab, SELECT_ITEM_ACTION);
 
+    const [name, setName] = usePropState(tab.label);
+
     const handleRename = useCallback(
         (newName: string) => {
             dispatch(renameDashboardTab(newName, tab.id));
 
             if (tab.id === DEFAULT_TAB_ID) {
-                dispatch(convertDashboardTabFromDefault(newName, undefined));
+                dispatch(convertDashboardTabFromDefault(newName));
             }
         },
         [dispatch, tab.id],
@@ -296,36 +306,72 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
     return (
         <div onKeyDown={preventPropagateKeydown} className={tabsBem.e("rename-wrapper")}>
             <UiFocusManager enableAutofocus enableReturnFocusOnUnmount={{ returnFocusTo: returnFocusId }}>
-                <RenamingTabValue
-                    initialName={tab.label}
-                    onRename={handleRename}
-                    onCancel={handleCancel}
-                    isSubmitOnBlur
-                />
+                {/*
+                We are autosizing the input by using a little trick.
+                The input field is absolutely positioned and fills the available space.
+                Then we render the default value component with visibility: hidden to provide the sizing.
+                */}
+
+                <div className={tabsBem.e("rename-value")}>
+                    <RenamingTabValue
+                        name={name}
+                        onChange={setName}
+                        onRename={handleRename}
+                        onCancel={handleCancel}
+                        isSubmitOnBlur
+                    />
+                </div>
+
+                <div className={tabsBem.e("rename-ghost-value")}>
+                    <DefaultUiTabsTabValue
+                        {...props}
+                        // A little hack to prevent the input from jumping when empty
+                        tab={{ ...tab, label: name.length === 0 ? "M" : name }}
+                    />
+                </div>
             </UiFocusManager>
         </div>
     );
 }
 
 function RenamingTabValue(props: {
-    initialName: string;
+    name: string;
+    onChange: (newName: string) => void;
     onRename: (newName: string) => void;
     onCancel: () => void;
     isSubmitOnBlur?: boolean;
 }) {
-    const { initialName, isSubmitOnBlur, onCancel, onRename } = props;
-    const [name, setName] = usePropState(initialName);
+    const { name, isSubmitOnBlur, onChange, onCancel, onRename } = props;
 
-    const handleChange = useCallback((newValue: string | number) => setName(String(newValue)), [setName]);
+    const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+        (e) => onChange(e.currentTarget.value),
+        [onChange],
+    );
     const handleSubmit = useCallback(() => onRename(name), [name, onRename]);
+    const handleKeyUp = useCallback<KeyboardEventHandler<HTMLInputElement>>(
+        (e) => {
+            if (e.key === "Enter") {
+                handleSubmit();
+            }
+            if (e.key === "Escape") {
+                onCancel();
+            }
+        },
+        [handleSubmit, onCancel],
+    );
+
+    // Id or name is required for an <input />.
+    // We don't do anything with it, it's just here to prevent console warnings.
+    const id = useId();
 
     return (
-        <InputPure
-            value={name}
+        <input
+            className={tabsBem.e("rename-input")}
             onChange={handleChange}
-            onEscKeyPress={onCancel}
-            onEnterKeyPress={handleSubmit}
             onBlur={isSubmitOnBlur ? handleSubmit : undefined}
+            value={name}
+            onKeyUp={handleKeyUp}
+            name={id}
         />
     );
 }

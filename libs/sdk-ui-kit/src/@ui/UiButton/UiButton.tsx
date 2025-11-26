@@ -40,6 +40,7 @@ export interface UiButtonProps {
         | VariantDanger
         | VariantTooltip
         | VariantLink;
+    disableIconAnimation?: boolean;
     iconBefore?: IconType;
     iconBeforeSize?: number;
     badgeAfter?: number;
@@ -79,6 +80,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             isDisabled,
             isSelected,
             isLoading,
+            disableIconAnimation,
             iconBefore,
             iconBeforeSize: iconBeforeSizeProp,
             iconAfter,
@@ -123,6 +125,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                         type={iconBefore}
                         size={iconBeforeSize}
                         ariaHidden={accessibilityConfig?.iconAriaHidden}
+                        disableAnimation={disableIconAnimation}
                     />
                 ) : null}
                 <span className={e("text")} style={{ maxWidth }}>
@@ -134,6 +137,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                         type={iconAfter}
                         size={iconAfterSize}
                         ariaHidden={accessibilityConfig?.iconAriaHidden}
+                        disableAnimation={disableIconAnimation}
                     />
                 ) : null}
             </button>

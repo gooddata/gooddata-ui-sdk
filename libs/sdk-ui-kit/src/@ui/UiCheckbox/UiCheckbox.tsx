@@ -48,7 +48,7 @@ export function UiCheckbox({
                 tabIndex={tabIndex}
             />
             <span className={e("box", { checked, indeterminate, disabled })} />
-            {label ? <span className={e("label")}>{label}</span> : null}
+            {label ? <span className={e("label") + " gd-label"}>{label}</span> : null}
         </label>
     );
 }

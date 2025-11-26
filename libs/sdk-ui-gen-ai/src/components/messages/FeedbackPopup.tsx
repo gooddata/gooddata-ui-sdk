@@ -25,6 +25,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
     const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
     const [description, setDescription] = useState("");
     const textareaWrapperId = useIdPrefixed("feedback-textarea-wrapper");
+    const textareaId = useIdPrefixed("feedback-textarea");
 
     const feedbackReasons = [
         {
@@ -79,6 +80,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
             closeVisible
             closeText={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.close" })}
             width={260}
+            enableFocusTrap
             onClose={() => {
                 handleCancel();
             }}
@@ -89,7 +91,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
                 <div className="gd-gen-ai-feedback-popup__body">
                     <div className="gd-gen-ai-feedback-popup__section">
                         <fieldset style={{ border: "none" }}>
-                            <legend className="gd-label">
+                            <legend className="gd-label gd-gen-ai-feedback-popup__legend">
                                 {intl.formatMessage({ id: "gd.gen-ai.feedback.popup.reasons-label" })}
                             </legend>
                             <div className="gd-gen-ai-feedback-popup__checkboxes">
@@ -117,16 +119,19 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
 
                     {selectedReasons.includes("other") && (
                         <div id={textareaWrapperId} className="gd-gen-ai-feedback-popup__section">
+                            <label className="gd-label" htmlFor={textareaId}>
+                                {intl.formatMessage({
+                                    id: "gd.gen-ai.feedback.popup.description-label",
+                                })}
+                            </label>
                             <EditableLabel
                                 autofocus
                                 value={description}
                                 onChange={setDescription}
                                 onSubmit={setDescription}
                                 maxRows={4}
-                                ariaLabel={intl.formatMessage({
-                                    id: "gd.gen-ai.feedback.popup.description-label",
-                                })}
-                                className="gd-input-field gd-gen-ai-feedback-popup__textarea"
+                                className="gd-label gd-gen-ai-feedback-popup__textarea"
+                                id={textareaId}
                             />
                         </div>
                     )}

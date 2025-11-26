@@ -26,7 +26,6 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Máx",
     "visualizations.totals.dropdown.title.nat": "Consolidación (Total)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por valor métrico. Para utilizar Rollup (Total), elimine todos los filtros de valor métrico de la barra de filtros.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por filtro de clasificación. Para utilizar Rollup (Total), elimine el filtro de clasificación de la barra de filtros.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.headline.tertiary.title": "Frente a",
@@ -191,7 +190,7 @@
     "filters.granularity.quarters": "Trimestres",
     "filters.granularity.years": "Años",
     "filters.from": "de",
-    "filters.to": "para",
+    "filters.to": "hasta",
     "filters.floatingRange": "Periodo relativo",
     "filters.floatingRange.noMatch": "No se encontró ninguna coincidencia",
     "filters.floatingRange.tooBig": "Valor máximo: {limit}",
@@ -800,5 +799,9 @@
     "table.header.menu.ariaLabel": "Acciones",
     "gs.header.mainMenu.ariaLabel": "Menú principal",
     "tabs.all": "Todo",
-    "tabs.showAllTabs": "Mostrar todas las pestañas"
+    "tabs.showAllTabs": "Mostrar todas las pestañas",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por valor métrico. Para utilizar Rollup (Total), elimine todos los filtros de valor métrico de la barra de filtros.",
+    "shareDialog.share.link.helperTextWithTabs": "El enlace refleja los filtros actuales en la pestaña activa. Solo accesible para usuarios con acceso al panel.",
+    "table.bulkActions.selectAll": "Seleccionar todo",
+    "tabs.actions": "Acciones para la pestaña actual"
 }

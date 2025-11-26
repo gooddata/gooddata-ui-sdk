@@ -152,7 +152,7 @@ export function* drillToDashboardHandler(
     const resultingFilters = compact([commonDateFilter, ...intersectionFilters, ...dashboardFilters]);
 
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
-    if (targetTabLocalIdentifier) {
+    if (targetTabLocalIdentifier && isDrillingToSelf) {
         yield put(switchDashboardTab(targetTabLocalIdentifier));
     }
 

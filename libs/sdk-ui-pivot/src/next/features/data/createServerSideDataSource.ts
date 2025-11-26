@@ -79,11 +79,11 @@ function getBackendRowOffset(
     agGridStartRow: number,
     agGridEndRow: number,
     grandTotalsPosition: GrandTotalsPosition,
-    isFirstRequest: boolean,
     grandTotalCount: number,
 ): { backendStartRow: number; backendEndRow: number } {
-    // For non-pinned "top" position, adjust backend offset after first page
-    const needsOffsetAdjustment = grandTotalsPosition === "top" && !isFirstRequest && grandTotalCount > 0;
+    // For non-pinned "top" position, adjust backend offset after first page.
+    const isNotFirstPage = agGridStartRow > 0;
+    const needsOffsetAdjustment = grandTotalsPosition === "top" && isNotFirstPage && grandTotalCount > 0;
 
     if (needsOffsetAdjustment) {
         return {
@@ -226,7 +226,6 @@ export const createServerSideDataSource = ({
                     startRow,
                     endRow,
                     grandTotalsPosition,
-                    isFirstRequest,
                     cachedGrandTotalCount,
                 );
 

@@ -454,6 +454,7 @@ export type {
     IAttributeFilterConfig,
     IColorMappingItem,
     InsightDisplayFormUsage,
+    IInsightLayerDefinition,
 } from "./insight/index.js";
 export {
     isInsight,
@@ -491,9 +492,12 @@ export {
     insightModifyItems,
     insightReduceItems,
     insightDisplayFormUsage,
+    insightLayers,
+    insightSetLayers,
     visClassUrl,
     visClassId,
     visClassUri,
+    isInsightLayerDefinition,
 } from "./insight/index.js";
 
 export {

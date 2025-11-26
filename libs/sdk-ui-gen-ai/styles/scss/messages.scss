@@ -441,6 +441,12 @@
         width: 100%;
     }
 
+    &__legend {
+        color: var(--gd-palette-complementary-7);
+        line-height: 21px;
+        margin-bottom: 10px;
+    }
+
     &__section {
         display: flex;
         flex-direction: column;
@@ -450,6 +456,11 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        .gd-label {
+            color: var(--gd-palette-complementary-8);
+            line-height: 19px;
+        }
     }
 
     &__textarea {
@@ -463,6 +474,10 @@
 
         &::placeholder {
             color: var(--gd-palette-complementary-5, #b0beca);
+        }
+
+        textarea {
+            min-height: 84px;
         }
     }
 }

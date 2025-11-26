@@ -34,6 +34,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
             }}
             onClick={onClick}
             ref={ref as RefObject<HTMLButtonElement>}
+            disableAnimation
         />
     ) : (
         <UiButton
@@ -46,6 +47,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
             }}
             onClick={onClick}
             ref={ref as RefObject<HTMLButtonElement>}
+            disableIconAnimation
         />
     );
 }
