@@ -28,6 +28,7 @@ import {
     selectCatalogDateDatasets,
     selectDashboardLockedFilters,
     selectDateFilterConfigsOverrides,
+    selectEnableNewScheduledExport,
     selectPersistedDashboardFilterContextDateFilterConfig,
     useDashboardSelector,
 } from "../../model/index.js";
@@ -43,7 +44,7 @@ export const useAutomationFilters = ({
 }: {
     availableFilters: FilterContextItem[];
     selectedFilters: FilterContextItem[];
-    onFiltersChange: (filters: FilterContextItem[]) => void;
+    onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
     onStoreFiltersChange: (shouldStore: boolean, filters: FilterContextItem[]) => void;
 }) => {
     const intl = useIntl();
@@ -54,6 +55,7 @@ export const useAutomationFilters = ({
     const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
+    const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
 
     const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
 
@@ -132,7 +134,7 @@ export const useAutomationFilters = ({
                 }
                 return prevFilter;
             });
-            onFiltersChange(updatedFilters);
+            onFiltersChange(updatedFilters, enableNewScheduledExport);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl],
@@ -150,7 +152,7 @@ export const useAutomationFilters = ({
             const updatedFilters = selectedFilters.filter(
                 (prevFilter) => !areFiltersMatchedByIdentifier(prevFilter, filter),
             );
-            onFiltersChange(updatedFilters);
+            onFiltersChange(updatedFilters, enableNewScheduledExport);
 
             focusFilterGroup();
         },
@@ -194,7 +196,7 @@ export const useAutomationFilters = ({
                 );
 
                 const updatedFilters = [...selectedFilters, filter];
-                onFiltersChange(updatedFilters);
+                onFiltersChange(updatedFilters, enableNewScheduledExport);
 
                 announceFiltersChanged(message);
                 setTimeout(focusAddFilterButton);

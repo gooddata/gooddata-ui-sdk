@@ -97,7 +97,7 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
  * @param tabs - Array of TabState objects from the dashboard state
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
-function processExistingTabsForSaveAs(tabs: TabState[]): IDashboardTab[] {
+function processExistingTabsForSaveAs(tabs: TabState[], useOriginalFilterContext?: boolean): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
 
@@ -114,7 +114,9 @@ function processExistingTabsForSaveAs(tabs: TabState[]): IDashboardTab[] {
 
         const filterContext = tab.filterContext?.filterContextDefinition
             ? ({
-                  ...tab.filterContext.filterContextDefinition,
+                  ...(useOriginalFilterContext
+                      ? tab.filterContext.originalFilterContextDefinition
+                      : tab.filterContext.filterContextDefinition),
               } as IFilterContext | ITempFilterContext)
             : undefined;
 
@@ -206,7 +208,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     // Process tabs if tabs feature is enabled and tabs exist
     const processedTabs: IDashboardTab[] | undefined =
-        enableDashboardTabs && tabs && tabs.length > 0 ? processExistingTabsForSaveAs(tabs) : undefined;
+        enableDashboardTabs && tabs && tabs.length > 0
+            ? processExistingTabsForSaveAs(tabs, useOriginalFilterContext)
+            : undefined;
 
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",

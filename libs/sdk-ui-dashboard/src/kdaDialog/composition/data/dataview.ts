@@ -21,6 +21,7 @@ import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { DeepReadonly, KdaItem, KdaItemGroup } from "../../internalTypes.js";
 import { IKdaDefinition } from "../../types.js";
 
+const YAXIS_ADDITION_PERCENTAGE = 1.1; //+10%
 const DEFAULT_MEASURE_FORMAT = "#,##0.00";
 const LIMIT_KDA = 20;
 
@@ -297,14 +298,16 @@ export function createConfig(
 
     const items = getLimitedDataOnly(group, trend);
     const index = items.indexOf(item);
-    const min = Math.min(
-        items.reduce((c, item) => Math.min(c, item.to.value - item.from.value), Infinity),
-        deviation,
-    );
-    const max = Math.max(
-        items.reduce((c, item) => Math.max(c, item.to.value - item.from.value), -Infinity),
-        deviation,
-    );
+    const min =
+        Math.min(
+            items.reduce((c, item) => Math.min(c, item.to.value - item.from.value), Infinity),
+            deviation,
+        ) * YAXIS_ADDITION_PERCENTAGE;
+    const max =
+        Math.max(
+            items.reduce((c, item) => Math.max(c, item.to.value - item.from.value), -Infinity),
+            deviation,
+        ) * YAXIS_ADDITION_PERCENTAGE;
 
     const firstColor = colorPalette[0]?.fill;
     const color = firstColor ? `rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b})` : "rgb(20, 178, 226)";

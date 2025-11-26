@@ -125,6 +125,7 @@ export enum TigerFeaturesNames {
     EnablePreserveFilterSelectionDuringInit = "enablePreserveFilterSelectionDuringInit",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
+    EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
 }
 
 export type ITigerFeatureFlags = {
@@ -243,6 +244,7 @@ export type ITigerFeatureFlags = {
     enablePreserveFilterSelectionDuringInit: (typeof FeatureFlagsValues)["enablePreserveFilterSelectionDuringInit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
+    enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -361,6 +363,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePreserveFilterSelectionDuringInit: false,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
+    enableAnomalyDetectionAlert: false,
 };
 
 export const FeatureFlagsValues = {
@@ -480,4 +483,5 @@ export const FeatureFlagsValues = {
     enablePreserveFilterSelectionDuringInit: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
+    enableAnomalyDetectionAlert: [true, false] as const,
 };

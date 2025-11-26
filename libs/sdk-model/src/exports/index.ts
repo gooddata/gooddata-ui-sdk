@@ -59,6 +59,7 @@ export interface IExportDefinitionVisualizationObjectContent {
 export interface IExportDefinitionDashboardContent {
     dashboard: Identifier;
     filters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
 }
 
 /**
@@ -94,7 +95,15 @@ export function isExportDefinitionDashboardRequestPayload(
  * Widget attachment types.
  * @alpha
  */
-export type WidgetAttachmentType = "CSV" | "XLSX" | "CSV_RAW" | "PNG" | "PPTX" | "PDF" | "HTML";
+export type WidgetAttachmentType =
+    | "CSV"
+    | "XLSX"
+    | "CSV_RAW"
+    | "PNG"
+    | "PPTX"
+    | "PDF"
+    | "PDF_TABULAR"
+    | "HTML";
 
 /**
  * Export definition visualization object request payload

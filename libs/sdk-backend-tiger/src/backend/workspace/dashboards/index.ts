@@ -111,7 +111,6 @@ import {
     convertDashboardPluginFromBackend,
     convertDashboardPluginWithLinksFromBackend,
     convertFilterContextFromBackend,
-    getFilterContextFromIncluded,
 } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
 import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
@@ -126,7 +125,7 @@ import {
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { FiltersByTab, TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
 import { convertApiError } from "../../../utils/errorHandling.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
@@ -193,7 +192,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             options?.exportId,
             options?.exportType,
             filterContextRef,
-            result?.data?.included,
+            options?.exportTabId,
         );
 
         const dashboard = convertDashboard(result.data, filterContext);
@@ -221,7 +220,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             options?.exportId,
             options?.exportType,
             filterContextRef,
-            included,
+            options?.exportTabId,
         );
 
         let updatedDashboard = convertDashboard(dashboard, filterContext);
@@ -259,6 +258,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getFilterContextByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
+        exportTabId?: string,
     ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
         const metadata = await this.authCall((client) => {
             if (type === "slides") {
@@ -289,11 +289,26 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             enableAutomationFilterContext,
         );
 
-        return {
-            ...(convertedExportMetadata?.filters
+        const filterContextFromFilters = convertedExportMetadata?.filters
+            ? {
+                  filterContext: {
+                      filters: convertedExportMetadata.filters,
+                      title: `temp-filter-context-${exportId}`,
+                      description: "temp-filter-context-description",
+                      ref: { identifier: `identifier-${exportId}` },
+                      uri: `uri-${exportId}`,
+                      identifier: `identifier-${exportId}`,
+                  },
+              }
+            : undefined;
+
+        const filterContextFromFiltersByTab =
+            convertedExportMetadata?.filtersByTab &&
+            exportTabId &&
+            convertedExportMetadata.filtersByTab[exportTabId]
                 ? {
                       filterContext: {
-                          filters: convertedExportMetadata.filters,
+                          filters: convertedExportMetadata.filtersByTab[exportTabId],
                           title: `temp-filter-context-${exportId}`,
                           description: "temp-filter-context-description",
                           ref: { identifier: `identifier-${exportId}` },
@@ -301,7 +316,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                           identifier: `identifier-${exportId}`,
                       },
                   }
-                : {}),
+                : undefined;
+
+        const filterContext = filterContextFromFiltersByTab || filterContextFromFilters;
+
+        return {
+            ...(filterContext || {}),
             ...(convertedExportMetadata?.title ? { title: convertedExportMetadata.title } : {}),
             ...(convertedExportMetadata?.hideWidgetTitles
                 ? { hideWidgetTitles: convertedExportMetadata.hideWidgetTitles }
@@ -589,6 +609,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToPdf = async (
         dashboardRef: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
@@ -596,6 +617,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         // skip all time date filter from stored filters, when missing, it's correctly
         // restored to All time during the load later
         const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+        const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce((acc, [tabId, filters]) => {
+            return {
+                ...acc,
+                [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+            };
+        }, {});
 
         return this.authCall(async (client) => {
             const dashboardResponse = await DashboardsApi_GetEntityAnalyticalDashboards(
@@ -614,7 +642,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const visualExportRequest = {
                 fileName: options?.filename ?? title,
                 dashboardId,
-                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
+                metadata: convertToBackendExportMetadata({
+                    filters: withoutAllTime,
+                    filtersByTab: withoutAllTimePerTab,
+                }),
             };
             const pdfExport = await ExportApi_CreatePdfExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
@@ -637,6 +668,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
@@ -644,6 +676,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         // skip all time date filter from stored filters, when missing, it's correctly
         // restored to All time during the load later
         const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+        const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce((acc, [tabId, filters]) => {
+            return {
+                ...acc,
+                [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+            };
+        }, {});
 
         return this.authCall(async (client) => {
             const dashboardResponse = await DashboardsApi_GetEntityAnalyticalDashboards(
@@ -670,6 +709,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 templateId: options?.templateId,
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
+                    filtersByTab: withoutAllTimePerTab,
                     title: options?.title,
                     hideWidgetTitles: options?.hideWidgetTitles,
                 }),
@@ -719,6 +759,22 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const dashboardFiltersOverrideObj = options?.dashboardFiltersOverride
                 ? { dashboardFiltersOverride: cloneWithSanitizedIds(options?.dashboardFiltersOverride) }
                 : {};
+
+            const dashboardTabsFiltersOverridesObj =
+                options?.dashboardTabsFiltersOverrides &&
+                Object.keys(options.dashboardTabsFiltersOverrides).length > 0
+                    ? {
+                          dashboardTabsFiltersOverrides: Object.entries(
+                              options.dashboardTabsFiltersOverrides,
+                          ).reduce((acc, [tabId, filters]) => {
+                              return {
+                                  ...acc,
+                                  [tabId]: cloneWithSanitizedIds(filters),
+                              };
+                          }, {}),
+                      }
+                    : {};
+
             const format = options?.format || "XLSX";
             const tabularExport = await ExportApi_CreateDashboardExportRequest(
                 client.axios,
@@ -742,6 +798,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         },
                         widgetIds: options?.widgetIds,
                         ...dashboardFiltersOverrideObj,
+                        ...dashboardTabsFiltersOverridesObj,
                     },
                     workspaceId: this.workspace,
                     dashboardId,
@@ -801,6 +858,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToImage = async (
         dashboardRef: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> => {
         return this.authCall(async (client) => {
@@ -809,6 +867,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             // skip all time date filter from stored filters, when missing, it's correctly
             // restored to All time during the load later
             const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+            const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce(
+                (acc, [tabId, filters]) => {
+                    return {
+                        ...acc,
+                        [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+                    };
+                },
+                {},
+            );
 
             const imageExportRequest: ImageExportRequest = {
                 format: "PNG",
@@ -823,6 +891,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     }) ?? [],
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
+                    filtersByTab: withoutAllTimePerTab,
                     title: options?.filename,
                 }),
             };
@@ -1396,21 +1465,18 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         exportId: string | undefined,
         type: "visual" | "slides" | undefined,
         filterContextRef: ObjRef | undefined,
-        includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
+        exportTabId?: string,
     ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean }> => {
         const filterContextByRef = filterContextRef
             ? await this.getFilterContext(filterContextRef)
             : undefined;
 
         const filterContextByExport = exportId
-            ? await this.getFilterContextByExportId(exportId, type)
-            : undefined; // TODO INE: handle this external filters with tabbed dashboard
+            ? await this.getFilterContextByExportId(exportId, type, exportTabId)
+            : undefined;
 
         return {
-            filterContext:
-                filterContextByExport?.filterContext ||
-                filterContextByRef ||
-                getFilterContextFromIncluded(includedFilterContext), // TODO INE: it returns always first filterContext from included, which will not always work with tabs
+            filterContext: filterContextByExport?.filterContext || filterContextByRef,
             title: filterContextByExport?.title,
             hideWidgetTitles: filterContextByExport?.hideWidgetTitles,
         };

@@ -99,6 +99,7 @@ export function Tabs({
                     role="tab"
                     aria-selected={tab.id === selectedTabId}
                     tabIndex={0}
+                    data-testid={`s-tab-${stringUtils.simplifyText(tab.id)}`}
                 >
                     <span>
                         {tab.icon ? <i className={tab.icon} /> : null}

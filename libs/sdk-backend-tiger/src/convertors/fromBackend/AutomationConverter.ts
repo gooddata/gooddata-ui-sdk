@@ -3,6 +3,7 @@
 import { compact } from "lodash-es";
 
 import {
+    AnomalyDetectionWrapper,
     AutomationAutomationAlert,
     AutomationAutomationExternalRecipient,
     ComparisonWrapper,
@@ -24,13 +25,33 @@ import {
     RelativeWrapper,
 } from "@gooddata/api-client-tiger";
 import {
+    DateFilterGranularity,
+    FilterContextItem,
     IAlertComparisonOperator,
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationRecipient,
     IAutomationState,
+    IExportDefinitionMetadataObject,
+    IFilter,
+    IRelativeDateFilter,
+    filterAttributeElements,
+    filterLocalIdentifier,
+    filterObjRef,
     idRef,
+    isAbsoluteDateFilter,
+    isAllTimeDateFilter,
+    isAttributeFilter,
     isAutomationUserRecipient,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isFilter,
+    isFilterContextItem,
+    isNegativeAttributeFilter,
+    isRelativeBoundedDateFilter,
+    isRelativeDateFilter,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import { convertFilter } from "./afm/FilterConverter.js";
@@ -230,6 +251,10 @@ export function convertAutomation(
         ) ?? []),
     ];
 
+    const normalizedExportDefinitions = enableNewScheduledExport
+        ? exportDefinitions.map(convertLegacyTabularFiltersToFilterContext)
+        : exportDefinitions;
+
     const recipients = [
         ...(relationships?.recipients?.data
             ?.map((r) => convertRecipient(r, included))
@@ -275,7 +300,7 @@ export function convertAutomation(
         // Details
         details,
         // Relationships
-        exportDefinitions,
+        exportDefinitions: normalizedExportDefinitions,
         recipients,
         notificationChannel,
         createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
@@ -320,6 +345,7 @@ const convertAlert = (
     const comparison = (condition as ComparisonWrapper)?.comparison;
     const range = (condition as RangeWrapper)?.range;
     const relative = (condition as RelativeWrapper)?.relative;
+    const anomaly = (condition as AnomalyDetectionWrapper)?.anomaly;
 
     // TODO: we do not support RANGE for now
     if (range) {
@@ -385,5 +411,98 @@ const convertAlert = (
         };
     }
 
+    if (anomaly) {
+        return {
+            condition: {
+                type: "anomalyDetection",
+                sensitivity: anomaly.sensitivity ?? "MEDIUM",
+                granularity: anomaly.granularity,
+                measure: {
+                    id: anomaly.measure.localIdentifier,
+                    title: anomaly.measure.title ?? undefined,
+                    format: anomaly.measure.format ?? undefined,
+                },
+            },
+            ...base,
+        };
+    }
+
     return undefined;
 };
+
+function convertLegacyTabularFiltersToFilterContext(
+    exportDefinition: IExportDefinitionMetadataObject,
+): IExportDefinitionMetadataObject {
+    if (
+        !isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) ||
+        exportDefinition.requestPayload.format !== "XLSX"
+    ) {
+        return exportDefinition;
+    }
+
+    const filters = exportDefinition.requestPayload.content.filters;
+
+    if (!filters?.length || filters.some(isFilterContextItem)) {
+        return exportDefinition;
+    }
+
+    const convertedFilters = filters
+        .map((filter) => (isFilter(filter) ? convertExecutionFilterToFilterContextItem(filter) : undefined))
+        .filter((filter): filter is FilterContextItem => Boolean(filter));
+
+    if (!convertedFilters.length) {
+        return exportDefinition;
+    }
+
+    return {
+        ...exportDefinition,
+        requestPayload: {
+            ...exportDefinition.requestPayload,
+            content: {
+                ...exportDefinition.requestPayload.content,
+                filters: convertedFilters,
+            },
+        },
+    };
+}
+
+function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterContextItem | undefined {
+    if (isAttributeFilter(filter)) {
+        return {
+            attributeFilter: {
+                negativeSelection: isNegativeAttributeFilter(filter),
+                attributeElements: filterAttributeElements(filter),
+                displayForm: filterObjRef(filter),
+                selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    }
+
+    if (isAbsoluteDateFilter(filter)) {
+        return newAbsoluteDashboardDateFilter(
+            filter.absoluteDateFilter.from,
+            filter.absoluteDateFilter.to,
+            filter.absoluteDateFilter.dataSet,
+            filter.absoluteDateFilter.localIdentifier,
+        );
+    }
+
+    if (isAllTimeDateFilter(filter)) {
+        const relativeFilter = (filter as IRelativeDateFilter).relativeDateFilter;
+        return newAllTimeDashboardDateFilter(relativeFilter?.dataSet, relativeFilter?.localIdentifier);
+    }
+
+    if (isRelativeDateFilter(filter)) {
+        return newRelativeDashboardDateFilter(
+            filter.relativeDateFilter.granularity as DateFilterGranularity,
+            filter.relativeDateFilter.from,
+            filter.relativeDateFilter.to,
+            filter.relativeDateFilter.dataSet,
+            filter.relativeDateFilter.localIdentifier,
+            isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
+        );
+    }
+
+    return undefined;
+}

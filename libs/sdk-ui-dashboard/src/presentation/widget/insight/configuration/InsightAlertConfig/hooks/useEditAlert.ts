@@ -1,10 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
+    IAlertAnomalyDetectionGranularity,
+    IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -27,6 +30,7 @@ import {
 } from "../../../../../../_staging/automation/index.js";
 import {
     selectCurrentUser,
+    selectEnableAnomalyDetectionAlert,
     selectEnableExternalRecipients,
     selectUsers,
     useDashboardSelector,
@@ -40,11 +44,14 @@ import {
     isAlertValueDefined,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/guards.js";
 import {
+    transformAlertByAnomalyDetection,
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
+    transformAlertByGranularity,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
+    transformAlertBySensitivity,
     transformAlertByTitle,
     transformAlertByValue,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
@@ -80,6 +87,7 @@ export const useEditAlert = ({
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
+    const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const intl = useIntl();
 
     const selectedDestination = destinations.find(
@@ -122,6 +130,13 @@ export const useEditAlert = ({
         [metrics],
     );
 
+    const changeAnomalyDetection = useCallback(
+        (measure: AlertMetric) => {
+            setUpdatedAlert((alert) => transformAlertByAnomalyDetection(metrics, alert, measure));
+        },
+        [metrics],
+    );
+
     const changeRelativeOperator = useCallback(
         (
             measure: AlertMetric,
@@ -148,6 +163,14 @@ export const useEditAlert = ({
 
     const changeTitle = useCallback((value: string | undefined) => {
         setUpdatedAlert((alert) => transformAlertByTitle(alert, value));
+    }, []);
+
+    const changeSensitivity = useCallback((value: IAlertAnomalyDetectionSensitivity) => {
+        setUpdatedAlert((alert) => transformAlertBySensitivity(alert, value));
+    }, []);
+
+    const changeGranularity = useCallback((value: IAlertAnomalyDetectionGranularity) => {
+        setUpdatedAlert((alert) => transformAlertByGranularity(alert, value));
     }, []);
 
     const changeDestination = useCallback(
@@ -277,8 +300,10 @@ export const useEditAlert = ({
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         warningMessage,
+        enableAnomalyDetectionAlert,
         //
         changeComparisonOperator,
+        changeAnomalyDetection,
         changeRelativeOperator,
         changeMeasure,
         changeAttribute,
@@ -287,6 +312,8 @@ export const useEditAlert = ({
         changeDestination,
         changeComparisonType,
         changeRecipients,
+        changeSensitivity,
+        changeGranularity,
         //
         configureAlert,
         saveAlertConfiguration,

@@ -612,6 +612,11 @@ export interface ISettings {
      */
     enablePreserveFilterSelectionDuringInit?: boolean;
 
+    /**
+     * Enable anomaly detection alert
+     */
+    enableAnomalyDetectionAlert?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

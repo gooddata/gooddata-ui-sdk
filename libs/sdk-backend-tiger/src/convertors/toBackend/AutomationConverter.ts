@@ -7,8 +7,8 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationOutAttributes,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributes,
+    JsonApiWorkspaceAutomationOutAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -34,6 +34,7 @@ import {
     convertToSlidesExportRequest,
     convertToTabularExportRequest,
     convertToVisualExportRequest,
+    convertVisualizationToDashboardTabularExportRequest,
 } from "./ExportDefinitionsConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 
@@ -130,32 +131,43 @@ export function convertAutomation(
     } = (exportDefinitions ?? []).reduce((acc, ed) => {
         switch (ed.requestPayload.format) {
             case "CSV":
-            case "XLSX":
                 return {
                     ...acc,
-                    ...(isExportDefinitionDashboardRequestPayload(ed.requestPayload)
-                        ? {
-                              dashboardTabularExports: [
-                                  ...(acc.dashboardTabularExports ?? []),
-                                  {
-                                      requestPayload: convertToDashboardTabularExportRequest(
-                                          ed.requestPayload,
-                                      ),
-                                  },
-                              ],
-                          }
-                        : {
-                              tabularExports: [
-                                  ...(acc.tabularExports ?? []),
-                                  {
-                                      requestPayload: convertToTabularExportRequest(
-                                          ed.requestPayload,
-                                          ed.title,
-                                      ),
-                                  },
-                              ],
-                          }),
+                    tabularExports: [
+                        ...(acc.tabularExports ?? []),
+                        {
+                            requestPayload: convertToTabularExportRequest(ed.requestPayload, ed.title),
+                        },
+                    ],
                 };
+            case "XLSX": {
+                const requestPayload = isExportDefinitionDashboardRequestPayload(ed.requestPayload)
+                    ? convertToDashboardTabularExportRequest(ed.requestPayload)
+                    : convertVisualizationToDashboardTabularExportRequest(ed.requestPayload);
+
+                return {
+                    ...acc,
+                    dashboardTabularExports: [
+                        ...(acc.dashboardTabularExports ?? []),
+                        {
+                            requestPayload,
+                        },
+                    ],
+                };
+            }
+            case "PDF_TABULAR": {
+                const requestPayload = convertVisualizationToDashboardTabularExportRequest(ed.requestPayload);
+
+                return {
+                    ...acc,
+                    dashboardTabularExports: [
+                        ...(acc.dashboardTabularExports ?? []),
+                        {
+                            requestPayload,
+                        },
+                    ],
+                };
+            }
             case "PDF":
                 return {
                     ...acc,
@@ -231,7 +243,7 @@ export function convertAutomation(
             default:
                 return acc;
         }
-    }, {} as JsonApiAutomationOutAttributes);
+    }, {} as JsonApiAutomationInAttributes);
 
     const attributes = omitBy(
         {
@@ -244,7 +256,7 @@ export function convertAutomation(
             visualExports: enableNewScheduledExport ? visualExports : visualExportsOld,
             imageExports,
             slidesExports,
-            dashboardTabularExports,
+            dashboardTabularExports: enableNewScheduledExport ? dashboardTabularExports : undefined,
             rawExports,
             externalRecipients,
             ...metadataObj,
@@ -270,7 +282,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationOutAttributesAlert => {
+): JsonApiWorkspaceAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(
@@ -340,6 +352,24 @@ const convertAlert = (
                                   value: condition.threshold,
                               }),
                     },
+                },
+            },
+            ...base,
+        };
+    }
+
+    //anomaly detection
+    if (condition.type === "anomalyDetection") {
+        return {
+            condition: {
+                anomaly: {
+                    measure: {
+                        localIdentifier: condition.measure.id,
+                        title: condition.measure.title,
+                        format: condition.measure.format,
+                    },
+                    sensitivity: condition.sensitivity,
+                    granularity: condition.granularity ?? "WEEK",
                 },
             },
             ...base,

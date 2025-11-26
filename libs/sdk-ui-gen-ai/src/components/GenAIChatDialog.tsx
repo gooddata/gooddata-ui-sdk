@@ -6,7 +6,7 @@ import { EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
 
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+import { CatalogItem, GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
 
@@ -26,6 +26,7 @@ export type GenAIChatDialogProps = {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    objectTypes?: GenAIObjectType[];
     settings?: IUserWorkspaceSettings;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
@@ -50,6 +51,7 @@ export function GenAIChatDialog({
     onClose,
     settings,
     returnFocusTo,
+    objectTypes,
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
@@ -66,6 +68,7 @@ export function GenAIChatDialog({
         eventHandlers,
         colorPalette,
         settings,
+        objectTypes,
     });
 
     useEffect(() => {

@@ -35,6 +35,45 @@ export const messages = defineMessages({
     comparisonOperatorDifferenceChangesBy: {
         id: "automations.alert.config.differenceOperator.changesBy",
     },
+    anomalyDetectionOperatorName: {
+        id: "automations.alert.config.anomalyDetection.operatorName",
+    },
+    anomalyDetectionWithName: {
+        id: "automations.alert.config.anomalyDetection.withName",
+    },
+    anomalyDetectionWithSensitivity: {
+        id: "automations.alert.config.anomalyDetection.withSensitivity",
+    },
+    anomalyDetectionGranularityMinute: {
+        id: "automations.alert.config.anomalyDetection.granularity.minute",
+    },
+    anomalyDetectionGranularityHour: {
+        id: "automations.alert.config.anomalyDetection.granularity.hour",
+    },
+    anomalyDetectionGranularityDay: {
+        id: "automations.alert.config.anomalyDetection.granularity.day",
+    },
+    anomalyDetectionGranularityWeek: {
+        id: "automations.alert.config.anomalyDetection.granularity.week",
+    },
+    anomalyDetectionGranularityMonth: {
+        id: "automations.alert.config.anomalyDetection.granularity.month",
+    },
+    anomalyDetectionGranularityQuarter: {
+        id: "automations.alert.config.anomalyDetection.granularity.quarter",
+    },
+    anomalyDetectionGranularityYear: {
+        id: "automations.alert.config.anomalyDetection.granularity.year",
+    },
+    anomalyDetectionSensitivityLow: {
+        id: "automations.alert.config.anomalyDetection.sensitivity.low",
+    },
+    anomalyDetectionSensitivityMedium: {
+        id: "automations.alert.config.anomalyDetection.sensitivity.medium",
+    },
+    anomalyDetectionSensitivityHigh: {
+        id: "automations.alert.config.anomalyDetection.sensitivity.high",
+    },
     untitledUser: {
         id: "automations.filter.untitledUser",
     },

@@ -55,6 +55,8 @@ export function DefaultUiTabsTabActions<
                           isDestructive: action.isDestructive,
                           iconLeft: action.iconLeft,
                           iconRight: action.iconRight,
+                          tooltip: action.tooltip,
+                          tooltipWidth: action.tooltipWidth,
                           data: {
                               onSelect: ((ctx) => {
                                   action.onSelect(ctx);

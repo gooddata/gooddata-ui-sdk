@@ -38,6 +38,8 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     isSelected?: boolean;
     isDestructive?: boolean;
+    tooltip?: ReactNode;
+    tooltipWidth?: number;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;

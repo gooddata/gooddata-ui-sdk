@@ -40,6 +40,10 @@ export type TigerMetadataType =
  */
 export type TigerObjectType = TigerAfmType | TigerMetadataType;
 
+export type FiltersByTab = {
+    [tabId: string]: FilterContextItem[];
+};
+
 /**
  * Export metadata contents is under our control, accepts arbitrary json, currently described by IExportMetadata interface
  * - what we store there during exportDashboardToPdf stays there for us to read in the exporter when loading dashboard
@@ -47,7 +51,8 @@ export type TigerObjectType = TigerAfmType | TigerMetadataType;
  * - see appropriate converters for type check and metadata contents
  */
 export interface IExportMetadata {
-    filters: FilterContextItem[];
+    filters?: FilterContextItem[];
+    filtersByTab?: FiltersByTab;
     title?: string;
     hideWidgetTitles?: boolean;
 }

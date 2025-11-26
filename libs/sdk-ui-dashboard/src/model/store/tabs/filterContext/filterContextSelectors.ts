@@ -79,6 +79,22 @@ export const selectFilterContextDefinitionsByTab = createSelector(
 );
 
 /**
+ * Returns filters from each tab keyed by tab identifier.
+ * This selector is useful for exporting dashboards with per-tab filters.
+ *
+ * @internal
+ */
+export const selectFiltersByTab = createSelector(selectFilterContextDefinitionsByTab, (definitionsByTab) => {
+    return Object.entries(definitionsByTab).reduce<Record<string, FilterContextItem[]>>(
+        (acc, [identifier, definition]) => {
+            acc[identifier] = definition?.filters ?? [];
+            return acc;
+        },
+        {},
+    );
+});
+
+/**
  * Returns original (persisted) filter context definitions for each tab keyed by identifier.
  *
  * @internal

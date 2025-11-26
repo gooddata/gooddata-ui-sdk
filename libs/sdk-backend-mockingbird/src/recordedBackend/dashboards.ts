@@ -206,6 +206,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public getFilterContextByExportId = async (
         _exportId: string,
         _type: "visual" | "slides" | undefined,
+        _tabId?: string,
     ): Promise<IFilterContext | null> => {
         return null;
     };

@@ -123,6 +123,7 @@ import {
 } from "./scheduledEmail.js";
 import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
 import {
+    DashboardTabConvertedFromDefault,
     DashboardTabCreated,
     DashboardTabDeleted,
     DashboardTabRenamed,
@@ -191,6 +192,8 @@ export type {
     DashboardTabSwitchedPayload,
     DashboardTabCreated,
     DashboardTabCreatedPayload,
+    DashboardTabConvertedFromDefault,
+    DashboardTabConvertedFromDefaultPayload,
     DashboardTabDeleted,
     DashboardTabDeletedPayload,
     DashboardTabRenamingStarted,
@@ -205,6 +208,8 @@ export {
     isDashboardTabSwitched,
     dashboardTabCreated,
     isDashboardTabCreated,
+    dashboardTabConvertedFromDefault,
+    isDashboardTabConvertedFromDefault,
     dashboardTabDeleted,
     isDashboardTabDeleted,
     dashboardTabRenamingStarted,
@@ -722,6 +727,7 @@ export type DashboardEvents =
     | DashboardDrillableItemsChanged
     | DashboardIgnoreExecutionTimestampChanged
     | DashboardTabSwitched
+    | DashboardTabConvertedFromDefault
     | DashboardTabCreated
     | DashboardTabDeleted
     | DashboardTabRenamingStarted

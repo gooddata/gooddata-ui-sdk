@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { AgentIcon } from "./AgentIcon.js";
 import { FeedbackPopup } from "./FeedbackPopup.js";
 import { MessageContents } from "./MessageContents.js";
+import { getAssistantMessageState } from "./messageState.js";
 import { useUserFeedback } from "./useUserFeedback.js";
-import { AssistantMessage, isErrorContents } from "../../model.js";
+import { AssistantMessage } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
 
 type AssistantMessageProps = {
@@ -25,32 +25,27 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
     const { handlePositiveFeedbackClick, handleNegativeFeedbackClick, handleFeedbackSubmit } =
         useUserFeedback({ message, setUserFeedback });
 
-    const classNames = cx(
-        "gd-gen-ai-chat__messages__message",
-        "gd-gen-ai-chat__messages__message--assistant",
-        message.cancelled && "gd-gen-ai-chat__messages__message--cancelled",
-    );
-    const hasError = message.content.some(isErrorContents);
-
+    const messageState = getAssistantMessageState(message);
     const thumbsUpLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.like" });
     const thumbsDownLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" });
 
     return (
-        <div className={classNames}>
+        <div
+            className={cx(
+                "gd-gen-ai-chat__messages__message",
+                "gd-gen-ai-chat__messages__message--assistant",
+                messageState === "cancelled" && "gd-gen-ai-chat__messages__message--cancelled",
+            )}
+            data-state={messageState}
+        >
             <span className="gd-gen-ai-chat__visually__hidden">
                 {intl.formatMessage({ id: "gd.gen-ai.message.label.assistant" })}
             </span>
-            <AgentIcon
-                loading={!message.complete}
-                error={hasError}
-                cancelled={message.cancelled}
-                aria-hidden="true"
-            />
             <div className="gd-gen-ai-chat__messages__message__contents_wrap">
                 <MessageContents
                     useMarkdown
                     content={message.content}
-                    isComplete={Boolean(message.content.length > 0 || message.complete || message.cancelled)}
+                    isLoading={messageState === "loading"}
                     isCancelled={message.cancelled}
                     isLastMessage={isLast}
                     messageId={message.localId}

@@ -23,6 +23,8 @@ export const RELATIVE_OPERATOR_CHANGES_BY = "CHANGES_BY";
 export const ARITHMETIC_OPERATOR_DIFFERENCE = "DIFFERENCE";
 export const ARITHMETIC_OPERATOR_CHANGE = "CHANGE";
 
+export const ANOMALY_DETECTION = "ANOMALY_DETECTION";
+
 /**
  * @internal
  */
@@ -48,6 +50,18 @@ export const RELATIVE_OPERATORS = {
 export const ARITHMETIC_OPERATORS = {
     ARITHMETIC_OPERATOR_DIFFERENCE,
     ARITHMETIC_OPERATOR_CHANGE,
+} as const;
+
+/**
+ * @internal
+ */
+export const AI_OPERATOR = "AI";
+
+/**
+ * @internal
+ */
+export const AI_OPERATORS = {
+    ANOMALY_DETECTION,
 } as const;
 
 export const DEFAULT_MAX_HEIGHT = 500;

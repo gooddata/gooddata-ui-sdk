@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
     IAutomationAlertCondition,
     IAutomationAlertRelativeCondition,
+    IAutomationAnomalyDetectionCondition,
     IAutomationMetadataObject,
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
@@ -17,12 +18,15 @@ import {
     AlertMetricComparatorType,
 } from "../../types.js";
 import {
+    getAlertAiOperator,
     getAlertAttribute,
     getAlertCompareOperator,
     getAlertComparison,
     getAlertFilters,
+    getAlertGranularity,
     getAlertMeasure,
     getAlertRelativeOperator,
+    getAlertSensitivity,
     getAlertThreshold,
     getDescription,
     getSubtitle,
@@ -30,16 +34,20 @@ import {
 } from "../utils/getters.js";
 import {
     isAlertValueDefined,
+    isAnomalyDetection,
     isChangeOperator,
     isChangeOrDifferenceOperator,
     isDifferenceOperator,
 } from "../utils/guards.js";
 import {
+    transformAlertByAnomalyDetection,
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
+    transformAlertByGranularity,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
+    transformAlertBySensitivity,
     transformAlertByValue,
     transformAlertExecutionByMetric,
 } from "../utils/transformation.js";
@@ -309,6 +317,30 @@ describe("alert transforms", () => {
                         },
                     },
                 ],
+            },
+            trigger: {
+                state: "ACTIVE",
+                mode: "ALWAYS",
+            },
+        },
+    };
+
+    const baseAnomalyDetection: IAutomationMetadataObject = {
+        ...base,
+        alert: {
+            condition: {
+                type: "anomalyDetection",
+                measure: {
+                    id: "",
+                },
+                sensitivity: "MEDIUM",
+                granularity: "WEEK",
+            },
+            execution: {
+                filters: [],
+                measures: [],
+                auxMeasures: [],
+                attributes: [],
             },
             trigger: {
                 state: "ACTIVE",
@@ -743,6 +775,13 @@ describe("alert transforms", () => {
                 },
             });
         });
+
+        it("transformAlertByValue, anomaly detection value", () => {
+            const res = transformAlertByValue(baseAnomalyDetection, 25);
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+            });
+        });
     });
 
     describe("transformAlertByDestination", () => {
@@ -885,6 +924,156 @@ describe("alert transforms", () => {
                     execution: {
                         ...baseRelative.alert?.execution,
                         measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByRelativeOperator, anomaly detection value", () => {
+            const res = transformAlertByRelativeOperator(
+                allMetrics,
+                baseAnomalyDetection,
+                previousPeriodMetric,
+                "CHANGES_BY",
+                "DIFFERENCE",
+            );
+            const cond = baseRelative.alert?.condition as IAutomationAlertRelativeCondition;
+            expect(res).toEqual({
+                ...baseRelative,
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        ...cond,
+                        operator: "CHANGES_BY",
+                        measure: {
+                            ...cond.measure,
+                            operator: "DIFFERENCE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localPPMetric1",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
+                        },
+                        threshold: undefined,
+                    },
+                    execution: {
+                        ...baseRelative.alert?.execution,
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+            });
+        });
+    });
+
+    describe("transformAlertByAnomalyDetection", () => {
+        it("transformAlertByAnomalyDetection, comparison value", () => {
+            const res = transformAlertByAnomalyDetection(allMetrics, baseComparison, previousPeriodMetric);
+            const cond = baseAnomalyDetection.alert?.condition as IAutomationAnomalyDetectionCondition;
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...cond,
+                    },
+                    execution: {
+                        ...baseRelative.alert?.execution,
+                        measures: [previousPeriodMetric.measure],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByRelativeOperator, relative value", () => {
+            const res = transformAlertByAnomalyDetection(allMetrics, baseRelative, previousPeriodMetric);
+            const cond = baseAnomalyDetection.alert?.condition as IAutomationAnomalyDetectionCondition;
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...cond,
+                    },
+                    execution: {
+                        ...baseRelative.alert?.execution,
+                        measures: [previousPeriodMetric.measure],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByRelativeOperator, anomaly detection value", () => {
+            const res = transformAlertByAnomalyDetection(
+                allMetrics,
+                baseAnomalyDetection,
+                previousPeriodMetric,
+            );
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                metadata: { filters: undefined },
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    execution: {
+                        ...baseAnomalyDetection.alert?.execution,
+                        measures: [previousPeriodMetric.measure],
+                    },
+                },
+            });
+        });
+    });
+
+    describe("transformAlertBySensitivity", () => {
+        it("anomaly detection change sensitivity", () => {
+            const res = transformAlertBySensitivity(baseAnomalyDetection, "LOW");
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...baseAnomalyDetection.alert?.condition,
+                        sensitivity: "LOW",
+                    },
+                },
+            });
+        });
+
+        it("relative change sensitivity", () => {
+            const res = transformAlertBySensitivity(baseRelative, "LOW");
+            expect(res).toEqual({
+                ...baseRelative,
+            });
+        });
+    });
+
+    describe("transformAlertByGranularity", () => {
+        it("anomaly detection change granularity", () => {
+            const res = transformAlertByGranularity(baseAnomalyDetection, "MINUTE");
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...baseAnomalyDetection.alert?.condition,
+                        granularity: "MINUTE",
+                    },
+                },
+            });
+        });
+
+        it("relative change granularity", () => {
+            const res = transformAlertByGranularity(baseAnomalyDetection, "MINUTE");
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...baseAnomalyDetection.alert?.condition,
+                        granularity: "MINUTE",
                     },
                 },
             });
@@ -1152,8 +1341,19 @@ describe("alert transforms", () => {
             expect(threshold).toEqual(0);
         });
 
+        it("getAlertThreshold - anomaly detection", () => {
+            const threshold = getAlertThreshold(baseAnomalyDetection.alert);
+            expect(threshold).toEqual(undefined);
+        });
+
         it("getAlertMeasure - comparison", () => {
             const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
+            const data = getAlertMeasure([simpleMetric1], update.alert);
+            expect(data?.measure?.measure?.localIdentifier).toEqual("localMetric1");
+        });
+
+        it("getAlertMeasure - anomaly detection", () => {
+            const update = transformAlertByMetric(allMetrics, baseAnomalyDetection, simpleMetric1);
             const data = getAlertMeasure([simpleMetric1], update.alert);
             expect(data?.measure?.measure?.localIdentifier).toEqual("localMetric1");
         });
@@ -1192,6 +1392,12 @@ describe("alert transforms", () => {
             const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const data = getAlertRelativeOperator(update.alert);
             expect(data).toEqual(["INCREASES_BY", "CHANGE"]);
+        });
+
+        it("getAlertRelativeOperator - anomaly detection", () => {
+            const update = transformAlertByMetric(allMetrics, baseAnomalyDetection, previousPeriodMetric);
+            const data = getAlertRelativeOperator(update.alert);
+            expect(data).toEqual(undefined);
         });
 
         // eslint-disable-next-line @vitest/no-identical-title
@@ -1254,6 +1460,42 @@ describe("alert transforms", () => {
             const filters = getAlertFilters(baseAllAttribute);
             expect(filters.length).toEqual(1);
             expect(filters[0]).toEqual(baseAllAttribute.alert?.execution.filters[1]);
+        });
+
+        it("getAlertAiOperator - relative", () => {
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            const res = getAlertAiOperator(update.alert);
+            expect(res).toEqual(undefined);
+        });
+
+        it("getAlertAiOperator - anomaly detection", () => {
+            const update = transformAlertByMetric(allMetrics, baseAnomalyDetection, previousPeriodMetric);
+            const res = getAlertAiOperator(update.alert);
+            expect(res).toEqual("AI.ANOMALY_DETECTION");
+        });
+
+        it("getAlertSensitivity - relative", () => {
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            const res = getAlertSensitivity(update.alert);
+            expect(res).toEqual(undefined);
+        });
+
+        it("getAlertSensitivity - anomaly detection", () => {
+            const update = transformAlertByMetric(allMetrics, baseAnomalyDetection, previousPeriodMetric);
+            const res = getAlertSensitivity(update.alert);
+            expect(res).toEqual("MEDIUM");
+        });
+
+        it("getAlertGranularity - relative", () => {
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            const res = getAlertGranularity(update.alert);
+            expect(res).toEqual(undefined);
+        });
+
+        it("getAlertGranularity - anomaly detection", () => {
+            const update = transformAlertByMetric(allMetrics, baseAnomalyDetection, previousPeriodMetric);
+            const res = getAlertGranularity(update.alert);
+            expect(res).toEqual("WEEK");
         });
 
         it("getAlertComparison - previous period metric", () => {
@@ -1370,6 +1612,11 @@ describe("alert transforms", () => {
             expect(res).toEqual(true);
         });
 
+        it("isAnomalyDetection", () => {
+            const res = isAnomalyDetection(baseAnomalyDetection?.alert);
+            expect(res).toEqual(true);
+        });
+
         it("isDifferenceOperator, baseComparison, change", () => {
             const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const res = isDifferenceOperator(update.alert);
@@ -1433,6 +1680,11 @@ describe("alert transforms", () => {
             update = transformAlertByValue(update, undefined as unknown as number);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(false);
+        });
+
+        it("isAlertValueDefined, baseAnomalyDetection", () => {
+            const res = isAlertValueDefined(baseAnomalyDetection.alert);
+            expect(res).toEqual(true);
         });
     });
 });

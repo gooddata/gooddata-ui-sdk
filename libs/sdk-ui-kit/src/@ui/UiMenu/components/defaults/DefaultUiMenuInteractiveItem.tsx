@@ -5,6 +5,7 @@ import { KeyboardEvent, MouseEvent, ReactNode, useCallback } from "react";
 import cx from "classnames";
 
 import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import {
@@ -109,22 +110,32 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     size = "medium",
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
     return (
-        <div
-            className={e("item", {
-                isFocused,
-                isSelected: !!item.isSelected,
-                isDisabled: !!item.isDisabled,
-                isDestructive: !!item.isDestructive,
-                size,
-            })}
-        >
-            {item.iconLeft ? item.iconLeft : null}
-            <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
-                {item.stringTitle}
-            </ShortenedText>
+        <UiTooltip
+            anchor={
+                <div
+                    className={e("item", {
+                        isFocused,
+                        isSelected: !!item.isSelected,
+                        isDisabled: !!item.isDisabled,
+                        isDestructive: !!item.isDestructive,
+                        size,
+                    })}
+                >
+                    {item.iconLeft ? item.iconLeft : null}
+                    <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
+                        {item.stringTitle}
+                    </ShortenedText>
 
-            {!!item.subItems && <i className="gd-icon-navigateright" />}
-            {item.iconRight ? item.iconRight : null}
-        </div>
+                    {!!item.subItems && <i className="gd-icon-navigateright" />}
+                    {item.iconRight ? item.iconRight : null}
+                </div>
+            }
+            content={item.tooltip}
+            disabled={!item.tooltip}
+            optimalPlacement
+            triggerBy={["hover"]}
+            arrowPlacement={"left"}
+            width={item.tooltipWidth}
+        />
     );
 }

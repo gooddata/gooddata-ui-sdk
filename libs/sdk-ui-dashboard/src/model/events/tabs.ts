@@ -195,6 +195,67 @@ export const isDashboardTabCreated = (event: any): event is DashboardTabCreated 
     event.type === "GDC.DASH/EVT.TAB.CREATED";
 
 /**
+ * Payload of the {@link DashboardTabConvertedFromDefault} event.
+ * @alpha
+ */
+export interface DashboardTabConvertedFromDefaultPayload {
+    /**
+     * Identifier of the newly created tab.
+     */
+    readonly newTabId: string;
+    /**
+     * Index at which the new tab was inserted.
+     */
+    readonly index: number;
+}
+
+/**
+ * This event is emitted when a default dashboard tab is converted to a regular tab.
+ *
+ * @alpha
+ */
+export interface DashboardTabConvertedFromDefault extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
+    readonly payload: DashboardTabConvertedFromDefaultPayload;
+}
+
+/**
+ * Creates the DashboardTabConvertedFromDefault event.
+ *
+ * @param ctx - dashboard context
+ * @param newTabId - identifier of the newly created tab
+ * @param index - index at which the new tab was inserted
+ * @param correlationId - correlation id to use for this event
+ * @returns dashboard tab converted from default event
+ *
+ * @alpha
+ */
+export function dashboardTabConvertedFromDefault(
+    ctx: DashboardContext,
+    newTabId: string,
+    index: number,
+    correlationId?: string,
+): DashboardTabConvertedFromDefault {
+    return {
+        type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT",
+        ctx,
+        correlationId,
+        payload: { newTabId, index },
+    };
+}
+
+/**
+ * Type guard that checks if an event is a DashboardTabConvertedFromDefault event.
+ *
+ * @param event - event to check
+ * @returns true if the event is a DashboardTabConvertedFromDefault event
+ *
+ * @alpha
+ */
+export const isDashboardTabConvertedFromDefault = (event: any): event is DashboardTabConvertedFromDefault =>
+    event.type === "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
+
+/**
  * Payload of the {@link DashboardTabDeleted} event.
  * @alpha
  */

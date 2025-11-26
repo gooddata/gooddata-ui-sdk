@@ -22,8 +22,10 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import {
+    DEFAULT_TAB_ID,
     TabState,
     cancelRenamingDashboardTab,
+    convertDashboardTabFromDefault,
     createDashboardTab,
     deleteDashboardTab,
     renameDashboardTab,
@@ -66,13 +68,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
     const uiTabs = useMemo<IDashboardUiTab[]>(() => {
         const isOnlyOneTab = tabs.length < 2;
 
-        const mappedTabs =
+        return (
             tabs.map(
                 (tab, index) =>
                     ({
                         id: tab.localIdentifier,
                         label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
                         isRenaming: tab.isRenaming,
+                        variant: isOnlyOneTab ? "placeholder" : "default",
                         actions: isEditMode
                             ? [
                                   {
@@ -147,27 +150,20 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
                                           />
                                       ),
                                       isDestructive: true,
+                                      tooltip: isOnlyOneTab
+                                          ? intl.formatMessage({
+                                                id: "dashboard.tabs.delete.disabled-tooltip",
+                                            })
+                                          : undefined,
+                                      tooltipWidth: 250,
                                       onSelect: () => dispatch(deleteDashboardTab(tab.localIdentifier)),
                                   },
                               ].filter((x) => !!x)
                             : [],
                     }) satisfies IDashboardUiTab,
-            ) ?? [];
-
-        // In edit mode, if tabs feature is enabled but no tabs exist, create a default "Untitled" tab
-        if (isEditMode && enableDashboardTabs && mappedTabs.length === 0) {
-            return [
-                {
-                    id: defaultTabIdRef.current,
-                    label: intl.formatMessage({ id: "dashboard.tabs.default.label" }),
-                    variant: "placeholder",
-                    isRenaming: true,
-                },
-            ];
-        }
-
-        return mappedTabs;
-    }, [tabs, isEditMode, enableDashboardTabs, intl, dispatch]);
+            ) ?? []
+        );
+    }, [tabs, isEditMode, intl, dispatch]);
 
     // Use the default tab ID as activeTabLocalIdentifier if we created a default tab and no activeTabLocalIdentifier is set
     const effectiveActiveTabLocalIdentifier = useMemo(() => {
@@ -215,6 +211,16 @@ export function DashboardTabs({
         [intl],
     );
 
+    const isCreateEnabled = isEditMode;
+    const hasDefaultTab = uiTabs.some((tab) => tab.id === DEFAULT_TAB_ID);
+
+    const handleCreateTab = useCallback(() => {
+        if (hasDefaultTab) {
+            dispatch(convertDashboardTabFromDefault());
+        }
+        dispatch(createDashboardTab());
+    }, [dispatch, hasDefaultTab]);
+
     const shouldHideTabs = useMemo(() => {
         if (!enableDashboardTabs || !uiTabs || activeTabLocalIdentifier === undefined) {
             return true;
@@ -225,8 +231,6 @@ export function DashboardTabs({
     if (shouldHideTabs) {
         return null;
     }
-
-    const isCreateEnabled = isEditMode && !uiTabs.some((tab) => tab.variant === "placeholder");
 
     return (
         <div className={tabsBem.b({ "with-create": isCreateEnabled })}>
@@ -248,7 +252,7 @@ export function DashboardTabs({
                             icon={"plus"}
                             size={"large"}
                             variant={"tertiary"}
-                            onClick={() => dispatch(createDashboardTab())}
+                            onClick={handleCreateTab}
                             accessibilityConfig={{
                                 ariaLabel: intl.formatMessage({
                                     id: "dashboard.tabs.accessibility.add-button-label",
@@ -270,23 +274,18 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
 
     const handleRename = useCallback(
         (newName: string) => {
-            if (tab.variant === "placeholder") {
-                dispatch(createDashboardTab(newName, undefined, false));
-                return;
-            }
-
             dispatch(renameDashboardTab(newName, tab.id));
+
+            if (tab.id === DEFAULT_TAB_ID) {
+                dispatch(convertDashboardTabFromDefault(newName, undefined));
+            }
         },
-        [dispatch, tab.id, tab.variant],
+        [dispatch, tab.id],
     );
 
     const handleCancel = useCallback(() => {
-        if (tab.variant === "placeholder") {
-            return;
-        }
-
         dispatch(cancelRenamingDashboardTab(tab.id));
-    }, [dispatch, tab.id, tab.variant]);
+    }, [dispatch, tab.id]);
 
     const preventPropagateKeydown = useCallback<KeyboardEventHandler>((e) => e.stopPropagation(), []);
 
@@ -301,7 +300,7 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
                     initialName={tab.label}
                     onRename={handleRename}
                     onCancel={handleCancel}
-                    isSubmitOnBlur={tab.variant !== "placeholder"}
+                    isSubmitOnBlur
                 />
             </UiFocusManager>
         </div>

@@ -1,7 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import {
+    IAlertAnomalyDetectionGranularity,
+    IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -10,9 +13,9 @@ import {
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
     IAutomationAlertRelativeCondition,
+    IAutomationAnomalyDetectionCondition,
     IAutomationMetadataObject,
     IAutomationRecipient,
-    IAutomationVisibleFilter,
     IFilter,
     IMeasure,
     IRelativeDateFilter,
@@ -59,6 +62,37 @@ export function transformAlertByMetric(
             c.comparator === AlertMetricComparatorType.PreviousPeriod ||
             c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
     );
+
+    if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure) {
+        const cond = transformToAnomalyDetectionCondition(alert.alert!.condition);
+        const condition = {
+            ...cond,
+            measure: {
+                ...cond.measure,
+                id: measure.measure.measure.localIdentifier,
+                format: getMeasureFormat(measure.measure, measureFormatMap),
+                title: getMeasureTitle(measure.measure),
+            },
+        } as IAutomationAnomalyDetectionCondition;
+
+        const { execution, metadata } = transformAlertExecutionByMetric(
+            metrics,
+            alert,
+            condition,
+            measure,
+            periodMeasure,
+        );
+
+        return {
+            ...alert,
+            alert: {
+                ...alert.alert!,
+                condition,
+                execution,
+            },
+            metadata,
+        };
+    }
 
     if (alert.alert?.condition.type === "relative" && periodMeasure) {
         const cond = transformToRelativeCondition(alert.alert!.condition);
@@ -290,6 +324,35 @@ export function transformAlertByRelativeOperator(
     };
 }
 
+export function transformAlertByAnomalyDetection(
+    metrics: AlertMetric[],
+    alert: IAutomationMetadataObject,
+    measure: AlertMetric,
+): IAutomationMetadataObject {
+    const cond = transformToAnomalyDetectionCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+    } as IAutomationAlertCondition;
+
+    const { execution, metadata } = transformAlertExecutionByMetric(
+        metrics,
+        alert,
+        condition,
+        measure,
+        undefined,
+    );
+
+    return {
+        ...alert,
+        alert: {
+            ...alert.alert!,
+            condition,
+            execution,
+        },
+        metadata,
+    };
+}
+
 /**
  * This function transforms alert by threshold value. It changes threshold in condition.
  * @param alert - alert to transform
@@ -299,6 +362,10 @@ export function transformAlertByValue(
     alert: IAutomationMetadataObject,
     value: number,
 ): IAutomationMetadataObject {
+    if (alert.alert?.condition.type === "anomalyDetection") {
+        // Do nothing, anomaly detection does not have threshold
+        return { ...alert };
+    }
     if (alert.alert?.condition.type === "relative") {
         return {
             ...alert,
@@ -384,7 +451,7 @@ export function transformAlertExecutionByMetric(
             return true;
         }) ?? [];
 
-    if (condition.type === "relative" && periodMeasure) {
+    if ((condition.type === "relative" || condition.type === "anomalyDetection") && periodMeasure) {
         const addedFilters: string[] = [];
 
         // Add filter for period measure only if can be defined
@@ -464,6 +531,15 @@ function transformToComparisonCondition(
         };
     }
 
+    if (condition.type === "anomalyDetection") {
+        return {
+            type: "comparison",
+            operator: COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN,
+            left: condition.measure,
+            right: undefined!,
+        };
+    }
+
     return {
         type: "comparison",
         operator: condition.operator,
@@ -488,11 +564,53 @@ function transformToRelativeCondition(
         };
     }
 
+    if (condition.type === "anomalyDetection") {
+        return {
+            type: "relative",
+            operator: RELATIVE_OPERATORS.RELATIVE_OPERATOR_INCREASE_BY,
+            measure: {
+                operator: ARITHMETIC_OPERATORS.ARITHMETIC_OPERATOR_CHANGE,
+                left: condition.measure,
+                right: undefined!,
+            },
+            threshold: undefined!,
+        };
+    }
+
     return {
         type: "relative",
         operator: condition.operator,
         measure: condition.measure,
         threshold: condition.threshold,
+    };
+}
+
+function transformToAnomalyDetectionCondition(
+    condition: IAutomationAlertCondition,
+): IAutomationAnomalyDetectionCondition {
+    if (condition.type === "comparison") {
+        return {
+            type: "anomalyDetection",
+            measure: condition.left,
+            sensitivity: "MEDIUM",
+            granularity: "WEEK",
+        };
+    }
+
+    if (condition.type === "relative") {
+        return {
+            type: "anomalyDetection",
+            measure: condition.measure.left,
+            sensitivity: "MEDIUM",
+            granularity: "WEEK",
+        };
+    }
+
+    return {
+        type: "anomalyDetection",
+        measure: condition.measure,
+        sensitivity: condition.sensitivity,
+        granularity: condition.granularity,
     };
 }
 
@@ -554,17 +672,42 @@ function transformRelativeCondition(
     };
 }
 
-export function transformAlertByVisibleFilters(
+export function transformAlertBySensitivity(
     alert: IAutomationMetadataObject,
-    visibleFilters: IAutomationVisibleFilter[] | undefined,
+    sensitivity: IAlertAnomalyDetectionSensitivity,
 ): IAutomationMetadataObject {
-    return {
-        ...alert,
-        metadata: {
-            ...alert.metadata,
-            visibleFilters,
-        },
-    };
+    if (alert.alert?.condition.type === "anomalyDetection") {
+        return {
+            ...alert,
+            alert: {
+                ...alert.alert,
+                condition: {
+                    ...alert.alert.condition,
+                    sensitivity,
+                },
+            },
+        };
+    }
+    return alert;
+}
+
+export function transformAlertByGranularity(
+    alert: IAutomationMetadataObject,
+    granularity: IAlertAnomalyDetectionGranularity,
+): IAutomationMetadataObject {
+    if (alert.alert?.condition.type === "anomalyDetection") {
+        return {
+            ...alert,
+            alert: {
+                ...alert.alert,
+                condition: {
+                    ...alert.alert.condition,
+                    granularity,
+                },
+            },
+        };
+    }
+    return alert;
 }
 
 //utils

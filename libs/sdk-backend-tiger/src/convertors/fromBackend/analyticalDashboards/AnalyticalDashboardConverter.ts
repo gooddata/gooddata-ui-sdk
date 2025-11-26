@@ -12,32 +12,20 @@ import {
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
-    JsonApiFilterContextOutWithLinks,
-    isFilterContextData,
 } from "@gooddata/api-client-tiger";
-import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardPlugin,
-    IFilterContext,
-    IListedDashboard,
-    ObjectType,
-    idRef,
-} from "@gooddata/sdk-model";
+import { IDashboard, IDashboardPlugin, IFilterContext, IListedDashboard, idRef } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "../ObjectInheritance.js";
 import { convertUserIdentifier } from "../UsersConverter.js";
 import { getShareStatus } from "../utils.js";
 import {
     convertDashboard as convertDashboardV1,
-    convertFilterContextFilters as convertFilterContextFiltersV1,
     convertFilterContextFromBackend as convertFilterContextFromBackendV1,
 } from "./v1/AnalyticalDashboardConverter.js";
 import {
     convertDashboardPlugin as convertDashboardPluginV2,
     convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
     convertDashboard as convertDashboardV2,
-    convertFilterContextFilters as convertFilterContextFiltersV2,
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
 } from "./v2/AnalyticalDashboardConverter.js";
 
@@ -144,39 +132,5 @@ export function convertDashboardPluginWithLinksFromBackend(
     invariant(false, "Unknown dashboard plugin version");
 }
 
-function convertFilterContextFilters(
-    content: AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
-): FilterContextItem[] {
-    if (AnalyticalDashboardModelV1.isFilterContext(content)) {
-        return convertFilterContextFiltersV1(content);
-    }
-
-    if (AnalyticalDashboardModelV2.isFilterContext(content)) {
-        return convertFilterContextFiltersV2(content);
-    }
-
-    invariant(false, "Unknown filter context version");
-}
-
-export function getFilterContextFromIncluded(
-    included: JsonApiAnalyticalDashboardOutDocument["included"],
-): IFilterContext | undefined {
-    const filterContext = included?.find(isFilterContextData) as JsonApiFilterContextOutWithLinks;
-    if (!filterContext) {
-        return;
-    }
-
-    const { id, type, attributes } = filterContext;
-    const { title = "", description = "", content } = attributes!;
-
-    return {
-        ref: idRef(id, type as ObjectType),
-        identifier: id,
-        uri: filterContext.links!.self,
-        title,
-        description,
-        filters: convertFilterContextFilters(
-            content as AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
-        ),
-    };
-}
+// Re-export common utilities for backward compatibility
+export { getFilterContextFromIncluded, getFilterContextsFromIncluded } from "./common/filterContextUtils.js";

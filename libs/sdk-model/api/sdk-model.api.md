@@ -687,6 +687,12 @@ export interface IAccessControlAware {
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
 // @alpha (undocumented)
+export type IAlertAnomalyDetectionGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
+
+// @alpha (undocumented)
+export type IAlertAnomalyDetectionSensitivity = "LOW" | "MEDIUM" | "HIGH";
+
+// @alpha (undocumented)
 export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO";
 
 // @public
@@ -981,7 +987,7 @@ export interface IAutomationAlertComparisonCondition {
 }
 
 // @alpha (undocumented)
-export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
+export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition | IAutomationAnomalyDetectionCondition;
 
 // @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
@@ -1012,6 +1018,18 @@ export interface IAutomationAlertRelativeCondition {
 export interface IAutomationAlertTrigger {
     mode?: IAlertTriggerMode;
     state: IAlertTriggerState;
+}
+
+// @alpha (undocumented)
+export interface IAutomationAnomalyDetectionCondition {
+    granularity?: IAlertAnomalyDetectionGranularity;
+    measure: {
+        id: string;
+        title?: string;
+        format?: string;
+    };
+    sensitivity: IAlertAnomalyDetectionSensitivity;
+    type: "anomalyDetection";
 }
 
 // @public (undocumented)
@@ -1978,6 +1996,8 @@ export interface IExportDefinitionDashboardContent {
     dashboard: Identifier;
     // (undocumented)
     filters?: FilterContextItem[];
+    // (undocumented)
+    filtersByTab?: Record<string, FilterContextItem[]>;
 }
 
 // @alpha
@@ -3644,6 +3664,7 @@ export interface ISettings {
     enableAlertingRollout?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
+    enableAnomalyDetectionAlert?: boolean;
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
@@ -5344,7 +5365,7 @@ export type WebhookRecipient = {
 export type WeekStart = "Sunday" | "Monday";
 
 // @alpha
-export type WidgetAttachmentType = "CSV" | "XLSX" | "CSV_RAW" | "PNG" | "PPTX" | "PDF" | "HTML";
+export type WidgetAttachmentType = "CSV" | "XLSX" | "CSV_RAW" | "PNG" | "PPTX" | "PDF" | "PDF_TABULAR" | "HTML";
 
 // @alpha
 export function widgetId(widget: IWidget): string;

@@ -21,6 +21,8 @@ export type IUiTabAction<
     label: string;
     isDisabled?: boolean;
     isDestructive?: boolean;
+    tooltip?: ReactNode;
+    tooltipWidth?: number;
     onSelect?: (context: { tab: IUiTab<TTabProps, TTabActionProps> }) => void;
     /**
      * Whether to close the dropdown when the action is selected.

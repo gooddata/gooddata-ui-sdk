@@ -26,10 +26,12 @@ import {
     IKeyDriveAnalysis,
     IMeasure,
     ISortItem,
+    isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IDrillEvent,
+    IHeaderPredicate,
     OnError,
     OnExportReady,
     OnFiredDrillEvent,
@@ -918,9 +920,7 @@ const renderTable = (
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
             drillableItems={
-                props.enableChangeAnalysis
-                    ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                    : undefined
+                props.enableChangeAnalysis ? metrics.filter(Boolean).map(headerPredicate) : undefined
             }
             onDrill={onDrill}
             onError={onError}
@@ -985,6 +985,15 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLDivElement | null
     return {
         x: c.left - a.left,
         y: c.top - a.top,
+    };
+}
+
+function headerPredicate(m: IMeasure): IHeaderPredicate {
+    return (header) => {
+        if (isMeasureDescriptor(header)) {
+            return header.measureHeaderItem.localIdentifier === m.measure.localIdentifier;
+        }
+        return false;
     };
 }
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { EmptyObject } from "@gooddata/util";
+import { EmptyObject, stringUtils } from "@gooddata/util";
 
 import { SELECT_ITEM_ACTION } from "../../hooks/useListWithActionsKeyboardNavigation.js";
 import { ScopedIdStore } from "../../hooks/useScopedId.js";
@@ -45,6 +45,7 @@ export function DefaultUiTabsTab<
             aria-label={isOverflowing ? tab.label : undefined}
             tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
             id={makeId?.({ item: tab, specifier: SELECT_ITEM_ACTION })}
+            data-testid={`s-tab-${stringUtils.simplifyText(tab.label)}`}
         >
             <TabValue tab={tab} isSelected={isSelected} location={"tabs"} />
         </button>

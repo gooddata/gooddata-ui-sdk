@@ -1088,6 +1088,9 @@ export type {
     IAutomationDetails,
     IAutomationVisibleFilter,
     AutomationEvaluationMode,
+    IAlertAnomalyDetectionSensitivity,
+    IAlertAnomalyDetectionGranularity,
+    IAutomationAnomalyDetectionCondition,
 } from "./automations/index.js";
 export {
     isAutomationMetadataObject,

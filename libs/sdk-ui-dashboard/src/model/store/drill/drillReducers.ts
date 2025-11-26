@@ -34,11 +34,11 @@ const crossFilterByWidget: DrillReducer<PayloadAction<CrossFilterByWidgetPayload
 const resetCrossFiltering: DrillReducer<PayloadAction<string | undefined>> = (state, action) => {
     if (action.payload) {
         state.crossFiltering[action.payload] = [];
+    } else {
+        Object.keys(state.crossFiltering).forEach((tabId) => {
+            state.crossFiltering[tabId] = [];
+        });
     }
-
-    Object.keys(state.crossFiltering).forEach((tabId) => {
-        state.crossFiltering[tabId] = [];
-    });
 };
 
 export const drillReducers = {

@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    FiltersByTab,
     IDashboardExportImageOptions,
     IDashboardExportPdfOptions,
     IDashboardExportPresentationOptions,
@@ -83,8 +84,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     public getFilterContextByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
+        tabId?: string,
     ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
-        return this.decorated.getFilterContextByExportId(exportId, type);
+        return this.decorated.getFilterContextByExportId(exportId, type, tabId);
     };
 
     getDashboardReferencedObjects(
@@ -115,26 +117,29 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     exportDashboardToPdf(
         ref: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult> {
-        return this.decorated.exportDashboardToPdf(ref, filters, options);
+        return this.decorated.exportDashboardToPdf(ref, filters, filtersByTab, options);
     }
 
     exportDashboardToPresentation(
         ref: ObjRef,
         format: "PPTX" | "PDF",
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> {
-        return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
+        return this.decorated.exportDashboardToPresentation(ref, format, filters, filtersByTab, options);
     }
 
     exportDashboardToImage(
         ref: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> {
-        return this.decorated.exportDashboardToImage(ref, filters, options);
+        return this.decorated.exportDashboardToImage(ref, filters, filtersByTab, options);
     }
 
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult> {

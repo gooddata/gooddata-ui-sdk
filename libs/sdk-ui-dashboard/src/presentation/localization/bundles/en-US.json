@@ -855,6 +855,10 @@
         "value": "Single Slide (.pdf)",
         "comment": "Attachment format for single slide in scheduled export"
     },
+    "scheduledEmail.attachmentFormat.widget.pdfTabular": {
+        "value": "Formatted data (.pdf)",
+        "comment": "Attachment format for formatted tabular data in PDF format in scheduled export"
+    },
     "scheduledEmail.attachmentFormat.widget.formattedXLSX": {
         "value": "Formatted data (.xlsx)",
         "comment": "Attachment format for formatted data in scheduled export"
@@ -2451,6 +2455,66 @@
         "value": "Difference{spacer}Calculates the net difference between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}Primary - Secondary",
         "comment": "Description and formula for the numeric difference calculation in alert configuration. {spacer} is a placeholder for line breaks."
     },
+    "insightAlert.config.aiOperator.header": {
+        "value": "AI",
+        "comment": "Header label for the AI operators in alert configuration"
+    },
+    "insightAlert.config.aiOperator.header.info": {
+        "value": "All AI operators are based on the AI functions.",
+        "comment": "Header info for the AI operators in alert configuration"
+    },
+    "insightAlert.config.anomalyDetection": {
+        "value": "Anomaly detection",
+        "comment": "Description and formula for the anomaly detection calculation in alert configuration."
+    },
+    "insightAlert.config.sensitivity": {
+        "value": "Sensitivity",
+        "comment": "Sensitivity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.sensitivity.low": {
+        "value": "Low",
+        "comment": "Low sensitivity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.sensitivity.medium": {
+        "value": "Medium",
+        "comment": "Medium sensitivity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.sensitivity.high": {
+        "value": "High",
+        "comment": "High sensitivity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity": {
+        "value": "Aggregate by",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.minute": {
+        "value": "Minutes",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.hour": {
+        "value": "Hours",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.day": {
+        "value": "Days",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.week": {
+        "value": "Weeks",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.month": {
+        "value": "Months",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.quarter": {
+        "value": "Quarters",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.year": {
+        "value": "Years",
+        "comment": "Granularity for anomaly detection in alert configuration."
+    },
     "insightAlert.config.changeOperator.increasesBy": {
         "value": "Increases by",
         "comment": "Alert condition for when a metric's percentage change increases by a specified amount"
@@ -2918,6 +2982,10 @@
     "dashboard.tabs.move.right": {
         "value": "Move right",
         "comment": "Label for the action that moves the tab to the right"
+    },
+    "dashboard.tabs.delete.disabled-tooltip": {
+        "value": "You can’t delete the last tab. Tab navigation won’t be visible in view mode when only one tab remains.",
+        "comment": "The tooltip shown when the user tries to delete the last tab"
     },
     "dashboard.tabs.rename": {
         "value": "Rename",

@@ -664,7 +664,7 @@
                     },
                     "filters": {
                         "type": "array",
-                        "description": "Various filter types to filter execution result.",
+                        "description": "Various filter types to filter execution result. For anomaly detection, exactly one date filter (RelativeDateFilter or AbsoluteDateFilter) is required.",
                         "items": {
                             "$ref": "#/components/schemas/FilterDefinition"
                         }
@@ -699,6 +699,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/RelativeWrapper"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AnomalyDetectionWrapper"
                     }
                 ]
             },
@@ -713,6 +716,35 @@
                         "$ref": "#/components/schemas/Value"
                     }
                 ]
+            },
+            "AnomalyDetection": {
+                "required": ["granularity", "measure"],
+                "type": "object",
+                "properties": {
+                    "measure": {
+                        "$ref": "#/components/schemas/LocalIdentifier"
+                    },
+                    "sensitivity": {
+                        "type": "string",
+                        "description": "Sensitivity level for anomaly detection",
+                        "default": "MEDIUM",
+                        "enum": ["LOW", "MEDIUM", "HIGH"]
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Date granularity for anomaly detection. Only time-based granularities are supported (MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).",
+                        "enum": ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+                    }
+                }
+            },
+            "AnomalyDetectionWrapper": {
+                "required": ["anomaly"],
+                "type": "object",
+                "properties": {
+                    "anomaly": {
+                        "$ref": "#/components/schemas/AnomalyDetection"
+                    }
+                }
             },
             "ArithmeticMeasure": {
                 "required": ["left", "operator", "right"],
@@ -878,6 +910,9 @@
                     },
                     "condition": {
                         "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AnomalyDetectionWrapper"
+                            },
                             {
                                 "$ref": "#/components/schemas/ComparisonWrapper"
                             },

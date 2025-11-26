@@ -215,6 +215,7 @@ export type {
     IDashboardExportTabularOptions,
     IDashboardExportImageOptions,
     IDashboardExportPresentationOptions,
+    FiltersByTab,
 } from "./workspace/dashboards/index.js";
 export type { IWidgetWithLayoutPath, LayoutPath } from "./workspace/dashboards/utils.js";
 export {

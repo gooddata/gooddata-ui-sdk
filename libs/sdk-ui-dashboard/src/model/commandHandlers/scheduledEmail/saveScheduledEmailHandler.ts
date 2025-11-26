@@ -13,13 +13,16 @@ import {
     isObjRef,
 } from "@gooddata/sdk-model";
 
+import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { SaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
+import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
     selectInsightByWidgetRef,
     selectRawExportOverridesForInsightByRef,
 } from "../../store/insights/insightsSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 function saveScheduledEmail(
@@ -55,6 +58,11 @@ export function* saveScheduledEmailHandler(
 
     const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition;
 
+    const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(selectWidgetByRef(ref));
+    const commonDateFilterId: ReturnType<typeof selectAutomationCommonDateFilterId> = yield select(
+        selectAutomationCommonDateFilterId,
+    );
+
     const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
         selectInsightByWidgetRef(ref),
     );
@@ -63,11 +71,24 @@ export function* saveScheduledEmailHandler(
         ? yield select(selectRawExportOverridesForInsightByRef(insightRef(insight)))
         : undefined;
 
-    if (csvRawRequest && widgetId && !preparedExecutionDefinition) {
-        throw new Error("CSV raw widget attachment requires an available execution.");
+    if (csvRawRequest && widgetId) {
+        if (!preparedExecutionDefinition) {
+            throw new Error("CSV raw widget attachment requires an available execution.");
+        }
+        if (!widget) {
+            throw new Error("CSV raw widget attachment requires an available widget.");
+        }
     }
 
-    yield call(saveScheduledEmail, ctx, scheduledEmail, preparedExecutionDefinition, overrides);
+    const preparedExecutionDefinitionWithFilters = prepareCsvRawExecutionDefinition(
+        preparedExecutionDefinition,
+        csvRawRequest,
+        insight,
+        widget,
+        commonDateFilterId,
+    );
+
+    yield call(saveScheduledEmail, ctx, scheduledEmail, preparedExecutionDefinitionWithFilters, overrides);
 
     return scheduledEmailSaved(ctx, cmd.correlationId);
 }

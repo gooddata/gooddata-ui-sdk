@@ -8,10 +8,10 @@ import {
     AutomationAutomationSlidesExport,
     AutomationAutomationTabularExport,
     AutomationAutomationVisualExport,
-    JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-    JsonApiAutomationOutAttributesRawExportsInner,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
+    JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+    JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -59,11 +59,29 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-): IExportDefinitionDashboardRequestPayload => {
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
-        requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },
+        requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride, widgetIds },
     } = exportRequest;
+
+    if (widgetIds && widgetIds.length > 0) {
+        const widgetId = widgetIds[0];
+
+        return {
+            type: "visualizationObject",
+            fileName,
+            format: format === "PDF" ? "PDF_TABULAR" : format,
+            settings,
+            content: {
+                dashboard: dashboardId,
+                visualizationObject: widgetId ?? "",
+                widget: widgetId,
+                filters: dashboardFiltersOverride?.map(cloneWithSanitizedIds) ?? undefined,
+            },
+        };
+    }
+
     return {
         type: "dashboard",
         fileName,
@@ -101,7 +119,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },

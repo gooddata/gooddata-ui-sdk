@@ -166,12 +166,16 @@ export function* initializeAutomationsHandler(
             const commonDateFilterLocalId =
                 commonDateFilter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
 
+            const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+                selectActiveTabLocalIdentifier,
+            );
+
             const {
                 targetAlertFilters,
                 targetExportDefinition,
                 targetExportDefinitionFilters,
                 targetExportVisibleFilters,
-            } = extractRelevantFilters(targetAutomation, insight);
+            } = extractRelevantFilters(targetAutomation, insight, activeTabLocalIdentifier);
 
             // Set filters to the dashboard based on alert execution filters
             if (targetWidget && targetAlertFilters) {
@@ -268,6 +272,7 @@ export function* initializeAutomationsHandler(
 function extractRelevantFilters(
     targetAutomation: IAutomationMetadataObject | undefined,
     insight: IInsight | undefined,
+    activeTabLocalIdentifier?: string,
 ) {
     //alert, widget
     const targetAlertFilters = targetAutomation?.alert?.execution?.filters;
@@ -281,6 +286,7 @@ function extractRelevantFilters(
     const targetExportDefinition = targetAutomation?.exportDefinitions?.[0];
     const targetExportDefinitionFilters = extractExportDefinitionFilters(
         targetExportDefinition?.requestPayload,
+        activeTabLocalIdentifier,
     );
     const targetExportVisibleFilters = targetAutomation?.metadata?.visibleFilters;
 
@@ -294,8 +300,15 @@ function extractRelevantFilters(
 
 function extractExportDefinitionFilters(
     content?: IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload,
+    activeTabLocalIdentifier?: string,
 ): FilterContextItem[] | undefined {
     if (isExportDefinitionDashboardRequestPayload(content)) {
+        // Check if per-tab filters are provided and use the active tab's filters
+        if (content.content.filtersByTab && activeTabLocalIdentifier) {
+            const tabFilters = content.content.filtersByTab[activeTabLocalIdentifier];
+            return tabFilters ? compact(tabFilters) : undefined;
+        }
+
         // The filters in dashboard case may be undefined or an array depending
         // on whether they should override filter context or use live filter context.
         return content.content.filters ? compact(content.content.filters) : undefined;

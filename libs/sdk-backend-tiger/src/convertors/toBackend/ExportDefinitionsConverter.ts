@@ -302,6 +302,47 @@ export const convertToTabularExportRequest = (
     throw new UnexpectedError("Export definition must be CSV or XLSX tabular");
 };
 
+export const convertVisualizationToDashboardTabularExportRequest = (
+    exportRequest: IExportDefinitionVisualizationObjectRequestPayload,
+): DashboardTabularExportRequestV2 => {
+    const { dashboard, widget, filters } = exportRequest.content;
+
+    if (!dashboard || !widget) {
+        throw new UnexpectedError(
+            "XLSX/PDF_TABULAR export definition must contain dashboard and widget identifiers",
+        );
+    }
+
+    if (exportRequest.format !== "XLSX" && exportRequest.format !== "PDF_TABULAR") {
+        throw new UnexpectedError("Only XLSX and PDF_TABULAR formats are supported for tabular exports");
+    }
+
+    const { mergeHeaders, exportInfo } = exportRequest.settings ?? {};
+
+    // Hardcoded settings for PDF_TABULAR for now
+    const settings =
+        exportRequest.format === "PDF_TABULAR"
+            ? {
+                  mergeHeaders: true,
+                  exportInfo: true,
+                  pageSize: "A4" as const,
+                  pageOrientation: "PORTRAIT" as const,
+              }
+            : {
+                  ...(mergeHeaders ? { mergeHeaders } : {}),
+                  ...(exportInfo ? { exportInfo } : {}),
+              };
+
+    return {
+        fileName: exportRequest.fileName,
+        format: exportRequest.format === "PDF_TABULAR" ? "PDF" : "XLSX",
+        dashboardId: dashboard,
+        widgetIds: [widget],
+        dashboardFiltersOverride: filters?.map(cloneWithSanitizedIds),
+        settings,
+    };
+};
+
 export const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
     enableAutomationFilterContext: boolean,

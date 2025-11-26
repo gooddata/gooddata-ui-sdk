@@ -3,7 +3,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { FiltersByTab, IExportResult } from "@gooddata/sdk-backend-spi";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { ExportSlidesInsightWidget } from "../../commands/insight.js";
@@ -11,7 +11,10 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectFiltersByTab,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -28,6 +31,14 @@ export function* exportSlidesInsightWidgetHandler(
     }
     const filterContextFilters = yield select(selectFilterContextFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+    const effectiveFiltersByTab: FiltersByTab = Object.entries(filtersByTab).reduce(
+        (acc, [tabId, filters]) => {
+            acc[tabId] = ensureAllTimeFilterForExport(filters);
+            return acc;
+        },
+        {} as FiltersByTab,
+    );
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
@@ -40,6 +51,7 @@ export function* exportSlidesInsightWidgetHandler(
         dashboardRef,
         exportType === "pptx" ? "PPTX" : "PDF",
         effectiveFilters,
+        effectiveFiltersByTab,
         {
             widgetIds: [ref],
             filename,

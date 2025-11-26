@@ -36,6 +36,7 @@ import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOpera
 //
 import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
+import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
 import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
 import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
@@ -43,10 +44,11 @@ import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js"
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
-import { isChangeOrDifferenceOperator } from "./utils/guards.js";
+import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
 import {
     getWidgetTitle,
+    selectEnableAnomalyDetectionAlert,
     selectEnableAutomationManagement,
     selectEnableDashboardTabs,
     selectEntitlementMaxAutomationRecipients,
@@ -68,6 +70,7 @@ import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDial
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { IAlertingDialogProps } from "../types.js";
+import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
@@ -104,6 +107,7 @@ export function AlertingDialogRenderer({
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -136,6 +140,7 @@ export function AlertingDialogRenderer({
         onAttributeChange,
         onComparisonOperatorChange,
         onRelativeOperatorChange,
+        onAnomalyDetectionChange,
         onChange,
         onBlur,
         onComparisonTypeChange,
@@ -152,8 +157,13 @@ export function AlertingDialogRenderer({
         isResultLoading,
         selectedComparisonOperator,
         selectedRelativeOperator,
+        selectedAiOperator,
         value,
         selectedComparator,
+        selectedSensitivity,
+        onSensitivityChange,
+        selectedGranularity,
+        onGranularityChange,
         canManageComparison,
         separators,
         defaultUser,
@@ -502,29 +512,34 @@ export function AlertingDialogRenderer({
                                                 <AlertComparisonOperatorSelect
                                                     id="alert.condition"
                                                     measure={selectedMeasure}
+                                                    enableAnomalyDetectionAlert={enableAnomalyDetectionAlert}
                                                     selectedComparisonOperator={selectedComparisonOperator}
                                                     selectedRelativeOperator={selectedRelativeOperator}
+                                                    selectedAiOperator={selectedAiOperator}
+                                                    onAnomalyDetectionChange={onAnomalyDetectionChange}
                                                     onComparisonOperatorChange={onComparisonOperatorChange}
                                                     onRelativeOperatorChange={onRelativeOperatorChange}
                                                     overlayPositionType={OVERLAY_POSITION_TYPE}
                                                     closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                                 />
                                             </FormField>
-                                            <FormField
-                                                label={
-                                                    <FormattedMessage id="insightAlert.config.threshold" />
-                                                }
-                                                htmlFor="alert.value"
-                                            >
-                                                <AlertThresholdInput
-                                                    id="alert.value"
-                                                    value={value}
-                                                    onChange={onChange}
-                                                    onBlur={onBlur}
-                                                    suffix={getValueSuffix(editedAutomation?.alert)}
-                                                    errorMessage={thresholdErrorMessage}
-                                                />
-                                            </FormField>
+                                            {!isAnomalyDetection(editedAutomation?.alert) && (
+                                                <FormField
+                                                    label={
+                                                        <FormattedMessage id="insightAlert.config.threshold" />
+                                                    }
+                                                    htmlFor="alert.value"
+                                                >
+                                                    <AlertThresholdInput
+                                                        id="alert.value"
+                                                        value={value}
+                                                        onChange={onChange}
+                                                        onBlur={onBlur}
+                                                        suffix={getValueSuffix(editedAutomation?.alert)}
+                                                        errorMessage={thresholdErrorMessage}
+                                                    />
+                                                </FormField>
+                                            )}
                                             {isChangeOrDifferenceOperator(editedAutomation?.alert) && (
                                                 <FormField
                                                     label={
@@ -549,6 +564,38 @@ export function AlertingDialogRenderer({
                                                         closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                                     />
                                                 </FormField>
+                                            )}
+                                            {isAnomalyDetection(editedAutomation?.alert) && (
+                                                <>
+                                                    <FormField
+                                                        label={
+                                                            <FormattedMessage id="insightAlert.config.sensitivity" />
+                                                        }
+                                                        htmlFor="alert.sensitivity"
+                                                    >
+                                                        <AlertSensitivitySelect
+                                                            id="alert.sensitivity"
+                                                            selectedSensitivity={selectedSensitivity}
+                                                            onSensitivityChange={onSensitivityChange}
+                                                            overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                                        />
+                                                    </FormField>
+                                                    <FormField
+                                                        label={
+                                                            <FormattedMessage id="insightAlert.config.granularity" />
+                                                        }
+                                                        htmlFor="alert.granularity"
+                                                    >
+                                                        <AlertGranularitySelect
+                                                            id="alert.granularity"
+                                                            selectedGranularity={selectedGranularity}
+                                                            onGranularityChange={onGranularityChange}
+                                                            overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                                        />
+                                                    </FormField>
+                                                </>
                                             )}
                                         </FormFieldGroup>
                                         <ContentDivider className="gd-divider-with-margin" />

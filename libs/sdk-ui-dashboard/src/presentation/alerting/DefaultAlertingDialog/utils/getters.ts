@@ -1,10 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
     DateAttributeGranularity,
+    IAlertAnomalyDetectionGranularity,
+    IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -32,7 +35,12 @@ import {
     measureIdentifier,
     measureTitle,
 } from "@gooddata/sdk-model";
-import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "@gooddata/sdk-ui-ext";
+import {
+    AI_OPERATOR,
+    AI_OPERATORS,
+    getComparisonOperatorTitle,
+    getRelativeOperatorTitle,
+} from "@gooddata/sdk-ui-ext";
 
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../types.js";
@@ -124,6 +132,9 @@ export function getValueSuffix(alert?: IAutomationAlert): string | undefined {
  * @internal
  */
 export function getAlertThreshold(alert?: IAutomationAlert): number | undefined {
+    if (alert?.condition?.type === "anomalyDetection") {
+        return undefined;
+    }
     if (alert?.condition?.type === "relative") {
         return alert.condition.threshold;
     }
@@ -135,6 +146,9 @@ export function getAlertThreshold(alert?: IAutomationAlert): number | undefined 
  */
 export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAlert): AlertMetric | undefined {
     const condition = alert?.condition;
+    if (condition?.type === "anomalyDetection") {
+        return measures.find((m) => m.measure.measure.localIdentifier === condition.measure.id);
+    }
     if (condition?.type === "relative") {
         return (
             measures.find((m) => m.measure.measure.localIdentifier === condition.measure.left.id) ??
@@ -149,6 +163,9 @@ export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAler
  */
 export function getAlertMeasureFormat(alert?: IAutomationAlert): string | undefined {
     const condition = alert?.condition;
+    if (condition?.type === "anomalyDetection") {
+        return condition.measure.format ?? DEFAULT_MEASURE_FORMAT;
+    }
     if (condition?.type === "relative") {
         return condition.measure.left.format ?? condition.measure.right.format ?? DEFAULT_MEASURE_FORMAT;
     }
@@ -229,6 +246,38 @@ export function getAlertRelativeOperator(
 ): [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined {
     if (alert?.condition.type === "relative") {
         return [alert.condition.operator, alert.condition.measure.operator];
+    }
+    return undefined;
+}
+
+/**
+ * @internal
+ */
+export function getAlertAiOperator(
+    alert?: IAutomationAlert,
+): `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}` | undefined {
+    if (alert?.condition.type === "anomalyDetection") {
+        return `${AI_OPERATOR}.${AI_OPERATORS.ANOMALY_DETECTION}`;
+    }
+    return undefined;
+}
+
+/**
+ * @internal
+ */
+export function getAlertSensitivity(alert?: IAutomationAlert): IAlertAnomalyDetectionSensitivity | undefined {
+    if (alert?.condition.type === "anomalyDetection") {
+        return alert.condition.sensitivity;
+    }
+    return undefined;
+}
+
+/**
+ * @internal
+ */
+export function getAlertGranularity(alert?: IAutomationAlert): IAlertAnomalyDetectionGranularity | undefined {
+    if (alert?.condition.type === "anomalyDetection") {
+        return alert.condition.granularity;
     }
     return undefined;
 }

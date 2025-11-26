@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IAutomationAlert, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { ARITHMETIC_OPERATORS } from "@gooddata/sdk-ui-ext";
 
@@ -25,6 +26,13 @@ export function isDifferenceOperator(alert?: IAutomationAlert): boolean {
 /**
  * @internal
  */
+export function isAnomalyDetection(alert?: IAutomationAlert): boolean {
+    return alert?.condition?.type === "anomalyDetection";
+}
+
+/**
+ * @internal
+ */
 export function isChangeOrDifferenceOperator(alert?: IAutomationAlert): boolean {
     return isChangeOperator(alert) || isDifferenceOperator(alert);
 }
@@ -36,7 +44,13 @@ export function isAlertValueDefined(alert?: IAutomationAlert): boolean {
     if (alert?.condition?.type === "relative") {
         return typeof alert.condition.threshold !== "undefined";
     }
-    return typeof alert?.condition?.right !== "undefined";
+    if (alert?.condition?.type === "comparison") {
+        return typeof alert.condition.right !== "undefined";
+    }
+    return (
+        typeof alert?.condition?.sensitivity !== "undefined" &&
+        typeof alert?.condition?.granularity !== "undefined"
+    );
 }
 
 /**

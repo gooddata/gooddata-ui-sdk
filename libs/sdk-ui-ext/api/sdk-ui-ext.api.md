@@ -83,6 +83,14 @@ export const AddWorkspaceToSubjects: {
 };
 
 // @internal (undocumented)
+export const AI_OPERATOR = "AI";
+
+// @internal (undocumented)
+export const AI_OPERATORS: {
+    readonly ANOMALY_DETECTION: "ANOMALY_DETECTION";
+};
+
+// @internal (undocumented)
 export const ARITHMETIC_OPERATORS: {
     readonly ARITHMETIC_OPERATOR_DIFFERENCE: "DIFFERENCE";
     readonly ARITHMETIC_OPERATOR_CHANGE: "CHANGE";

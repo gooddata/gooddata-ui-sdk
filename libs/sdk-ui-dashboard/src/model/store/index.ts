@@ -108,6 +108,7 @@ export {
     selectEnableDashboardTabs,
     selectEnablePreserveFilterSelectionDuringInit,
     selectExportResultPollingTimeout,
+    selectEnableAnomalyDetectionAlert,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -156,6 +157,7 @@ export {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
     selectFilterContextFilters,
+    selectFiltersByTab,
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextAttributeFilters,
@@ -275,6 +277,7 @@ export {
     selectEffectiveAttributeFiltersModeMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
 } from "./tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+export { DEFAULT_TAB_ID } from "./tabs/tabsState.js";
 export type { TabsState, TabState } from "./tabs/tabsState.js";
 export type { DateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { AttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";

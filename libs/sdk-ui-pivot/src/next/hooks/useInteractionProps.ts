@@ -112,10 +112,13 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 intersection: createDrillIntersection(colDef as AgGridColumnDef, data),
             };
 
+            const cord = getChartCoordinates(event);
+
             // Create drill event with actual dataView from context
             const drillEvent: IDrillEvent = {
                 dataView: currentDataView.dataView,
                 drillContext,
+                ...cord,
             };
 
             if (onDrill(drillEvent)) {
@@ -371,4 +374,32 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
         },
         [onCellClicked, onCellKeyDown, onCellSelectionChanged, onCellMouseDown, onCellMouseOver],
     );
+}
+
+function getChartCoordinates(
+    event:
+        | CellClickedEvent<AgGridRowData, string | null, any>
+        | CellKeyDownEvent<AgGridRowData, string | null, any>,
+) {
+    const id = event.api.getGridId();
+    const found = event.eventPath?.find((x) => {
+        return (x as HTMLElement).getAttribute("grid-id") === id;
+    }) as HTMLElement | undefined;
+    const boxParent = found?.getBoundingClientRect();
+    const boxCell = (event.event?.target as HTMLElement | undefined)?.getBoundingClientRect();
+
+    if (!boxParent || !boxCell) {
+        return {
+            chartX: undefined,
+            chartY: undefined,
+        };
+    }
+
+    const chartX = boxCell.x + boxCell.width / 2 - boxParent.x;
+    const chartY = boxCell.y + boxCell.height / 2 - boxParent.y;
+
+    return {
+        chartX,
+        chartY,
+    };
 }

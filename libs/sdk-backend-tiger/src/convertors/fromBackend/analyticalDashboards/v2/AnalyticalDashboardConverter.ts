@@ -10,9 +10,7 @@ import {
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
-    JsonApiFilterContextOutWithLinks,
     isDataSetItem,
-    isFilterContextData,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -38,6 +36,7 @@ import {
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 
+import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
@@ -45,6 +44,7 @@ import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
+import { getFilterContextsFromIncluded } from "../common/filterContextUtils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
@@ -174,8 +174,10 @@ function convertDashboardTabContent(
 function convertDashboardTab(
     tab: AnalyticalDashboardModelV2.IDashboardTab,
     filterContextsList: IFilterContext[],
+    filterContextOverride?: IFilterContext,
 ): IDashboardTab {
-    const filterContext = getTabFilterContext(tab, filterContextsList);
+    // Provided filter context override is used for all tabs - it is used for export and export is done for single tab only
+    const filterContext = filterContextOverride || getTabFilterContext(tab, filterContextsList);
     return {
         ...convertDashboardTabContent(tab, filterContext),
     };
@@ -183,28 +185,11 @@ function convertDashboardTab(
 
 function getConvertedAnalyticalDashboardContent(
     analyticalDashboard: AnalyticalDashboardModelV2.IAnalyticalDashboard,
-    included?: JsonApiAnalyticalDashboardOutIncludes[],
+    filterContextsList: IFilterContext[],
+    filterContextOverride?: IFilterContext,
 ): IAnalyticalDashboardContent {
-    const filterContextsList: IFilterContext[] = [];
-    if (included) {
-        const filterContexts = included.filter(isFilterContextData) as JsonApiFilterContextOutWithLinks[];
-        filterContexts.forEach((fc) => {
-            const { id, type, attributes } = fc;
-            const { title = "", description = "", content } = attributes!;
-            const filters = convertFilterContextFilters(content as AnalyticalDashboardModelV2.IFilterContext);
-            filterContextsList.push({
-                ref: idRef(id, type),
-                identifier: id,
-                uri: fc.links!.self,
-                title,
-                description,
-                filters,
-            });
-        });
-    }
-
     const tabs = analyticalDashboard.tabs?.map((tab) => {
-        return convertDashboardTab(tab, filterContextsList);
+        return convertDashboardTab(tab, filterContextsList, filterContextOverride);
     });
 
     const activeTab =
@@ -241,15 +226,34 @@ function getConvertedAnalyticalDashboardContent(
     };
 }
 
+function getDashboardRootFilterContext(
+    analyticalDashboardContent: AnalyticalDashboardModelV2.IAnalyticalDashboard,
+    filterContextsList: IFilterContext[],
+): IFilterContext | undefined {
+    const sanitizedFilterRef = cloneWithSanitizedIds(analyticalDashboardContent.filterContextRef);
+
+    return filterContextsList.find((fc) => areObjRefsEqual(fc.ref, sanitizedFilterRef));
+}
+
 export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
-    filterContext?: IFilterContext,
+    filterContext?: IFilterContext, // external override
 ): IDashboard {
     const { data, links, included } = analyticalDashboard;
     const { id, attributes, meta = {}, relationships = {} } = data;
     const { createdBy, modifiedBy } = relationships;
     const { title = "", description = "", content, createdAt = "", modifiedAt = "" } = attributes;
     const isPrivate = meta.accessInfo?.private ?? false;
+
+    let filterContextsList: IFilterContext[] = [];
+    if (included) {
+        filterContextsList = getFilterContextsFromIncluded(included);
+    }
+
+    const defaultFilterContext = getDashboardRootFilterContext(
+        content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
+        filterContextsList,
+    );
 
     const {
         dateFilterConfig,
@@ -267,8 +271,13 @@ export function convertDashboard(
         activeTabLocalIdentifier,
     } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
-        included,
+        filterContextsList,
+        filterContext,
     );
+
+    const filterContextOfActiveTab = tabs?.find(
+        (tab) => tab.localIdentifier === activeTabLocalIdentifier,
+    )?.filterContext;
 
     return {
         type: "IDashboard",
@@ -286,7 +295,7 @@ export function convertDashboard(
         shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         tags: attributes.tags ?? [],
-        filterContext,
+        filterContext: filterContext ?? filterContextOfActiveTab ?? defaultFilterContext,
         dateFilterConfig,
         dateFilterConfigs,
         attributeFilterConfigs,
@@ -318,12 +327,6 @@ export function convertFilterContextFromBackend(
         description,
         filters: convertFilterContextFilters(content as AnalyticalDashboardModelV2.IFilterContext),
     };
-}
-
-export function convertFilterContextFilters(
-    content: AnalyticalDashboardModelV2.IFilterContext,
-): FilterContextItem[] {
-    return sanitizeSelectionMode(cloneWithSanitizedIds(content.filters));
 }
 
 export function convertFilterViewContextFilters(

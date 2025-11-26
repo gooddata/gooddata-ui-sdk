@@ -248,6 +248,11 @@ export type ExportDefinitionQuerySortDirection = "asc" | "desc";
 // @alpha
 export type ExportDefinitionQuerySortProperty = "id" | "title";
 
+// @alpha
+export type FiltersByTab = {
+    [tabId: string]: FilterContextItem[];
+};
+
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
@@ -630,6 +635,7 @@ export interface IDashboardExportRawOptions {
 // @alpha
 export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
+    dashboardTabsFiltersOverrides?: FiltersByTab;
     exportInfo?: boolean;
     format?: "XLSX" | "PDF";
     mergeHeaders?: boolean;
@@ -1048,6 +1054,7 @@ export interface IGetAutomationsQueryOptions {
 // @alpha
 export interface IGetDashboardOptions {
     exportId?: string;
+    exportTabId?: string;
     exportType?: "visual" | "slides";
     includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
@@ -1789,9 +1796,9 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides, options?: IDashboardExportRawOptions): Promise<IExportResult>;
-    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportPdfOptions): Promise<IExportResult>;
-    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
+    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportImageOptions): Promise<IExportResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportPdfOptions): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
@@ -1803,7 +1810,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardsQuery(): IDashboardsQuery;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined): Promise<{
+    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined, tabId?: string): Promise<{
         filterContext?: IFilterContext;
         title?: string;
         hideWidgetTitles?: boolean;
