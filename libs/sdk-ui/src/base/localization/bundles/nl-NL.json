@@ -26,7 +26,6 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Max",
     "visualizations.totals.dropdown.title.nat": "Groot (Totaal)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Oprolaggregatie (totaal) is niet beschikbaar als u de visualisatie filtert op metrische waarde. Om Oprol(Totaal) te gebruiken, verwijdert u alle metrische waardefilters uit de filterbalk.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Oprolaggregatie (totaal) is niet beschikbaar als u de visualisatie filtert op ranking filter. Als u Oprol(Totaal) wilt gebruiken, verwijdert u de rangschikkingsfilter uit de filterbalk.",
     "visualizations.totals.dropdown.title.med": "Mediaan",
     "visualizations.headline.tertiary.title": "Versus",
@@ -290,7 +289,7 @@
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
     "attributesDropdown.attributeNameWithData": "met gegevens van",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kan niet worden gefilterd op <strong>{parentTitle}</strong>. Er is geen verbinding tussen de filterattributen in het gegevensmodel.",
-    "attributesDropdown.details.type": "Attributen",
+    "attributesDropdown.details.type": "Attribuut",
     "attributesDropdown.details.dataset": "Dataset",
     "attributesDropdown.relevantValues": "Alleen relevante waarden.{nbsp}",
     "attributesDropdown.relevantValues.tooltip.parentFilters": "Beschikbare waarden voor <strong>{child}</strong> worden gefilterd op geselecteerde <strong>{parents}</strong>.",
@@ -800,5 +799,9 @@
     "table.header.menu.ariaLabel": "Acties",
     "gs.header.mainMenu.ariaLabel": "Hoofdmenu",
     "tabs.all": "Alle",
-    "tabs.showAllTabs": "Alle tabbladen weergeven"
+    "tabs.showAllTabs": "Alle tabbladen weergeven",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Oprolaggregatie (totaal) is niet beschikbaar als u de visualisatie filtert op metrische waarde. Om Oprol(Totaal) te gebruiken, verwijdert u alle metrische waardefilters uit de filterbalk.",
+    "shareDialog.share.link.helperTextWithTabs": "De link geeft de huidige filters op het actieve tabblad weer. Alleen toegankelijk voor gebruikers met dashboardtoegang.",
+    "table.bulkActions.selectAll": "Selecteer alles",
+    "tabs.actions": "Acties voor het huidige tabblad"
 }

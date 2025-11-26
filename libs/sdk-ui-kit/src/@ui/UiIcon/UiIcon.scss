@@ -36,6 +36,12 @@
     path {
         transition: var(--gd-transition-all);
     }
+
+    &--disableAnimation {
+        path {
+            transition: none;
+        }
+    }
 }
 
 .gd-ui-kit-icon-background {

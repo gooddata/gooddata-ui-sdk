@@ -40,11 +40,14 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     display: flex;
     background-color: variables.$gd-dashboards-filterBar-backgroundColor;
 
+    & .gd-ui-kit-tabs__container {
+        padding: 0 var(--gd-spacing-5px);
+    }
+
     &__list {
         flex-grow: 1;
         flex-shrink: 1;
         min-width: 0;
-        padding: 0 var(--gd-spacing-5px);
     }
 
     &__add-wrapper {
@@ -54,13 +57,24 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         border-bottom: 1px solid var(--gd-palette-complementary-3);
         display: flex;
         align-items: center;
-        padding-left: var(--gd-spacing-10px);
         padding-right: var(--gd-spacing-5px);
     }
 
     &__add {
-        padding-left: var(--gd-spacing-10px);
-        border-left: 1px solid var(--gd-palette-complementary-3);
+        position: relative;
+        padding-left: var(--gd-spacing-5px);
+
+        // Left side separator
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 1px;
+            height: 20px;
+            background-color: var(--gd-palette-complementary-3);
+            transform: translateY(-50%);
+        }
     }
 
     &--with-create {
@@ -73,8 +87,30 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
+    &__rename-wrapper {
+        position: relative;
+    }
+
+    // Provides sizing for the rename input
+    &__rename-ghost-value {
+        visibility: hidden;
+        min-width: 30px;
+    }
+
+    // Rename input wrapper
+    &__rename-value {
+        position: absolute;
+        inset: 0;
+    }
+
+    // Rename input itself
     &__rename-input {
-        width: 120px;
+        padding: 0;
+        border: none;
+        width: 100%;
+        outline: 1px solid var(--gd-palette-complementary-3);
+        outline-offset: var(--gd-spacing-3px);
+        font-weight: 700;
     }
 }
 

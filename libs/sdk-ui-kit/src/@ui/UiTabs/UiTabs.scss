@@ -44,11 +44,22 @@
     }
 
     &__dropdown-wrapper {
+        position: relative;
         display: flex;
         align-self: stretch;
         flex-shrink: 0;
-        border-left: 1px solid var(--gd-palette-complementary-3);
         margin-right: calc(-1 * var(--gd-spacing-5px));
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 20px;
+            content: "";
+            background-color: var(--gd-palette-complementary-3);
+        }
     }
 
     &__dropdown {
@@ -75,6 +86,7 @@
 
     &__dropdown .gd-ui-kit-icon-button {
         width: 45px;
+        margin-right: var(--gd-spacing-5px);
     }
 
     &__tab-wrapper {
@@ -96,6 +108,24 @@
         &--variant-placeholder#{&}--selected {
             border-bottom: 3px solid var(--gd-palette-complementary-3);
         }
+    }
+
+    &__tab-scroll-target {
+        position: absolute;
+        left: calc(-1 * var(--scroll-target-margin));
+        right: calc(-1 * var(--scroll-target-margin));
+        top: 0;
+        bottom: 0;
+        content: "";
+        pointer-events: none;
+    }
+
+    &__tab-wrapper:first-of-type #{$root}__tab-scroll-target {
+        left: 0;
+    }
+
+    &__tab-wrapper:last-of-type #{$root}__tab-scroll-target {
+        right: 0;
     }
 
     &__item {
@@ -154,13 +184,12 @@
         opacity: 0;
         transition: opacity 0.2s;
         position: absolute;
-        top: 50%;
+        top: calc(50% + 1px);
         right: 0;
         transform: translateY(-50%);
 
-        & .gd-ui-kit-icon-button {
-            align-items: center;
-            justify-items: end;
+        &:hover svg {
+            fill: var(--gd-palette-primary-base);
         }
     }
 
@@ -175,6 +204,10 @@
         flex-shrink: 0;
         opacity: 0;
         transition: opacity 0.2s;
+
+        &:hover svg {
+            fill: var(--gd-palette-primary-base);
+        }
     }
 
     &__tab-list {
@@ -226,6 +259,8 @@
 
     &--size {
         &-large {
+            --scroll-target-margin: 50px;
+
             #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-L, 56px);
                 padding: var(--gd-spacing-16px) var(--gd-spacing-20px) var(--gd-spacing-14px)
@@ -238,6 +273,8 @@
         }
 
         &-medium {
+            --scroll-target-margin: 30px;
+
             #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-M, 27px);
                 padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)
@@ -250,6 +287,8 @@
         }
 
         &-small {
+            --scroll-target-margin: 10px;
+
             #{$root}__tab-wrapper {
                 height: var(--gd-tabs-height-S, 23px);
                 padding: var(--gd-spacing-3px) var(--gd-spacing-6px) var(--gd-spacing-3px)

@@ -48,6 +48,11 @@ export interface UiPopoverProps {
      * default is check if active element is exactly focused element.
      */
     focusCheckFn?: (element: HTMLElement) => boolean;
+    /**
+     * Enable focus trap to prevent tabbing out of the popover
+     * When true, uses UiFocusManager's focus trap instead of tabOutHandler
+     */
+    enableFocusTrap?: boolean;
     onOpen?: () => void;
     onClose?: () => void;
 }
@@ -71,6 +76,7 @@ export function UiPopover({
     triggerBy = ["click"],
     returnFocusAfterClose = true,
     focusCheckFn = defaultFocusCheckFn,
+    enableFocusTrap = false,
     onOpen,
     onClose,
 }: UiPopoverProps) {
@@ -104,15 +110,19 @@ export function UiPopover({
                 }
                 return (
                     <UiFocusManager
-                        enableFocusTrap={false}
+                        enableFocusTrap={enableFocusTrap}
                         enableAutofocus={initialFocus ? { initialFocus } : true}
                         enableReturnFocusOnUnmount={
                             returnFocusAfterClose ? { returnFocusTo: returnFocus } : false
                         }
                         focusCheckFn={focusCheckFn}
-                        tabOutHandler={() => {
-                            onClose();
-                        }}
+                        tabOutHandler={
+                            enableFocusTrap
+                                ? undefined
+                                : () => {
+                                      onClose();
+                                  }
+                        }
                     >
                         <div
                             id={id}

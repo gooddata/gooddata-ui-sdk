@@ -36,15 +36,17 @@ const allSizes = propCombination("size", ["large", "medium", "small"]);
 
 function UiTabsTest({ showCode }: { showCode?: boolean }) {
     return (
-        <div className="screenshot-target">
-            <ComponentTable
-                rowsBy={[allSizes]}
-                Component={UiTabs}
-                codeSnippet={showCode ? "UiTabs" : undefined}
-                align="flex-start"
-                cellWidth={400}
-            />
-        </div>
+        <IntlWrapper locale="en-US">
+            <div className="screenshot-target">
+                <ComponentTable
+                    rowsBy={[allSizes]}
+                    Component={UiTabs}
+                    codeSnippet={showCode ? "UiTabs" : undefined}
+                    align="flex-start"
+                    cellWidth={400}
+                />
+            </div>
+        </IntlWrapper>
     );
 }
 

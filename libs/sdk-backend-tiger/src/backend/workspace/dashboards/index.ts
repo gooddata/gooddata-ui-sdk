@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
 import {
+    AnalyticalDashboardModelV2,
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     ExportAFM,
     ExportRawExportRequest,
@@ -1148,12 +1149,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
             const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
+            const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
 
             return this.authCall(async (client) => {
                 if (isDefault) {
                     // this should ideally be handled by the POST call below so all these calls are just
                     // a single transaction and the action itself is more performant on UI
-                    await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                    if (enableDashboardTabs && tabLocalIdentifier) {
+                        await this.unsetDashboardDefaultFilterView(client, dashboardId, tabLocalIdentifier);
+                    } else if (!enableDashboardTabs) {
+                        await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                    }
                 }
                 const profile = await ProfileApi_GetCurrent(client.axios);
                 const result = await FilterViewsApi_CreateEntityFilterViews(
@@ -1230,6 +1236,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
+
         await this.authCall(async (client) => {
             if (isDefault) {
                 // this should ideally be handled by the PATCH call below so all these calls are just
@@ -1237,7 +1246,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 const filterView = await this.getFilterView(client, id);
                 const dashboardId = filterView.data.relationships?.analyticalDashboard?.data?.id;
                 invariant(dashboardId, "Dashboard could not be determined for the filter view.");
-                await this.unsetDashboardDefaultFilterView(client, dashboardId);
+
+                if (enableDashboardTabs) {
+                    // Extract tabLocalIdentifier from filter view content
+                    const content = filterView.data.attributes?.content;
+                    const tabLocalIdentifier = AnalyticalDashboardModelV2.isFilterContextWithTab(content)
+                        ? content.tabLocalIdentifier
+                        : undefined;
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId, tabLocalIdentifier);
+                } else {
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                }
             }
             await this.updateFilterViewDefaultStatus(client, id, isDefault);
         });
@@ -1246,6 +1265,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private unsetDashboardDefaultFilterView = async (
         client: ITigerClientBase,
         dashboardId: string,
+        tabLocalIdentifier?: string,
     ): Promise<void> => {
         const profile = await ProfileApi_GetCurrent(client.axios);
         const defaultFilterViewsForDashboard = await FilterViewsApi_GetAllEntitiesFilterViews(
@@ -1258,10 +1278,20 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 origin: "NATIVE",
             },
         );
+
+        // Filter by tabLocalIdentifier if provided (for per-tab defaults)
+        const defaultFilterViews = tabLocalIdentifier
+            ? defaultFilterViewsForDashboard.data.data.filter((view) => {
+                  const content = view.attributes?.content;
+                  return (
+                      AnalyticalDashboardModelV2.isFilterContextWithTab(content) &&
+                      content.tabLocalIdentifier === tabLocalIdentifier
+                  );
+              })
+            : defaultFilterViewsForDashboard.data.data;
+
         await Promise.all(
-            defaultFilterViewsForDashboard.data.data.map((view) =>
-                this.updateFilterViewDefaultStatus(client, view.id, false),
-            ),
+            defaultFilterViews.map((view) => this.updateFilterViewDefaultStatus(client, view.id, false)),
         );
     };
 

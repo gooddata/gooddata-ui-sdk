@@ -11,7 +11,7 @@
     "gs.date.today": "Heute",
     "gs.date.yesterday": "Gestern",
     "semantic-search.label": "Dashboards oder Visualisierung durchsuchen",
-    "semantic-search.ask.ai.assistant": "KI-Assistent fragen",
+    "semantic-search.ask.ai.assistant": "Fragen Sie den AI-Assistenten",
     "semantic-search.results.count": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}",
     "semantic-search.tree": "Semantischer Suchbaum",
     "semantic-search.tree.history": "Verlauf des semantischen Suchbaums",

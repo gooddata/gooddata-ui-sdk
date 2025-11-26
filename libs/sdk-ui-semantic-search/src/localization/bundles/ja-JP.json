@@ -3,7 +3,7 @@
     "semantic-search.error.text": "私たちはこの問題の解決に取り組んでいます。",
     "semantic-search.no-results": "「{query}」の結果は見つかりませんでした。",
     "semantic-search.placeholder": "ダッシュボードまたはビジュアライゼーションを検索…",
-    "semantic-search.id": "ID",
+    "semantic-search.id": "アイド",
     "semantic-search.tags": "タグ",
     "semantic-search.match": "{score}％マッチ",
     "semantic-search.previous-search": "前の検索: {query}",

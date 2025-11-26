@@ -26,7 +26,6 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Max",
     "visualizations.totals.dropdown.title.nat": "Rollup (Total)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Total) aggregation is not available when filtering the visualisation by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Rollup (Total) aggregation is not available when filtering the visualisation by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
     "visualizations.totals.dropdown.title.med": "Median",
     "visualizations.headline.tertiary.title": "Versus",
@@ -809,5 +808,9 @@
     "table.header.menu.ariaLabel": "Actions",
     "gs.header.mainMenu.ariaLabel": "Main menu",
     "tabs.all": "All",
-    "tabs.showAllTabs": "Display all tabs"
+    "tabs.showAllTabs": "Display all tabs",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Total) aggregation is not available when filtering the visualisation by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
+    "shareDialog.share.link.helperTextWithTabs": "Link reflects current filters on active tab. Only accessible to users with dashboard access",
+    "table.bulkActions.selectAll": "Select all",
+    "tabs.actions": "Actions for the current tab"
 }

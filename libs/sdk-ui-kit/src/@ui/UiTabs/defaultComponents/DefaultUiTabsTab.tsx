@@ -59,8 +59,11 @@ export function DefaultUiTabsTab<
                 focused: !!focusedAction,
                 "actions-open": isActionsOpen,
             })}
-            id={makeId?.({ item: tab, specifier: "container" })}
         >
+            <div
+                className={UiTabsBem.e("tab-scroll-target")}
+                id={makeId?.({ item: tab, specifier: "tab-scroll-target" })}
+            />
             {isOverflowing ? (
                 <UiTooltip
                     key={tab.id}

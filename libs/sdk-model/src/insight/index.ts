@@ -174,6 +174,18 @@ export type IInsightDefinition = {
          * any way.
          */
         properties: VisualizationProperties;
+
+        /**
+         * Additional layers for multi-layer visualizations.
+         *
+         * @remarks
+         * Used by geo charts and other visualizations that support
+         * multiple independent data layers. Each layer has its own
+         * buckets, and optionally filters, sorts, and properties.
+         *
+         * @alpha
+         */
+        layers?: IInsightLayerDefinition[];
     };
 };
 
@@ -267,6 +279,94 @@ export type VisualizationProperties = {
 export interface IColorMappingItem {
     id: string;
     color: IColor;
+}
+
+/**
+ * Defines a single layer in a multi-layer visualization (e.g., geo charts).
+ *
+ * @remarks
+ * Each layer has its own buckets, filters, sorts, and properties,
+ * allowing independent data configuration per layer.
+ *
+ * @alpha
+ */
+export interface IInsightLayerDefinition {
+    /**
+     * Unique identifier for this layer
+     */
+    id: string;
+
+    /**
+     * Layer visualization type (e.g., "pushpin", "area")
+     *
+     * @remarks
+     * This determines how the layer data should be visualized.
+     * For geo charts: "pushpin" for point-based layers, "area" for polygon-based layers.
+     */
+    type: string;
+
+    /**
+     * Optional human-readable name for the layer
+     */
+    name?: string;
+
+    /**
+     * Buckets containing attributes/measures for this layer
+     */
+    buckets: IBucket[];
+
+    /**
+     * Filters specific to this layer
+     *
+     * @remarks
+     * If not set, the layer will inherit the filters from the root insight definition.
+     */
+    filters?: IFilter[];
+
+    /**
+     * Attribute filter configurations for this layer
+     *
+     * @remarks
+     * If not set, the layer will inherit the attribute filter configs from the root insight definition.
+     */
+    attributeFilterConfigs?: IAttributeFilterConfigs;
+
+    /**
+     * Sorting configuration for this layer
+     *
+     * @remarks
+     * If not set, the layer will inherit the sorting from the root insight definition.
+     */
+    sorts?: ISortItem[];
+
+    /**
+     * Layer-specific visualization properties
+     *
+     * @remarks
+     * If not set, the layer will inherit the properties from the root insight definition.
+     */
+    properties?: VisualizationProperties;
+}
+
+/**
+ * Type guard to check if an object is IInsightLayerDefinition
+ *
+ * @param obj - object to check
+ * @returns true if the object is an IInsightLayerDefinition
+ * @alpha
+ */
+export function isInsightLayerDefinition(obj: unknown): obj is IInsightLayerDefinition {
+    return (
+        !isEmpty(obj) &&
+        typeof obj === "object" &&
+        obj !== null &&
+        "id" in obj &&
+        typeof (obj as IInsightLayerDefinition).id === "string" &&
+        "type" in obj &&
+        typeof (obj as IInsightLayerDefinition).type === "string" &&
+        "buckets" in obj &&
+        Array.isArray((obj as IInsightLayerDefinition).buckets)
+    );
 }
 
 /**
@@ -821,6 +921,44 @@ export function insightReduceItems<T extends IInsightDefinition>(
         insight: {
             ...insight.insight,
             buckets: bucketsReduceItem(buckets, reducer),
+        },
+    } as T;
+}
+
+/**
+ * Gets layers from insight definition.
+ *
+ * @param insight - insight to get layers from
+ * @returns array of layers or empty array if none defined
+ * @alpha
+ */
+export function insightLayers(insight: IInsightDefinition): IInsightLayerDefinition[] {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.layers ?? [];
+}
+
+/**
+ * Gets a new insight that 'inherits' all data from the provided insight but has different layers.
+ *
+ * @remarks
+ * New layers will be used in the new insight as-is, no merging with existing layers.
+ *
+ * @param insight - insight to work with
+ * @param layers - new layers to apply
+ * @returns always new instance
+ * @alpha
+ */
+export function insightSetLayers<T extends IInsightDefinition>(
+    insight: T,
+    layers: IInsightLayerDefinition[] = [],
+): T {
+    invariant(insight, "insight must be specified");
+
+    return {
+        insight: {
+            ...insight.insight,
+            layers,
         },
     } as T;
 }

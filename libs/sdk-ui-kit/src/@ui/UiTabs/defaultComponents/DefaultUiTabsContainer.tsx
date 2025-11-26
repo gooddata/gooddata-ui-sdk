@@ -30,6 +30,7 @@ export function DefaultUiTabsContainer<
         containerRef: resizeContainerRef,
         AllTabs,
         disableBottomBorder,
+        isOverflowing,
     } = store.useContextStoreValues([
         "Tab",
         "accessibilityConfig",
@@ -40,6 +41,7 @@ export function DefaultUiTabsContainer<
         "containerRef",
         "AllTabs",
         "disableBottomBorder",
+        "isOverflowing",
     ]);
 
     const handleSelectTab = useCallback(
@@ -68,15 +70,16 @@ export function DefaultUiTabsContainer<
         scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
 
-    const focusedItemContainerId = scopedIdStoreValue.makeId({ item: focusedItem, specifier: "container" });
+    const focusedItemContainerId = scopedIdStoreValue.makeId({
+        item: focusedItem,
+        specifier: "tab-scroll-target",
+    });
 
     useEffect(() => {
-        // We currently cannot use the smooth scrolling, since the actions dropdown uses the Bubble component
-        // which does not reposition itself once opened. So with the smooth animation, it becomes detached.
         document
             .getElementById(focusedItemContainerId)
-            ?.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
-    }, [focusedItemContainerId, selectedTabId]);
+            ?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    }, [focusedItemContainerId, selectedTabId, isOverflowing]);
 
     return (
         <div className={UiTabsBem.b({ size, overflow: true, "disable-border": disableBottomBorder })}>

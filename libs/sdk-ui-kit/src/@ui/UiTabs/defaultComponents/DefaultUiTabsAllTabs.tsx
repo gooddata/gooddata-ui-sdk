@@ -75,8 +75,8 @@ export function DefaultUiTabsAllTabs<
     }
 
     return (
-        <div className={UiTabsBem.e("dropdown-wrapper")}>
-            <div className={UiTabsBem.e("dropdown")}>
+        <div className={UiTabsBem.e("dropdown-wrapper", { mobile: isMobile })}>
+            <div className={UiTabsBem.e("dropdown", { mobile: isMobile })}>
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen, buttonRef, ariaAttributes }) => (
                         <AllTabsButton

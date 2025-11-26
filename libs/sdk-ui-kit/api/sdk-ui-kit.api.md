@@ -2265,6 +2265,8 @@ export interface IEditableLabelProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isEditableLabelWidthBasedOnText?: boolean;
     // (undocumented)
     maxLength?: number;
@@ -6689,6 +6691,8 @@ export interface UiButtonProps {
     // (undocumented)
     dataTestId?: string;
     // (undocumented)
+    disableIconAnimation?: boolean;
+    // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
     iconAfterSize?: number;
@@ -6886,7 +6890,7 @@ export function UiFocusTrap({ root, children, focusCheckFn, }: {
 }): FunctionComponentElement<any>;
 
 // @internal (undocumented)
-export function UiIcon({ type, label, color, layout, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps): JSX.Element;
+export function UiIcon({ type, label, color, layout, disableAnimation, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: ForwardRefExoticComponent<UiIconButtonPublicProps & RefAttributes<HTMLButtonElement>>;
@@ -6904,6 +6908,8 @@ export interface UiIconButtonPublicProps {
     dataId?: string;
     // (undocumented)
     dataTestId?: string;
+    // (undocumented)
+    disableAnimation?: boolean;
     // (undocumented)
     icon: IconType;
     // (undocumented)
@@ -6940,6 +6946,8 @@ export interface UiIconProps {
     backgroundType?: BackgroundType;
     // (undocumented)
     color?: ThemeColor | "currentColor";
+    // (undocumented)
+    disableAnimation?: boolean;
     // (undocumented)
     label?: string;
     layout?: "block" | "inline";
@@ -7139,7 +7147,7 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
-export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, onOpen, onClose, }: UiPopoverProps): JSX.Element;
+export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: UiPopoverProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiPopoverProps {
@@ -7157,6 +7165,7 @@ export interface UiPopoverProps {
     }) => ReactNode);
     // (undocumented)
     disabled?: boolean;
+    enableFocusTrap?: boolean;
     focusCheckFn?: (element: HTMLElement) => boolean;
     // (undocumented)
     footer?: ReactNode | ((args: {

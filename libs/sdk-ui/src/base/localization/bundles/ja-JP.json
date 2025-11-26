@@ -26,8 +26,6 @@
     "visualizations.totals.dropdown.title.min": "最小",
     "visualizations.totals.dropdown.title.max": "最高",
     "visualizations.totals.dropdown.title.nat": "ロールアップ (合計)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "ロールアップ (合計) 集計は、メトリック値でビジュアライゼーションをフィルタリングしている場合は使用できません。ロールアップ（合計）を使用するには、フィルターバーからすべてのメトリック値フィルターを削除します。",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "ロールアップ（合計）集計は、ランキング・フィルターによるビジュアライゼーションのフィルタリングでは使用できません。ロールアップ（合計）を使用するには、フィルターバーからランキング・フィルターを削除してください。",
     "visualizations.totals.dropdown.title.med": "中央値",
     "visualizations.headline.tertiary.title": "対",
     "visualizations.headline.comparison.title.change": "変化",
@@ -760,7 +758,7 @@
     "table.bulkActions.selectedCountShort": "{selectedCount} 選ばれた",
     "visualizations.menu.textWrapping": "テキストの折り返し",
     "visualizations.menu.textWrapping.header": "ヘッダー",
-    "visualizations.menu.textWrapping.cell": "細胞",
+    "visualizations.menu.textWrapping.cell": "セル",
     "visualizations.menu.header.openAriaLabel": "ヘッダーメニューを開く",
     "table.filter.optionAll": "すべて",
     "table.filter.optionApply": "適用",
@@ -800,5 +798,9 @@
     "table.header.menu.ariaLabel": "アクション",
     "gs.header.mainMenu.ariaLabel": "メインメニュー",
     "tabs.all": "すべて",
-    "tabs.showAllTabs": "すべてのタブを表示する"
+    "tabs.showAllTabs": "すべてのタブを表示する",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "ロールアップ (合計) 集計は、メトリック値でビジュアライゼーションをフィルタリングしている場合は使用できません。ロールアップ（合計）を使用するには、フィルターバーからすべてのメトリック値フィルターを削除します。",
+    "shareDialog.share.link.helperTextWithTabs": "リンクはアクティブなタブの現在のフィルターを反映します。ダッシュボードにアクセスできるユーザーのみがアクセスできます。",
+    "table.bulkActions.selectAll": "すべて選択",
+    "tabs.actions": "現在のタブのアクション"
 }

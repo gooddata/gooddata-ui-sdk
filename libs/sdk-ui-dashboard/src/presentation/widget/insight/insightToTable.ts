@@ -3,18 +3,28 @@
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
+    IAttribute,
+    IAttributeOrMeasure,
     IBucket,
     IInsight,
     IMeasure,
+    attributeAlias,
+    attributeDisplayFormRef,
+    attributeLocalId,
+    bucketAttribute,
     bucketMeasure,
     bucketsFind,
+    idRef,
     insightBuckets,
     insightMeasures,
     insightProperties,
     insightVisualizationType,
     isPoPMeasure,
     isPreviousPeriodMeasure,
+    isUriRef,
+    newAttribute,
     newVirtualArithmeticMeasure,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -213,6 +223,45 @@ function createHeadlineComparisonMeasures(
 }
 
 /**
+ * Transforms geochart location bucket to use tooltipText (location name) instead of lat/lon coordinates.
+ * This makes the table view more readable by showing "New York" instead of "40.7128".
+ *
+ * @param locationBucket - The location bucket from geochart
+ * @param insight - The insight containing properties with tooltipText reference
+ * @returns Transformed attribute using location name, or original attribute if tooltipText not available
+ */
+function transformGeoLocationAttribute(
+    locationBucket: IBucket | undefined,
+    insight: IInsight,
+): IAttribute | undefined {
+    if (!locationBucket) {
+        return undefined;
+    }
+
+    const locationAttr = bucketAttribute(locationBucket);
+    if (!locationAttr) {
+        return undefined;
+    }
+
+    const properties = insightProperties(insight);
+    const tooltipTextId = properties?.["controls"]?.["tooltipText"];
+
+    if (!tooltipTextId) {
+        return locationAttr;
+    }
+
+    const ref = isUriRef(attributeDisplayFormRef(locationAttr))
+        ? uriRef(tooltipTextId)
+        : idRef(tooltipTextId, "displayForm");
+
+    // Generate a unique localId to avoid conflicts with existing attributes
+    // Use the original location localId as base but add a suffix for table view
+    const uniqueLocalId = `${attributeLocalId(locationAttr)}_table_name`;
+
+    return newAttribute(ref, (m) => m.localId(uniqueLocalId).alias(attributeAlias(locationAttr)));
+}
+
+/**
  * Converts any insight (except of type "table", "repeater", or "xirr") to a table insight definition.
  * For table, repeater, or xirr insights, returns the original insight.
  *
@@ -270,17 +319,42 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
 
     // Helper to match bucket by common attribute bucket names
     const isRowBucket = (bucket: IBucket) =>
-        ["attribute", "attributes", "attribute_from", "attribute_to", "view", "trend", "location"].includes(
+        ["attribute", "attributes", "attribute_from", "attribute_to", "view", "trend"].includes(
             bucket.localIdentifier ?? "",
         );
     const isColumnBucket = (bucket: IBucket) =>
         ["columns", "stack", "segment"].includes(bucket.localIdentifier ?? "");
 
-    const rowBuckets = buckets.filter(isRowBucket);
-    const columnBuckets = buckets.filter(isColumnBucket);
+    let rowAttributes: IAttributeOrMeasure[];
+    let columnAttributes: IAttributeOrMeasure[];
 
-    const rowAttributes = rowBuckets.map((bucket) => bucket.items).flat();
-    const columnAttributes = columnBuckets.map((bucket) => bucket.items).flat();
+    const isGeoChart = type === "pushpin";
+    if (isGeoChart) {
+        const locationBucket = bucketsFind(buckets, BucketNames.LOCATION);
+        const segmentBucket = bucketsFind(buckets, BucketNames.SEGMENT);
+
+        const transformedLocation = transformGeoLocationAttribute(locationBucket, insight);
+
+        const geoAttributes = [];
+        if (segmentBucket) {
+            const segmentAttr = bucketAttribute(segmentBucket);
+            if (segmentAttr) {
+                geoAttributes.push(segmentAttr);
+            }
+        }
+        if (transformedLocation) {
+            geoAttributes.push(transformedLocation);
+        }
+
+        rowAttributes = geoAttributes;
+        columnAttributes = [];
+    } else {
+        const rowBuckets = buckets.filter(isRowBucket);
+        const columnBuckets = buckets.filter(isColumnBucket);
+
+        rowAttributes = rowBuckets.map((bucket) => bucket.items).flat();
+        columnAttributes = columnBuckets.map((bucket) => bucket.items).flat();
+    }
 
     const tableBuckets = [
         {

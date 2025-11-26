@@ -2313,8 +2313,21 @@ export type IInsightDefinition = {
         attributeFilterConfigs?: IAttributeFilterConfigs;
         sorts: ISortItem[];
         properties: VisualizationProperties;
+        layers?: IInsightLayerDefinition[];
     };
 };
+
+// @alpha
+export interface IInsightLayerDefinition {
+    attributeFilterConfigs?: IAttributeFilterConfigs;
+    buckets: IBucket[];
+    filters?: IFilter[];
+    id: string;
+    name?: string;
+    properties?: VisualizationProperties;
+    sorts?: ISortItem[];
+    type: string;
+}
 
 // @public (undocumented)
 export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {
@@ -2804,6 +2817,8 @@ export class InsightDefinitionBuilder {
     // (undocumented)
     filters: (filters: IFilter[]) => InsightDefinitionBuilder;
     // (undocumented)
+    layers: (layers: IInsightLayerDefinition[]) => InsightDefinitionBuilder;
+    // (undocumented)
     properties: (properties: VisualizationProperties) => InsightDefinitionBuilder;
     // (undocumented)
     sorts: (sorts: ISortItem[]) => InsightDefinitionBuilder;
@@ -2845,6 +2860,9 @@ export function insightIsLocked(insight: IInsight): boolean;
 // @public
 export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[];
 
+// @alpha
+export function insightLayers(insight: IInsightDefinition): IInsightLayerDefinition[];
+
 // @public
 export function insightMeasures(insight: IInsightDefinition, measurePredicate?: MeasurePredicate): IMeasure[];
 
@@ -2871,6 +2889,9 @@ export function insightSetBuckets<T extends IInsightDefinition>(insight: T, buck
 
 // @public
 export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters?: IFilter[]): T;
+
+// @alpha
+export function insightSetLayers<T extends IInsightDefinition>(insight: T, layers?: IInsightLayerDefinition[]): T;
 
 // @public
 export function insightSetProperties<T extends IInsightDefinition>(insight: T, properties?: VisualizationProperties): T;
@@ -3836,6 +3857,9 @@ export function isInlineMeasureDefinition(obj: unknown): obj is IInlineMeasureDe
 
 // @public
 export function isInsight(obj: unknown): obj is IInsight;
+
+// @alpha
+export function isInsightLayerDefinition(obj: unknown): obj is IInsightLayerDefinition;
 
 // @alpha
 export function isInsightWidget(obj: unknown): obj is IInsightWidget;
