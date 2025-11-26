@@ -621,6 +621,18 @@ export const selectEnableExternalRecipients: DashboardSelector<boolean> = create
 );
 
 /**
+ * Returns whether anomaly detection alert is enabled.
+ *
+ * @internal
+ */
+export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAnomalyDetectionAlert ?? false;
+    },
+);
+
+/**
  *
  *
  * @internal

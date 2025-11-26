@@ -147,6 +147,10 @@
         "value": "Sure thing, what business question would you like to answer?",
         "comment": "AI chatbot's response when user selects the business question option"
     },
+    "gd.gen-ai.semantic-search.title": {
+        "value": "Search",
+        "comment": "Title shown above semantic search results."
+    },
     "gd.gen-ai.state.cancelled": {
         "value": "Evaluation cancelled…",
         "comment": "Status message displayed when the AI chatbot's evaluation is cancelled"

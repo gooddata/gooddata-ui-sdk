@@ -271,8 +271,13 @@ export function useEditScheduledEmail({
 
     const onDashboardAttachmentsChange = (
         formats: DashboardAttachmentType[],
-        dashboardFilters?: FilterContextItem[],
+        // this needs to be here for compatibility with old component that doesn't use enableAutomationFilterContext
+        dashboardFiltersFromComponent?: FilterContextItem[],
     ): void => {
+        const filtersToSave = enableAutomationFilterContext
+            ? effectiveDashboardFilters
+            : (dashboardFiltersFromComponent ?? effectiveDashboardFilters);
+
         setEditedAutomation((s) => {
             const currentExportDefinitions = s.exportDefinitions || [];
 
@@ -297,7 +302,7 @@ export function useEditScheduledEmail({
                 newDashboardExportDefinitionMetadataObjectDefinition({
                     dashboardId: dashboardId!,
                     dashboardTitle,
-                    dashboardFilters: storeFilters ? dashboardFilters : undefined,
+                    dashboardFilters: storeFilters ? filtersToSave : undefined,
                     format,
                 }),
             );
@@ -341,6 +346,7 @@ export function useEditScheduledEmail({
                     format,
                     widgetFilters: effectiveWidgetFilters,
                     dashboardFilters: effectiveDashboardFilters,
+                    enableNewScheduledExport,
                 }),
             );
 
@@ -412,6 +418,7 @@ export function useEditScheduledEmail({
                 format,
                 scheduledExportToEdit,
                 widgetFilters: enableAutomationFilterContext ? effectiveWidgetFilters : widgetFilters,
+                enableNewScheduledExport,
             });
 
             const exportDefinitionExists = automationTypeGuard(editedAutomation);
@@ -462,7 +469,7 @@ export function useEditScheduledEmail({
     };
 
     const onFiltersChange = useCallback(
-        (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
+        (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
             setEditedAutomationFilters(filters);
             const shouldStoreFilters = storeFiltersParam ?? storeFilters;
 
@@ -499,8 +506,10 @@ export function useEditScheduledEmail({
                                 )
                             ) {
                                 const format = exportDefinition.requestPayload.format;
-                                const isTabularFormat = format === "XLSX" || format === "CSV";
-                                const appliedFilters = isTabularFormat
+                                const shouldUseWidgetFilters = enableNewScheduledExport
+                                    ? format === "CSV"
+                                    : format === "XLSX" || format === "CSV";
+                                const appliedFilters = shouldUseWidgetFilters
                                     ? appliedWidgetFilters
                                     : appliedDashboardFilters;
                                 return {
@@ -576,15 +585,19 @@ export function useEditScheduledEmail({
     );
 
     const onApplyCurrentFilters = useCallback(() => {
-        onFiltersChange(filtersForNewAutomation ?? [], widget ? true : storeFilters);
-    }, [filtersForNewAutomation, storeFilters, onFiltersChange, widget]);
+        onFiltersChange(
+            filtersForNewAutomation ?? [],
+            enableNewScheduledExport,
+            widget ? true : storeFilters,
+        );
+    }, [filtersForNewAutomation, storeFilters, onFiltersChange, widget, enableNewScheduledExport]);
 
     const onStoreFiltersChange = useCallback(
         (value: boolean, filters: FilterContextItem[]) => {
             setStoreFilters(value);
-            onFiltersChange(filters, value);
+            onFiltersChange(filters, enableNewScheduledExport, value);
         },
-        [onFiltersChange, setStoreFilters],
+        [onFiltersChange, setStoreFilters, enableNewScheduledExport],
     );
 
     const isDashboardExportSelected =
@@ -751,6 +764,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFilters,
     scheduledExportToEdit,
     dashboardFilters,
+    enableNewScheduledExport,
 }: {
     insight: IInsight;
     widget: ExtendedDashboardWidget;
@@ -759,6 +773,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFilters?: IFilter[];
     scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
     dashboardFilters?: FilterContextItem[];
+    enableNewScheduledExport: boolean;
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
     const { executionFilters: existingScheduleFilters } =
@@ -767,11 +782,13 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     // in case of editing widget schedule, we never overwrite already stored filters
     const allWidgetFilters = scheduledExportToEdit ? existingScheduleFilters : (widgetFilters ?? []);
 
-    const isTabularExport = format === "XLSX" || format === "CSV";
+    const shouldUseWidgetFilters = enableNewScheduledExport
+        ? format === "CSV"
+        : format === "XLSX" || format === "CSV";
     const filtersObj =
-        isTabularExport && (allWidgetFilters ?? []).length > 0
+        shouldUseWidgetFilters && (allWidgetFilters ?? []).length > 0
             ? { filters: allWidgetFilters }
-            : !isTabularExport && (dashboardFilters ?? []).length > 0
+            : !shouldUseWidgetFilters && (dashboardFilters ?? []).length > 0
               ? { filters: dashboardFilters }
               : {};
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
@@ -831,6 +848,7 @@ function newAutomationMetadataObjectDefinition({
                   format: enableNewScheduledExport ? "PNG" : "XLSX",
                   widgetFilters,
                   dashboardFilters,
+                  enableNewScheduledExport,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
                   dashboardId,

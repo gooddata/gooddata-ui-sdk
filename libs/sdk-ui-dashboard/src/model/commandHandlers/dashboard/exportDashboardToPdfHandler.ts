@@ -3,7 +3,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { IDashboardExportPdfOptions, IExportResult } from "@gooddata/sdk-backend-spi";
+import { FiltersByTab, IDashboardExportPdfOptions, IExportResult } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
@@ -16,7 +16,10 @@ import {
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectFiltersByTab,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -24,10 +27,14 @@ function exportDashboardToPdf(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     filters: FilterContextItem[] | undefined,
+    filtersByTab: FiltersByTab | undefined,
     options?: IDashboardExportPdfOptions,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToPdf(dashboardRef, filters, options);
+    return backend
+        .workspace(workspace)
+        .dashboards()
+        .exportDashboardToPdf(dashboardRef, filters, filtersByTab, options);
 }
 
 export function* exportDashboardToPdfHandler(
@@ -44,7 +51,17 @@ export function* exportDashboardToPdfHandler(
     const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
 
+    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const effectiveFiltersByTab: FiltersByTab = Object.entries(filtersByTab).reduce(
+        (acc, [tabId, filters]) => {
+            acc[tabId] = ensureAllTimeFilterForExport(filters);
+            return acc;
+        },
+        {} as FiltersByTab,
+    );
+
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
@@ -54,6 +71,7 @@ export function* exportDashboardToPdfHandler(
         ctx,
         dashboardRef,
         effectiveFilters,
+        effectiveFiltersByTab,
         { timeout },
     );
 

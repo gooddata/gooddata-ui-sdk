@@ -13,13 +13,16 @@ import {
     insightRef,
 } from "@gooddata/sdk-model";
 
+import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { CreateScheduledEmail } from "../../commands/scheduledEmail.js";
 import { DashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
+import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
     selectInsightByWidgetRef,
     selectRawExportOverridesForInsightByRef,
 } from "../../store/insights/insightsSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -53,6 +56,11 @@ export function* createScheduledEmailHandler(
 
     const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition;
 
+    const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(selectWidgetByRef(ref));
+    const commonDateFilterId: ReturnType<typeof selectAutomationCommonDateFilterId> = yield select(
+        selectAutomationCommonDateFilterId,
+    );
+
     const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
         selectInsightByWidgetRef(ref),
     );
@@ -61,15 +69,28 @@ export function* createScheduledEmailHandler(
         ? yield select(selectRawExportOverridesForInsightByRef(insightRef(insight)))
         : undefined;
 
-    if (csvRawRequest && widgetId && !preparedExecutionDefinition) {
-        throw new Error("CSV raw widget attachment requires an available execution.");
+    if (csvRawRequest && widgetId) {
+        if (!preparedExecutionDefinition) {
+            throw new Error("CSV raw widget attachment requires an available execution.");
+        }
+        if (!widget) {
+            throw new Error("CSV raw widget attachment requires an available widget.");
+        }
     }
+
+    const preparedExecutionDefinitionWithFilters = prepareCsvRawExecutionDefinition(
+        preparedExecutionDefinition,
+        csvRawRequest,
+        insight,
+        widget,
+        commonDateFilterId,
+    );
 
     const scheduledEmail: PromiseFnReturnType<typeof createScheduledEmail> = yield call(
         createScheduledEmail,
         ctx,
         cmd.payload.scheduledEmail,
-        preparedExecutionDefinition,
+        preparedExecutionDefinitionWithFilters,
         overrides,
     );
 

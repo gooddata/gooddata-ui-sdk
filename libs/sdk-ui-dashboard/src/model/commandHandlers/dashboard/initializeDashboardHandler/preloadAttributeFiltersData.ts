@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { uniqBy } from "lodash-es";
+
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { IDashboard, ObjRef, isDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboard, ObjRef, isDashboardAttributeFilter, objRefToString } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes.js";
 
@@ -21,11 +23,14 @@ export function preloadAttributeFiltersData(
         return [...acc, ...(refs ?? [])];
     }, [] as ObjRef[]);
 
-    const attributeFilterRefs = [...(dashboardAttributeFilterRefs ?? []), ...(tabsAttributeFilterRefs ?? [])];
+    const allRefs = [...(dashboardAttributeFilterRefs ?? []), ...(tabsAttributeFilterRefs ?? [])];
 
-    if (!attributeFilterRefs?.length) {
+    // Remove duplicates by comparing ObjRef string representations
+    const uniqueRefs = uniqBy(allRefs, objRefToString);
+
+    if (!uniqueRefs?.length) {
         return Promise.resolve([]);
     }
 
-    return backend.workspace(workspace).attributes().getAttributesWithReferences(attributeFilterRefs);
+    return backend.workspace(workspace).attributes().getAttributesWithReferences(uniqueRefs);
 }

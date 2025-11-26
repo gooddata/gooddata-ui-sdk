@@ -10,6 +10,7 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
+import { AI_OPERATOR, AI_OPERATORS } from "@gooddata/sdk-ui-ext";
 import {
     Dropdown,
     DropdownButton,
@@ -36,9 +37,12 @@ type StaticItemData = SeparatorItem | HeaderItem;
 
 export interface IAlertComparisonOperatorSelectProps {
     measure: AlertMetric | undefined;
+    enableAnomalyDetectionAlert: boolean;
     selectedComparisonOperator: IAlertComparisonOperator | undefined;
     selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
+    selectedAiOperator: `${typeof AI_OPERATOR}.${typeof AI_OPERATORS.ANOMALY_DETECTION}` | undefined;
     onComparisonOperatorChange: (metric: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
+    onAnomalyDetectionChange: (metric: AlertMetric) => void;
     onRelativeOperatorChange: (
         metric: AlertMetric,
         relativeOperator: IAlertRelativeOperator,
@@ -56,9 +60,12 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
         onComparisonOperatorChange,
         selectedRelativeOperator,
         onRelativeOperatorChange,
+        selectedAiOperator,
+        onAnomalyDetectionChange,
         overlayPositionType,
         id,
         closeOnParentScroll,
+        enableAnomalyDetectionAlert,
     } = props;
     const selectedComparisonItem = selectedComparisonOperator
         ? OPERATORS.find((option) => option.id === selectedComparisonOperator)!
@@ -68,11 +75,14 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
               (option) => option.id === `${selectedRelativeOperator[1]}.${selectedRelativeOperator[0]}`,
           )!
         : undefined;
+    const selectedAiItem = selectedAiOperator
+        ? OPERATORS.find((option) => option.id === `${AI_OPERATOR}.${AI_OPERATORS.ANOMALY_DETECTION}`)!
+        : undefined;
 
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
 
-    const operators = useOperators(props.measure);
+    const operators = useOperators(props.measure, enableAnomalyDetectionAlert);
 
     if (!measure) {
         return null;
@@ -99,9 +109,16 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                                 },
                             )}
                             value={intl.formatMessage({
-                                id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
+                                id:
+                                    selectedComparisonItem?.title ??
+                                    selectedRelativeItem?.title ??
+                                    selectedAiItem?.title,
                             })}
-                            iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
+                            iconLeft={
+                                selectedComparisonItem?.icon ??
+                                selectedRelativeItem?.icon ??
+                                selectedAiItem?.icon
+                            }
                             onClick={toggleDropdown}
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
@@ -136,7 +153,11 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                     }
                 });
 
-                const selectedItemId = (selectedComparisonItem?.id ?? selectedRelativeItem?.id)?.toString();
+                const selectedItemId = (
+                    selectedComparisonItem?.id ??
+                    selectedRelativeItem?.id ??
+                    selectedAiItem?.id
+                )?.toString();
 
                 return (
                     <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
@@ -149,8 +170,13 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                         onSelect={(item) => {
                             const operatorItem = item.data;
                             const [first, second] = operatorItem.id.toString().split(".");
+                            if (first === AI_OPERATOR && second === AI_OPERATORS.ANOMALY_DETECTION) {
+                                onAnomalyDetectionChange(measure);
+                                return;
+                            }
                             if (first && !second) {
                                 onComparisonOperatorChange(measure, first as IAlertComparisonOperator);
+                                return;
                             }
                             if (first && second) {
                                 onRelativeOperatorChange(

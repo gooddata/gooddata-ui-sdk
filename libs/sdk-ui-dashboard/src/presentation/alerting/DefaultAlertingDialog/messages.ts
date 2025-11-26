@@ -48,6 +48,45 @@ export const messages = defineMessages({
     comparisonOperatorDifferenceHeaderInfo: {
         id: "insightAlert.config.differenceOperator.header.info",
     },
+    anomalyDetection: {
+        id: "insightAlert.config.anomalyDetection",
+    },
+    aiOperatorHeader: {
+        id: "insightAlert.config.aiOperator.header",
+    },
+    aiOperatorHeaderInfo: {
+        id: "insightAlert.config.aiOperator.header.info",
+    },
+    alertSensitivityLow: {
+        id: "insightAlert.config.sensitivity.low",
+    },
+    alertSensitivityMedium: {
+        id: "insightAlert.config.sensitivity.medium",
+    },
+    alertSensitivityHigh: {
+        id: "insightAlert.config.sensitivity.high",
+    },
+    alertGranularityMinute: {
+        id: "insightAlert.config.granularity.minute",
+    },
+    alertGranularityHour: {
+        id: "insightAlert.config.granularity.hour",
+    },
+    alertGranularityDay: {
+        id: "insightAlert.config.granularity.day",
+    },
+    alertGranularityWeek: {
+        id: "insightAlert.config.granularity.week",
+    },
+    alertGranularityMonth: {
+        id: "insightAlert.config.granularity.month",
+    },
+    alertGranularityQuarter: {
+        id: "insightAlert.config.granularity.quarter",
+    },
+    alertGranularityYear: {
+        id: "insightAlert.config.granularity.year",
+    },
     comparisonOperatorDifferenceIncreasesBy: {
         id: "insightAlert.config.differenceOperator.increasesBy",
     },

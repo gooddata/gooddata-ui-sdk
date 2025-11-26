@@ -25,7 +25,11 @@ import {
 } from "./constants.js";
 import { messages } from "./messages.js";
 import { CellValueType } from "./types.js";
-import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
+import {
+    getAnomalyDetectionOperatorTitle,
+    getComparisonOperatorTitle,
+    getRelativeOperatorTitle,
+} from "./utils.js";
 
 export const formatAutomationSubtitle = (automation: IAutomationMetadataObject, intl: IntlShape) => {
     if (automation.schedule) {
@@ -61,6 +65,14 @@ export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) =
             intl,
         )?.toLowerCase();
         return `${alert.condition.left.title} ${comparisonOperatorTitle} ${alert.condition.right}`;
+    }
+    if (alert?.condition.type === "anomalyDetection") {
+        return getAnomalyDetectionOperatorTitle(
+            alert.condition.measure.title,
+            alert.condition.sensitivity,
+            alert.condition.granularity,
+            intl,
+        );
     }
     return "";
 };

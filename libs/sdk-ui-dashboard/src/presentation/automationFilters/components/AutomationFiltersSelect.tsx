@@ -67,7 +67,7 @@ export interface IAutomationFiltersProps {
 export interface IAutomationFiltersSelectProps {
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[]) => void;
+    onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
     storeFilters: boolean;
     onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;

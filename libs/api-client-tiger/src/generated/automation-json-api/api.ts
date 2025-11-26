@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -196,7 +198,7 @@ export interface AutomationAlertAfm {
      */
     attributes?: Array<AutomationAttributeItem>;
     /**
-     * Various filter types to filter execution result.
+     * Various filter types to filter execution result. For anomaly detection, exactly one date filter (RelativeDateFilter or AbsoluteDateFilter) is required.
      */
     filters: Array<AutomationFilterDefinition>;
     /**
@@ -214,6 +216,7 @@ export interface AutomationAlertAfm {
  * Alert trigger condition.
  */
 export type AutomationAlertCondition =
+    | AutomationAnomalyDetectionWrapper
     | AutomationComparisonWrapper
     | AutomationRangeWrapper
     | AutomationRelativeWrapper;
@@ -249,6 +252,32 @@ export interface AutomationAlertEvaluationRow {
     secondaryMetric?: AutomationMetricRecord;
     computedMetric?: AutomationMetricRecord;
     labelValue?: string;
+}
+
+export interface AutomationAnomalyDetection {
+    measure: AutomationLocalIdentifier;
+    /**
+     * Sensitivity level for anomaly detection
+     */
+    sensitivity?: AutomationAnomalyDetectionSensitivityEnum;
+    /**
+     * Date granularity for anomaly detection. Only time-based granularities are supported (MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
+     */
+    granularity: AutomationAnomalyDetectionGranularityEnum;
+}
+
+export type AutomationAnomalyDetectionSensitivityEnum = "LOW" | "MEDIUM" | "HIGH";
+export type AutomationAnomalyDetectionGranularityEnum =
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR";
+
+export interface AutomationAnomalyDetectionWrapper {
+    anomaly: AutomationAnomalyDetection;
 }
 
 export interface AutomationArithmeticMeasure {
@@ -361,6 +390,7 @@ export type AutomationAutomationAlertTriggerEnum = "ALWAYS" | "ONCE";
  * @type AutomationAutomationAlertCondition
  */
 export type AutomationAutomationAlertCondition =
+    | AutomationAnomalyDetectionWrapper
     | AutomationComparisonWrapper
     | AutomationRangeWrapper
     | AutomationRelativeWrapper;

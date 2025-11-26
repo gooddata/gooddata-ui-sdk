@@ -289,6 +289,19 @@ $base_path: "@gooddata/sdk-ui-kit/styles";
     }
 }
 
+.gd-icon-anomaly-detection {
+    @extend .gd-icon-measure-value-filter;
+    @include gd-svg-icon("ai");
+
+    &.gd-button-small::before {
+        margin-top: -1px;
+    }
+
+    &.gd-button-link::before {
+        margin-top: -2px;
+    }
+}
+
 .gd-icon-label {
     @include gd-svg-icon("label");
 

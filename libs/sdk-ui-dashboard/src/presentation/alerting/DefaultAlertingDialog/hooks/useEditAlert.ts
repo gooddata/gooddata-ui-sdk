@@ -7,6 +7,8 @@ import { useIntl } from "react-intl";
 
 import {
     FilterContextItem,
+    IAlertAnomalyDetectionGranularity,
+    IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -57,11 +59,14 @@ import { isEmail } from "../../../scheduledEmail/utils/validate.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
 import {
+    getAlertAiOperator,
     getAlertAttribute,
     getAlertCompareOperator,
     getAlertComparison,
+    getAlertGranularity,
     getAlertMeasure,
     getAlertRelativeOperator,
+    getAlertSensitivity,
     getMeasureFormatsFromExecution,
 } from "../utils/getters.js";
 import { isAlertValueDefined } from "../utils/guards.js";
@@ -70,11 +75,14 @@ import {
     getSupportedInsightMeasuresByInsight,
 } from "../utils/items.js";
 import {
+    transformAlertByAnomalyDetection,
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
+    transformAlertByGranularity,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
+    transformAlertBySensitivity,
     transformAlertByValue,
 } from "../utils/transformation.js";
 
@@ -197,7 +205,10 @@ export function useEditAlert({
     const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
     const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
     const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
+    const selectedAiOperator = getAlertAiOperator(editedAutomation?.alert);
     const selectedComparator = getAlertComparison(selectedMeasure, editedAutomation?.alert);
+    const selectedSensitivity = getAlertSensitivity(editedAutomation?.alert);
+    const selectedGranularity = getAlertGranularity(editedAutomation?.alert);
     const [selectedAttribute, selectedValue] = getAlertAttribute(
         supportedAttributes,
         editedAutomation as IAutomationMetadataObject,
@@ -309,6 +320,19 @@ export function useEditAlert({
         [measureFormatMap, supportedMeasures],
     );
 
+    const onAnomalyDetectionChange = useCallback(
+        (measure: AlertMetric) => {
+            setEditedAutomation((alert) =>
+                transformAlertByAnomalyDetection(
+                    supportedMeasures,
+                    alert as IAutomationMetadataObject,
+                    measure,
+                ),
+            );
+        },
+        [supportedMeasures],
+    );
+
     const onComparisonTypeChange = useCallback(
         (
             measure: AlertMetric | undefined,
@@ -335,6 +359,18 @@ export function useEditAlert({
         },
         [measureFormatMap, supportedMeasures],
     );
+
+    const onSensitivityChange = useCallback((sensitivity: IAlertAnomalyDetectionSensitivity) => {
+        setEditedAutomation((alert) =>
+            transformAlertBySensitivity(alert as IAutomationMetadataObject, sensitivity),
+        );
+    }, []);
+
+    const onGranularityChange = useCallback((granularity: IAlertAnomalyDetectionGranularity) => {
+        setEditedAutomation((alert) =>
+            transformAlertByGranularity(alert as IAutomationMetadataObject, granularity),
+        );
+    }, []);
 
     const onDestinationChange = useCallback(
         (destinationId: string) => {
@@ -545,6 +581,9 @@ export function useEditAlert({
         onAttributeChange,
         onComparisonOperatorChange,
         onRelativeOperatorChange,
+        onAnomalyDetectionChange,
+        onSensitivityChange,
+        onGranularityChange,
         onChange,
         onBlur,
         onComparisonTypeChange,
@@ -559,6 +598,9 @@ export function useEditAlert({
         catalogAttributes,
         catalogDateDatasets,
         isResultLoading,
+        selectedAiOperator,
+        selectedSensitivity,
+        selectedGranularity,
         selectedComparisonOperator,
         selectedRelativeOperator,
         value,

@@ -3,7 +3,7 @@
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { FiltersByTab, IExportResult } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { ExportDashboardToExcel } from "../../commands/index.js";
@@ -16,7 +16,10 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectFiltersByTab,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -28,6 +31,7 @@ function exportDashboardToTabular(
     exportInfo?: boolean,
     widgetIds?: string[],
     dashboardFiltersOverride?: FilterContextItem[],
+    filtersByTab?: FiltersByTab,
     format?: "XLSX" | "PDF",
     pdfConfiguration?: {
         pageSize?: "A3" | "A4" | "LETTER";
@@ -43,6 +47,7 @@ function exportDashboardToTabular(
         mergeHeaders,
         exportInfo,
         dashboardFiltersOverride,
+        dashboardTabsFiltersOverrides: filtersByTab,
         widgetIds,
         pdfConfiguration,
         timeout,
@@ -69,8 +74,10 @@ export function* exportToTabularHandler(
         yield select(selectIsFiltersChanged);
     const filterViews: SagaReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
     const hasDefaultFilterViewApplied = filterViews.some((filterView) => filterView.isDefault);
-    const filterContext: SagaReturnType<typeof selectFilterContextFilters> =
+    const filterContextFilters: SagaReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
+    const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
@@ -82,7 +89,8 @@ export function* exportToTabularHandler(
         mergeHeaders,
         exportInfo,
         widgetIds,
-        isFilterContextChanged || hasDefaultFilterViewApplied ? filterContext : undefined,
+        isFilterContextChanged || hasDefaultFilterViewApplied ? filterContextFilters : undefined,
+        isFilterContextChanged || hasDefaultFilterViewApplied ? filtersByTab : undefined,
         format,
         pdfConfiguration,
         timeout,

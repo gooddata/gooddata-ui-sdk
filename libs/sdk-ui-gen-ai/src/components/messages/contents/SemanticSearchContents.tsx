@@ -3,9 +3,10 @@
 import { Suspense, lazy } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { MarkdownComponent } from "./Markdown.js";
 import { replaceLinks } from "./replaceLinks.js";
@@ -37,6 +38,17 @@ export function SemanticSearchContentsComponent({ content, useMarkdown }: Props)
             )}
         >
             <MarkdownComponent allowMarkdown={useMarkdown}>{text}</MarkdownComponent>
+            <header>
+                <UiIcon
+                    type="search"
+                    size={14}
+                    color="complementary-6"
+                    backgroundSize={26}
+                    backgroundColor="complementary-2"
+                    ariaHidden
+                />
+                <FormattedMessage id="gd.gen-ai.semantic-search.title" />
+            </header>
             <Suspense fallback={null}>
                 <SemanticSearchTreeView workspace={workspace} content={content} locale={intl.locale} />
             </Suspense>

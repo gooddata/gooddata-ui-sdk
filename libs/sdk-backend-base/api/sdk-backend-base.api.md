@@ -14,6 +14,7 @@ import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { FiltersByTab } from '@gooddata/sdk-backend-spi';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
@@ -589,11 +590,11 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides, options?: IDashboardExportRawOptions): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
+    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportImageOptions): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportPdfOptions): Promise<IExportResult>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportPdfOptions): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], filtersByTab?: FiltersByTab, options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     // (undocumented)
@@ -617,7 +618,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
-    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined) => Promise<{
+    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined, tabId?: string) => Promise<{
         filterContext?: IFilterContext;
         title?: string;
         hideWidgetTitles?: boolean;

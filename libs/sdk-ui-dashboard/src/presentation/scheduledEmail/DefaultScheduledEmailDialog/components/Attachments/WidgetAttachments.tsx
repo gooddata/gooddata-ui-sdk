@@ -8,7 +8,15 @@ import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
-const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PNG", "PPTX", "PDF", "XLSX", "CSV", "CSV_RAW"];
+const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
+    "PNG",
+    "PPTX",
+    "PDF",
+    "PDF_TABULAR",
+    "XLSX",
+    "CSV",
+    "CSV_RAW",
+];
 
 export interface IWidgetAttachmentsProps {
     selectedAttachments: WidgetAttachmentType[];

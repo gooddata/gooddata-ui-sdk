@@ -395,7 +395,8 @@ export type IAlertComparisonOperator =
  */
 export type IAutomationAlertCondition =
     | IAutomationAlertComparisonCondition
-    | IAutomationAlertRelativeCondition;
+    | IAutomationAlertRelativeCondition
+    | IAutomationAnomalyDetectionCondition;
 
 /**
  * @alpha
@@ -510,6 +511,59 @@ export interface IAutomationAlertRelativeCondition {
      */
     threshold: number;
 }
+
+/**
+ * @alpha
+ */
+export interface IAutomationAnomalyDetectionCondition {
+    /**
+     * Type of the condition.
+     */
+    type: "anomalyDetection";
+    /**
+     * Sensitivity of the anomaly detection.
+     */
+    sensitivity: IAlertAnomalyDetectionSensitivity;
+    /**
+     * Granularity of the anomaly detection.
+     */
+    granularity?: IAlertAnomalyDetectionGranularity;
+
+    /**
+     * Identifier of left side of the condition.
+     */
+    measure: {
+        /**
+         * Identifier of the measure.
+         */
+        id: string;
+        /**
+         * Title of the measure.
+         */
+        title?: string;
+        /**
+         * Format of the measure.
+         */
+        format?: string;
+    };
+}
+
+/**
+ * @alpha
+ */
+export type IAlertAnomalyDetectionSensitivity = "LOW" | "MEDIUM" | "HIGH";
+
+/**
+ * @alpha
+ */
+export type IAlertAnomalyDetectionGranularity =
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR";
 
 /**
  * @alpha

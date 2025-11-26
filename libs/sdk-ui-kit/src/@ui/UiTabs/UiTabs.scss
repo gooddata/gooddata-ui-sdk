@@ -216,11 +216,11 @@
         }
 
         &--variant-placeholder {
-            color: var(--gd-palette-complementary-3);
+            color: var(--gd-palette-complementary-6);
         }
 
         &--variant-placeholder#{$root}__label--selected {
-            color: var(--gd-palette-complementary-3);
+            color: var(--gd-palette-complementary-6);
         }
     }
 

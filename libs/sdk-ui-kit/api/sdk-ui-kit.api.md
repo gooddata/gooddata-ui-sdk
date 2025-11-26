@@ -5448,6 +5448,8 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     isSelected?: boolean;
     isDestructive?: boolean;
+    tooltip?: ReactNode;
+    tooltipWidth?: number;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
     iconRight?: ReactNode;
@@ -5584,6 +5586,8 @@ export type IUiTabAction<TTabProps extends Record<any, any> = EmptyObject, TTabA
     label: string;
     isDisabled?: boolean;
     isDestructive?: boolean;
+    tooltip?: ReactNode;
+    tooltipWidth?: number;
     onSelect?: (context: {
         tab: IUiTab<TTabProps, TTabActionProps>;
     }) => void;

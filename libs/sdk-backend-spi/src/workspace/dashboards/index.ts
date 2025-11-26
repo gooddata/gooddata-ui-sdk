@@ -149,6 +149,11 @@ export interface IGetDashboardOptions {
      * This id is used to retrieve export-related metadata, such as currently active attribute filters.
      */
     exportType?: "visual" | "slides";
+
+    /**
+     * Tab identifier to export. Used for export of dashboard with tabs.
+     */
+    exportTabId?: string;
 }
 
 /**
@@ -262,6 +267,11 @@ export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
 
     /**
+     * Override stored dashboard filters per tab with custom filters
+     */
+    dashboardTabsFiltersOverrides?: FiltersByTab;
+
+    /**
      * PDF-specific configuration options. Only applicable when format is "PDF".
      */
     pdfConfiguration?: {
@@ -372,6 +382,14 @@ export interface IDashboardExportPresentationOptions {
 }
 
 /**
+ * Structure holding filters from each tab
+ * @alpha
+ */
+export type FiltersByTab = {
+    [tabId: string]: FilterContextItem[];
+};
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -442,10 +460,12 @@ export interface IWorkspaceDashboardsService {
      *
      * @param exportId - export id
      * @param type - export type
+     * @param tabId - id of the tab to export
      */
     getFilterContextByExportId(
         exportId: string,
         type: "visual" | "slides" | undefined,
+        tabId?: string,
     ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null>;
 
     /**
@@ -497,6 +517,7 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToPdf(
         ref: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult>;
 
@@ -509,6 +530,7 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard reference
      * @param format - export format
      * @param filters - Override stored dashboard filters with custom filters
+     * @param filtersByTab - Override stored dashboard filters per tab with custom filters
      * @param options - additional options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
@@ -516,6 +538,7 @@ export interface IWorkspaceDashboardsService {
         ref: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult>;
 
@@ -527,6 +550,7 @@ export interface IWorkspaceDashboardsService {
      *
      * @param ref - dashboard reference
      * @param filters - Override stored dashboard filters with custom filters
+     * @param filtersByTab - Override stored dashboard filters per tab with custom filters
      * @param options - export options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
@@ -534,6 +558,7 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToImage(
         ref: ObjRef,
         filters?: FilterContextItem[],
+        filtersByTab?: FiltersByTab,
         options?: IDashboardExportImageOptions,
     ): Promise<IExportResult>;
 

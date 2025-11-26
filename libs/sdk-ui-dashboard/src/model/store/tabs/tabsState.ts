@@ -9,7 +9,7 @@ import type { FilterContextState } from "./filterContext/filterContextState.js";
 import type { LayoutState } from "./layout/layoutState.js";
 
 /**
- * Identifier used for dashboards without explicit tabs support.
+ * Identifier used for dashboards without explicit tabs support and the first tab created automatically.
  *
  * @internal
  */

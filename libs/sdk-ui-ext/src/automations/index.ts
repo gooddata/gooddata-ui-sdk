@@ -19,4 +19,10 @@ export type {
     AutomationsOnLoad,
 } from "./types.js";
 export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
-export { COMPARISON_OPERATORS, RELATIVE_OPERATORS, ARITHMETIC_OPERATORS } from "./constants.js";
+export {
+    COMPARISON_OPERATORS,
+    RELATIVE_OPERATORS,
+    ARITHMETIC_OPERATORS,
+    AI_OPERATORS,
+    AI_OPERATOR,
+} from "./constants.js";

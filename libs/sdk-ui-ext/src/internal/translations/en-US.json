@@ -1555,6 +1555,58 @@
         "value": "Changes by",
         "comment": "Alert condition for when a metric's numeric value changes (either increases or decreases) by a specified amount"
     },
+    "automations.alert.config.anomalyDetection.operatorName": {
+        "value": "anomaly detection for",
+        "comment": "Part of sentence `{Daily} >anomaly detection for< {title} with {Low} sensitivity`"
+    },
+    "automations.alert.config.anomalyDetection.withName": {
+        "value": "with",
+        "comment": "Part of sentence `{Daily} anomaly detection for {title} >with< {Low} sensitivity`"
+    },
+    "automations.alert.config.anomalyDetection.withSensitivity": {
+        "value": "sensitivity",
+        "comment": "Part of sentence `{Daily} anomaly detection for {title} with {Low} >sensitivity<`"
+    },
+    "automations.alert.config.anomalyDetection.granularity.minute": {
+        "value": "Every minute",
+        "comment": "Name for granularity that is occurred every minute."
+    },
+    "automations.alert.config.anomalyDetection.granularity.hour": {
+        "value": "Hourly",
+        "comment": "Name for granularity that is occurred every hour"
+    },
+    "automations.alert.config.anomalyDetection.granularity.day": {
+        "value": "Daily",
+        "comment": "Name for granularity that is occurred every day"
+    },
+    "automations.alert.config.anomalyDetection.granularity.week": {
+        "value": "Weekly",
+        "comment": "Name for granularity that is occurred every week"
+    },
+    "automations.alert.config.anomalyDetection.granularity.month": {
+        "value": "Monthly",
+        "comment": "Name for granularity that is occurred every month"
+    },
+    "automations.alert.config.anomalyDetection.granularity.quarter": {
+        "value": "Per quarter",
+        "comment": "Name for granularity that is occurred every quarter"
+    },
+    "automations.alert.config.anomalyDetection.granularity.year": {
+        "value": "Yearly",
+        "comment": "Name for granularity that is occurred every year"
+    },
+    "automations.alert.config.anomalyDetection.sensitivity.low": {
+        "value": "low",
+        "comment": "Name for low sensitivity setting"
+    },
+    "automations.alert.config.anomalyDetection.sensitivity.medium": {
+        "value": "medium",
+        "comment": "Name for medium sensitivity setting"
+    },
+    "automations.alert.config.anomalyDetection.sensitivity.high": {
+        "value": "high",
+        "comment": "Name for high sensitivity setting"
+    },
     "automations.filter.allDashboards": {
         "value": "All dashboards",
         "comment": "Filter option to show automations for all dashboards"

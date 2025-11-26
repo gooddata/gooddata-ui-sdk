@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.11.0-alpha.3",
+    "version": "11.11.0-alpha.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",

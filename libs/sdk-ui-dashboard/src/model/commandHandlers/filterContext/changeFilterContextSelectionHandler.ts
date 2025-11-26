@@ -30,6 +30,7 @@ import {
 import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { ChangeFilterContextSelection } from "../../commands/index.js";
+import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
 import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -55,7 +56,8 @@ export function* changeFilterContextSelectionHandler(
     const { filters, resetOthers, attributeFilterConfigs = [] } = cmd.payload;
 
     const isCrossFiltering = yield select(selectIsCrossFiltering);
-    if (isCrossFiltering) {
+    const enableDashboardTabs = yield select(selectEnableDashboardTabs);
+    if (isCrossFiltering && !enableDashboardTabs) {
         yield call(resetCrossFiltering, cmd);
     }
 

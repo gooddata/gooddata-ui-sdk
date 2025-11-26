@@ -178,7 +178,16 @@ export function DrillSelectDropdown({
         onSelect,
     });
 
+    useEffect(() => {
+        if (isOpen && menuItems.length === 0) {
+            onCloseReturnFocus();
+        }
+    }, [isOpen, menuItems.length, onCloseReturnFocus]);
+
     if (!isOpen) {
+        return null;
+    }
+    if (menuItems.length === 0) {
         return null;
     }
 

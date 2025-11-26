@@ -12,6 +12,7 @@ import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } fro
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -29,15 +30,26 @@ export function* exportImageInsightWidgetHandler(
 
     const filterContextFilters = yield select(selectFilterContextFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+        selectActiveTabLocalIdentifier,
+    );
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
+
+    // for single widget export active tabs filters are enough
+    const effectiveFiltersByTab = activeTabLocalIdentifier
+        ? {
+              [activeTabLocalIdentifier]: effectiveFilters,
+          }
+        : undefined;
 
     const exportDashboardToImage = backend.workspace(workspace).dashboards().exportDashboardToImage;
     const result: PromiseFnReturnType<typeof exportDashboardToImage> = yield call(
         exportDashboardToImage,
         dashboardRef,
         effectiveFilters,
+        effectiveFiltersByTab,
         {
             widgetIds: [ref],
             filename,

@@ -120,6 +120,7 @@ import {
 import { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
 import {
     CancelRenamingDashboardTab,
+    ConvertDashboardTabFromDefault,
     CreateDashboardTab,
     DeleteDashboardTab,
     RenameDashboardTab,
@@ -559,6 +560,8 @@ export { setShowWidgetAsTable } from "./showWidgetAsTable.js";
 export type {
     SwitchDashboardTab,
     SwitchDashboardTabPayload,
+    ConvertDashboardTabFromDefault,
+    ConvertDashboardTabFromDefaultPayload,
     CreateDashboardTab,
     CreateDashboardTabPayload,
     RepositionDashboardTab,
@@ -575,6 +578,7 @@ export type {
 export {
     switchDashboardTab,
     repositionDashboardTab,
+    convertDashboardTabFromDefault,
     createDashboardTab,
     deleteDashboardTab,
     startRenamingDashboardTab,
@@ -701,6 +705,7 @@ export type DashboardCommands =
     | ResetFilterContextWorkingSelection
     | ChangeIgnoreExecutionTimestamp
     | SwitchDashboardTab
+    | ConvertDashboardTabFromDefault
     | CreateDashboardTab
     | RepositionDashboardTab
     | DeleteDashboardTab

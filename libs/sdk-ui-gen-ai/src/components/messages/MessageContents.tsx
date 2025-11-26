@@ -16,7 +16,7 @@ import { Contents } from "../../model.js";
 type MessageContentsProps = {
     content: Contents[];
     messageId: string;
-    isComplete?: boolean;
+    isLoading?: boolean;
     isCancelled?: boolean;
     isLastMessage?: boolean;
     useMarkdown?: boolean;
@@ -25,7 +25,7 @@ type MessageContentsProps = {
 export function MessageContents({
     content,
     messageId,
-    isComplete = true,
+    isLoading = false,
     isCancelled = false,
     isLastMessage = false,
     useMarkdown = false,
@@ -80,11 +80,11 @@ export function MessageContents({
                         return assertNever(type);
                 }
             })}
-            {isComplete ? null : (
+            {isLoading ? (
                 <Typography tagName="p">
                     <FormattedMessage id="gd.gen-ai.state.generating" />
                 </Typography>
-            )}
+            ) : null}
             {isCancelled ? (
                 <Typography tagName="p">
                     <FormattedMessage id="gd.gen-ai.state.cancelled" />

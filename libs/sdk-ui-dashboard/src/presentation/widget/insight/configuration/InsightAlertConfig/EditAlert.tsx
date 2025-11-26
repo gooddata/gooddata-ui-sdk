@@ -29,7 +29,9 @@ import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDia
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
 import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
+import { AlertGranularitySelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertGranularitySelect.js";
 import { AlertMeasureSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertMeasureSelect.js";
+import { AlertSensitivitySelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertSensitivitySelect.js";
 import {
     AlertInvalidityReason,
     useAlertValidation,
@@ -38,16 +40,22 @@ import { useAttributeValuesFromExecResults } from "../../../../alerting/DefaultA
 import { useThresholdValue } from "../../../../alerting/DefaultAlertingDialog/hooks/useThresholdValue.js";
 import {
     IMeasureFormatMap,
+    getAlertAiOperator,
     getAlertAttribute,
     getAlertCompareOperator,
     getAlertComparison,
     getAlertFilters,
+    getAlertGranularity,
     getAlertMeasure,
     getAlertRelativeOperator,
+    getAlertSensitivity,
     getValueSuffix,
 } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { translateGranularity } from "../../../../alerting/DefaultAlertingDialog/utils/granularity.js";
-import { isChangeOrDifferenceOperator } from "../../../../alerting/DefaultAlertingDialog/utils/guards.js";
+import {
+    isAnomalyDetection,
+    isChangeOrDifferenceOperator,
+} from "../../../../alerting/DefaultAlertingDialog/utils/guards.js";
 import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
 import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
@@ -125,7 +133,9 @@ export function EditAlert({
         allowExternalRecipients,
         allowOnlyLoggedUserRecipients,
         warningMessage,
+        enableAnomalyDetectionAlert,
         //
+        changeAnomalyDetection,
         changeComparisonOperator,
         changeRelativeOperator,
         changeMeasure,
@@ -135,6 +145,8 @@ export function EditAlert({
         changeDestination,
         changeComparisonType,
         changeRecipients,
+        changeSensitivity,
+        changeGranularity,
         //
         configureAlert,
         saveAlertConfiguration,
@@ -162,6 +174,9 @@ export function EditAlert({
     const filters = getAlertFilters(updatedAlert);
     const selectedComparisonOperator = getAlertCompareOperator(updatedAlert.alert);
     const selectedRelativeOperator = getAlertRelativeOperator(updatedAlert.alert);
+    const selectedAiOperator = getAlertAiOperator(updatedAlert.alert);
+    const selectedSensitivity = getAlertSensitivity(updatedAlert.alert);
+    const selectedGranularity = getAlertGranularity(updatedAlert.alert);
 
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
     const showFilterInfo = filters.length > 0 || Boolean(selectedComparator?.granularity);
@@ -276,27 +291,32 @@ export function EditAlert({
                         <AlertComparisonOperatorSelect
                             id="alert.comparisonOperator"
                             measure={selectedMeasure}
+                            enableAnomalyDetectionAlert={enableAnomalyDetectionAlert}
+                            selectedAiOperator={selectedAiOperator}
+                            onAnomalyDetectionChange={changeAnomalyDetection}
                             selectedComparisonOperator={selectedComparisonOperator}
                             selectedRelativeOperator={selectedRelativeOperator}
                             onComparisonOperatorChange={changeComparisonOperator}
                             onRelativeOperatorChange={changeRelativeOperator}
                             overlayPositionType={overlayPositionType}
                         />
-                        <Input
-                            className="gd-edit-alert__value-input s-alert-value-input"
-                            isSmall
-                            autofocus
-                            value={value}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            type="number"
-                            suffix={getValueSuffix(updatedAlert.alert)}
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({
-                                    id: "insightAlert.config.accessbility.input",
-                                }),
-                            }}
-                        />
+                        {!isAnomalyDetection(updatedAlert?.alert) && (
+                            <Input
+                                className="gd-edit-alert__value-input s-alert-value-input"
+                                isSmall
+                                autofocus
+                                value={value}
+                                onChange={onChange}
+                                onBlur={onBlur}
+                                type="number"
+                                suffix={getValueSuffix(updatedAlert.alert)}
+                                accessibilityConfig={{
+                                    ariaLabel: intl.formatMessage({
+                                        id: "insightAlert.config.accessbility.input",
+                                    }),
+                                }}
+                            />
+                        )}
                         {!updatedAlert || !isChangeOrDifferenceOperator(updatedAlert.alert) ? null : (
                             <div style={{ marginTop: "1rem" }}>
                                 <label htmlFor="alert.comparison">
@@ -318,6 +338,32 @@ export function EditAlert({
                                     canManageComparison={canManageComparison}
                                 />
                             </div>
+                        )}
+                        {!updatedAlert || !isAnomalyDetection(updatedAlert.alert) ? null : (
+                            <>
+                                <div style={{ marginTop: "1rem" }}>
+                                    <label htmlFor="alert.sensitivity">
+                                        <FormattedMessage id="insightAlert.config.sensitivity" />
+                                    </label>
+                                    <AlertSensitivitySelect
+                                        id="alert.sensitivity"
+                                        selectedSensitivity={selectedSensitivity}
+                                        onSensitivityChange={changeSensitivity}
+                                        overlayPositionType={overlayPositionType}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="alert.granularity">
+                                        <FormattedMessage id="insightAlert.config.granularity" />
+                                    </label>
+                                    <AlertGranularitySelect
+                                        id="alert.granularity"
+                                        selectedGranularity={selectedGranularity}
+                                        onGranularityChange={changeGranularity}
+                                        overlayPositionType={overlayPositionType}
+                                    />
+                                </div>
+                            </>
                         )}
                         {destinations.length > 1 && (
                             <div style={{ marginTop: "1rem" }}>

@@ -14,6 +14,53 @@ export interface SwitchDashboardTabPayload {
 }
 
 /**
+ * Payload of the {@link ConvertDashboardTabFromDefault} command.
+ *
+ * @alpha
+ */
+export interface ConvertDashboardTabFromDefaultPayload {
+    /**
+     * Optional title for the new tab.
+     */
+    readonly title?: string;
+}
+
+/**
+ * Command to convert a default dashboard tab into a regular tab.
+ *
+ * @remarks
+ * This command will:
+ * - Duplicate the default tab and create a new regular tab with the given title
+ * - Remove the default tab
+ *
+ * @alpha
+ */
+export interface ConvertDashboardTabFromDefault extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT";
+    readonly payload: ConvertDashboardTabFromDefaultPayload;
+}
+
+/**
+ * Creates the ConvertDashboardTabFromDefault command.
+ *
+ * @param title - Optional title for the new tab.
+ * @param correlationId - Specify correlation id to use for this command.
+ * @returns Convert dashboard tab from default command.
+ *
+ * @alpha
+ */
+export function convertDashboardTabFromDefault(
+    title?: string,
+    correlationId?: string,
+): ConvertDashboardTabFromDefault {
+    return {
+        type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT",
+        correlationId,
+        payload: { title },
+    };
+}
+
+/**
  * Command to switch to a different dashboard tab.
  *
  * @remarks

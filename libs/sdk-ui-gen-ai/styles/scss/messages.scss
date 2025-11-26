@@ -228,12 +228,23 @@
 .gd-gen-ai-chat__messages__content--semantic-search {
     display: grid;
 
+    header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 7px;
+        margin: 10px 0 5px 0;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--gd-palette-complementary-7);
+    }
+
     .gd-ui-kit-treeview {
         border: 1px solid kit-variables.$gd-border-color;
         border-radius: 8px;
         overflow-x: hidden;
         overflow-y: auto;
-        margin: 15px 0 0 0;
+        margin: 0;
     }
 }
 
