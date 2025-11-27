@@ -75,6 +75,7 @@ export interface IAutomationFiltersSelectProps {
     overlayPositionType?: OverlayPositionType;
     hideTitle?: boolean;
     showAllFilters?: boolean;
+    disableDateFilters?: boolean;
 }
 
 interface IAutomationCheckboxOrNoteProps {
@@ -154,6 +155,7 @@ export function AutomationFiltersSelect({
     overlayPositionType,
     hideTitle = false,
     showAllFilters = false,
+    disableDateFilters = false,
 }: IAutomationFiltersSelectProps) {
     const {
         commonDateFilterId,
@@ -174,6 +176,7 @@ export function AutomationFiltersSelect({
     } = useAutomationFilters({
         availableFilters,
         selectedFilters,
+        disableDateFilters,
         onFiltersChange,
         onStoreFiltersChange,
     });

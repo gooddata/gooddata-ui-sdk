@@ -76,6 +76,7 @@ export function mapTypeToKey(
         case "METRIC_FORMAT_OVERRIDE":
         case "SORT_CASE_SENSITIVE":
         case "FISCAL_YEAR":
+        case "ENABLE_AI_ON_DATA":
         case undefined:
             return fallback;
         default:

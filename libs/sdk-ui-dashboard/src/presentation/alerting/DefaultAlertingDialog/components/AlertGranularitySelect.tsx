@@ -22,10 +22,6 @@ const options: {
     id: IAlertAnomalyDetectionGranularity;
 }[] = [
     {
-        title: messages.alertGranularityMinute.id,
-        id: "MINUTE",
-    },
-    {
         title: messages.alertGranularityHour.id,
         id: "HOUR",
     },

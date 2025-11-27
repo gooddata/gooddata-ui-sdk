@@ -261,14 +261,13 @@ export interface AutomationAnomalyDetection {
      */
     sensitivity?: AutomationAnomalyDetectionSensitivityEnum;
     /**
-     * Date granularity for anomaly detection. Only time-based granularities are supported (MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
+     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
      */
     granularity: AutomationAnomalyDetectionGranularityEnum;
 }
 
 export type AutomationAnomalyDetectionSensitivityEnum = "LOW" | "MEDIUM" | "HIGH";
 export type AutomationAnomalyDetectionGranularityEnum =
-    | "MINUTE"
     | "HOUR"
     | "DAY"
     | "WEEK"

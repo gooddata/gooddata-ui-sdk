@@ -3346,6 +3346,9 @@
                                     "GEO_AREA",
                                     "IMAGE"
                                 ]
+                            },
+                            "geoAreaConfig": {
+                                "$ref": "#/components/schemas/GeoAreaConfig"
                             }
                         }
                     }
@@ -3367,6 +3370,27 @@
                     }
                 },
                 "description": "Response to AFM execution request body"
+            },
+            "GeoAreaConfig": {
+                "required": ["collection"],
+                "type": "object",
+                "properties": {
+                    "collection": {
+                        "$ref": "#/components/schemas/GeoCollection"
+                    }
+                },
+                "description": "Configuration specific to geo area labels."
+            },
+            "GeoCollection": {
+                "required": ["id"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Geo collection identifier."
+                    }
+                }
             },
             "MeasureGroupHeaders": {
                 "type": "object",

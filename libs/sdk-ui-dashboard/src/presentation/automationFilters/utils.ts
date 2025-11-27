@@ -240,6 +240,7 @@ export const getNonHiddenFilters = (
     attributeConfigs: IDashboardAttributeFilterConfig[],
     dateConfigs: IDashboardDateFilterConfigItem[],
     isCommonDateFilterHidden: boolean,
+    disableDateFilters: boolean,
 ): FilterContextItem[] => {
     return (filters ?? []).filter((filter) => {
         if (isDashboardAttributeFilter(filter)) {
@@ -248,12 +249,12 @@ export const getNonHiddenFilters = (
             );
             return config?.mode !== "hidden";
         } else if ((isDashboardCommonDateFilter as (filter: FilterContextItem) => boolean)(filter)) {
-            return !isCommonDateFilterHidden;
+            return !isCommonDateFilterHidden && !disableDateFilters;
         } else {
             const config = dateConfigs.find((date) =>
                 areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
             );
-            return config?.config.mode !== "hidden";
+            return config?.config.mode !== "hidden" && !disableDateFilters;
         }
     });
 };

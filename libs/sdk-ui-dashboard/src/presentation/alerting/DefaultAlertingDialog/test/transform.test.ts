@@ -983,13 +983,21 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseRelative.alert?.execution,
-                        measures: [previousPeriodMetric.measure],
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "0 0 0 * * 1",
+                    timezone: undefined,
                 },
             });
         });
 
-        it("transformAlertByRelativeOperator, relative value", () => {
+        it("transformAlertByAnomalyDetection, relative value", () => {
             const res = transformAlertByAnomalyDetection(allMetrics, baseRelative, previousPeriodMetric);
             const cond = baseAnomalyDetection.alert?.condition as IAutomationAnomalyDetectionCondition;
             expect(res).toEqual({
@@ -1001,13 +1009,21 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseRelative.alert?.execution,
-                        measures: [previousPeriodMetric.measure],
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "0 0 0 * * 1",
+                    timezone: undefined,
                 },
             });
         });
 
-        it("transformAlertByRelativeOperator, anomaly detection value", () => {
+        it("transformAlertByAnomalyDetection, anomaly detection value", () => {
             const res = transformAlertByAnomalyDetection(
                 allMetrics,
                 baseAnomalyDetection,
@@ -1015,13 +1031,102 @@ describe("alert transforms", () => {
             );
             expect(res).toEqual({
                 ...baseAnomalyDetection,
-                metadata: { filters: undefined },
                 alert: {
                     ...baseAnomalyDetection.alert,
                     execution: {
                         ...baseAnomalyDetection.alert?.execution,
-                        measures: [previousPeriodMetric.measure],
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "0 0 0 * * 1",
+                    timezone: undefined,
+                },
+            });
+        });
+
+        it("transformAlertByAnomalyDetection, anomaly detection value, updated cron, save original, return back", () => {
+            const res = transformAlertByAnomalyDetection(
+                allMetrics,
+                {
+                    ...baseAnomalyDetection,
+                    schedule: {
+                        cron: "6 * * */3 1",
+                        cronDescription: "This is description",
+                        timezone: "UTC",
+                    },
+                },
+                previousPeriodMetric,
+            );
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    execution: {
+                        ...baseAnomalyDetection.alert?.execution,
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: {
+                        cron: "6 * * */3 1",
+                        cronDescription: "This is description",
+                        timezone: "UTC",
+                    },
+                },
+                schedule: {
+                    cron: "0 0 0 * * 1",
+                    timezone: undefined,
+                },
+            });
+
+            const res1 = transformAlertByRelativeOperator(
+                allMetrics,
+                res,
+                previousPeriodMetric,
+                "INCREASES_BY",
+                "CHANGE",
+            );
+            expect(res1).toEqual({
+                ...baseRelative,
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        ...baseRelative.alert?.condition,
+                        operator: "INCREASES_BY",
+                        measure: {
+                            ...(baseRelative.alert?.condition as IAutomationAlertRelativeCondition).measure,
+                            left: {
+                                format: "#,##0.00",
+                                id: "localPPMetric1",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
+                        },
+                        threshold: undefined,
+                    },
+                    execution: {
+                        ...baseRelative.alert?.execution,
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "6 * * */3 1",
+                    cronDescription: "This is description",
+                    timezone: "UTC",
                 },
             });
         });
@@ -1052,29 +1157,53 @@ describe("alert transforms", () => {
 
     describe("transformAlertByGranularity", () => {
         it("anomaly detection change granularity", () => {
-            const res = transformAlertByGranularity(baseAnomalyDetection, "MINUTE");
+            const res = transformAlertByGranularity(
+                allMetrics,
+                baseAnomalyDetection,
+                previousPeriodMetric,
+                "QUARTER",
+            );
             expect(res).toEqual({
                 ...baseAnomalyDetection,
                 alert: {
                     ...baseAnomalyDetection.alert,
                     condition: {
                         ...baseAnomalyDetection.alert?.condition,
-                        granularity: "MINUTE",
+                        granularity: "QUARTER",
                     },
+                    execution: {
+                        ...baseAnomalyDetection.alert?.execution,
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+                schedule: {
+                    cron: "0 0 0 1 */3 *",
                 },
             });
         });
 
         it("relative change granularity", () => {
-            const res = transformAlertByGranularity(baseAnomalyDetection, "MINUTE");
+            const res = transformAlertByGranularity(
+                allMetrics,
+                baseAnomalyDetection,
+                previousPeriodMetric,
+                "QUARTER",
+            );
             expect(res).toEqual({
                 ...baseAnomalyDetection,
                 alert: {
                     ...baseAnomalyDetection.alert,
                     condition: {
                         ...baseAnomalyDetection.alert?.condition,
-                        granularity: "MINUTE",
+                        granularity: "QUARTER",
                     },
+                    execution: {
+                        ...baseAnomalyDetection.alert?.execution,
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+                schedule: {
+                    cron: "0 0 0 1 */3 *",
                 },
             });
         });

@@ -687,7 +687,7 @@ export interface IAccessControlAware {
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
 // @alpha (undocumented)
-export type IAlertAnomalyDetectionGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
+export type IAlertAnomalyDetectionGranularity = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
 
 // @alpha (undocumented)
 export type IAlertAnomalyDetectionSensitivity = "LOW" | "MEDIUM" | "HIGH";
@@ -1073,6 +1073,7 @@ export interface IAutomationMetadataObjectBase {
         widget?: string;
         filters?: string[];
         visibleFilters?: IAutomationVisibleFilter[];
+        originalSchedule?: IAutomationSchedule;
     };
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];
@@ -3778,6 +3779,8 @@ export interface ISettings {
     enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
+    // (undocumented)
+    enableStarrocksDataSource?: boolean;
     enableToDateFilters?: boolean;
     enableUserManagement?: boolean;
     enableVisualizationFineTuning?: boolean;
