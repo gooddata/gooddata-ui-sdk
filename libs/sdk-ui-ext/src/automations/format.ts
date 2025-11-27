@@ -32,11 +32,11 @@ import {
 } from "./utils.js";
 
 export const formatAutomationSubtitle = (automation: IAutomationMetadataObject, intl: IntlShape) => {
-    if (automation.schedule) {
-        return automation.schedule.cronDescription;
-    }
     if (automation.alert) {
         return formatAlertSubtitle(intl, automation.alert);
+    }
+    if (automation.schedule) {
+        return automation.schedule.cronDescription;
     }
     return "";
 };

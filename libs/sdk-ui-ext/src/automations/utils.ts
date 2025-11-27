@@ -105,34 +105,11 @@ export const getComparisonOperatorTitle = (operator: IAlertComparisonOperator, i
 
 export function getAnomalyDetectionOperatorTitle(
     title: string,
-    sensitivity: IAlertAnomalyDetectionSensitivity,
-    granularity: IAlertAnomalyDetectionGranularity,
+    _sensitivity: IAlertAnomalyDetectionSensitivity,
+    _granularity: IAlertAnomalyDetectionGranularity,
     intl: IntlShape,
 ): string {
-    const granularityMsgs: Record<IAlertAnomalyDetectionGranularity, string> = {
-        MINUTE: messages.anomalyDetectionGranularityMinute.id,
-        HOUR: messages.anomalyDetectionGranularityHour.id,
-        DAY: messages.anomalyDetectionGranularityDay.id,
-        WEEK: messages.anomalyDetectionGranularityWeek.id,
-        MONTH: messages.anomalyDetectionGranularityMonth.id,
-        QUARTER: messages.anomalyDetectionGranularityQuarter.id,
-        YEAR: messages.anomalyDetectionGranularityYear.id,
-    };
-
-    const sensitivityMsgs: Record<IAlertAnomalyDetectionSensitivity, string> = {
-        LOW: messages.anomalyDetectionSensitivityLow.id,
-        MEDIUM: messages.anomalyDetectionSensitivityMedium.id,
-        HIGH: messages.anomalyDetectionSensitivityHigh.id,
-    };
-
-    return [
-        intl.formatMessage({ id: granularityMsgs[granularity] }),
-        intl.formatMessage({ id: messages.anomalyDetectionOperatorName.id }),
-        title,
-        intl.formatMessage({ id: messages.anomalyDetectionWithName.id }),
-        intl.formatMessage({ id: sensitivityMsgs[sensitivity] }),
-        intl.formatMessage({ id: messages.anomalyDetectionWithSensitivity.id }),
-    ].join(" ");
+    return [title, intl.formatMessage({ id: messages.anomalyDetectionOperator.id })].join(" ");
 }
 
 /**

@@ -41,9 +41,11 @@ export const useAutomationFilters = ({
     selectedFilters,
     onFiltersChange,
     onStoreFiltersChange,
+    disableDateFilters = false,
 }: {
     availableFilters: FilterContextItem[];
     selectedFilters: FilterContextItem[];
+    disableDateFilters?: boolean;
     onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
     onStoreFiltersChange: (shouldStore: boolean, filters: FilterContextItem[]) => void;
 }) => {
@@ -65,8 +67,14 @@ export const useAutomationFilters = ({
     const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
     const visibleFilters = useMemo(() => {
-        return getNonHiddenFilters(selectedFilters, attributeConfigs, dateConfigs, isCommonDateFilterHidden);
-    }, [attributeConfigs, dateConfigs, selectedFilters, isCommonDateFilterHidden]);
+        return getNonHiddenFilters(
+            selectedFilters,
+            attributeConfigs,
+            dateConfigs,
+            isCommonDateFilterHidden,
+            disableDateFilters,
+        );
+    }, [attributeConfigs, dateConfigs, selectedFilters, isCommonDateFilterHidden, disableDateFilters]);
 
     const nonSelectedFilters = useMemo(
         () => getNonSelectedFilters(availableFilters, selectedFilters),

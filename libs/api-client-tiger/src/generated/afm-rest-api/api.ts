@@ -372,6 +372,7 @@ export interface AttributeHeaderAttributeHeader {
      * Attribute value type.
      */
     valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
+    geoAreaConfig?: GeoAreaConfig;
 }
 
 export type AttributeHeaderAttributeHeaderGranularityEnum =
@@ -1298,6 +1299,20 @@ export interface FoundObjects {
      * Reasoning from LLM. Description of how and why the answer was generated.
      */
     reasoning: string;
+}
+
+/**
+ * Configuration specific to geo area labels.
+ */
+export interface GeoAreaConfig {
+    collection: GeoCollection;
+}
+
+export interface GeoCollection {
+    /**
+     * Geo collection identifier.
+     */
+    id: string;
 }
 
 export interface GetQualityIssuesResponse {

@@ -66,9 +66,6 @@ export const messages = defineMessages({
     alertSensitivityHigh: {
         id: "insightAlert.config.sensitivity.high",
     },
-    alertGranularityMinute: {
-        id: "insightAlert.config.granularity.minute",
-    },
     alertGranularityHour: {
         id: "insightAlert.config.granularity.hour",
     },

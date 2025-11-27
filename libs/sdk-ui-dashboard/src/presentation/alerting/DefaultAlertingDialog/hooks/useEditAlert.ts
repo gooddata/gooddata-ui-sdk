@@ -51,7 +51,9 @@ import {
     selectLocale,
     selectSeparators,
     selectSettings,
+    selectTimezone,
     selectUsers,
+    selectWeekStart,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
@@ -130,6 +132,8 @@ export function useEditAlert({
     const separators = useDashboardSelector(selectSeparators);
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const weekStart = useDashboardSelector(selectWeekStart);
+    const timezone = useDashboardSelector(selectTimezone);
 
     // Computed values
     const isNewAlert = !alertToEdit;
@@ -245,11 +249,13 @@ export function useEditAlert({
                           alert as IAutomationMetadataObject,
                           measure,
                           measureFormatMap,
+                          weekStart,
+                          timezone,
                       )
                     : undefined,
             );
         },
-        [measureFormatMap, supportedMeasures],
+        [measureFormatMap, supportedMeasures, weekStart, timezone],
     );
     const onAttributeChange = useCallback(
         (
@@ -327,10 +333,12 @@ export function useEditAlert({
                     supportedMeasures,
                     alert as IAutomationMetadataObject,
                     measure,
+                    weekStart,
+                    timezone,
                 ),
             );
         },
-        [supportedMeasures],
+        [supportedMeasures, weekStart, timezone],
     );
 
     const onComparisonTypeChange = useCallback(
@@ -366,11 +374,23 @@ export function useEditAlert({
         );
     }, []);
 
-    const onGranularityChange = useCallback((granularity: IAlertAnomalyDetectionGranularity) => {
-        setEditedAutomation((alert) =>
-            transformAlertByGranularity(alert as IAutomationMetadataObject, granularity),
-        );
-    }, []);
+    const onGranularityChange = useCallback(
+        (measure: AlertMetric | undefined, granularity: IAlertAnomalyDetectionGranularity) => {
+            if (!measure) {
+                return;
+            }
+            setEditedAutomation((alert) =>
+                transformAlertByGranularity(
+                    supportedMeasures,
+                    alert as IAutomationMetadataObject,
+                    measure,
+                    granularity,
+                    weekStart,
+                ),
+            );
+        },
+        [supportedMeasures, weekStart],
+    );
 
     const onDestinationChange = useCallback(
         (destinationId: string) => {
@@ -488,6 +508,8 @@ export function useEditAlert({
                           updatedAutomationWithAttribute as IAutomationMetadataObject,
                           selectedMeasure,
                           measureFormatMap,
+                          weekStart,
+                          timezone,
                       )
                     : updatedAutomationWithAttribute;
             });
@@ -508,6 +530,9 @@ export function useEditAlert({
             selectedMeasure,
             supportedMeasures,
             measureFormatMap,
+            //
+            weekStart,
+            timezone,
         ],
     );
 

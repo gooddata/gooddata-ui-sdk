@@ -150,6 +150,11 @@ export interface IAutomationMetadataObjectBase {
          * Filters description used for display in all client-related places (e.g. UI, e-mail, exports, etc.)
          */
         visibleFilters?: IAutomationVisibleFilter[];
+        /**
+         * Original schedule of the automation before transformation by alert
+         * anomaly detection, that uses different granularity.
+         */
+        originalSchedule?: IAutomationSchedule;
     };
 }
 
@@ -556,14 +561,7 @@ export type IAlertAnomalyDetectionSensitivity = "LOW" | "MEDIUM" | "HIGH";
 /**
  * @alpha
  */
-export type IAlertAnomalyDetectionGranularity =
-    | "MINUTE"
-    | "HOUR"
-    | "DAY"
-    | "WEEK"
-    | "MONTH"
-    | "QUARTER"
-    | "YEAR";
+export type IAlertAnomalyDetectionGranularity = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
 
 /**
  * @alpha

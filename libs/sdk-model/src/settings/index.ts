@@ -280,6 +280,7 @@ export interface ISettings {
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableMongoDbDataSource?: boolean;
+    enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
 
     /**

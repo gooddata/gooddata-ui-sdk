@@ -445,6 +445,7 @@ export function AlertingDialogRenderer({
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             hideTitle
                                             showAllFilters
+                                            disableDateFilters={isAnomalyDetection(editedAutomation?.alert)}
                                         />
                                     </div>
                                 ) : (
@@ -462,6 +463,9 @@ export function AlertingDialogRenderer({
                                                     onStoreFiltersChange={() => {}}
                                                     isDashboardAutomation={false}
                                                     overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                    disableDateFilters={isAnomalyDetection(
+                                                        editedAutomation?.alert,
+                                                    )}
                                                 />
                                                 <ContentDivider className="gd-divider-with-margin" />
                                             </>
@@ -590,7 +594,12 @@ export function AlertingDialogRenderer({
                                                         <AlertGranularitySelect
                                                             id="alert.granularity"
                                                             selectedGranularity={selectedGranularity}
-                                                            onGranularityChange={onGranularityChange}
+                                                            onGranularityChange={(granularity) => {
+                                                                onGranularityChange(
+                                                                    selectedMeasure,
+                                                                    granularity,
+                                                                );
+                                                            }}
                                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                                         />

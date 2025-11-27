@@ -32,7 +32,9 @@ import {
     selectCurrentUser,
     selectEnableAnomalyDetectionAlert,
     selectEnableExternalRecipients,
+    selectTimezone,
     selectUsers,
+    selectWeekStart,
     useDashboardSelector,
 } from "../../../../../../model/index.js";
 import {
@@ -88,6 +90,8 @@ export const useEditAlert = ({
     const users = useDashboardSelector(selectUsers);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
+    const weekStart = useDashboardSelector(selectWeekStart);
+    const timezone = useDashboardSelector(selectTimezone);
     const intl = useIntl();
 
     const selectedDestination = destinations.find(
@@ -100,9 +104,11 @@ export const useEditAlert = ({
 
     const changeMeasure = useCallback(
         (measure: AlertMetric) => {
-            setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, measureFormatMap));
+            setUpdatedAlert((alert) =>
+                transformAlertByMetric(metrics, alert, measure, measureFormatMap, weekStart, timezone),
+            );
         },
-        [measureFormatMap, metrics],
+        [measureFormatMap, metrics, weekStart, timezone],
     );
 
     const changeAttribute = useCallback(
@@ -132,9 +138,11 @@ export const useEditAlert = ({
 
     const changeAnomalyDetection = useCallback(
         (measure: AlertMetric) => {
-            setUpdatedAlert((alert) => transformAlertByAnomalyDetection(metrics, alert, measure));
+            setUpdatedAlert((alert) =>
+                transformAlertByAnomalyDetection(metrics, alert, measure, weekStart, timezone),
+            );
         },
-        [metrics],
+        [metrics, weekStart, timezone],
     );
 
     const changeRelativeOperator = useCallback(
@@ -169,9 +177,17 @@ export const useEditAlert = ({
         setUpdatedAlert((alert) => transformAlertBySensitivity(alert, value));
     }, []);
 
-    const changeGranularity = useCallback((value: IAlertAnomalyDetectionGranularity) => {
-        setUpdatedAlert((alert) => transformAlertByGranularity(alert, value));
-    }, []);
+    const changeGranularity = useCallback(
+        (measure: AlertMetric | undefined, value: IAlertAnomalyDetectionGranularity) => {
+            if (!measure) {
+                return;
+            }
+            setUpdatedAlert((alert) =>
+                transformAlertByGranularity(metrics, alert, measure, value, weekStart),
+            );
+        },
+        [metrics, weekStart],
+    );
 
     const changeDestination = useCallback(
         (destinationId: string) => {

@@ -284,6 +284,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableStarrocksDataSource,
+            "enableStarrocksDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableStarrocksDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",

@@ -3,6 +3,7 @@
 import { isEqual } from "lodash-es";
 
 import {
+    DateAttributeGranularity,
     IAlertAnomalyDetectionGranularity,
     IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
@@ -20,6 +21,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     ObjRefInScope,
+    WeekStart,
     isArithmeticMeasure,
     isLocalIdRef,
     isMeasureValueFilter,
@@ -29,6 +31,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 
+import { createCronFromGranularity } from "./cron.js";
 import {
     IMeasureFormatMap,
     getAttributeRelatedFilterInfo,
@@ -50,12 +53,16 @@ import {
  * @param alert - alert to transform
  * @param measure - selected metric
  * @param measureFormatMap - all available measures from catalog
+ * @param weekStart - week start for relative date filter
+ * @param timezone - timezone for relative date filter
  */
 export function transformAlertByMetric(
     metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
     measureFormatMap?: IMeasureFormatMap,
+    weekStart?: WeekStart,
+    timezone?: string,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.find(
         (c) =>
@@ -90,7 +97,14 @@ export function transformAlertByMetric(
                 condition,
                 execution,
             },
-            metadata,
+            schedule: {
+                cron: createCronFromGranularity(alert.alert.condition.granularity, weekStart),
+                timezone,
+            },
+            metadata: {
+                ...metadata,
+                originalSchedule: alert.schedule ? { ...alert.schedule } : undefined,
+            },
         };
     }
 
@@ -267,7 +281,15 @@ export function transformAlertByComparisonOperator(
             condition,
             execution,
         },
-        metadata,
+        ...(alert.metadata?.originalSchedule
+            ? {
+                  schedule: alert.metadata.originalSchedule,
+              }
+            : {}),
+        metadata: {
+            ...metadata,
+            originalSchedule: undefined,
+        },
     };
 }
 
@@ -320,7 +342,15 @@ export function transformAlertByRelativeOperator(
             condition,
             execution,
         },
-        metadata,
+        ...(alert.metadata?.originalSchedule
+            ? {
+                  schedule: alert.metadata.originalSchedule,
+              }
+            : {}),
+        metadata: {
+            ...metadata,
+            originalSchedule: undefined,
+        },
     };
 }
 
@@ -328,7 +358,11 @@ export function transformAlertByAnomalyDetection(
     metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
+    weekStart?: WeekStart,
+    timezone?: string,
 ): IAutomationMetadataObject {
+    const periodMeasure = measure.comparators;
+
     const cond = transformToAnomalyDetectionCondition(alert.alert!.condition);
     const condition = {
         ...cond,
@@ -339,7 +373,7 @@ export function transformAlertByAnomalyDetection(
         alert,
         condition,
         measure,
-        undefined,
+        periodMeasure[0],
     );
 
     return {
@@ -349,7 +383,14 @@ export function transformAlertByAnomalyDetection(
             condition,
             execution,
         },
-        metadata,
+        schedule: {
+            cron: createCronFromGranularity(cond.granularity, weekStart),
+            timezone,
+        },
+        metadata: {
+            ...metadata,
+            originalSchedule: alert.schedule ? { ...alert.schedule } : undefined,
+        },
     };
 }
 
@@ -451,7 +492,7 @@ export function transformAlertExecutionByMetric(
             return true;
         }) ?? [];
 
-    if ((condition.type === "relative" || condition.type === "anomalyDetection") && periodMeasure) {
+    if (condition.type === "relative" && periodMeasure) {
         const addedFilters: string[] = [];
 
         // Add filter for period measure only if can be defined
@@ -466,6 +507,50 @@ export function transformAlertExecutionByMetric(
                     to: 0,
                     dataSet: periodMeasure.dataset.ref,
                     granularity: periodMeasure.granularity,
+                    localIdentifier,
+                },
+            };
+
+            originalFilters.unshift(filter);
+            addedFilters.push(localIdentifier);
+        }
+
+        const measures = [measure.measure, periodMeasure.measure];
+        const auxMeasures = [
+            ...collectAllRelatedMeasures(metrics, measure.measure),
+            ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
+            ...collectAllRelatedMeasuresFromFilters(metrics, originalFilters),
+        ];
+
+        return {
+            execution: {
+                attributes: [],
+                ...execution,
+                filters: [...originalFilters],
+                measures,
+                auxMeasures: filterMeasures(auxMeasures, measures),
+            },
+            metadata: {
+                ...alert.metadata,
+                filters: addedFilters.length ? addedFilters : undefined,
+            },
+        };
+    }
+
+    if (condition.type === "anomalyDetection" && periodMeasure) {
+        const addedFilters: string[] = [];
+
+        // Add filter for period measure only if can be defined
+        // For example headline not used this at all
+        if (periodMeasure.dataset) {
+            const gran = DateGranularity[condition.granularity ?? "WEEK"];
+            const localIdentifier = `relativeDateFilter_${objRefToString(periodMeasure.dataset.ref)}_${gran}`;
+            const filter: IRelativeDateFilter = {
+                relativeDateFilter: {
+                    from: 0,
+                    to: 0,
+                    dataSet: periodMeasure.dataset.ref,
+                    granularity: gran,
                     localIdentifier,
                 },
             };
@@ -692,10 +777,26 @@ export function transformAlertBySensitivity(
 }
 
 export function transformAlertByGranularity(
+    metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
+    measure: AlertMetric,
     granularity: IAlertAnomalyDetectionGranularity,
+    weekStart?: WeekStart,
 ): IAutomationMetadataObject {
     if (alert.alert?.condition.type === "anomalyDetection") {
+        const periodMeasure = measure.comparators;
+
+        const { execution, metadata } = transformAlertExecutionByMetric(
+            metrics,
+            alert,
+            {
+                ...alert.alert.condition,
+                granularity,
+            },
+            measure,
+            periodMeasure[0],
+        );
+
         return {
             ...alert,
             alert: {
@@ -704,7 +805,13 @@ export function transformAlertByGranularity(
                     ...alert.alert.condition,
                     granularity,
                 },
+                execution,
             },
+            schedule: {
+                ...alert.schedule,
+                cron: createCronFromGranularity(granularity, weekStart),
+            },
+            metadata,
         };
     }
     return alert;
@@ -755,3 +862,12 @@ function filterMeasures(auxMeasures: IMeasure[], measures: IMeasure[]): IMeasure
         return arr.indexOf(m) === index;
     });
 }
+
+const DateGranularity: { [short in IAlertAnomalyDetectionGranularity]: DateAttributeGranularity } = {
+    HOUR: "GDC.time.hour",
+    DAY: "GDC.time.date",
+    WEEK: "GDC.time.week_us",
+    MONTH: "GDC.time.month",
+    QUARTER: "GDC.time.quarter",
+    YEAR: "GDC.time.year",
+};

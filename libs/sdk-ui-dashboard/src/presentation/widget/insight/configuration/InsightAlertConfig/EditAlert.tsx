@@ -359,7 +359,9 @@ export function EditAlert({
                                     <AlertGranularitySelect
                                         id="alert.granularity"
                                         selectedGranularity={selectedGranularity}
-                                        onGranularityChange={changeGranularity}
+                                        onGranularityChange={(granularity) => {
+                                            changeGranularity(selectedMeasure, granularity);
+                                        }}
                                         overlayPositionType={overlayPositionType}
                                     />
                                 </div>
