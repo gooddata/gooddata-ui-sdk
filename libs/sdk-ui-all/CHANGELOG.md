@@ -1,6 +1,45 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 20 Nov 2025 08:13:37 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Nov 2025 07:59:24 GMT and should not be manually modified.
+
+## 11.11.0
+
+Thu, 27 Nov 2025 07:59:24 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Display location name for geochart as table.
+- sdk-model: Introduce `semanticSearch` into `IGenAIChatInteraction`.
+- sdk-ui-gen-ai: Introduce semantic search results rendering into the AI assistant.
+- sdk-ui-gen-ai: Update suggestion and feedback button sizes
+- sdk-ui-gen-ai: Remove the chatbot answer icon from the AI assistant.
+- sdk-ui-gen-ai: Add semantic search header with icon above search results.
+- sdk-ui-gen-ai: standalone embed gen-ai chat component wrongly load settings
+- sdk-ui-dashboard: frontend integration for anomaly detection alerts
+- sdk-ui-dashboard: The drill-down option is hidden when there are no items
+- sdk-ui-dashboard: Adjust layout so attribute value labels no longer overlap axis labels
+- sdk-ui-dashboard: Enable triggering the key driver analysis popup from chatbot tables
+- api-client-tiger: update client specifications based on current definition in open spec doc
+- sdk-ui-dashboard: align UI workflows with new anomaly detection alert granularity model, apply right date filter and filter out date filters
+- sdk-ui-all: Improve design and behavior of tabs.
+- sdk-ui-all: Improved tab renaming UX.
+- sdk-ui-all: Use a placeholder tab variant when there is only one tab.
+- sdk-ui-all: Improve design of tabs in dashboard dialogs
+- sdk-ui-dashboard: Support alerts on dashboard tabs
+- gdc-ui-all: Support export of dashboards with tabs.
+- sdk-ui-pivot: Fix multiple grand total positioning issues.
+- sdk-ui-dashboard: Fix app crashes caused by missing metric in alert creation.
+- sdk-ui-pivot: Fix pivot table grand total top positioning data loading.
+- sdk-ui-pivot: Fix pivot table with top grand total position and sorting.
+- Add @alpha support for GeoJSON features retrieval in sdk-model, api-client-tiger, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger and sdk-ui.
+- Add @alpha support for GeoAreaChart.
+- Add @alpha support for multiple execution layers in insight definition.
+- gdc-ui-all: Introduce drill to specific tab on dashboards.
+- sdk: Introduce Filter Views per Tab Identifier
+- sdk-ui-dashboard: Update drill app state to be tab-aware
+- sdk-ui-dashboard: New schedule export attachments and fixes.
+- Added support for Slovenian language
+- sdk-ui-gen-ai: fix accessibility issues with feedback
 
 ## 11.10.0
 
