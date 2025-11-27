@@ -2,6 +2,111 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.11.0",
+            "tag": "@gooddata/sdk-ui-all_v11.11.0",
+            "date": "Thu, 27 Nov 2025 07:59:24 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Display location name for geochart as table."
+                    },
+                    {
+                        "comment": "sdk-model: Introduce `semanticSearch` into `IGenAIChatInteraction`."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Introduce semantic search results rendering into the AI assistant."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Update suggestion and feedback button sizes"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Remove the chatbot answer icon from the AI assistant."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add semantic search header with icon above search results."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: standalone embed gen-ai chat component wrongly load settings"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: frontend integration for anomaly detection alerts"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: The drill-down option is hidden when there are no items"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Adjust layout so attribute value labels no longer overlap axis labels"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Enable triggering the key driver analysis popup from chatbot tables"
+                    },
+                    {
+                        "comment": "api-client-tiger: update client specifications based on current definition in open spec doc"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: align UI workflows with new anomaly detection alert granularity model, apply right date filter and filter out date filters"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve design and behavior of tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improved tab renaming UX."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Use a placeholder tab variant when there is only one tab."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve design of tabs in dashboard dialogs"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Support alerts on dashboard tabs"
+                    },
+                    {
+                        "comment": "gdc-ui-all: Support export of dashboards with tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix multiple grand total positioning issues."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix app crashes caused by missing metric in alert creation."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix pivot table grand total top positioning data loading."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix pivot table with top grand total position and sorting."
+                    },
+                    {
+                        "comment": "Add @alpha support for GeoJSON features retrieval in sdk-model, api-client-tiger, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger and sdk-ui."
+                    },
+                    {
+                        "comment": "Add @alpha support for GeoAreaChart."
+                    },
+                    {
+                        "comment": "Add @alpha support for multiple execution layers in insight definition."
+                    },
+                    {
+                        "comment": "gdc-ui-all: Introduce drill to specific tab on dashboards."
+                    },
+                    {
+                        "comment": "sdk: Introduce Filter Views per Tab Identifier"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Update drill app state to be tab-aware"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: New schedule export attachments and fixes."
+                    },
+                    {
+                        "comment": "Added support for Slovenian language"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: fix accessibility issues with feedback"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.10.0",
             "tag": "@gooddata/sdk-ui-all_v11.10.0",
             "date": "Thu, 20 Nov 2025 08:13:37 GMT",
