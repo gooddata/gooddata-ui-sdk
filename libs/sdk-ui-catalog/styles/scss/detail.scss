@@ -28,6 +28,12 @@ $content-font-size: 14px;
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        // UiTabs recently started enforcing a white background, which clashes with the catalog card.
+        // Make the tabs transparent in this view so the surrounding card color shows through.
+        .gd-ui-kit-tabs {
+            background: transparent;
+        }
     }
 
     &__card {

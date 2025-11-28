@@ -86,6 +86,7 @@ $content-font-size: 14px;
         &__select-list {
             .s-without_issues .input-label-text {
                 color: var(--gd-palette-complementary-7);
+                font-style: italic;
             }
         }
 
@@ -225,6 +226,11 @@ $content-font-size: 14px;
 
             &__loading {
                 flex: none;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
             }
 
             &__item {

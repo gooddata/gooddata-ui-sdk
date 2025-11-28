@@ -161,6 +161,7 @@ export {
 
 export type { IPagedResource } from "./common/paging.js";
 export type { IFilterBaseOptions } from "./common/filtering.js";
+export type { QueryMethod } from "./common/query.js";
 
 export type {
     IAnalyticalWorkspace,

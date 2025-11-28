@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
+import type {
     IInsight,
     IMeasure,
     IMeasureMetadataObject,
@@ -12,9 +12,10 @@ import {
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import { IMeasureExpressionToken } from "./measure.js";
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
+import type { IMeasureExpressionToken } from "./measure.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
 
 /**
  * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.
@@ -210,6 +211,16 @@ export interface IMeasuresQuery {
      * @returns measures query
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IMeasuresQuery;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing measures.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     * @returns measures query
+     * @beta
+     */
+    withMethod(method: QueryMethod): IMeasuresQuery;
 
     /**
      * Starts the query.

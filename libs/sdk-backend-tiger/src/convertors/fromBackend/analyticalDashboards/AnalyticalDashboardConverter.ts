@@ -5,13 +5,14 @@ import { invariant } from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
-    JsonApiAnalyticalDashboardOutDocument,
-    JsonApiAnalyticalDashboardOutIncludes,
-    JsonApiAnalyticalDashboardOutList,
-    JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiDashboardPluginOutDocument,
-    JsonApiDashboardPluginOutWithLinks,
-    JsonApiFilterContextOutDocument,
+    type JsonApiAnalyticalDashboardOut,
+    type JsonApiAnalyticalDashboardOutDocument,
+    type JsonApiAnalyticalDashboardOutIncludes,
+    type JsonApiAnalyticalDashboardOutList,
+    type JsonApiAnalyticalDashboardOutWithLinks,
+    type JsonApiDashboardPluginOutDocument,
+    type JsonApiDashboardPluginOutWithLinks,
+    type JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import { IDashboard, IDashboardPlugin, IFilterContext, IListedDashboard, idRef } from "@gooddata/sdk-model";
 
@@ -30,12 +31,13 @@ import {
 } from "./v2/AnalyticalDashboardConverter.js";
 
 export const convertAnalyticalDashboard = (
-    analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
+    analyticalDashboard: JsonApiAnalyticalDashboardOut | JsonApiAnalyticalDashboardOutWithLinks,
     included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IListedDashboard => {
-    const { id, links, attributes, meta, relationships = {} } = analyticalDashboard;
+    const { id, attributes, meta, relationships = {} } = analyticalDashboard;
     const { createdBy, modifiedBy } = relationships;
     const { createdAt, modifiedAt } = attributes;
+    const links = "links" in analyticalDashboard ? analyticalDashboard.links : undefined;
     const isPrivate = meta?.accessInfo?.private ?? false;
 
     // Use type guard for safer access to dashboard content
@@ -44,7 +46,7 @@ export const convertAnalyticalDashboard = (
 
     return {
         ref: idRef(id, "analyticalDashboard"),
-        uri: links!.self,
+        uri: links?.self ?? "",
         identifier: id,
         title: attributes?.title ?? "",
         description: attributes?.description ?? "",

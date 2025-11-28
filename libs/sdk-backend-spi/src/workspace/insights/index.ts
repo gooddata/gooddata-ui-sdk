@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
+import type {
     CatalogItem,
     ICatalogAttribute,
     ICatalogFact,
@@ -17,8 +17,9 @@ import {
     ObjectType,
 } from "@gooddata/sdk-model";
 
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
 
 /**
  * Additional options for the {@link IWorkspaceInsightsService.getVisualizationClasses} function.
@@ -325,6 +326,16 @@ export interface IInsightsQuery {
      * @returns insights query
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IInsightsQuery;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing insights.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     * @returns insights query
+     * @beta
+     */
+    withMethod(method: QueryMethod): IInsightsQuery;
 
     /**
      * Starts the query.

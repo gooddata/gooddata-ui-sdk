@@ -3,7 +3,7 @@
 import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { DropdownTabs } from "./DropdownTabs.js";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
@@ -84,17 +84,21 @@ export const DEFAULT_ITEM_HEIGHT = 28;
  */
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
-function DefaultNoData({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
-    const intl = useIntl();
+type DefaultNoDataProps = (props: { hasNoMatchingData: boolean }) => ReactNode;
 
-    return (
+const DefaultNoDataComponent = injectIntl(
+    ({ hasNoMatchingData, intl }: { hasNoMatchingData: boolean } & WrappedComponentProps) => (
         <NoData
             hasNoMatchingData={hasNoMatchingData}
             notFoundLabel={intl.formatMessage({ id: "gs.noData.noMatchingData" })}
             noDataLabel={intl.formatMessage({ id: "gs.noData.noDataAvailable" })}
         />
-    );
-}
+    ),
+);
+
+const defaultNoData: DefaultNoDataProps = (props) => {
+    return <DefaultNoDataComponent hasNoMatchingData={props.hasNoMatchingData} />;
+};
 
 /**
  * @internal
@@ -144,7 +148,7 @@ export function DropdownList<T>({
     selectedTabId,
     onTabSelect,
 
-    renderNoData = DefaultNoData,
+    renderNoData = defaultNoData,
     footer,
     closeDropdown,
 

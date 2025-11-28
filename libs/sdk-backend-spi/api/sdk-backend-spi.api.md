@@ -11,7 +11,7 @@ import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
-import { FilterContextItem } from '@gooddata/sdk-model';
+import type { FilterContextItem } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import type { GenAIObjectType } from '@gooddata/sdk-model';
@@ -37,25 +37,25 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
-import { IDashboard } from '@gooddata/sdk-model';
-import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
-import { IDashboardBase } from '@gooddata/sdk-model';
-import { IDashboardDefinition } from '@gooddata/sdk-model';
-import { IDashboardFilterView } from '@gooddata/sdk-model';
-import { IDashboardFilterViewSaveRequest } from '@gooddata/sdk-model';
+import type { IDashboard } from '@gooddata/sdk-model';
+import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
+import type { IDashboardBase } from '@gooddata/sdk-model';
+import type { IDashboardDefinition } from '@gooddata/sdk-model';
+import type { IDashboardFilterView } from '@gooddata/sdk-model';
+import type { IDashboardFilterViewSaveRequest } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
-import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
-import { IDashboardPermissions } from '@gooddata/sdk-model';
-import { IDashboardPlugin } from '@gooddata/sdk-model';
-import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
+import type { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import type { IDashboardPermissions } from '@gooddata/sdk-model';
+import type { IDashboardPlugin } from '@gooddata/sdk-model';
+import type { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
-import { IDateFilter } from '@gooddata/sdk-model';
+import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -63,13 +63,13 @@ import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
-import { IExistingDashboard } from '@gooddata/sdk-model';
+import type { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterContext } from '@gooddata/sdk-model';
-import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import type { IFilterContext } from '@gooddata/sdk-model';
+import type { IFilterContextDefinition } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import type { IGenAIChatRouting } from '@gooddata/sdk-model';
@@ -80,11 +80,11 @@ import { IGeoJsonFeature } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IListedDashboard } from '@gooddata/sdk-model';
+import type { IListedDashboard } from '@gooddata/sdk-model';
 import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { IMeasureMetadataObject } from '@gooddata/sdk-model';
-import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import type { IMeasureMetadataObject } from '@gooddata/sdk-model';
+import type { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import type { IMemoryItemDefinition } from '@gooddata/sdk-model';
 import type { IMemoryItemMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
@@ -107,8 +107,8 @@ import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
-import { IScheduledMail } from '@gooddata/sdk-model';
-import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import type { IScheduledMail } from '@gooddata/sdk-model';
+import type { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import type { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
 import type { ISemanticQualityReport } from '@gooddata/sdk-model';
 import type { ISemanticSearchResult } from '@gooddata/sdk-model';
@@ -120,11 +120,11 @@ import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
-import { IVisualizationClass } from '@gooddata/sdk-model';
+import type { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
-import { IWidgetAlert } from '@gooddata/sdk-model';
-import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import type { IWidgetAlert } from '@gooddata/sdk-model';
+import type { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
@@ -374,6 +374,8 @@ export interface IAttributesQuery {
     query(): Promise<IAttributesQueryResult>;
     withFilter(filter: IFilterBaseOptions): IAttributesQuery;
     withInclude(include: string[]): IAttributesQuery;
+    // @beta
+    withMethod(method: QueryMethod): IAttributesQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IAttributesQuery;
     withPage(page: number): IAttributesQuery;
     withSize(size: number): IAttributesQuery;
@@ -662,6 +664,8 @@ export interface IDashboardsQuery {
     withFilter(filter: IFilterBaseOptions): IDashboardsQuery;
     withInclude(include: string[]): IDashboardsQuery;
     withMetaInclude(metaInclude: string[]): IDashboardsQuery;
+    // @beta
+    withMethod(method: QueryMethod): IDashboardsQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IDashboardsQuery;
     withPage(page: number): IDashboardsQuery;
     withSize(size: number): IDashboardsQuery;
@@ -935,6 +939,8 @@ export interface IFactsQuery {
     query(): Promise<IFactsQueryResult>;
     withFilter(filter: IFilterBaseOptions): IFactsQuery;
     withInclude(include: string[]): IFactsQuery;
+    // @beta
+    withMethod(method: QueryMethod): IFactsQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IFactsQuery;
     withPage(page: number): IFactsQuery;
     withSize(size: number): IFactsQuery;
@@ -1107,6 +1113,8 @@ export interface IInsightsQuery {
     query(): Promise<IInsightsQueryResult>;
     withFilter(filter: IFilterBaseOptions): IInsightsQuery;
     withInclude(include: string[]): IInsightsQuery;
+    // @beta
+    withMethod(method: QueryMethod): IInsightsQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IInsightsQuery;
     withPage(page: number): IInsightsQuery;
     withSize(size: number): IInsightsQuery;
@@ -1162,6 +1170,8 @@ export interface IMeasuresQuery {
     query(): Promise<IMeasuresQueryResult>;
     withFilter(filter: IFilterBaseOptions): IMeasuresQuery;
     withInclude(include: string[]): IMeasuresQuery;
+    // @beta
+    withMethod(method: QueryMethod): IMeasuresQuery;
     withOrigin(origin: ObjectOrigin | (string & {})): IMeasuresQuery;
     withPage(page: number): IMeasuresQuery;
     withSize(size: number): IMeasuresQuery;
@@ -2106,6 +2116,9 @@ export function prepareExecution(backend: IAnalyticalBackend, definition: IExecu
 export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @beta
+export type QueryMethod = "GET" | "POST";
 
 // @alpha (undocumented)
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";

@@ -2464,7 +2464,7 @@
         "comment": "Header info for the AI operators in alert configuration"
     },
     "insightAlert.config.anomalyDetection": {
-        "value": "Anomaly detection",
+        "value": "Has an anomaly",
         "comment": "Description and formula for the anomaly detection calculation in alert configuration."
     },
     "insightAlert.config.sensitivity": {
@@ -2484,8 +2484,12 @@
         "comment": "High sensitivity for anomaly detection in alert configuration."
     },
     "insightAlert.config.granularity": {
-        "value": "Aggregate by",
+        "value": "Group by",
         "comment": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.granularity.tooltip": {
+        "value": "Set how the data is aggregated before checking for anomalies.",
+        "comment": "Granularity label tooltip in alert configuration."
     },
     "insightAlert.config.granularity.hour": {
         "value": "Hours",

@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -270,7 +272,10 @@ export type ExportBoundedFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -398,7 +403,10 @@ export type ExportDashboardDateFilterDateFilterGranularityEnum =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour";
+    | "GDC.time.minute_in_hour"
+    | "GDC.time.fiscal_month"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_year";
 
 /**
  * @type ExportDashboardDateFilterDateFilterFrom
@@ -896,7 +904,10 @@ export type ExportRelativeBoundedDateFilterGranularityEnum =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour";
+    | "GDC.time.minute_in_hour"
+    | "GDC.time.fiscal_month"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_year";
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -940,7 +951,10 @@ export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 /**
  * Additional settings.

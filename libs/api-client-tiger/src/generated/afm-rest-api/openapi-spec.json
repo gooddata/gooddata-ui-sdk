@@ -1938,7 +1938,10 @@
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
-                            "QUARTER_OF_YEAR"
+                            "QUARTER_OF_YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
                         ]
                     },
                     "from": {
@@ -2222,7 +2225,10 @@
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
                                 ]
                             },
                             "from": {
@@ -2351,7 +2357,10 @@
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
-                            "QUARTER_OF_YEAR"
+                            "QUARTER_OF_YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
                         ]
                     },
                     "format": {
@@ -2762,7 +2771,10 @@
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
-                            "QUARTER_OF_YEAR"
+                            "QUARTER_OF_YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
                         ]
                     },
                     "format": {
@@ -3325,7 +3337,10 @@
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
                                 ]
                             },
                             "primaryLabel": {
@@ -4241,7 +4256,10 @@
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
                                 ]
                             },
                             "from": {

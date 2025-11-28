@@ -56,7 +56,7 @@ export const commonMetadataObjectModifications =
         const { attributes } = item;
         return builder
             .id(item.id)
-            .uri(item.links!.self)
+            .uri(item.links?.self ?? "")
             .title(attributes?.title || "")
             .description(attributes?.description || "")
             .tags(attributes?.tags || [])
@@ -146,7 +146,7 @@ function convertAttributeDocument(
             .id(attribute.id)
             .title(attribute.attributes?.title || "")
             .description(attribute.attributes?.description || "")
-            .uri(attributeDoc.links!.self)
+            .uri(attributeDoc.links?.self ?? "")
             .displayForms(convertAttributeLabels(attribute, labelMap))
             .isLocked(isInheritedObject(attribute))
             .isHidden(attribute.attributes?.isHidden)
@@ -170,7 +170,7 @@ function convertLabelWithLinks(
             .id(label.id)
             .title(label.attributes?.title || "")
             .description(label.attributes?.description || "")
-            .uri(label.links!.self)
+            .uri(label.links?.self ?? "")
             .attribute(idRef(attributeId, "attribute"))
             .isDefault(isDefault)
             .isPrimary(isPrimary)
@@ -256,7 +256,7 @@ export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObjec
             .title(fact.attributes?.title || "")
             .description(fact.attributes?.description || "")
             .tags(fact.attributes?.tags || [])
-            .uri(factDoc.links!.self)
+            .uri(factDoc.links?.self ?? "")
             .isLocked(isInheritedObject(fact))
             .isHidden(fact.attributes?.isHidden)
             .dataSet(convertDatasetRelationship(fact.relationships, datasetMap)),

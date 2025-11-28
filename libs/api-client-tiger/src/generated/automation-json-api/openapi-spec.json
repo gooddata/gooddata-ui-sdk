@@ -1039,7 +1039,10 @@
                             "DAY_OF_YEAR",
                             "WEEK_OF_YEAR",
                             "MONTH_OF_YEAR",
-                            "QUARTER_OF_YEAR"
+                            "QUARTER_OF_YEAR",
+                            "FISCAL_MONTH",
+                            "FISCAL_QUARTER",
+                            "FISCAL_YEAR"
                         ]
                     },
                     "from": {
@@ -1273,7 +1276,10 @@
                                     "GDC.time.hour",
                                     "GDC.time.hour_in_day",
                                     "GDC.time.minute",
-                                    "GDC.time.minute_in_hour"
+                                    "GDC.time.minute_in_hour",
+                                    "GDC.time.fiscal_month",
+                                    "GDC.time.fiscal_quarter",
+                                    "GDC.time.fiscal_year"
                                 ]
                             },
                             "from": {
@@ -2197,7 +2203,10 @@
                             "GDC.time.hour",
                             "GDC.time.hour_in_day",
                             "GDC.time.minute",
-                            "GDC.time.minute_in_hour"
+                            "GDC.time.minute_in_hour",
+                            "GDC.time.fiscal_month",
+                            "GDC.time.fiscal_quarter",
+                            "GDC.time.fiscal_year"
                         ]
                     },
                     "from": {
@@ -2238,7 +2247,10 @@
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
                                 ]
                             },
                             "from": {

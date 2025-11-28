@@ -53,6 +53,10 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     ["DAY_OF_WEEK"]: "GDC.time.day_in_week",
     ["HOUR_OF_DAY"]: "GDC.time.hour_in_day",
     ["MINUTE_OF_HOUR"]: "GDC.time.minute_in_hour",
+
+    ["FISCAL_YEAR"]: "GDC.time.fiscal_year",
+    ["FISCAL_QUARTER"]: "GDC.time.fiscal_quarter",
+    ["FISCAL_MONTH"]: "GDC.time.fiscal_month",
 };
 
 /**
@@ -85,6 +89,10 @@ const SdkToTigerGranularityMap: SdkToTiger = {
     "GDC.time.day_in_week": "DAY_OF_WEEK",
     "GDC.time.hour_in_day": "HOUR_OF_DAY",
     "GDC.time.minute_in_hour": "MINUTE_OF_HOUR",
+
+    "GDC.time.fiscal_year": "FISCAL_YEAR",
+    "GDC.time.fiscal_quarter": "FISCAL_QUARTER",
+    "GDC.time.fiscal_month": "FISCAL_MONTH",
 
     "GDC.time.day_in_euweek": undefined,
     "GDC.time.euweek_in_quarter": undefined,

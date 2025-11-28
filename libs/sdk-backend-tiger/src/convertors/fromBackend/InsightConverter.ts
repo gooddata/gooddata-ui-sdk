@@ -1,10 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    JsonApiAnalyticalDashboardOutIncludes,
-    JsonApiMetricOutIncludes,
-    JsonApiVisualizationObjectOutList,
-    JsonApiVisualizationObjectOutWithLinks,
+    type JsonApiAnalyticalDashboardOutIncludes,
+    type JsonApiMetricOutIncludes,
+    type JsonApiVisualizationObjectOut,
+    type JsonApiVisualizationObjectOutList,
+    type JsonApiVisualizationObjectOutWithLinks,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
@@ -44,12 +45,13 @@ export const insightFromInsightDefinition = (
 };
 
 export const visualizationObjectsItemToInsight = (
-    visualizationObject: JsonApiVisualizationObjectOutWithLinks,
+    visualizationObject: JsonApiVisualizationObjectOut | JsonApiVisualizationObjectOutWithLinks,
     included: (JsonApiAnalyticalDashboardOutIncludes | JsonApiMetricOutIncludes)[] = [],
 ): IInsight => {
-    const { id, attributes, links, relationships = {} } = visualizationObject;
+    const { id, attributes, relationships = {} } = visualizationObject;
     const { createdBy, modifiedBy } = relationships;
     const { content, title, description, tags, isHidden, createdAt, modifiedAt } = attributes!;
+    const links = "links" in visualizationObject ? visualizationObject.links : undefined;
 
     return insightFromInsightDefinition(
         convertVisualizationObject(
@@ -61,7 +63,7 @@ export const visualizationObjectsItemToInsight = (
             tags,
         ),
         id,
-        links!.self,
+        links?.self ?? "",
         tags,
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isInheritedObject(visualizationObject),

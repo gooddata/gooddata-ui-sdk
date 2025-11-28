@@ -26,6 +26,7 @@ import {
     ScrollablePanel,
     UiIcon,
     UiTabs,
+    UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
 
@@ -587,7 +588,26 @@ export function AlertingDialogRenderer({
                                                     </FormField>
                                                     <FormField
                                                         label={
-                                                            <FormattedMessage id="insightAlert.config.granularity" />
+                                                            <div className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
+                                                                <FormattedMessage id="insightAlert.config.granularity" />
+                                                                <UiTooltip
+                                                                    anchor={
+                                                                        <UiIcon
+                                                                            type="question"
+                                                                            size={12}
+                                                                            color="complementary-6"
+                                                                        />
+                                                                    }
+                                                                    content={
+                                                                        <FormattedMessage id="insightAlert.config.granularity.tooltip" />
+                                                                    }
+                                                                    arrowPlacement="left"
+                                                                    optimalPlacement
+                                                                    offset={10}
+                                                                    width={280}
+                                                                    triggerBy={["hover", "click"]}
+                                                                />
+                                                            </div>
                                                         }
                                                         htmlFor="alert.granularity"
                                                     >

@@ -16,6 +16,19 @@ export {
     type DashboardsApiDeleteEntityAnalyticalDashboardsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
+export {
+    EntitiesApi_SearchEntitiesAnalyticalDashboards,
+    type EntitiesApiSearchEntitiesAnalyticalDashboardsRequest,
+    EntitiesApi_SearchEntitiesVisualizationObjects,
+    type EntitiesApiSearchEntitiesVisualizationObjectsRequest,
+    EntitiesApi_SearchEntitiesMetrics,
+    type EntitiesApiSearchEntitiesMetricsRequest,
+    EntitiesApi_SearchEntitiesAttributes,
+    type EntitiesApiSearchEntitiesAttributesRequest,
+    EntitiesApi_SearchEntitiesFacts,
+    type EntitiesApiSearchEntitiesFactsRequest,
+} from "../../generated/metadata-json-api/index.js";
+
 // EntitiesApi - DashboardPlugins
 export {
     EntitiesApi_CreateEntityDashboardPlugins,

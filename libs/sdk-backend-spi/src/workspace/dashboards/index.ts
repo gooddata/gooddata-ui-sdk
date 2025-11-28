@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
+import type {
     CatalogItem,
     FilterContextItem,
     IDashboard,
@@ -32,9 +32,10 @@ import {
     ObjectType,
 } from "@gooddata/sdk-model";
 
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
-import { IExportResult } from "../execution/export.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
+import type { IExportResult } from "../execution/export.js";
 
 /**
  * Dashboard referenced objects
@@ -909,6 +910,16 @@ export interface IDashboardsQuery {
      * @returns dashboards query
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IDashboardsQuery;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing dashboards.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     * @returns dashboards query
+     * @beta
+     */
+    withMethod(method: QueryMethod): IDashboardsQuery;
 
     /**
      * Starts the dashboards query.

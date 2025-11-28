@@ -473,7 +473,10 @@ export type AutomationBoundedFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 export interface AutomationComparison {
     operator: AutomationComparisonOperatorEnum;
@@ -619,7 +622,10 @@ export type AutomationDashboardDateFilterDateFilterGranularityEnum =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour";
+    | "GDC.time.minute_in_hour"
+    | "GDC.time.fiscal_month"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_year";
 
 /**
  * @type AutomationDashboardDateFilterDateFilterFrom
@@ -1309,7 +1315,10 @@ export type AutomationRelativeBoundedDateFilterGranularityEnum =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour";
+    | "GDC.time.minute_in_hour"
+    | "GDC.time.fiscal_month"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_year";
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -1353,7 +1362,10 @@ export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 export interface AutomationRelativeWrapper {
     relative: AutomationRelative;

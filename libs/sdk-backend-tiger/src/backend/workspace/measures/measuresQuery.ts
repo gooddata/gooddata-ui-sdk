@@ -1,22 +1,32 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { EntitiesApiGetAllEntitiesMetricsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesMetrics } from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    EntitiesApi_GetAllEntitiesMetrics,
+    EntitiesApi_SearchEntitiesMetrics,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IFilterBaseOptions, IMeasuresQuery, IMeasuresQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IFilterBaseOptions,
+    IMeasuresQuery,
+    IMeasuresQueryResult,
+    QueryMethod,
+} from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertMetricsWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
+import { buildSortQuery } from "../../common/sorting.js";
 
 export class MeasuresQuery implements IMeasuresQuery {
     private size = 50;
     private page = 0;
-    private filter: string | undefined = undefined;
-    private sort = {};
+    private filter: IFilterBaseOptions | undefined = undefined;
+    private sort: string[] | undefined = undefined;
     private include: EntitiesApiGetAllEntitiesMetricsRequest["include"] = undefined;
     private origin: ObjectOrigin | undefined = undefined;
+    private method: QueryMethod = "GET";
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -39,14 +49,14 @@ export class MeasuresQuery implements IMeasuresQuery {
     }
 
     withFilter(filter: IFilterBaseOptions): IMeasuresQuery {
-        this.filter = buildFilterQuery(filter);
+        this.filter = filter;
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
     }
 
     withSorting(sort: string[]): IMeasuresQuery {
-        this.sort = { sort };
+        this.sort = sort;
         return this;
     }
 
@@ -61,27 +71,52 @@ export class MeasuresQuery implements IMeasuresQuery {
         return this;
     }
 
+    withMethod(method: QueryMethod): IMeasuresQuery {
+        this.method = method;
+        return this;
+    }
+
     query(): Promise<IMeasuresQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
+                const filterOptions: IFilterBaseOptions = this.filter ?? {};
+                const filterQuery = buildFilterQuery(filterOptions);
+
                 /**
                  * For backend performance reasons, we do not want to ask for paging info each time.
                  */
-                const metaIncludeObj =
-                    this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
+                const metaInclude: EntitiesApiGetAllEntitiesMetricsRequest["metaInclude"] =
+                    this.totalCount === undefined ? (["page"] as const) : undefined;
 
-                const items = await this.authCall((client) =>
-                    EntitiesApi_GetAllEntitiesMetrics(client.axios, client.basePath, {
+                const items = await this.authCall((client) => {
+                    if (this.method === "POST") {
+                        return EntitiesApi_SearchEntitiesMetrics(client.axios, client.basePath, {
+                            workspaceId: this.requestParameters.workspaceId,
+                            origin: this.origin,
+                            entitySearchBody: {
+                                sort: buildSortQuery(this.sort),
+                                filter: filterQuery,
+                                include: this.include,
+                                metaInclude,
+                                page: {
+                                    index: offset / limit,
+                                    size: limit,
+                                },
+                            },
+                        });
+                    }
+
+                    return EntitiesApi_GetAllEntitiesMetrics(client.axios, client.basePath, {
                         ...this.requestParameters,
-                        ...metaIncludeObj,
-                        ...this.sort,
-                        filter: this.filter,
+                        sort: this.sort,
+                        filter: filterQuery,
                         include: this.include,
+                        metaInclude,
                         origin: this.origin,
                         size: limit,
                         page: offset / limit,
-                    }),
-                )
+                    });
+                })
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;

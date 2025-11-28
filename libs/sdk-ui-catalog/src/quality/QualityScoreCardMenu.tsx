@@ -34,7 +34,7 @@ export function QualityScoreCardMenu({ intl, onRunCheck }: Props) {
     return (
         <Dropdown
             className="gd-analytics-catalog__quality-score-card__menu"
-            alignPoints={[{ align: "tr br" }]}
+            alignPoints={[{ align: "br tr" }]}
             renderButton={({ toggleDropdown, ariaAttributes }) => {
                 return (
                     <UiIconButton
@@ -49,6 +49,7 @@ export function QualityScoreCardMenu({ intl, onRunCheck }: Props) {
             renderBody={({ closeDropdown, ariaAttributes }) => {
                 return (
                     <UiListbox
+                        width={120}
                         items={items}
                         onClose={closeDropdown}
                         onSelect={handleAction}

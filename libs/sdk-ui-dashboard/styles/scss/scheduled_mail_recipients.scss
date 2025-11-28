@@ -355,6 +355,12 @@ $input-height: 28px;
         flex: 1;
         min-width: 200px;
     }
+
+    &__content-container-tooltip {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 }
 
 .gd-dashboard-alerting-dialog-form-field-group {
