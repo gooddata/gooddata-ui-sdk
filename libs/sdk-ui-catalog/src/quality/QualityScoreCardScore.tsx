@@ -1,8 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import type { ISemanticQualityIssue } from "@gooddata/sdk-model";
-import { LoadingComponent } from "@gooddata/sdk-ui";
-import { UiIcon } from "@gooddata/sdk-ui-kit";
+import { LoadingSpinner, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
 import { groupQualityIssuesBySeverity } from "./utils.js";
@@ -19,7 +18,7 @@ export function QualityScoreCardScore({ issues, isLoading }: Props) {
     return (
         <div className="gd-analytics-catalog__quality-score-card__score">
             {isLoading ? (
-                <LoadingComponent className="gd-analytics-catalog__quality-score-card__score__loading" />
+                <LoadingSpinner className="gd-analytics-catalog__quality-score-card__score__loading" />
             ) : totalCount > 0 ? (
                 [...severityGroup].map(([severity, issues]) => {
                     if (issues.length === 0) {

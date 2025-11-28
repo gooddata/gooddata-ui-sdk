@@ -30,7 +30,8 @@ export function getDashboardsQuery({
         .withMetaInclude(["permissions"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withMethod("POST");
 }
 
 export function getInsightsQuery({
@@ -56,7 +57,8 @@ export function getInsightsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withMethod("POST");
 }
 
 export function getMetricsQuery({
@@ -82,7 +84,8 @@ export function getMetricsQuery({
         .withInclude(["createdBy", "modifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden });
+        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withMethod("POST");
 }
 
 export function getAttributesQuery({
@@ -109,6 +112,7 @@ export function getAttributesQuery({
             .withSorting(["title,asc"])
             .withOrigin(origin)
             .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
+            .withMethod("POST")
     );
 }
 
@@ -136,6 +140,7 @@ export function getFactsQuery({
             .withSorting(["title,asc"])
             .withOrigin(origin)
             .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
+            .withMethod("POST")
     );
 }
 

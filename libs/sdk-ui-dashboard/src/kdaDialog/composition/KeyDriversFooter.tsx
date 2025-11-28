@@ -30,6 +30,7 @@ export function KeyDriversFooter() {
             return validAttributes.find((a) => a.displayForms.some((df) => areObjRefsEqual(df.ref, attr)));
         })
         .filter(Boolean) as ICatalogAttribute[];
+    const isSearchBarVisible = validAttributes.length > 7;
 
     return (
         <div>
@@ -46,6 +47,7 @@ export function KeyDriversFooter() {
                                 <DropdownInvertableSelect
                                     className="gd-kda-attributes-dropdown"
                                     initialValue={initialAttributes}
+                                    overlayPositionType="fixed"
                                     initialIsInverted={false}
                                     options={validAttributes}
                                     alignPoints={[{ align: "tl bl" }]}
@@ -68,9 +70,11 @@ export function KeyDriversFooter() {
                                             <FormattedMessage id="kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes" />
                                         </div>
                                     }
-                                    renderSearchBar={() => (
-                                        <div className="gd-kda-attributes-dropdown__no-search" />
-                                    )}
+                                    renderSearchBar={
+                                        isSearchBarVisible
+                                            ? undefined
+                                            : () => <div className="gd-kda-attributes-dropdown__no-search" />
+                                    }
                                     renderButton={({ buttonRef, isOpen, toggleDropdown }) => (
                                         <UiButton
                                             ref={buttonRef as RefObject<HTMLButtonElement>}

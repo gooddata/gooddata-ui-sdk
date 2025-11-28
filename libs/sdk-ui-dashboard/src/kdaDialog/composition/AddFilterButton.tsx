@@ -36,6 +36,7 @@ export function AddFilterButton() {
                 ariaLabelledBy,
                 searchAriaLabel,
             }}
+            overlayPositionType="fixed"
             className="gd-kda-attribute-add-dropdown"
             DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
                 <UiTooltip

@@ -1,22 +1,27 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { EntitiesApiGetAllEntitiesFactsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesFacts } from "@gooddata/api-client-tiger/entitiesObjects";
+import {
+    EntitiesApi_GetAllEntitiesFacts,
+    EntitiesApi_SearchEntitiesFacts,
+} from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IFactsQuery, IFactsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
+import { IFactsQuery, IFactsQueryResult, IFilterBaseOptions, QueryMethod } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertFactsWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
+import { buildSortQuery } from "../../common/sorting.js";
 
 export class FactsQuery implements IFactsQuery {
     private size = 50;
     private page = 0;
-    private filter: string | undefined = undefined;
-    private sort = {};
+    private filter: IFilterBaseOptions | undefined = undefined;
+    private sort: string[] | undefined = undefined;
     private include: EntitiesApiGetAllEntitiesFactsRequest["include"] = undefined;
     private origin: ObjectOrigin | undefined = undefined;
+    private method: QueryMethod = "GET";
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -39,14 +44,14 @@ export class FactsQuery implements IFactsQuery {
     }
 
     withFilter(filter: IFilterBaseOptions): IFactsQuery {
-        this.filter = buildFilterQuery(filter);
+        this.filter = filter;
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
     }
 
     withSorting(sort: string[]): IFactsQuery {
-        this.sort = { sort };
+        this.sort = sort;
         return this;
     }
 
@@ -61,27 +66,52 @@ export class FactsQuery implements IFactsQuery {
         return this;
     }
 
+    withMethod(method: QueryMethod): IFactsQuery {
+        this.method = method;
+        return this;
+    }
+
     query(): Promise<IFactsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
+                const filterOptions: IFilterBaseOptions = this.filter ?? {};
+                const filterQuery = buildFilterQuery(filterOptions);
+
                 /**
                  * For backend performance reasons, we do not want to ask for paging info each time.
                  */
-                const metaIncludeObj =
-                    this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
+                const metaInclude: EntitiesApiGetAllEntitiesFactsRequest["metaInclude"] =
+                    this.totalCount === undefined ? (["page"] as const) : undefined;
 
-                const items = await this.authCall((client) =>
-                    EntitiesApi_GetAllEntitiesFacts(client.axios, client.basePath, {
+                const items = await this.authCall((client) => {
+                    if (this.method === "POST") {
+                        return EntitiesApi_SearchEntitiesFacts(client.axios, client.basePath, {
+                            workspaceId: this.requestParameters.workspaceId,
+                            origin: this.origin,
+                            entitySearchBody: {
+                                sort: buildSortQuery(this.sort),
+                                filter: filterQuery,
+                                include: this.include,
+                                metaInclude,
+                                page: {
+                                    index: offset / limit,
+                                    size: limit,
+                                },
+                            },
+                        });
+                    }
+
+                    return EntitiesApi_GetAllEntitiesFacts(client.axios, client.basePath, {
                         ...this.requestParameters,
-                        ...metaIncludeObj,
-                        ...this.sort,
-                        filter: this.filter,
+                        sort: this.sort,
+                        filter: filterQuery,
                         include: this.include,
+                        metaInclude,
                         origin: this.origin,
                         size: limit,
                         page: offset / limit,
-                    }),
-                )
+                    });
+                })
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;

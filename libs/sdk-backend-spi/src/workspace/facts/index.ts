@@ -9,8 +9,9 @@ import {
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
 
 /**
  * Service for querying additional facts data.
@@ -106,6 +107,16 @@ export interface IFactsQuery {
      * @returns facts query
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IFactsQuery;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing facts.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     * @returns facts query
+     * @beta
+     */
+    withMethod(method: QueryMethod): IFactsQuery;
 
     /**
      * Starts the query.

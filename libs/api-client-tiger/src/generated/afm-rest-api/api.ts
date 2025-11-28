@@ -391,7 +391,10 @@ export type AttributeHeaderAttributeHeaderGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 export type AttributeHeaderAttributeHeaderValueTypeEnum =
     | "TEXT"
     | "HYPERLINK"
@@ -471,7 +474,10 @@ export type BoundedFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 /**
  * Change analysis specification.
@@ -923,7 +929,10 @@ export type DateRelativeFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 /**
  * Filter definition type specified by label and values.
@@ -1101,7 +1110,10 @@ export type ElementsResponseGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 /**
  * Links to the execution result.
@@ -1403,7 +1415,10 @@ export type KeyDriversDimensionGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 export type KeyDriversDimensionValueTypeEnum =
     | "TEXT"
     | "HYPERLINK"
@@ -1880,7 +1895,10 @@ export type RelativeDateFilterRelativeDateFilterGranularityEnum =
     | "DAY_OF_YEAR"
     | "WEEK_OF_YEAR"
     | "MONTH_OF_YEAR"
-    | "QUARTER_OF_YEAR";
+    | "QUARTER_OF_YEAR"
+    | "FISCAL_MONTH"
+    | "FISCAL_QUARTER"
+    | "FISCAL_YEAR";
 
 export interface ResolvedLlmEndpoint {
     /**

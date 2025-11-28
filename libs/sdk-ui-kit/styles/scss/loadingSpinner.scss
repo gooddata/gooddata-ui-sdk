@@ -1,6 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 .gd-loading-spinner {
-    animation: spin 1s infinite steps(12);
+    svg {
+        animation: spin 1s infinite steps(12);
+    }
 
     &.small {
         &,

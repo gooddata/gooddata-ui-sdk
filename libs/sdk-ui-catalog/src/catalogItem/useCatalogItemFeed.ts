@@ -251,6 +251,7 @@ function useFirstLoad(
                 setTotalCounts(firstPages.map((page) => page.totalCount));
                 setStatus("success");
             } catch (error) {
+                console.error(error);
                 setError(error as Error);
                 setItems([]);
                 setTotalCounts([]);
@@ -328,6 +329,7 @@ function useNextCallback(
                     setStatus("success");
                     setError(null);
                 } catch (error) {
+                    console.error(error);
                     setStatus("error");
                     setError(error as Error);
                 }

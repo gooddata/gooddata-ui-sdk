@@ -73,6 +73,7 @@ export function mapTypeToKey(
         case "LDM_DEFAULT_LOCALE":
         case "ENABLE_DRILL_TO_URL_BY_DEFAULT":
         case "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS":
+        case "MAX_ZOOM_LEVEL":
         case "METRIC_FORMAT_OVERRIDE":
         case "SORT_CASE_SENSITIVE":
         case "FISCAL_YEAR":

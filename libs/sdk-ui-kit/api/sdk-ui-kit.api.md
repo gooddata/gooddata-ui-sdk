@@ -2113,7 +2113,7 @@ export interface IDropdownInvertableSelectProps<T> {
     initialValue?: T[];
     onChange: (selectedItems: T[], isInverted: boolean) => void;
     options: T[];
-    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
     renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
     renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;

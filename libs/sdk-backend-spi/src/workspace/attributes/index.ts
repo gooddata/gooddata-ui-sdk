@@ -11,9 +11,10 @@ import {
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import { IElementsQueryFactory } from "./elements/index.js";
-import { IFilterBaseOptions } from "../../common/filtering.js";
-import { IPagedResource } from "../../common/paging.js";
+import type { IElementsQueryFactory } from "./elements/index.js";
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
 
 /**
  * @beta
@@ -209,6 +210,16 @@ export interface IAttributesQuery {
      * @returns attributes query
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IAttributesQuery;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing attributes.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     * @returns attributes query
+     * @beta
+     */
+    withMethod(method: QueryMethod): IAttributesQuery;
 
     /**
      * Starts the query.

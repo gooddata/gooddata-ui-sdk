@@ -23,12 +23,17 @@ export function QualityScoreCard() {
         setQualityCodes({ values: codes, isInverted: false });
     };
 
+    const handleRunCheck = () => {
+        setQualityCodes({ values: [], isInverted: true });
+        createQualityIssuesCalculation();
+    };
+
     return (
         <div className="gd-analytics-catalog__quality-score-card">
             <span className="gd-analytics-catalog__quality-score-card__title">
                 {intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.title" })}
             </span>
-            <QualityScoreCardMenu intl={intl} onRunCheck={createQualityIssuesCalculation} />
+            <QualityScoreCardMenu intl={intl} onRunCheck={handleRunCheck} />
             <QualityScoreCardScore issues={issues} isLoading={isLoading} />
             <QualityScoreCardAction
                 intl={intl}

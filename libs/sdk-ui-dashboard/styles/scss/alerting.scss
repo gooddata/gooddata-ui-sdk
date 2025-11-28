@@ -425,6 +425,8 @@
 // TODO: support "invisible" styling of the Button on sdk-ui-kit component level.
 // For now overload because of clash with other config panel css
 .gd-button.gd-alert-destination-select__button,
+.gd-edit-alert-sensitivity-select__button,
+.gd-edit-alert-granularity-select__button,
 .gd-button.gd-alert-comparison-select__button {
     margin-top: 0;
     padding-left: 5px;

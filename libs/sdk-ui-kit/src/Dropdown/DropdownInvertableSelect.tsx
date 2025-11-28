@@ -19,6 +19,7 @@ import {
 } from "../List/InvertableSelect/InvertableSelect.js";
 import { useInvertableSelectionStatusText } from "../List/InvertableSelect/InvertableSelectSelectionStatus.js";
 import { SeparatorLine } from "../SeparatorLine/SeparatorLine.js";
+import { OverlayPositionType } from "../typings/overlay.js";
 import type { IAlignPoint } from "../typings/positioning.js";
 
 /**
@@ -110,10 +111,15 @@ export interface IDropdownInvertableSelectProps<T> {
      */
     renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
 
-    /*
+    /**
      * Render function for the actions.
      */
     renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
+
+    /**
+     * Overlay position type.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 const messages = defineMessages({
@@ -142,6 +148,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         initialValue,
         initialIsInverted,
         initialSearchString,
+        overlayPositionType,
         header,
         renderStatusBar,
         renderSearchBar,
@@ -208,6 +215,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         <Dropdown
             className={className}
             alignPoints={alignPoints}
+            overlayPositionType={overlayPositionType}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
                     resetTemporarySelection();

@@ -2,16 +2,23 @@
 
 import {
     EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
+    EntitiesApi_SearchEntitiesAnalyticalDashboards,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import type { IDashboardsQuery, IDashboardsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
+import type {
+    IDashboardsQuery,
+    IDashboardsQueryResult,
+    IFilterBaseOptions,
+    QueryMethod,
+} from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
+import { buildSortQuery } from "../../common/sorting.js";
 
 type DashboardInclude = NonNullable<EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"]>[number];
 
@@ -23,10 +30,11 @@ export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;
     private page = 0;
     private filter: IFilterBaseOptions | undefined = undefined;
-    private sort = {};
+    private sort: string[] | undefined = undefined;
     private include: DashboardInclude[] | undefined = undefined;
     private metaInclude: DashboardMetaInclude[] | undefined = undefined;
     private origin: ObjectOrigin | undefined = undefined;
+    private method: QueryMethod = "GET";
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -56,7 +64,7 @@ export class DashboardsQuery implements IDashboardsQuery {
     }
 
     withSorting(sort: string[]): IDashboardsQuery {
-        this.sort = { sort };
+        this.sort = sort;
         return this;
     }
 
@@ -77,16 +85,15 @@ export class DashboardsQuery implements IDashboardsQuery {
         return this;
     }
 
+    withMethod(method: QueryMethod): IDashboardsQuery {
+        this.method = method;
+        return this;
+    }
+
     query(): Promise<IDashboardsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const filter: IFilterBaseOptions = this.filter ?? {};
-                const metaIncludeSet: Set<DashboardMetaInclude> = new Set([
-                    "accessInfo",
-                    // For backend performance reasons, we do not want to ask for paging info each time.
-                    ...(this.totalCount === undefined ? ["page" as const] : []),
-                    ...(this.metaInclude ?? []),
-                ]);
 
                 // NOTE: Dashboards API doesn't support `isHidden` filter parameter yet.
                 // When filtering for hidden dashboards, return empty results immediately
@@ -98,18 +105,43 @@ export class DashboardsQuery implements IDashboardsQuery {
                     delete filter.isHidden;
                 }
 
-                const items = await this.authCall((client) =>
-                    DashboardsApi_GetAllEntitiesAnalyticalDashboards(client.axios, client.basePath, {
+                const filterQuery = buildFilterQuery(filter);
+                const metaIncludeSet: Set<DashboardMetaInclude> = new Set([
+                    "accessInfo",
+                    // For backend performance reasons, we do not want to ask for paging info each time.
+                    ...(this.totalCount === undefined ? ["page" as const] : []),
+                    ...(this.metaInclude ?? []),
+                ]);
+                const metaInclude = [...metaIncludeSet];
+
+                const items = await this.authCall((client) => {
+                    if (this.method === "POST") {
+                        return EntitiesApi_SearchEntitiesAnalyticalDashboards(client.axios, client.basePath, {
+                            workspaceId: this.requestParameters.workspaceId,
+                            origin: this.origin,
+                            entitySearchBody: {
+                                sort: buildSortQuery(this.sort),
+                                filter: filterQuery,
+                                include: this.include,
+                                metaInclude,
+                                page: {
+                                    index: offset / limit,
+                                    size: limit,
+                                },
+                            },
+                        });
+                    }
+                    return DashboardsApi_GetAllEntitiesAnalyticalDashboards(client.axios, client.basePath, {
                         ...this.requestParameters,
-                        ...this.sort,
-                        filter: buildFilterQuery(filter),
+                        sort: this.sort,
+                        filter: filterQuery,
                         include: this.include,
-                        metaInclude: [...metaIncludeSet],
+                        metaInclude,
                         origin: this.origin,
                         size: limit,
                         page: offset / limit,
-                    }),
-                )
+                    });
+                })
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;

@@ -1,6 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { JsonApiAnalyticalDashboardOutMeta, JsonApiDatasetOutMetaOrigin } from "@gooddata/api-client-tiger";
+import {
+    JsonApiAnalyticalDashboardOutMeta,
+    JsonApiDatasetOutMetaOrigin,
+    JsonApiDatasetOutMetaOriginOriginTypeEnum,
+} from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {
     id: string;
@@ -22,7 +26,9 @@ export function getObjectOrigin<T = unknown>(obj: JsonApiMetadataLikeObject<T>):
 /**
  * @internal
  */
-export interface OriginInfoWithId extends JsonApiDatasetOutMetaOrigin {
+export interface OriginInfoWithId {
+    originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
+    originId: string;
     id: string;
 }
 

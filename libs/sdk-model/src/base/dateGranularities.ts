@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * All possible date dataset attribute granularities.
@@ -32,7 +32,10 @@ export type DateAttributeGranularity =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour";
+    | "GDC.time.minute_in_hour"
+    | "GDC.time.fiscal_year"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_month";
 
 /**
  * Special granularity used to indicate there should be no date filtering for the given dimension.
