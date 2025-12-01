@@ -53,9 +53,8 @@ export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateF
             }
 
             const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
-            return (
-                overridesByTab[resolvedActiveTabId] ?? overridesByTab[Object.keys(overridesByTab)[0]] ?? []
-            );
+
+            return overridesByTab[resolvedActiveTabId] ?? [];
         },
     );
 

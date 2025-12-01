@@ -11,6 +11,14 @@ github.com/gooddata/gooddata-neobackstop v0.1.0 h1:wOA5OdWBEMU6/GkI/k6Hwi4Qrm/0g
 github.com/gooddata/gooddata-neobackstop v0.1.0/go.mod h1:HrhD1YpnskZCGLQZOwRuGdxCL1qj/s6uW/dlUAZ6GsM=
 github.com/gooddata/gooddata-neobackstop v0.2.0 h1:hJsHi6B4S1NaPIP6KfA635ri1T9V8z9jP3MAkUYMKmY=
 github.com/gooddata/gooddata-neobackstop v0.2.0/go.mod h1:HrhD1YpnskZCGLQZOwRuGdxCL1qj/s6uW/dlUAZ6GsM=
+github.com/gooddata/gooddata-neobackstop v0.3.0 h1:zfKAbyKLT6eyum1k4/ATXdLMf2DO1HplmNnY7fl3A0U=
+github.com/gooddata/gooddata-neobackstop v0.3.0/go.mod h1:HrhD1YpnskZCGLQZOwRuGdxCL1qj/s6uW/dlUAZ6GsM=
+github.com/gooddata/gooddata-neobackstop v0.4.0 h1:ztvs70Xb3hEp4WlHLvHI4XyEH2gNDSBefa/NHngrpoQ=
+github.com/gooddata/gooddata-neobackstop v0.4.0/go.mod h1:JR8ggWmexp+s18jiWqmrZt23dRLec+tmcz5HHIiwCCI=
+github.com/gooddata/gooddata-neobackstop v0.5.0 h1:q+CDVcR22VIcnOuVZ2r6DCMfyJMuxNH6G9H80qIgbjg=
+github.com/gooddata/gooddata-neobackstop v0.5.0/go.mod h1:JR8ggWmexp+s18jiWqmrZt23dRLec+tmcz5HHIiwCCI=
+github.com/gooddata/gooddata-neobackstop v0.5.1 h1:AxqApw/UQ4+Z1vM7xnKwT77ZenvyD79kxcpxt5QhnRA=
+github.com/gooddata/gooddata-neobackstop v0.5.1/go.mod h1:JR8ggWmexp+s18jiWqmrZt23dRLec+tmcz5HHIiwCCI=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/mitchellh/go-ps v1.0.0 h1:i6ampVEEF4wQFF+bkYfwYgY+F/uYJDktmvLPf7qIgjc=
 github.com/mitchellh/go-ps v1.0.0/go.mod h1:J4lOc8z8yJs6vUwklHw2XEIiT4z4C40KtWVN3nvg8Pg=

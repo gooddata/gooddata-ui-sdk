@@ -1071,6 +1071,7 @@ export interface IAutomationMetadataObjectBase {
     };
     metadata?: {
         widget?: string;
+        targetTabIdentifier?: string;
         filters?: string[];
         visibleFilters?: IAutomationVisibleFilter[];
         originalSchedule?: IAutomationSchedule;

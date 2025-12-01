@@ -259,6 +259,7 @@ export {
     selectKpiWidgetPlaceholderPath,
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
+    selectWidgetLocalIdToTabIdMap,
 } from "./tabs/layout/layoutSelectors.js";
 export type { DateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterConfigState.js";
 

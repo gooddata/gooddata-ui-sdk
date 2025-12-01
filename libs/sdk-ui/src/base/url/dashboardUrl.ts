@@ -3,7 +3,11 @@
 /**
  * @internal
  */
-export type IDashboardUrlBuilder = (workspaceId?: string, dashboardId?: string) => string | undefined;
+export type IDashboardUrlBuilder = (
+    workspaceId?: string,
+    dashboardId?: string,
+    tabId?: string,
+) => string | undefined;
 
 /**
  * @internal
@@ -12,6 +16,7 @@ export type IWidgetUrlBuilder = (
     workspaceId?: string,
     dashboardId?: string,
     widgetId?: string,
+    tabId?: string,
 ) => string | undefined;
 
 /**
@@ -26,22 +31,32 @@ export type IAutomationUrlBuilder = (
 /**
  * @internal
  */
-export const buildDashboardUrl: IDashboardUrlBuilder = (workspaceId, dashboardId) => {
+export const buildDashboardUrl: IDashboardUrlBuilder = (workspaceId, dashboardId, tabId) => {
     if (!workspaceId || !dashboardId) {
         return undefined;
     }
+
+    if (tabId) {
+        return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}/tab/${tabId}`;
+    }
+
     return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}`;
 };
 
 /**
  * @internal
  */
-export const buildWidgetUrl: IWidgetUrlBuilder = (workspaceId, dashboardId, widgetId) => {
+export const buildWidgetUrl: IWidgetUrlBuilder = (workspaceId, dashboardId, widgetId, tabId) => {
     const dashboardUrl = buildDashboardUrl(workspaceId, dashboardId);
 
     if (!dashboardUrl || !widgetId) {
         return undefined;
     }
+
+    if (tabId) {
+        return `${dashboardUrl}/tab/${tabId}/?widgetId=${widgetId}`;
+    }
+
     return `${dashboardUrl}?widgetId=${widgetId}`;
 };
 

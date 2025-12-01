@@ -140,6 +140,11 @@ export interface IAutomationMetadataObjectBase {
          * (scheduled exports widget local identifier is stored in exportDefinition)
          */
         widget?: string;
+        /**
+         * Local identifier of the target tab.
+         * Helps to switch to the tab containing the widget when opening the automation
+         */
+        targetTabIdentifier?: string;
 
         /**
          * Filters that are used in the alerting configuration when creating a condition with some measure.

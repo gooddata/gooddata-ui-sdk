@@ -54,6 +54,7 @@ export {
 export { clearThreadAction, newMessageAction } from "./store/index.js";
 export { makeUserMessage, makeTextContents } from "./model.js";
 export type { LinkHandlerEvent } from "./components/ConfigContext.js";
+export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 
 //customization
 

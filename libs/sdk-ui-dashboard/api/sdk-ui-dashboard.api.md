@@ -10111,6 +10111,9 @@ export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undef
 export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
 
 // @alpha
+export const selectWidgetLocalIdToTabIdMap: DashboardSelector<Record<string, string>>;
+
+// @alpha
 export const selectWidgetPathByRef: (ref: ObjRef) => DashboardSelector<ILayoutItemPath>;
 
 // @internal (undocumented)

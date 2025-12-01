@@ -68,4 +68,10 @@
 .gd-ui-ext-automation-menu-item {
     -webkit-font-smoothing: antialiased;
     min-width: 150px;
+
+    &--disabled {
+        span {
+            color: var(--gd-palette-complementary-4);
+        }
+    }
 }

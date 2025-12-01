@@ -143,6 +143,9 @@ export const messages = defineMessages({
     menuLabel: {
         id: "automations.menu.ariaLabel",
     },
+    menuEditUnavailable: {
+        id: "automations.menu.edit.unavailable",
+    },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",
     },
