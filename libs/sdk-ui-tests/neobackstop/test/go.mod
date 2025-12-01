@@ -1,9 +1,9 @@
 module neobackstop
 
-go 1.25.3
+go 1.25.4
 
 require (
-	github.com/gooddata/gooddata-neobackstop v0.2.0
+	github.com/gooddata/gooddata-neobackstop v0.5.1
 	github.com/playwright-community/playwright-go v0.5200.1
 )
 

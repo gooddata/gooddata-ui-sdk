@@ -77,7 +77,11 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnDashboard),
                 getTextContent: (item) => formatCellValue(item.dashboard?.title),
                 getTextHref: (item) =>
-                    dashboardUrlBuilder(getWorkspaceId(item, workspace), item.dashboard?.id),
+                    dashboardUrlBuilder(
+                        getWorkspaceId(item, workspace),
+                        item.dashboard?.id,
+                        item.metadata?.targetTabIdentifier,
+                    ),
                 width: DEFAULT_COLUMN_WIDTHS.DASHBOARD,
             },
             ["workspace"]: {
@@ -93,6 +97,7 @@ export const useAutomationColumns = ({
                         getWorkspaceId(item, workspace),
                         item.dashboard?.id,
                         getWidgetId(item, type),
+                        item.metadata?.targetTabIdentifier,
                     );
                 },
                 width: DEFAULT_COLUMN_WIDTHS.WIDGET,

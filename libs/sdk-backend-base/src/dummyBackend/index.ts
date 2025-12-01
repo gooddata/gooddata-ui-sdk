@@ -121,6 +121,7 @@ import {
     IExecutionConfig,
     IExecutionDefinition,
     IInsightDefinition,
+    ILlmEndpointBase,
     ILlmEndpointOpenAI,
     IMeasure,
     IMeasureDefinitionType,
@@ -417,6 +418,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
                 async semanticSearchIndex(): Promise<void> {
+                    throw new NotSupported("not supported");
+                },
+                async getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
                     throw new NotSupported("not supported");
                 },
                 getMemoryItems() {

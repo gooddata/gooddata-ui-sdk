@@ -625,3 +625,32 @@ export const selectTabLocalIdentifierByWidgetRef: (
         return undefined;
     }),
 );
+
+/**
+ * Maps widget local identifiers to the tab that contains them.
+ *
+ * @alpha
+ */
+export const selectWidgetLocalIdToTabIdMap: DashboardSelector<Record<string, string>> = createSelector(
+    selectTabs,
+    (tabs) => {
+        if (!tabs) {
+            return {};
+        }
+
+        return tabs.reduce<Record<string, string>>((acc, tab) => {
+            if (!tab.localIdentifier || !tab.layout?.layout) {
+                return acc;
+            }
+
+            const widgets = getLayoutWidgets(tab.layout.layout);
+            widgets.forEach((widget) => {
+                if (widget.localIdentifier) {
+                    acc[widget.localIdentifier] = tab.localIdentifier as string;
+                }
+            });
+
+            return acc;
+        }, {});
+    },
+);

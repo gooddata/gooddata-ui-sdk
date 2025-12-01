@@ -31,6 +31,7 @@ export function createDefaultAlert(
     widgetLocalId?: string,
     dashboardId?: string,
     widgetName?: string,
+    targetTabIdentifier?: string,
 ): IAutomationMetadataObjectDefinition | undefined {
     if (!measure) {
         return undefined;
@@ -76,6 +77,7 @@ export function createDefaultAlert(
         metadata: {
             widget: widgetLocalId,
             visibleFilters: visibleWidgetFilters,
+            ...(targetTabIdentifier ? { targetTabIdentifier } : {}),
         },
         details: {
             widgetName: widgetName,

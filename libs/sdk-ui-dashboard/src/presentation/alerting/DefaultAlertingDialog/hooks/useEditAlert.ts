@@ -46,6 +46,7 @@ import {
     selectDashboardId,
     selectEnableAlertAttributes,
     selectEnableComparisonInAlerting,
+    selectEnableDashboardTabs,
     selectEnableExternalRecipients,
     selectExecutionResultByRef,
     selectLocale,
@@ -54,6 +55,7 @@ import {
     selectTimezone,
     selectUsers,
     selectWeekStart,
+    selectWidgetLocalIdToTabIdMap,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
@@ -135,6 +137,13 @@ export function useEditAlert({
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
 
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
+
+    // Determine target tab ID if tabs are enabled and widget is present
+    const targetTabIdentifier =
+        enableDashboardTabs && widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
+
     // Computed values
     const isNewAlert = !alertToEdit;
 
@@ -198,6 +207,7 @@ export function useEditAlert({
                 widget?.localIdentifier,
                 dashboardId,
                 (widget as IInsightWidget)?.title,
+                targetTabIdentifier,
             ),
     );
 

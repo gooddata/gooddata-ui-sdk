@@ -750,7 +750,7 @@ export interface ICorrelationProviderProps {
 }
 
 // @internal (undocumented)
-export type IDashboardUrlBuilder = (workspaceId?: string, dashboardId?: string) => string | undefined;
+export type IDashboardUrlBuilder = (workspaceId?: string, dashboardId?: string, tabId?: string) => string | undefined;
 
 // @public
 export interface IDataAccessMethods {
@@ -2008,7 +2008,7 @@ export interface IVisualizationProps {
 }
 
 // @internal (undocumented)
-export type IWidgetUrlBuilder = (workspaceId?: string, dashboardId?: string, widgetId?: string) => string | undefined;
+export type IWidgetUrlBuilder = (workspaceId?: string, dashboardId?: string, widgetId?: string, tabId?: string) => string | undefined;
 
 // @internal
 export interface IWithExecution<T> {

@@ -1,9 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { IAutomationMetadataObject, IWidget, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
 
-import { selectEnableScheduling, selectInsights, selectWidgets, uiActions } from "../../store/index.js";
+import { switchDashboardTab } from "../../commands/index.js";
+import {
+    selectActiveTabLocalIdentifier,
+    selectEnableDashboardTabs,
+    selectEnableScheduling,
+    selectInsights,
+    selectWidgets,
+    uiActions,
+} from "../../store/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 
@@ -24,6 +33,8 @@ export const useDashboardScheduledEmailsCommands = () => {
     const { automationInteraction } = useDashboardUserInteraction();
     const widgets = useDashboardSelector(selectWidgets);
     const insights = useDashboardSelector(selectInsights);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
     // Feature Flags
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
@@ -34,6 +45,11 @@ export const useDashboardScheduledEmailsCommands = () => {
             const { widget, openedFrom, schedule } = options;
 
             if (isScheduledEmailingEnabled) {
+                const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
+                if (enableDashboardTabs && targetTabIdentifier && targetTabIdentifier !== activeTabId) {
+                    dispatch(switchDashboardTab(targetTabIdentifier));
+                }
+
                 dispatch(
                     uiActions.openScheduleEmailDialog({
                         ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
@@ -51,7 +67,15 @@ export const useDashboardScheduledEmailsCommands = () => {
                 });
             }
         },
-        [automationInteraction, dispatch, insights, isScheduledEmailingEnabled, widgets],
+        [
+            activeTabId,
+            automationInteraction,
+            dispatch,
+            enableDashboardTabs,
+            insights,
+            isScheduledEmailingEnabled,
+            widgets,
+        ],
     );
 
     const closeScheduleEmailingDialog = useCallback(

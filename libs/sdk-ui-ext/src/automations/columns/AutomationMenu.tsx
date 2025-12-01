@@ -9,6 +9,7 @@ import {
     ItemsWrapper,
     SingleSelectListItem,
     UiFocusManager,
+    UiTooltip,
     makeMenuKeyboardNavigation,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
@@ -24,6 +25,8 @@ interface IAutomationMenuItem {
     label: string;
     onClick: () => void;
     withSeparator?: boolean;
+    disabled?: boolean;
+    tooltip?: string;
 }
 
 export function AutomationMenu({
@@ -61,6 +64,9 @@ export function AutomationMenu({
     const { addSuccess } = useToastMessage();
     const menuWrapperRef = useRef<HTMLDivElement>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
+    const editActionUnavailable = useMemo(() => {
+        return !item.dashboard?.id;
+    }, [item.dashboard?.id]);
 
     const setMenuItemRef = useCallback(
         (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => {
@@ -74,9 +80,12 @@ export function AutomationMenu({
     );
 
     const onEdit = useCallback(() => {
+        if (editActionUnavailable) {
+            return;
+        }
         closeDropdown();
         editAutomation(item, workspace, item.dashboard?.id);
-    }, [editAutomation, workspace, item, closeDropdown]);
+    }, [editAutomation, workspace, item, closeDropdown, editActionUnavailable]);
 
     const onDelete = useCallback(() => {
         closeDropdown();
@@ -133,6 +142,8 @@ export function AutomationMenu({
                 id: "edit",
                 label: intl.formatMessage(messages.menuEdit),
                 onClick: onEdit,
+                disabled: editActionUnavailable,
+                tooltip: editActionUnavailable ? intl.formatMessage(messages.menuEditUnavailable) : undefined,
             });
         }
 
@@ -181,6 +192,7 @@ export function AutomationMenu({
         isSubscribed,
         canResume,
         canPause,
+        editActionUnavailable,
         intl,
         onEdit,
         onUnsubscribe,
@@ -259,17 +271,27 @@ function AutomationMenuItem({ menuItem, setMenuItemRef }: AutomationMenuItemProp
                     }}
                 />
             ) : null}
-            <SingleSelectListItem
-                ref={setMenuItemRef(menuItem.id)}
-                className={b()}
-                title={menuItem.label}
-                onClick={menuItem.onClick}
-                elementType="button"
-                accessibilityConfig={{
-                    role: "menuitem",
-                    ariaDisabled: false,
-                    ariaHasPopup: "dialog",
-                }}
+            <UiTooltip
+                content={menuItem.tooltip}
+                triggerBy={["hover", "focus"]}
+                arrowPlacement="right"
+                disabled={!menuItem.tooltip}
+                anchor={
+                    <SingleSelectListItem
+                        ref={setMenuItemRef(menuItem.id)}
+                        className={b({
+                            disabled: menuItem.disabled,
+                        })}
+                        title={menuItem.label}
+                        onClick={menuItem.onClick}
+                        elementType="button"
+                        accessibilityConfig={{
+                            role: "menuitem",
+                            ariaDisabled: menuItem.disabled,
+                            ariaHasPopup: "dialog",
+                        }}
+                    />
+                }
             />
         </>
     );

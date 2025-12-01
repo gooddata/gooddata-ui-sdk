@@ -54,3 +54,9 @@ export {
     ActionsApi_WorkspaceResolveSettings,
     type ActionsApiWorkspaceResolveSettingsRequest,
 } from "../../generated/metadata-json-api/index.js";
+
+// Execution Result API
+export {
+    ActionsApi_ResolveLlmEndpoints,
+    type ActionsApiResolveLlmEndpointsRequest,
+} from "../../generated/afm-rest-api/index.js";

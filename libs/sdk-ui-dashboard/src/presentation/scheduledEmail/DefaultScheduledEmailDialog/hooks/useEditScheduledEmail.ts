@@ -10,6 +10,7 @@ import {
     DashboardAttachmentType,
     FilterContextItem,
     IAutomationMetadataObject,
+    IAutomationMetadataObjectBase,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
     IAutomationVisibleFilter,
@@ -51,9 +52,11 @@ import {
     selectDashboardId,
     selectDashboardTitle,
     selectEnableAutomationEvaluationMode,
+    selectEnableDashboardTabs,
     selectEnableExternalRecipients,
     selectTimezone,
     selectUsers,
+    selectWidgetLocalIdToTabIdMap,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import {
@@ -137,6 +140,12 @@ export function useEditScheduledEmail({
 
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
+
+    // Determine target tab ID if tabs are enabled and widget is present
+    const targetTabId =
+        enableDashboardTabs && widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     const effectiveWidgetFilters = enableAutomationFilterContext
         ? getAppliedWidgetFilters(
@@ -184,6 +193,7 @@ export function useEditScheduledEmail({
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                           enableNewScheduledExport,
                           evaluationMode: "PER_RECIPIENT",
+                          targetTabId,
                       }
                     : {
                           timezone,
@@ -824,6 +834,7 @@ function newAutomationMetadataObjectDefinition({
     visibleFiltersMetadata,
     enableNewScheduledExport,
     evaluationMode,
+    targetTabId,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -837,6 +848,7 @@ function newAutomationMetadataObjectDefinition({
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
     enableNewScheduledExport: boolean;
     evaluationMode: AutomationEvaluationMode;
+    targetTabId?: string;
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -857,13 +869,23 @@ function newAutomationMetadataObjectDefinition({
                   format: "PDF",
               });
 
-    const metadataObj = visibleFiltersMetadata
+    let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } = visibleFiltersMetadata
         ? {
               metadata: {
                   visibleFilters: visibleFiltersMetadata,
               },
           }
         : {};
+
+    if (targetTabId) {
+        metadataObj = {
+            ...metadataObj,
+            metadata: {
+                ...metadataObj.metadata,
+                targetTabIdentifier: targetTabId,
+            },
+        };
+    }
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",

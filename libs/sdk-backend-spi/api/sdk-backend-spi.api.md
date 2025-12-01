@@ -81,6 +81,7 @@ import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
+import type { ILlmEndpointBase } from '@gooddata/sdk-model';
 import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import type { IMeasureMetadataObject } from '@gooddata/sdk-model';
@@ -1032,6 +1033,7 @@ export interface IGenAIService {
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     getChatThread(): IChatThread;
+    getLlmEndpoints(): Promise<ILlmEndpointBase[]>;
     // @internal
     getMemoryItems(): IMemoryItemsService;
     // @internal

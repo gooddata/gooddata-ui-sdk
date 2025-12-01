@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, Ref, useCallback } from "react";
+import { MouseEvent, ReactNode, Ref, useCallback } from "react";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getColumnWidth, getRowLabelId, stopPropagationCallback } from "./utils.js";
+import { getColumnWidth, getRowLabelId } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
@@ -32,9 +32,24 @@ export function UiAsyncTableRow<T extends { id: string }>({
 }: UiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge });
     const isRowFocused = isFocused && focusedColumnIndex === undefined;
+
+    const handleRowClick = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            // Check if the click originated from a menu button
+            // We can't stop event propagation on dropdown button as we would lose
+            // dropdown closeOnOutsideClick functionality, causing menu dropdowns to overlap
+            const target = e.target as HTMLElement;
+            if (target.closest('[data-id="menu-button"]')) {
+                return;
+            }
+            onClick?.(item);
+        },
+        [onClick, item],
+    );
+
     return (
         <div
-            onClick={() => onClick?.(item)}
+            onClick={handleRowClick}
             className={e("row", { large: isLarge, focused: isRowFocused, active: !!onClick })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
@@ -120,9 +135,8 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                                 icon="ellipsis"
                                 label={label}
                                 variant="table"
-                                onClick={(e) => {
-                                    stopPropagationCallback(e, toggleDropdown);
-                                }}
+                                onClick={toggleDropdown}
+                                dataId="menu-button"
                                 dataTestId="more"
                                 isActive={isOpen}
                                 isDisabled={isDisabled}

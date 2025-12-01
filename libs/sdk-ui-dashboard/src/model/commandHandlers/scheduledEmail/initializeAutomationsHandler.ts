@@ -59,10 +59,7 @@ import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import {
-    selectTabLocalIdentifierByWidgetRef,
-    selectWidgetByRef,
-} from "../../store/tabs/layout/layoutSelectors.js";
+import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -138,19 +135,17 @@ export function* initializeAutomationsHandler(
         if (automationId) {
             const targetAutomation = automations.find((a) => a.id === automationId);
             const targetWidget = targetAutomation?.metadata?.widget;
+            const targetTabIdentifier = targetAutomation?.metadata?.targetTabIdentifier;
 
             // Switch to the tab containing the target widget if necessary
-            if (targetWidget) {
-                const widgetRef = idRef(targetWidget);
-                const widgetTabId: ReturnType<ReturnType<typeof selectTabLocalIdentifierByWidgetRef>> =
-                    yield select(selectTabLocalIdentifierByWidgetRef(widgetRef));
+            if (targetTabIdentifier) {
                 const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
                     selectActiveTabLocalIdentifier,
                 );
 
                 // If widget is on a different tab, switch to it before continuing
-                if (widgetTabId && widgetTabId !== currentActiveTabId) {
-                    const switchTabCmd = switchDashboardTab(widgetTabId);
+                if (targetTabIdentifier !== currentActiveTabId) {
+                    const switchTabCmd = switchDashboardTab(targetTabIdentifier);
                     const switchedEvent = yield call(switchDashboardTabHandler, ctx, switchTabCmd);
                     yield dispatchDashboardEvent(switchedEvent);
                 }

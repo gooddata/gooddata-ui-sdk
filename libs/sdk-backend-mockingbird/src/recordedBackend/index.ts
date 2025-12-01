@@ -60,6 +60,7 @@ import {
     IColorPalette,
     IColorPaletteDefinition,
     IColorPaletteMetadataObject,
+    ILlmEndpointBase,
     ILlmEndpointOpenAI,
     INotificationChannelMetadataObject,
     IOrganizationDescriptor,
@@ -365,6 +366,9 @@ function recordedWorkspace(
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
                 semanticSearchIndex: () => {
+                    throw new NotSupported("not supported");
+                },
+                getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
                     throw new NotSupported("not supported");
                 },
                 getMemoryItems: () => {

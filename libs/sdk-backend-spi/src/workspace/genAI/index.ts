@@ -10,6 +10,7 @@ import type {
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
     IGenAIUserContext,
+    ILlmEndpointBase,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
     ISemanticQualityIssuesCalculation,
@@ -60,6 +61,11 @@ export interface IGenAIService {
      * @internal
      */
     getSemanticQuality(): ISemanticQualityService;
+
+    /**
+     * Get list of available LLM endpoints.
+     */
+    getLlmEndpoints(): Promise<ILlmEndpointBase[]>;
 }
 
 /**

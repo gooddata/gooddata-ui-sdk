@@ -297,6 +297,9 @@ export type TextContents = {
     objects: TextContentObject[];
 };
 
+// @internal (undocumented)
+export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean): boolean;
+
 // @public (undocumented)
 export type UserMessage = BaseMessage & {
     role: "user";
