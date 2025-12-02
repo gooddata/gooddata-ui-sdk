@@ -75,6 +75,7 @@ export function AttributesDropdown({
     className,
     bodyClassName,
     onClose,
+    onOpen,
     onSelect,
     attributes,
     dateDatasets,
@@ -131,11 +132,13 @@ export function AttributesDropdown({
 
     const onDropdownStateChange = useCallback(
         (isOpen: boolean) => {
-            if (!isOpen) {
-                onClose();
+            if (isOpen) {
+                onOpen?.();
+            } else {
+                onClose?.();
             }
         },
-        [onClose],
+        [onClose, onOpen],
     );
 
     const dropdownClassName = cx(

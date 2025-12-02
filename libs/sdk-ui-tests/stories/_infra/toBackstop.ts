@@ -5,13 +5,13 @@ import { fileURLToPath } from "url";
 
 import fg from "fast-glob";
 
-import { IBackstopScenarioConfig } from "./backstopScenario.js";
+import { INeobackstopScenarioConfig } from "./backstopScenario.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 interface ISingleScreenshotConfig {
-    screenshot?: IBackstopScenarioConfig | true;
+    screenshot?: INeobackstopScenarioConfig | true;
 }
 
 function isSingleScreenshotConfig(obj: unknown): obj is ISingleScreenshotConfig {
@@ -19,7 +19,7 @@ function isSingleScreenshotConfig(obj: unknown): obj is ISingleScreenshotConfig 
 }
 
 interface IMultipleScreenshotConfig {
-    screenshots?: Record<string, IBackstopScenarioConfig>;
+    screenshots?: Record<string, INeobackstopScenarioConfig>;
 }
 
 function isMultipleScreenshotConfig(obj: unknown): obj is IMultipleScreenshotConfig {
@@ -67,7 +67,7 @@ export interface IStoryInfo {
     storyName: string;
     scenarioName?: string;
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    scenarioConfig: IBackstopScenarioConfig | {} | undefined;
+    scenarioConfig: INeobackstopScenarioConfig | {} | undefined;
 }
 
 async function processStoryFile(file: string): Promise<IStoryInfo[]> {

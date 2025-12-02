@@ -15,6 +15,7 @@ import {
     JsonApiAutomationOutWithLinks,
     JsonApiAutomationResultOutAttributes,
     JsonApiExportDefinitionOutWithLinks,
+    JsonApiNotificationChannelOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
     JsonApiWorkspaceAutomationOutIncludes,
@@ -143,6 +144,20 @@ const convertWorkspace = (
     return undefined;
 };
 
+const convertNotificationChannel = (
+    relationships?: JsonApiAutomationOutRelationships,
+    included?: JsonApiAutomationOutIncludes[],
+) => {
+    const id = relationships?.notificationChannel?.data?.id;
+    const title = (
+        included?.find(
+            (i) => i.type === "notificationChannel" && i.id === id,
+        ) as JsonApiNotificationChannelOutWithLinks
+    )?.attributes?.name;
+
+    return title ?? undefined;
+};
+
 const convertAutomationResult = (
     relationships?: JsonApiAutomationOutRelationships,
     included?: JsonApiAutomationOutIncludes[],
@@ -266,6 +281,8 @@ export function convertAutomation(
 
     const dashboard = convertDashboard(relationships, included);
 
+    const notificationChannelTitle = convertNotificationChannel(relationships, included);
+
     const automationResult = convertAutomationResult(relationships, included);
 
     const convertedAlert = convertAlert(alert, state);
@@ -303,6 +320,7 @@ export function convertAutomation(
         exportDefinitions: normalizedExportDefinitions,
         recipients,
         notificationChannel,
+        notificationChannelTitle,
         createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
         updatedBy: convertUserIdentifier(modifiedBy, included as IIncludedWithUserIdentifier[]),
         lastRun: automationResult,

@@ -6,10 +6,11 @@ import { IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
-const scenarios = {
+const scenarios: INeobackstopConfig = {
     closed: {},
     opened: { clickSelector: ".s-mvf-operator-dropdown-button", postInteractionWait: 200 },
     "between-selected": {
@@ -47,7 +48,7 @@ export function FullFeatured() {
         </div>
     );
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
+FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
 
 export function WithTreatNullAsOptionEnabled() {
     return (
@@ -66,7 +67,7 @@ export function WithTreatNullAsOptionEnabled() {
 WithTreatNullAsOptionEnabled.parameters = {
     kind: "with-treat-null-as-option-enabled",
     screenshots: scenarios,
-};
+} satisfies IStoryParameters;
 
 export function WithTreatNullAsOptionEnabledAndCheckedByDefault() {
     return (
@@ -86,7 +87,7 @@ export function WithTreatNullAsOptionEnabledAndCheckedByDefault() {
 WithTreatNullAsOptionEnabledAndCheckedByDefault.parameters = {
     kind: "with-treat-null-as-option-enabled-and-checked-by-default",
     screenshots: scenarios,
-};
+} satisfies IStoryParameters;
 
 export function WithDisabledOperatorSelection() {
     return (
@@ -102,7 +103,10 @@ export function WithDisabledOperatorSelection() {
         </div>
     );
 }
-WithDisabledOperatorSelection.parameters = { kind: "with-disabled-operator-selection", screenshot: true };
+WithDisabledOperatorSelection.parameters = {
+    kind: "with-disabled-operator-selection",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function Localized() {
     return (
@@ -118,4 +122,4 @@ export function Localized() {
         </div>
     );
 }
-Localized.parameters = { kind: "localized", screenshots: scenarios };
+Localized.parameters = { kind: "localized", screenshots: scenarios } satisfies IStoryParameters;

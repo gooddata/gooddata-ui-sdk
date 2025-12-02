@@ -4,8 +4,8 @@ import { ICellRendererParams } from "ag-grid-enterprise";
 
 import { METRIC_EMPTY_VALUE } from "../../constants/internal.js";
 import { isTableTotalCellData } from "../../features/columns/shared.js";
-import { CellTypes } from "../../features/styling/cell.js";
 import { getPivotCellTestIdPropsFromCellTypes } from "../../testing/dataTestIdGenerators.js";
+import { CellTypes } from "../../types/cellRendering.js";
 
 /**
  * Cell renderer for transposed metrics.

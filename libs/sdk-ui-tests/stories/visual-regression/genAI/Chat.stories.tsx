@@ -6,6 +6,7 @@ import { ChatEvent, GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const backend = StorybookBackend();
@@ -41,7 +42,7 @@ export default {
 export function FullFeatured() {
     return <FlexAIBase />;
 }
-FullFeatured.parameters = { kind: "full-featured" };
+FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<FlexAIBase />);
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Timepicker } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -32,12 +33,12 @@ export default {
     title: "12 UI Kit/TimePicker",
 };
 
-const screenshotConfig = { mismatchThreshold: 0.05 }; // screenshots ~current time, which changes every run
+const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.05 }; // screenshots ~current time, which changes every run
 
 export function FullFeatured() {
     return <TimePickerExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<TimePickerExamples />);
-Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig } satisfies IStoryParameters;

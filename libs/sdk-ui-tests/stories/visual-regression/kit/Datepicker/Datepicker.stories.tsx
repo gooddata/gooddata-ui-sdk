@@ -4,6 +4,11 @@ import { useState } from "react";
 
 import { Datepicker } from "@gooddata/sdk-ui-kit";
 
+import {
+    INeobackstopConfig,
+    INeobackstopScenarioConfig,
+    IStoryParameters,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -69,12 +74,12 @@ function DatePickerTest() {
     );
 }
 
-const openedProps = {
+const openedProps: INeobackstopScenarioConfig = {
     clickSelector: "#external-date input",
     postInteractionWait: 200,
 };
 
-const screenshotScenarios = {
+const screenshotScenarios: INeobackstopConfig = {
     closed: {},
     opened: openedProps,
     "next-month": {
@@ -90,7 +95,10 @@ export default {
 export function FullFeatured() {
     return <DatePickerTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotScenarios };
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshots: screenshotScenarios,
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DatePickerTest />);
-Themed.parameters = { kind: "themed", screenshot: openedProps };
+Themed.parameters = { kind: "themed", screenshot: openedProps } satisfies IStoryParameters;

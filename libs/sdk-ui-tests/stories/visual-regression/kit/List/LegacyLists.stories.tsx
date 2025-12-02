@@ -7,6 +7,7 @@ import { times } from "lodash-es";
 import { withIntl } from "@gooddata/sdk-ui";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -141,7 +142,7 @@ export default {
 export function FullFeatured() {
     return <WithIntl />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<WithIntl />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

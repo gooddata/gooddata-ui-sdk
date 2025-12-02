@@ -65,6 +65,7 @@
 
             &--sorted:hover {
                 color: var(--gd-palette-complementary-8);
+
                 #{$root}__sort svg {
                     fill: var(--gd-palette-complementary-8);
                 }
@@ -191,39 +192,31 @@
     }
 
     &__toolbar {
-        padding: 0;
-        min-height: var(--gd-table-row-height-small);
+        width: calc(100% - var(--gd-spacing-10px));
+        margin-right: var(--gd-spacing-10px);
+        margin-bottom: var(--gd-spacing-20px);
+    }
+
+    &__toolbar-top {
         display: flex;
         align-items: flex-start;
         justify-content: start;
         gap: var(--gd-spacing-10px);
         margin-bottom: var(--gd-spacing-20px);
-        margin-right: var(--gd-spacing-10px);
-        width: calc(100% - var(--gd-spacing-10px));
-
-        #{$root}__cell {
-            visibility: visible;
-            border: 1px solid var(--gd-palette-complementary-3);
-            border-radius: 3px;
-            height: 27px;
-        }
 
         &--mobile-view {
             flex-direction: column-reverse;
             align-items: stretch;
             width: 100%;
-            padding-right: var(--gd-spacing-10px);
             row-gap: var(--gd-spacing-20px);
-            margin-bottom: var(--gd-spacing-10px);
 
-            #{$root}__toolbar-bulk-actions {
-                width: 100%;
-                justify-content: space-between;
+            #{$root}__toolbar-search-section {
+                margin-left: 0;
+                max-width: 100%;
             }
 
             #{$root}__toolbar-search {
-                margin-left: 0;
-                max-width: 100%;
+                flex-grow: 1;
             }
 
             #{$root}__toolbar-filters-section {
@@ -239,10 +232,25 @@
         gap: var(--gd-spacing-10px);
     }
 
+    &__toolbar-bulk-actions {
+        &--mobile-view {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        #{$root}__cell {
+            visibility: visible;
+            border: 1px solid var(--gd-palette-complementary-3);
+            border-radius: 3px;
+            height: 27px;
+        }
+    }
+
     &__toolbar-filters-section {
         display: flex;
         align-items: flex-start;
         gap: var(--gd-spacing-10px);
+        margin-top: 1px;
     }
 
     &__toolbar-label {
@@ -271,15 +279,14 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
-        &:not(&--short) {
-            min-width: 110px;
-        }
+        min-width: 110px;
     }
 
-    &__toolbar-search {
+    &__toolbar-search-section {
+        display: flex;
+        gap: var(--gd-spacing-10px);
         margin-left: auto;
-        max-width: 200px;
+        max-width: 260px;
     }
 
     &__toolbar-custom-element {
@@ -416,6 +423,7 @@
         #{$root}__row--focused,
         #{$root}__cell--focused {
             @include mixins.focus-ring;
+
             @supports (-webkit-hyphens: none) {
                 outline-offset: -5px;
             }

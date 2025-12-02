@@ -4,6 +4,7 @@ import { CSSProperties } from "react";
 
 import { DescriptionPanel, DescriptionPanelContent, IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const TITLE = "Revenue and Customer Distribution in the US";
@@ -53,7 +54,7 @@ export default {
 export function FullFeatured() {
     return <DescriptionPanelTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DescriptionPanelTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

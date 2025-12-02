@@ -2,6 +2,7 @@
 
 import { UiButton, UiButtonSegmentedControl, UiIconButton } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {
@@ -24,7 +25,7 @@ export function Buttons() {
         </div>
     );
 }
-Buttons.parameters = { kind: "buttons", screenshot: true };
+Buttons.parameters = { kind: "buttons", screenshot: true } satisfies IStoryParameters;
 
 export function IconButtons() {
     return (
@@ -42,14 +43,14 @@ export function IconButtons() {
         </div>
     );
 }
-IconButtons.parameters = { kind: "icon-buttons", screenshot: true };
+IconButtons.parameters = { kind: "icon-buttons", screenshot: true } satisfies IStoryParameters;
 
 export function ThemedButtons() {
     return wrapWithTheme(<Buttons />);
 }
-ThemedButtons.parameters = { kind: "themed-buttons" };
+ThemedButtons.parameters = { kind: "themed-buttons" } satisfies IStoryParameters;
 
 export function ThemedIconButtons() {
     return wrapWithTheme(<IconButtons />);
 }
-ThemedIconButtons.parameters = { kind: "themed-icon-buttons" };
+ThemedIconButtons.parameters = { kind: "themed-icon-buttons" } satisfies IStoryParameters;

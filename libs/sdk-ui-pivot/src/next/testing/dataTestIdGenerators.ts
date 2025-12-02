@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CellTypes } from "../features/styling/cell.js";
+import { CellTypes } from "../types/cellRendering.js";
 
 export function getPivotHeaderTestIdProps(options?: {
     drillable?: boolean;
@@ -29,7 +29,7 @@ export function getPivotHeaderTestIdProps(options?: {
  * Returns empty object if cell type information is not provided.
  * Generates space-separated tokens like "pivot-cell pivot-cell-drillable pivot-cell-total-column-subtotal"
  */
-export function getPivotCellTestIdPropsFromCellTypes(cellTypes: CellTypes) {
+export function getPivotCellTestIdPropsFromCellTypes(cellTypes: CellTypes | undefined) {
     if (!cellTypes) {
         return {};
     }

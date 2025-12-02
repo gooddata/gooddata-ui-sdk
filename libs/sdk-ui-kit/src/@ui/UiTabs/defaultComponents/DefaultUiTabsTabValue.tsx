@@ -2,6 +2,7 @@
 
 import { EmptyObject } from "@gooddata/util";
 
+import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { IUiTabComponentProps } from "../types.js";
@@ -19,8 +20,13 @@ export function DefaultUiTabsTabValue<
     const isOverflowing = tab.label.length > maxLabelLength;
 
     return (
-        <span className={UiTabsBem.e("label", { selected: isSelected, variant: tab.variant ?? "default" })}>
+        <ShortenedText
+            className={UiTabsBem.e("label", { selected: isSelected, variant: tab.variant ?? "default" })}
+            ellipsisPosition={"end"}
+            tagName={"div"}
+            tooltipAlignPoints={[{ align: "cl cr" }]}
+        >
             {isOverflowing ? tab.label.substring(0, maxLabelLength) + "…" : tab.label}
-        </span>
+        </ShortenedText>
     );
 }

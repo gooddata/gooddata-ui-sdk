@@ -2,6 +2,8 @@
 
 import { DefaultThemePreview } from "@gooddata/sdk-ui-theme-provider/internal";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
+
 function DefaultThemeStory() {
     return (
         <div className="library-component">
@@ -18,4 +20,4 @@ export default {
 export function DefaultThemePreviewStory() {
     return <DefaultThemeStory />;
 }
-DefaultThemePreviewStory.parameters = { kind: "default theme preview" };
+DefaultThemePreviewStory.parameters = { kind: "default theme preview" } satisfies IStoryParameters;

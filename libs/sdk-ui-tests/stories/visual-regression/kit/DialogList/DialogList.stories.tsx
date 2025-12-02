@@ -7,6 +7,7 @@ import { action } from "storybook/actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 
 import { itemsMock as items } from "./itemsMock.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -78,12 +79,12 @@ export default {
 export function FullFeatured() {
     return <DialogListExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export function Loading() {
     return <DialogListLoadingExample />;
 }
-Loading.parameters = { kind: "loading" };
+Loading.parameters = { kind: "loading" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogListExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

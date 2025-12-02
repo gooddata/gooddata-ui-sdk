@@ -42,7 +42,7 @@ export function DefaultUiTabsTab<
             onClick={onSelect}
             role={accessibilityConfig?.tabRole}
             aria-selected={isSelected}
-            aria-label={isOverflowing ? tab.label : undefined}
+            aria-label={tab.label}
             tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
             id={makeId?.({ item: tab, specifier: SELECT_ITEM_ACTION })}
             data-testid={`s-tab-${stringUtils.simplifyText(tab.label)}`}

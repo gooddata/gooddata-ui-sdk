@@ -7,6 +7,7 @@ import {
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
@@ -73,12 +74,12 @@ export default {
 export function FullFeaturedNavigationSkip() {
     return <UiNavigationBypassTest />;
 }
-FullFeaturedNavigationSkip.parameters = { kind: "full-featured navigation skip" };
+FullFeaturedNavigationSkip.parameters = { kind: "full-featured navigation skip" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiNavigationBypassTest />);
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiNavigationBypassTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

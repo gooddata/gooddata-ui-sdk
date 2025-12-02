@@ -27,7 +27,7 @@ import {
     userInactive,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "../styles/goodstrap.scss";
 
@@ -159,7 +159,7 @@ function GranteeItemExamples(): ReactElement {
 
 const testItemSelector = `.${getGranteeItemTestId(user)}`;
 
-const scenarios: BackstopConfig = {
+const scenarios: INeobackstopConfig = {
     normal: {},
     hover: {
         hoverSelector: testItemSelector,
@@ -181,7 +181,7 @@ export default {
 export function FullFeatured() {
     return <GranteeItemExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
+FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<GranteeItemExamples />);
-Themed.parameters = { kind: "themed", screenshots: scenarios };
+Themed.parameters = { kind: "themed", screenshots: scenarios } satisfies IStoryParameters;

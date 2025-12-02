@@ -5,7 +5,14 @@ import { isEqual } from "lodash-es";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IMeasure, ISeparators, ISortItem } from "@gooddata/sdk-model";
-import { DataViewFacade, OnDataView, OnError, OnExportReady, convertError } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    GoodDataSdkError,
+    OnDataView,
+    OnError,
+    OnExportReady,
+    convertDataWindowError,
+} from "@gooddata/sdk-ui";
 
 import { agGridSetLoading } from "./agGridLoadingApi.js";
 import { dataViewToRowData } from "./dataViewToRowData.js";
@@ -31,6 +38,7 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     pageSize: number;
     setCurrentDataView: (dataView: DataViewFacade | undefined) => void;
+    setRuntimeError: (error: GoodDataSdkError | undefined) => void;
     setPivotResultColumns: (gridApi: AgGridApi) => void;
     setGrandTotalRows: (gridApi: AgGridApi, grandTotalRowData: AgGridRowData[]) => void;
     initSizingForEmptyData: (gridApi: AgGridApi, rowData: AgGridRowData[]) => void;
@@ -125,6 +133,7 @@ export const createServerSideDataSource = ({
     onExportReady,
     exportTitle,
     separators,
+    setRuntimeError,
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
 
@@ -134,6 +143,7 @@ export const createServerSideDataSource = ({
     let currentExecutionResult: IExecutionResult = initialExecutionResult;
     // Track grand total count for offset adjustment in non-pinned "top" position
     let cachedGrandTotalCount = 0;
+    let hasFatalRuntimeError = false;
 
     /**
      * There is 1 additional request when sorting + pivoting.
@@ -209,8 +219,16 @@ export const createServerSideDataSource = ({
             abortController.abort();
             // Clear the context when data source is destroyed
             setCurrentDataView(undefined);
+            // NOTE: Do NOT clear runtimeError here - if the grid is being destroyed
+            // because of a runtime error, clearing it would cause a re-render loop.
+            // The error should persist until the next execution starts.
         },
         getRows: async (params: IServerSideGetRowsParams<AgGridRowData>) => {
+            if (hasFatalRuntimeError) {
+                params.fail();
+                return;
+            }
+
             try {
                 if (sortBy.length > 0 && params.request.sortModel.length === 0 && isFirstRequest) {
                     handleExtraSortRequest(params);
@@ -218,7 +236,6 @@ export const createServerSideDataSource = ({
                 }
 
                 const executionResult = await applyChangedSortToExecutionResult(params);
-
                 const startRow = params.request.startRow ?? 0;
                 const endRow = params.request.endRow ?? pageSize;
 
@@ -272,6 +289,7 @@ export const createServerSideDataSource = ({
                 };
 
                 params.success(successParam);
+                setRuntimeError(undefined);
 
                 if (isFirstRequest) {
                     setGrandTotalRows(params.api, grandTotalRowData);
@@ -289,7 +307,10 @@ export const createServerSideDataSource = ({
                 setCurrentDataView(nextDataView);
                 onDataView?.(nextDataView);
             } catch (e) {
-                onError?.(convertError(e));
+                const error = convertDataWindowError(e);
+                hasFatalRuntimeError = true;
+                setRuntimeError(error);
+                onError?.(error);
                 params.fail();
             } finally {
                 agGridSetLoading({ isLoading: false }, params.api);

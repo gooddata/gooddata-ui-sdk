@@ -8,11 +8,26 @@
 
     max-height: 300px;
     width: 100%;
-    min-width: 200px;
     position: relative;
     display: flex;
     flex-direction: column;
     user-select: none;
+
+    &--size {
+        &-small {
+            --item-padding-vertical: 4px;
+            --item-padding-horizontal: 10px;
+            --item-font-size: 12px;
+            --item-height: 26px;
+        }
+
+        &-medium {
+            --item-padding-vertical: 8px;
+            --item-padding-horizontal: 10px;
+            --item-font-size: 14px;
+            --item-height: 36px;
+        }
+    }
 
     &__content-container {
         display: contents;
@@ -25,11 +40,19 @@
         overflow-x: hidden;
 
         &--container-bottom-padding-small {
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
         &--container-bottom-padding-medium {
             padding-bottom: 10px;
+        }
+
+        &--container-top-padding-small {
+            padding-top: 6px;
+        }
+
+        &--container-top-padding-medium {
+            padding-top: 10px;
         }
     }
 
@@ -42,20 +65,20 @@
     }
 
     &__menu-header {
-        background: variables.$is-focused-background;
+        background: var(--gd-palette-complementary-2);
 
         &-button {
             cursor: pointer;
             background: none;
             border: none;
             padding: 0;
-            color: variables.$gd-color-state-blank;
+            color: var(--gd-palette-complementary-6);
         }
 
         &-title {
             &-text {
                 flex-grow: 1;
-                color: variables.$gd-color-state-blank;
+                color: var(--gd-palette-complementary-6);
                 margin: 0;
                 white-space: nowrap;
                 font-size: 11px;
@@ -84,7 +107,7 @@
 
     &__group-title {
         text-transform: uppercase;
-        color: variables.$gd-color-text-dimmed;
+        color: var(--gd-palette-complementary-5);
         font-size: 10px;
         font-weight: normal;
         margin: 0;
@@ -113,21 +136,22 @@
     }
 
     &__item {
-        padding: 8px 10px;
+        height: var(--item-height);
+        padding: var(--item-padding-vertical) var(--item-padding-horizontal);
         cursor: pointer;
         display: flex;
         align-items: center;
-        font-size: 14px;
+        font-size: var(--item-font-size);
         line-height: 20px;
-        color: variables.$gd-color-text;
+        color: var(--gd-palette-complementary-8);
         transition: background-color 0.2s;
         box-sizing: border-box;
         gap: 10px;
 
         // Controlled by mouse and has hover
         #{$root}--controlType-mouse &:hover:not(&--isDisabled) {
-            background-color: variables.$is-focused-background;
-            color: variables.$is-focused-color;
+            background-color: var(--gd-palette-complementary-2);
+            color: var(--gd-palette-complementary-9);
         }
         #{$root}--controlType-mouse &:hover:not(&--isDisabled)#{$root}__item--isDestructive {
             background-color: var(--gd-palette-error-dimmed);
@@ -139,31 +163,19 @@
         }
 
         &--isDisabled {
-            color: variables.$gd-color-disabled;
+            color: var(--gd-palette-complementary-5);
             cursor: not-allowed;
         }
 
         &--isSelected {
             font-weight: bold;
-            background-color: variables.$is-selected-background;
-            color: variables.$is-selected-color;
+            background: none;
+            color: var(--gd-palette-primary-base);
         }
 
         #{$root}--controlType-mouse &--isSelected:hover:not(&--isDisabled) {
-            background-color: variables.$is-selected-focused-background;
-            color: variables.$is-selected-color;
-        }
-
-        &--size {
-            &-small {
-                height: 28px;
-                font-size: 12px;
-            }
-
-            &-medium {
-                height: 36px;
-                font-size: 14px;
-            }
+            background-color: var(--gd-palette-primary-dimmed);
+            color: var(--gd-palette-primary-base);
         }
     }
 

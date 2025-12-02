@@ -7,7 +7,7 @@ import { action } from "storybook/actions";
 import { DialogListItemBasic, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -175,7 +175,7 @@ function DialogListItemBasicExamples() {
 
 const testItemSelector = ".s-dialog-list-item-basic";
 
-const scenarios: BackstopConfig = {
+const scenarios: INeobackstopConfig = {
     normal: {},
     hover: {
         hoverSelector: testItemSelector,
@@ -193,7 +193,7 @@ export default {
 export function FullFeatured() {
     return <DialogListItemBasicExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
+FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogListItemBasicExamples />);
-Themed.parameters = { kind: "themed", screenshots: scenarios };
+Themed.parameters = { kind: "themed", screenshots: scenarios } satisfies IStoryParameters;

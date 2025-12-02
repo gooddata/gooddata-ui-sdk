@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
 
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, GoodDataSdkError, convertDataWindowError } from "@gooddata/sdk-ui";
 
 import { dataViewToRepeaterData } from "./dataViewToRepeaterData.js";
 import { IRepeaterChartConfig } from "../publicTypes.js";
@@ -12,6 +12,7 @@ export type GridApiProvider = () => GridApi | undefined;
 
 export type AdGridCallbacks = {
     onError?: (error: any) => void;
+    setRuntimeError?: (error: GoodDataSdkError | undefined) => void;
 };
 
 export const getWindowSize = (numberOfDimensions: number, startRow = 0, endRow = 100) => {
@@ -26,6 +27,7 @@ export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
     private dataViewFacade: DataViewFacade;
     private onError: AdGridCallbacks["onError"];
+    private setRuntimeError: AdGridCallbacks["setRuntimeError"];
     private config: IRepeaterChartConfig;
 
     constructor(dataViewFacade: DataViewFacade, callbacks: AdGridCallbacks, config: IRepeaterChartConfig) {
@@ -33,6 +35,7 @@ export class AgGridDatasource implements IDatasource {
         this.dataViewFacade = dataViewFacade;
         this.rowCount = firstDimCount;
         this.onError = callbacks.onError;
+        this.setRuntimeError = callbacks.setRuntimeError;
         this.config = config;
     }
 
@@ -52,9 +55,10 @@ export class AgGridDatasource implements IDatasource {
                 successCallback(transformedResult, result.totalCount[0]);
             })
             .catch((error) => {
-                console.error("error", { error });
+                const convertedError = convertDataWindowError(error);
                 failCallback();
-                this.onError?.(error);
+                this.setRuntimeError?.(convertedError);
+                this.onError?.(convertedError);
             });
     };
 }

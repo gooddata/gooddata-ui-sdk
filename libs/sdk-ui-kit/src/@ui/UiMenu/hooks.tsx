@@ -49,6 +49,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     const {
         items,
 
+        size = "medium",
+
         itemDataTestId,
 
         onSelect,
@@ -205,6 +207,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         shownCustomContentItemId,
         onClose,
         items,
+        size,
         onSelect: handleSelectItem,
         itemDataTestId,
         isItemFocusable,

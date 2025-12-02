@@ -2,6 +2,7 @@
 
 import { ComponentTable, IUiLinkProps, UiLink, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({ children: "I am a link" } as IUiLinkProps);
@@ -36,12 +37,12 @@ export default {
 export function Default() {
     return <UiLinkTest />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiLinkTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiLinkTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

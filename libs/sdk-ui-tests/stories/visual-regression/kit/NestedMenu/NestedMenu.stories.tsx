@@ -13,6 +13,7 @@ import {
     SubMenu,
 } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./NestedMenu.scss";
@@ -63,7 +64,7 @@ function NestedMenuExamples() {
     );
 }
 
-const screenshotProps = {
+const screenshotProps: INeobackstopConfig = {
     closed: {},
     openedMenu: {
         clickSelector: ".s-menu-toggle",
@@ -89,7 +90,7 @@ export default {
 export function FullFeatured() {
     return <NestedMenuExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<NestedMenuExamples />);
-Themed.parameters = { kind: "themed", screenshots: screenshotProps };
+Themed.parameters = { kind: "themed", screenshots: screenshotProps } satisfies IStoryParameters;

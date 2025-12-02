@@ -3,8 +3,8 @@
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectLoading } from "@gooddata/sdk-ui-filters";
 
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 function AttributeFilterElementsSelectLoadingExamples() {
@@ -27,9 +27,9 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterElementsSelectLoadingExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured" };
+FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;
 // No screenshot param here as in original
 
 export const Themed = () => wrapWithTheme(<AttributeFilterElementsSelectLoadingExamples />);
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;
 // No screenshot param here as in original

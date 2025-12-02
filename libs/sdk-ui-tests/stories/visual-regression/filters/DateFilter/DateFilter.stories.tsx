@@ -9,6 +9,7 @@ import {
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
@@ -79,7 +80,7 @@ FullFeatured.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function Localized() {
     return (
@@ -115,7 +116,7 @@ Localized.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function Dateformat() {
     return (
@@ -131,7 +132,10 @@ export function Dateformat() {
         </div>
     );
 }
-Dateformat.parameters = { kind: "dateFormat", screenshot: { misMatchThreshold: 0.1 } }; // shows current date, which changes (every day)
+Dateformat.parameters = {
+    kind: "dateFormat",
+    screenshot: { misMatchThreshold: 0.1 }, // shows current date, which changes (every day)
+} satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -169,7 +173,7 @@ Themed.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function DateFilterAlignedToTheRight() {
     return (
@@ -210,7 +214,7 @@ DateFilterAlignedToTheRight.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 export function DateformatWithTime() {
     const selectedFilterOption: IUiAbsoluteDateFilterForm = {
         localIdentifier: "ABSOLUTE_FORM",
@@ -240,4 +244,4 @@ DateformatWithTime.parameters = {
         closed: {},
         opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
     },
-};
+} satisfies IStoryParameters;

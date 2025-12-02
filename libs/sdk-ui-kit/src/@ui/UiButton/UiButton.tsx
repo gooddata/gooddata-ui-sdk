@@ -118,6 +118,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 aria-describedby={accessibilityConfig?.ariaDescribedBy}
                 aria-expanded={accessibilityConfig?.ariaExpanded}
                 aria-description={accessibilityConfig?.ariaDescription}
+                aria-controls={accessibilityConfig?.ariaControls}
                 role={accessibilityConfig?.role}
             >
                 {iconBefore ? (

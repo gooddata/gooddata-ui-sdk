@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useCallback, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 
 import { EmptyObject } from "@gooddata/util";
 
@@ -37,12 +37,6 @@ export function DefaultUiTabsAllTabs<
     const isMobile = useMediaQuery("mobileDevice");
     const [isOpen, setIsOpen] = useState(false);
 
-    useActionListener(({ action }) => {
-        if (action.closeOnSelect === "all") {
-            setIsOpen(false);
-        }
-    });
-
     const handleDropdownSelect = useCallback(
         (item: IUiTab<TTabProps, TTabActionProps>) => () => {
             onTabSelect(item);
@@ -69,6 +63,29 @@ export function DefaultUiTabsAllTabs<
     const { containerRef } = useFocusWithinContainer(
         scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
+
+    const selectedItemId = focusedItem
+        ? scopedIdStoreValue.makeId({ item: focusedItem, specifier: "container" })
+        : "";
+    useEffect(() => {
+        document
+            .getElementById(selectedItemId)
+            ?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+    }, [selectedItemId, isOpen]);
+
+    useActionListener(({ action, tab }) => {
+        if (action.closeOnSelect === "all") {
+            setIsOpen(false);
+            return;
+        }
+        const tabContainerId = scopedIdStoreValue.makeId({ item: tab, specifier: "container" });
+
+        window.setTimeout(() => {
+            document
+                .getElementById(tabContainerId)
+                ?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
+        }, 50);
+    });
 
     if (!isOverflowing) {
         return null;
@@ -175,12 +192,15 @@ function TabListItem<
             aria-rowindex={index + 1}
             aria-labelledby={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
             tabIndex={-1}
+            id={makeId?.({ item, specifier: "container" })}
         >
             <div className={UiTabsBem.e("tab-list-item-value")} onClick={onApply} role={"gridcell"}>
                 <div
                     role={"button"}
                     tabIndex={isSelected ? 0 : -1}
                     id={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
+                    className={UiTabsBem.e("tab-list-item-value-button")}
+                    aria-label={item.label}
                 >
                     <TabValue tab={item} isSelected={isSelected} location={"allList"} />
                 </div>

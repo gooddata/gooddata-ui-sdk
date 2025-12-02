@@ -7,11 +7,12 @@ import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterElementsSelectProps } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
-
-import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 function CustomElementsSelect(_props: IAttributeFilterElementsSelectProps) {
     return (
@@ -56,4 +57,4 @@ CustomComponent.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;

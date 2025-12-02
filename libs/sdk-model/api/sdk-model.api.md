@@ -1077,6 +1077,7 @@ export interface IAutomationMetadataObjectBase {
         originalSchedule?: IAutomationSchedule;
     };
     notificationChannel?: string;
+    notificationChannelTitle?: string;
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     state?: IAutomationState;
@@ -3698,6 +3699,7 @@ export interface ISettings {
     enableCreateUser?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
+    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterViews?: boolean;
     // @alpha

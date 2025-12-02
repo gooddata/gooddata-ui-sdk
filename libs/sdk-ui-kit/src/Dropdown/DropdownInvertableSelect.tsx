@@ -12,6 +12,7 @@ import {
     type IDropdownButtonRenderProps,
 } from "../Dropdown/Dropdown.js";
 import {
+    IInvertableSelectRenderItemProps,
     type IInvertableSelectRenderNoDataProps,
     type IInvertableSelectRenderSearchBarProps,
     type IInvertableSelectRenderStatusBarProps,
@@ -117,9 +118,29 @@ export interface IDropdownInvertableSelectProps<T> {
     renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
 
     /**
+     * Render function for the item.
+     */
+    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => ReactElement;
+
+    /**
      * Overlay position type.
      */
     overlayPositionType?: OverlayPositionType;
+
+    /**
+     * On open handler
+     */
+    onOpen?: () => void;
+
+    /**
+     * On close handler
+     */
+    onClose?: () => void;
+
+    /**
+     * Close on escape
+     */
+    closeOnEscape?: boolean;
 }
 
 const messages = defineMessages({
@@ -139,6 +160,9 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         title,
         options,
         onChange,
+        onOpen,
+        onClose,
+        closeOnEscape,
         className,
         bodyClassName,
         width = 240,
@@ -154,6 +178,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         renderSearchBar,
         renderNoData,
         renderActions,
+        renderItem,
     } = props;
 
     const [searchString, setSearchString] = useState<string>(initialSearchString ?? "");
@@ -217,10 +242,14 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
             alignPoints={alignPoints}
             overlayPositionType={overlayPositionType}
             onOpenStateChanged={(isOpen) => {
-                if (!isOpen) {
+                if (isOpen) {
+                    onOpen?.();
+                } else {
                     resetTemporarySelection();
+                    onClose?.();
                 }
             }}
+            closeOnEscape={closeOnEscape}
             renderButton={renderButton}
             renderBody={(bodyProps) => {
                 const { closeDropdown } = bodyProps;
@@ -244,6 +273,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                             renderStatusBar={renderStatusBar}
                             renderSearchBar={renderSearchBar}
                             renderNoData={renderNoData}
+                            renderItem={renderItem}
                             totalItemsCount={filteredOptions.length}
                         />
                         {renderActions?.(bodyProps) ?? (

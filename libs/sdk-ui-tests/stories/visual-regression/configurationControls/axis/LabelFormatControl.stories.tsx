@@ -3,8 +3,10 @@
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LabelFormatControl } from "@gooddata/sdk-ui-ext/internal";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
@@ -27,7 +29,7 @@ export function Disabled() {
         </div>
     );
 }
-Disabled.parameters = { kind: "disabled", screenshot: true };
+Disabled.parameters = { kind: "disabled", screenshot: true } satisfies IStoryParameters;
 
 export function YAxis() {
     return (
@@ -54,4 +56,4 @@ YAxis.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;

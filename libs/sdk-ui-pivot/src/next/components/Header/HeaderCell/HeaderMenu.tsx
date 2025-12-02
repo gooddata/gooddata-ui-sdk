@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
 
-import { AggregationsMenuItemData, SmallInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
+import { AggregationsMenuItemData, HeaderInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
 import { messages } from "../../../../locales.js";
 import { e } from "../../../features/styling/bem.js";
 import { getPivotHeaderMenuButtonTestIdProps } from "../../../testing/dataTestIdGenerators.js";
@@ -139,7 +139,8 @@ export function HeaderMenu({
                             id: ariaAttributes.id,
                             "aria-labelledby": ariaAttributes["aria-labelledby"],
                         }}
-                        InteractiveItem={SmallInteractiveItem}
+                        InteractiveItem={HeaderInteractiveItem}
+                        size={"small"}
                     />
                 )}
             />

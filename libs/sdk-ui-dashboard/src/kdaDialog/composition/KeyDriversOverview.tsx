@@ -65,7 +65,9 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     const intl = useIntl();
     const { state } = useKdaState();
 
-    const description = getDescription(state.selectedItem);
+    const metric = state.definition?.metric;
+    const title = metric?.measure.title ?? metric?.measure.alias ?? "";
+
     const category = getCategory(state.selectedItem);
 
     const { group, item } = useGroupAndItem();
@@ -75,11 +77,8 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
             <div>
                 <div className={cx("gd-kda-key-drivers-detail-title")}>
-                    {getTitle(intl, state.selectedItem)}
+                    {getTitle(intl, title, state.selectedItem)}
                 </div>
-                {description ? (
-                    <div className={cx("gd-kda-key-drivers-detail-description")}>{description}</div>
-                ) : null}
             </div>
             <div className={cx("gd-kda-key-drivers-detail-visualisation")}>
                 <KdaKeyDriverChart config={config} dataView={dataView} displayForm={displayForm} />
@@ -97,24 +96,17 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     );
 }
 
-function getTitle(intl: IntlShape, item: IUiListboxInteractiveItem<KdaItem> | string) {
+function getTitle(intl: IntlShape, metric: string, item: IUiListboxInteractiveItem<KdaItem> | string) {
     if (typeof item === "string") {
         return "";
     }
     return intl.formatMessage(
         { id: "kdaDialog.dialog.keyDrives.overview.detail.title" },
         {
-            title: item.data.title,
-            category: item.data.category,
+            title: metric,
+            category: item.data.title,
         },
     );
-}
-
-function getDescription(item: IUiListboxInteractiveItem<KdaItem> | string) {
-    if (typeof item === "string") {
-        return "";
-    }
-    return item.data.description;
 }
 
 function getCategory(item: IUiListboxInteractiveItem<KdaItem> | string) {
@@ -128,7 +120,7 @@ function getSummaryLoading(state: KdaState, globalLoading?: boolean) {
     if (state.definition) {
         const from = state.fromValue;
         const to = state.toValue;
-        return from?.value === undefined || to?.value === undefined;
+        return globalLoading || from?.value === undefined || to?.value === undefined;
     }
     return globalLoading ?? false;
 }

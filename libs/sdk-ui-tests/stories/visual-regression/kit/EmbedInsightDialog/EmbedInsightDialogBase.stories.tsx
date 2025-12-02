@@ -8,6 +8,7 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, IReactOptions, IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
 import { code } from "./CodeMock.js";
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function EmbedInsightDialogBaseExamples() {
@@ -157,12 +158,12 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",
 };
 
-const screenshotConfig = { clickSelector: "h4" };
+const screenshotConfig: INeobackstopScenarioConfig = { clickSelector: "h4" };
 
 export function FullFeatured() {
     return <EmbedInsightDialogBaseExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<EmbedInsightDialogBaseExamples />);
-Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig } satisfies IStoryParameters;

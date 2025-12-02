@@ -69,6 +69,7 @@ export enum TigerFeaturesNames {
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
+    EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
@@ -187,6 +188,7 @@ export type ITigerFeatureFlags = {
     enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
+    enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
     enableKDVisualizationSwitcher: (typeof FeatureFlagsValues)["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: (typeof FeatureFlagsValues)["enableIgnoreCrossFiltering"][number];
@@ -307,6 +309,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAICatalogQualityChecker: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
+    enableCustomizedDashboardsWithoutPluginOverlay: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
@@ -427,6 +430,7 @@ export const FeatureFlagsValues = {
     enableGenAICatalogQualityChecker: [false, true] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
+    enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,

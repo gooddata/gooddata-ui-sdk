@@ -161,7 +161,7 @@ export const useAutomationColumns = ({
             ["notificationChannel"]: {
                 key: "notificationChannel",
                 label: intl.formatMessage(messages.columnNotificationChannel),
-                getTextContent: (item) => formatCellValue(item.notificationChannel),
+                getTextContent: (item) => formatCellValue(item.notificationChannelTitle),
                 width: DEFAULT_COLUMN_WIDTHS.NOTIFICATION_CHANNEL,
             },
             ["menu"]: {

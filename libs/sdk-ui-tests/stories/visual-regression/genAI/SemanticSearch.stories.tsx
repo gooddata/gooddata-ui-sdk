@@ -7,7 +7,7 @@ import { SearchOverlay } from "@gooddata/sdk-ui-semantic-search/internal";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
-import { IBackstopScenarioConfig } from "../../_infra/backstopScenario.js";
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const backend = StorybookBackend();
@@ -32,7 +32,7 @@ function SemanticSearchBase({ width = 200 }: { width?: number }) {
     );
 }
 
-const config: IBackstopScenarioConfig = {
+const config: INeobackstopScenarioConfig = {
     readySelector: "input",
     keyPressSelector: {
         keyPress: "test",
@@ -48,23 +48,29 @@ export default {
 export function FullFeatured() {
     return <SemanticSearchBase />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: config };
+FullFeatured.parameters = { kind: "full-featured", screenshot: config } satisfies IStoryParameters;
 
 export function Short() {
     return <SemanticSearchBase width={100} />;
 }
-Short.parameters = { kind: "short", screenshot: config };
+Short.parameters = { kind: "short", screenshot: config } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<SemanticSearchBase />);
-Themed.parameters = { kind: "themed", screenshot: config };
+Themed.parameters = { kind: "themed", screenshot: config } satisfies IStoryParameters;
 
 export function InternalSearchoverlay() {
     return <SearchOverlay onSelect={action("onSelect")} backend={backend} workspace={ReferenceWorkspaceId} />;
 }
-InternalSearchoverlay.parameters = { kind: "internal SearchOverlay", screenshot: config };
+InternalSearchoverlay.parameters = {
+    kind: "internal SearchOverlay",
+    screenshot: config,
+} satisfies IStoryParameters;
 
 export const InternalSearchoverlayThemed = () =>
     wrapWithTheme(
         <SearchOverlay onSelect={action("onSelect")} backend={backend} workspace={ReferenceWorkspaceId} />,
     );
-InternalSearchoverlayThemed.parameters = { kind: "internal SearchOverlay themed", screenshot: config };
+InternalSearchoverlayThemed.parameters = {
+    kind: "internal SearchOverlay themed",
+    screenshot: config,
+} satisfies IStoryParameters;

@@ -2,6 +2,7 @@
 
 import { ComponentTable, UiButton, UiButtonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({ label: "Apply" } as UiButtonProps);
@@ -41,12 +42,12 @@ export default {
 export function FullFeaturedButton() {
     return <UiButtonTest />;
 }
-FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true };
+FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiButtonTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiButtonTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

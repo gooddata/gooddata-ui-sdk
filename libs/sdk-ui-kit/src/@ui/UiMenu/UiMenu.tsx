@@ -34,6 +34,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     props: UiMenuProps<T, M>,
 ): ReactNode {
     const {
+        size = "medium",
         dataTestId,
         maxWidth,
         maxHeight,
@@ -42,6 +43,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         shouldKeyboardActionPreventDefault,
         shouldKeyboardActionStopPropagation,
         containerBottomPadding = "none",
+        containerTopPadding = "none",
     } = props;
 
     const menuComponentRef = useRef<HTMLMenuElement>(null);
@@ -95,7 +97,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     return (
         <UiMenuContextStore value={contextStoreValue}>
             <div
-                className={cx(b(), b({ controlType }))}
+                className={cx(b({ controlType, size }))}
                 style={{ maxWidth, maxHeight: maxHeightValue }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
@@ -111,6 +113,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                         <div
                             className={e("items-container", {
                                 "container-bottom-padding": containerBottomPadding,
+                                "container-top-padding": containerTopPadding,
                             })}
                             ref={itemsContainerRef as MutableRefObject<HTMLDivElement>}
                         >

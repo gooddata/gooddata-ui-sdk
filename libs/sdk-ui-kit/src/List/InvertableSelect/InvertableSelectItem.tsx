@@ -26,6 +26,7 @@ export interface IInvertableSelectItem {
     onOnly?: () => void;
     onClick?: () => void;
     renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
+    renderRight?: () => ReactElement | null;
     isDisabled?: boolean;
     listRef?: RefObject<HTMLElement>;
 }
@@ -41,6 +42,7 @@ export function InvertableSelectItem({
     isSelected,
     onOnly,
     renderOnly,
+    renderRight,
     icon,
     isDisabled,
 }: IInvertableSelectItem) {
@@ -84,6 +86,7 @@ export function InvertableSelectItem({
                     <FormattedMessage id="gs.list.only" />
                 </span>
             )}
+            {renderRight?.()}
         </div>
     );
 }

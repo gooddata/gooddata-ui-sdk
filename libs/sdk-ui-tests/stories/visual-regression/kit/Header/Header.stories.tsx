@@ -17,6 +17,7 @@ import {
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { custom, gd } from "./logos.js";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
@@ -347,7 +348,7 @@ const messages = {
 };
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
-const screenshotProps = {
+const screenshotProps: INeobackstopConfig = {
     closed: { delay: 300 },
     openedProjectPicker: {
         clickSelector: ".s-default-header .s-goodsales",
@@ -374,10 +375,13 @@ export default {
 export function FullFeatured() {
     return <WithIntl />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<WithIntl />);
-Themed.parameters = { kind: "themed", screenshot: screenshotProps.openedProjectPicker };
+Themed.parameters = {
+    kind: "themed",
+    screenshot: screenshotProps["openedProjectPicker"],
+} satisfies IStoryParameters;
 
 export function DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForMaxWidthHelpContent() {
     return (
@@ -407,8 +411,8 @@ export function DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForM
 }
 DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForMaxWidthHelpContent.parameters = {
     kind: "dropdown help menu should be bottom top left position when enough space for max-width help content",
-    screenshot: screenshotProps.openedHelp,
-};
+    screenshot: screenshotProps["openedHelp"],
+} satisfies IStoryParameters;
 
 export function DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpaceForMaxWidthHelpContent() {
     return (
@@ -433,8 +437,8 @@ export function DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpace
 }
 DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpaceForMaxWidthHelpContent.parameters = {
     kind: "dropdown help menu should be bottom top right position when not enough space for max-width help content",
-    screenshot: screenshotProps.openedHelp,
-};
+    screenshot: screenshotProps["openedHelp"],
+} satisfies IStoryParameters;
 
 export function WithSearchMenuItem() {
     return (
@@ -467,4 +471,7 @@ export function WithSearchMenuItem() {
         </IntlProvider>
     );
 }
-WithSearchMenuItem.parameters = { kind: "with search menu item", screenshot: true };
+WithSearchMenuItem.parameters = {
+    kind: "with search menu item",
+    screenshot: true,
+} satisfies IStoryParameters;

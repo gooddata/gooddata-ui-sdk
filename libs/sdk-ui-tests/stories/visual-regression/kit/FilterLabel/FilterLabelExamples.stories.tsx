@@ -3,6 +3,8 @@
 import { withIntl } from "@gooddata/sdk-ui";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+
 function FilterLabelExamples() {
     return (
         <div className="library-component screenshot-target">
@@ -32,4 +34,4 @@ export default {
 export function FullFeatured() {
     return <WithIntl />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;

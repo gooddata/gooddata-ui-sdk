@@ -5,6 +5,7 @@ import { ReactElement } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterEmptyResult } from "@gooddata/sdk-ui-filters";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -55,7 +56,7 @@ function AttributeFilterEmptyResultExamples(): ReactElement {
     );
 }
 
-const delayConfig = { delay: 200 };
+const delayConfig: INeobackstopScenarioConfig = { delay: 200 };
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterEmptyResult",
@@ -64,7 +65,7 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterEmptyResultExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: delayConfig };
+FullFeatured.parameters = { kind: "full-featured", screenshot: delayConfig } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterEmptyResultExamples />);
-Themed.parameters = { kind: "themed", screenshot: delayConfig };
+Themed.parameters = { kind: "themed", screenshot: delayConfig } satisfies IStoryParameters;

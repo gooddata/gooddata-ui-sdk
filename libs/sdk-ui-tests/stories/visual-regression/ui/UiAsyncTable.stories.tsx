@@ -12,6 +12,7 @@ import {
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {
@@ -259,7 +260,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     );
 }
 
-const screenshotViewport = {
+const screenshotViewport: INeobackstopScenarioConfig = {
     viewports: [{ label: "desktop", width: 1076, height: 768 }],
 };
 
@@ -269,10 +270,10 @@ export function Default() {
 Default.parameters = {
     kind: "default",
     screenshot: screenshotViewport,
-};
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiAsyncTableExample />);
 Themed.parameters = {
     kind: "themed",
     screenshot: screenshotViewport,
-};
+} satisfies IStoryParameters;

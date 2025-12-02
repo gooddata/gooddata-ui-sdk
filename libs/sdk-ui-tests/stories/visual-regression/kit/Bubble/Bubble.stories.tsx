@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Bubble, BubbleFocusTrigger, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -238,9 +239,9 @@ FullFeatured.parameters = {
             postInteractionWait: 1000,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<BubbleExamples />);
 Themed.parameters = {
     kind: "themed",
-};
+} satisfies IStoryParameters;

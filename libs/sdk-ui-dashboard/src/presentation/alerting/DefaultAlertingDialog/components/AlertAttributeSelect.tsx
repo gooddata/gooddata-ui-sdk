@@ -12,11 +12,9 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import {
-    DefaultUiMenuInteractiveItem,
     Dropdown,
     DropdownButton,
     IUiMenuInteractiveItem,
-    IUiMenuInteractiveItemProps,
     IUiMenuItem,
     IUiMenuStaticItemProps,
     UiMenu,
@@ -75,13 +73,6 @@ const createSeparator = (id: string): IUiMenuItem<IAttributeMenuData> => ({
     id,
     data: {},
 });
-
-export function CustomInteractiveItem({
-    item,
-    isFocused,
-}: IUiMenuInteractiveItemProps<IAttributeMenuData>): ReactNode {
-    return <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} size="small" />;
-}
 
 function CustomStaticItem({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): ReactNode {
     return <div className="gd-alert-attribute-select__dropdown-separator" />;
@@ -275,10 +266,10 @@ export function AlertAttributeSelect({
                             }}
                             shouldCloseOnSelect
                             onClose={closeDropdown}
-                            InteractiveItem={CustomInteractiveItem}
                             StaticItem={CustomStaticItem}
                             ariaAttributes={ariaAttributes}
                             dataTestId="s-alert-attribute-select-list"
+                            size={"small"}
                         />
                     )}
                     alignPoints={[{ align: "bl tl" }]}

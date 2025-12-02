@@ -104,6 +104,7 @@ import {
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 interface IIconWrapperProps {
     name: string;
@@ -449,9 +450,9 @@ export default {
 export function InsightIcons() {
     return <InsightIconsTest />;
 }
-InsightIcons.parameters = { kind: "insight icons", screenshot: true };
+InsightIcons.parameters = { kind: "insight icons", screenshot: true } satisfies IStoryParameters;
 
 export function Icons() {
     return <IconsTest />;
 }
-Icons.parameters = { kind: "icons", screenshot: true };
+Icons.parameters = { kind: "icons", screenshot: true } satisfies IStoryParameters;

@@ -353,7 +353,7 @@ item: IUiMenuContentItem<T>;
 }) => ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, size, }: IUiMenuContentItemProps<T>): ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuContentItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContentItemWrapper: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuContentItemWrapperProps<T>) => ReactElement)>;
@@ -365,7 +365,7 @@ export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ ite
 export const DefaultUiMenuHeader: FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, size, }: IUiMenuInteractiveItemProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuInteractiveItemProps<T>): ReactNode;
 
 // @internal (undocumented)
 export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
@@ -2105,6 +2105,7 @@ export interface IDropdownInvertableSelectProps<T> {
     alignPoints?: IAlignPoint[];
     bodyClassName?: string;
     className?: string;
+    closeOnEscape?: boolean;
     getItemKey: (item: T) => string;
     getItemTitle: (item: T) => string;
     header?: ReactNode;
@@ -2112,10 +2113,13 @@ export interface IDropdownInvertableSelectProps<T> {
     initialSearchString?: string;
     initialValue?: T[];
     onChange: (selectedItems: T[], isInverted: boolean) => void;
+    onClose?: () => void;
+    onOpen?: () => void;
     options: T[];
     overlayPositionType?: OverlayPositionType;
     renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
     renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
+    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => ReactElement;
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
@@ -2912,6 +2916,8 @@ export interface IInvertableSelectItem {
     onOnly?: () => void;
     // (undocumented)
     renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
+    // (undocumented)
+    renderRight?: () => ReactElement | null;
     // (undocumented)
     title?: string;
 }
@@ -4105,7 +4111,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Eleme
 export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, icon, isDisabled, }: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, }: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectLimitWarning({ limit, selectedItemsCount, }: IInvertableSelectLimitWarningProps): JSX.Element;
@@ -5365,8 +5371,6 @@ export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     isFocused: boolean;
     // (undocumented)
     item: IUiMenuContentItem<T>;
-    // (undocumented)
-    size?: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)
@@ -5419,6 +5423,8 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
     // (undocumented)
     shownCustomContentItemId?: string;
+    // (undocumented)
+    size: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)
@@ -5465,8 +5471,6 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     isFocused: boolean;
     // (undocumented)
     item: IUiMenuInteractiveItem<T>;
-    // (undocumented)
-    size?: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)
@@ -5653,7 +5657,7 @@ export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTab
     isOverflowing: boolean;
     containerRef: RefCallback<Element>;
     onActionTriggered: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void;
-    useActionListener: (callback: (context: IUiTabActionEventContext) => void) => void;
+    useActionListener: (callback: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void) => void;
 } & IUiTabComponents<TTabProps, TTabActionProps>;
 
 // @internal (undocumented)
@@ -7049,6 +7053,8 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     // (undocumented)
     containerBottomPadding?: "none" | "small" | "medium";
     // (undocumented)
+    containerTopPadding?: "none" | "small" | "medium";
+    // (undocumented)
     dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
     isDisabledFocusable?: boolean;
@@ -7076,6 +7082,8 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     shouldKeyboardActionPreventDefault?: boolean;
     // (undocumented)
     shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)

@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
+import { DrillableItemsRefProvider, useDrillableItemsRef } from "./DrillableItemsRefContext.js";
 import { useInitialExecution } from "./InitialExecutionContext.js";
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
 import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
@@ -18,10 +19,18 @@ const ColumnDefsContext = createContext<IColumnDefsContext | undefined>(undefine
  * @internal
  */
 export function ColumnDefsProvider({ children }: { children: ReactNode }) {
+    return (
+        <DrillableItemsRefProvider>
+            <ColumnDefsProviderInner>{children}</ColumnDefsProviderInner>
+        </DrillableItemsRefProvider>
+    );
+}
+
+function ColumnDefsProviderInner({ children }: { children: ReactNode }) {
     const intl = useIntl();
     const initialExecutionData = useInitialExecution();
     const props = usePivotTableProps();
-    const { config, drillableItems } = props;
+    const { config } = props;
     const {
         columnHeadersPosition,
         columnSizing: { columnWidths: initialColumnWidths },
@@ -29,17 +38,18 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
     } = config;
     const { initialDataView } = initialExecutionData;
     const columnWidths = useInitialProp(initialColumnWidths);
+    const drillableItemsRef = useDrillableItemsRef();
 
     const columnDefs = useMemo(() => {
         return dataViewToColDefs({
             dataView: initialDataView,
             columnHeadersPosition,
             columnWidths,
-            drillableItems,
+            drillableItemsRef,
             textWrapping,
             intl,
         });
-    }, [initialDataView, columnHeadersPosition, columnWidths, drillableItems, textWrapping, intl]);
+    }, [initialDataView, columnHeadersPosition, columnWidths, textWrapping, intl, drillableItemsRef]);
 
     return <ColumnDefsContext.Provider value={columnDefs}>{children}</ColumnDefsContext.Provider>;
 }

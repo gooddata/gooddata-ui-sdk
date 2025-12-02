@@ -25,6 +25,7 @@ import {
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { useSyncDrillableItems } from "./drilling/useSyncDrillableItems.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
@@ -68,6 +69,9 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
     const { currentDataView } = useCurrentDataView();
     const isDraggingRef = useRef<boolean>(false);
     const clickedCellRef = useRef<{ rowIndex: number; colId: string | undefined } | null>(null);
+
+    // Sync drillable items changes to ag-grid cells
+    useSyncDrillableItems();
 
     const drillFromCellEvent = useCallback(
         (

@@ -24,7 +24,6 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                 renderButton={({ toggleDropdown, isOpen }) => (
                     <UiButton
                         id={ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID}
-                        variant="primary"
                         ref={buttonRef}
                         isDisabled={!bulkActions.length}
                         label={intl.formatMessage(messages["chooseAction"])}

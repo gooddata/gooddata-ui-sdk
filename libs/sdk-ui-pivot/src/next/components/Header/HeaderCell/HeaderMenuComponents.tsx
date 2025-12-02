@@ -83,13 +83,13 @@ export type AggregationsMenuItemData = {
         | null;
 };
 
-export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
+export function HeaderInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
     const { item } = props;
 
     if (item.data && item.data.type === "disabledItem" && item.data.disabledTooltip) {
         return (
             <BubbleHoverTrigger showDelay={0} hideDelay={0} eventsOnBubble>
-                <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />
+                <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} />
                 <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
                     {item.data.disabledTooltip}
                 </Bubble>
@@ -97,7 +97,7 @@ export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<Aggregat
         );
     }
 
-    return <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />;
+    return <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} />;
 }
 
 /**

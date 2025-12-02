@@ -8,6 +8,7 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
 
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -64,7 +65,7 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterElementsSelectItemExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterElementsSelectItemExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

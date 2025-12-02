@@ -13,6 +13,7 @@ import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { useInitialExecution } from "../context/InitialExecutionContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { useRuntimeError } from "../context/RuntimeErrorContext.js";
 import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
 import { AgGridProps } from "../types/agGrid.js";
 
@@ -28,6 +29,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
     const { setGrandTotalRows } = useGrandTotalRows();
     const { initSizingForEmptyData } = useInitSizingForEmptyData();
     const { setPivotResultColumns } = useSetAgGridPivotResultColumns();
+    const { setRuntimeError } = useRuntimeError();
 
     const { rows, measures, sortBy, config, pageSize, onDataView, onExportReady, exportTitle } = props;
     const { columnHeadersPosition, separators, grandTotalsPosition = "pinnedBottom" } = config;
@@ -56,6 +58,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
                 onExportReady,
                 exportTitle,
                 separators,
+                setRuntimeError,
             }),
         [
             rows,
@@ -75,6 +78,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
             onExportReady,
             exportTitle,
             separators,
+            setRuntimeError,
         ],
     );
 

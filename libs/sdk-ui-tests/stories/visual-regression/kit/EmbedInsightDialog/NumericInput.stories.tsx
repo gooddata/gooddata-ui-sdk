@@ -7,6 +7,7 @@ import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { NumericInput } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function NumericInputExamples() {
@@ -40,7 +41,7 @@ export default {
 export function FullFeatured() {
     return <NumericInputExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<NumericInputExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

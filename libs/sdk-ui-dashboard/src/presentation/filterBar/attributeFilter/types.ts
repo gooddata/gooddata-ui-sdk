@@ -120,7 +120,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     className?: string;
     bodyClassName?: string;
     onSelect: (displayForm: ObjRef) => void;
-    onClose: () => void;
+    onOpen?: () => void;
+    onClose?: () => void;
     attributes: ICatalogAttribute[];
     dateDatasets: ICatalogDateDataset[];
     openOnInit?: boolean;

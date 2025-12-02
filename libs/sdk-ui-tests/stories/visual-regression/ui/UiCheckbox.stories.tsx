@@ -2,6 +2,7 @@
 
 import { ComponentTable, UiCheckbox, UiCheckboxProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {
@@ -29,12 +30,12 @@ function UiCheckboxExample({ showCode }: { showCode?: boolean }) {
 export function Default() {
     return <UiCheckboxExample />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiCheckboxExample />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiCheckboxExample showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

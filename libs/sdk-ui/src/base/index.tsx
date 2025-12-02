@@ -31,6 +31,7 @@ export {
     BadRequestSdkError,
     GeoTokenMissingSdkError,
     DynamicScriptLoadSdkError,
+    ResultCacheMissingSdkError,
     isGoodDataSdkError,
     isBadRequest,
     isCancelledSdkError,
@@ -47,9 +48,15 @@ export {
     isForecastNotReceived,
     isClusteringNotReceived,
     isDynamicScriptLoadSdkError,
+    isResultCacheMissingSdkError,
 } from "./errors/GoodDataSdkError.js";
 export type { IErrorDescriptors } from "./errors/errorHandling.js";
-export { newErrorMapping, convertError, defaultErrorHandler } from "./errors/errorHandling.js";
+export {
+    newErrorMapping,
+    convertError,
+    convertDataWindowError,
+    defaultErrorHandler,
+} from "./errors/errorHandling.js";
 
 /*
  * Base React stuff

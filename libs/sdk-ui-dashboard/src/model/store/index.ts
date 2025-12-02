@@ -70,6 +70,7 @@ export {
     selectIsDisableUserFilterReset,
     selectEnableScheduling,
     selectEnableFilterViews,
+    selectEnableCustomizedDashboardsWithoutPluginOverlay,
     selectEnableAlerting,
     selectEnableAlertAttributes,
     selectEnableComparisonInAlerting,

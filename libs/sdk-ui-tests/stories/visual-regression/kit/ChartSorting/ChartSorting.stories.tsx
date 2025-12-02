@@ -15,24 +15,24 @@ import {
     singleChronologicalDateSortConfig,
     singleGenericDateAndMetricSortConfig,
 } from "./ChartSortingMock.js";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
-const dropdownSingleAttributeScenario: BackstopConfig = {
+const dropdownSingleAttributeScenario: INeobackstopConfig = {
     default: {},
     attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
 };
 
-const dropdownSingleChronologicalDateScenario: BackstopConfig = {
+const dropdownSingleChronologicalDateScenario: INeobackstopConfig = {
     default: {},
     attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
 };
 
-const dropdownSingleGenericDateScenario: BackstopConfig = {
+const dropdownSingleGenericDateScenario: INeobackstopConfig = {
     default: {},
     attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
     applyButtonActivated: {
@@ -40,11 +40,11 @@ const dropdownSingleGenericDateScenario: BackstopConfig = {
     },
 };
 
-const dropdownSingleAttributeSingleMetricScenario: BackstopConfig = {
+const dropdownSingleAttributeSingleMetricScenario: INeobackstopConfig = {
     default: {},
     attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
 };
-const dropdownMultipleAttributesMultipleMetricsScenario: BackstopConfig = {
+const dropdownMultipleAttributesMultipleMetricsScenario: INeobackstopConfig = {
     default: {},
     measureDropdownOpen: { clickSelectors: [".s-snapshot__m1_", 200] },
 };
@@ -106,7 +106,7 @@ export function DropdownSingleAttribute() {
 DropdownSingleAttribute.parameters = {
     kind: "dropdown single attribute",
     screenshots: dropdownSingleAttributeScenario,
-};
+} satisfies IStoryParameters;
 
 export function DropdownSingleChronologicalDate() {
     return (
@@ -127,7 +127,7 @@ export function DropdownSingleChronologicalDate() {
 DropdownSingleChronologicalDate.parameters = {
     kind: "dropdown single chronological date",
     screenshots: dropdownSingleChronologicalDateScenario,
-};
+} satisfies IStoryParameters;
 
 export function DropdownSingleGenericDateAndMeasure() {
     return (
@@ -148,7 +148,7 @@ export function DropdownSingleGenericDateAndMeasure() {
 DropdownSingleGenericDateAndMeasure.parameters = {
     kind: "dropdown single generic date and measure",
     screenshots: dropdownSingleGenericDateScenario,
-};
+} satisfies IStoryParameters;
 
 export function DropdownSingleAttributeSingleMetric() {
     return (
@@ -169,7 +169,7 @@ export function DropdownSingleAttributeSingleMetric() {
 DropdownSingleAttributeSingleMetric.parameters = {
     kind: "dropdown single attribute single metric",
     screenshots: dropdownSingleAttributeSingleMetricScenario,
-};
+} satisfies IStoryParameters;
 
 export function DropdownSingleAttributeMultipleMetrics() {
     return (
@@ -190,7 +190,7 @@ export function DropdownSingleAttributeMultipleMetrics() {
 DropdownSingleAttributeMultipleMetrics.parameters = {
     kind: "dropdown single attribute multiple metrics",
     screenshot: true,
-};
+} satisfies IStoryParameters;
 
 export function DropdownMultipleAttributesMultipleMetrics() {
     return (
@@ -211,7 +211,7 @@ export function DropdownMultipleAttributesMultipleMetrics() {
 DropdownMultipleAttributesMultipleMetrics.parameters = {
     kind: "dropdown multiple attributes multiple metrics",
     screenshots: dropdownMultipleAttributesMultipleMetricsScenario,
-};
+} satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -231,4 +231,4 @@ export const Themed = () =>
 Themed.parameters = {
     kind: "themed",
     screenshot: true,
-};
+} satisfies IStoryParameters;

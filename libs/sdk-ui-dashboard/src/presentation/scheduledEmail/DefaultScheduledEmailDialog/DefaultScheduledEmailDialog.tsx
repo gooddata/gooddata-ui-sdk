@@ -12,12 +12,7 @@ import {
     IAutomationMetadataObjectDefinition,
     WidgetAttachmentType,
 } from "@gooddata/sdk-model";
-import {
-    ValidationContextStore,
-    createInvalidDatapoint,
-    createInvalidNode,
-    useValidationContextValue,
-} from "@gooddata/sdk-ui";
+import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import {
     Button,
     ConfirmDialogBase,
@@ -277,17 +272,9 @@ export function ScheduledMailDialogRenderer({
     const validationContextValue = useValidationContextValue(
         createInvalidNode({ id: "ScheduledEmailDialog" }),
     );
-    const { getInvalidDatapoints, setInvalidDatapoints } = validationContextValue;
+    const { getInvalidDatapoints } = validationContextValue;
 
-    useEffect(() => {
-        const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
-
-        if (!errorMessage) {
-            return;
-        }
-
-        setInvalidDatapoints(() => [createInvalidDatapoint({ message: errorMessage })]);
-    }, [missingAttachmentsErrorMessage, savingErrorMessage, setInvalidDatapoints, validationErrorMessage]);
+    const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
 
     const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
         effectiveFilters: dashboardFilters,
@@ -657,6 +644,17 @@ export function ScheduledMailDialogRenderer({
                                                 isShared={editedAutomation.evaluationMode === "SHARED"}
                                                 onChange={onEvaluationModeChange}
                                             />
+                                        ) : null}
+                                        {errorMessage ? (
+                                            <Message
+                                                type="error"
+                                                className={cx("gd-notifications-channels-dialog-error", {
+                                                    "gd-notifications-channels-dialog-error-scrollable":
+                                                        enableAutomationFilterContext,
+                                                })}
+                                            >
+                                                {errorMessage}
+                                            </Message>
                                         ) : null}
                                         {getInvalidDatapoints({ recursive: true })
                                             .filter(

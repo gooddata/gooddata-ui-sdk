@@ -13,7 +13,7 @@ import { Button, ComponentLabelsProvider, ShareDialogBase, getGranteeItemTestId 
 
 import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -92,7 +92,7 @@ function ShareDialogExamples() {
 
 const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 
-const scenarios = {
+const scenarios: INeobackstopConfig = {
     open: {
         clickSelectors: [".s-share-dialog-button"],
         delay: {
@@ -117,7 +117,7 @@ const scenarios = {
     },
 };
 
-const lockScenarios: BackstopConfig = {
+const lockScenarios: INeobackstopConfig = {
     open: {
         clickSelectors: [".s-share-dialog-button", 300],
     },
@@ -126,7 +126,7 @@ const lockScenarios: BackstopConfig = {
     },
 };
 
-const drillAvailabilityScenarios: BackstopConfig = {
+const drillAvailabilityScenarios: INeobackstopConfig = {
     open: {
         clickSelectors: [".s-share-dialog-button", 300],
     },
@@ -142,15 +142,18 @@ export default {
 export function FullFeatured() {
     return <ShareDialogExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
+FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ShareDialogExamples />);
-Themed.parameters = { kind: "themed", screenshots: scenarios };
+Themed.parameters = { kind: "themed", screenshots: scenarios } satisfies IStoryParameters;
 
 export function LockInteraction() {
     return <ShareDialogExamples />;
 }
-LockInteraction.parameters = { kind: "lock-interaction", screenshots: lockScenarios };
+LockInteraction.parameters = {
+    kind: "lock-interaction",
+    screenshots: lockScenarios,
+} satisfies IStoryParameters;
 
 export function DrillAvailabilityInteraction() {
     return <ShareDialogExamples />;
@@ -158,4 +161,4 @@ export function DrillAvailabilityInteraction() {
 DrillAvailabilityInteraction.parameters = {
     kind: "drill-availability-interaction",
     screenshots: drillAvailabilityScenarios,
-};
+} satisfies IStoryParameters;

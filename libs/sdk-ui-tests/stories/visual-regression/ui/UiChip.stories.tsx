@@ -2,6 +2,7 @@
 
 import { ComponentTable, UiChip, UiChipProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
@@ -55,12 +56,12 @@ export default {
 export function FullFeaturedChip() {
     return <UiChipTest />;
 }
-FullFeaturedChip.parameters = { kind: "full-featured chip", screenshot: true };
+FullFeaturedChip.parameters = { kind: "full-featured chip", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiChipTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiChipTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

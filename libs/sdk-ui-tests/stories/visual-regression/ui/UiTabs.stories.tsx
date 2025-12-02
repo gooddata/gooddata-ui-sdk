@@ -12,6 +12,7 @@ import {
     separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const tabs = [
@@ -206,27 +207,27 @@ export default {
     title: "15 Ui/UiTabs",
 };
 
-const screenshotConfig = { misMatchThreshold: 0.01 };
+const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.01 };
 
 export function Default() {
     return <UiTabsTest />;
 }
-Default.parameters = { kind: "default", screenshot: screenshotConfig };
+Default.parameters = { kind: "default", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiTabsTest />);
-Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiTabsTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;
 
 export function Interactive() {
     return <InteractiveUiTabsTest />;
 }
-Interactive.parameters = { kind: "interactive" };
+Interactive.parameters = { kind: "interactive" } satisfies IStoryParameters;
 
 export function WithOverflowAndScrolling() {
     return <UiTabsWithOverflowTest />;
 }
-WithOverflowAndScrolling.parameters = { kind: "interactive" };
+WithOverflowAndScrolling.parameters = { kind: "interactive" } satisfies IStoryParameters;

@@ -25,7 +25,15 @@ import {
     isMeasure,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    DataViewFacade,
+    ErrorComponent,
+    GoodDataSdkError,
+    LoadingComponent,
+    emptyHeaderTitleFromIntl,
+    newErrorMapping,
+} from "@gooddata/sdk-ui";
 import { IconImage } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -50,8 +58,11 @@ const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false, suppressHead
 
 export function RepeaterChart(props: IRepeaterChartProps) {
     const { dataView, onError, config, afterRender } = props;
+    const intl = useIntl();
+    const [runtimeError, setRuntimeError] = useState<GoodDataSdkError | undefined>(undefined);
+
     const dataSource = useMemo(
-        () => new AgGridDatasource(dataView, { onError }, config),
+        () => new AgGridDatasource(dataView, { onError, setRuntimeError }, config),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [dataView.fingerprint(), onError, config],
     );
@@ -165,6 +176,20 @@ export function RepeaterChart(props: IRepeaterChartProps) {
     const { onFirstDataRendered } = useRenderWatcher(afterRender);
 
     const { switchToBrowserDefault, focusGridInnerElement } = useFocusMng();
+
+    if (runtimeError) {
+        const errorMap = newErrorMapping(intl);
+        const errorCode = runtimeError.getErrorCode();
+        const errorProps = errorMap[errorCode] ?? errorMap["UNKNOWN_ERROR"];
+        return (
+            <ErrorComponent
+                code={errorCode}
+                message={errorProps.message}
+                description={errorProps.description}
+                icon={errorProps.icon}
+            />
+        );
+    }
 
     return (
         <div className="gd-repeater s-repeater" ref={containerRef}>

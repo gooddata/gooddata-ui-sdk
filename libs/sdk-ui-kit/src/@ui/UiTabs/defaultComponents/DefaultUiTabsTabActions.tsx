@@ -40,7 +40,7 @@ export function DefaultUiTabsTabActions<
         "onActionTriggered",
     ]);
 
-    const tabElementId = useScopedId(tab, "container");
+    const tabElementId = useScopedId(tab, "tab-scroll-target");
 
     const menuItems: IMenuItemType<TTabProps, TTabActionProps>[] = useMemo(
         () =>
@@ -118,6 +118,9 @@ export function DefaultUiTabsTabActions<
                     ariaAttributes={ariaAttributes}
                     maxWidth={160}
                     maxHeight={400}
+                    size={"small"}
+                    containerBottomPadding={"small"}
+                    containerTopPadding={"small"}
                 />
             )}
             autofocusOnOpen

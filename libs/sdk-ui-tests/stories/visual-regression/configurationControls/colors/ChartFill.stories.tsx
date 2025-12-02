@@ -5,9 +5,8 @@ import { IInsightDefinition, insightMeasures, measureLocalId } from "@gooddata/s
 import { ChartFillType, PatternFillName } from "@gooddata/sdk-ui-charts";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { IBackstopScenarioConfig } from "stories/_infra/backstopScenario.js";
-
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { ShortPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import {
     ScreenshotReadyWrapper,
@@ -17,7 +16,7 @@ import {
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "./styles.css";
 
-const config: IBackstopScenarioConfig = {
+const config: INeobackstopScenarioConfig = {
     postInteractionWait: ShortPostInteractionTimeout,
     // use ScreenshotReadyWrapper, override default selector for suite "11" in backstop.json
     readySelector: ".screenshot-ready-wrapper-done",
@@ -101,7 +100,7 @@ export function AllInsightTypesWithSolidFill() {
 AllInsightTypesWithSolidFill.parameters = {
     kind: "Supported insight types with solid fill",
     screenshot: config,
-};
+} satisfies IStoryParameters;
 
 export function AllInsightTypesWithPatternFill() {
     return <ChartFillStories chartFillType="pattern" />;
@@ -109,7 +108,7 @@ export function AllInsightTypesWithPatternFill() {
 AllInsightTypesWithPatternFill.parameters = {
     kind: "Supported insight types with pattern fill",
     screenshot: config,
-};
+} satisfies IStoryParameters;
 
 export function AllInsightTypesWithSetPatternFill() {
     return (
@@ -133,7 +132,7 @@ export function AllInsightTypesWithSetPatternFill() {
 AllInsightTypesWithSetPatternFill.parameters = {
     kind: "Supported insight types with set pattern fill for the first measures",
     screenshot: config,
-};
+} satisfies IStoryParameters;
 
 export function AllInsightTypesWithOutlineFill() {
     return <ChartFillStories chartFillType="outline" />;
@@ -141,4 +140,4 @@ export function AllInsightTypesWithOutlineFill() {
 AllInsightTypesWithOutlineFill.parameters = {
     kind: "Supported insight types with outline fill",
     screenshot: config,
-};
+} satisfies IStoryParameters;

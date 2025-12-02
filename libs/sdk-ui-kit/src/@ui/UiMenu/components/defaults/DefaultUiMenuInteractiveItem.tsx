@@ -107,7 +107,6 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
-    size = "medium",
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
     return (
         <UiTooltip
@@ -118,7 +117,6 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
                         isSelected: !!item.isSelected,
                         isDisabled: !!item.isDisabled,
                         isDestructive: !!item.isDestructive,
-                        size,
                     })}
                 >
                     {item.iconLeft ? item.iconLeft : null}

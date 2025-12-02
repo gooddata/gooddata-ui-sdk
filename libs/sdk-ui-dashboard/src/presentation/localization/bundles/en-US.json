@@ -1111,6 +1111,14 @@
         "value": "Contact your administrator.",
         "comment": "Instructional text shown below an error message, guiding users to contact support"
     },
+    "visualization.ErrorMessageResultCacheMissing": {
+        "value": "Visualization needs refresh",
+        "comment": "Error message shown when a visualization cannot reuse its cached execution result because it was cleared from the backend result cache."
+    },
+    "visualization.ErrorDescriptionResultCacheMissing": {
+        "value": "The underlying data changed or expired. Refresh the page.",
+        "comment": "Follow-up text shown under the 'result is no longer available' error message, instructing the user to rerun the execution to obtain fresh data."
+    },
     "visualization.warning.export.too_small": {
         "value": "Not enough space for visualization",
         "comment": "Warning shown when there is insufficient space to properly display a visualization during export"

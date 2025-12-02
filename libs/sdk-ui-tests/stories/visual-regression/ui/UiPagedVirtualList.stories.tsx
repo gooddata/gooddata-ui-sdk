@@ -2,6 +2,7 @@
 
 import { UiPagedVirtualList } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const items = Array.from({ length: 100 }, (_, index) => ({
@@ -55,6 +56,6 @@ function UiPagedVirtualListExample() {
 export function Default() {
     return <UiPagedVirtualListExample />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 export const Themed = () => wrapWithTheme(<UiPagedVirtualListExample />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

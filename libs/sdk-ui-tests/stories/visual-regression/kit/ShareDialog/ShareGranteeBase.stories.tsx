@@ -14,6 +14,7 @@ import {
 
 import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -128,7 +129,7 @@ export default {
 export function FullFeatured() {
     return <ShareGranteeBaseExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ShareGranteeBaseExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

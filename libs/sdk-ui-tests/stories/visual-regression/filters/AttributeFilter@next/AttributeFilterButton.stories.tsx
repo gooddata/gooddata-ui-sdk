@@ -11,9 +11,9 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
@@ -50,7 +50,7 @@ EmptyDefaultSelection.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function NotFitIntoContent() {
     return (
@@ -82,7 +82,7 @@ NotFitIntoContent.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function EmptyDefaultSelectionLocalized() {
     return (
@@ -105,7 +105,7 @@ EmptyDefaultSelectionLocalized.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function PreSelectedElements() {
     return (
@@ -129,7 +129,7 @@ PreSelectedElements.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AllElementsSelectedInNegativeSelection() {
     return (
@@ -161,7 +161,7 @@ AllElementsSelectedInNegativeSelection.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AttributeFilterError() {
     return (
@@ -228,7 +228,7 @@ AttributeFilterError.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -249,7 +249,7 @@ Themed.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function SingleSelection() {
     return (
@@ -274,4 +274,4 @@ SingleSelection.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;

@@ -525,6 +525,17 @@ export const selectEnableFilterViews: DashboardSelector<boolean> = createSelecto
 });
 
 /**
+ * Returns whether customized dashboards without plugin overlay are enabled.
+ * When enabled, the plugin overlay will not be displayed on dashboard items.
+ *
+ * @internal
+ */
+export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean> =
+    createSelector(selectConfig, (state) => {
+        return state.settings?.enableCustomizedDashboardsWithoutPluginOverlay ?? false;
+    });
+
+/**
  * Returns whether filter views are enabled.
  *
  * @internal

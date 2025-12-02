@@ -528,7 +528,7 @@ $attribute-filter-drag-handle-left: 10px;
 .gd-button-primary.gd-filter-views-button {
     border: 0;
     box-shadow: none;
-    color: kit-variables.$gd-color-state-blank;
+    color: var(--gd-palette-complementary-6);
     background: variables.$gd-dashboards-content-backgroundColor;
     font-size: 14px;
 
@@ -551,8 +551,25 @@ $attribute-filter-drag-handle-left: 10px;
 
             .gd-button-icon {
                 margin-top: 1px;
+                color: var(--gd-palette-primary-base);
             }
         }
+    }
+
+    &:not(.disabled):not(.gd-button-link):hover {
+        .gd-button-icon {
+            color: var(--gd-palette-primary-base);
+        }
+
+        color: var(--gd-palette-complementary-8);
+    }
+
+    .gd-button-icon {
+        color: var(--gd-palette-complementary-5);
+        // A little hack. The My views button is using the outdated <Button> component.
+        // This brings the visuals in line with the <UiButton> used in the All tabs component.
+        /* stylelint-disable-next-line declaration-no-important */
+        margin: 0 -8px 0 6px !important;
     }
 
     .gd-filter-views-button__label {

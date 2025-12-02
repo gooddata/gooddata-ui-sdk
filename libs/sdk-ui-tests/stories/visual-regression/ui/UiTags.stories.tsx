@@ -7,6 +7,7 @@ import { action } from "storybook/actions";
 
 import { IAccessibilityConfigBase, UiCheckbox, UiTagDef, UiTags, UiTagsProps } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const smallTags: UiTagDef[] = [
@@ -285,12 +286,12 @@ export default {
 export function Default() {
     return <UiTagsExamples />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiTagsExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interactive() {
     return <InteractiveUiTagsTest />;
 }
-Interactive.parameters = { kind: "interactive" };
+Interactive.parameters = { kind: "interactive" } satisfies IStoryParameters;
