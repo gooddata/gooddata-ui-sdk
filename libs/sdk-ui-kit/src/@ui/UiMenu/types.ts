@@ -119,8 +119,6 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     item: IUiMenuInteractiveItem<T>;
 
     isFocused: boolean;
-
-    size?: SizeSmall | SizeMedium;
 }
 
 /**
@@ -143,7 +141,6 @@ export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
 export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
     isFocused: boolean;
-    size?: SizeSmall | SizeMedium;
 }
 
 /**
@@ -178,6 +175,7 @@ export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> 
 export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     extends IUiMenuPluggableComponents<T> {
     items: IUiMenuItem<T>[];
+    size: SizeSmall | SizeMedium;
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     shownCustomContentItemId?: string;
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
@@ -207,6 +205,8 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 
+    size?: SizeSmall | SizeMedium;
+
     dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
 
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
@@ -215,6 +215,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
 
     containerBottomPadding?: "none" | "small" | "medium";
+    containerTopPadding?: "none" | "small" | "medium";
 
     onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent | KeyboardEvent) => void;
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;

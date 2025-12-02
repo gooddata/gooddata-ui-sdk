@@ -495,6 +495,7 @@ $gd-dashboards-section-description-color: var(
 }
 
 .gd-grid-layout__section {
+    position: relative; // necessary to contain plugin overlay inside of the element
     display: grid;
     grid-template-columns: subgrid;
 }

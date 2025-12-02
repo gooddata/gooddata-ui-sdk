@@ -7,6 +7,7 @@ import { action } from "storybook/actions";
 import { CodeArea } from "@gooddata/sdk-ui-kit";
 
 import { code } from "./CodeMock.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function AreaWrapper({ children }: { children?: ReactNode }) {
@@ -51,7 +52,7 @@ export default {
 export function FullFeatured() {
     return <CodeAreaExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<CodeAreaExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

@@ -94,7 +94,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     // Provides sizing for the rename input
     &__rename-ghost-value {
         visibility: hidden;
-        min-width: 30px;
     }
 
     // Rename input wrapper

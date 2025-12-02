@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -86,7 +87,7 @@ export default {
 export function FullFeatured() {
     return <ResponsiveTextExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export function Dynamic() {
     return <ResponsiveTextDynamicExamples />;
@@ -107,4 +108,4 @@ Dynamic.parameters = {
 };
 
 export const Themed = () => wrapWithTheme(<ResponsiveTextExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

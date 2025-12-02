@@ -3,11 +3,13 @@
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, MinMaxControl } from "@gooddata/sdk-ui-ext/internal";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
+import { IStoryParameters, IViewport } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
+const mobileViewport: IViewport[] = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 
 export default {
@@ -29,7 +31,7 @@ export function Disabled() {
         </div>
     );
 }
-Disabled.parameters = { kind: "disabled", screenshot: true };
+Disabled.parameters = { kind: "disabled", screenshot: true } satisfies IStoryParameters;
 
 export function Enabled() {
     return (
@@ -61,7 +63,7 @@ Enabled.parameters = {
             misMatchThreshold: 0.01,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function EnabledLocale() {
     return (
@@ -92,4 +94,4 @@ EnabledLocale.parameters = {
             viewports: mobileViewport,
         },
     },
-};
+} satisfies IStoryParameters;

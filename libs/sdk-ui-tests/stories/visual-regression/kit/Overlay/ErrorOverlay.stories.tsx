@@ -6,6 +6,7 @@ import { action } from "storybook/actions";
 import { withIntl } from "@gooddata/sdk-ui";
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);
@@ -55,12 +56,12 @@ export default {
 export function Default() {
     return <WrappedErrorOverlayExampleDefault />;
 }
-Default.parameters = { kind: "default" };
+Default.parameters = { kind: "default" } satisfies IStoryParameters;
 
 export function Custom() {
     return <WrappedErrorOverlayExampleCustom />;
 }
-Custom.parameters = { kind: "custom" };
+Custom.parameters = { kind: "custom" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<WrappedErrorOverlayExampleDefault />);
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;

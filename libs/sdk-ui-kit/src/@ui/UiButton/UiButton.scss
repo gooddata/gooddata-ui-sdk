@@ -95,6 +95,7 @@
                 }
 
                 &:active,
+                &[aria-expanded="true"],
                 &#{$root}--isSelected {
                     background-color: var(--gd-palette-primary-base-d12);
                     box-shadow: var(--gd-button-dropShadow, 0 1px 0 0) var(--gd-palette-complementary-9-t85)
@@ -129,6 +130,7 @@
                 }
 
                 &:active,
+                &[aria-expanded="true"],
                 &#{$root}--isSelected {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
 
@@ -159,6 +161,7 @@
                 &:hover,
                 &:focus-visible,
                 &:active,
+                &[aria-expanded="true"],
                 &#{$root}--isSelected {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
 

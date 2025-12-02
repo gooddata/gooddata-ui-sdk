@@ -6,6 +6,7 @@ import { IntlProvider } from "react-intl";
 
 import { UiDrawer } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 function Example({ title, children }: { title: string; children: ReactNode }) {
@@ -314,7 +315,7 @@ export default {
 export function Default() {
     return <UiDrawerExamples />;
 }
-Default.parameters = { kind: "default" };
+Default.parameters = { kind: "default" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiDrawerExamples />);
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;

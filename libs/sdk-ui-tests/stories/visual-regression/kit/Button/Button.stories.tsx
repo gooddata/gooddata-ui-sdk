@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/button.css";
@@ -321,7 +322,7 @@ export default {
 export function FullFeaturedButton() {
     return <ButtonTest />;
 }
-FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true };
+FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ButtonTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

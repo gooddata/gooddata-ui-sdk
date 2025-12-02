@@ -13,6 +13,7 @@ import {
     UiStaticTreeview,
 } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 type StaticItem = { id: string; value: string };
@@ -385,7 +386,7 @@ export default {
 export function Default() {
     return <UiTreeviewExamples />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiTreeviewExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

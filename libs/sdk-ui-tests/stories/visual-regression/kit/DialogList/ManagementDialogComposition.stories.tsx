@@ -7,6 +7,7 @@ import { action } from "storybook/actions";
 import { ConfirmDialogBase, ContentDivider, DialogList, DialogListHeader } from "@gooddata/sdk-ui-kit";
 
 import { itemsMock as items } from "./itemsMock.js";
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -202,17 +203,17 @@ export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",
 };
 
-const screenshotConfig = { clickSelector: ".screenshot-target" };
+const screenshotConfig: INeobackstopScenarioConfig = { clickSelector: ".screenshot-target" };
 
 export function FullFeatured() {
     return <ManagementDialogCompositionExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export function Loading() {
     return <ManagementDialogCompositionLoadingExample />;
 }
-Loading.parameters = { kind: "loading" };
+Loading.parameters = { kind: "loading" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ManagementDialogCompositionExamples />);
-Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig } satisfies IStoryParameters;

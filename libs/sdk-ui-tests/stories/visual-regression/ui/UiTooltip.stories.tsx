@@ -12,6 +12,7 @@ import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/
 
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 
 const propCombination = propCombinationsFor({} as UiTooltipProps);
 
@@ -228,27 +229,27 @@ export default {
 export function Default() {
     return <UiTooltipTest />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiTooltipTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiTooltipTest showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;
 
 export function Examples() {
     return <UiTooltipExamples />;
 }
-Examples.parameters = { kind: "examples" };
+Examples.parameters = { kind: "examples" } satisfies IStoryParameters;
 
 export function FullExampleButtons() {
     return <UiTooltipWithButtonsTest />;
 }
-FullExampleButtons.parameters = { kind: "full-example-buttons" };
+FullExampleButtons.parameters = { kind: "full-example-buttons" } satisfies IStoryParameters;
 
 export function ScopedTheme() {
     return <UiTooltipScopedThemeTest />;
 }
-ScopedTheme.parameters = { kind: "scoped-theme" };
+ScopedTheme.parameters = { kind: "scoped-theme" } satisfies IStoryParameters;

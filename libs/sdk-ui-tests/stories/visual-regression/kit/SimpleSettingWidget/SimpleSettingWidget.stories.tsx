@@ -2,6 +2,7 @@
 
 import { SimpleSettingWidget } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function SimpleSettingWidgetTest() {
@@ -41,12 +42,12 @@ export default {
     title: "12 UI Kit/SimpleSettingWidget",
 };
 
-const screenshotConfig = { misMatchThreshold: 0.025 }; // misMatchThreshold needed for loading spinner
+const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.025 }; // misMatchThreshold needed for loading spinner
 
 export function FullFeatured() {
     return <SimpleSettingWidgetTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig };
+FullFeatured.parameters = { kind: "full-featured", screenshot: screenshotConfig } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<SimpleSettingWidgetTest />);
-Themed.parameters = { kind: "themed", screenshot: screenshotConfig };
+Themed.parameters = { kind: "themed", screenshot: screenshotConfig } satisfies IStoryParameters;

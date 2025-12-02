@@ -9,10 +9,12 @@ import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { useAddNewAttributeHandler } from "./hooks/useAddNewAttributeHandler.js";
 import { useUnusedAttributes } from "./hooks/useUnusedAttributes.js";
 import { AttributesDropdown } from "../../presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+import { useKdaState } from "../providers/KdaState.js";
 
 export function AddFilterButton() {
     const intl = useIntl();
     const attributes = useUnusedAttributes();
+    const { setState } = useKdaState();
 
     const tooltipText = intl.formatMessage({ id: "kdaDialog.dialog.filters.add.tooltip" });
     const searchAriaLabel = intl.formatMessage({ id: "kdaDialog.dialog.filters.search" });
@@ -30,13 +32,22 @@ export function AddFilterButton() {
             dateDatasets={[]}
             attributes={attributes}
             onSelect={onSelectCallback}
-            onClose={() => {}}
+            onOpen={() => {
+                setState({
+                    addFilterDropdownOpen: true,
+                });
+            }}
+            onClose={() => {
+                setState({
+                    addFilterDropdownOpen: false,
+                });
+            }}
             renderVirtualisedList
             accessibilityConfig={{
                 ariaLabelledBy,
                 searchAriaLabel,
             }}
-            overlayPositionType="fixed"
+            overlayPositionType="sameAsTarget"
             className="gd-kda-attribute-add-dropdown"
             DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
                 <UiTooltip

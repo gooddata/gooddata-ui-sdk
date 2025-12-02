@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo, useRef } from "react";
+import { RefObject, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -20,6 +20,7 @@ interface IDateBarProps {
 export function DateBar(props: IDateBarProps) {
     const intl = useIntl();
     const ref = useRef<HTMLUListElement>(null);
+    const [isActive, setIsActive] = useState(false);
 
     const splitter = intl.formatMessage({ id: "kdaDialog.dialog.bars.date.splitter" });
     const label = intl.formatMessage(
@@ -58,7 +59,7 @@ export function DateBar(props: IDateBarProps) {
                 anchor={
                     <UiPopover
                         disabled={!props.isAvailable}
-                        anchor={<UiChip label={label} iconBefore="date" isExpandable={false} />}
+                        anchor={<UiChip label={label} iconBefore="date" isExpandable isActive={isActive} />}
                         title={intl.formatMessage({ id: "kdaDialog.dialog.bars.date.period.title" })}
                         initialFocus={ref as RefObject<HTMLElement>}
                         content={({ onClose }) => (
@@ -77,6 +78,8 @@ export function DateBar(props: IDateBarProps) {
                                 />
                             </div>
                         )}
+                        onOpen={() => setIsActive(true)}
+                        onClose={() => setIsActive(false)}
                     />
                 }
             />

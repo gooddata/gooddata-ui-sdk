@@ -5,6 +5,7 @@ import { action } from "storybook/actions";
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 
 export default {
     title: "15 Ui/UiSubmenuHeader",
@@ -64,4 +65,4 @@ export function FullFeatured() {
         </div>
     );
 }
-FullFeatured.parameters = { kind: "Full featured", screenshot: true };
+FullFeatured.parameters = { kind: "Full featured", screenshot: true } satisfies IStoryParameters;

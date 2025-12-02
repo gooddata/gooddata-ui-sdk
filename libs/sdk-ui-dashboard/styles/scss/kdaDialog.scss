@@ -21,6 +21,9 @@
         &-content {
             flex: 1 1 auto;
             overflow: hidden;
+            margin: -20px;
+            padding: 20px;
+            background: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
         }
 
         &-footer {
@@ -94,6 +97,10 @@
         &__metric {
             display: flex;
             max-width: 300px;
+
+            svg.gd-ui-kit-icon {
+                fill: #00c18d;
+            }
         }
 
         &__date {
@@ -451,14 +458,6 @@
             line-height: 26px;
         }
 
-        &-description {
-            color: var(--gd-palette-complementary-7);
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 23px;
-        }
-
         &-visualisation {
             width: 100%;
             display: flex;
@@ -468,6 +467,10 @@
         &-visualisation-container {
             width: 100%;
             height: 100%;
+
+            rect.highcharts-background {
+                fill: var(--gd-palette-complementary-0-from-theme, #fcfcfd);
+            }
         }
 
         &-info {
@@ -588,6 +591,13 @@
 .gd-kda-attributes-dropdown__no-search {
     display: flex;
     margin-top: 6px;
+}
+
+.gd-list-item span.gd-kda-attributes-dropdown__key_drivers {
+    flex: 0 0 auto;
+    font-weight: bold;
+    color: var(--gd-palette-complementary-7);
+    margin-left: 5px;
 }
 
 //kda dialog is over drill modal

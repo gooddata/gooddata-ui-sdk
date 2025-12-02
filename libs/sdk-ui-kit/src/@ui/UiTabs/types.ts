@@ -138,7 +138,9 @@ export type IUiTabContext<
     isOverflowing: boolean;
     containerRef: RefCallback<Element>;
     onActionTriggered: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void;
-    useActionListener: (callback: (context: IUiTabActionEventContext) => void) => void;
+    useActionListener: (
+        callback: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void,
+    ) => void;
 } & IUiTabComponents<TTabProps, TTabActionProps>;
 
 /**

@@ -7,6 +7,7 @@ import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddat
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -46,7 +47,7 @@ EmptyDefaultSelection.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function NotFitIntoContent() {
     return (
@@ -78,7 +79,7 @@ NotFitIntoContent.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function EmptyDefaultSelectionLocalized() {
     return (
@@ -101,7 +102,7 @@ EmptyDefaultSelectionLocalized.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function PreSelectedElements() {
     return (
@@ -125,7 +126,7 @@ PreSelectedElements.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function TitleWithPreSelectedElementsPositiveAttributefilter() {
     return (
@@ -154,7 +155,7 @@ TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function TitleWithPreSelectedElementsNegativeAttributefilter() {
     return (
@@ -183,7 +184,7 @@ TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AllElementsSelectedInNegativeSelection() {
     return (
@@ -215,7 +216,7 @@ AllElementsSelectedInNegativeSelection.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AttributeFilterError() {
     return (
@@ -229,7 +230,10 @@ export function AttributeFilterError() {
         </div>
     );
 }
-AttributeFilterError.parameters = { kind: "attribute filter error", screenshot: true };
+AttributeFilterError.parameters = {
+    kind: "attribute filter error",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -250,7 +254,7 @@ Themed.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function SingleSelectionFilter() {
     return (
@@ -277,7 +281,7 @@ SingleSelectionFilter.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export const SingleSelectionFilterThemed = () =>
     wrapWithTheme(
@@ -303,7 +307,7 @@ SingleSelectionFilterThemed.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function FilterWithDisplayAsLabel() {
     return (
@@ -327,4 +331,4 @@ FilterWithDisplayAsLabel.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;

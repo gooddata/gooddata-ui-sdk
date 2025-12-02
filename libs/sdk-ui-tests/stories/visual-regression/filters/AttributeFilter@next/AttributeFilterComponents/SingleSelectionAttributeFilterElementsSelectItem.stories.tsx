@@ -9,6 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SingleSelectionAttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const item: IAttributeElement = {
@@ -63,7 +64,7 @@ export default {
 export function FullFeatured() {
     return <SingleSelectionAttributeFilterElementsSelectItemExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<SingleSelectionAttributeFilterElementsSelectItemExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

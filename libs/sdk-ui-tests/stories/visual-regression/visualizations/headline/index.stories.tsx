@@ -9,6 +9,7 @@ import {
     comparisonEnabled,
 } from "../../../../scenarios/charts/headline/comparison.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -54,7 +55,10 @@ export function ResponsiveWithComparison() {
         </ScreenshotReadyWrapper>
     );
 }
-ResponsiveWithComparison.parameters = { kind: "responsive with comparison", screenshot: true };
+ResponsiveWithComparison.parameters = {
+    kind: "responsive with comparison",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function ResponsiveWithMultiMeasures() {
     return (
@@ -78,7 +82,10 @@ export function ResponsiveWithMultiMeasures() {
         </ScreenshotReadyWrapper>
     );
 }
-ResponsiveWithMultiMeasures.parameters = { kind: "responsive with multi measures", screenshot: true };
+ResponsiveWithMultiMeasures.parameters = {
+    kind: "responsive with multi measures",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export const ThemedWithComparison = () =>
     wrapWithTheme(
@@ -94,7 +101,10 @@ export const ThemedWithComparison = () =>
             </div>
         </ScreenshotReadyWrapper>,
     );
-ThemedWithComparison.parameters = { kind: "themed with comparison", screenshot: true };
+ThemedWithComparison.parameters = {
+    kind: "themed with comparison",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export const ThemedWithMultiMeasure = () =>
     wrapWithTheme(
@@ -110,7 +120,10 @@ export const ThemedWithMultiMeasure = () =>
             </div>
         </ScreenshotReadyWrapper>,
     );
-ThemedWithMultiMeasure.parameters = { kind: "themed with multi measure", screenshot: true };
+ThemedWithMultiMeasure.parameters = {
+    kind: "themed with multi measure",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function CompactSizeWithComparison() {
     return (
@@ -145,7 +158,10 @@ export function CompactSizeWithComparison() {
         </ScreenshotReadyWrapper>
     );
 }
-CompactSizeWithComparison.parameters = { kind: "compactSize with comparison", screenshot: true };
+CompactSizeWithComparison.parameters = {
+    kind: "compactSize with comparison",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function CompactsizeWithMultiMeasure() {
     return (
@@ -180,4 +196,7 @@ export function CompactsizeWithMultiMeasure() {
         </ScreenshotReadyWrapper>
     );
 }
-CompactsizeWithMultiMeasure.parameters = { kind: "compactSize with multi measure", screenshot: true };
+CompactsizeWithMultiMeasure.parameters = {
+    kind: "compactSize with multi measure",
+    screenshot: true,
+} satisfies IStoryParameters;

@@ -4,6 +4,7 @@ import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function LoadingSpinnerTest() {
     return (
@@ -28,4 +29,4 @@ export default {
 export function FullFeatured() {
     return <LoadingSpinnerTest />;
 }
-FullFeatured.parameters = { kind: "full-featured" };
+FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;

@@ -33,11 +33,10 @@ import {
 
 import { CELL_CLASSNAME, e } from "./bem.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
+import { CellTypes } from "../../types/cellRendering.js";
 import { AgGridRowData } from "../../types/internal.js";
 import { getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
-
-export type CellTypes = ReturnType<typeof getCellTypes>;
 
 /**
  * Common parameters shared between CellClassParams and ICellRendererParams
@@ -124,7 +123,7 @@ export const getCellTypes = (
     params: CommonCellParams,
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
-) => {
+): CellTypes | undefined => {
     const { colDef, data } = params;
     const colId = colDef?.colId ?? colDef?.field;
 

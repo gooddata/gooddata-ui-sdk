@@ -480,7 +480,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ id, className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4795,7 +4795,9 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
     id?: string;
     // (undocumented)
-    onClose: () => void;
+    onClose?: () => void;
+    // (undocumented)
+    onOpen?: () => void;
     // (undocumented)
     onSelect: (displayForm: ObjRef) => void;
     // (undocumented)
@@ -7119,6 +7121,8 @@ export interface IUseInsightMenuConfig {
     // (undocumented)
     isAlertingVisible: boolean;
     // (undocumented)
+    isAlertManagementVisible: boolean;
+    // (undocumented)
     isAutomationManagementEnabled: boolean;
     // (undocumented)
     isDataError: boolean;
@@ -9342,6 +9346,9 @@ export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;

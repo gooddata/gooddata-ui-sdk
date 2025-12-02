@@ -7,8 +7,10 @@ import { useState } from "react";
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/internal";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = {
     width: 400,
@@ -40,7 +42,10 @@ export function LegendsectionDisabled() {
         </div>
     );
 }
-LegendsectionDisabled.parameters = { kind: "LegendSection: Disabled", screenshot: true };
+LegendsectionDisabled.parameters = {
+    kind: "LegendSection: Disabled",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function LegendsectionEnabled() {
     function LegendWidget() {
@@ -79,7 +84,7 @@ LegendsectionEnabled.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function LegendsectionEnabledLocalized() {
     function LegendWidget() {
@@ -118,4 +123,4 @@ LegendsectionEnabledLocalized.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;

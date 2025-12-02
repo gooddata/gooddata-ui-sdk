@@ -45,11 +45,11 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
     return (
         <OverlayControllerProvider overlayController={overlayController}>
             <Dialog
+                closeOnEscape={!state.attributesDropdownOpen && !state.addFilterDropdownOpen}
                 className={cx(accessibilityConfig.dialogId, className)}
                 isModal={accessibilityConfig.isModal}
                 accessibilityConfig={accessibilityConfig}
                 displayCloseButton={showCloseButton}
-                closeOnEscape={showCloseButton}
                 onClose={onClose}
             >
                 <KdaDialogSections

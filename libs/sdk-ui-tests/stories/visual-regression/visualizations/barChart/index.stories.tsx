@@ -9,6 +9,7 @@ import {
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "../../../../scenarios/charts/barChart/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -200,7 +201,7 @@ ResponsivePopupLegend.parameters = {
             postInteractionWait: 300,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export const ThemedPopupLegend = () =>
     wrapWithTheme(
@@ -217,7 +218,7 @@ ThemedPopupLegend.parameters = {
             postInteractionWait: 300,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function HidingOfHierarchicalAxisLabels() {
     return (
@@ -226,12 +227,15 @@ export function HidingOfHierarchicalAxisLabels() {
         </ScreenshotReadyWrapper>
     );
 }
-HidingOfHierarchicalAxisLabels.parameters = { kind: "hiding of hierarchical axis labels", screenshot: true };
+HidingOfHierarchicalAxisLabels.parameters = {
+    kind: "hiding of hierarchical axis labels",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function ZoomingEnabled() {
     return <BarChartZoomTest />;
 }
-ZoomingEnabled.parameters = { kind: "zooming enabled" };
+ZoomingEnabled.parameters = { kind: "zooming enabled" } satisfies IStoryParameters;
 
 export function BackplateDataLabels() {
     return (
@@ -241,7 +245,10 @@ export function BackplateDataLabels() {
     );
 }
 
-BackplateDataLabels.parameters = { kind: "backplate data labels", screenshot: true };
+BackplateDataLabels.parameters = {
+    kind: "backplate data labels",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export const ThemedDataLabels = () =>
     wrapWithTheme(
@@ -251,4 +258,4 @@ export const ThemedDataLabels = () =>
         </ScreenshotReadyWrapper>,
         ["themed", "dataLabels"],
     );
-ThemedDataLabels.parameters = { kind: "themed data labels", screenshot: true };
+ThemedDataLabels.parameters = { kind: "themed data labels", screenshot: true } satisfies IStoryParameters;

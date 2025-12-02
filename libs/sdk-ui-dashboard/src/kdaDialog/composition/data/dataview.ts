@@ -309,11 +309,13 @@ export function createConfig(
             deviation,
         ) * YAXIS_ADDITION_PERCENTAGE;
 
-    const firstColor = colorPalette[0]?.fill;
-    const color = firstColor ? `rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b})` : "rgb(20, 178, 226)";
+    const d = 0.2;
+    const firstColor = colorPalette[0]?.fill ?? { r: 20, g: 178, b: 226 };
+    const mainColor = `rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b})`;
+    const darkerColor = `rgb(${darker(firstColor.r, d)}, ${darker(firstColor.g, d)}, ${darker(firstColor.b, d)})`;
 
     return {
-        colorPalette,
+        colors: [mainColor, darkerColor],
         chartFill: {
             type: "outline",
         },
@@ -342,7 +344,7 @@ export function createConfig(
         },
         enableAccessibleTooltip: settings.enableAccessibleChartTooltip,
         enableVisualizationFineTuning: true,
-        chartConfigOverride: getConfigOverride(index, color),
+        chartConfigOverride: getConfigOverride(index, mainColor),
     };
 }
 
@@ -373,4 +375,15 @@ series:
     data:
       '${index}':
         color: ${color}`;
+}
+
+function darker(color: number, percent: number) {
+    const p = Math.abs(percent);
+    const constant = 1 - p;
+
+    if (constant === 0) {
+        return color;
+    }
+    const c = Math.round((color - 255 * p) / constant);
+    return Math.max(0, Math.min(255, c));
 }

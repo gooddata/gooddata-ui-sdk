@@ -6,12 +6,14 @@ import {
     isDataTooLargeToDisplay,
     isNoDataSdkError,
     isProtectedReport,
+    isResultCacheMissingSdkError,
 } from "@gooddata/sdk-ui";
 
 import { DataTooLargeError } from "./DataTooLargeError.js";
 import { ExecuteProtectedError } from "./ExecuteProtectedError.js";
 import { NoDataError } from "./NoDataError.js";
 import { OtherError } from "./OtherError.js";
+import { ResultCacheMissingError } from "./ResultCacheMissingError.js";
 import { shouldRenderFullContent } from "./sizingUtils.js";
 
 interface ICustomErrorProps {
@@ -29,6 +31,8 @@ export function CustomError({ error, height, width, forceFullContent }: ICustomE
         return <DataTooLargeError fullContent={fullContent} />;
     } else if (isNoDataSdkError(error)) {
         return <NoDataError fullContent={fullContent} />;
+    } else if (isResultCacheMissingSdkError(error)) {
+        return <ResultCacheMissingError fullContent={fullContent} />;
     } else if (error) {
         return <OtherError fullContent={fullContent} />;
     }

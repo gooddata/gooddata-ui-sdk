@@ -12,13 +12,14 @@ export function useGenAiChatAvailability(
     backend: IAnalyticalBackend,
     workspaceId?: string,
     enabled?: boolean,
+    canManage?: boolean,
 ) {
     const [showGenAiButton, setShowGenAiButton] = useState(false);
 
     useCancelablePromise(
         {
             promise: () => {
-                if (!workspaceId || !enabled) {
+                if (!workspaceId || !enabled || canManage) {
                     return Promise.resolve([]);
                 }
                 return backend.workspace(workspaceId).genAI().getLlmEndpoints();
@@ -27,10 +28,10 @@ export function useGenAiChatAvailability(
                 setShowGenAiButton(false);
             },
             onSuccess: (endpoints) => {
-                setShowGenAiButton(endpoints.length > 0);
+                setShowGenAiButton(Boolean(endpoints.length > 0 || canManage));
             },
         },
-        [backend, workspaceId, enabled],
+        [backend, workspaceId, enabled, canManage],
     );
 
     return showGenAiButton;

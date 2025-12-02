@@ -298,7 +298,7 @@ export type TextContents = {
 };
 
 // @internal (undocumented)
-export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean): boolean;
+export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;
 
 // @public (undocumented)
 export type UserMessage = BaseMessage & {

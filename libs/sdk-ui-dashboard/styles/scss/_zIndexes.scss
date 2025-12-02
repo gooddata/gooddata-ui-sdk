@@ -36,8 +36,8 @@ $layout-fluidlayout-item-changed: $resize-basic-overlay-text + 1;
 $scheduled-email-mask: 5001;
 $scheduled-email-mask-small: $scheduled-email-mask + 1;
 
-//toolbar need to be on top of resize and draggable wrapper
-$toolbar-basic: $resize-basic + 1;
+//toolbar need to be on top of resize and draggable wrapper and plugin overlay
+$toolbar-basic: $layout-fluidlayout-item-changed + 1;
 
 $dashboard-canvas-tooltip: $filterbar-sdk-8-12 + 1;
 

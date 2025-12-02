@@ -1,5 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { RefObject } from "react";
+
 import { IntlShape } from "react-intl";
 
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
@@ -24,14 +26,14 @@ export function dataViewToColDefs({
     dataView,
     columnHeadersPosition,
     columnWidths,
-    drillableItems,
+    drillableItemsRef,
     textWrapping,
     intl,
 }: {
     dataView: DataViewFacade;
     columnHeadersPosition: ColumnHeadersPosition;
     columnWidths: ColumnWidthItem[];
-    drillableItems: ExplicitDrill[];
+    drillableItemsRef: RefObject<ExplicitDrill[]>;
     textWrapping: ITextWrapping;
     intl: IntlShape;
 }): {
@@ -50,12 +52,12 @@ export function dataViewToColDefs({
     });
 
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
-        const colDef = createColDef(columnDefinition, columnHeadersPosition, intl, drillableItems, dataView);
+        const colDef = createColDef(columnDefinition, columnHeadersPosition, intl, dataView);
         return applyAllFeaturesToColDef({
             columnWidths,
             sortBy,
             textWrapping,
-            drillableItems,
+            drillableItemsRef,
             dataViewFacade: dataView,
         })(colDef);
     });

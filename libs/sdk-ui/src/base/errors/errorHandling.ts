@@ -19,6 +19,7 @@ import {
     NoDataSdkError,
     NotFoundSdkError,
     ProtectedReportSdkError,
+    ResultCacheMissingSdkError,
     UnauthorizedSdkError,
     UnexpectedSdkError,
     isGoodDataSdkError,
@@ -79,6 +80,11 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             message: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
         },
+        [ErrorCodes.RESULT_CACHE_MISSING]: {
+            icon: "gd-icon-sync",
+            message: intl.formatMessage({ id: "visualization.ErrorMessageResultCacheMissing" }),
+            description: intl.formatMessage({ id: "visualization.ErrorDescriptionResultCacheMissing" }),
+        },
         [ErrorCodes.BAD_REQUEST]: genericDescriptor,
         [ErrorCodes.UNKNOWN_ERROR]: genericDescriptor,
         [ErrorCodes.VISUALIZATION_CLASS_UNKNOWN]: {
@@ -138,6 +144,38 @@ export function convertError(error: unknown): GoodDataSdkError {
     }
 
     return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error as Error);
+}
+
+/**
+ * Converts errors from data window requests (e.g., readWindow calls during pagination).
+ *
+ * Only use in specific `/result` endpoints with paging. Currently `/result` returns 404 only
+ * in this specific result cache expired scenario, so we can safely convert it to
+ * {@link ResultCacheMissingSdkError}.
+ *
+ * @remarks
+ * This function is a temporary workaround/bypass for a backend limitation. When the execution result
+ * cache expires on the backend (usually due to manual cache clearing), subsequent `readWindow`
+ * result calls return a generic 404 NOT_FOUND error from existing execution created in the app.
+ * It intercepts NOT_FOUND errors and converts them to {@link ResultCacheMissingSdkError},
+ * which provides more accurate messaging to the user (e.g., "Visualization needs refresh").
+ *
+ * This workaround will be merged into the standard {@link convertError} function once the backend
+ * properly identifies cache-miss 404s in `/result` with a specific `abeType` or `structuredDetail`,
+ * allowing us to distinguish between "not found" and "cache expired" scenarios.
+ *
+ * @param error - error from a data window request (e.g., from readWindow)
+ * @returns new instance of GoodDataSdkError with appropriate error code
+ * @internal
+ */
+export function convertDataWindowError(error: unknown): GoodDataSdkError {
+    const convertedError = convertError(error);
+
+    if (convertedError.getErrorCode() === ErrorCodes.NOT_FOUND) {
+        return new ResultCacheMissingSdkError(convertedError.getMessage(), convertedError);
+    }
+
+    return convertedError;
 }
 
 /**

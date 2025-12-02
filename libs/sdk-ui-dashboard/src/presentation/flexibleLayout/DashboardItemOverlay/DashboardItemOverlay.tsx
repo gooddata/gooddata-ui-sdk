@@ -10,7 +10,11 @@ import DefaultMeasure from "react-measure";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { IDashboardWidgetOverlay } from "../../../model/index.js";
+import {
+    IDashboardWidgetOverlay,
+    selectEnableCustomizedDashboardsWithoutPluginOverlay,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -28,6 +32,7 @@ export function DashboardItemOverlay({ render, type, modifications, onHide }: Da
     const intl = useIntl();
     const added = modifications.includes("insertedByPlugin");
     const modified = modifications.includes("modifiedByPlugin");
+    const isOverlayDisabled = useDashboardSelector(selectEnableCustomizedDashboardsWithoutPluginOverlay);
 
     const theme = useTheme();
     const [size, setSize] = useState<"big" | "small" | "none">("none");
@@ -38,7 +43,7 @@ export function DashboardItemOverlay({ render, type, modifications, onHide }: Da
         added: added,
         modified: modified,
     });
-    const show = render && (added || modified);
+    const show = render && (added || modified) && !isOverlayDisabled;
 
     return show ? (
         <Measure

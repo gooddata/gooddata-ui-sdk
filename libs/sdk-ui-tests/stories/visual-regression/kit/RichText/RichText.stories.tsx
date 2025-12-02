@@ -8,6 +8,7 @@ import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-u
 import { RichText } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
@@ -113,7 +114,7 @@ export default {
 export function FullFeatured() {
     return <RichTextTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<RichTextTest />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

@@ -125,7 +125,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                     null,
                     4,
                 )})();
-${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} };`);
+${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} } satisfies IStoryParameters;`);
 
                 // we need an additional import
                 helperFileNamedImports.push("groupedStory");
@@ -184,7 +184,7 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
         scenario.tags,
     )();
 })();
-${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} };`);
+${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} } satisfies IStoryParameters;`);
                 });
 
                 // we need additional imports
@@ -200,6 +200,10 @@ ${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.vis
             {
                 source: `${pathToRoot}stories/visual-regression/visualizations/scenarioStories.js`,
                 namedImports: [...new Set(helperFileNamedImports)],
+            },
+            {
+                source: `${pathToRoot}stories/_infra/backstopScenario.js`,
+                namedImports: ["IStoryParameters"],
             },
         ]);
 

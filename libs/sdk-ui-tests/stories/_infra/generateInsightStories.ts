@@ -8,6 +8,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 
+import { INeobackstopScenarioConfig, IStoryParameters } from "./backstopScenario.js";
 import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backstopWrapper.js";
 import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -143,6 +144,10 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                 namedImports: ["getScenariosGroupByIndexes", "plugVizStory"],
             },
             {
+                source: `${pathToRoot}stories/_infra/backstopScenario.js`,
+                namedImports: ["IStoryParameters"],
+            },
+            {
                 source: `${pathToRoot}/stories/visual-regression/visualizations/insightStories.css`,
             },
         ]);
@@ -176,7 +181,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 
             const exportName = generateExportName(scenario.name);
 
-            const screenshotConfig = group.testConfig.visual.skip
+            const screenshotConfig: INeobackstopScenarioConfig | undefined = group.testConfig.visual.skip
                 ? undefined
                 : {
                       clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
@@ -210,10 +215,10 @@ ${exportName}.parameters = ${JSON.stringify(
                 {
                     kind: scenario.name,
                     screenshot: screenshotConfig,
-                },
+                } satisfies IStoryParameters,
                 null,
                 4,
-            )};`);
+            )} satisfies IStoryParameters;`);
         });
 
         if (storyExports.length === 0) return;

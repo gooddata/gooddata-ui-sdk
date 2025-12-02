@@ -23,6 +23,7 @@ import {
     user,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { useResetFocus } from "../../../utils/useResetFocus.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -196,7 +197,7 @@ export default {
 export function FullFeatured() {
     return <AddGranteeExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: { delay: 300 } };
+FullFeatured.parameters = { kind: "full-featured", screenshot: { delay: 300 } } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AddGranteeExamples />);
-Themed.parameters = { kind: "themed", screenshot: { delay: 300 } };
+Themed.parameters = { kind: "themed", screenshot: { delay: 300 } } satisfies IStoryParameters;

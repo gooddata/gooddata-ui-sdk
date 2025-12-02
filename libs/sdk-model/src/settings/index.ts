@@ -320,6 +320,12 @@ export interface ISettings {
     enableDashboardFilterViews?: boolean;
 
     /**
+     * Enable customized dashboards without plugin overlay.
+     * When enabled, the plugin overlay will not be displayed on dashboard items.
+     */
+    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
+
+    /**
      * Enables ignore cross-filtering in widgets on dashboard.
      */
     enableIgnoreCrossFiltering?: boolean;

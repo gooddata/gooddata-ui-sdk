@@ -2,6 +2,7 @@
 
 import { ComponentTable, UiSkeleton, UiSkeletonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {
@@ -36,14 +37,14 @@ function UiSkeletonExample({ showCode }: { showCode?: boolean }) {
 export function Default() {
     return <UiSkeletonExample />;
 }
-Default.parameters = { kind: "default" };
+Default.parameters = { kind: "default" } satisfies IStoryParameters;
 
 export function Themed() {
     return wrapWithTheme(<UiSkeletonExample />);
 }
-Themed.parameters = { kind: "themed" };
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;
 
 export function Interface() {
     return <UiSkeletonExample showCode />;
 }
-Interface.parameters = { kind: "interface" };
+Interface.parameters = { kind: "interface" } satisfies IStoryParameters;

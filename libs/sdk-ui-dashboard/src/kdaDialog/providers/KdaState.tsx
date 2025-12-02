@@ -21,6 +21,9 @@ const defaultState: KdaState = {
     definitionStatus: "pending",
     items: [],
     itemsStatus: "pending",
+    //states
+    attributesDropdownOpen: false,
+    addFilterDropdownOpen: false,
     //selected
     selectedTrend: ["up", "down"],
     selectedItem: "summary",

@@ -49,6 +49,7 @@ export interface IUseInsightMenuConfig {
     isScheduleExportManagementVisible: boolean;
     isDataError: boolean;
     isAlertingVisible: boolean;
+    isAlertManagementVisible: boolean;
     alertingDisabled: boolean;
     alertingDisabledReason?: AlertingDisabledReason;
     canCreateAutomation: boolean;

@@ -9,6 +9,7 @@ import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 import { Button, IconAttribute } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const attributeTitle = "Product";
@@ -197,22 +198,25 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterDropdownButtonExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export function FullFeaturedWithIcon() {
     return <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />;
 }
-FullFeaturedWithIcon.parameters = { kind: "full-featured-with-icon", screenshot: true };
+FullFeaturedWithIcon.parameters = {
+    kind: "full-featured-with-icon",
+    screenshot: true,
+} satisfies IStoryParameters;
 
 export function Draggable() {
     return <AttributeFilterDropdownButtonExamples isDraggable />;
 }
-Draggable.parameters = { kind: "draggable", screenshot: true };
+Draggable.parameters = { kind: "draggable", screenshot: true } satisfies IStoryParameters;
 
 export function DraggableWithIcon() {
     return <AttributeFilterDropdownButtonExamples isDraggable icon={AttributeIcon} />;
 }
-DraggableWithIcon.parameters = { kind: "draggable-with-icon", screenshot: true };
+DraggableWithIcon.parameters = { kind: "draggable-with-icon", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

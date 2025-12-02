@@ -89,6 +89,11 @@ export interface IAutomationMetadataObjectBase {
     notificationChannel?: string;
 
     /**
+     * Title of the notification channel.
+     */
+    notificationChannelTitle?: string;
+
+    /**
      * Export definitions of the automation (attachments).
      */
     exportDefinitions?: IExportDefinitionMetadataObject[];

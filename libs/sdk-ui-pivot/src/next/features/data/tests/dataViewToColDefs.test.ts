@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -60,7 +61,7 @@ async function getRowData(
         dataView,
         columnHeadersPosition: paramsWithDefaults.columnHeadersPosition,
         columnWidths: [],
-        drillableItems: [],
+        drillableItemsRef: { current: [] },
         textWrapping: {},
         intl: createIntlMock(),
     });

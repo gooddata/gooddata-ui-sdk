@@ -266,6 +266,7 @@ export function DashboardTabs({
                             content={intl.formatMessage({ id: "dashboard.tabs.add-button-tooltip" })}
                             triggerBy={["hover"]}
                             arrowPlacement={"bottom"}
+                            optimalPlacement
                         />
                     </div>
                 </div>

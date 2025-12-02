@@ -48,7 +48,10 @@
         display: flex;
         align-self: stretch;
         flex-shrink: 0;
-        margin-right: calc(-1 * var(--gd-spacing-5px));
+
+        &--mobile {
+            margin-right: calc(-1 * var(--gd-spacing-5px));
+        }
 
         &::after {
             position: absolute;
@@ -76,7 +79,7 @@
     &__dropdown .gd-ui-kit-icon-button {
         height: 100%;
         width: 100%;
-        color: var(--gd-palette-complementary-7);
+        color: var(--gd-palette-complementary-6);
     }
 
     &__dropdown .gd-ui-kit-button {
@@ -149,6 +152,7 @@
         cursor: pointer;
         align-items: center;
         transition: background-color 0.2s;
+        font-size: 12px;
 
         &:hover {
             background-color: var(--gd-palette-complementary-2);
@@ -196,7 +200,12 @@
     &__tab-list-item-value {
         padding: var(--gd-spacing-10px) var(--gd-spacing-10px);
         flex-grow: 1;
-        flex-shrink: 0;
+        flex-shrink: 1;
+        overflow: hidden;
+    }
+
+    &__tab-list-item-value-button {
+        white-space: nowrap;
     }
 
     &__tab-list-item-actions {
@@ -211,13 +220,14 @@
     }
 
     &__tab-list {
-        width: 250px;
+        max-width: 250px;
         max-height: 400px;
         overflow-y: auto;
         overflow-x: hidden;
+        padding: 6px 0;
 
         &--mobile {
-            width: unset;
+            max-width: unset;
             height: unset;
         }
     }

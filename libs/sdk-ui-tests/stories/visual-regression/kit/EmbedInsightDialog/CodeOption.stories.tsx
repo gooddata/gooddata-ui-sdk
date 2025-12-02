@@ -5,6 +5,7 @@ import { useState } from "react";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { CodeOptions, IReactOptions } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function FullExampleByDefinition() {
@@ -137,7 +138,7 @@ export default {
 export function FullFeatured() {
     return <CodeOptionExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<CodeOptionExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

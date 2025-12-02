@@ -3,6 +3,8 @@
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LabelRotationControl } from "@gooddata/sdk-ui-ext/internal";
+
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
 
@@ -55,7 +57,7 @@ YAxis.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function XAxisLocalized() {
     return (
@@ -82,4 +84,4 @@ XAxisLocalized.parameters = {
             postInteractionWait: 200,
         },
     },
-};
+} satisfies IStoryParameters;

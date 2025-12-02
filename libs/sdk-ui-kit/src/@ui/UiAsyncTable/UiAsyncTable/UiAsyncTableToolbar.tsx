@@ -17,17 +17,19 @@ import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
-    const { hasContent, renderBulkActions, renderFilters, renderSearch, renderCustomElement } =
-        useAsyncTableToolbar(props);
+    const { hasContent, renderBulkActions, renderFilters, renderSearchSection } = useAsyncTableToolbar(props);
 
-    const { isMobileView } = props;
+    const { isMobileView, variant } = props;
+    const isSmall = variant === "small";
 
     return hasContent ? (
-        <div className={e("toolbar", { "mobile-view": isMobileView })}>
-            {renderBulkActions()}
-            {renderFilters()}
-            {renderSearch()}
-            {renderCustomElement()}
+        <div className={e("toolbar")}>
+            <div className={e("toolbar-top", { "mobile-view": isMobileView })}>
+                {isSmall ? null : renderBulkActions()}
+                {renderFilters()}
+                {renderSearchSection()}
+            </div>
+            {isSmall ? renderBulkActions() : null}
         </div>
     ) : null;
 }
@@ -77,15 +79,11 @@ const useAsyncTableToolbar = <T extends { id: string }>({
             totalCount: totalItemsCount,
         });
 
-        const selectedMessageShort = intl.formatMessage(messages["selectedCountShort"], {
-            selectedCount,
-        });
-
         const tooltipMessage = intl.formatMessage(messages["selectAll"]);
 
-        if (bulkActions) {
+        if (bulkActions && (isCheckboxChecked || !isSmall)) {
             return (
-                <div className={e("toolbar-bulk-actions")}>
+                <div className={e("toolbar-bulk-actions", { "mobile-view": isMobileView })}>
                     <div className={e("toolbar-checkbox-section")}>
                         <UiTooltip
                             anchor={
@@ -101,11 +99,8 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                             triggerBy={["hover", "focus"]}
                             content={tooltipMessage}
                         />
-                        <div
-                            id={ASYNC_TABLE_SELECTED_COUNT_ID}
-                            className={e("toolbar-selected-count", { short: isSmall })}
-                        >
-                            {isSmall ? selectedMessageShort : selectedMessage}
+                        <div id={ASYNC_TABLE_SELECTED_COUNT_ID} className={e("toolbar-selected-count")}>
+                            {selectedMessage}
                         </div>
                     </div>
                     {selectedItemIds?.length > 0 ? (
@@ -119,6 +114,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         bulkActions,
         selectedItemIds,
         isSmall,
+        isMobileView,
         totalItemsCount,
         intl,
         isCheckboxDisabled,
@@ -154,32 +150,43 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         ) : null;
     }, [filters, intl, isFiltersTooLarge, variant, isMobileView, width]);
 
-    const renderCustomElement = useCallback(() => {
-        return renderToolbarCustomElement ? (
-            <div className={e("toolbar-custom-element")}>{renderToolbarCustomElement()}</div>
-        ) : null;
-    }, [renderToolbarCustomElement]);
-
-    const renderSearch = useCallback(() => {
+    const renderSearchSection = useCallback(() => {
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
-        return onSearch ? (
-            <div className={e("toolbar-search")}>
-                <UiSearchResultsAnnouncement totalResults={searchValue ? totalItemsCount : undefined} />
-                <Input
-                    isSearch
-                    type="search"
-                    isSmall
-                    clearOnEsc
-                    placeholder={placeholder}
-                    accessibilityConfig={{
-                        ariaLabel: accessibilityConfig?.searchAriaLabel ?? placeholder,
-                    }}
-                    value={searchValue}
-                    onChange={setSearchValue}
-                />
+        return (
+            <div className={e("toolbar-search-section")}>
+                {onSearch ? (
+                    <>
+                        <UiSearchResultsAnnouncement
+                            totalResults={searchValue ? totalItemsCount : undefined}
+                        />
+                        <div className={e("toolbar-search")}>
+                            <Input
+                                isSearch
+                                type="search"
+                                isSmall
+                                clearOnEsc
+                                placeholder={placeholder}
+                                accessibilityConfig={{
+                                    ariaLabel: accessibilityConfig?.searchAriaLabel ?? placeholder,
+                                }}
+                                value={searchValue}
+                                onChange={setSearchValue}
+                            />
+                        </div>
+                    </>
+                ) : null}
+                {renderToolbarCustomElement ? renderToolbarCustomElement() : null}
             </div>
-        ) : null;
-    }, [onSearch, intl, searchValue, setSearchValue, accessibilityConfig?.searchAriaLabel, totalItemsCount]);
+        );
+    }, [
+        onSearch,
+        renderToolbarCustomElement,
+        intl,
+        searchValue,
+        setSearchValue,
+        accessibilityConfig?.searchAriaLabel,
+        totalItemsCount,
+    ]);
 
     const hasContent = useMemo(() => {
         return filters?.length || bulkActions;
@@ -189,7 +196,6 @@ const useAsyncTableToolbar = <T extends { id: string }>({
         hasContent,
         renderBulkActions,
         renderFilters,
-        renderSearch,
-        renderCustomElement,
+        renderSearchSection,
     };
 };

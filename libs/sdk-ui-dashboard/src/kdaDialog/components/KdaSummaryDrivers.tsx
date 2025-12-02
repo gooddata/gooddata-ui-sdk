@@ -18,6 +18,7 @@ import { driversCountColumn } from "./columns/driversCount.js";
 import { titleColumn } from "./columns/titleColumn.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { getSortedSignificantDriver } from "../tools/sortedKeyDrivers.js";
 
 export function KdaSummaryDrivers() {
     const { ref, width, height } = useElementSize();
@@ -39,10 +40,10 @@ export function KdaSummaryDrivers() {
         const columnWidth = [200, 200, width - 400 - (list.length > 6 ? UiAsyncTableScrollbarWidth : 0)];
         return [
             titleColumn(intl, columnWidth[0]),
-            driverColumn(intl, columnWidth[1], onSelect),
+            driverColumn(intl, columnWidth[1]),
             driversCountColumn(intl, columnWidth[2]),
         ] as UiAsyncTableColumn<KdaItemGroup>[];
-    }, [intl, width, list, onSelect]);
+    }, [intl, width, list]);
 
     return (
         <div className={cx("gd-kda-key-drivers-summary")}>
@@ -55,6 +56,12 @@ export function KdaSummaryDrivers() {
                     maxHeight={height - 45}
                     hasNextPage={false}
                     filters={[]}
+                    onItemClick={(item) => {
+                        const first = getSortedSignificantDriver(item)[0];
+                        if (first) {
+                            onSelect(first);
+                        }
+                    }}
                 />
             </div>
         </div>

@@ -13,6 +13,11 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
+import {
+    INeobackstopConfig,
+    INeobackstopScenarioConfig,
+    IStoryParameters,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
@@ -420,12 +425,12 @@ const exportDialogProps = {
 //     postInteractionWait: 200,
 // };
 
-const stylingEditorDialogProps = {
+const stylingEditorDialogProps: INeobackstopScenarioConfig = {
     clickSelector: "#styling-editor-dialog-example button",
     postInteractionWait: 200,
 };
 
-const screenshotProps = {
+const screenshotProps: INeobackstopConfig = {
     dialog: {
         clickSelector: "#dialog-example button",
         postInteractionWait: 200,
@@ -445,7 +450,7 @@ const screenshotProps = {
     "styling-editor-dialog": stylingEditorDialogProps,
 };
 
-const screenshotPropsThemed = {
+const screenshotPropsThemed: INeobackstopConfig = {
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
     // "export-dialog": exportDialogProps,
     "styling-editor-dialog": stylingEditorDialogProps,
@@ -458,7 +463,7 @@ export default {
 export function FullFeatured() {
     return <DialogExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogExamples />);
-Themed.parameters = { kind: "themed", screenshots: screenshotPropsThemed };
+Themed.parameters = { kind: "themed", screenshots: screenshotPropsThemed } satisfies IStoryParameters;

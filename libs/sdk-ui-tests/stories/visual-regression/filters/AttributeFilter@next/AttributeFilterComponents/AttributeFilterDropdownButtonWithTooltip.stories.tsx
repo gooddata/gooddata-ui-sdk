@@ -5,14 +5,14 @@ import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 
-import { BackstopConfig } from "../../../../_infra/backstopScenario.js";
+import { INeobackstopConfig } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const attributeTitle = "Product";
 
-const dropdownButtonWithTooltip: BackstopConfig = {
+const dropdownButtonWithTooltip: INeobackstopConfig = {
     default: {},
     hover: {
         hoverSelector: ".s-attribute-filter-tooltip-icon",

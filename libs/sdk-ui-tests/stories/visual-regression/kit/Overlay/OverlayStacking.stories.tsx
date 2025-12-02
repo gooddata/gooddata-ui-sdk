@@ -7,6 +7,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function OverlayStackingExample() {
     const [state, setState] = useState(0);
@@ -92,4 +93,4 @@ FullFeatured.parameters = {
             delay: { postOperation: 500 },
         },
     },
-};
+} satisfies IStoryParameters;

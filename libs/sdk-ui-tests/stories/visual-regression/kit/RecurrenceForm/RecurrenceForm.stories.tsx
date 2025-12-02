@@ -5,6 +5,7 @@ import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -84,7 +85,7 @@ function RecurrenceFormTest() {
     );
 }
 
-const screenshotProps = {
+const screenshotProps: INeobackstopConfig = {
     default: {},
     openedRecurrenceType: {
         clickSelector: "#first-example .s-recurrence-form-type",
@@ -99,7 +100,7 @@ export default {
 export function FullFeatured() {
     return <RecurrenceFormTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<RecurrenceFormTest />);
-Themed.parameters = { kind: "themed", screenshots: screenshotProps };
+Themed.parameters = { kind: "themed", screenshots: screenshotProps } satisfies IStoryParameters;

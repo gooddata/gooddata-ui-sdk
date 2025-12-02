@@ -22,11 +22,11 @@
         font-size: 14px;
         font-weight: bold;
         line-height: normal;
-        color: kit-variables.$gd-color-state-blank;
 
         h2,
-        p {
-            color: inherit;
+        p,
+        div {
+            color: kit-variables.$gd-color-text;
         }
 
         h2 {
@@ -43,6 +43,7 @@
     .info-label-icon {
         margin-bottom: 10px;
         font-size: 40px;
+        color: kit-variables.$gd-color-text;
     }
 
     .info-label-icon-empty {

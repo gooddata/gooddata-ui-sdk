@@ -12,7 +12,7 @@ interface IMetricBarProps {
 }
 
 export function MetricBar(props: IMetricBarProps) {
-    const { title } = props.definition.metric.measure;
+    const { title, alias } = props.definition.metric.measure;
 
     return (
         <div className={cx("gd-kda-dialog-bar__metric")}>
@@ -21,7 +21,14 @@ export function MetricBar(props: IMetricBarProps) {
                 content={title}
                 optimalPlacement
                 triggerBy={["hover", "focus"]}
-                anchor={<UiChip label={title ?? ""} iconBefore="metric" isExpandable={false} isDisabled />}
+                anchor={
+                    <UiChip
+                        label={alias ?? title ?? ""}
+                        iconBefore="metric"
+                        isExpandable={false}
+                        isDisabled
+                    />
+                }
             />
         </div>
     );

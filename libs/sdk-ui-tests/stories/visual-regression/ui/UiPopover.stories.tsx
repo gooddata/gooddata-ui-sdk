@@ -6,6 +6,7 @@ import { IntlProvider } from "react-intl";
 
 import { IAccessibilityConfigBase, UiButton, UiPopover } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 function Example({ title, children }: { title: string; children: ReactNode }) {
@@ -51,7 +52,7 @@ export default {
 export function Default() {
     return <UiPopoverExamples />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiPopoverExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

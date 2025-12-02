@@ -28,6 +28,7 @@ export interface KeyDriversPanelProps {
 
 export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
     const intl = useIntl();
+    const listTitleId = useId();
     const listId = useId();
 
     const label = intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.title" });
@@ -85,7 +86,7 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                     />
                 )}
             </div>
-            <div className={cx("gd-kda-key-drivers-panel-title")}>
+            <div className={cx("gd-kda-key-drivers-panel-title")} id={listTitleId}>
                 {loading ? (
                     <UiSkeleton itemHeight={21} itemWidth={70} />
                 ) : (
@@ -164,6 +165,7 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
                                 ariaAttributes={{
                                     id: listId,
                                     "aria-controls": detailsId,
+                                    "aria-labelledby": listTitleId,
                                 }}
                                 InteractiveItemComponent={(props) => {
                                     return <KeyDriverItem {...props} maximum={maximum} />;

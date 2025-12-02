@@ -46,6 +46,9 @@ export interface KdaState {
     fromValue: IKdaDataPoint | undefined;
     toValue: IKdaDataPoint | undefined;
     definitionStatus: "loading" | "success" | "error" | "pending";
+    //states
+    attributesDropdownOpen: boolean;
+    addFilterDropdownOpen: boolean;
     //settings
     separators?: ISeparators;
     //rest

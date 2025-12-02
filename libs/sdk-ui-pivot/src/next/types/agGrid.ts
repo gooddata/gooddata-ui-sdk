@@ -13,12 +13,18 @@ import { AgGridReactProps } from "ag-grid-react";
 
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
 
+import { CellRendererFactory } from "./cellRendering.js";
 import { AgGridRowData } from "./internal.js";
 
 export type AgGridColumnDefContext = {
     columnDefinition: ITableColumnDefinition;
     indexWithinGroup?: number;
     measureIndex?: number;
+    /**
+     * Factory function to create the cell renderer with cellTypes.
+     * This allows applyDrillsToColDef to handle all drillability logic centrally.
+     */
+    cellRendererFactory?: CellRendererFactory;
 };
 
 /**

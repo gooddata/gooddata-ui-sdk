@@ -19,6 +19,7 @@ import {
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
 } from "../../../../scenarios/pivotTable/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -72,7 +73,7 @@ export function TableWithResizing() {
         </ScreenshotReadyWrapper>
     );
 }
-TableWithResizing.parameters = { kind: "table with resizing", screenshot: true };
+TableWithResizing.parameters = { kind: "table with resizing", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -87,7 +88,7 @@ Themed.parameters = {
             ".s-table-measure-column-header-group-cell-0.s-table-measure-column-header-cell-0.s-table-measure-column-header-index-2",
         postInteractionWait: 200,
     },
-};
+} satisfies IStoryParameters;
 
 export function DrillUnderlineStyle() {
     return (
@@ -108,7 +109,7 @@ DrillUnderlineStyle.parameters = {
             postInteractionWait: 1000,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AutoResizingOfAllColumns() {
     return (
@@ -133,7 +134,7 @@ AutoResizingOfAllColumns.parameters = {
             postInteractionWait: 1000,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AutoResizingOfVisibleColumns() {
     return (
@@ -165,7 +166,7 @@ AutoResizingOfVisibleColumns.parameters = {
             postInteractionWait: 1000,
         },
     },
-};
+} satisfies IStoryParameters;
 
 export function AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked() {
     return (
@@ -203,4 +204,4 @@ AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked.parameters = {
     screenshots: {
         "initial viewport": {},
     },
-};
+} satisfies IStoryParameters;

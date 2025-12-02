@@ -7,14 +7,16 @@ import { useState } from "react";
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LabelSubsection } from "@gooddata/sdk-ui-ext/internal";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const german = "de-DE";
 const defaultProps = {};
 
-const commonScenarios = {
+const commonScenarios: INeobackstopConfig = {
     closed: {},
     opened: {
         clickSelector: ".gd-button-primary",
@@ -50,7 +52,7 @@ export function AxisDisabled() {
         </div>
     );
 }
-AxisDisabled.parameters = { kind: "axis: Disabled", screenshot: true };
+AxisDisabled.parameters = { kind: "axis: Disabled", screenshot: true } satisfies IStoryParameters;
 
 export function AxisEnabled() {
     function HandleState() {
@@ -77,7 +79,7 @@ export function AxisEnabled() {
     }
     return <HandleState />;
 }
-AxisEnabled.parameters = { kind: "axis: Enabled", screenshots: commonScenarios };
+AxisEnabled.parameters = { kind: "axis: Enabled", screenshots: commonScenarios } satisfies IStoryParameters;
 
 export function AxisEnabledLocalized() {
     function HandleState() {
@@ -104,4 +106,7 @@ export function AxisEnabledLocalized() {
     }
     return <HandleState />;
 }
-AxisEnabledLocalized.parameters = { kind: "axis: Enabled - localized", screenshots: commonScenarios };
+AxisEnabledLocalized.parameters = {
+    kind: "axis: Enabled - localized",
+    screenshots: commonScenarios,
+} satisfies IStoryParameters;

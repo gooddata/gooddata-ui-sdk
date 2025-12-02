@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { setWebComponentsContext } from "../../_infra/webComponents.js";
 
 /**
@@ -61,24 +62,24 @@ export function Base() {
     return <InsightContainer insight={insightIds[15]} />;
 }
 
-Base.parameters = { kind: "Base", screenshot: true };
+Base.parameters = { kind: "Base", screenshot: true } satisfies IStoryParameters;
 
 export function WithLocalization() {
     return <InsightContainer insight={insightIds[15]} locale="fr-FR" />;
 }
-WithLocalization.parameters = { kind: "With localization", screenshot: true };
+WithLocalization.parameters = { kind: "With localization", screenshot: true } satisfies IStoryParameters;
 
 export function WithCustomTitle() {
     return <InsightContainer insight={insightIds[15]} title="Custom title" />;
 }
-WithCustomTitle.parameters = { kind: "With custom title", screenshot: true };
+WithCustomTitle.parameters = { kind: "With custom title", screenshot: true } satisfies IStoryParameters;
 
 // JSX+React has issues with setting boolean props on custom element, so we can't use
 //  <InsightContainer title /> without specifying an empty string value or boolean
 export function WithDefaultTitle() {
     return <InsightContainer insight={insightIds[15]} title="" />;
 }
-WithDefaultTitle.parameters = { kind: "With default title", screenshot: true };
+WithDefaultTitle.parameters = { kind: "With default title", screenshot: true } satisfies IStoryParameters;
 
 export function AllInsightTypes() {
     return (
@@ -95,4 +96,4 @@ AllInsightTypes.parameters = {
         // Wait for AGgrid watermark to disappear
         postInteractionWait: 6500,
     },
-};
+} satisfies IStoryParameters;

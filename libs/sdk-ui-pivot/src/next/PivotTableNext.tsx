@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, FocusEvent, MouseEvent, useCallback, useMemo } from "react";
+import { CSSProperties, FocusEvent, MouseEvent, useCallback, useEffect, useMemo } from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
@@ -18,6 +18,7 @@ import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
+import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
@@ -64,15 +65,17 @@ export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
     return (
         <AgGridApiProvider>
             <PivotTablePropsProvider {...props}>
-                <CurrentDataViewProvider>
-                    <IntlWrapper locale={props.locale}>
-                        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                            <OverlayControllerProvider overlayController={pivotOverlayController}>
-                                <PivotTableNextWithInitialization />
-                            </OverlayControllerProvider>
-                        </ThemeContextProvider>
-                    </IntlWrapper>
-                </CurrentDataViewProvider>
+                <RuntimeErrorProvider>
+                    <CurrentDataViewProvider>
+                        <IntlWrapper locale={props.locale}>
+                            <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+                                <OverlayControllerProvider overlayController={pivotOverlayController}>
+                                    <PivotTableNextWithInitialization />
+                                </OverlayControllerProvider>
+                            </ThemeContextProvider>
+                        </IntlWrapper>
+                    </CurrentDataViewProvider>
+                </RuntimeErrorProvider>
             </PivotTablePropsProvider>
         </AgGridApiProvider>
     );
@@ -80,14 +83,26 @@ export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
 
 function PivotTableNextWithInitialization() {
     const { result, status, error } = useInitExecutionResult();
+    const { runtimeError, setRuntimeError } = useRuntimeError();
+
+    useEffect(() => {
+        if (status === "pending" || status === "loading") {
+            setRuntimeError(undefined);
+        }
+    }, [status, setRuntimeError]);
+
+    if (status === "pending" || status === "loading") {
+        return <LoadingComponent />;
+    }
+
+    if (runtimeError) {
+        return <ErrorComponent error={runtimeError} />;
+    }
 
     if (status === "error") {
         return <ErrorComponent error={error} />;
     }
 
-    if (status === "pending" || status === "loading") {
-        return <LoadingComponent />;
-    }
     const { initialExecutionResult, initialDataView } = result;
 
     return (

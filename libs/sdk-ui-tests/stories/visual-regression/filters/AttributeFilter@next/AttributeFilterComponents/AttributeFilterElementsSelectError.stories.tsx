@@ -6,6 +6,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectError } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 function AttributeFilterElementsSelectErrorExamples(): ReactElement {
@@ -28,7 +29,7 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterElementsSelectErrorExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true };
+FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterElementsSelectErrorExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

@@ -28,6 +28,7 @@ export const ErrorCodes = {
     VISUALIZATION_CLASS_UNKNOWN: "VISUALIZATION_CLASS_UNKNOWN",
     FORECAST_NOT_RECEIVED: "FORECAST_NOT_RECEIVED",
     CLUSTERING_NOT_RECEIVED: "CLUSTERING_NOT_RECEIVED",
+    RESULT_CACHE_MISSING: "RESULT_CACHE_MISSING",
 };
 
 /**
@@ -252,6 +253,17 @@ export class DynamicScriptLoadSdkError extends GoodDataSdkError {
     }
 }
 
+/**
+ * This error means that result cache is missing.
+ *
+ * @public
+ */
+export class ResultCacheMissingSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.RESULT_CACHE_MISSING as SdkErrorType, message, cause);
+    }
+}
+
 //
 //
 //
@@ -398,4 +410,13 @@ export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError {
  */
 export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DYNAMIC_SCRIPT_LOAD_ERROR";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ResultCacheMissingSdkError};
+ *
+ * @public
+ */
+export function isResultCacheMissingSdkError(obj: unknown): obj is ResultCacheMissingSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "RESULT_CACHE_MISSING";
 }

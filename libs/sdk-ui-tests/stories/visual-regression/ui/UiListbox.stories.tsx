@@ -6,6 +6,7 @@ import { action } from "storybook/actions";
 
 import { IUiListboxItem, UiListbox, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // Mock items for the listbox
@@ -140,7 +141,7 @@ export default {
 export function Default() {
     return <UiListboxExamples />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiListboxExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

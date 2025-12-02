@@ -424,6 +424,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCustomizedDashboardsWithoutPluginOverlay,
+            "enableCustomizedDashboardsWithoutPluginOverlay",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCustomizedDashboardsWithoutPluginOverlay,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNewInsightChangedPostMessageEvent,
             "enableNewInsightChangedPostMessageEvent",
             "BOOLEAN",

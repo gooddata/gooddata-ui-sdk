@@ -6,6 +6,7 @@ import { action } from "storybook/actions";
 
 import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -88,7 +89,7 @@ function DialogListHeaderExamples() {
     );
 }
 
-const scenarios = {
+const scenarios: INeobackstopConfig = {
     normal: {},
     hover: {
         hoverSelector: ".s-dialog-list-header-button",
@@ -103,7 +104,7 @@ export default {
 export function FullFeatured() {
     return <DialogListHeaderExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
+FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogListHeaderExamples />);
-Themed.parameters = { kind: "themed", screenshots: scenarios };
+Themed.parameters = { kind: "themed", screenshots: scenarios } satisfies IStoryParameters;

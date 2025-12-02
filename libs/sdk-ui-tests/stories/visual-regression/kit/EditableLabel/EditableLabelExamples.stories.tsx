@@ -4,6 +4,12 @@ import { memo, useState } from "react";
 
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
+import {
+    INeobackstopConfig,
+    INeobackstopScenarioConfig,
+    IStoryParameters,
+} from "../../../_infra/backstopScenario.js";
+
 const EditableLabelExamples = memo(function EditableLabelExamples() {
     const [text, setText] = useState("Edit me with icon!");
 
@@ -24,12 +30,12 @@ const EditableLabelExamples = memo(function EditableLabelExamples() {
     );
 });
 
-const editLabelClickProps = {
+const editLabelClickProps: INeobackstopScenarioConfig = {
     clickSelector: ".s-my-editable-label",
     postInteractionWait: 200,
 };
 
-const screenshotProps = {
+const screenshotProps: INeobackstopConfig = {
     "initial-label": {},
     "edited-label": editLabelClickProps,
 };
@@ -41,4 +47,4 @@ export default {
 export function FullFeatured() {
     return <EditableLabelExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;

@@ -5,6 +5,7 @@ import { action } from "storybook/actions";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ColorDropdown, ColoredItemContent, InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { getLargePalette } from "../mocks/testColorHelper.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
@@ -16,7 +17,7 @@ const wrapperStyle = {
 };
 const german = "de-DE";
 
-const defaultScenarios = {
+const defaultScenarios: INeobackstopConfig = {
     closed: {},
     opened: {
         clickSelector: ".gd-icon-navigatedown",
@@ -46,7 +47,10 @@ export function Colordropdown() {
         </div>
     );
 }
-Colordropdown.parameters = { kind: "ColorDropdown", screenshots: defaultScenarios };
+Colordropdown.parameters = {
+    kind: "ColorDropdown",
+    screenshots: defaultScenarios,
+} satisfies IStoryParameters;
 
 export function ColordropdownPreSelectedWithLargePalette() {
     return (
@@ -69,7 +73,7 @@ export function ColordropdownPreSelectedWithLargePalette() {
 ColordropdownPreSelectedWithLargePalette.parameters = {
     kind: "ColorDropdown pre-selected with large palette",
     screenshots: defaultScenarios,
-};
+} satisfies IStoryParameters;
 
 export function ColordropdownLocalized() {
     return (
@@ -88,4 +92,4 @@ export function ColordropdownLocalized() {
 ColordropdownLocalized.parameters = {
     kind: "ColorDropdown with custom picker - localized",
     screenshots: defaultScenarios,
-};
+} satisfies IStoryParameters;

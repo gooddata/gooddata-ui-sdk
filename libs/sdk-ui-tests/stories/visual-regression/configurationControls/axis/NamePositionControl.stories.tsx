@@ -3,8 +3,10 @@
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, NamePositionControl } from "@gooddata/sdk-ui-ext/internal";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
+import { INeobackstopConfig } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const german = "de-DE";
@@ -40,7 +42,7 @@ XAxis.parameters = {
             clickSelectors: [".gd-button-primary", ".s-left"],
             postInteractionWait: 200,
         },
-    },
+    } satisfies INeobackstopConfig,
 };
 
 export function Disabled() {
@@ -87,5 +89,5 @@ YAxisLocalized.parameters = {
             clickSelectors: [".gd-button-primary", ".s-mitte"],
             postInteractionWait: 200,
         },
-    },
+    } satisfies INeobackstopConfig,
 };

@@ -220,6 +220,9 @@ export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceho
 // @public
 export function compressForUrl<T>(data: T): string;
 
+// @internal
+export function convertDataWindowError(error: unknown): GoodDataSdkError;
+
 // @public (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[];
 
@@ -444,6 +447,7 @@ export const ErrorCodes: {
     VISUALIZATION_CLASS_UNKNOWN: string;
     FORECAST_NOT_RECEIVED: string;
     CLUSTERING_NOT_RECEIVED: string;
+    RESULT_CACHE_MISSING: string;
 };
 
 // @public
@@ -1505,6 +1509,9 @@ export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T>;
 // @public
 export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
 
+// @public
+export function isResultCacheMissingSdkError(obj: unknown): obj is ResultCacheMissingSdkError;
+
 // @internal (undocumented)
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
 
@@ -2200,6 +2207,11 @@ export function resolveUseCancelablePromisesError<TError>(states: UseCancelableP
 export function resolveUseCancelablePromisesStatus(cancelablePromisesStates: UseCancelablePromiseState<unknown, unknown>[], options?: {
     strategy?: "serial" | "parallel";
 }): UseCancelablePromiseStatus;
+
+// @public
+export class ResultCacheMissingSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
 
 // @public (undocumented)
 export type SdkErrorType = keyof typeof ErrorCodes;

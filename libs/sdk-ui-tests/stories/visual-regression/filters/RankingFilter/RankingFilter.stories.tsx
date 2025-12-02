@@ -12,14 +12,15 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
+import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
-const dropdownScenarios = {
+const dropdownScenarios: INeobackstopConfig = {
     default: {},
 };
 
-const dropdownWithOneAttributeItemScenarios = {
+const dropdownWithOneAttributeItemScenarios: INeobackstopConfig = {
     default: {},
     attributeDropdownButtonTooltip: {
         hoverSelector: ".s-rf-attribute-dropdown-button",
@@ -27,14 +28,14 @@ const dropdownWithOneAttributeItemScenarios = {
     },
 };
 
-const customGranularityScenarios = {
+const customGranularityScenarios: INeobackstopConfig = {
     attributeDropdownOpened: {
         clickSelector: ".s-rf-attribute-dropdown-button",
         delay: { postOperation: 350 },
     },
 };
 
-const buttonScenarios = {
+const buttonScenarios: INeobackstopConfig = {
     closed: {},
     opened: { clickSelector: ".s-rf-dropdown-button", postInteractionWait: 200 },
 };
@@ -91,7 +92,7 @@ export function Dropdown() {
         </div>
     );
 }
-Dropdown.parameters = { kind: "dropdown", screenshots: dropdownScenarios };
+Dropdown.parameters = { kind: "dropdown", screenshots: dropdownScenarios } satisfies IStoryParameters;
 
 export function DropdownWithOneAttributeItem() {
     return (
@@ -110,7 +111,7 @@ export function DropdownWithOneAttributeItem() {
 DropdownWithOneAttributeItem.parameters = {
     kind: "dropdown with one attribute item",
     screenshots: dropdownWithOneAttributeItemScenarios,
-};
+} satisfies IStoryParameters;
 
 export function DropdownWithNonDefaultValueAndLongItemsSelected() {
     return (
@@ -129,7 +130,7 @@ export function DropdownWithNonDefaultValueAndLongItemsSelected() {
 DropdownWithNonDefaultValueAndLongItemsSelected.parameters = {
     kind: "dropdown with non default value and long items selected",
     screenshot: true,
-};
+} satisfies IStoryParameters;
 
 export function DropdownWithCustomGranularitySelectionDisabled() {
     return (
@@ -152,7 +153,7 @@ export function DropdownWithCustomGranularitySelectionDisabled() {
 DropdownWithCustomGranularitySelectionDisabled.parameters = {
     kind: "dropdown with custom granularity selection disabled",
     screenshots: customGranularityScenarios,
-};
+} satisfies IStoryParameters;
 
 export function DefaultButtonWithDropdown() {
     return (
@@ -171,4 +172,4 @@ export function DefaultButtonWithDropdown() {
 DefaultButtonWithDropdown.parameters = {
     kind: "default button with dropdown",
     screenshots: buttonScenarios,
-};
+} satisfies IStoryParameters;

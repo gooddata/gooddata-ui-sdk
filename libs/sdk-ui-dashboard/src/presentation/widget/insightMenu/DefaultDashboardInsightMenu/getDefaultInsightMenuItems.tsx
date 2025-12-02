@@ -181,6 +181,7 @@ export function getDefaultInsightMenuItems(
         isScheduleExportManagementVisible,
         isDataError,
         isAlertingVisible,
+        isAlertManagementVisible,
         alertingDisabled,
         alertingDisabledReason,
         canCreateAutomation,
@@ -350,7 +351,7 @@ export function getDefaultInsightMenuItems(
               !isExportRawVisible && availableMenuItems.exportXLSXBubble,
               !isExportRawVisible && availableMenuItems.exportCSVBubble,
               isScheduleExportManagementVisible && availableMenuItems.scheduleExportManagement,
-              isAlertingVisible && availableMenuItems.alertsManagement,
+              isAlertManagementVisible && availableMenuItems.alertsManagement,
           ]
         : [
               (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,

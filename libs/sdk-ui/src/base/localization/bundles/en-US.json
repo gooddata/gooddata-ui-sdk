@@ -327,6 +327,14 @@
         "value": "The visualization with this URL does not exist.",
         "comment": "Explanation shown when a visualization cannot be found, indicating that no visualization exists with the requested identifier."
     },
+    "visualization.ErrorMessageResultCacheMissing": {
+        "value": "Visualization needs refresh",
+        "comment": "Error message shown when a visualization cannot reuse its cached execution result because it was cleared from the backend result cache."
+    },
+    "visualization.ErrorDescriptionResultCacheMissing": {
+        "value": "The underlying data changed or expired. Refresh the page.",
+        "comment": "Follow-up text shown under the 'result is no longer available' error message, instructing the user to rerun the execution to obtain fresh data."
+    },
     "visualization.ErrorDescriptionMissingMapboxToken": {
         "value": "The Geochart configuration requires a valid API access token.",
         "comment": "Error message shown when trying to display a geographic visualization without having a valid Mapbox API token configured."

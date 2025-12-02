@@ -6,6 +6,7 @@ import { IntlProvider } from "react-intl";
 
 import { IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
+import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // Mock items for the menu
@@ -217,7 +218,7 @@ export default {
 export function Default() {
     return <UiMenuExamples />;
 }
-Default.parameters = { kind: "default", screenshot: true };
+Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiMenuExamples />);
-Themed.parameters = { kind: "themed", screenshot: true };
+Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;

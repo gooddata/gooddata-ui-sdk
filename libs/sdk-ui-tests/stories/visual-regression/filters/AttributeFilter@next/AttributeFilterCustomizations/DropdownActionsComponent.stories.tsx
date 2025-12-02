@@ -8,6 +8,7 @@ import { AttributeFilter, IAttributeFilterDropdownActionsProps } from "@gooddata
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
+import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
@@ -63,4 +64,4 @@ CustomComponent.parameters = {
             postInteractionWait: LongPostInteractionTimeout,
         },
     },
-};
+} satisfies IStoryParameters;

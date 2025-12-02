@@ -9,6 +9,7 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import {
     selectCanCreateAutomation,
+    selectDashboardUserAutomationAlertsInContext,
     selectEnableAutomationManagement,
     selectExecutionResultByRef,
     useDashboardSelector,
@@ -119,6 +120,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
+    const automations = useDashboardSelector(
+        selectDashboardUserAutomationAlertsInContext(widget.localIdentifier),
+    );
+    const isAlertManagementVisible = isAlertingVisible && (canCreateAutomation || automations.length > 0);
 
     return useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightMenuItems(
@@ -180,6 +185,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 isScheduleExportManagementVisible,
                 isDataError: isDataError(execution?.error),
                 isAlertingVisible,
+                isAlertManagementVisible,
                 alertingDisabled,
                 alertingDisabledReason,
                 canCreateAutomation,
@@ -202,6 +208,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isAlertingVisible,
+        isAlertManagementVisible,
         alertingDisabled,
         isExportVisible,
         setIsMenuOpen,

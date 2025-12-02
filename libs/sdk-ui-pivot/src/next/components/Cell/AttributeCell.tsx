@@ -11,8 +11,8 @@ import {
     isTableTotalHeaderValue,
     shouldGroupAttribute,
 } from "../../features/columns/shared.js";
-import { CellTypes } from "../../features/styling/cell.js";
 import { getPivotCellTestIdPropsFromCellTypes } from "../../testing/dataTestIdGenerators.js";
+import { CellTypes } from "../../types/cellRendering.js";
 
 /**
  * Cell renderer for attributes.

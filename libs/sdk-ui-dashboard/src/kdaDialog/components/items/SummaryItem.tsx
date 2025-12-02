@@ -22,7 +22,6 @@ export function SummaryItem({
         <div
             tabIndex={0}
             role="button"
-            aria-selected={isSelected}
             aria-controls={detailsId}
             className={cx("gd-kda-item-summary", {
                 "gd-kda-item-summary-selected": isSelected,
