@@ -1,5 +1,8 @@
 "use strict";
 
+// baseline-browser-mapping needs to be updated to the latest version very 14 days
+const baselineBrowserMappingVersion = "2.8.32"
+
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
  * dependencies that have mistakes in their package.json file.  (This feature is
@@ -33,6 +36,16 @@ function readPackage(packageJson, context) {
   //  context.log('Fixed up dependencies for @types/karma');
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
+
+  if(packageJson.dependencies && packageJson.dependencies['baseline-browser-mapping']) {
+    context.log('Fixed up dependencies for baseline-browser-mapping');
+    packageJson.dependencies['baseline-browser-mapping'] = baselineBrowserMappingVersion;
+  }
+
+  if(packageJson.devDependencies && packageJson.devDependencies['baseline-browser-mapping']) {
+    context.log('Fixed up dependencies for baseline-browser-mapping', packageJson.dependencies['baseline-browser-mapping']);
+   packageJson.devDependencies['baseline-browser-mapping'] = baselineBrowserMappingVersion;
+  }
 
   return packageJson;
 }

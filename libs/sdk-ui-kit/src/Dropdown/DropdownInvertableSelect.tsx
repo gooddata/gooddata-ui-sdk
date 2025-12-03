@@ -12,6 +12,7 @@ import {
     type IDropdownButtonRenderProps,
 } from "../Dropdown/Dropdown.js";
 import {
+    IInvertableSelectRenderActionsProps,
     IInvertableSelectRenderItemProps,
     type IInvertableSelectRenderNoDataProps,
     type IInvertableSelectRenderSearchBarProps,
@@ -123,6 +124,11 @@ export interface IDropdownInvertableSelectProps<T> {
     renderItem?: (props: IInvertableSelectRenderItemProps<T>) => ReactElement;
 
     /**
+     * Render function for list actions
+     */
+    renderListActions?: (props: IInvertableSelectRenderActionsProps) => ReactElement;
+
+    /**
      * Overlay position type.
      */
     overlayPositionType?: OverlayPositionType;
@@ -179,6 +185,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         renderNoData,
         renderActions,
         renderItem,
+        renderListActions,
     } = props;
 
     const [searchString, setSearchString] = useState<string>(initialSearchString ?? "");
@@ -274,6 +281,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                             renderSearchBar={renderSearchBar}
                             renderNoData={renderNoData}
                             renderItem={renderItem}
+                            renderActions={renderListActions}
                             totalItemsCount={filteredOptions.length}
                         />
                         {renderActions?.(bodyProps) ?? (

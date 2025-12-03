@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 export type {
     IInvertableSelectProps,
     IInvertableSelectRenderItemProps,
@@ -14,7 +15,11 @@ export type { IInvertableSelectStatusBarProps } from "./InvertableSelectStatusBa
 export { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 export type { IInvertableSelectLimitWarningProps } from "./InvertableSelectLimitWarning.js";
 export { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
-export type { IInvertableSelectItem, IInvertableSelectItemRenderOnlyProps } from "./InvertableSelectItem.js";
+export type {
+    IInvertableSelectItem,
+    IInvertableSelectItemRenderOnlyProps,
+    IInvertableSelectItemAccessibilityConfig,
+} from "./InvertableSelectItem.js";
 export { InvertableSelectItem } from "./InvertableSelectItem.js";
 export type { IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
 export { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";

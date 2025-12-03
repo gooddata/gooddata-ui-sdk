@@ -49,7 +49,7 @@
         "story-generator": "vite-node neobackstop/story-generator.ts && npm run prettier-write-generated",
         "storybook": "storybook dev -p 9001 -c .storybook",
         "storybook-serve": "bash stories/serve-storybook.sh",
-        "stylelint": "bash scripts/stylelint.sh",
+        "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",

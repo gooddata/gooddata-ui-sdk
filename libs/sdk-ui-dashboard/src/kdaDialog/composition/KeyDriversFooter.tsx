@@ -1,11 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo } from "react";
+import { RefObject, useId, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { ICatalogAttribute, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { DropdownInvertableSelect, InvertableSelectItem, UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import {
+    DropdownInvertableSelect,
+    InvertableSelectAllCheckbox,
+    InvertableSelectItem,
+    UiButton,
+    UiSkeleton,
+} from "@gooddata/sdk-ui-kit";
 
 import { selectCatalogAttributes, selectCatalogIsLoaded, useDashboardSelector } from "../../model/index.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
@@ -15,6 +21,9 @@ import { useKdaState } from "../providers/KdaState.js";
 export function KeyDriversFooter() {
     const { state, setState } = useKdaState();
     const list = useSummaryDrivers();
+
+    const labelAttributeId = useId();
+    const labelKeyDriversId = useId();
 
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const isLoading =
@@ -39,8 +48,8 @@ export function KeyDriversFooter() {
                 return [a, group] as const;
             })
             .sort(([, a], [, b]) => {
-                const aIndex = a ? list.indexOf(a) : -1;
-                const bIndex = b ? list.indexOf(b) : -1;
+                const aIndex = a ? list.indexOf(a) : Number.MAX_VALUE;
+                const bIndex = b ? list.indexOf(b) : Number.MAX_VALUE;
                 return aIndex - bIndex;
             })
             .map(([a]) => a);
@@ -120,13 +129,26 @@ export function KeyDriversFooter() {
                                             isSelected={props.isSelected}
                                             onClick={props.isSelected ? props.onDeselect : props.onSelect}
                                             onOnly={props.onSelectOnly}
+                                            accessibilityConfig={{
+                                                ariaLabelledBy: labelAttributeId,
+                                            }}
                                             renderRight={() => {
                                                 const group = mapAttributes.get(props.item.attribute.ref);
                                                 if (!group || group.significantDrivers.length === 0) {
-                                                    return null;
+                                                    return (
+                                                        <span
+                                                            className="gd-kda-attributes-dropdown__key_drivers"
+                                                            aria-labelledby={labelKeyDriversId}
+                                                        >
+                                                            -
+                                                        </span>
+                                                    );
                                                 }
                                                 return (
-                                                    <span className="gd-kda-attributes-dropdown__key_drivers">
+                                                    <span
+                                                        className="gd-kda-attributes-dropdown__key_drivers"
+                                                        aria-labelledby={labelKeyDriversId}
+                                                    >
                                                         ({group.significantDrivers.length})
                                                     </span>
                                                 );
@@ -143,6 +165,35 @@ export function KeyDriversFooter() {
                                             onClick={toggleDropdown}
                                         />
                                     )}
+                                    renderListActions={(props) => {
+                                        return (
+                                            <>
+                                                <InvertableSelectAllCheckbox
+                                                    isVisible={props.isVisible}
+                                                    checked={props.checked}
+                                                    onChange={props.onChange}
+                                                    onToggle={props.onToggle}
+                                                    isFiltered={props.isFiltered}
+                                                    totalItemsCount={props.totalItemsCount}
+                                                    isPartialSelection={props.isPartialSelection}
+                                                />
+                                                <div className="gd-kda-attributes-dropdown__subheader">
+                                                    <div
+                                                        className="gd-kda-attributes-dropdown__subheader__attribute"
+                                                        id={labelAttributeId}
+                                                    >
+                                                        <FormattedMessage id="kdaDialog.dialog.keyDrives.overview.detail.table.attribute" />
+                                                    </div>
+                                                    <div
+                                                        className="gd-kda-attributes-dropdown__subheader__key_drivers"
+                                                        id={labelKeyDriversId}
+                                                    >
+                                                        <FormattedMessage id="kdaDialog.dialog.keyDrives.overview.detail.table.drivers" />
+                                                    </div>
+                                                </div>
+                                            </>
+                                        );
+                                    }}
                                 />
                             );
                         },

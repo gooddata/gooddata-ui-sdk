@@ -2120,6 +2120,7 @@ export interface IDropdownInvertableSelectProps<T> {
     renderActions?: (props: IDropdownBodyRenderProps) => ReactElement;
     renderButton?: (props: IDropdownButtonRenderProps) => ReactNode;
     renderItem?: (props: IInvertableSelectRenderItemProps<T>) => ReactElement;
+    renderListActions?: (props: IInvertableSelectRenderActionsProps) => ReactElement;
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
@@ -2899,6 +2900,8 @@ export interface IInvertableSelectAllCheckboxProps {
 // @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
+    accessibilityConfig?: IInvertableSelectItemAccessibilityConfig;
+    // (undocumented)
     icon?: ReactElement;
     // (undocumented)
     isDisabled?: boolean;
@@ -2920,6 +2923,12 @@ export interface IInvertableSelectItem {
     renderRight?: () => ReactElement | null;
     // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectItemAccessibilityConfig {
+    // (undocumented)
+    ariaLabelledBy?: string;
 }
 
 // @internal (undocumented)
@@ -4111,7 +4120,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Eleme
 export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, }: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig, }: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectLimitWarning({ limit, selectedItemsCount, }: IInvertableSelectLimitWarningProps): JSX.Element;

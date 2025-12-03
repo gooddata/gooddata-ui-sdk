@@ -37,6 +37,7 @@ export type {
     IInvertableSelectVirtualisedProps,
     IInvertableSelectVirtualisedRenderItemProps,
     IInvertableSelectVirtualisedRenderActionsProps,
+    IInvertableSelectItemAccessibilityConfig,
 } from "./InvertableSelect/index.js";
 export {
     InvertableSelect,

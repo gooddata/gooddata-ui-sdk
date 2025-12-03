@@ -17,6 +17,13 @@ export interface IInvertableSelectItemRenderOnlyProps {
 /**
  * @internal
  */
+export interface IInvertableSelectItemAccessibilityConfig {
+    ariaLabelledBy?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IInvertableSelectItem {
     title?: string;
     icon?: ReactElement;
@@ -29,6 +36,7 @@ export interface IInvertableSelectItem {
     renderRight?: () => ReactElement | null;
     isDisabled?: boolean;
     listRef?: RefObject<HTMLElement>;
+    accessibilityConfig?: IInvertableSelectItemAccessibilityConfig;
 }
 
 /**
@@ -45,6 +53,7 @@ export function InvertableSelectItem({
     renderRight,
     icon,
     isDisabled,
+    accessibilityConfig,
 }: IInvertableSelectItem) {
     const handleOnly = useCallback(
         (e: MouseEvent<HTMLSpanElement>) => {
@@ -67,6 +76,7 @@ export function InvertableSelectItem({
                 "is-disabled": isDisabled,
             })}
             onClick={isDisabled ? () => {} : onClick}
+            aria-labelledby={accessibilityConfig?.ariaLabelledBy}
             onMouseOver={onMouseOver}
             onMouseOut={onMouseOut}
         >
