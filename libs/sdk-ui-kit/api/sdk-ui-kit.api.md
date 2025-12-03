@@ -388,7 +388,7 @@ export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = E
 export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"Container", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, focusedAction }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
 export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen, }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element;
@@ -5619,7 +5619,7 @@ export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, T
         tab: IUiTab<TTabProps, TTabActionProps>;
         isSelected: boolean;
         onSelect: () => void;
-        focusedAction?: typeof SELECT_ITEM_ACTION | "selectTabActions";
+        isFocused?: boolean;
     }>;
     TabValue: ComponentType<{
         tab: IUiTab<TTabProps, TTabActionProps>;

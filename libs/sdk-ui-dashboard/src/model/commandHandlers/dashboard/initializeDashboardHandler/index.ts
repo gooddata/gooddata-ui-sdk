@@ -289,15 +289,14 @@ function* loadExistingDashboard(
     } = dashboardWithReferences;
 
     const dashboardWithFilterView = applyDefaultFilterView(loadedDashboard, filterViews, config.settings);
+    // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab
+    // Note: activeTabLocalIdentifier is app state only, NOT persisted to/read from dashboard MD
     const resolvedActiveTabId = resolveActiveTabId(
         dashboardWithFilterView.tabs,
         cmd.payload.initialTabId,
-        dashboardWithFilterView.activeTabLocalIdentifier,
+        undefined, // Don't use any persisted value - always default to first tab if no URL param
     );
-    const dashboard = {
-        ...dashboardWithFilterView,
-        activeTabLocalIdentifier: resolvedActiveTabId,
-    };
+    const dashboard = dashboardWithFilterView;
 
     const { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource } = yield call(
         getTabsFilterConfigs,
@@ -321,6 +320,7 @@ function* loadExistingDashboard(
         tabsDateFilterConfigSource,
         createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
+        resolvedActiveTabId,
     );
 
     const catalogPayload = {

@@ -119,10 +119,7 @@ export function convertAnalyticalDashboard(
     let effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
 
     if (dashboard.tabs && dashboard.tabs.length > 0) {
-        const activeTab = dashboard.activeTabLocalIdentifier
-            ? dashboard.tabs.find((tab) => tab.localIdentifier === dashboard.activeTabLocalIdentifier)
-            : undefined;
-        const effectiveTab = activeTab ?? dashboard.tabs[0];
+        const effectiveTab = dashboard.tabs[0];
 
         // Use tab's properties for root-level (backward compatibility)
         effectiveLayout = effectiveTab.layout;
@@ -151,7 +148,6 @@ export function convertAnalyticalDashboard(
         tabs: dashboard.tabs?.map((tab) =>
             convertDashboardTabToBackend(tab, tab.filterContext?.ref, useWidgetLocalIdentifiers),
         ),
-        activeTabLocalIdentifier: dashboard.activeTabLocalIdentifier,
         version: "2",
     };
 

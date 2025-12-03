@@ -10,7 +10,7 @@ import {
     IExportDefinitionMetadataObjectDefinition,
 } from "../exports/index.js";
 import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/types.js";
-import { Identifier } from "../objRef/index.js";
+import { Identifier, ObjRef } from "../objRef/index.js";
 
 /**
  * @public
@@ -160,6 +160,11 @@ export interface IAutomationMetadataObjectBase {
          * Filters description used for display in all client-related places (e.g. UI, e-mail, exports, etc.)
          */
         visibleFilters?: IAutomationVisibleFilter[];
+        /**
+         * Filters description structured by tab ID.
+         * Used for dashboard automations when dashboard tabs are enabled.
+         */
+        visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
         /**
          * Original schedule of the automation before transformation by alert
          * anomaly detection, that uses different granularity.
@@ -542,8 +547,11 @@ export interface IAutomationAnomalyDetectionCondition {
     /**
      * Granularity of the anomaly detection.
      */
-    granularity?: IAlertAnomalyDetectionGranularity;
-
+    granularity: IAlertAnomalyDetectionGranularity;
+    /**
+     * Date dataset to be used for anomaly detection.
+     */
+    dataset: ObjRef;
     /**
      * Identifier of left side of the condition.
      */

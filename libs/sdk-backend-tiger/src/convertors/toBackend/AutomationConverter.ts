@@ -8,7 +8,7 @@ import {
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
     JsonApiAutomationInAttributes,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -36,6 +36,7 @@ import {
     convertToVisualExportRequest,
     convertVisualizationToDashboardTabularExportRequest,
 } from "./ExportDefinitionsConverter.js";
+import { toDateDataSetQualifier } from "./ObjRefConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 
 export function convertAutomation(
@@ -282,7 +283,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationOutAttributesAlert => {
+): JsonApiAutomationInAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(
@@ -369,7 +370,8 @@ const convertAlert = (
                         format: condition.measure.format,
                     },
                     sensitivity: condition.sensitivity,
-                    granularity: condition.granularity ?? "WEEK",
+                    granularity: condition.granularity,
+                    dataset: toDateDataSetQualifier(condition.dataset),
                 },
             },
             ...base,

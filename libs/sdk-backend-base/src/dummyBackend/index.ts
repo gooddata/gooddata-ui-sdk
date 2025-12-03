@@ -892,6 +892,8 @@ class DummyOrganization implements IOrganization {
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
+            setCalendar: () => Promise.resolve(),
+            deleteCalendar: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
@@ -1081,6 +1083,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setCalendar(_monthOffset: number): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteCalendar(): Promise<void> {
         return Promise.resolve();
     }
 

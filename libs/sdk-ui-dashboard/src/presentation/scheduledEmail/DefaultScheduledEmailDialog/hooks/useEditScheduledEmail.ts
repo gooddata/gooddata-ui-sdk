@@ -46,6 +46,7 @@ import {
 } from "../../../../_staging/automation/index.js";
 import {
     ExtendedDashboardWidget,
+    IAutomationFiltersTab,
     selectAutomationCommonDateFilterId,
     selectCurrentUser,
     selectDashboardHiddenFilters,
@@ -59,10 +60,12 @@ import {
     selectWidgetLocalIdToTabIdMap,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
+    getVisibleFiltersByFiltersByTab,
 } from "../../../automationFilters/utils.js";
 import {
     toModifiedISOStringToTimezone,
@@ -83,8 +86,20 @@ export interface IUseEditScheduledEmailProps {
     editedAutomationFilters?: FilterContextItem[];
     dashboardFilters?: FilterContextItem[];
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
-    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
 
+    /**
+     * Edited filters structured by tab ID for dashboard automations with tabs enabled.
+     * When provided, these are used instead of dashboardFilters for per-tab filter storage.
+     */
+    editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
+    /**
+     * Setter for editedFiltersByTab state.
+     * Used to update filters for a specific tab.
+     */
+    setEditedAutomationFiltersByTab?: (filters: Record<string, FilterContextItem[]>) => void;
+    filtersDataByTab?: IAutomationFiltersTab[] | undefined;
+    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
+    availableFiltersAsVisibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
     // Option to opt out of storing filters
     storeFilters?: boolean;
     setStoreFilters: (storeFilters: boolean) => void;
@@ -101,9 +116,11 @@ export function useEditScheduledEmail({
     widget,
     editedAutomationFilters,
     dashboardFilters,
+    editedAutomationFiltersByTab,
     widgetFilters,
     maxAutomationsRecipients,
     setEditedAutomationFilters,
+    setEditedAutomationFiltersByTab,
     availableFiltersAsVisibleFilters,
     storeFilters,
     setStoreFilters,
@@ -111,6 +128,8 @@ export function useEditScheduledEmail({
     filtersForNewAutomation,
     externalRecipientOverride,
     enableNewScheduledExport,
+    filtersDataByTab,
+    availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
     const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
@@ -169,10 +188,43 @@ export function useEditScheduledEmail({
           )
         : dashboardFilters;
 
+    // Process filters per tab if provided (for dashboard automations with tabs enabled)
+    const effectiveDashboardFiltersByTab = useMemo((): Record<string, FilterContextItem[]> | undefined => {
+        if (!editedAutomationFiltersByTab || !enableAutomationFilterContext || !storeFilters) {
+            return undefined;
+        }
+        // Apply the same processing as effectiveDashboardFilters to each tab's filters
+        return Object.entries(editedAutomationFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [tabId, filters]) => {
+                const tabHiddenFilters =
+                    filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
+                const appliedFilters = getAppliedDashboardFilters(
+                    filters ?? [],
+                    tabHiddenFilters,
+                    storeFilters,
+                );
+                // Only add if we got filters back (storeFilters is true)
+                if (appliedFilters) {
+                    acc[tabId] = appliedFilters;
+                }
+                return acc;
+            },
+            {},
+        );
+    }, [editedAutomationFiltersByTab, enableAutomationFilterContext, filtersDataByTab, storeFilters]);
+
     const effectiveVisibleDashboardFilters = enableAutomationFilterContext
         ? getVisibleFiltersByFilters(
               editedAutomationFilters ?? [],
               availableFiltersAsVisibleFilters,
+              storeFilters,
+          )
+        : undefined;
+
+    const effectiveVisibleDashboardFiltersByTab = enableAutomationFilterContext
+        ? getVisibleFiltersByFiltersByTab(
+              editedAutomationFiltersByTab,
+              availableFiltersAsVisibleFiltersByTab,
               storeFilters,
           )
         : undefined;
@@ -202,7 +254,9 @@ export function useEditScheduledEmail({
                           title: dashboardTitle,
                           recipient: defaultRecipient,
                           dashboardFilters: effectiveDashboardFilters,
+                          filtersByTab: effectiveDashboardFiltersByTab,
                           visibleFiltersMetadata: effectiveVisibleDashboardFilters,
+                          visibleFiltersByTab: effectiveVisibleDashboardFiltersByTab,
                           enableNewScheduledExport,
                           evaluationMode: "PER_RECIPIENT",
                       },
@@ -313,6 +367,7 @@ export function useEditScheduledEmail({
                     dashboardId: dashboardId!,
                     dashboardTitle,
                     dashboardFilters: storeFilters ? filtersToSave : undefined,
+                    filtersByTab: storeFilters ? effectiveDashboardFiltersByTab : undefined,
                     format,
                 }),
             );
@@ -594,20 +649,108 @@ export function useEditScheduledEmail({
         ],
     );
 
+    // Callback for per-tab filter changes - updates state AND syncs to export definitions
+    const onFiltersByTabChange = useCallback(
+        (newFiltersByTab: Record<string, FilterContextItem[]>, storeFiltersParam?: boolean) => {
+            // Update the editedFiltersByTab state
+            setEditedAutomationFiltersByTab?.(newFiltersByTab);
+            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
+
+            const newEffectiveFiltersByTab = Object.entries(newFiltersByTab).reduce<
+                Record<string, FilterContextItem[]>
+            >((acc, [tabId, filters]) => {
+                const tabHiddenFilters =
+                    filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
+                const appliedFilters = getAppliedDashboardFilters(
+                    filters ?? [],
+                    tabHiddenFilters,
+                    shouldStoreFilters,
+                );
+                if (appliedFilters) {
+                    acc[tabId] = appliedFilters;
+                }
+                return acc;
+            }, {});
+
+            const newVisibleFiltersByTab = getVisibleFiltersByFiltersByTab(
+                newFiltersByTab,
+                availableFiltersAsVisibleFiltersByTab,
+                shouldStoreFilters,
+            );
+
+            // Sync to export definitions AND metadata
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                        return {
+                            ...exportDefinition,
+                            requestPayload: {
+                                ...exportDefinition.requestPayload,
+                                content: {
+                                    ...exportDefinition.requestPayload.content,
+                                    filtersByTab: newEffectiveFiltersByTab,
+                                },
+                            },
+                        };
+                    }
+                    return exportDefinition;
+                }),
+                metadata: {
+                    ...s.metadata,
+                    visibleFiltersByTab: newVisibleFiltersByTab,
+                },
+            }));
+        },
+        [
+            setEditedAutomationFiltersByTab,
+            storeFilters,
+            setEditedAutomation,
+            availableFiltersAsVisibleFiltersByTab,
+            filtersDataByTab,
+        ],
+    );
+
     const onApplyCurrentFilters = useCallback(() => {
-        onFiltersChange(
-            filtersForNewAutomation ?? [],
-            enableNewScheduledExport,
-            widget ? true : storeFilters,
-        );
-    }, [filtersForNewAutomation, storeFilters, onFiltersChange, widget, enableNewScheduledExport]);
+        const filtersByTabForNewAutomation = getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
+        if (filtersByTabForNewAutomation) {
+            onFiltersByTabChange(filtersByTabForNewAutomation);
+        } else {
+            onFiltersChange(
+                filtersForNewAutomation ?? [],
+                enableNewScheduledExport,
+                widget ? true : storeFilters,
+            );
+        }
+    }, [
+        filtersForNewAutomation,
+        storeFilters,
+        onFiltersChange,
+        onFiltersByTabChange,
+        widget,
+        enableNewScheduledExport,
+        filtersDataByTab,
+    ]);
 
     const onStoreFiltersChange = useCallback(
-        (value: boolean, filters: FilterContextItem[]) => {
+        (
+            value: boolean,
+            filters?: FilterContextItem[],
+            filtersByTabParam?: Record<string, FilterContextItem[]>,
+        ) => {
             setStoreFilters(value);
-            onFiltersChange(filters, enableNewScheduledExport, value);
+
+            // If filtersByTab is provided, use onFiltersByTabChange, otherwise use onFiltersChange
+            if (filtersByTabParam) {
+                // Trigger filtersByTab change which handles the sync
+                onFiltersByTabChange(filtersByTabParam, value);
+            }
+            if (filters) {
+                // Use regular filters change
+                onFiltersChange(filters, enableNewScheduledExport, value);
+            }
         },
-        [onFiltersChange, setStoreFilters, enableNewScheduledExport],
+        [onFiltersChange, onFiltersByTabChange, setStoreFilters, enableNewScheduledExport],
     );
 
     const isDashboardExportSelected =
@@ -731,6 +874,7 @@ export function useEditScheduledEmail({
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
+        onFiltersByTabChange,
         enableAutomationEvaluationMode,
     };
 }
@@ -739,14 +883,21 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
     dashboardId,
     dashboardTitle,
     dashboardFilters,
+    filtersByTab,
     format,
 }: {
     dashboardId: string;
     dashboardTitle: string;
     dashboardFilters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
     format: DashboardAttachmentType;
 }): IExportDefinitionMetadataObjectDefinition {
-    const filtersObj = dashboardFilters ? { filters: dashboardFilters } : {};
+    // Use filtersByTab if provided, otherwise fall back to simple filters
+    const filtersObj = filtersByTab
+        ? { filtersByTab }
+        : dashboardFilters
+          ? { filters: dashboardFilters }
+          : {};
 
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
@@ -830,8 +981,10 @@ function newAutomationMetadataObjectDefinition({
     widget,
     recipient,
     dashboardFilters,
+    filtersByTab,
     widgetFilters,
     visibleFiltersMetadata,
+    visibleFiltersByTab,
     enableNewScheduledExport,
     evaluationMode,
     targetTabId,
@@ -844,8 +997,10 @@ function newAutomationMetadataObjectDefinition({
     widget?: ExtendedDashboardWidget;
     recipient: IAutomationRecipient;
     dashboardFilters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
     widgetFilters?: IFilter[];
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
+    visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
     enableNewScheduledExport: boolean;
     evaluationMode: AutomationEvaluationMode;
     targetTabId?: string;
@@ -866,16 +1021,19 @@ function newAutomationMetadataObjectDefinition({
                   dashboardId,
                   dashboardTitle: title ?? "",
                   dashboardFilters,
+                  filtersByTab,
                   format: "PDF",
               });
 
-    let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } = visibleFiltersMetadata
-        ? {
-              metadata: {
-                  visibleFilters: visibleFiltersMetadata,
-              },
-          }
-        : {};
+    let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } =
+        visibleFiltersMetadata || visibleFiltersByTab
+            ? {
+                  metadata: {
+                      ...(visibleFiltersMetadata ? { visibleFilters: visibleFiltersMetadata } : {}),
+                      ...(visibleFiltersByTab ? { visibleFiltersByTab } : {}),
+                  },
+              }
+            : {};
 
     if (targetTabId) {
         metadataObj = {

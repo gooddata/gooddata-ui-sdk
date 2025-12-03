@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { iconOverrides, themeBalham } from "ag-grid-enterprise";
@@ -6,7 +7,13 @@ import { iconOverrides, themeBalham } from "ag-grid-enterprise";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { getAscSortIcon, getDescSortIcon, getMenuIcon } from "../features/styling/icons.js";
+import {
+    getAscSortIcon,
+    getDescSortIcon,
+    getMenuIcon,
+    getPaginationNextIcon,
+    getPaginationPreviousIcon,
+} from "../features/styling/icons.js";
 import { AgGridProps } from "../types/agGrid.js";
 
 /**
@@ -36,6 +43,12 @@ export const useThemeProps = (): ((agGridReactProps: AgGridProps) => AgGridProps
                     },
                     "menu-alt": {
                         svg: getMenuIcon(iconColor),
+                    },
+                    previous: {
+                        svg: getPaginationPreviousIcon(),
+                    },
+                    next: {
+                        svg: getPaginationNextIcon(),
                     },
                 },
             });

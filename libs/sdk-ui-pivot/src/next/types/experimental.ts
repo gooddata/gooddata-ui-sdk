@@ -13,4 +13,11 @@ export interface PivotTableNextExperimentalConfig {
      * Default: true
      */
     enablePivotTableAutoSizeReset?: boolean;
+
+    /**
+     * Enable pagination for the pivot table.
+     *
+     * Default: false
+     */
+    enablePivotTablePagination?: boolean;
 }

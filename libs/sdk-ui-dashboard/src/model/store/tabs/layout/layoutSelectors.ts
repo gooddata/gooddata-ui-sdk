@@ -50,6 +50,7 @@ import {
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
 import { DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
+import { DEFAULT_TAB_ID } from "../index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
@@ -59,6 +60,27 @@ const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (t
     const activeTab = tabs.find((tab) => tab.localIdentifier === activeTabId);
 
     return activeTab?.layout ?? layoutInitialState;
+});
+
+const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
+
+/**
+ * Returns layout keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectLayoutByTab: DashboardSelector<
+    Record<string, IDashboardLayout<ExtendedDashboardWidget> | undefined>
+> = createSelector(selectTabsArray, (tabs) => {
+    if (!tabs.length) {
+        return {};
+    }
+
+    return tabs.reduce<Record<string, IDashboardLayout<ExtendedDashboardWidget> | undefined>>((acc, tab) => {
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.layout?.layout ?? undefined;
+        return acc;
+    }, {});
 });
 
 /**

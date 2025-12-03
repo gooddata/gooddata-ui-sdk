@@ -238,6 +238,11 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
 
         if (this.type) {
             allFilters.push(`${this.type}=isnull=false`);
+            if (this.type === "schedule") {
+                // Alerts belonging to dashboard with evaluation frequency setting
+                // have schedule field so we need to exclude them
+                allFilters.push(`alert=isnull=true`);
+            }
         }
 
         if (this.author) {

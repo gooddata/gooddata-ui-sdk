@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { convertState } from "./state.js";
 import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
+import { convertState } from "./state.js";
 
 export type FeatureDef = {
     id: string;
@@ -841,6 +841,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAnomalyDetectionAlert",
             "BOOLEAN",
             FeatureFlagsValues.enableAnomalyDetectionAlert,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableFiscalCalendars,
+            "enableFiscalCalendars",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFiscalCalendars,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePivotTablePagination,
+            "enablePivotTablePagination",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePivotTablePagination,
         ),
     };
 }

@@ -21,6 +21,7 @@ import { PivotTableNextGrandTotalsPositionConfig } from "./grandTotalsPosition.j
 import { PivotTableNextLayoutConfig } from "./layout.js";
 import { PivotTableNextAgGridLicenseConfig } from "./license.js";
 import { PivotTableNextMenuConfig } from "./menu.js";
+import { PivotTableNextPaginationConfig } from "./pagination.js";
 import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
 import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
 import { PivotTableNextTranspositionConfig } from "./transposition.js";
@@ -40,6 +41,7 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextGrandTotalsPositionConfig &
     PivotTableNextCellSelectionConfig &
     PivotTableNextAgGridLicenseConfig &
+    PivotTableNextPaginationConfig &
     PivotTableNextExperimentalConfig;
 
 /**

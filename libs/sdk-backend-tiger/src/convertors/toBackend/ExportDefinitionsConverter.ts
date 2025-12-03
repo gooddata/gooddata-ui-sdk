@@ -4,6 +4,7 @@ import { isEmpty, omitBy } from "lodash-es";
 
 import {
     AutomationRawExportAutomationRequest,
+    DashboardFilter,
     DashboardTabularExportRequestV2,
     ImageExportRequest,
     JsonApiExportDefinitionInDocument,
@@ -170,8 +171,17 @@ export const convertToSlidesExportRequest = (
     }
 
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
-        const { filters, dashboard } = exportRequest.content;
-        const isMetadataFilled = title || filters;
+        const { filters, filtersByTab, dashboard } = exportRequest.content;
+
+        // Convert filtersByTab to API format
+        const filtersByTabObj = filtersByTab
+            ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
+                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+                  return acc;
+              }, {})
+            : undefined;
+
+        const isMetadataFilled = title || filters || filtersByTab;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -181,6 +191,7 @@ export const convertToSlidesExportRequest = (
                                     filters: filters.map(cloneWithSanitizedIds),
                                 }
                               : {}),
+                          ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -218,8 +229,17 @@ export const convertToVisualExportRequest = (
     exportRequest: IExportDefinitionDashboardRequestPayload,
     title?: string,
 ): VisualExportRequest => {
-    const { filters, dashboard } = exportRequest.content;
-    const isMetadataFilled = title || filters;
+    const { filters, filtersByTab, dashboard } = exportRequest.content;
+
+    // Convert filtersByTab to API format
+    const filtersByTabObj = filtersByTab
+        ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
+              acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+              return acc;
+          }, {})
+        : undefined;
+
+    const isMetadataFilled = title || filters || filtersByTab;
     const metadataObj = {
         ...(isMetadataFilled
             ? {
@@ -229,6 +249,7 @@ export const convertToVisualExportRequest = (
                                 filters: filters.map(cloneWithSanitizedIds),
                             }
                           : {}),
+                      ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                       ...(title ? { title } : {}),
                   },
               }
@@ -245,13 +266,24 @@ export const convertToVisualExportRequest = (
 export const convertToDashboardTabularExportRequest = (
     exportRequest: IExportDefinitionDashboardRequestPayload,
 ): DashboardTabularExportRequestV2 => {
-    const { filters, dashboard } = exportRequest.content;
+    const { filters, filtersByTab, dashboard } = exportRequest.content;
     if (
         exportRequest.format === "XLSX" &&
         isExportDefinitionDashboardRequestPayload(exportRequest) &&
         dashboard != null
     ) {
         const { mergeHeaders, orientation, exportInfo } = exportRequest.settings ?? {};
+
+        // Convert filtersByTab to API format (dashboardTabsFiltersOverrides)
+        const dashboardTabsFiltersOverrides = filtersByTab
+            ? Object.entries(filtersByTab).reduce<Record<string, DashboardFilter[]>>(
+                  (acc, [tabId, tabFilters]) => {
+                      acc[tabId] = tabFilters.map(cloneWithSanitizedIds) as DashboardFilter[];
+                      return acc;
+                  },
+                  {},
+              )
+            : undefined;
 
         return {
             fileName: exportRequest.fileName,
@@ -263,6 +295,7 @@ export const convertToDashboardTabularExportRequest = (
                 ...(exportInfo ? { exportInfo } : {}),
             },
             dashboardFiltersOverride: filters?.map(cloneWithSanitizedIds),
+            dashboardTabsFiltersOverrides,
         };
     }
     throw new UnexpectedError("Export definition must be dashboard and XLSX");
@@ -349,8 +382,17 @@ export const convertExportDefinitionRequestPayload = (
     title?: string,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
-        const { filters, dashboard } = exportRequest.content;
-        const isMetadataFilled = title || exportRequest.content.filters;
+        const { filters, filtersByTab, dashboard } = exportRequest.content;
+
+        // Convert filtersByTab to API format
+        const filtersByTabObj = filtersByTab
+            ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
+                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+                  return acc;
+              }, {})
+            : undefined;
+
+        const isMetadataFilled = title || filters || filtersByTab;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -362,6 +404,7 @@ export const convertExportDefinitionRequestPayload = (
                                         : filters,
                                 }
                               : {}),
+                          ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
                           ...(title ? { title } : {}),
                       },
                   }

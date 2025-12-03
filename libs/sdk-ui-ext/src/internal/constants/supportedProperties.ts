@@ -389,6 +389,8 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "disableScheduledExports",
     "chartConfigOverride",
     "textWrapping",
+    "pagination",
+    "pageSize",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [

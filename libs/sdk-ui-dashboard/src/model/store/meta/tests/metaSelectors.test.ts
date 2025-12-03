@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -38,9 +37,6 @@ import {
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
-import { configActions } from "../../config/index.js";
-import { tabsActions } from "../../tabs/index.js";
-import { metaActions } from "../index.js";
 import { selectIsDashboardDirty } from "../metaSelectors.js";
 
 describe("selectIsDashboardDirty", () => {
@@ -183,94 +179,6 @@ describe("selectIsDashboardDirty", () => {
 
     it.each(scenarios)(`should detect %s`, async (_, command, event) => {
         await Tester.dispatchAndWaitFor(command, event);
-        expect(Tester.select(selectIsDashboardDirty)).toBe(true);
-    });
-
-    it("should detect changes on non-active tab", () => {
-        const state = Tester.select((s) => s);
-        const persistedDashboard = state.meta.persistedDashboard;
-        const tabs = state.tabs.tabs;
-
-        expect(persistedDashboard).toBeDefined();
-        expect(tabs).toBeDefined();
-
-        const firstTab = cloneDeep(tabs![0]);
-        expect(firstTab).toBeDefined();
-
-        const secondTab = cloneDeep(firstTab);
-        secondTab.localIdentifier = "second";
-        secondTab.title = "Second Tab";
-
-        expect(secondTab.filterContext?.filterContextDefinition).toBeDefined();
-        secondTab.filterContext = {
-            ...cloneDeep(secondTab.filterContext!),
-            filterContextDefinition: cloneDeep(secondTab.filterContext!.filterContextDefinition),
-            originalFilterContextDefinition: cloneDeep(
-                secondTab.filterContext!.originalFilterContextDefinition,
-            ),
-        };
-
-        const currentConfig = state.config.config ?? {};
-        Tester.dispatch(
-            configActions.setConfig({
-                ...currentConfig,
-                settings: {
-                    ...currentConfig.settings,
-                    enableDashboardTabs: true,
-                },
-            }),
-        );
-
-        const dashboardWithTabs = {
-            ...persistedDashboard!,
-            tabs: [
-                {
-                    localIdentifier: firstTab.localIdentifier,
-                    title: firstTab.title ?? "",
-                    filterContext: cloneDeep(persistedDashboard!.filterContext),
-                    dateFilterConfig: persistedDashboard!.dateFilterConfig,
-                    dateFilterConfigs: persistedDashboard!.dateFilterConfigs,
-                    attributeFilterConfigs: persistedDashboard!.attributeFilterConfigs,
-                },
-                {
-                    localIdentifier: secondTab.localIdentifier,
-                    title: secondTab.title ?? "",
-                    filterContext: cloneDeep(persistedDashboard!.filterContext),
-                    dateFilterConfig: persistedDashboard!.dateFilterConfig,
-                    dateFilterConfigs: persistedDashboard!.dateFilterConfigs,
-                    attributeFilterConfigs: persistedDashboard!.attributeFilterConfigs,
-                },
-            ],
-            activeTabLocalIdentifier: firstTab.localIdentifier,
-        };
-
-        Tester.dispatch(
-            metaActions.setMeta({
-                dashboard: dashboardWithTabs,
-                initialContent: state.meta.initialContent,
-            }),
-        );
-
-        Tester.dispatch(
-            tabsActions.setTabs({
-                tabs: [firstTab, secondTab],
-                activeTabLocalIdentifier: firstTab.localIdentifier,
-            }),
-        );
-
-        expect(Tester.select(selectIsDashboardDirty)).toBe(false);
-
-        const dirtySecondTab = cloneDeep(secondTab);
-        dirtySecondTab.filterContext = {
-            ...dirtySecondTab.filterContext!,
-            filterContextDefinition: {
-                ...dirtySecondTab.filterContext!.filterContextDefinition!,
-                filters: [],
-            },
-        };
-
-        Tester.dispatch(tabsActions.updateTab(dirtySecondTab));
-
         expect(Tester.select(selectIsDashboardDirty)).toBe(true);
     });
 });

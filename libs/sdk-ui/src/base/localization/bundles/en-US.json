@@ -507,6 +507,10 @@
         "value": "Next page",
         "comment": "Button label to navigate to the next page in a paginated view. Shown when there are more items available after the current page."
     },
+    "visualizations.table.pagination.of": {
+        "value": "of",
+        "comment": "Preposition used in pagination to separate current page from total pages (e.g., '2 of 17'). Keep it short and lowercase to match pagination styling."
+    },
     "visualizations.menu.aggregations": {
         "value": "Aggregate",
         "comment": "Heading showed above menu listing possible aggregations (totals). Use imperative."

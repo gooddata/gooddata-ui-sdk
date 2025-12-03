@@ -7,7 +7,6 @@ import { EmptyObject } from "@gooddata/util";
 import { IDropdownButtonRenderProps } from "../../Dropdown/index.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
-import { SELECT_ITEM_ACTION } from "../hooks/useListWithActionsKeyboardNavigation.js";
 import { separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 
 /**
@@ -65,7 +64,11 @@ export type IUiTabComponents<
         tab: IUiTab<TTabProps, TTabActionProps>;
         isSelected: boolean;
         onSelect: () => void;
-        focusedAction?: typeof SELECT_ITEM_ACTION | "selectTabActions";
+        /**
+         * Whether this tab is the currently focused tab in keyboard navigation.
+         * When true, the tab button and its actions button become tabbable (tabIndex=0).
+         */
+        isFocused?: boolean;
     }>;
     TabValue: ComponentType<{
         tab: IUiTab<TTabProps, TTabActionProps>;

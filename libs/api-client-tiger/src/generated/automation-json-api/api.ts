@@ -151,7 +151,7 @@ export interface AutomationAfmObjectIdentifierCoreIdentifier {
 export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = "attribute" | "label" | "fact" | "metric";
 
 /**
- * Reference to the date dataset to which the filter should be applied.
+ * Date dataset used for anomaly detection.
  */
 export interface AutomationAfmObjectIdentifierDataset {
     identifier: AutomationAfmObjectIdentifierDatasetIdentifier;
@@ -198,7 +198,7 @@ export interface AutomationAlertAfm {
      */
     attributes?: Array<AutomationAttributeItem>;
     /**
-     * Various filter types to filter execution result. For anomaly detection, exactly one date filter (RelativeDateFilter or AbsoluteDateFilter) is required.
+     * Various filter types to filter execution result. For anomaly detection, exactly one dataset is specified in the condition. The AFM may contain multiple date filters for different datasets, but only the date filter matching the dataset from the condition is used for anomaly detection.
      */
     filters: Array<AutomationFilterDefinition>;
     /**
@@ -259,11 +259,12 @@ export interface AutomationAnomalyDetection {
     /**
      * Sensitivity level for anomaly detection
      */
-    sensitivity?: AutomationAnomalyDetectionSensitivityEnum;
+    sensitivity: AutomationAnomalyDetectionSensitivityEnum;
     /**
      * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
      */
     granularity: AutomationAnomalyDetectionGranularityEnum;
+    dataset: AutomationAfmObjectIdentifierDataset;
 }
 
 export type AutomationAnomalyDetectionSensitivityEnum = "LOW" | "MEDIUM" | "HIGH";

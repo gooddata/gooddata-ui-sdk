@@ -866,6 +866,7 @@ export type {
     IWhiteLabeling,
     IAlertDefault,
     WeekStart,
+    IFiscalYear,
     IOpenAiConfig,
     ILlmEndpoint,
     DashboardFiltersApplyMode,

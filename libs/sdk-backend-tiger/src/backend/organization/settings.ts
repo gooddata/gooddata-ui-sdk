@@ -72,6 +72,14 @@ export class OrganizationSettingsService
         return this.setSetting("WEEK_START", { value: weekStart });
     }
 
+    public async setCalendar(monthOffset: number): Promise<void> {
+        return this.setSetting("FISCAL_YEAR", { monthOffset });
+    }
+
+    public async deleteCalendar(): Promise<void> {
+        return this.deleteSettingByType("FISCAL_YEAR");
+    }
+
     public override async setTheme(activeThemeId: string) {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }

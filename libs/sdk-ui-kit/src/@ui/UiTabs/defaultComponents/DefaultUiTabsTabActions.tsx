@@ -41,6 +41,7 @@ export function DefaultUiTabsTabActions<
     ]);
 
     const tabElementId = useScopedId(tab, "tab-scroll-target");
+    const tabActionsId = useScopedId(tab, "actions");
 
     const menuItems: IMenuItemType<TTabProps, TTabActionProps>[] = useMemo(
         () =>
@@ -72,12 +73,19 @@ export function DefaultUiTabsTabActions<
                                           block: "nearest",
                                           behavior: "instant",
                                       });
+                                      // The second scrollIntoView is needed to make sure the actions end up visible
+                                      // if the tab is larger than the tablist element. This can happen for very long names.
+                                      document.getElementById(tabActionsId)?.scrollIntoView({
+                                          inline: "nearest",
+                                          block: "nearest",
+                                          behavior: "instant",
+                                      });
                                   }, 50);
                               }) as IUiTabAction<TTabProps, TTabActionProps>["onSelect"],
                           },
                       };
             }) ?? [],
-        [tab, onActionTriggered, location, tabElementId, onToggleOpen],
+        [tab, onActionTriggered, location, onToggleOpen, tabElementId, tabActionsId],
     );
 
     const handleItemSelected = useCallback(

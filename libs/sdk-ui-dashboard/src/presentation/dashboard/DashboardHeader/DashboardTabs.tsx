@@ -349,7 +349,7 @@ function RenamingTabValue(props: {
         [onChange],
     );
     const handleSubmit = useCallback(() => onRename(name), [name, onRename]);
-    const handleKeyUp = useCallback<KeyboardEventHandler<HTMLInputElement>>(
+    const handleKeyDown = useCallback<KeyboardEventHandler<HTMLInputElement>>(
         (e) => {
             if (e.key === "Enter") {
                 handleSubmit();
@@ -371,7 +371,7 @@ function RenamingTabValue(props: {
             onChange={handleChange}
             onBlur={isSubmitOnBlur ? handleSubmit : undefined}
             value={name}
-            onKeyUp={handleKeyUp}
+            onKeyDown={handleKeyDown}
             name={id}
         />
     );

@@ -440,6 +440,7 @@ const convertAlert = (
                     title: anomaly.measure.title ?? undefined,
                     format: anomaly.measure.format ?? undefined,
                 },
+                dataset: idRef(anomaly.dataset.identifier.id, "dataSet"),
             },
             ...base,
         };

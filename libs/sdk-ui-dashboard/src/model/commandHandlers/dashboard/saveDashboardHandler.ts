@@ -25,8 +25,9 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { SaveDashboard, changeRenderMode } from "../../commands/index.js";
+import { SaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
@@ -44,13 +45,14 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { TabState } from "../../store/tabs/tabsState.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
+import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -246,14 +248,8 @@ function* createDashboardSaveContext(
               ? processExistingTabs(tabs)
               : undefined;
 
-    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
-        selectActiveTabLocalIdentifier,
-    );
-    const defaultActiveTabLocalIdentifier =
-        enableDashboardTabs && (!tabs || tabs.length === 0) && processedTabs
-            ? processedTabs[0].localIdentifier
-            : activeTabLocalIdentifier;
-
+    // Note: activeTabLocalIdentifier is NOT saved to dashboard MD - it's app state only
+    // Dashboard always opens on first tab by default
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
@@ -267,9 +263,7 @@ function* createDashboardSaveContext(
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-        ...(enableDashboardTabs && processedTabs
-            ? { tabs: processedTabs, activeTabLocalIdentifier: defaultActiveTabLocalIdentifier }
-            : {}),
+        ...(enableDashboardTabs && processedTabs ? { tabs: processedTabs } : {}),
         ...pluginsProp,
     };
 
@@ -398,6 +392,8 @@ export function* saveDashboardHandler(
 
         const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
             yield select(selectPersistedDashboard);
+        const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+            yield select(selectEnableDashboardTabs);
 
         const isNewDashboard = persistedDashboard === undefined;
 
@@ -429,6 +425,15 @@ export function* saveDashboardHandler(
         const isInViewMode: ReturnType<typeof selectIsInViewMode> = yield select(selectIsInViewMode);
         if (!isInViewMode) {
             yield call(changeRenderModeHandler, ctx, changeRenderMode("view", undefined, cmd.correlationId));
+        }
+
+        // After save, reset to first tab - activeTabLocalIdentifier is not persisted in dashboard MD
+        const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+        const firstTabId = tabs?.[0]?.localIdentifier;
+        if (enableDashboardTabs && firstTabId) {
+            const switchTabCmd = switchDashboardTab(firstTabId);
+            const switchedEvent = yield call(switchDashboardTabHandler, ctx, switchTabCmd);
+            yield dispatchDashboardEvent(switchedEvent);
         }
 
         yield put(savingActions.setSavingSuccess());

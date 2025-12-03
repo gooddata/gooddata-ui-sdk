@@ -107,6 +107,22 @@ export interface IWorkspaceSettingsService {
     setWeekStart(weekStart: string): Promise<void>;
 
     /**
+     * Sets fiscal calendar for current workspace.
+     *
+     * @param monthOffset - number of months the fiscal year is offset from the calendar year. Can be positive or negative.
+     *
+     * @returns promise
+     */
+    setCalendar(monthOffset: number): Promise<void>;
+
+    /**
+     * Deletes fiscal calendar from workspace settings returning calendar to default.
+     *
+     * @returns promise
+     */
+    deleteCalendar(): Promise<void>;
+
+    /**
      * Sets DashboardFiltersApplyMode configuration for workspace. Default is taken from organization setting.
      *
      * @param dashboardFiltersApplyMode - describes new mode for applying dashboard filters.

@@ -31,7 +31,11 @@ export function useHeaderGroupDrilling(params: AgGridHeaderGroupParams) {
             return false;
         }
 
-        const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
+        const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef | null;
+        if (!colGroupDef) {
+            return false;
+        }
+
         return isHeaderCellDrillable(
             colGroupDef,
             drillableItems,
@@ -49,7 +53,11 @@ export function useHeaderGroupDrilling(params: AgGridHeaderGroupParams) {
                 return false;
             }
 
-            const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
+            const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef | null;
+            if (!colGroupDef) {
+                return false;
+            }
+
             const rowIndex = colGroupDef.headerGroupComponentParams?.pivotGroupDepth ?? -1;
 
             // Create drill context for header group

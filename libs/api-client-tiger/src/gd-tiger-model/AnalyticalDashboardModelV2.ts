@@ -89,13 +89,6 @@ export interface IAnalyticalDashboard {
      * @alpha
      */
     tabs?: IDashboardTab[];
-
-    /**
-     * Local identifier of the active tab for persistence purposes.
-     *
-     * @alpha
-     */
-    activeTabLocalIdentifier?: string;
 }
 
 /**

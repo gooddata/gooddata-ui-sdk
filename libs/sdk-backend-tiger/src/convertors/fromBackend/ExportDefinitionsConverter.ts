@@ -8,8 +8,8 @@ import {
     AutomationAutomationSlidesExport,
     AutomationAutomationTabularExport,
     AutomationAutomationVisualExport,
-    JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-    JsonApiAutomationOutAttributesRawExportsInner,
+    JsonApiAutomationInAttributesDashboardTabularExportsInner,
+    JsonApiAutomationInAttributesRawExportsInner,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -36,6 +36,7 @@ type MetadataObjectDefinition = {
     dashboard?: string;
     title?: string;
     filters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
 };
 
 export const wrapExportDefinition = (
@@ -59,10 +60,18 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiAutomationInAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
-        requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride, widgetIds },
+        requestPayload: {
+            fileName,
+            format,
+            dashboardId,
+            settings,
+            dashboardFiltersOverride,
+            dashboardTabsFiltersOverrides,
+            widgetIds,
+        },
     } = exportRequest;
 
     if (widgetIds && widgetIds.length > 0) {
@@ -82,6 +91,17 @@ export const convertDashboardTabularExportRequest = (
         };
     }
 
+    // Convert dashboardTabsFiltersOverrides to filtersByTab
+    const filtersByTab = dashboardTabsFiltersOverrides
+        ? Object.entries(dashboardTabsFiltersOverrides).reduce<Record<string, FilterContextItem[]>>(
+              (acc, [tabId, tabFilters]) => {
+                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+                  return acc;
+              },
+              {},
+          )
+        : undefined;
+
     return {
         type: "dashboard",
         fileName,
@@ -90,6 +110,7 @@ export const convertDashboardTabularExportRequest = (
         content: {
             dashboard: dashboardId,
             filters: dashboardFiltersOverride?.map(cloneWithSanitizedIds) ?? undefined,
+            filtersByTab,
         },
     };
 };
@@ -107,6 +128,20 @@ export const convertVisualExportRequest = (
         ? metadata?.filters?.map(cloneWithSanitizedIds)
         : metadata?.filters;
     const filtersObj = filters ? { filters } : {};
+
+    // Convert filtersByTab from metadata
+    const filtersByTab =
+        enableAutomationFilterContext && metadata?.filtersByTab
+            ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+                  (acc, [tabId, tabFilters]) => {
+                      acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                      return acc;
+                  },
+                  {},
+              )
+            : undefined;
+    const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
+
     return {
         type: "dashboard",
         fileName,
@@ -114,12 +149,13 @@ export const convertVisualExportRequest = (
         content: {
             dashboard: dashboardId,
             ...filtersObj,
+            ...filtersByTabObj,
         },
     };
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiAutomationInAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },
@@ -186,15 +222,28 @@ export const convertSlidesExportRequest = (
         };
     }
 
+    const metadataObj = metadata as MetadataObjectDefinition | undefined;
+    const filters = metadataObj?.filters?.map(cloneWithSanitizedIds) ?? undefined;
+
+    // Convert filtersByTab from metadata
+    const filtersByTab = metadataObj?.filtersByTab
+        ? Object.entries(metadataObj.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+              (acc, [tabId, tabFilters]) => {
+                  acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                  return acc;
+              },
+              {},
+          )
+        : undefined;
+
     return {
         type: "dashboard",
         fileName,
         format: format === "PDF" ? "PDF_SLIDES" : format,
         content: {
             dashboard: dashboardId,
-            filters:
-                (metadata as MetadataObjectDefinition | undefined)?.filters?.map(cloneWithSanitizedIds) ??
-                undefined,
+            filters,
+            filtersByTab,
         },
     } as IExportDefinitionDashboardRequestPayload;
 };
@@ -331,6 +380,19 @@ const convertExportDefinitionRequestPayload = (
             : metadata?.filters;
         const filtersObj = filters ? { filters } : {};
 
+        // Convert filtersByTab from metadata
+        const filtersByTab =
+            enableAutomationFilterContext && metadata?.filtersByTab
+                ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+                      (acc, [tabId, tabFilters]) => {
+                          acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                          return acc;
+                      },
+                      {},
+                  )
+                : undefined;
+        const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
+
         return {
             type: "dashboard",
             fileName: exportRequest.fileName,
@@ -338,6 +400,7 @@ const convertExportDefinitionRequestPayload = (
             content: {
                 dashboard: exportRequest.dashboardId,
                 ...filtersObj,
+                ...filtersByTabObj,
             },
         };
     }

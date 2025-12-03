@@ -16,6 +16,7 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { loadDataView } from "../../features/data/loadDataView.js";
 import { getAvailableDrillTargets } from "../../features/drilling/getAvailableDrillTargets.js";
 import { handleExportReady } from "../../features/exports/exports.js";
+import { getEffectivePageSize } from "../../features/pagination/utils.js";
 import { sanitizeSortInExecution } from "../../features/sorting/sanitizeSortInExecution.js";
 import { IInitialExecutionData } from "../../types/internal.js";
 import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
@@ -40,6 +41,8 @@ export const useInitExecutionResult = () => {
     } = props;
     const { columnHeadersPosition, measureGroupDimension, enableExecutionCancelling } = config;
 
+    const effectivePageSize = getEffectivePageSize(pageSize);
+
     return useCancelablePromise<IInitialExecutionData, GoodDataSdkError>(
         {
             promise: async (signal) => {
@@ -51,7 +54,7 @@ export const useInitExecutionResult = () => {
                     const initialDataView = await loadDataView({
                         executionResult: initialExecutionResult,
                         startRow: 0,
-                        endRow: pageSize,
+                        endRow: effectivePageSize,
                     });
                     return { initialExecutionResult, initialDataView };
                 } catch (e) {

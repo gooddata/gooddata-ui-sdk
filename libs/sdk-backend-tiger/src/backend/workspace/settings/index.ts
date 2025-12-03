@@ -2,7 +2,7 @@
 
 import {
     FeatureContext,
-    JsonApiDatasetOutMetaOriginOriginTypeEnum,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
@@ -93,7 +93,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
+        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;
@@ -143,6 +143,14 @@ export class TigerWorkspaceSettings
 
     public async setWeekStart(weekStart: string): Promise<void> {
         return this.setSetting("WEEK_START", { value: weekStart });
+    }
+
+    public async setCalendar(monthOffset: number): Promise<void> {
+        return this.setSetting("FISCAL_YEAR", { monthOffset });
+    }
+
+    public async deleteCalendar(): Promise<void> {
+        return this.deleteSettingByType("FISCAL_YEAR");
     }
 
     public async setDashboardFiltersApplyMode(

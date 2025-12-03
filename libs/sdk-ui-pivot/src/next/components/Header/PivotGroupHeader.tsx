@@ -33,7 +33,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const isTransposed = useIsTransposed();
-    const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
+    const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef | null;
 
     const columnDefinition = colGroupDef?.context?.columnDefinition;
     const isValueColDef = isValueColumnDef(columnDefinition);
@@ -43,12 +43,14 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
     const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
     const isTotalGroup =
+        !!colGroupDef &&
         !isRegularValueColumn &&
         (colGroupDef as ColGroupDef).children?.some((child) =>
             isGrandTotalColumnDefinition(child.context?.columnDefinition),
         );
     const isSubtotal = !isRegularValueColumn && isSubtotalColumnDefinition(columnDefinition);
     const isSubtotalGroup =
+        !!colGroupDef &&
         !isRegularValueColumn &&
         (colGroupDef as ColGroupDef).children?.some((child) =>
             isSubtotalColumnDefinition(child.context?.columnDefinition),

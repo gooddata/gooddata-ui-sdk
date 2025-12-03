@@ -68,7 +68,10 @@ import {
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
+import {
+    getAvailableFiltersFromFiltersByTab,
+    useAutomationFiltersSelect,
+} from "../../automationFilters/useAutomationFiltersSelect.js";
 import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
@@ -176,6 +179,11 @@ export function ScheduledMailDialogRenderer({
         availableFilters,
         availableFiltersAsVisibleFilters,
         filtersForNewAutomation,
+        // filter by tab data
+        filtersByTab,
+        editedAutomationFiltersByTab,
+        setEditedAutomationFiltersByTab,
+        availableFiltersAsVisibleFiltersByTab,
     } = useAutomationFiltersSelect({
         automationToEdit: scheduledExportToEdit,
         widget,
@@ -192,7 +200,10 @@ export function ScheduledMailDialogRenderer({
         isExecutionTimestampMode,
         enableAutomationFilterContext,
         enableNewScheduledExport,
-    } = useDefaultScheduledEmailDialogData({ filters: availableFilters ?? [] });
+    } = useDefaultScheduledEmailDialogData({
+        filters: availableFilters ?? [],
+        filtersByTab: getAvailableFiltersFromFiltersByTab(filtersByTab),
+    });
 
     const {
         defaultUser,
@@ -225,6 +236,7 @@ export function ScheduledMailDialogRenderer({
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
+        onFiltersByTabChange,
         enableAutomationEvaluationMode,
     } = useEditScheduledEmail({
         notificationChannels,
@@ -243,6 +255,10 @@ export function ScheduledMailDialogRenderer({
         filtersForNewAutomation,
         externalRecipientOverride,
         enableNewScheduledExport,
+        filtersDataByTab: filtersByTab,
+        editedAutomationFiltersByTab,
+        setEditedAutomationFiltersByTab,
+        availableFiltersAsVisibleFiltersByTab,
     });
 
     const { isValid } = useValidateExistingAutomationFilters({
@@ -502,6 +518,9 @@ export function ScheduledMailDialogRenderer({
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             hideTitle
                                             showAllFilters
+                                            filtersByTab={filtersByTab}
+                                            editedFiltersByTab={editedAutomationFiltersByTab}
+                                            onFiltersByTabChange={onFiltersByTabChange}
                                         />
                                     </div>
                                 ) : (
@@ -509,7 +528,16 @@ export function ScheduledMailDialogRenderer({
                                         ref={generalTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
                                     >
-                                        {enableAutomationFilterContext && !enableDashboardTabs ? (
+                                        {enableAutomationFilterContext && enableDashboardTabs ? (
+                                            <Message
+                                                type="progress"
+                                                className="gd-schedule-dialog-tab-content-info"
+                                            >
+                                                {intl.formatMessage({
+                                                    id: "dialogs.schedule.email.tabs.info",
+                                                })}
+                                            </Message>
+                                        ) : enableAutomationFilterContext && !enableDashboardTabs ? (
                                             <>
                                                 <AutomationFiltersSelect
                                                     availableFilters={availableFilters}
@@ -519,6 +547,9 @@ export function ScheduledMailDialogRenderer({
                                                     onStoreFiltersChange={onStoreFiltersChange}
                                                     isDashboardAutomation={isDashboardExportSelected}
                                                     overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                    filtersByTab={filtersByTab}
+                                                    editedFiltersByTab={editedAutomationFiltersByTab}
+                                                    onFiltersByTabChange={onFiltersByTabChange}
                                                 />
                                                 <ContentDivider className="gd-divider-with-margin" />
                                             </>
@@ -715,7 +746,13 @@ export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     );
 }
 
-function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
+function useDefaultScheduledEmailDialogData({
+    filters,
+    filtersByTab,
+}: {
+    filters: FilterContextItem[];
+    filtersByTab: Record<string, FilterContextItem[]>;
+}) {
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -738,8 +775,15 @@ function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContex
     const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
     const enableAutomationFilterContext = useMemo(() => {
         const doAllDashboardFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
-        return enableAutomationFilterContextFlag && doAllDashboardFiltersHaveLocalIdentifiers;
-    }, [filters, enableAutomationFilterContextFlag]);
+        const doAllDashboardFiltersByTabHaveLocalIdentifiers = Object.values(filtersByTab).every(
+            (tabFilters) => validateAllFilterLocalIdentifiers(tabFilters),
+        );
+        return (
+            enableAutomationFilterContextFlag &&
+            doAllDashboardFiltersHaveLocalIdentifiers &&
+            doAllDashboardFiltersByTabHaveLocalIdentifiers
+        );
+    }, [filters, filtersByTab, enableAutomationFilterContextFlag]);
     const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
 
     return {

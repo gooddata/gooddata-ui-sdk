@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
-import { DrillableItemsRefProvider, useDrillableItemsRef } from "./DrillableItemsRefContext.js";
+import { useDrillableItemsRef } from "./DrillableItemsRefContext.js";
 import { useInitialExecution } from "./InitialExecutionContext.js";
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
 import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
@@ -19,14 +19,6 @@ const ColumnDefsContext = createContext<IColumnDefsContext | undefined>(undefine
  * @internal
  */
 export function ColumnDefsProvider({ children }: { children: ReactNode }) {
-    return (
-        <DrillableItemsRefProvider>
-            <ColumnDefsProviderInner>{children}</ColumnDefsProviderInner>
-        </DrillableItemsRefProvider>
-    );
-}
-
-function ColumnDefsProviderInner({ children }: { children: ReactNode }) {
     const intl = useIntl();
     const initialExecutionData = useInitialExecution();
     const props = usePivotTableProps();

@@ -776,6 +776,11 @@ $min-content-height: 110px;
         flex-direction: column;
         flex: 1 1 auto;
     }
+
+    .gd-schedule-dialog-tab-content-info {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
 
 .gd-divider-with-margin {

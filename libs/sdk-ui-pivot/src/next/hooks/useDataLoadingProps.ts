@@ -15,6 +15,7 @@ import { useInitialExecution } from "../context/InitialExecutionContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { useRuntimeError } from "../context/RuntimeErrorContext.js";
 import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
+import { getEffectivePageSize, isPaginationEnabled } from "../features/pagination/utils.js";
 import { AgGridProps } from "../types/agGrid.js";
 
 /**
@@ -38,49 +39,55 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
 
     const initialSortBy = useInitialProp(sortBy);
 
-    const dataSource = useMemo(
-        () =>
-            createServerSideDataSource({
-                rows,
-                measures,
-                sortBy: initialSortBy,
-                columnHeadersPosition,
-                grandTotalsPosition,
-                setCurrentDataView,
-                initialExecutionResult,
-                initialDataView,
-                columnDefinitionByColId,
-                setPivotResultColumns,
-                setGrandTotalRows,
-                initSizingForEmptyData,
-                pageSize,
-                onDataView,
-                onExportReady,
-                exportTitle,
-                separators,
-                setRuntimeError,
-            }),
-        [
+    const paginationEnabled = isPaginationEnabled(config);
+    const effectivePageSize = getEffectivePageSize(pageSize);
+
+    const dataSource = useMemo(() => {
+        // Access paginationEnabled so React Hook lint rules keep it in sync.
+        // Remounting the grid toggles virtualization and requires a fresh data source instance.
+        void paginationEnabled;
+
+        return createServerSideDataSource({
             rows,
             measures,
-            initialSortBy,
+            sortBy: initialSortBy,
             columnHeadersPosition,
             grandTotalsPosition,
+            setCurrentDataView,
             initialExecutionResult,
             initialDataView,
             columnDefinitionByColId,
-            setCurrentDataView,
             setPivotResultColumns,
             setGrandTotalRows,
             initSizingForEmptyData,
-            pageSize,
+            pageSize: effectivePageSize,
             onDataView,
             onExportReady,
             exportTitle,
             separators,
             setRuntimeError,
-        ],
-    );
+        });
+    }, [
+        rows,
+        measures,
+        initialSortBy,
+        columnHeadersPosition,
+        grandTotalsPosition,
+        initialExecutionResult,
+        initialDataView,
+        columnDefinitionByColId,
+        setCurrentDataView,
+        setPivotResultColumns,
+        setGrandTotalRows,
+        initSizingForEmptyData,
+        onDataView,
+        onExportReady,
+        exportTitle,
+        separators,
+        setRuntimeError,
+        paginationEnabled,
+        effectivePageSize,
+    ]);
 
     return useCallback(
         (agGridReactProps: AgGridProps) => {
@@ -104,9 +111,9 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
                 rowModelType: "serverSide",
                 serverSideDatasource: dataSource,
                 serverSidePivotResultFieldSeparator: AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR,
-                cacheBlockSize: pageSize,
+                cacheBlockSize: effectivePageSize,
             };
         },
-        [dataSource, pageSize],
+        [dataSource, effectivePageSize],
     );
 };

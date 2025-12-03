@@ -181,13 +181,14 @@ function* processExistingTabFilterContext(
 function getEffectiveDashboardProperties<TWidget>(
     dashboard: IDashboard<TWidget>,
     enableDashboardTabs: boolean,
+    activeTabLocalIdentifier?: string,
 ): {
     layout: IDashboardLayout<TWidget> | undefined;
 } {
     // If dashboard has tabs and feature flag is enabled, use the active tab (or first tab) instead of root properties
     if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
-        const activeTab: IDashboardTab<TWidget> | undefined = dashboard.activeTabLocalIdentifier
-            ? dashboard.tabs.find((tab) => tab.localIdentifier === dashboard.activeTabLocalIdentifier)
+        const activeTab: IDashboardTab<TWidget> | undefined = activeTabLocalIdentifier
+            ? dashboard.tabs.find((tab) => tab.localIdentifier === activeTabLocalIdentifier)
             : undefined;
         const effectiveTab = activeTab ?? dashboard.tabs[0];
 
@@ -612,11 +613,19 @@ export function* actionsToInitializeExistingDashboard(
     tabsDateFilterConfigSource: Record<string, "dashboard" | "workspace">,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
+    activeTabLocalIdentifier?: string,
 ): SagaIterator<Array<PayloadAction<any>>> {
     // Check if dashboard tabs feature is enabled
     const enableDashboardTabs = settings.enableDashboardTabs ?? false;
 
-    const effectiveProps = getEffectiveDashboardProperties(dashboard, enableDashboardTabs);
+    const effectiveActiveTabId =
+        activeTabLocalIdentifier ?? dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID;
+
+    const effectiveProps = getEffectiveDashboardProperties(
+        dashboard,
+        enableDashboardTabs,
+        effectiveActiveTabId,
+    );
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = updateDashboard(
         {
@@ -655,7 +664,7 @@ export function* actionsToInitializeExistingDashboard(
         const processedTabs: TabState[] = [];
 
         for (const tab of dashboard.tabs) {
-            const isActiveTab = tab.localIdentifier === dashboard.activeTabLocalIdentifier;
+            const isActiveTab = tab.localIdentifier === effectiveActiveTabId;
             // Override default filters are only applied to the active tab
             const overrideDefaultFilters =
                 isActiveTab && ctx.config?.overrideDefaultFilters
@@ -719,7 +728,7 @@ export function* actionsToInitializeExistingDashboard(
         }
         tabsAction = tabsActions.setTabs({
             tabs: processedTabs,
-            activeTabLocalIdentifier: dashboard.activeTabLocalIdentifier,
+            activeTabLocalIdentifier: effectiveActiveTabId,
         });
     } else {
         // For dashboards without tabs, create a single default tab with the filterContext

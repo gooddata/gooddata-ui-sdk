@@ -34,13 +34,14 @@ import {
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
+import { IAutomationFiltersTab } from "../../../model/index.js";
 import {
     AUTOMATION_FILTERS_DIALOG_ID,
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,
     AUTOMATION_FILTERS_GROUP_LABEL_ID,
 } from "../../constants/automations.js";
 import { AttributesDropdown } from "../../filterBar/index.js";
-import { useAutomationFilters } from "../useAutomationFilters.js";
+import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -69,13 +70,33 @@ export interface IAutomationFiltersSelectProps {
     selectedFilters: FilterContextItem[] | undefined;
     onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
     storeFilters: boolean;
-    onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
+    onStoreFiltersChange: (
+        value: boolean,
+        filters?: FilterContextItem[],
+        filtersByTab?: Record<string, FilterContextItem[]>,
+    ) => void;
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
     overlayPositionType?: OverlayPositionType;
     hideTitle?: boolean;
     showAllFilters?: boolean;
     disableDateFilters?: boolean;
+    /**
+     * Filters structured per tab.
+     * When provided (with multiple tabs), filters will be rendered grouped by tab sections.
+     * When undefined or single tab, the flat filter list is used instead.
+     */
+    filtersByTab?: IAutomationFiltersTab[];
+    /**
+     * Edited filters per tab state.
+     * Used together with filtersByTab to track user edits per tab.
+     */
+    editedFiltersByTab?: Record<string, FilterContextItem[]>;
+    /**
+     * Callback to update filters for a specific tab.
+     * Called when user adds, changes, or removes a filter in a tab section.
+     */
+    onFiltersByTabChange?: (filtersByTab: Record<string, FilterContextItem[]>) => void;
 }
 
 interface IAutomationCheckboxOrNoteProps {
@@ -156,30 +177,61 @@ export function AutomationFiltersSelect({
     hideTitle = false,
     showAllFilters = false,
     disableDateFilters = false,
+    filtersByTab,
+    editedFiltersByTab,
+    onFiltersByTabChange,
 }: IAutomationFiltersSelectProps) {
-    const {
-        commonDateFilterId,
-        lockedFilters,
-        visibleFilters: filters,
-        attributes,
-        dateDatasets,
-        attributeConfigs,
-        dateConfigs,
-        filterAnnouncement,
-        filterGroupRef,
-        handleAddFilter,
-        handleDeleteFilter,
-        handleChangeFilter,
-        handleStoreFiltersChange,
-        makeFilterGroupUnfocusable,
-        setAddFilterButtonRefs,
-    } = useAutomationFilters({
+    // Determine rendering mode first
+    const shouldRenderByTab = !!filtersByTab && filtersByTab.length > 1;
+
+    // Use appropriate hook based on rendering mode
+    const flatFiltersData = useAutomationFilters({
         availableFilters,
         selectedFilters,
         disableDateFilters,
         onFiltersChange,
         onStoreFiltersChange,
     });
+
+    const tabFiltersData = useAutomationFiltersByTab({
+        filtersByTab,
+        editedFiltersByTab,
+        onFiltersByTabChange,
+        onStoreFiltersChange,
+        disableDateFilters,
+    });
+
+    // Use data from the appropriate hook based on rendering mode
+    const {
+        commonDateFilterId,
+        lockedFilters,
+        attributeConfigs,
+        dateConfigs,
+        filterAnnouncement,
+        filterGroupRef,
+        makeFilterGroupUnfocusable,
+        setAddFilterButtonRefs,
+    } = shouldRenderByTab && tabFiltersData.processedFiltersByTab ? tabFiltersData : flatFiltersData;
+
+    const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
+    const attributes = shouldRenderByTab ? [] : flatFiltersData.attributes;
+    const dateDatasets = shouldRenderByTab ? [] : flatFiltersData.dateDatasets;
+
+    const handleChangeFilter = shouldRenderByTab
+        ? () => {} // Not used in tab mode
+        : flatFiltersData.handleChangeFilter;
+
+    const handleDeleteFilter = shouldRenderByTab
+        ? () => {} // Not used in tab mode
+        : flatFiltersData.handleDeleteFilter;
+
+    const handleAddFilter = shouldRenderByTab
+        ? () => {} // Not used in tab mode
+        : flatFiltersData.handleAddFilter;
+
+    const handleStoreFiltersChange = shouldRenderByTab
+        ? tabFiltersData.handleStoreFiltersChange
+        : flatFiltersData.handleStoreFiltersChange;
 
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(showAllFilters);
@@ -212,7 +264,7 @@ export function AutomationFiltersSelect({
                 </div>
             ) : (
                 <div className="gd-label" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
-                    {isExpandable ? (
+                    {isExpandable && !shouldRenderByTab ? (
                         <BubbleHoverTrigger showDelay={500} hideDelay={0}>
                             <UiButton
                                 label={intl.formatMessage(
@@ -263,106 +315,248 @@ export function AutomationFiltersSelect({
                         <Divider />
                     </>
                 ) : null}
-                <div
-                    className="gd-automation-filters__list"
-                    role="group"
-                    aria-labelledby={AUTOMATION_FILTERS_GROUP_LABEL_ID}
-                    ref={filterGroupRef}
-                    onBlur={makeFilterGroupUnfocusable}
-                >
-                    {filters
-                        .slice(0, showAllFilters || isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT)
-                        .map((filter) => {
-                            const isCommonDateFilter =
-                                isDashboardCommonDateFilter(filter) ||
-                                (isDashboardDateFilter(filter) &&
-                                    commonDateFilterId === filter.dateFilter.localIdentifier);
 
-                            return (
-                                <AutomationFilter
-                                    key={
-                                        isDashboardAttributeFilter(filter)
-                                            ? filter.attributeFilter.localIdentifier
-                                            : filter.dateFilter.localIdentifier
-                                    }
-                                    filter={filter}
-                                    attributeConfigs={attributeConfigs}
-                                    onChange={handleChangeFilter}
-                                    onDelete={handleDeleteFilter}
-                                    isCommonDateFilter={isCommonDateFilter}
-                                    overlayPositionType={overlayPositionType}
-                                    lockedFilters={lockedFilters}
-                                />
-                            );
-                        })}
-                    {isExpanded || !isExpandable ? (
-                        <AttributesDropdown
-                            id={AUTOMATION_FILTERS_DIALOG_ID}
-                            onClose={() => {}}
-                            onSelect={(value) => {
-                                handleAddFilter(value, attributes, dateDatasets);
-                                setIsExpanded(true);
-                            }}
-                            attributes={attributes}
-                            dateDatasets={dateDatasets}
-                            openOnInit={false}
-                            overlayPositionType={overlayPositionType}
-                            className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
-                            getCustomItemTitle={(item) =>
-                                getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
-                            }
-                            renderVirtualisedList
-                            accessibilityConfig={{
-                                ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
-                                searchAriaLabel: searchAriaLabel,
-                            }}
-                            DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
-                                <UiTooltip
-                                    arrowPlacement="left"
-                                    triggerBy={["hover", "focus"]}
-                                    content={tooltipText}
-                                    anchor={
-                                        <ButtonDisabledFocusableWrapper
-                                            isDisabled={isAddButtonDisabled}
-                                            ariaLabel={tooltipText}
-                                            onRefSet={(element) => setAddFilterButtonRefs(element, buttonRef)}
-                                        >
-                                            <UiIconButton
-                                                icon="plus"
-                                                label={tooltipText}
-                                                onClick={onClick}
-                                                variant="tertiary"
-                                                isDisabled={isAddButtonDisabled}
-                                                ref={(element) => {
-                                                    if (!isAddButtonDisabled) {
-                                                        setAddFilterButtonRefs(element, buttonRef);
-                                                    }
+                <div
+                    className={`gd-automation-filters__wrapper${storeFilters ? "" : " gd-automation-filters__wrapper--disabled"}`}
+                >
+                    {!storeFilters && <div className="gd-automation-filters__overlay" />}
+                    {shouldRenderByTab && tabFiltersData.processedFiltersByTab ? (
+                        // Render filters grouped by tab with dividers between sections
+                        <div
+                            className="gd-automation-filters__list gd-automation-filters__list--tabbed"
+                            role="group"
+                            aria-labelledby={AUTOMATION_FILTERS_GROUP_LABEL_ID}
+                            ref={filterGroupRef}
+                            onBlur={makeFilterGroupUnfocusable}
+                        >
+                            {tabFiltersData.processedFiltersByTab.map((tab, index) => {
+                                // Check if all filters for this tab are already selected
+                                const tabEditedFilters = editedFiltersByTab?.[tab.tabId] ?? [];
+                                const tabAvailableFilters =
+                                    filtersByTab?.find((t) => t.tabId === tab.tabId)?.availableFilters ?? [];
+                                const isTabAddButtonDisabled =
+                                    tabEditedFilters.length >= tabAvailableFilters.length;
+                                const tabTooltipText = isTabAddButtonDisabled
+                                    ? tooltipTextValues.addDisabled
+                                    : tooltipTextValues.add;
+
+                                return (
+                                    <AutomationFiltersTabSection
+                                        key={tab.tabId}
+                                        tabTitle={tab.tabTitle}
+                                        tabId={tab.tabId}
+                                        filters={tab.visibleFilters}
+                                        attributeConfigs={attributeConfigs}
+                                        commonDateFilterId={commonDateFilterId}
+                                        lockedFilters={tab.lockedFilters}
+                                        onChange={(filter) =>
+                                            tabFiltersData.handleTabFilterChange(tab.tabId, filter)
+                                        }
+                                        onDelete={(filter) =>
+                                            tabFiltersData.handleTabFilterDelete(tab.tabId, filter)
+                                        }
+                                        overlayPositionType={overlayPositionType}
+                                        showDivider={index < tabFiltersData.processedFiltersByTab!.length - 1}
+                                        storeFilters={storeFilters}
+                                        // Add button for each tab section
+                                        addFilterButton={
+                                            <AttributesDropdown
+                                                id={`${AUTOMATION_FILTERS_DIALOG_ID}-${tab.tabId}`}
+                                                onClose={() => {}}
+                                                onSelect={(value) => {
+                                                    tabFiltersData.handleTabFilterAdd(
+                                                        tab.tabId,
+                                                        value,
+                                                        tab.attributes,
+                                                        tab.dateDatasets,
+                                                    );
                                                 }}
+                                                attributes={tab.attributes}
+                                                dateDatasets={tab.dateDatasets}
+                                                openOnInit={false}
+                                                overlayPositionType={overlayPositionType}
+                                                className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
+                                                getCustomItemTitle={(item) =>
+                                                    getCatalogItemCustomTitle(
+                                                        item,
+                                                        availableFilters,
+                                                        dateConfigs,
+                                                    )
+                                                }
+                                                renderVirtualisedList
                                                 accessibilityConfig={{
-                                                    ariaLabel: tooltipText,
-                                                    ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
-                                                    ariaExpanded: isOpen,
-                                                    ariaHaspopup: "dialog",
+                                                    ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
+                                                    searchAriaLabel: searchAriaLabel,
                                                 }}
+                                                DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
+                                                    <UiTooltip
+                                                        arrowPlacement="left"
+                                                        triggerBy={["hover", "focus"]}
+                                                        content={tabTooltipText}
+                                                        anchor={
+                                                            <ButtonDisabledFocusableWrapper
+                                                                isDisabled={isTabAddButtonDisabled}
+                                                                ariaLabel={tabTooltipText}
+                                                                onRefSet={(element) =>
+                                                                    setAddFilterButtonRefs(element, buttonRef)
+                                                                }
+                                                            >
+                                                                <UiIconButton
+                                                                    icon="plus"
+                                                                    label={tabTooltipText}
+                                                                    onClick={onClick}
+                                                                    variant="tertiary"
+                                                                    isDisabled={isTabAddButtonDisabled}
+                                                                    ref={(element) => {
+                                                                        if (!isTabAddButtonDisabled) {
+                                                                            setAddFilterButtonRefs(
+                                                                                element,
+                                                                                buttonRef,
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                    accessibilityConfig={{
+                                                                        ariaLabel: tabTooltipText,
+                                                                        ariaControls: `${AUTOMATION_FILTERS_DIALOG_ID}-${tab.tabId}`,
+                                                                        ariaExpanded: isOpen,
+                                                                        ariaHaspopup: "dialog",
+                                                                    }}
+                                                                />
+                                                            </ButtonDisabledFocusableWrapper>
+                                                        }
+                                                    />
+                                                )}
+                                                DropdownTitleComponent={() => (
+                                                    <div className="gd-automation-filters__dropdown-header">
+                                                        <Typography
+                                                            tagName="h3"
+                                                            id={AUTOMATION_FILTERS_DIALOG_TITLE_ID}
+                                                        >
+                                                            <FormattedMessage id="dialogs.automation.filters.title" />
+                                                        </Typography>
+                                                    </div>
+                                                )}
+                                                renderNoData={() => (
+                                                    <div className="gd-automation-filters__dropdown-no-filters">
+                                                        <FormattedMessage id="dialogs.automation.filters.noFilters" />
+                                                    </div>
+                                                )}
                                             />
-                                        </ButtonDisabledFocusableWrapper>
+                                        }
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        // Render flat filter list (original behavior)
+                        <div
+                            className="gd-automation-filters__list"
+                            role="group"
+                            aria-labelledby={AUTOMATION_FILTERS_GROUP_LABEL_ID}
+                            ref={filterGroupRef}
+                            onBlur={makeFilterGroupUnfocusable}
+                        >
+                            {filters
+                                .slice(
+                                    0,
+                                    showAllFilters || isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT,
+                                )
+                                .map((filter) => {
+                                    const isCommonDateFilter =
+                                        isDashboardCommonDateFilter(filter) ||
+                                        (isDashboardDateFilter(filter) &&
+                                            commonDateFilterId === filter.dateFilter.localIdentifier);
+
+                                    return (
+                                        <AutomationFilter
+                                            key={
+                                                isDashboardAttributeFilter(filter)
+                                                    ? filter.attributeFilter.localIdentifier
+                                                    : filter.dateFilter.localIdentifier
+                                            }
+                                            filter={filter}
+                                            attributeConfigs={attributeConfigs}
+                                            onChange={handleChangeFilter}
+                                            onDelete={handleDeleteFilter}
+                                            isCommonDateFilter={isCommonDateFilter}
+                                            overlayPositionType={overlayPositionType}
+                                            lockedFilters={lockedFilters}
+                                            storeFilters={storeFilters}
+                                        />
+                                    );
+                                })}
+                            {isExpanded || !isExpandable ? (
+                                <AttributesDropdown
+                                    id={AUTOMATION_FILTERS_DIALOG_ID}
+                                    onClose={() => {}}
+                                    onSelect={(value) => {
+                                        handleAddFilter(value, attributes, dateDatasets);
+                                        setIsExpanded(true);
+                                    }}
+                                    attributes={attributes}
+                                    dateDatasets={dateDatasets}
+                                    openOnInit={false}
+                                    overlayPositionType={overlayPositionType}
+                                    className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
+                                    getCustomItemTitle={(item) =>
+                                        getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
                                     }
+                                    renderVirtualisedList
+                                    accessibilityConfig={{
+                                        ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
+                                        searchAriaLabel: searchAriaLabel,
+                                    }}
+                                    DropdownButtonComponent={({ buttonRef, isOpen, onClick }) => (
+                                        <UiTooltip
+                                            arrowPlacement="left"
+                                            triggerBy={["hover", "focus"]}
+                                            content={tooltipText}
+                                            anchor={
+                                                <ButtonDisabledFocusableWrapper
+                                                    isDisabled={isAddButtonDisabled}
+                                                    ariaLabel={tooltipText}
+                                                    onRefSet={(element) =>
+                                                        setAddFilterButtonRefs(element, buttonRef)
+                                                    }
+                                                >
+                                                    <UiIconButton
+                                                        icon="plus"
+                                                        label={tooltipText}
+                                                        onClick={onClick}
+                                                        variant="tertiary"
+                                                        isDisabled={isAddButtonDisabled}
+                                                        ref={(element) => {
+                                                            if (!isAddButtonDisabled) {
+                                                                setAddFilterButtonRefs(element, buttonRef);
+                                                            }
+                                                        }}
+                                                        accessibilityConfig={{
+                                                            ariaLabel: tooltipText,
+                                                            ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
+                                                            ariaExpanded: isOpen,
+                                                            ariaHaspopup: "dialog",
+                                                        }}
+                                                    />
+                                                </ButtonDisabledFocusableWrapper>
+                                            }
+                                        />
+                                    )}
+                                    DropdownTitleComponent={() => (
+                                        <div className="gd-automation-filters__dropdown-header">
+                                            <Typography tagName="h3" id={AUTOMATION_FILTERS_DIALOG_TITLE_ID}>
+                                                <FormattedMessage id="dialogs.automation.filters.title" />
+                                            </Typography>
+                                        </div>
+                                    )}
+                                    renderNoData={() => (
+                                        <div className="gd-automation-filters__dropdown-no-filters">
+                                            <FormattedMessage id="dialogs.automation.filters.noFilters" />
+                                        </div>
+                                    )}
                                 />
-                            )}
-                            DropdownTitleComponent={() => (
-                                <div className="gd-automation-filters__dropdown-header">
-                                    <Typography tagName="h3" id={AUTOMATION_FILTERS_DIALOG_TITLE_ID}>
-                                        <FormattedMessage id="dialogs.automation.filters.title" />
-                                    </Typography>
-                                </div>
-                            )}
-                            renderNoData={() => (
-                                <div className="gd-automation-filters__dropdown-no-filters">
-                                    <FormattedMessage id="dialogs.automation.filters.noFilters" />
-                                </div>
-                            )}
-                        />
-                    ) : null}
+                            ) : null}
+                        </div>
+                    )}
                 </div>
                 {showAllFilters ? null : (
                     <>
@@ -404,6 +598,7 @@ interface IAutomationFilterProps {
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
     lockedFilters: FilterContextItem[];
+    storeFilters: boolean;
 }
 
 function AutomationFilter({
@@ -414,6 +609,7 @@ function AutomationFilter({
     isCommonDateFilter,
     overlayPositionType,
     lockedFilters,
+    storeFilters,
 }: IAutomationFilterProps) {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -433,6 +629,7 @@ function AutomationFilter({
                 isLocked={isLocked}
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
+                readonly={!storeFilters}
             />
         );
     } else {
@@ -449,9 +646,112 @@ function AutomationFilter({
                 isLocked={isLocked}
                 isCommonDateFilter={isCommonDateFilter}
                 overlayPositionType={overlayPositionType}
+                readonly={!storeFilters}
             />
         );
     }
+}
+
+interface IAutomationFiltersTabSectionProps {
+    tabId: string;
+    tabTitle: string;
+    filters: FilterContextItem[];
+    attributeConfigs: IDashboardAttributeFilterConfig[];
+    commonDateFilterId: string | undefined;
+    lockedFilters: FilterContextItem[];
+    onChange: (filter: FilterContextItem | undefined) => void;
+    onDelete: (filter: FilterContextItem) => void;
+    overlayPositionType?: OverlayPositionType;
+    /** Show divider after this tab section */
+    showDivider?: boolean;
+    /** Add filter button to render at the end of filters list */
+    addFilterButton?: ReactNode;
+    storeFilters: boolean;
+}
+
+/**
+ * Renders filters for a single tab with a tab title header.
+ * Used when displaying filters grouped by tab for whole dashboard automations.
+ */
+function AutomationFiltersTabSection({
+    tabId,
+    tabTitle,
+    filters,
+    attributeConfigs,
+    commonDateFilterId,
+    lockedFilters,
+    onChange,
+    onDelete,
+    overlayPositionType,
+    showDivider = false,
+    addFilterButton,
+    storeFilters,
+}: IAutomationFiltersTabSectionProps) {
+    const intl = useIntl();
+    const tabSectionLabelId = useIdPrefixed(`automation-filters-tab-${tabId}`);
+
+    // Display tab title or fallback to generic "Tab" label
+    const displayTitle = tabTitle || intl.formatMessage({ id: "dialogs.automation.filters.tab.untitled" });
+    const tabLabel = intl.formatMessage({ id: "dialogs.automation.filters.tab.label" });
+
+    if (filters.length === 0) {
+        return null;
+    }
+
+    return (
+        <>
+            <div
+                className="gd-automation-filters__tab-section s-automation-filters-tab-section"
+                role="group"
+                aria-labelledby={tabSectionLabelId}
+            >
+                <div className="gd-automation-filters__tab-header">
+                    <span className="gd-automation-filters__tab-label">{tabLabel}</span>
+                    <UiTooltip
+                        content={displayTitle}
+                        triggerBy={["hover", "focus"]}
+                        optimalPlacement
+                        anchor={
+                            <span
+                                className="gd-automation-filters__tab-title s-automation-filters-tab-title"
+                                id={tabSectionLabelId}
+                            >
+                                {displayTitle}
+                            </span>
+                        }
+                    />
+                </div>
+                <div className="gd-automation-filters__tab-filters">
+                    {filters.map((filter) => {
+                        const isCommonDateFilter =
+                            isDashboardCommonDateFilter(filter) ||
+                            (isDashboardDateFilter(filter) &&
+                                commonDateFilterId === filter.dateFilter.localIdentifier);
+
+                        return (
+                            <AutomationFilter
+                                key={
+                                    isDashboardAttributeFilter(filter)
+                                        ? filter.attributeFilter.localIdentifier
+                                        : filter.dateFilter.localIdentifier
+                                }
+                                filter={filter}
+                                attributeConfigs={attributeConfigs}
+                                onChange={onChange}
+                                onDelete={onDelete}
+                                isCommonDateFilter={isCommonDateFilter}
+                                overlayPositionType={overlayPositionType}
+                                lockedFilters={lockedFilters}
+                                storeFilters={storeFilters}
+                            />
+                        );
+                    })}
+                    {addFilterButton}
+                </div>
+            </div>
+            {showDivider ? <div className="gd-automation-filters__tab-divider" /> : null}
+        </>
+    );
 }
 
 interface IButtonDisabledFocusableWrapperProps {

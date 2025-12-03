@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { differenceBy, omit, uniq } from "lodash-es";
 
 import {
@@ -28,15 +29,18 @@ import {
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
+    getAutomationDashboardFiltersByTab,
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import {
     ExtendedDashboardWidget,
     selectAutomationCommonDateFilterId,
+    selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
+    selectEnableDashboardTabs,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { IDashboardFilter } from "../../../types.js";
@@ -92,8 +96,11 @@ export function useValidateExistingAutomationFilters({
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const dashboardFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const dashboardFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
 
     const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters;
+    const savedAutomationVisibleFiltersByTab = automationToEdit?.metadata?.visibleFiltersByTab;
 
     const ignoredFilters = widget ? dashboardFilters.filter((f) => isFilterIgnoredByWidget(f, widget)) : [];
 
@@ -101,6 +108,53 @@ export function useValidateExistingAutomationFilters({
         getAutomationVisualizationFilters(automationToEdit);
     const savedAlertFilters = getAutomationAlertFilters(automationToEdit);
     const savedDashboardFilters = getAutomationDashboardFilters(automationToEdit);
+    const savedDashboardFiltersByTab = getAutomationDashboardFiltersByTab(automationToEdit);
+
+    const skipValidation =
+        !enableAutomationFilterContext ||
+        !automationToEdit ||
+        // Handle case, when dashboard scheduled export filters are not saved (undefined === always use latest dashboard filters in the scheduled export)
+        // Also do not validate widgets that are not insight widgets
+        (widget ? !isInsightWidget(widget) : typeof savedDashboardFilters === "undefined");
+
+    if (skipValidation) {
+        return defaultValidState;
+    }
+
+    // Check for matching format scenario: both automation and dashboard have per-tab structure
+    const hasMatchingPerTabFormat =
+        !widget &&
+        enableDashboardTabs &&
+        dashboardFiltersByTab.length > 1 &&
+        savedAutomationVisibleFiltersByTab &&
+        savedDashboardFiltersByTab;
+
+    // When both have per-tab structure, validate tab by tab
+    if (hasMatchingPerTabFormat) {
+        return validateExistingAutomationFiltersPerTab({
+            savedDashboardFiltersByTab,
+            savedAutomationVisibleFiltersByTab,
+            dashboardFiltersPerTab: dashboardFiltersByTab,
+            commonDateFilterId,
+        });
+    }
+
+    // Handle migration scenarios where formats don't match
+    const automationHasPerTabFilters = Boolean(
+        savedAutomationVisibleFiltersByTab || savedDashboardFiltersByTab,
+    );
+    const dashboardHasPerTabFilters = !widget && enableDashboardTabs && dashboardFiltersByTab.length > 1;
+    const hasFormatMismatch = automationHasPerTabFilters !== dashboardHasPerTabFilters;
+
+    // If there's a format mismatch (automation saved with different structure than current dashboard),
+    // mark as invalid - user needs to apply latest filters to migrate to the new structure
+    if (hasFormatMismatch) {
+        return {
+            ...defaultValidState,
+            isValid: false,
+            visibleFiltersAreMissing: true,
+        };
+    }
 
     const savedDashboardFiltersAsExecutionFilters = filterContextItemsToDashboardFiltersByWidget(
         savedDashboardFilters ?? [],
@@ -134,17 +188,6 @@ export function useValidateExistingAutomationFilters({
         savedScheduleFiltersAsExecutionFilters ??
         savedAlertFilters ??
         savedDashboardFiltersAsExecutionFilters;
-
-    const skipValidation =
-        !enableAutomationFilterContext ||
-        !automationToEdit ||
-        // Handle case, when dashboard scheduled export filters are not saved (undefined === always use latest dashboard filters in the scheduled export)
-        // Also do not validate widgets that are not insight widgets
-        (widget ? !isInsightWidget(widget) : typeof savedDashboardFilters === "undefined");
-
-    if (skipValidation) {
-        return defaultValidState;
-    }
 
     return validateExistingAutomationFilters({
         savedAutomationFilters,
@@ -266,6 +309,106 @@ export function validateExistingAutomationFilters({
         visibleFilterIsMissingInSavedFilters,
         visibleFiltersAreMissing,
     };
+}
+
+export interface IAutomationFiltersPerTabData {
+    tabId: string;
+    availableFilters: FilterContextItem[];
+    hiddenFilters: FilterContextItem[];
+    lockedFilters: FilterContextItem[];
+}
+
+/**
+ * Validate existing automation filters for dashboards with per-tab filter structure.
+ * Validates each tab's filters and aggregates results - if any tab is invalid, the whole automation is invalid.
+ */
+export function validateExistingAutomationFiltersPerTab({
+    savedDashboardFiltersByTab,
+    savedAutomationVisibleFiltersByTab,
+    dashboardFiltersPerTab,
+    commonDateFilterId,
+}: {
+    savedDashboardFiltersByTab: Record<string, FilterContextItem[]>;
+    savedAutomationVisibleFiltersByTab: Record<string, IAutomationVisibleFilter[]>;
+    dashboardFiltersPerTab: IAutomationFiltersPerTabData[];
+    commonDateFilterId?: string;
+}): IAutomationValidationResult {
+    const tabValidationResults = Object.entries(savedDashboardFiltersByTab).map(([tabId, tabFilters]) => {
+        const tabVisibleFilters = savedAutomationVisibleFiltersByTab[tabId] ?? [];
+        const tabData = dashboardFiltersPerTab.find((t) => t.tabId === tabId);
+
+        if (!tabData) {
+            // Tab no longer exists - mark as invalid
+            return {
+                ...defaultValidState,
+                isValid: false,
+                removedFilterIsAppliedInSavedFilters: true,
+            };
+        }
+
+        const savedTabFiltersAsExecutionFilters = filterContextItemsToDashboardFiltersByWidget(
+            tabFilters,
+        ).map((filter): IDashboardFilter => {
+            if (isDateFilter(filter) && filterLocalIdentifier(filter) === commonDateFilterId) {
+                return isRelativeDateFilter(filter)
+                    ? (omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter)
+                    : (omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter);
+            }
+            return filter;
+        });
+
+        // Validate this tab's filters against THIS TAB's dashboard configuration
+        return validateExistingAutomationFilters({
+            savedAutomationFilters: savedTabFiltersAsExecutionFilters,
+            savedAutomationVisibleFilters: tabVisibleFilters,
+            hiddenFilters: tabData.hiddenFilters,
+            lockedFilters: tabData.lockedFilters,
+            ignoredFilters: [],
+            dashboardFilters: tabData.availableFilters,
+            widget: undefined,
+            insight: undefined,
+        });
+    });
+
+    // Aggregate validation results - if any tab is invalid, the whole automation is invalid
+    return tabValidationResults.reduce<IAutomationValidationResult>(
+        (aggregated, tabResult) => ({
+            isValid: aggregated.isValid && tabResult.isValid,
+            hiddenFilterIsMissingInSavedFilters:
+                aggregated.hiddenFilterIsMissingInSavedFilters ||
+                tabResult.hiddenFilterIsMissingInSavedFilters,
+            hiddenFilterHasDifferentValueInSavedFilter:
+                aggregated.hiddenFilterHasDifferentValueInSavedFilter ||
+                tabResult.hiddenFilterHasDifferentValueInSavedFilter,
+            lockedFilterIsMissingInSavedFilters:
+                aggregated.lockedFilterIsMissingInSavedFilters ||
+                tabResult.lockedFilterIsMissingInSavedFilters,
+            lockedFilterHasDifferentValueInSavedFilter:
+                aggregated.lockedFilterHasDifferentValueInSavedFilter ||
+                tabResult.lockedFilterHasDifferentValueInSavedFilter,
+            ignoredFilterIsAppliedInSavedFilters:
+                aggregated.ignoredFilterIsAppliedInSavedFilters ||
+                tabResult.ignoredFilterIsAppliedInSavedFilters,
+            insightFilterIsMissingInSavedFilters:
+                aggregated.insightFilterIsMissingInSavedFilters ||
+                tabResult.insightFilterIsMissingInSavedFilters,
+            insightFilterHasDifferentValueInSavedFilter:
+                aggregated.insightFilterHasDifferentValueInSavedFilter ||
+                tabResult.insightFilterHasDifferentValueInSavedFilter,
+            removedFilterIsAppliedInSavedFilters:
+                aggregated.removedFilterIsAppliedInSavedFilters ||
+                tabResult.removedFilterIsAppliedInSavedFilters,
+            commonDateFilterIsMissingInSavedVisibleFilters:
+                aggregated.commonDateFilterIsMissingInSavedVisibleFilters ||
+                tabResult.commonDateFilterIsMissingInSavedVisibleFilters,
+            visibleFilterIsMissingInSavedFilters:
+                aggregated.visibleFilterIsMissingInSavedFilters ||
+                tabResult.visibleFilterIsMissingInSavedFilters,
+            visibleFiltersAreMissing:
+                aggregated.visibleFiltersAreMissing || tabResult.visibleFiltersAreMissing,
+        }),
+        defaultValidState,
+    );
 }
 
 /**

@@ -7,7 +7,9 @@ export {
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
     selectAutomationDefaultSelectedFilters,
+    selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
 } from "../../store/filtering/dashboardFilterSelectors.js";
+export type { IAutomationFiltersTab } from "../../store/filtering/dashboardFilterSelectors.js";

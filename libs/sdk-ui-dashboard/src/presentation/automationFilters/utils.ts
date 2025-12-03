@@ -168,6 +168,35 @@ export const getVisibleFiltersByFilters = (
 };
 
 /**
+ * Get visible filters metadata structured by tab.
+ * Applies the same logic as getVisibleFiltersByFilters to each tab's filters.
+ */
+export const getVisibleFiltersByFiltersByTab = (
+    filtersByTab: Record<string, FilterContextItem[]> | undefined,
+    visibleFiltersMetadata: Record<string, IAutomationVisibleFilter[]> | undefined,
+    storeFilters?: boolean,
+): Record<string, IAutomationVisibleFilter[]> | undefined => {
+    if (!storeFilters || !filtersByTab) {
+        return undefined;
+    }
+
+    return Object.entries(filtersByTab).reduce<Record<string, IAutomationVisibleFilter[]>>(
+        (acc, [tabId, tabFilters]) => {
+            const visibleFilters = getVisibleFiltersByFilters(
+                tabFilters,
+                visibleFiltersMetadata?.[tabId],
+                true,
+            );
+            if (visibleFilters && visibleFilters.length > 0) {
+                acc[tabId] = visibleFilters;
+            }
+            return acc;
+        },
+        {},
+    );
+};
+
+/**
  * Get final execution filters for the widget alert or scheduled export.
  */
 export const getAppliedWidgetFilters = (

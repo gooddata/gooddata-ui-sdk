@@ -4067,6 +4067,9 @@
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"
                     },
+                    "semanticSearch": {
+                        "$ref": "#/components/schemas/SearchResult"
+                    },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
                     },
@@ -4407,6 +4410,9 @@
                     },
                     "changeAnalysisParams": {
                         "$ref": "#/components/schemas/ChangeAnalysisParams"
+                    },
+                    "semanticSearch": {
+                        "$ref": "#/components/schemas/SearchResult"
                     },
                     "threadIdSuffix": {
                         "type": "string",

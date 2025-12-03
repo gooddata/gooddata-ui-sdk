@@ -9,6 +9,7 @@ import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     FilterContextItem,
     IAutomationMetadataObject,
+    IAutomationVisibleFilter,
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
     IFilter,
@@ -283,7 +284,10 @@ function extractRelevantFilters(
         targetExportDefinition?.requestPayload,
         activeTabLocalIdentifier,
     );
-    const targetExportVisibleFilters = targetAutomation?.metadata?.visibleFilters;
+    const targetExportVisibleFilters = extractVisibleFiltersForTab(
+        targetAutomation,
+        activeTabLocalIdentifier,
+    );
 
     return {
         targetAlertFilters: sanitizedTargetAlertFilters,
@@ -291,6 +295,29 @@ function extractRelevantFilters(
         targetExportDefinitionFilters,
         targetExportVisibleFilters,
     };
+}
+
+/**
+ * Extracts visible filters from automation metadata, handling both flat and per-tab structure.
+ * When per-tab structure is present and activeTabLocalIdentifier is provided, extracts filters for that tab.
+ */
+function extractVisibleFiltersForTab(
+    automation?: IAutomationMetadataObject,
+    activeTabLocalIdentifier?: string,
+): IAutomationVisibleFilter[] | undefined {
+    if (!automation?.metadata) {
+        return undefined;
+    }
+
+    const visibleFiltersByTab = automation.metadata.visibleFiltersByTab;
+
+    // If per-tab visible filters exist and we have an active tab, use that tab's filters
+    if (visibleFiltersByTab && activeTabLocalIdentifier) {
+        return visibleFiltersByTab[activeTabLocalIdentifier];
+    }
+
+    // Fall back to flat visible filters
+    return automation.metadata.visibleFilters;
 }
 
 function extractExportDefinitionFilters(

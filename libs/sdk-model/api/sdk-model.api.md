@@ -1022,7 +1022,8 @@ export interface IAutomationAlertTrigger {
 
 // @alpha (undocumented)
 export interface IAutomationAnomalyDetectionCondition {
-    granularity?: IAlertAnomalyDetectionGranularity;
+    dataset: ObjRef;
+    granularity: IAlertAnomalyDetectionGranularity;
     measure: {
         id: string;
         title?: string;
@@ -1074,6 +1075,7 @@ export interface IAutomationMetadataObjectBase {
         targetTabIdentifier?: string;
         filters?: string[];
         visibleFilters?: IAutomationVisibleFilter[];
+        visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
         originalSchedule?: IAutomationSchedule;
     };
     notificationChannel?: string;
@@ -1354,7 +1356,6 @@ export type ICustomSmtpDestinationConfiguration = {
 
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly activeTabLocalIdentifier?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
@@ -1476,7 +1477,6 @@ export interface IDashboardDateFilterReference {
 
 // @alpha
 export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
-    readonly activeTabLocalIdentifier?: string;
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
@@ -2119,6 +2119,11 @@ export interface IFilterContextBase {
 
 // @alpha
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IFiscalYear {
+    monthOffset: number;
 }
 
 // @internal
@@ -3722,6 +3727,7 @@ export interface ISettings {
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterAccessibility?: boolean;
+    enableFiscalCalendars?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
@@ -3760,6 +3766,7 @@ export interface ISettings {
     enableOrchestratedTabularExports?: boolean;
     enablePivotTableAutoSizeReset?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
+    enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
     enablePreserveFilterSelectionDuringInit?: boolean;
     enableRawExports?: boolean;
@@ -3793,6 +3800,7 @@ export interface ISettings {
     enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     exportResultPollingTimeoutSeconds?: number;
+    fiscalYear?: IFiscalYear;
     formatLocale?: string;
     llmEndpoint?: ILlmEndpoint;
     metadataLocale?: string;

@@ -1,36 +1,33 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 import { FirstDataRenderedEvent } from "ag-grid-enterprise";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { useTableReady } from "../context/TableReadyContext.js";
 import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Hook that provides proper afterRender callback timing.
  *
- * Calls afterRender once per execution when ag-grid first renders data.
+ * Notifies TableReadyContext when ag-grid first renders data.
+ * The actual afterRender callback is called by the context
+ * when both firstDataRendered AND visibility are ready.
  *
  * @internal
  */
 export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgGridProps {
-    const { afterRender, execution } = usePivotTableProps();
-    const lastAfterRenderExecutionRef = useRef<string | null>(null);
+    const { afterRender } = usePivotTableProps();
+    const { onFirstDataRendered: notifyFirstDataRendered } = useTableReady();
 
-    const onFirstDataRendered = useCallback(
+    const handleFirstDataRendered = useCallback(
         (_event: FirstDataRenderedEvent) => {
-            const currentFingerprint = execution.fingerprint();
-
-            // Only call afterRender once per execution change
-            if (lastAfterRenderExecutionRef.current !== currentFingerprint && afterRender) {
-                lastAfterRenderExecutionRef.current = currentFingerprint;
-                afterRender();
-            }
+            notifyFirstDataRendered();
         },
-        [afterRender, execution],
+        [notifyFirstDataRendered],
     );
 
     return useCallback(
@@ -47,10 +44,10 @@ export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgG
                 ...agGridReactProps,
                 onFirstDataRendered: (event: FirstDataRenderedEvent) => {
                     agGridReactProps.onFirstDataRendered?.(event);
-                    onFirstDataRendered(event);
+                    handleFirstDataRendered(event);
                 },
             };
         },
-        [afterRender, onFirstDataRendered],
+        [afterRender, handleFirstDataRendered],
     );
 }

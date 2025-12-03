@@ -15,6 +15,7 @@ import {
     IDashboardDateFilterConfig,
     IDashboardDateFilterConfigItem,
     IDashboardDefinition,
+    IDashboardLayout,
     IDashboardObjectIdentity,
     IDashboardTab,
     IDashboardWidget,
@@ -47,7 +48,7 @@ import {
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
 import { DEFAULT_TAB_ID, TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
-import { selectBasicLayout } from "../tabs/layout/layoutSelectors.js";
+import { selectBasicLayout, selectLayoutByTab } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -130,6 +131,7 @@ export const selectPersistedDashboardTabs = createSelector(
                 attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
                 dateFilterConfig: persistedDashboard.dateFilterConfig,
                 dateFilterConfigs: persistedDashboard.dateFilterConfigs,
+                layout: persistedDashboard.layout,
             },
         ];
     },
@@ -138,17 +140,17 @@ export const selectPersistedDashboardTabs = createSelector(
 const selectPersistedDashboardActiveTabId = createSelector(
     selectSelf,
     selectPersistedDashboardTabs,
+    selectActiveTabLocalIdentifier,
     selectEnableDashboardTabs,
-    (state, tabs, enableDashboardTabs) => {
+    (state, tabs, activeTabId, enableDashboardTabs) => {
         const persistedDashboard = state.persistedDashboard;
         if (!persistedDashboard) {
             return undefined;
         }
 
-        if (enableDashboardTabs) {
-            const persistedActiveTabId =
-                persistedDashboard.activeTabLocalIdentifier ?? tabs[0]?.localIdentifier;
-            return persistedActiveTabId ?? DEFAULT_TAB_ID;
+        if (enableDashboardTabs && tabs && tabs.length > 0) {
+            const activeTab = activeTabId ? tabs.find((tab) => tab.localIdentifier === activeTabId) : tabs[0];
+            return activeTab?.localIdentifier ?? DEFAULT_TAB_ID;
         }
 
         return DEFAULT_TAB_ID;
@@ -707,14 +709,22 @@ const selectPersistedDashboardEvaluationFrequency = createSelector(selectSelf, (
 });
 
 /**
- * Selects persisted layout - that is the IDashboardLayout object that was used to initialize the rest
+ * Selects persisted layout by tab identifier - that is the IDashboardLayout object that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  */
-const selectPersistedDashboardLayout = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.layout;
+const selectPersistedDashboardLayoutByTab: DashboardSelector<
+    Record<string, IDashboardLayout<IDashboardWidget> | undefined>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IDashboardLayout<IDashboardWidget> | undefined>>(
+        (acc, snapshot) => {
+            acc[snapshot.localIdentifier] = snapshot.layout ?? undefined;
+            return acc;
+        },
+        {},
+    );
 });
 
 /**
@@ -977,15 +987,8 @@ export const selectIsSectionHeadersDateDataSetChanged: DashboardSelector<boolean
  */
 const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardTabs,
-    selectPersistedDashboardActiveTabId,
     selectTabs,
-    selectActiveTabLocalIdentifier,
-    (persistedTabs, persistedActiveTabId, currentTabs, currentActiveTabId) => {
-        // Check if active tab ID changed (only if persisted dashboard has tabs)
-        if (persistedActiveTabId !== currentActiveTabId) {
-            return true;
-        }
-
+    (persistedTabs, currentTabs) => {
         // Both have tabs - compare them
         // Normalize tabs for comparison - compare all common properties including filter configs
         // Layout is compared separately via selectIsLayoutChanged
@@ -1033,10 +1036,17 @@ export const selectIsTitleChanged: DashboardSelector<boolean> = createSelector(
  * @internal
  */
 export const selectIsLayoutChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardLayout,
-    selectBasicLayout,
-    (persistedLayout, currentLayout) => {
-        return !isEqual(currentLayout, persistedLayout);
+    selectPersistedDashboardLayoutByTab,
+    selectLayoutByTab,
+    (persistedLayoutByTab, currentLayoutByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(persistedLayoutByTab, currentLayoutByTab);
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedLayout = persistedLayoutByTab[tabId] ?? [];
+            const currentLayout = currentLayoutByTab[tabId] ?? [];
+
+            return !isEqual(persistedLayout, currentLayout);
+        });
     },
 );
 
@@ -1106,7 +1116,6 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
         selectBasicLayout,
         selectDateFilterConfigOverrides,
         selectTabs,
-        selectActiveTabLocalIdentifier,
         (
             persistedDashboard,
             dashboardDescriptor,
@@ -1115,7 +1124,6 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
             layout,
             dateFilterConfig,
             tabs,
-            activeTabLocalIdentifier,
         ): IDashboardDefinition => {
             const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
                 ref: persistedDashboard?.ref,
@@ -1135,7 +1143,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
-                ...(tabs ? { tabs: tabs as any, activeTabLocalIdentifier } : {}),
+                ...(tabs ? { tabs: tabs as any } : {}),
                 ...pluginsProp,
             };
         },

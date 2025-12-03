@@ -15,7 +15,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
-import { DashboardKeyDriverCombinationItem, IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
+import { DashboardKeyDriverCombinationItem, IKdaDefinition, KdaPeriodType } from "@gooddata/sdk-ui-dashboard";
 import { attributeFilterToDashboardAttributeFilter } from "@gooddata/sdk-ui-dashboard/internal";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
@@ -33,6 +33,7 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
             content.params.filters
                 .map(getDashboardAttributeFilter)
                 .filter(Boolean) as IDashboardAttributeFilter[],
+            "previous_period",
             content.params.normalizedReferencePeriod,
             content.params.normalizedAnalyzedPeriod,
             locale ?? intl.locale,
@@ -77,6 +78,7 @@ export function createKdaDefinition(
     measure: IMeasure,
     dateAttribute: IAttribute,
     filters: IDashboardAttributeFilter[],
+    type: KdaPeriodType,
     referencePeriod: string,
     analyzedPeriod: string,
     locale: string,
@@ -93,7 +95,7 @@ export function createKdaDefinition(
         metrics: [],
         dateAttribute: dateAttribute.attribute.displayForm,
         filters,
-        type: "previous_period",
+        type,
         range: [
             {
                 date: referencePeriod,
@@ -147,6 +149,7 @@ export function createKdaDefinitionFromDrill(
             },
         },
         filters ?? [],
+        data.type === "year-to-year" ? "same_period_previous_year" : "previous_period",
         from.header.attributeHeaderItem.normalizedValue,
         to.header.attributeHeaderItem.normalizedValue,
         attr.format?.locale ?? locale,

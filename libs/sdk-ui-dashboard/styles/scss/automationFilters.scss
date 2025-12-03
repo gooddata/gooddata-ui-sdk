@@ -5,15 +5,41 @@
 .gd-automation-filters {
     width: 100%;
 
+    &__wrapper {
+        position: relative;
+
+        &--disabled {
+            pointer-events: none;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.4);
+        z-index: 1;
+        pointer-events: none;
+    }
+
     &__list {
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
         align-items: center;
+
+        // Override for tab sections - nested to ensure higher specificity
+        &--tabbed {
+            flex-direction: column;
+            gap: 0;
+            align-items: stretch;
+        }
     }
 
     &__message {
-        color: var(--gd-palette-complementary-7, #6d7680);
+        color: var(--gd-palette-complementary-7);
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -71,5 +97,54 @@
         position: relative;
         margin-left: 5px;
         top: 3px;
+    }
+
+    &__tab-section {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+
+    &__tab-header {
+        display: flex;
+        flex-direction: column;
+        width: 140px;
+        flex-shrink: 0;
+    }
+
+    &__tab-label {
+        color: var(--gd-palette-complementary-6);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 16px;
+        letter-spacing: 0.5px;
+    }
+
+    &__tab-title {
+        color: var(--gd-palette-complementary-8);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    &__tab-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        flex: 1;
+    }
+
+    &__tab-divider {
+        height: 1px;
+        background-color: var(--gd-palette-complementary-3);
+        width: 100%;
     }
 }

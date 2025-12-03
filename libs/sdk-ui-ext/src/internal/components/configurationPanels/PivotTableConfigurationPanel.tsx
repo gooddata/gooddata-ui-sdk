@@ -24,6 +24,7 @@ import { ConfigDummySection } from "../configurationControls/ConfigDummySection.
 import ConfigSection from "../configurationControls/ConfigSection.js";
 import GrandTotalsControl from "../configurationControls/GrandTotalsControl.js";
 import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
+import PagingSection from "../configurationControls/PagingSection.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(sectionName?: SectionName): boolean {
@@ -41,10 +42,15 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
     }
 
     protected renderConfigurationPanel(): ReactNode {
+        const { featureFlags } = this.props;
+        const enableNewPivotTable = !!featureFlags?.enableNewPivotTable;
+        const enablePivotTablePagination = !!featureFlags?.enablePivotTablePagination;
+
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     {this.renderInteractionsSection()}
+                    {enableNewPivotTable && enablePivotTablePagination ? this.renderPagingSection() : null}
                     {this.renderCanvasSection()}
                 </div>
                 <Bubble
@@ -135,6 +141,19 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
             </ConfigSection>
         ) : (
             canvasSection
+        );
+    }
+
+    private renderPagingSection() {
+        const { properties, pushData, isLoading, propertiesMeta } = this.props;
+
+        return (
+            <PagingSection
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                pushData={pushData}
+                isDisabled={isLoading}
+            />
         );
     }
 }

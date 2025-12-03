@@ -57,6 +57,14 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setWeekStart(weekStart);
     }
 
+    async setCalendar(monthOffset: number): Promise<void> {
+        return this.decorated.setCalendar(monthOffset);
+    }
+
+    async deleteCalendar(): Promise<void> {
+        return this.decorated.deleteCalendar();
+    }
+
     async setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
         return this.decorated.setDashboardFiltersApplyMode(dashboardFiltersApplyMode);
     }

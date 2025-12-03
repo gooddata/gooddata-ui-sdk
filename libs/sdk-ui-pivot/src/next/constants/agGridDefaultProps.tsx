@@ -48,6 +48,10 @@ const NAVIGATION_PROPS: AgGridProps = {
     },
 };
 
+const PAGINATION_PROPS: AgGridProps = {
+    paginationPageSizeSelector: false,
+};
+
 const AGGREGATION_PROPS: AgGridProps = {
     suppressAggFuncInHeader: true,
 };
@@ -101,4 +105,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     LOADING_PROPS,
     HEADER_PROPS,
     CONTEXT_MENU_PROPS,
+    PAGINATION_PROPS,
 );

@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { isEqual } from "lodash-es";
+import { invariant } from "ts-invariant";
 
 import {
-    DateAttributeGranularity,
     IAlertAnomalyDetectionGranularity,
     IAlertAnomalyDetectionSensitivity,
     IAlertComparisonOperator,
@@ -71,7 +71,7 @@ export function transformAlertByMetric(
     );
 
     if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure) {
-        const cond = transformToAnomalyDetectionCondition(alert.alert!.condition);
+        const cond = transformToAnomalyDetectionCondition(alert.alert!.condition, periodMeasure);
         const condition = {
             ...cond,
             measure: {
@@ -362,8 +362,9 @@ export function transformAlertByAnomalyDetection(
     timezone?: string,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators;
+    const first = periodMeasure[0];
 
-    const cond = transformToAnomalyDetectionCondition(alert.alert!.condition);
+    const cond = transformToAnomalyDetectionCondition(alert.alert!.condition, first);
     const condition = {
         ...cond,
     } as IAutomationAlertCondition;
@@ -373,7 +374,7 @@ export function transformAlertByAnomalyDetection(
         alert,
         condition,
         measure,
-        periodMeasure[0],
+        first,
     );
 
     return {
@@ -537,49 +538,7 @@ export function transformAlertExecutionByMetric(
         };
     }
 
-    if (condition.type === "anomalyDetection" && periodMeasure) {
-        const addedFilters: string[] = [];
-
-        // Add filter for period measure only if can be defined
-        // For example headline not used this at all
-        if (periodMeasure.dataset) {
-            const gran = DateGranularity[condition.granularity ?? "WEEK"];
-            const localIdentifier = `relativeDateFilter_${objRefToString(periodMeasure.dataset.ref)}_${gran}`;
-            const filter: IRelativeDateFilter = {
-                relativeDateFilter: {
-                    from: 0,
-                    to: 0,
-                    dataSet: periodMeasure.dataset.ref,
-                    granularity: gran,
-                    localIdentifier,
-                },
-            };
-
-            originalFilters.unshift(filter);
-            addedFilters.push(localIdentifier);
-        }
-
-        const measures = [measure.measure, periodMeasure.measure];
-        const auxMeasures = [
-            ...collectAllRelatedMeasures(metrics, measure.measure),
-            ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
-            ...collectAllRelatedMeasuresFromFilters(metrics, originalFilters),
-        ];
-
-        return {
-            execution: {
-                attributes: [],
-                ...execution,
-                filters: [...originalFilters],
-                measures,
-                auxMeasures: filterMeasures(auxMeasures, measures),
-            },
-            metadata: {
-                ...alert.metadata,
-                filters: addedFilters.length ? addedFilters : undefined,
-            },
-        };
-    }
+    //Anomaly detection and comparison are same
 
     const measures = [measure.measure];
     const auxMeasures = [
@@ -672,13 +631,17 @@ function transformToRelativeCondition(
 
 function transformToAnomalyDetectionCondition(
     condition: IAutomationAlertCondition,
+    comparator: AlertMetricComparator | undefined,
 ): IAutomationAnomalyDetectionCondition {
+    invariant(comparator?.dataset, "Dataset is not set for composition in anomaly detection alert.");
+
     if (condition.type === "comparison") {
         return {
             type: "anomalyDetection",
             measure: condition.left,
             sensitivity: "MEDIUM",
             granularity: "WEEK",
+            dataset: comparator.dataset.ref,
         };
     }
 
@@ -688,6 +651,7 @@ function transformToAnomalyDetectionCondition(
             measure: condition.measure.left,
             sensitivity: "MEDIUM",
             granularity: "WEEK",
+            dataset: comparator.dataset.ref,
         };
     }
 
@@ -696,6 +660,7 @@ function transformToAnomalyDetectionCondition(
         measure: condition.measure,
         sensitivity: condition.sensitivity,
         granularity: condition.granularity,
+        dataset: comparator.dataset.ref,
     };
 }
 
@@ -862,12 +827,3 @@ function filterMeasures(auxMeasures: IMeasure[], measures: IMeasure[]): IMeasure
         return arr.indexOf(m) === index;
     });
 }
-
-const DateGranularity: { [short in IAlertAnomalyDetectionGranularity]: DateAttributeGranularity } = {
-    HOUR: "GDC.time.hour",
-    DAY: "GDC.time.date",
-    WEEK: "GDC.time.week_us",
-    MONTH: "GDC.time.month",
-    QUARTER: "GDC.time.quarter",
-    YEAR: "GDC.time.year",
-};

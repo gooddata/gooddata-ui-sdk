@@ -128,6 +128,8 @@ export enum TigerFeaturesNames {
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
+    EnableFiscalCalendars = "enableFiscalCalendars",
+    EnablePivotTablePagination = "enablePivotTablePagination",
 }
 
 export type ITigerFeatureFlags = {
@@ -249,6 +251,8 @@ export type ITigerFeatureFlags = {
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
+    enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
+    enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -370,6 +374,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
+    enableFiscalCalendars: false,
+    enablePivotTablePagination: false,
 };
 
 export const FeatureFlagsValues = {
@@ -492,4 +498,6 @@ export const FeatureFlagsValues = {
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,
+    enableFiscalCalendars: [true, false] as const,
+    enablePivotTablePagination: [true, false] as const,
 };

@@ -17,12 +17,25 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { selectCrossFilteringItems } from "../drill/drillSelectors.js";
+import { selectCrossFilteringItems, selectCrossFilteringItemsByTab } from "../drill/drillSelectors.js";
 import { ICrossFilteringItem } from "../drill/types.js";
-import { selectAttributeFilterConfigsOverrides } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectDateFilterConfigOverrides } from "../tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { selectFilterContextFilters } from "../tabs/filterContext/filterContextSelectors.js";
+import {
+    selectAttributeFilterConfigsOverrides,
+    selectAttributeFilterConfigsOverridesByTab,
+} from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
+    selectDateFilterConfigOverrides,
+    selectDateFilterConfigOverridesByTab,
+} from "../tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import {
+    selectDateFilterConfigsOverrides,
+    selectDateFilterConfigsOverridesByTab,
+} from "../tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectFiltersByTab,
+} from "../tabs/filterContext/filterContextSelectors.js";
+import { selectTabs } from "../tabs/tabsSelectors.js";
 import { DashboardSelector } from "../types.js";
 
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
@@ -265,3 +278,125 @@ export const isFilterContextItemLocked = (
 
     return false;
 };
+
+//
+// Per-tab automation filter selectors
+//
+
+/**
+ * Automation filters grouped by tab.
+ * @alpha
+ */
+export interface IAutomationFiltersTab {
+    /**
+     * Tab local identifier.
+     */
+    tabId: string;
+    /**
+     * Tab title.
+     */
+    tabTitle: string;
+    /**
+     * Automation-available filters for the tab (hidden filters removed).
+     */
+    availableFilters: FilterContextItem[];
+    /**
+     * Default selected filters for the tab (non-locked empty attribute filters removed).
+     */
+    defaultSelectedFilters: FilterContextItem[];
+    /**
+     * Locked filters for the tab.
+     */
+    lockedFilters: FilterContextItem[];
+    /**
+     * Hidden filters for the tab.
+     */
+    hiddenFilters: FilterContextItem[];
+}
+
+/**
+ * Returns automation-available filters structured per tab.
+ * Each entry includes tab information and the filters applicable to that tab.
+ * This selector is useful for whole dashboard automations when dashboard tabs are enabled.
+ *
+ * @alpha
+ */
+export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersTab[]> = createSelector(
+    selectTabs,
+    selectFiltersByTab,
+    selectDateFilterConfigOverridesByTab,
+    selectDateFilterConfigsOverridesByTab,
+    selectAttributeFilterConfigsOverridesByTab,
+    selectCrossFilteringItemsByTab,
+    (
+        tabs,
+        filtersByTab,
+        dateFilterConfigByTab,
+        dateFilterConfigsByTab,
+        attributeFilterConfigsByTab,
+        crossFilteringItemsByTab,
+    ) => {
+        if (!tabs || tabs.length === 0) {
+            return [];
+        }
+
+        return tabs.map((tab) => {
+            const tabId = tab.localIdentifier;
+            const tabTitle = tab.title ?? "";
+            const rawFilters = filtersByTab[tabId] ?? [];
+
+            // Get cross-filtering items for this specific tab
+            const tabCrossFilteringItems = crossFilteringItemsByTab[tabId] ?? [];
+
+            // Remove cross-filtering filters for this tab
+            const filtersWithoutCrossFiltering = removeCrossFilteringFilters(
+                rawFilters,
+                tabCrossFilteringItems,
+            );
+
+            // Ensure common date filter exists
+            const filtersWithCommonDate = filtersWithoutCrossFiltering.some(isDashboardCommonDateFilter)
+                ? filtersWithoutCrossFiltering
+                : [commonDateFilter, ...filtersWithoutCrossFiltering];
+
+            // Get filter configs for this tab
+            const commonDateFilterConfig = dateFilterConfigByTab[tabId];
+            const dateFilterWithDimensionConfigs = dateFilterConfigsByTab[tabId] ?? [];
+            const attributeFilterConfigs = attributeFilterConfigsByTab[tabId] ?? [];
+
+            const filterConfigurations = {
+                commonDateFilterConfig,
+                dateFilterWithDimensionConfigs,
+                attributeFilterConfigs,
+            };
+
+            // Get available filters (hidden removed)
+            const availableFilters = removeHiddenFilters(filtersWithCommonDate, filterConfigurations);
+
+            // Get locked filters
+            const lockedFilters = filtersWithCommonDate.filter((filter) =>
+                isFilterContextItemLocked(filter, filterConfigurations),
+            );
+
+            // Get hidden filters
+            const hiddenFilters = filtersWithCommonDate.filter((filter) =>
+                isFilterContextItemHidden(filter, filterConfigurations),
+            );
+
+            // Get default selected filters (non-locked empty attribute filters removed)
+            const defaultSelectedFilters = removeNonLockedEmptyDashboardAttributeFilters(
+                availableFilters,
+                lockedFilters,
+            );
+
+            return {
+                tabId,
+                tabTitle,
+                availableFilters,
+                defaultSelectedFilters,
+                lockedFilters,
+                hiddenFilters,
+            };
+        });
+    },
+);

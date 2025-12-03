@@ -7,7 +7,6 @@ import {
     ReactElement,
     MouseEvent as ReactMouseEvent,
     createRef,
-    version,
 } from "react";
 
 import cx from "classnames";
@@ -66,17 +65,19 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
+/**
+ * Stops React synthetic event propagation but re-dispatches native events
+ * to document and documentElement so that:
+ * - Other Overlays can detect outside clicks and close themselves
+ * - Libraries listening on document.documentElement (like fixed-data-table-2's
+ *   DOMMouseMoveTracker for scrollbar drag release) receive the events
+ */
 const stopPropagation = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>): void => {
     e.stopPropagation();
-    const reactMajorVersion = parseInt(version?.split(".")[0], 10);
-    // Propagate events to `document` for react 17
-    // (We need to get them for other overlays to close and the events did not get there due to changes
-    // introduced in https://reactjs.org/blog/2020/08/10/react-v17-rc.html#changes-to-event-delegation)
-    if (reactMajorVersion >= 17) {
-        const evt = new MouseEvent(e.nativeEvent.type, e.nativeEvent);
-        Object.defineProperty(evt, "target", { value: e.nativeEvent.target, enumerable: true });
-        document.dispatchEvent(evt);
-    }
+    const evt = new MouseEvent(e.nativeEvent.type, e.nativeEvent);
+    Object.defineProperty(evt, "target", { value: e.nativeEvent.target, enumerable: true });
+    document.dispatchEvent(evt);
+    document.documentElement.dispatchEvent(evt);
 };
 
 /**

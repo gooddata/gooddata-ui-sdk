@@ -32,6 +32,7 @@ export function AutomationAttributeFilter({
     isLocked,
     displayAsLabel,
     overlayPositionType,
+    readonly,
 }: {
     filter: IDashboardAttributeFilter;
     onChange: (filter: FilterContextItem) => void;
@@ -39,6 +40,7 @@ export function AutomationAttributeFilter({
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
+    readonly?: boolean;
 }) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
@@ -58,6 +60,7 @@ export function AutomationAttributeFilter({
             <AttributeFilterWrapper
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
+                readonly={readonly}
             />
         </AutomationAttributeFilterProvider>
     );
@@ -66,9 +69,11 @@ export function AutomationAttributeFilter({
 function AttributeFilterWrapper({
     displayAsLabel,
     overlayPositionType,
+    readonly,
 }: {
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
+    readonly?: boolean;
 }) {
     const { onChange, filter } = useAutomationAttributeFilterContext();
 
@@ -86,6 +91,7 @@ function AttributeFilterWrapper({
             displayAsLabel={displayAsLabel}
             AttributeFilterComponent={AttributeFilter}
             overlayPositionType={overlayPositionType}
+            readonly={readonly}
         />
     );
 }
