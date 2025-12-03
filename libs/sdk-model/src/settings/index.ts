@@ -58,6 +58,11 @@ export interface ISettings {
     weekStart?: WeekStart;
 
     /**
+     * Fiscal year calendar configuration
+     */
+    fiscalYear?: IFiscalYear;
+
+    /**
      * Locale code to use for metadata.
      */
     metadataLocale?: string;
@@ -624,6 +629,16 @@ export interface ISettings {
      */
     enableAnomalyDetectionAlert?: boolean;
 
+    /**
+     * Enable fiscal calendars configuration.
+     */
+    enableFiscalCalendars?: boolean;
+
+    /**
+     * Enable pagination for the pivot table.
+     */
+    enablePivotTablePagination?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
@@ -750,6 +765,18 @@ export type DashboardFiltersApplyMode = { mode: "INDIVIDUAL" } | { mode: "ALL_AT
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * Fiscal year calendar configuration
+ *
+ * @public
+ */
+export interface IFiscalYear {
+    /**
+     * Month offset from January (0 = January, 1 = February, ..., -1 = December of previous year, etc.)
+     */
+    monthOffset: number;
+}
 
 /**
  * @beta

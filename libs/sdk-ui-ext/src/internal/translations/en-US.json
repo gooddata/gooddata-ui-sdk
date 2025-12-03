@@ -1051,6 +1051,18 @@
         "value": "top",
         "comment": "Option to place grand totals at beginning of table data (scrolls)"
     },
+    "properties.paging.title": {
+        "value": "Paging",
+        "comment": "Title for pagination configuration section"
+    },
+    "properties.paging.pageSize": {
+        "value": "Page size",
+        "comment": "Label for page size dropdown in pagination settings"
+    },
+    "properties.paging.pageSize.auto": {
+        "value": "auto (default)",
+        "comment": "Option label for automatically sized pagination page size"
+    },
     "dashboard.bucket.table.subtitle.columns": {
         "value": "in columns",
         "comment": "Subtitle indicating table data is arranged in columns"

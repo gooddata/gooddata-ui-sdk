@@ -14,6 +14,8 @@ import { useDataLoadingProps } from "./useDataLoadingProps.js";
 import { useFocusManagementProps } from "./useFocusManagementProps.js";
 import { useHeaderComponents } from "./useHeaderComponents.js";
 import { useInteractionProps } from "./useInteractionProps.js";
+import { useLocaleTextProps } from "./useLocaleTextProps.js";
+import { usePaginationProps } from "./usePaginationProps.js";
 import { usePivotingProps } from "./usePivotingProps.js";
 import { useSortingProps } from "./useSortingProps.js";
 import { useTextWrappingProps } from "./useTextWrappingProps.js";
@@ -38,6 +40,8 @@ export function useAgGridReactProps() {
     const enhanceWithClipboard = useClipboardProps();
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithAutoHeight = useAutoHeight();
+    const enhanceWithPagination = usePaginationProps();
+    const enhanceWithLocaleText = useLocaleTextProps();
     const enhanceWithTheme = useThemeProps();
     const enhanceWithHeaderComponents = useHeaderComponents();
     const enhanceWithAfterRender = useAfterRenderCallback();
@@ -57,6 +61,8 @@ export function useAgGridReactProps() {
             enhanceWithClipboard,
             enhanceWithTextWrapping,
             enhanceWithAutoHeight,
+            enhanceWithPagination,
+            enhanceWithLocaleText,
             enhanceWithTheme,
             enhanceWithHeaderComponents,
             enhanceWithAfterRender,
@@ -75,6 +81,8 @@ export function useAgGridReactProps() {
         enhanceWithClipboard,
         enhanceWithTextWrapping,
         enhanceWithAutoHeight,
+        enhanceWithPagination,
+        enhanceWithLocaleText,
         enhanceWithTheme,
         enhanceWithHeaderComponents,
         enhanceWithAfterRender,

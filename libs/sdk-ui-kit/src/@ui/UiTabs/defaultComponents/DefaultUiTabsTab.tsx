@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 
 import { EmptyObject, stringUtils } from "@gooddata/util";
 
-import { SELECT_ITEM_ACTION } from "../../hooks/useListWithActionsKeyboardNavigation.js";
 import { ScopedIdStore } from "../../hooks/useScopedId.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { UiTabsBem } from "../bem.js";
@@ -17,7 +16,7 @@ import { IUiTabComponentProps } from "../types.js";
 export function DefaultUiTabsTab<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
->({ tab, isSelected, onSelect, focusedAction }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>) {
+>({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>) {
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { accessibilityConfig, TabValue, TabActions, maxLabelLength } = store.useContextStoreValues([
         "accessibilityConfig",
@@ -36,6 +35,10 @@ export function DefaultUiTabsTab<
         [setIsActionsOpen],
     );
 
+    // When this tab is focused, both tab button and actions are tabbable (tabIndex=0)
+    // This allows natural Tab key navigation from tab button to actions button
+    const tabIndex = isFocused ? 0 : -1;
+
     const tabButton = (
         <button
             className={UiTabsBem.e("item", { selected: isSelected })}
@@ -43,8 +46,8 @@ export function DefaultUiTabsTab<
             role={accessibilityConfig?.tabRole}
             aria-selected={isSelected}
             aria-label={tab.label}
-            tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
-            id={makeId?.({ item: tab, specifier: SELECT_ITEM_ACTION })}
+            tabIndex={tabIndex}
+            id={makeId?.({ item: tab, specifier: "tab" })}
             data-testid={`s-tab-${stringUtils.simplifyText(tab.label)}`}
         >
             <TabValue tab={tab} isSelected={isSelected} location={"tabs"} />
@@ -56,7 +59,7 @@ export function DefaultUiTabsTab<
             className={UiTabsBem.e("tab-wrapper", {
                 selected: isSelected,
                 variant: tab.variant ?? "default",
-                focused: !!focusedAction,
+                focused: isFocused,
                 "actions-open": isActionsOpen,
             })}
         >
@@ -77,12 +80,12 @@ export function DefaultUiTabsTab<
                 tabButton
             )}
 
-            <div className={UiTabsBem.e("tabs-actions")}>
+            <div className={UiTabsBem.e("tabs-actions")} id={makeId?.({ item: tab, specifier: "actions" })}>
                 <TabActions
                     tab={tab}
                     location={"tabs"}
                     id={makeId?.({ item: tab, specifier: "selectTabActions" })}
-                    tabIndex={focusedAction === "selectTabActions" ? 0 : -1}
+                    tabIndex={tabIndex}
                     isOpen={isActionsOpen}
                     onToggleOpen={handleToggleActionsOpen}
                 />

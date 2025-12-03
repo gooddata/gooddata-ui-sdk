@@ -409,13 +409,6 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * @alpha
      */
     readonly tabs?: IDashboardTab<TWidget>[];
-
-    /**
-     * Local identifier of the active tab for persistence purposes.
-     *
-     * @alpha
-     */
-    readonly activeTabLocalIdentifier?: string;
 }
 
 /**
@@ -497,13 +490,6 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * @alpha
      */
     readonly tabs?: IDashboardTab<TWidget>[];
-
-    /**
-     * Local identifier of the active tab for persistence purposes.
-     *
-     * @alpha
-     */
-    readonly activeTabLocalIdentifier?: string;
 }
 
 /**

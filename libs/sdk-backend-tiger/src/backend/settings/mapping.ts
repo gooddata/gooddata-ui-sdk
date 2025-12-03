@@ -31,6 +31,8 @@ export function mapTypeToKey(
             return "timezone";
         case "WEEK_START":
             return "weekStart";
+        case "FISCAL_YEAR":
+            return "fiscalYear";
         case "SHOW_HIDDEN_CATALOG_ITEMS":
             return "showHiddenCatalogItems";
         case "OPENAI_CONFIG":
@@ -76,7 +78,6 @@ export function mapTypeToKey(
         case "MAX_ZOOM_LEVEL":
         case "METRIC_FORMAT_OVERRIDE":
         case "SORT_CASE_SENSITIVE":
-        case "FISCAL_YEAR":
         case "ENABLE_AI_ON_DATA":
         case undefined:
             return fallback;

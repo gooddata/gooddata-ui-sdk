@@ -28,7 +28,7 @@ export function useGenAiChatAvailability(
                 setShowGenAiButton(false);
             },
             onSuccess: (endpoints) => {
-                setShowGenAiButton(Boolean(endpoints.length > 0 || canManage));
+                setShowGenAiButton(Boolean((endpoints.length > 0 || canManage) && enabled));
             },
         },
         [backend, workspaceId, enabled, canManage],

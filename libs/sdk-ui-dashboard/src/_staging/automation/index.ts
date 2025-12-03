@@ -104,6 +104,24 @@ export const getAutomationDashboardFilters = (
     )?.content.filters?.filter((f) => isFilterContextItem(f));
 };
 
+/**
+ * Extracts dashboard filters structured by tab from automation metadata object.
+ * Returns filtersByTab from the first dashboard export definition.
+ */
+export const getAutomationDashboardFiltersByTab = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): Record<string, FilterContextItem[]> | undefined => {
+    if (!automation) {
+        return undefined;
+    }
+
+    return (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionDashboardRequestPayload
+    )?.content.filtersByTab;
+};
+
 export const getAutomationVisualizationFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
 ): { executionFilters: IFilter[] | undefined; filterContextItems: FilterContextItem[] | undefined } => {

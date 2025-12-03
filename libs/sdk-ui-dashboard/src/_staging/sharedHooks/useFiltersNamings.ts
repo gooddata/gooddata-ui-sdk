@@ -15,6 +15,7 @@ import {
     isDashboardDateFilterWithDimension,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { ILocale } from "@gooddata/sdk-ui";
 import {
     DateFilterHelpers,
     getAttributeFilterSubtitle,
@@ -45,19 +46,64 @@ export type FilterNaming = {
     dataSet?: ObjRef;
 };
 
-export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (FilterNaming | undefined)[] {
+type FilterNamingDependencies = {
+    intl: ReturnType<typeof useIntl>;
+    locale: ILocale;
+    dateFormat: string | undefined;
+    getAttributeFilterDisplayFormFromMap: ReturnType<typeof useAttributeFilterDisplayFormFromMap>;
+    attrMap: ReturnType<typeof selectAllCatalogAttributesMap>;
+    commonDateFilterTitle: string | undefined;
+    allDateFiltersTitlesObj: Record<string, string>;
+};
+
+/**
+ * Hook that gathers all dependencies needed for filter naming transformations.
+ * Reusable across different hooks that need to transform filters to namings.
+ *
+ * @param filtersForTitles - Array of filters (date filters will be extracted for titles)
+ * @returns Object containing all dependencies needed for filter naming transformations
+ */
+function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): FilterNamingDependencies {
     const intl = useIntl();
     const locale = useDashboardSelector(selectLocale);
     const settings = useDashboardSelector(selectSettings);
-
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings.responsiveUiDateFormat;
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
-    const dateFiltersToDisplay = filtersToDisplay.filter(isDashboardDateFilterWithDimension);
+    const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
-    const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersToDisplay, intl);
+    const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
+
+    return {
+        intl,
+        locale,
+        dateFormat,
+        getAttributeFilterDisplayFormFromMap,
+        attrMap,
+        commonDateFilterTitle,
+        allDateFiltersTitlesObj,
+    };
+}
+
+/**
+ * Pure function that transforms filters into filter namings.
+ * Extracted to avoid code duplication between useFiltersNamings and useFiltersByTabNamings.
+ */
+function transformFiltersToNamings(
+    filtersToDisplay: FilterContextItem[],
+    deps: FilterNamingDependencies,
+): (FilterNaming | undefined)[] {
+    const {
+        intl,
+        locale,
+        dateFormat,
+        getAttributeFilterDisplayFormFromMap,
+        attrMap,
+        commonDateFilterTitle,
+        allDateFiltersTitlesObj,
+    } = deps;
 
     // we want to show all time filter in the list of filters even if it is not stored
     const extendedFiltersToDisplay = ensureAllTimeFilterForExport(filtersToDisplay);
@@ -137,4 +183,27 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (Filte
             return undefined;
         }
     });
+}
+
+export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (FilterNaming | undefined)[] {
+    const deps = useFilterNamingDependencies(filtersToDisplay);
+
+    return transformFiltersToNamings(filtersToDisplay, deps);
+}
+
+export function useFiltersByTabNamings(
+    tabFilters: Record<string, FilterContextItem[]>,
+): Record<string, (FilterNaming | undefined)[]> {
+    // Collect all filters from all tabs for titles lookup
+    const allFilters = Object.values(tabFilters).flat();
+    const deps = useFilterNamingDependencies(allFilters);
+
+    // Process each tab's filters separately using the shared transformation function
+    const result: Record<string, (FilterNaming | undefined)[]> = {};
+
+    Object.entries(tabFilters).forEach(([tabId, filters]) => {
+        result[tabId] = transformFiltersToNamings(filters, deps);
+    });
+
+    return result;
 }

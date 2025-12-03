@@ -647,14 +647,6 @@
         "value": "To create or edit alerts, reset the dashboard date to today.",
         "comment": "Error message shown when trying to create alerts with non-current date filters applied"
     },
-    "dialogs.alert.tabs.general": {
-        "value": "General",
-        "comment": "Label for the General tab in alert dialog"
-    },
-    "dialogs.alert.tabs.filters": {
-        "value": "Filters",
-        "comment": "Label for the Filters tab in alert dialog"
-    },
     "dialogs.schedule.email.widgetError": {
         "value": "Error: Schedule can't be sent — the source widget was deleted. Delete the schedule or contact your administrator.",
         "comment": "Error message shown when alert configuration references a deleted widget"
@@ -726,6 +718,18 @@
     "dialogs.automation.filters.missing": {
         "value": "<b>Warning:</b> Some filters couldn't be applied — they're no longer available on the dashboard.",
         "comment": "Warning message when saved filters are no longer available on the dashboard"
+    },
+    "dialogs.automation.filters.tab.label": {
+        "value": "TAB",
+        "comment": "Label shown above each tab section header in automation filters dialog"
+    },
+    "dialogs.automation.filters.tab.untitled": {
+        "value": "Tab",
+        "comment": "Fallback title for a dashboard tab section in automation filters when the tab has no title"
+    },
+    "dialogs.schedule.email.tabs.info": {
+        "value": "All tabs in the dashboard are included — a separate file is created for each tab and export format.",
+        "comment": "Info message shown on General tab when dashboard tabs are enabled, explaining that all tabs will be exported"
     },
     "dialogs.automation.attachments.add": {
         "value": "Add attachments",
@@ -2582,6 +2586,10 @@
     "insightAlert.config.trigger": {
         "value": "Trigger",
         "comment": "Title of the section in insight configuration"
+    },
+    "insightAlert.config.metric": {
+        "value": "Metric",
+        "comment": "Label of the metric select dropdown"
     },
     "insightAlert.config.trigger.tooltip": {
         "value": "How often to trigger the alert when the condition is met.",

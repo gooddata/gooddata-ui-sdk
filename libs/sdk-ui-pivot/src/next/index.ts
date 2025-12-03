@@ -19,6 +19,7 @@ export type {
 export type { PivotTableNextLayoutConfig } from "./types/layout.js";
 export type { PivotTableNextAgGridLicenseConfig } from "./types/license.js";
 export type { PivotTableNextMenuConfig } from "./types/menu.js";
+export type { PivotTableNextPaginationConfig, IPagination } from "./types/pagination.js";
 export type { PivotTableNextColumnsSizingConfig } from "./types/resizing.js";
 export type { PivotTableNextTextWrappingConfig } from "./types/textWrapping.js";
 export type {

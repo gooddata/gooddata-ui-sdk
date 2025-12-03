@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -23,7 +24,8 @@ export type FilterValidationErrorType =
     | "cannot-apply-hidden" // The filter is hidden and cannot be modified
     | "cannot-apply-readonly" // The filter is readonly and cannot be modified
     | "cannot-apply-multi-to-single" // Cannot apply a multi-value filter to a single-value filter
-    | "cannot-apply-missing-filter"; // The filter doesn't exist in the dashboard
+    | "cannot-apply-missing-filter" // The filter doesn't exist in the dashboard
+    | "parent-filter-is-missing"; // The filter parent doesn't exist in the dashboard
 
 /**
  * Result of filter validation containing the filter and the specific error.
@@ -157,12 +159,14 @@ function findMissingFilters(
  * @param originalFilter - Original attribute filter
  * @param filterToMerge - Attribute filter to merge
  * @param filterConfig - Filter configuration
+ * @param missingAttributeFilterLocalIdentifiers - List of local identifiers of missing attribute filters
  * @returns Array of validation results
  */
 function validateAttributeFilter(
     originalFilter: IDashboardAttributeFilter,
     filterToMerge: IDashboardAttributeFilter,
     filterConfig: IDashboardAttributeFilterConfig | undefined,
+    missingAttributeFilterLocalIdentifiers: string[],
 ): ValidationResult[] {
     const validationResults: ValidationResult[] = [];
 
@@ -183,6 +187,17 @@ function validateAttributeFilter(
         validationResults.push({
             filter: filterToMerge,
             error: "cannot-apply-multi-to-single",
+        });
+    }
+
+    if (
+        filterToMerge.attributeFilter.filterElementsBy?.some((filter) =>
+            missingAttributeFilterLocalIdentifiers.includes(filter.filterLocalIdentifier),
+        )
+    ) {
+        validationResults.push({
+            filter: filterToMerge,
+            error: "parent-filter-is-missing",
         });
     }
 
@@ -221,18 +236,37 @@ function limitAttributeFilterToFirstElement(filter: IDashboardAttributeFilter): 
     return result;
 }
 
+// remove invalid parent filter links to not hit invariant error in useParentFilters hook
+function removeInvalidParentFilterLinks(
+    filter: IDashboardAttributeFilter,
+    missingAttributeFilterLocalIdentifiers: string[],
+): IDashboardAttributeFilter {
+    return {
+        ...filter,
+        attributeFilter: {
+            ...filter.attributeFilter,
+            filterElementsBy: filter.attributeFilter.filterElementsBy?.filter(
+                (parentFilter) =>
+                    !missingAttributeFilterLocalIdentifiers.includes(parentFilter.filterLocalIdentifier),
+            ),
+        },
+    };
+}
+
 /**
  * Determines the appropriate filter to use based on validation results.
  *
  * @param originalFilter - Original filter from the dashboard
  * @param filterToMerge - Filter to merge
  * @param validationResults - Validation results for this filter pair
+ * @param missingAttributeFilterLocalIdentifiers - List of local identifiers of missing attribute filters
  * @returns The filter to use in the merged result
  */
 function determineFilterToUse(
     originalFilter: FilterContextItem,
     filterToMerge: FilterContextItem,
     validationResults: ValidationResult[],
+    missingAttributeFilterLocalIdentifiers: string[],
 ): FilterContextItem {
     // If no validation issues, use the filter to merge
     if (validationResults.length === 0) {
@@ -248,6 +282,13 @@ function determineFilterToUse(
         return limitAttributeFilterToFirstElement(filterToMerge);
     }
 
+    if (
+        isDashboardAttributeFilter(filterToMerge) &&
+        validationResults.some((result) => result.error === "parent-filter-is-missing")
+    ) {
+        return removeInvalidParentFilterLinks(filterToMerge, missingAttributeFilterLocalIdentifiers);
+    }
+
     // For all other validation issues, keep the original filter
     return originalFilter;
 }
@@ -258,12 +299,14 @@ function determineFilterToUse(
  * @param originalFilter - Original attribute filter
  * @param filterToMerge - Attribute filter to merge, if found
  * @param attributeFilterConfigs - Attribute filter configurations
+ * @param missingAttributeFilterLocalIdentifiers - List of local identifiers of missing attribute filters
  * @returns Object containing the merged filter and validation results
  */
 function mergeAttributeFilter(
     originalFilter: IDashboardAttributeFilter,
     filterToMerge: FilterContextItem | undefined,
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined,
+    missingAttributeFilterLocalIdentifiers: string[],
 ): { mergedFilter: FilterContextItem; validationResults: ValidationResult[] } {
     // No matching filter found, keep original
     if (!filterToMerge || !isDashboardAttributeFilter(filterToMerge)) {
@@ -279,10 +322,20 @@ function mergeAttributeFilter(
     const filterConfig = filterLocalIdentifier ? filterConfigsMap.get(filterLocalIdentifier) : undefined;
 
     // Validate filter
-    const validationResults = validateAttributeFilter(originalFilter, filterToMerge, filterConfig);
+    const validationResults = validateAttributeFilter(
+        originalFilter,
+        filterToMerge,
+        filterConfig,
+        missingAttributeFilterLocalIdentifiers,
+    );
 
     // Determine which filter to use based on validation
-    const mergedFilter = determineFilterToUse(originalFilter, filterToMerge, validationResults);
+    const mergedFilter = determineFilterToUse(
+        originalFilter,
+        filterToMerge,
+        validationResults,
+        missingAttributeFilterLocalIdentifiers,
+    );
 
     return {
         mergedFilter,
@@ -378,6 +431,13 @@ export function mergeFilterContextFilters(
 ): { mergedFilters: FilterContextItem[]; validationResults: ValidationResult[] } {
     // Find filters that are missing in the dashboard
     const missingFilterValidationResults = findMissingFilters(originalFilters, filtersToMerge);
+    const missingAttributeFilterLocalIdentifiers = missingFilterValidationResults
+        .map((result) =>
+            isDashboardAttributeFilter(result.filter)
+                ? result.filter.attributeFilter.localIdentifier
+                : undefined,
+        )
+        .filter((localIdentifier) => localIdentifier !== undefined);
 
     // Process each original filter
     const mergeResults = originalFilters.map((originalFilter) => {
@@ -385,7 +445,12 @@ export function mergeFilterContextFilters(
         const filterToMerge = findMatchingFilterToMerge(originalFilter, filtersToMerge);
 
         if (isDashboardAttributeFilter(originalFilter)) {
-            return mergeAttributeFilter(originalFilter, filterToMerge, config.attributeFilterConfigs);
+            return mergeAttributeFilter(
+                originalFilter,
+                filterToMerge,
+                config.attributeFilterConfigs,
+                missingAttributeFilterLocalIdentifiers,
+            );
         } else if (isDashboardDateFilter(originalFilter)) {
             return mergeDateFilter(
                 originalFilter,

@@ -4588,6 +4588,16 @@ export interface IAttributeFiltersCustomizer {
 }
 
 // @alpha
+export interface IAutomationFiltersTab {
+    availableFilters: FilterContextItem[];
+    defaultSelectedFilters: FilterContextItem[];
+    hiddenFilters: FilterContextItem[];
+    lockedFilters: FilterContextItem[];
+    tabId: string;
+    tabTitle: string;
+}
+
+// @alpha
 export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
     // (undocumented)
     alertFilter: TFilter;
@@ -8936,6 +8946,9 @@ export const selectAttributeFilterConfigsModeMap: DashboardSelector<Map<string, 
 // @alpha
 export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]>;
 
+// @internal
+export const selectAttributeFilterConfigsOverridesByTab: DashboardSelector<Record<string, IDashboardAttributeFilterConfig[]>>;
+
 // @public
 export const selectAttributeFilterDescendants: (localId: string) => DashboardSelector<string[]>;
 
@@ -8959,6 +8972,9 @@ export const selectAutomationCommonDateFilterId: DashboardSelector<string | unde
 
 // @alpha (undocumented)
 export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]>;
+
+// @alpha
+export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersTab[]>;
 
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
@@ -9227,11 +9243,17 @@ export const selectDateFilterConfig: DashboardSelector<IDateFilterConfig>;
 // @alpha
 export const selectDateFilterConfigOverrides: DashboardSelector<IDashboardDateFilterConfig_2 | undefined>;
 
+// @internal
+export const selectDateFilterConfigOverridesByTab: DashboardSelector<Record<string, IDashboardDateFilterConfig_2 | undefined>>;
+
 // @alpha
 export const selectDateFilterConfigsModeMap: DashboardSelector<Map<string, DashboardDateFilterConfigMode>>;
 
 // @alpha
 export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateFilterConfigItem[]>;
+
+// @internal
+export const selectDateFilterConfigsOverridesByTab: DashboardSelector<Record<string, IDashboardDateFilterConfigItem[]>>;
 
 // @alpha
 export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFilterValidationResult[]>;

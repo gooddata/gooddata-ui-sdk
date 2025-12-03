@@ -563,4 +563,86 @@
     .ag-column-first:not(.ag-cell-range-selected) {
         border-left-color: transparent;
     }
+
+    // Pagination: hide summary, keep only page controls
+    .ag-paging-panel {
+        justify-content: center;
+
+        // Hide first and last page buttons
+        [data-ref="btFirst"],
+        [data-ref="btLast"] {
+            display: none;
+        }
+
+        // Style next and previous buttons - circular design from Figma
+        [data-ref="btPrevious"],
+        [data-ref="btNext"] {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border: none;
+            border-radius: 40px;
+            background: var(--gd-palette-complementary-2);
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            // Default icon color
+            .ag-icon {
+                color: var(--gd-palette-complementary-9);
+            }
+
+            // Hover, and Selected states
+            &:hover:not(.ag-disabled),
+            &.ag-selected:not(.ag-disabled) {
+                background: var(--gd-palette-complementary-5);
+
+                .ag-icon {
+                    color: var(--gd-palette-complementary-0);
+                }
+            }
+
+            // Disabled state - must come after hover to override
+            &.ag-disabled {
+                cursor: not-allowed;
+
+                .ag-icon {
+                    opacity: 0.5;
+                    color: var(--gd-palette-complementary-7);
+                }
+            }
+        }
+
+        // Page number display
+        .ag-paging-page-summary-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--gd-spacing-10px);
+
+            color: var(--gd-palette-complementary-9);
+            font-family: var(--gd-font-family);
+            font-size: 12px;
+            font-style: normal;
+            line-height: 14px;
+
+            // Hide the word "Page" (first span)
+            .ag-paging-description > span:first-child {
+                display: none;
+            }
+
+            // Current page number should be bold
+            [data-ref="lbCurrent"] {
+                font-weight: 700;
+            }
+        }
+
+        .ag-paging-row-summary-panel {
+            display: none;
+        }
+    }
 }

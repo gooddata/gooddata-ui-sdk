@@ -335,6 +335,10 @@ describe("alert transforms", () => {
                 },
                 sensitivity: "MEDIUM",
                 granularity: "WEEK",
+                dataset: {
+                    type: "dataSet",
+                    identifier: "date",
+                },
             },
             execution: {
                 filters: [],
@@ -435,6 +439,20 @@ describe("alert transforms", () => {
                                 dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
                             },
                         },
+                    },
+                },
+                dataset: {
+                    type: "dataSet",
+                    id: "date",
+                    title: "date",
+                    uri: "date",
+                    description: "",
+                    production: true,
+                    deprecated: false,
+                    unlisted: false,
+                    ref: {
+                        identifier: "date",
+                        type: "dataSet",
                     },
                 },
             },
@@ -983,7 +1001,7 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseRelative.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 metadata: {
@@ -1009,7 +1027,7 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseRelative.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 metadata: {
@@ -1035,7 +1053,7 @@ describe("alert transforms", () => {
                     ...baseAnomalyDetection.alert,
                     execution: {
                         ...baseAnomalyDetection.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 metadata: {
@@ -1068,7 +1086,7 @@ describe("alert transforms", () => {
                     ...baseAnomalyDetection.alert,
                     execution: {
                         ...baseAnomalyDetection.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 metadata: {
@@ -1173,7 +1191,7 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseAnomalyDetection.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 schedule: {
@@ -1199,7 +1217,7 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseAnomalyDetection.alert?.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [previousPeriodMetric.measure],
                     },
                 },
                 schedule: {

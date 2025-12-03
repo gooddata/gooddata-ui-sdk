@@ -42,6 +42,17 @@ export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>
 );
 
 /**
+ * Returns cross filtering items for all tabs keyed by tab identifier.
+ * This selector is useful when processing filters for all tabs at once.
+ *
+ * @internal
+ */
+export const selectCrossFilteringItemsByTab: DashboardSelector<Record<string, ICrossFilteringItem[]>> =
+    createSelector(selectSelf, (drillState) => {
+        return drillState.crossFiltering;
+    });
+
+/**
  * @beta
  */
 export const selectIsCrossFiltering: DashboardSelector<boolean> = createSelector(

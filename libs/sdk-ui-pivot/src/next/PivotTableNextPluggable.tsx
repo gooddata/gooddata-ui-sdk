@@ -22,6 +22,7 @@ export const CorePivotTableNext = memo(PivotTableNextImplementation, (prevProps,
         [prevProps.filters, nextProps.filters],
         [prevProps.totals, nextProps.totals],
         [prevProps.drillableItems, nextProps.drillableItems],
+        [prevProps.pageSize, nextProps.pageSize],
     ].some(([prev, next]) => !isEqual(prev, next));
 
     return !deepEqualPropsChanged;

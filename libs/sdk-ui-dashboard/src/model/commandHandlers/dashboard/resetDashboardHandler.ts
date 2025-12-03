@@ -35,7 +35,12 @@ import {
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { DEFAULT_TAB_ID, TabState, selectTabs } from "../../store/tabs/index.js";
+import {
+    DEFAULT_TAB_ID,
+    TabState,
+    selectActiveTabLocalIdentifier,
+    selectTabs,
+} from "../../store/tabs/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
@@ -221,6 +226,19 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         );
         const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
 
+        const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+            selectActiveTabLocalIdentifier,
+        );
+
+        // Validate that the current active tab exists in the persisted dashboard
+        // If not (e.g., user created a new tab but didn't save), fall back to first tab
+        const activeTabExistsInPersisted = persistedDashboard.tabs?.some(
+            (tab) => tab.localIdentifier === currentActiveTabId,
+        );
+        const effectiveActiveTabId = activeTabExistsInPersisted
+            ? currentActiveTabId
+            : persistedDashboard.tabs?.[0]?.localIdentifier;
+
         batch = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
@@ -235,6 +253,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             tabsDateFilterConfigSource,
             displayForms,
             persistedDashboard,
+            effectiveActiveTabId,
         );
     } else {
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);

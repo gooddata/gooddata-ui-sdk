@@ -16,9 +16,12 @@ import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
 import { AgGridApiProvider, useAgGridApi } from "./context/AgGridApiContext.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
+import { DrillableItemsRefProvider } from "./context/DrillableItemsRefContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
+import { TableReadyProvider } from "./context/TableReadyContext.js";
+import { isPaginationEnabled } from "./features/pagination/utils.js";
 import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
@@ -110,9 +113,13 @@ function PivotTableNextWithInitialization() {
             initialExecutionResult={initialExecutionResult}
             initialDataView={initialDataView}
         >
-            <ColumnDefsProvider>
-                <RenderPivotTableNextAgGrid />
-            </ColumnDefsProvider>
+            <TableReadyProvider>
+                <DrillableItemsRefProvider>
+                    <ColumnDefsProvider>
+                        <RenderPivotTableNextAgGrid />
+                    </ColumnDefsProvider>
+                </DrillableItemsRefProvider>
+            </TableReadyProvider>
         </InitialExecutionContextProvider>
     );
 }
@@ -154,6 +161,14 @@ function RenderPivotTableNextAgGrid() {
         [clearCellSelection],
     );
 
+    // Generate a key that changes when pagination is enabled/disabled
+    // This forces the grid to be recreated, which is necessary when changing
+    // virtualization settings (suppressColumnVirtualisation, suppressRowVirtualisation)
+    const gridKey = useMemo(() => {
+        const paginationEnabled = isPaginationEnabled(config);
+        return `ag-grid-${paginationEnabled ? "paginated" : "virtualized"}`;
+    }, [config]);
+
     return (
         <AvoidResizeFlickering>
             {({ isReadyForInitialPaint }) => {
@@ -177,7 +192,7 @@ function RenderPivotTableNextAgGrid() {
                         onBlur={handleBlur}
                         {...getPivotContainerTestIdProps(isReadyForInitialPaint)}
                     >
-                        <AgGridReact {...agGridReactProps} />
+                        <AgGridReact key={gridKey} {...agGridReactProps} />
                     </div>
                 );
             }}

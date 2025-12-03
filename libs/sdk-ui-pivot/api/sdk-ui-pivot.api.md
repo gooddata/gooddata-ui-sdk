@@ -303,6 +303,11 @@ export interface IMixedValuesColumnWidthItemNext {
     mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBodyNext;
 }
 
+// @public
+export interface IPagination {
+    enabled?: boolean;
+}
+
 // @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
@@ -527,7 +532,7 @@ export type PivotTableNextColumnsSizingConfig = {
 };
 
 // @public
-export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextExperimentalConfig;
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextExperimentalConfig;
 
 // @public
 export interface PivotTableNextExecutionCancellingConfig {
@@ -537,6 +542,7 @@ export interface PivotTableNextExecutionCancellingConfig {
 // @public
 export interface PivotTableNextExperimentalConfig {
     enablePivotTableAutoSizeReset?: boolean;
+    enablePivotTablePagination?: boolean;
 }
 
 // @public
@@ -558,6 +564,11 @@ export interface PivotTableNextLayoutConfig {
 export type PivotTableNextMenuConfig = {
     menu?: IMenuNext;
 };
+
+// @public
+export interface PivotTableNextPaginationConfig {
+    pagination?: IPagination;
+}
 
 // @public (undocumented)
 export type PivotTableNextTextWrappingConfig = {

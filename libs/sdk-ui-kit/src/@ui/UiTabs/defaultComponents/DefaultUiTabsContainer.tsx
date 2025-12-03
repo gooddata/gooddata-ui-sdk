@@ -6,11 +6,11 @@ import { useCombineRefs } from "@gooddata/sdk-ui";
 import { EmptyObject } from "@gooddata/util";
 
 import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
-import { useListWithActionsKeyboardNavigation } from "../../hooks/useListWithActionsKeyboardNavigation.js";
 import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { IUiTab, IUiTabComponentProps } from "../types.js";
+import { useTabsKeyboardNavigation } from "../useTabsKeyboardNavigation.js";
 
 /**
  * @internal
@@ -45,20 +45,15 @@ export function DefaultUiTabsContainer<
     ]);
 
     const handleSelectTab = useCallback(
-        (tab: IUiTab<TTabProps, TTabActionProps>) => () => {
+        (tab: IUiTab<TTabProps, TTabActionProps>) => {
             onTabSelect(tab);
         },
         [onTabSelect],
     );
 
-    const { onKeyboardNavigation, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation({
+    const { onKeyDown, focusedItem } = useTabsKeyboardNavigation({
         items: tabs,
-        getItemAdditionalActions: (item) => ((item.actions ?? []).length ? ["selectTabActions"] : []),
-        actionHandlers: {
-            selectItem: handleSelectTab,
-            selectTabActions: () => undefined,
-        },
-        isSimple: true,
+        onSelect: handleSelectTab,
         focusedIndex: tabs.findIndex((t) => t.id === selectedTabId) ?? 0,
     });
 
@@ -67,7 +62,7 @@ export function DefaultUiTabsContainer<
     );
 
     const { containerRef: focusContainerRef } = useFocusWithinContainer(
-        scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
+        scopedIdStoreValue.makeId({ item: focusedItem, specifier: "tab" }) ?? "",
     );
 
     const focusedItemContainerId = scopedIdStoreValue.makeId({
@@ -86,7 +81,7 @@ export function DefaultUiTabsContainer<
             <div
                 className={UiTabsBem.e("container")}
                 ref={useCombineRefs(resizeContainerRef, focusContainerRef)}
-                onKeyDown={onKeyboardNavigation}
+                onKeyDown={onKeyDown}
                 id={scopedIdStoreValue.containerId}
                 tabIndex={-1}
                 aria-label={accessibilityConfig?.ariaLabel}
@@ -99,13 +94,14 @@ export function DefaultUiTabsContainer<
                     {tabs.map((tab) => {
                         const isSelected = selectedTabId === tab.id;
                         const onSelect = () => onTabSelect(tab);
+                        const isFocused = focusedItem === tab;
 
                         return (
                             <Tab
                                 key={tab.id}
                                 tab={tab}
                                 isSelected={isSelected}
-                                focusedAction={focusedItem === tab ? focusedAction : undefined}
+                                isFocused={isFocused}
                                 onSelect={onSelect}
                             />
                         );

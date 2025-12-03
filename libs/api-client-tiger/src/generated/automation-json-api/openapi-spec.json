@@ -627,7 +627,7 @@
                         }
                     }
                 },
-                "description": "Reference to the date dataset to which the filter should be applied."
+                "description": "Date dataset used for anomaly detection."
             },
             "AfmObjectIdentifierLabel": {
                 "required": ["identifier"],
@@ -664,7 +664,7 @@
                     },
                     "filters": {
                         "type": "array",
-                        "description": "Various filter types to filter execution result. For anomaly detection, exactly one date filter (RelativeDateFilter or AbsoluteDateFilter) is required.",
+                        "description": "Various filter types to filter execution result. For anomaly detection, exactly one dataset is specified in the condition. The AFM may contain multiple date filters for different datasets, but only the date filter matching the dataset from the condition is used for anomaly detection.",
                         "items": {
                             "$ref": "#/components/schemas/FilterDefinition"
                         }
@@ -718,7 +718,7 @@
                 ]
             },
             "AnomalyDetection": {
-                "required": ["granularity", "measure"],
+                "required": ["dataset", "granularity", "measure", "sensitivity"],
                 "type": "object",
                 "properties": {
                     "measure": {
@@ -727,13 +727,15 @@
                     "sensitivity": {
                         "type": "string",
                         "description": "Sensitivity level for anomaly detection",
-                        "default": "MEDIUM",
                         "enum": ["LOW", "MEDIUM", "HIGH"]
                     },
                     "granularity": {
                         "type": "string",
                         "description": "Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).",
                         "enum": ["HOUR", "DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+                    },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
                     }
                 }
             },

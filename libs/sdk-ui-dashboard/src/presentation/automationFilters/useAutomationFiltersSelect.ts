@@ -2,19 +2,45 @@
 
 import { useMemo, useState } from "react";
 
-import { FilterContextItem, IAutomationMetadataObject, IAutomationVisibleFilter } from "@gooddata/sdk-model";
+import {
+    FilterContextItem,
+    IAutomationMetadataObject,
+    IAutomationVisibleFilter,
+    isExportDefinitionDashboardRequestPayload,
+} from "@gooddata/sdk-model";
 
-import { useAutomationVisibleFilters } from "./hooks/useAutomationVisibleFilters.js";
-import { useDefaultSelectedFiltersForExistingAutomation } from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
+import {
+    useAutomationVisibleFilters,
+    useAutomationVisibleFiltersByTab,
+} from "./hooks/useAutomationVisibleFilters.js";
+import {
+    getDefaultSelectedFiltersByTabForExistingAutomation,
+    useDefaultSelectedFiltersForExistingAutomation,
+} from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
 import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
 import {
     ExtendedDashboardWidget,
+    IAutomationFiltersTab,
     removeIgnoredWidgetFilters,
+    selectAutomationCommonDateFilterId,
+    selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
+    selectEnableDashboardTabs,
     useDashboardSelector,
 } from "../../model/index.js";
 
-interface IUseAutomationFiltersSelect {
+/**
+ * Edited automation filters structured by tab ID.
+ * Used for storing user edits to filters when dashboard tabs are enabled.
+ * @internal
+ */
+export type EditedFiltersByTab = Record<string, FilterContextItem[]>;
+
+/**
+ * Result from useAutomationFiltersSelect hook.
+ * @internal
+ */
+export interface IUseAutomationFiltersSelect {
     editedAutomationFilters: FilterContextItem[];
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
     storeFilters: boolean;
@@ -22,6 +48,25 @@ interface IUseAutomationFiltersSelect {
     availableFilters: FilterContextItem[] | undefined;
     availableFiltersAsVisibleFilters: IAutomationVisibleFilter[] | undefined;
     filtersForNewAutomation: FilterContextItem[];
+    /**
+     * Filters for new automation structured per tab.
+     * Only provided for whole dashboard automations when dashboard tabs feature is enabled
+     * and there are multiple tabs. When provided, the component should render filters grouped by tab.
+     * When undefined, the component should use the flat filter list.
+     */
+    filtersByTab: IAutomationFiltersTab[] | undefined;
+    /**
+     * Edited filters structured by tab ID.
+     * This is the state that stores user edits to per-tab filters until save.
+     * Only provided when filtersByTab is provided.
+     */
+    editedAutomationFiltersByTab: EditedFiltersByTab | undefined;
+    /**
+     * Setter for editedFiltersByTab state.
+     */
+    setEditedAutomationFiltersByTab: (filters: EditedFiltersByTab) => void;
+
+    availableFiltersAsVisibleFiltersByTab: Record<string, IAutomationVisibleFilter[]> | undefined;
 }
 
 /**
@@ -56,7 +101,26 @@ export const useAutomationFiltersSelect = ({
         widget,
     );
 
+    // Get filters per tab - only applicable for whole dashboard automations (no widget)
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const allFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
+    const availableFiltersByTab = allFiltersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
+        acc[tab.tabId] = tab.availableFilters;
+        return acc;
+    }, {});
+
+    const availableFiltersAsVisibleFiltersByTab = useAutomationVisibleFiltersByTab(availableFiltersByTab);
+    // Safe to get from active tab selector as it's a consistent identifier
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+
+    // Only provide filtersPerTab for whole dashboard automations when tabs are enabled and there are multiple tabs
+    const isDashboardAutomation = !widget;
+    const hasMultipleTabs = allFiltersByTab.length > 1;
+    const filtersByTab =
+        isDashboardAutomation && enableDashboardTabs && hasMultipleTabs ? allFiltersByTab : undefined;
+
     const areFiltersStored = useMemo(() => {
+        // Check old flat filters structure
         const hasSavedSomeAllTimeDateFilters = automationToEdit?.metadata?.visibleFilters?.some(
             (f) => f.isAllTimeDateFilter,
         );
@@ -65,7 +129,29 @@ export const useAutomationFiltersSelect = ({
                 return !!exportDefinition.requestPayload.content.filters;
             },
         );
-        return hasSavedFiltersInExportDefinitions ?? hasSavedSomeAllTimeDateFilters ?? false;
+
+        // Check new per-tab filters structure
+        const hasSavedSomeAllTimeDateFiltersPerTab = automationToEdit?.metadata?.visibleFiltersByTab
+            ? Object.values(automationToEdit.metadata.visibleFiltersByTab).some((tabFilters) =>
+                  tabFilters.some((f) => f.isAllTimeDateFilter),
+              )
+            : false;
+        const hasSavedFiltersByTabInExportDefinitions = automationToEdit?.exportDefinitions?.some(
+            (exportDefinition) => {
+                return (
+                    isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload) &&
+                    !!exportDefinition.requestPayload.content.filtersByTab
+                );
+            },
+        );
+
+        // Filters are stored if either old OR new structure has filters
+        return (
+            hasSavedFiltersInExportDefinitions ||
+            hasSavedSomeAllTimeDateFilters ||
+            hasSavedFiltersByTabInExportDefinitions ||
+            hasSavedSomeAllTimeDateFiltersPerTab
+        );
     }, [automationToEdit]);
 
     // Store filters or not? (checkbox to use latest saved dashboard filters vs "freeze" filters state as is)
@@ -82,13 +168,73 @@ export const useAutomationFiltersSelect = ({
             : filtersForNewAutomation,
     );
 
+    const filtersByTabForNewAutomation = getDefaultSelectedFiltersFromFiltersByTab(filtersByTab);
+    const filtersByTabForExistingAutomation = useMemo((): EditedFiltersByTab | undefined => {
+        if (!filtersByTab || !automationToEdit || isDashboardAutomationWithoutStoredFilters) {
+            return {};
+        }
+
+        const filtersByTabForExistingAutomation = getDefaultSelectedFiltersByTabForExistingAutomation(
+            automationToEdit,
+            availableFiltersByTab,
+            commonDateFilterId,
+        );
+
+        if (filtersByTabForExistingAutomation) {
+            return filtersByTabForExistingAutomation;
+        }
+
+        return {};
+    }, [
+        filtersByTab,
+        automationToEdit,
+        isDashboardAutomationWithoutStoredFilters,
+        commonDateFilterId,
+        availableFiltersByTab,
+    ]);
+
+    // State for edited filters per tab (only used when dashboard tabs are enabled)
+    const [editedAutomationFiltersByTab, setEditedAutomationFiltersByTab] = useState<
+        EditedFiltersByTab | undefined
+    >(
+        automationToEdit && !isDashboardAutomationWithoutStoredFilters
+            ? filtersByTabForExistingAutomation
+            : filtersByTabForNewAutomation,
+    );
+
     return {
-        editedAutomationFilters,
-        setEditedAutomationFilters,
         storeFilters,
         setStoreFilters,
+        //flat filters
+        editedAutomationFilters,
+        setEditedAutomationFilters,
         availableFilters: availableFiltersWithoutIgnoredWidgetFilters,
         availableFiltersAsVisibleFilters: availableFiltersAsVisibleFilters,
         filtersForNewAutomation,
+        // filters by tab data
+        editedAutomationFiltersByTab,
+        setEditedAutomationFiltersByTab,
+        filtersByTab, // includes all filters related parameters
+        availableFiltersAsVisibleFiltersByTab,
     };
 };
+
+export function getDefaultSelectedFiltersFromFiltersByTab(filtersByTab: IAutomationFiltersTab[] | undefined) {
+    if (!filtersByTab) {
+        return {};
+    }
+    return filtersByTab.reduce<EditedFiltersByTab>((acc, tab) => {
+        acc[tab.tabId] = tab.defaultSelectedFilters;
+        return acc;
+    }, {});
+}
+
+export function getAvailableFiltersFromFiltersByTab(filtersByTab: IAutomationFiltersTab[] | undefined) {
+    if (!filtersByTab) {
+        return {};
+    }
+    return filtersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
+        acc[tab.tabId] = tab.availableFilters;
+        return acc;
+    }, {});
+}

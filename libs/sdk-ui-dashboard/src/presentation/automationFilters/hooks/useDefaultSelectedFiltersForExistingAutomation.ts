@@ -16,6 +16,7 @@ import {
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
+    getAutomationDashboardFiltersByTab,
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
@@ -67,14 +68,12 @@ export function useDefaultSelectedFiltersForExistingAutomation(
 
     const savedVisibleFilters = automationToEdit?.metadata?.visibleFilters ?? [];
 
-    return savedVisibleFilters
-        ? getDefaultSelectedFiltersByVisibleFilters(
-              savedVisibleFilters,
-              availableWidgetFilters,
-              savedFilterContextItems,
-              commonDateFilterId,
-          )
-        : [];
+    return getDefaultSelectedFiltersByVisibleFilters(
+        savedVisibleFilters,
+        availableWidgetFilters,
+        savedFilterContextItems,
+        commonDateFilterId,
+    );
 }
 
 /**
@@ -143,6 +142,54 @@ function getDefaultSelectedFiltersByVisibleFilters(
             ) ?? []
         );
     });
+}
+
+/**
+ * Reconstructs filters per tab from saved visibleFiltersByTab and filtersByTab.
+ * Applies the same matching logic as getDefaultSelectedFiltersByVisibleFilters to each tab.
+ *
+ * @internal
+ */
+export function getDefaultSelectedFiltersByTabForExistingAutomation(
+    automationToEdit: IAutomationMetadataObject | undefined,
+    availableDashboardFiltersByTab: Record<string, FilterContextItem[]> = {},
+    commonDateFilterId?: string,
+): Record<string, FilterContextItem[]> | undefined {
+    if (!automationToEdit) {
+        return undefined;
+    }
+
+    const savedVisibleFiltersByTab = automationToEdit.metadata?.visibleFiltersByTab;
+    const savedFiltersByTab = getAutomationDashboardFiltersByTab(automationToEdit);
+
+    if (!savedFiltersByTab) {
+        return undefined;
+    }
+
+    // If we have visibleFiltersByTab, use it to properly reconstruct filters
+    if (savedVisibleFiltersByTab) {
+        return Object.entries(savedVisibleFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [tabId, savedVisibleFilters]) => {
+                const availableFiltersForTab = availableDashboardFiltersByTab[tabId] ?? [];
+                const savedFiltersForTab = savedFiltersByTab[tabId] ?? [];
+
+                const reconstructedFilters = getDefaultSelectedFiltersByVisibleFilters(
+                    savedVisibleFilters,
+                    availableFiltersForTab,
+                    savedFiltersForTab,
+                    commonDateFilterId,
+                );
+
+                if (reconstructedFilters.length > 0) {
+                    acc[tabId] = reconstructedFilters;
+                }
+
+                return acc;
+            },
+            {},
+        );
+    }
+    return undefined;
 }
 
 function convertAndSanitizeFilter(

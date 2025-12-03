@@ -1391,12 +1391,14 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
+    deleteCalendar(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setAttachmentSizeLimit(size: number): Promise<void>;
+    setCalendar(monthOffset: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
@@ -1965,6 +1967,7 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
+    deleteCalendar(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -1973,6 +1976,7 @@ export interface IWorkspaceSettingsService {
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
+    setCalendar(monthOffset: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;

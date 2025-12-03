@@ -55,24 +55,6 @@
         },
         {
             "commandKind": "bulk",
-            "name": "prettier-check",
-            "summary": "Verifies code formatting in all projects.",
-            "safeForSimultaneousRushProcesses": true,
-            "enableParallelism": true,
-            "ignoreDependencyOrder": true,
-            "ignoreMissingScript": true
-        },
-        {
-            "commandKind": "bulk",
-            "name": "prettier-write",
-            "summary": "Formats code in all projects",
-            "safeForSimultaneousRushProcesses": true,
-            "enableParallelism": true,
-            "ignoreDependencyOrder": true,
-            "ignoreMissingScript": true
-        },
-        {
-            "commandKind": "bulk",
             "name": "eslint-fix",
             "summary": "Triggers eslint auto fix in all projects.",
             "safeForSimultaneousRushProcesses": true,

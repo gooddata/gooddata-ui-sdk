@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject, useCallback, useMemo } from "react";
+import { KeyboardEvent, MutableRefObject, ReactNode, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -21,11 +21,24 @@ import {
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 
 function AutomationDateFilterButton(props: IDateFilterButtonProps) {
-    const { isLocked, isCommonDateFilter, onDelete, filter } = useAutomationDateFilterContext();
-    const intl = useIntl();
-    const deleteAriaLabel = intl.formatMessage({ id: "delete" });
+    const {
+        isLocked,
+        isCommonDateFilter,
+        onDelete,
+        filter,
+        deleteAriaLabel,
+        deleteTooltipContent,
+        lockedTooltipContent,
+    } = useAutomationDateFilterContext();
     const label = `${props.textTitle}: ${props.textSubtitle}`;
     const dateFilterTooltipId = useIdPrefixed("date-filter-tooltip");
+    const dateFilterDeleteTooltipId = useIdPrefixed("date-filter-delete-tooltip");
+    const tooltipContent = (
+        <>
+            {label}
+            {isLocked ? <div>{lockedTooltipContent}</div> : null}
+        </>
+    );
 
     const onDeleteHandler = useCallback(() => {
         onDelete(filter);
@@ -40,31 +53,50 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
         () => ({
             ariaDescribedBy: dateFilterTooltipId,
             isExpanded: props.isOpen,
-            deleteAriaLabel,
+            deleteAriaLabel: props.textTitle ? `${deleteAriaLabel} ${props.textTitle}` : deleteAriaLabel,
+            deleteAriaDescribedBy: dateFilterDeleteTooltipId,
         }),
-        [dateFilterTooltipId, props.isOpen, deleteAriaLabel],
+        [dateFilterTooltipId, dateFilterDeleteTooltipId, props.isOpen, deleteAriaLabel, props.textTitle],
     );
 
     return (
-        <UiTooltip
-            id={dateFilterTooltipId}
-            arrowPlacement="top-start"
-            content={label}
-            optimalPlacement
-            triggerBy={["hover", "focus"]}
-            anchor={
-                <UiChip
-                    label={label}
-                    iconBefore="date"
-                    isActive={props.isOpen}
-                    isLocked={isLocked}
-                    isDeletable={!isLocked && !isCommonDateFilter}
-                    onDelete={onDeleteHandler}
-                    onDeleteKeyDown={handleDeleteKeyDown}
-                    accessibilityConfig={accessibilityConfig}
-                    buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
+        <UiChip
+            label={label}
+            iconBefore="date"
+            isActive={props.isOpen}
+            isLocked={isLocked}
+            isDeletable={!isLocked && !isCommonDateFilter}
+            onDelete={onDeleteHandler}
+            onDeleteKeyDown={handleDeleteKeyDown}
+            accessibilityConfig={accessibilityConfig}
+            buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
+            renderChipContent={(content: ReactNode) => (
+                <UiTooltip
+                    id={dateFilterTooltipId}
+                    arrowPlacement="top-start"
+                    content={tooltipContent}
+                    triggerBy={["hover", "focus"]}
+                    anchor={content}
+                    anchorWrapperStyles={{
+                        display: "flex",
+                        width: "100%",
+                        height: "100%",
+                        minWidth: 0,
+                    }}
                 />
-            }
+            )}
+            renderDeleteButton={(button: ReactNode) => (
+                <UiTooltip
+                    id={dateFilterDeleteTooltipId}
+                    arrowPlacement="top-start"
+                    content={deleteTooltipContent}
+                    triggerBy={["hover", "focus"]}
+                    anchor={button}
+                    anchorWrapperStyles={{
+                        height: "100%",
+                    }}
+                />
+            )}
         />
     );
 }
@@ -76,6 +108,7 @@ export function AutomationDateFilter({
     isLocked,
     isCommonDateFilter,
     overlayPositionType,
+    readonly,
 }: {
     filter: IDashboardDateFilter;
     onChange: (filter: FilterContextItem | undefined) => void;
@@ -83,7 +116,13 @@ export function AutomationDateFilter({
     isLocked?: boolean;
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
+    readonly?: boolean;
 }) {
+    const intl = useIntl();
+    const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
+    const deleteTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.deleteTooltip" });
+    const lockedTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
+
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -117,11 +156,15 @@ export function AutomationDateFilter({
             onDelete={onDelete}
             isLocked={isLocked}
             isCommonDateFilter={isCommonDateFilter}
+            deleteAriaLabel={deleteAriaLabel}
+            deleteTooltipContent={deleteTooltipContent}
+            lockedTooltipContent={lockedTooltipContent}
         >
             <DefaultDashboardDateFilter
                 filter={filter}
                 workingFilter={filter}
                 onFilterChanged={handleFilterChanged}
+                readonly={readonly || isLocked}
                 config={filterConfig}
                 overlayPositionType={overlayPositionType}
                 ButtonComponent={AutomationDateFilterButton}

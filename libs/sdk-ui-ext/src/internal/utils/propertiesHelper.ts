@@ -11,7 +11,7 @@ import {
     GrandTotalsPosition,
     MeasureGroupDimension,
 } from "@gooddata/sdk-ui-pivot";
-import { ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
+import { IPagination, ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
 
 import {
     getAllMeasuresShowOnSecondaryAxis,
@@ -289,6 +289,19 @@ export function getGrandTotalsPositionFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): GrandTotalsPosition | undefined {
     return visualizationProperties?.controls?.["grandTotalsPosition"];
+}
+
+export function getPaginationFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): IPagination | undefined {
+    return visualizationProperties?.controls?.["pagination"];
+}
+
+export function getPageSizeFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): number | undefined {
+    const pageSize = visualizationProperties?.controls?.["pageSize"];
+    return typeof pageSize === "number" ? pageSize : undefined;
 }
 
 export function getMeasureGroupDimensionFromProperties(

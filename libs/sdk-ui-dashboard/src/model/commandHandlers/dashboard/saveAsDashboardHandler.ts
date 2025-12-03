@@ -56,7 +56,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { TabState, tabsActions } from "../../store/tabs/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -195,9 +195,6 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
-        selectActiveTabLocalIdentifier,
-    );
     const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
         yield select(selectEnableDashboardTabs);
 
@@ -222,12 +219,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-        ...(enableDashboardTabs && processedTabs
-            ? {
-                  tabs: processedTabs,
-                  activeTabLocalIdentifier: activeTabLocalIdentifier ?? processedTabs[0]?.localIdentifier,
-              }
-            : {}),
+        ...(enableDashboardTabs && processedTabs ? { tabs: processedTabs } : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};

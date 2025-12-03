@@ -14,6 +14,9 @@ export interface IAutomationDateFilterContext {
     filter: IDashboardDateFilter;
     isLocked?: boolean;
     isCommonDateFilter?: boolean;
+    deleteAriaLabel?: string;
+    deleteTooltipContent?: string;
+    lockedTooltipContent?: string;
 }
 
 /**
@@ -40,9 +43,22 @@ export function AutomationDateFilterProvider({
     isLocked,
     isCommonDateFilter,
     filter,
+    deleteAriaLabel,
+    deleteTooltipContent,
+    lockedTooltipContent,
 }: IAutomationDateFilterProviderProps) {
     return (
-        <AutomationDateFilterContext.Provider value={{ onDelete, isLocked, isCommonDateFilter, filter }}>
+        <AutomationDateFilterContext.Provider
+            value={{
+                onDelete,
+                isLocked,
+                isCommonDateFilter,
+                filter,
+                deleteAriaLabel,
+                deleteTooltipContent,
+                lockedTooltipContent,
+            }}
+        >
             {children}
         </AutomationDateFilterContext.Provider>
     );

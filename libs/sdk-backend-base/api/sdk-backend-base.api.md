@@ -659,6 +659,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
     // (undocumented)
+    deleteCalendar(): Promise<void>;
+    // (undocumented)
     deleteColorPalette(): Promise<void>;
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -672,6 +674,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
+    // (undocumented)
+    setCalendar(monthOffset: number): Promise<void>;
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
     // (undocumented)

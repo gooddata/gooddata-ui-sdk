@@ -266,6 +266,7 @@ export type { DateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterCo
 
 export {
     selectDateFilterConfigOverrides,
+    selectDateFilterConfigOverridesByTab,
     selectEffectiveDateFilterConfig,
     selectEffectiveDateFilterTitle,
     selectEffectiveDateFilterMode,
@@ -275,6 +276,7 @@ export {
 } from "./tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 export {
     selectAttributeFilterConfigsOverrides,
+    selectAttributeFilterConfigsOverridesByTab,
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
@@ -321,6 +323,7 @@ export {
 } from "./tabs/index.js";
 export {
     selectDateFilterConfigsOverrides,
+    selectDateFilterConfigsOverridesByTab,
     selectDateFilterConfigsModeMap,
     selectEffectiveDateFiltersModeMap,
 } from "./tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";

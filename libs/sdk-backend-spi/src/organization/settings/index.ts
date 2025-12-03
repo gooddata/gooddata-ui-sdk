@@ -114,6 +114,22 @@ export interface IOrganizationSettingsService {
     setWeekStart(weekStart: string): Promise<void>;
 
     /**
+     * Sets fiscal calendar for organization.
+     *
+     * @param monthOffset - number of months the fiscal year is offset from the calendar year. Can be positive or negative.
+     *
+     * @returns promise
+     */
+    setCalendar(monthOffset: number): Promise<void>;
+
+    /**
+     * Deletes fiscal calendar from organization settings returning calendar to default.
+     *
+     * @returns promise
+     */
+    deleteCalendar(): Promise<void>;
+
+    /**
      * Sets theme for organization.
      *
      * @param themeId - ID of the theme to apply to workspaces in organization.

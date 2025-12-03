@@ -64,6 +64,8 @@ import {
     getColumnWidthsFromProperties,
     getGrandTotalsPositionFromProperties,
     getMeasureGroupDimensionFromProperties,
+    getPageSizeFromProperties,
+    getPaginationFromProperties,
     getPivotTableProperties,
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
@@ -94,6 +96,7 @@ export function createPivotTableNextConfig(
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
         agGridToken: config.agGridToken,
         enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? true,
+        enablePivotTablePagination: settings.enablePivotTablePagination ?? false,
     };
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {
@@ -379,6 +382,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             : "top";
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const { isInEditMode } = config;
+        const pagination = getPaginationFromProperties(insightProperties(insight));
         const tableConfig: PivotTableNextConfig = {
             ...createPivotTableNextConfig(config, this.environment, this.settings),
             ...customVisualizationConfig,
@@ -391,8 +395,13 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             },
             textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
             grandTotalsPosition: getGrandTotalsPositionFromProperties(insightProperties(insight)),
+            pagination,
             enableCellSelection: !isInEditMode,
         };
+
+        // Only pass pageSize when pagination is enabled
+        const pageSize = getPageSizeFromProperties(insightProperties(insight));
+        const pageSizeObj = pagination?.enabled && pageSize !== undefined ? { pageSize } : {};
 
         const pivotTableProps: ICorePivotTableNextProps = {
             ...this.createCorePivotTableProps(),
@@ -406,6 +415,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             sortBy,
             config: tableConfig,
             theme,
+            ...pageSizeObj,
         };
 
         this.renderFun(<CorePivotTableNext {...pivotTableProps} />, this.getElement());

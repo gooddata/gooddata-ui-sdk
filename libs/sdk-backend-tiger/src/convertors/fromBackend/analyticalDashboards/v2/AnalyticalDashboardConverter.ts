@@ -125,7 +125,6 @@ interface IAnalyticalDashboardContent {
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: IdentifierRef;
     tabs?: IDashboardTab[];
-    activeTabLocalIdentifier?: string;
 }
 
 function convertDashboardPluginLink(
@@ -192,9 +191,7 @@ function getConvertedAnalyticalDashboardContent(
         return convertDashboardTab(tab, filterContextsList, filterContextOverride);
     });
 
-    const activeTab =
-        tabs?.find((tab) => tab.localIdentifier === analyticalDashboard.activeTabLocalIdentifier) ??
-        tabs?.[0];
+    const defaultTab = tabs?.[0];
 
     const layout = convertLayout(
         true,
@@ -206,14 +203,14 @@ function getConvertedAnalyticalDashboardContent(
     return {
         dateFilterConfig: analyticalDashboard.dateFilterConfig
             ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig)
-            : activeTab?.dateFilterConfig,
+            : defaultTab?.dateFilterConfig,
         dateFilterConfigs: analyticalDashboard.dateFilterConfigs
             ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs)
-            : activeTab?.dateFilterConfigs,
+            : defaultTab?.dateFilterConfigs,
         attributeFilterConfigs: analyticalDashboard.attributeFilterConfigs
             ? cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs)
-            : activeTab?.attributeFilterConfigs,
-        layout: layout ?? activeTab?.layout,
+            : defaultTab?.attributeFilterConfigs,
+        layout: layout ?? defaultTab?.layout,
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
@@ -222,7 +219,6 @@ function getConvertedAnalyticalDashboardContent(
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
         sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
         tabs,
-        activeTabLocalIdentifier: analyticalDashboard.activeTabLocalIdentifier,
     };
 }
 
@@ -268,16 +264,13 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
-        activeTabLocalIdentifier,
     } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
         filterContextsList,
         filterContext,
     );
 
-    const filterContextOfActiveTab = tabs?.find(
-        (tab) => tab.localIdentifier === activeTabLocalIdentifier,
-    )?.filterContext;
+    const filterContextOfDefaultTab = tabs?.[0]?.filterContext;
 
     return {
         type: "IDashboard",
@@ -295,7 +288,7 @@ export function convertDashboard(
         shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         tags: attributes.tags ?? [],
-        filterContext: filterContext ?? filterContextOfActiveTab ?? defaultFilterContext,
+        filterContext: filterContext ?? filterContextOfDefaultTab ?? defaultFilterContext,
         dateFilterConfig,
         dateFilterConfigs,
         attributeFilterConfigs,
@@ -308,7 +301,6 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
-        activeTabLocalIdentifier,
         dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }

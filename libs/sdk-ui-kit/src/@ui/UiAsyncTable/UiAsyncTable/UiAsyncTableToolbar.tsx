@@ -51,7 +51,6 @@ const useAsyncTableToolbar = <T extends { id: string }>({
 }: UiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
-    const isSmall = variant === "small";
 
     const handleCheckboxChange = useCallback(() => {
         setSelectedItemIds(selectedItemIds?.length === 0 ? items.map((item) => item.id) : []);
@@ -81,7 +80,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
 
         const tooltipMessage = intl.formatMessage(messages["selectAll"]);
 
-        if (bulkActions && (isCheckboxChecked || !isSmall)) {
+        if (bulkActions) {
             return (
                 <div className={e("toolbar-bulk-actions", { "mobile-view": isMobileView })}>
                     <div className={e("toolbar-checkbox-section")}>
@@ -113,7 +112,6 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [
         bulkActions,
         selectedItemIds,
-        isSmall,
         isMobileView,
         totalItemsCount,
         intl,

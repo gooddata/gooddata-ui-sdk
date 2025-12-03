@@ -31,6 +31,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     sortDescending: { id: "visualizations.menu.sort.descending" },
     // Accessibility
     openHeaderMenuAria: { id: "visualizations.menu.header.openAriaLabel" },
+    // Pagination
+    paginationOf: { id: "visualizations.table.pagination.of" },
 });
 
 /**

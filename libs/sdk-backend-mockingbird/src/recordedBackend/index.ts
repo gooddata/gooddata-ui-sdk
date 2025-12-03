@@ -273,6 +273,12 @@ function recordedWorkspace(
                 async setWeekStart(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setCalendar(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteCalendar(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setDashboardFiltersApplyMode(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -490,6 +496,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),
+                setCalendar: () => Promise.resolve(),
+                deleteCalendar: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
