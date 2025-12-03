@@ -598,6 +598,27 @@
     font-weight: bold;
     color: var(--gd-palette-complementary-7);
     margin-left: 5px;
+    min-width: 35px;
+    text-align: right;
+}
+
+.gd-kda-attributes-dropdown__subheader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 10px;
+    font-size: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    color: var(--gd-palette-complementary-6);
+
+    .gd-kda-attributes-dropdown__subheader__attribute {
+        flex: 1 1 auto;
+    }
+
+    .gd-kda-attributes-dropdown__subheader__key_drivers {
+        flex: 0 0 auto;
+    }
 }
 
 //kda dialog is over drill modal

@@ -46,7 +46,7 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist --load-path=node_modules/maplibre-gl/dist styles/scss/main.scss:styles/css/main.css",
-        "stylelint": "bash scripts/stylelint.sh",
+        "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
