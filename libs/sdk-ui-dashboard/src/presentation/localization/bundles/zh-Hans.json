@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "向右移动",
     "dashboard.tabs.delete.disabled-tooltip": "您无法删除最后一个标签页。当只剩下一个标签页时，在查看模式下将不显示标签页导航。",
     "dashboard.tabs.rename": "重命名",
-    "dashboard.tabs.accessibility.add-button-label": "添加新标签页"
+    "dashboard.tabs.accessibility.add-button-label": "添加新标签页",
+    "dialogs.automation.filters.tab.label": "制表",
+    "dialogs.automation.filters.tab.untitled": "标签页",
+    "dialogs.schedule.email.tabs.info": "仪表板中的所有选项卡都包含在内——每个选项卡和导出格式都会创建一个单独的文件。",
+    "visualization.ErrorMessageResultCacheMissing": "可视化效果需要更新",
+    "visualization.ErrorDescriptionResultCacheMissing": "基础数据已更改或过期。请刷新页面。",
+    "insightAlert.config.granularity.tooltip": "在检查异常情况之前，先设置数据的聚合方式。",
+    "insightAlert.config.metric": "指标",
+    "dashboard.tabs.add-button-tooltip": "添加新标签页"
 }

@@ -134,6 +134,7 @@ export function EditAlert({
         allowOnlyLoggedUserRecipients,
         warningMessage,
         enableAnomalyDetectionAlert,
+        allowHourlyRecurrence,
         //
         changeAnomalyDetection,
         changeComparisonOperator,
@@ -358,6 +359,7 @@ export function EditAlert({
                                     </label>
                                     <AlertGranularitySelect
                                         id="alert.granularity"
+                                        allowHourlyRecurrence={allowHourlyRecurrence}
                                         selectedGranularity={selectedGranularity}
                                         onGranularityChange={(granularity) => {
                                             changeGranularity(selectedMeasure, granularity);

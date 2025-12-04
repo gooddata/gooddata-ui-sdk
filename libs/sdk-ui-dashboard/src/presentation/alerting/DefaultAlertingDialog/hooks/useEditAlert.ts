@@ -48,6 +48,7 @@ import {
     selectEnableComparisonInAlerting,
     selectEnableDashboardTabs,
     selectEnableExternalRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
     selectExecutionResultByRef,
     selectLocale,
     selectSeparators,
@@ -89,6 +90,8 @@ import {
     transformAlertBySensitivity,
     transformAlertByValue,
 } from "../utils/transformation.js";
+
+const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;
@@ -136,6 +139,12 @@ export function useEditAlert({
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
+
+    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
+        selectEntitlementMinimumRecurrenceMinutes,
+    );
+    const allowHourlyRecurrence =
+        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
@@ -652,5 +661,6 @@ export function useEditAlert({
         isSubmitDisabled,
         isParentValid,
         thresholdErrorMessage,
+        allowHourlyRecurrence,
     };
 }

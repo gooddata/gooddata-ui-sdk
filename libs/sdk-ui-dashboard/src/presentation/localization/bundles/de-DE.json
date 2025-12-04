@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "Nach rechts bewegen",
     "dashboard.tabs.delete.disabled-tooltip": "Sie können die letzte Registerkarte nicht löschen. Die Tab-Navigation ist im Ansichtsmodus nicht sichtbar, wenn nur noch ein Tab vorhanden ist.",
     "dashboard.tabs.rename": "Umbenennen",
-    "dashboard.tabs.accessibility.add-button-label": "Neuen Tab hinzufügen"
+    "dashboard.tabs.accessibility.add-button-label": "Neuen Tab hinzufügen",
+    "dialogs.automation.filters.tab.label": "REGISTERKARTE",
+    "dialogs.automation.filters.tab.untitled": "Registerkarte",
+    "dialogs.schedule.email.tabs.info": "Alle Registerkarten im Dashboard sind enthalten — für jede Registerkarte und jedes Exportformat wird eine separate Datei erstellt.",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisierung muss aktualisiert werden",
+    "visualization.ErrorDescriptionResultCacheMissing": "Die zugrundeliegenden Daten haben sich geändert oder sind abgelaufen. Aktualisieren Sie die Seite.",
+    "insightAlert.config.granularity.tooltip": "Legen Sie fest, wie die Daten aggregiert werden, bevor Sie nach Anomalien suchen.",
+    "insightAlert.config.metric": "Metrik",
+    "dashboard.tabs.add-button-tooltip": "Neuen Tab hinzufügen"
 }

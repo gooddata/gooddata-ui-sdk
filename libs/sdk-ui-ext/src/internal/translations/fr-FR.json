@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Quantifie la part de la valeur métrique primaire dans la valeur métrique secondaire.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Calcule la différence absolue entre les valeurs métriques primaires et secondaires.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Calcule à la fois la variation relative et la différence absolue entre les valeurs métriques primaires et secondaires.",
-    "automations.alert.config.anomalyDetection.operatorName": "détection d'anomalies pour",
+    "automations.alert.config.anomalyDetection.operatorName": "présente une anomalie",
     "automations.alert.config.anomalyDetection.withName": "avec",
     "automations.alert.config.anomalyDetection.withSensitivity": "sensibilité",
     "automations.alert.config.anomalyDetection.granularity.minute": "Chaque minute",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "moyenne",
     "automations.alert.config.anomalyDetection.sensitivity.high": "élevé",
     "automations.icon.tooltip.startsOn": "Commence la",
-    "automations.icon.tooltip.repeats": "Répétitions"
+    "automations.icon.tooltip.repeats": "Répétitions",
+    "properties.paging.title": "Pagination",
+    "properties.paging.pageSize": "Taille de la page",
+    "properties.paging.pageSize.auto": "auto (par défaut)",
+    "automations.menu.edit.unavailable": "L'action de modification n'est pas disponible, il n'y a pas de tableau de bord associé."
 }

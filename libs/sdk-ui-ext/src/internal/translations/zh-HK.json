@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "量化主要計量值喺次要計量值中嘅份額。",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "計算主要計量值同次要指標值之間嘅絕對差異。",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "計算主要指標值和次要計量值之間嘅相對變化同絕對差值。",
-    "automations.alert.config.anomalyDetection.operatorName": "異常檢測",
+    "automations.alert.config.anomalyDetection.operatorName": "有異",
     "automations.alert.config.anomalyDetection.withName": "隨住",
     "automations.alert.config.anomalyDetection.withSensitivity": "敏銳度",
     "automations.alert.config.anomalyDetection.granularity.minute": "分分鐘",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "中等",
     "automations.alert.config.anomalyDetection.sensitivity.high": "高",
     "automations.icon.tooltip.startsOn": "開始于",
-    "automations.icon.tooltip.repeats": "重複"
+    "automations.icon.tooltip.repeats": "重複",
+    "properties.paging.title": "分頁",
+    "properties.paging.pageSize": "頁數",
+    "properties.paging.pageSize.auto": "自動（默認）",
+    "automations.menu.edit.unavailable": "編輯動作無法使用，沒有相關聯的儀表板"
 }

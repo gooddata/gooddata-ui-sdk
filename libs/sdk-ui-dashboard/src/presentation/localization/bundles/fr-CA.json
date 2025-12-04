@@ -886,5 +886,13 @@
     "dashboard.tabs.move.right": "Déplacer à droite",
     "dashboard.tabs.delete.disabled-tooltip": "Vous ne pouvez pas supprimer le dernier onglet. La navigation dans les onglets ne sera pas visible en mode affichage lorsqu'il ne reste qu'un seul onglet.",
     "dashboard.tabs.rename": "Renommer",
-    "dashboard.tabs.accessibility.add-button-label": "Ajouter un nouvel onglet"
+    "dashboard.tabs.accessibility.add-button-label": "Ajouter un nouvel onglet",
+    "dialogs.automation.filters.tab.label": "TAB",
+    "dialogs.automation.filters.tab.untitled": "Onglet",
+    "dialogs.schedule.email.tabs.info": "Tous les onglets du tableau de bord sont inclus - un fichier distinct est créé pour chaque onglet et chaque format d'exportation.",
+    "visualization.ErrorMessageResultCacheMissing": "La visualisation a besoin d'être rafraîchie",
+    "visualization.ErrorDescriptionResultCacheMissing": "Les données sous-jacentes ont changé ou ont expiré. Actualiser la page.",
+    "insightAlert.config.granularity.tooltip": "Définissez le mode d'agrégation des données avant de vérifier les anomalies.",
+    "insightAlert.config.metric": "Métrique",
+    "dashboard.tabs.add-button-tooltip": "Ajouter un nouvel onglet"
 }

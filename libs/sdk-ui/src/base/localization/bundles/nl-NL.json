@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Oprolaggregatie (totaal) is niet beschikbaar als u de visualisatie filtert op metrische waarde. Om Oprol(Totaal) te gebruiken, verwijdert u alle metrische waardefilters uit de filterbalk.",
     "shareDialog.share.link.helperTextWithTabs": "De link geeft de huidige filters op het actieve tabblad weer. Alleen toegankelijk voor gebruikers met dashboardtoegang.",
     "table.bulkActions.selectAll": "Selecteer alles",
-    "tabs.actions": "Acties voor het huidige tabblad"
+    "tabs.actions": "Acties voor het huidige tabblad",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisatie heeft een opfrisbeurt nodig",
+    "visualization.ErrorDescriptionResultCacheMissing": "De onderliggende gegevens zijn gewijzigd of verlopen. Vernieuw de pagina.",
+    "visualizations.table.pagination.of": "van"
 }

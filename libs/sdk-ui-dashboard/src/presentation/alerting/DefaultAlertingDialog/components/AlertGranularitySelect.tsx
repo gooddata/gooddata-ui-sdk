@@ -49,6 +49,7 @@ const options: {
 
 export interface IAlertGranularitySelectProps {
     id: string;
+    allowHourlyRecurrence: boolean;
     selectedGranularity: IAlertAnomalyDetectionGranularity | undefined;
     onGranularityChange: (granularity: IAlertAnomalyDetectionGranularity) => void;
     overlayPositionType?: OverlayPositionType;
@@ -57,12 +58,19 @@ export interface IAlertGranularitySelectProps {
 
 export function AlertGranularitySelect({
     id,
+    allowHourlyRecurrence,
     selectedGranularity = "WEEK",
     onGranularityChange,
     overlayPositionType,
     closeOnParentScroll,
 }: IAlertGranularitySelectProps) {
-    const selectedOption = options.find((o) => o.id === selectedGranularity);
+    const usableOptions = options.filter((o) => {
+        if (!allowHourlyRecurrence) {
+            return o.id !== "HOUR";
+        }
+        return true;
+    });
+    const selectedOption = usableOptions.find((o) => o.id === selectedGranularity);
     const intl = useIntl();
 
     return (
@@ -90,7 +98,7 @@ export function AlertGranularitySelect({
                     const listboxItems: IUiListboxItem<{
                         title: string;
                         id: IAlertAnomalyDetectionGranularity;
-                    }>[] = options.map((option) => ({
+                    }>[] = usableOptions.map((option) => ({
                         type: "interactive",
                         id: option.id,
                         stringTitle: intl.formatMessage({ id: option.title }),

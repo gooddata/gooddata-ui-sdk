@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "向右移動",
     "dashboard.tabs.delete.disabled-tooltip": "您無法刪除最後一個標籤頁。當只剩下一個標籤頁時，在檢視模式下將不顯示標籤頁導覽。",
     "dashboard.tabs.rename": "重新命名",
-    "dashboard.tabs.accessibility.add-button-label": "新增標籤頁"
+    "dashboard.tabs.accessibility.add-button-label": "新增標籤頁",
+    "dialogs.automation.filters.tab.label": "製表",
+    "dialogs.automation.filters.tab.untitled": "標籤頁",
+    "dialogs.schedule.email.tabs.info": "儀表板中的所有選項卡都包含在內—每個選項卡和匯出格式都會建立一個單獨的檔案。",
+    "visualization.ErrorMessageResultCacheMissing": "可視化效果需要更新",
+    "visualization.ErrorDescriptionResultCacheMissing": "基礎數據已更改或過期。請刷新頁面。",
+    "insightAlert.config.granularity.tooltip": "在檢查異常情況之前，先設定資料的聚合方式。",
+    "insightAlert.config.metric": "公制",
+    "dashboard.tabs.add-button-tooltip": "新增標籤頁"
 }

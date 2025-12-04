@@ -275,16 +275,14 @@
     &--headline {
         height: auto;
         min-height: 50px;
-        background: variables.$gd-dashboards-content-kpiWidget-backgroundColor;
-        color: variables.$gd-dashboards-content-kpiWidget-title-color;
-
-        p {
-            color: variables.$gd-dashboards-content-kpiWidget-title-color;
-        }
 
         // Headline value is smaller in chart, looks much better with contrast with other text
         .headline-value {
             font-size: 0.8em;
+        }
+
+        .gd-icon-filter::before {
+            background: none;
         }
     }
 
@@ -406,6 +404,16 @@
     display: inline;
 }
 
+.gd-gen-ai-chat__visualization__drill-header {
+    padding: 4px 10px;
+    display: flex;
+    text-transform: uppercase;
+    color: var(--gd-palette-complementary-5);
+    font-size: 10px;
+    font-weight: normal;
+    margin: 0;
+}
+
 @keyframes gd-gen-ai-message-in {
     0% {
         opacity: 0;
@@ -450,6 +458,12 @@
     &__section {
         display: flex;
         flex-direction: column;
+
+        fieldset {
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
     }
 
     &__checkboxes {
@@ -465,19 +479,28 @@
 
     &__textarea {
         resize: vertical;
-        padding: 3px 4px;
         min-height: 92px;
         font-family: "Avenir", sans-serif;
         font-size: 14px;
         line-height: 22px;
-        box-shadow: inset 0 1px 2px 0 rgba(31, 53, 74, 0.15);
+        border-radius: 3px;
+        border: 1px solid var(--gd-palette-complementary-4);
+        background: var(--gd-palette-complementary-0);
+        box-shadow: 0 1px 2px 0 rgba(31, 53, 74, 0.15) inset;
 
         &::placeholder {
             color: var(--gd-palette-complementary-5, #b0beca);
         }
 
+        .gd-editable-label-inner {
+            padding: 3px 4px;
+        }
+
         textarea {
-            min-height: 84px;
+            margin: -3px -4px;
+            min-height: 90px;
+            padding: 3px 4px;
+            width: calc(100% + 8px);
         }
     }
 }

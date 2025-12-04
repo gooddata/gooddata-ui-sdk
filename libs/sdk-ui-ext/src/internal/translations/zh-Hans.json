@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "衡量主要指标值在次要指标值中所占的比例。",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "计算主要指标值和次要指标值之间的绝对差异。",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "计算主要指标值和次要指标值之间的相对变化和绝对差异。",
-    "automations.alert.config.anomalyDetection.operatorName": "异常检测",
+    "automations.alert.config.anomalyDetection.operatorName": "存在异常",
     "automations.alert.config.anomalyDetection.withName": "和",
     "automations.alert.config.anomalyDetection.withSensitivity": "敏感性",
     "automations.alert.config.anomalyDetection.granularity.minute": "每分钟",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "中",
     "automations.alert.config.anomalyDetection.sensitivity.high": "高的",
     "automations.icon.tooltip.startsOn": "开始于",
-    "automations.icon.tooltip.repeats": "重复"
+    "automations.icon.tooltip.repeats": "重复",
+    "properties.paging.title": "翻页",
+    "properties.paging.pageSize": "页面大小",
+    "properties.paging.pageSize.auto": "自动（默认）",
+    "automations.menu.edit.unavailable": "编辑操作不可用，没有关联的仪表板"
 }

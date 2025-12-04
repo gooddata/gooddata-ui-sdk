@@ -168,6 +168,7 @@ export function AlertingDialogRenderer({
         isSubmitDisabled,
         isParentValid,
         thresholdErrorMessage,
+        allowHourlyRecurrence,
     } = useEditAlert({
         insight,
         widget,
@@ -499,6 +500,7 @@ export function AlertingDialogRenderer({
                                             >
                                                 <AlertGranularitySelect
                                                     id="alert.granularity"
+                                                    allowHourlyRecurrence={allowHourlyRecurrence}
                                                     selectedGranularity={selectedGranularity}
                                                     onGranularityChange={(granularity) => {
                                                         onGranularityChange(selectedMeasure, granularity);

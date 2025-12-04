@@ -194,7 +194,7 @@ describe("withCaching", () => {
         expect(secondAll.equals(firstAll)).toBe(true);
     });
 
-    it("evicts when execution cache limit hit", () => {
+    it("evicts when execution cache limit hit (count-based)", () => {
         const backend = withCachingForTests();
 
         const first = doExecution(backend, [ReferenceMd.Won]);
@@ -202,6 +202,67 @@ describe("withCaching", () => {
         const second = doExecution(backend, [ReferenceMd.Won]);
 
         expect(second).not.toBe(first);
+    });
+
+    it("evicts when execution cache TTL expires (time-based)", async () => {
+        vi.useFakeTimers();
+        const ttl = 1000; // 1 second TTL for test
+        const backend = withCaching(defaultBackend, {
+            maxExecutionsAge: ttl,
+            maxCatalogs: 1,
+            maxCatalogOptions: 1,
+            maxResultWindows: 1,
+            maxGeoCollectionItemsPerResult: 50,
+            maxSecuritySettingsOrgs: 1,
+            maxSecuritySettingsOrgUrls: 1,
+            maxSecuritySettingsOrgUrlsAge: 300_000,
+            maxAttributeDisplayFormsPerWorkspace: 2,
+            maxAttributesPerWorkspace: 2,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+            maxWorkspaceSettings: 1,
+            maxAutomationsWorkspaces: 1,
+        });
+
+        const first = await doExecution(backend, [ReferenceMd.Won]);
+
+        // Advance time past TTL
+        vi.advanceTimersByTime(ttl + 100);
+
+        const second = await doExecution(backend, [ReferenceMd.Won]);
+
+        // After TTL expiration, should get a new execution result (not the same reference)
+        expect(second).not.toBe(first);
+
+        vi.useRealTimers();
+    });
+
+    it("uses count-based eviction when maxExecutions is set (takes precedence over maxExecutionsAge)", async () => {
+        const backend = withCaching(defaultBackend, {
+            maxExecutions: 1, // This takes precedence over maxExecutionsAge
+            maxExecutionsAge: 900_000,
+            maxCatalogs: 1,
+            maxCatalogOptions: 1,
+            maxResultWindows: 1,
+            maxGeoCollectionItemsPerResult: 50,
+            maxSecuritySettingsOrgs: 1,
+            maxSecuritySettingsOrgUrls: 1,
+            maxSecuritySettingsOrgUrlsAge: 300_000,
+            maxAttributeDisplayFormsPerWorkspace: 2,
+            maxAttributesPerWorkspace: 2,
+            maxAttributeElementResultsPerWorkspace: 1,
+            maxAttributeWorkspaces: 1,
+            maxWorkspaceSettings: 1,
+            maxAutomationsWorkspaces: 1,
+        });
+
+        // With maxExecutions: 1, this should evict the first execution when the second one is cached
+        const first = doExecution(backend, [ReferenceMd.Won]);
+        doExecution(backend, [ReferenceMd.Amount]);
+        const third = doExecution(backend, [ReferenceMd.Won]);
+
+        // Should NOT be the same cached result (evicted by count-based LRU)
+        expect(third).not.toBe(first);
     });
 
     it("caches readWindow calls", async () => {

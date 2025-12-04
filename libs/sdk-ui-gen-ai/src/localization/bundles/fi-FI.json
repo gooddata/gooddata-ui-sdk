@@ -84,5 +84,6 @@
     "drill.kda.drop": "Pudota {where} {title}",
     "drill.kda.increase": "Lisäys {where} {title}",
     "drill.kda.no_change": "Vanhentunut {where} {title}",
-    "drill.kda.year_to_year": "Vuosi vuodelta muutos"
+    "drill.kda.year_to_year": "Vuosi vuodelta muutos",
+    "gd.gen-ai.drill_modal_picker.header.explain": "Selitä"
 }

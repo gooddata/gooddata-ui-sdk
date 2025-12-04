@@ -813,5 +813,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "롤업(총계) 집계는 시각화를 메트릭 값으로 필터링할 때 사용할 수 없습니다. 롤업(총계)을 사용하려면 필터 바에서 모든 메트릭 값 필터를 제거하세요.",
     "shareDialog.share.link.helperTextWithTabs": "링크는 활성 탭의 현재 필터를 반영합니다. 대시보드 접근 권한이 있는 사용자만 접근 가능합니다.",
     "table.bulkActions.selectAll": "모두 선택",
-    "tabs.actions": "현재 탭에 대한 작업"
+    "tabs.actions": "현재 탭에 대한 작업",
+    "visualization.ErrorMessageResultCacheMissing": "시각화 새로 고침 필요",
+    "visualization.ErrorDescriptionResultCacheMissing": "기본 데이터가 변경되었거나 만료되었습니다. 페이지를 새로 고치십시오.",
+    "visualizations.table.pagination.of": "/"
 }

@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "Muoversi a destra",
     "dashboard.tabs.delete.disabled-tooltip": "Non è possibile eliminare l'ultima scheda. La navigazione delle schede non sarà visibile in modalità di visualizzazione quando rimane una sola scheda.",
     "dashboard.tabs.rename": "Rinominare",
-    "dashboard.tabs.accessibility.add-button-label": "Aggiungi una nuova scheda"
+    "dashboard.tabs.accessibility.add-button-label": "Aggiungi una nuova scheda",
+    "dialogs.automation.filters.tab.label": "TAB",
+    "dialogs.automation.filters.tab.untitled": "Scheda",
+    "dialogs.schedule.email.tabs.info": "Vengono incluse tutte le schede del dashboard; viene creato un file separato per ogni scheda e per ogni formato di esportazione.",
+    "visualization.ErrorMessageResultCacheMissing": "La visualizzazione ha bisogno di una rinfrescata",
+    "visualization.ErrorDescriptionResultCacheMissing": "I dati sottostanti sono cambiati o scaduti. Aggiornare la pagina.",
+    "insightAlert.config.granularity.tooltip": "Impostare la modalità di aggregazione dei dati prima di verificare la presenza di anomalie.",
+    "insightAlert.config.metric": "Metrica",
+    "dashboard.tabs.add-button-tooltip": "Aggiungi una nuova scheda"
 }

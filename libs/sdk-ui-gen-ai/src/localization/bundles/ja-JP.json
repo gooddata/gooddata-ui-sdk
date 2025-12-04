@@ -84,5 +84,6 @@
     "drill.kda.drop": "ドロップ{where} {title}",
     "drill.kda.increase": "増加{where} {title}",
     "drill.kda.no_change": "陳腐{where} {title}",
-    "drill.kda.year_to_year": "前年比"
+    "drill.kda.year_to_year": "前年比",
+    "gd.gen-ai.drill_modal_picker.header.explain": "説明する"
 }

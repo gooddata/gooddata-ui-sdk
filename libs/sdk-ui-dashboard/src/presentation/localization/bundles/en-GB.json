@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "Shift right",
     "dashboard.tabs.delete.disabled-tooltip": "You cannot delete the last tab. Tab navigation will not be visible in view mode when only one tab remains.",
     "dashboard.tabs.rename": "Rename",
-    "dashboard.tabs.accessibility.add-button-label": "Add new tab"
+    "dashboard.tabs.accessibility.add-button-label": "Add new tab",
+    "dialogs.automation.filters.tab.label": "TAB",
+    "dialogs.automation.filters.tab.untitled": "Tab",
+    "dialogs.schedule.email.tabs.info": "All tabs in the dashboard are included — a separate file is created for each tab and export format.",
+    "visualization.ErrorMessageResultCacheMissing": "Visualization needs refresh",
+    "visualization.ErrorDescriptionResultCacheMissing": "The underlying data changed or expired. Refresh the page.",
+    "insightAlert.config.granularity.tooltip": "Set how the data is aggregated before checking for anomalies.",
+    "insightAlert.config.metric": "Metric",
+    "dashboard.tabs.add-button-tooltip": "Add new tab"
 }

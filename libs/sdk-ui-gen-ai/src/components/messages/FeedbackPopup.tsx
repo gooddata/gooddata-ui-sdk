@@ -90,7 +90,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
             content={() => (
                 <div className="gd-gen-ai-feedback-popup__body">
                     <div className="gd-gen-ai-feedback-popup__section">
-                        <fieldset style={{ border: "none" }}>
+                        <fieldset>
                             <legend className="gd-label gd-gen-ai-feedback-popup__legend">
                                 {intl.formatMessage({ id: "gd.gen-ai.feedback.popup.reasons-label" })}
                             </legend>
@@ -143,12 +143,14 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
                         label={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.cancel" })}
                         variant="secondary"
                         onClick={() => handleCancel(onClose)}
+                        size="small"
                     />
                     <UiButton
                         label={intl.formatMessage({ id: "gd.gen-ai.feedback.popup.send" })}
                         variant="primary"
                         isDisabled={false}
                         onClick={() => handleSubmit(onClose)}
+                        size="small"
                     />
                 </>
             )}

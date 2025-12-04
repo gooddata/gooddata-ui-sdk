@@ -511,7 +511,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Drückt den Anteil des primären Metrikwerts am sekundären Metrikwert in Zahlen aus.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Berechnet die absolute Differenz zwischen primären und sekundären Metrikwerten.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Berechnet sowohl die relative Änderung als auch die absolute Differenz zwischen primären und sekundären Metrikwerten.",
-    "automations.alert.config.anomalyDetection.operatorName": "anomalieerkennung für",
+    "automations.alert.config.anomalyDetection.operatorName": "hat eine Anomalie",
     "automations.alert.config.anomalyDetection.withName": "mit",
     "automations.alert.config.anomalyDetection.withSensitivity": "empfindlichkeit",
     "automations.alert.config.anomalyDetection.granularity.minute": "Jede Minute",
@@ -525,5 +525,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "mittel",
     "automations.alert.config.anomalyDetection.sensitivity.high": "hoch",
     "automations.icon.tooltip.startsOn": "Beginnt am",
-    "automations.icon.tooltip.repeats": "Wiederholt"
+    "automations.icon.tooltip.repeats": "Wiederholt",
+    "properties.paging.title": "Paging",
+    "properties.paging.pageSize": "Seitengröße",
+    "properties.paging.pageSize.auto": "automatisch (Standard)",
+    "automations.menu.edit.unavailable": "Bearbeitungsaktion ist nicht verfügbar, kein zugeordnetes Dashboard"
 }

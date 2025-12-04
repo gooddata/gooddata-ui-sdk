@@ -32,6 +32,7 @@ import {
     selectCurrentUser,
     selectEnableAnomalyDetectionAlert,
     selectEnableExternalRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
     selectTimezone,
     selectUsers,
     selectWeekStart,
@@ -59,6 +60,8 @@ import {
 } from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../../../alerting/types.js";
 import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
+
+const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];
@@ -93,6 +96,12 @@ export const useEditAlert = ({
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
     const intl = useIntl();
+
+    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
+        selectEntitlementMinimumRecurrenceMinutes,
+    );
+    const allowHourlyRecurrence =
+        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
     const selectedDestination = destinations.find(
         (destination) => destination.id === updatedAlert.notificationChannel,
@@ -317,6 +326,7 @@ export const useEditAlert = ({
         allowExternalRecipients,
         warningMessage,
         enableAnomalyDetectionAlert,
+        allowHourlyRecurrence,
         //
         changeComparisonOperator,
         changeAnomalyDetection,

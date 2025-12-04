@@ -882,5 +882,13 @@
     "dashboard.tabs.move.right": "Mova-se para a direita",
     "dashboard.tabs.delete.disabled-tooltip": "Você não pode deletar a última aba. A navegação de aba não será visível no modo visualização quando restar apenas uma aba.",
     "dashboard.tabs.rename": "Renomear",
-    "dashboard.tabs.accessibility.add-button-label": "Adicionar nova aba"
+    "dashboard.tabs.accessibility.add-button-label": "Adicionar nova aba",
+    "dialogs.automation.filters.tab.label": "GUIA",
+    "dialogs.automation.filters.tab.untitled": "Guia",
+    "dialogs.schedule.email.tabs.info": "Todas as abas no painel estão incluídas — um arquivo separado é criado para cada aba e formato de exportação.",
+    "visualization.ErrorMessageResultCacheMissing": "A visualização precisa ser atualizada",
+    "visualization.ErrorDescriptionResultCacheMissing": "Os dados subjacentes mudaram ou expiraram. Atualize a página.",
+    "insightAlert.config.granularity.tooltip": "Defina como os dados são agregados antes de verificar anomalias.",
+    "insightAlert.config.metric": "Métrica",
+    "dashboard.tabs.add-button-tooltip": "Adicionar nova aba"
 }

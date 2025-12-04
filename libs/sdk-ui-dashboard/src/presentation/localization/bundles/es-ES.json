@@ -884,5 +884,13 @@
     "dashboard.tabs.move.right": "Muévete a la derecha",
     "dashboard.tabs.delete.disabled-tooltip": "No se puede borrar la última pestaña. La navegación por pestañas no será visible en el modo de vista cuando sólo quede una pestaña.",
     "dashboard.tabs.rename": "Cambie el nombre de",
-    "dashboard.tabs.accessibility.add-button-label": "Añadir nueva pestaña"
+    "dashboard.tabs.accessibility.add-button-label": "Añadir nueva pestaña",
+    "dialogs.automation.filters.tab.label": "TAB",
+    "dialogs.automation.filters.tab.untitled": "Pestaña",
+    "dialogs.schedule.email.tabs.info": "Se incluyen todas las pestañas del cuadro de mandos: se crea un archivo distinto para cada pestaña y formato de exportación.",
+    "visualization.ErrorMessageResultCacheMissing": "Hay que actualizar la visualización",
+    "visualization.ErrorDescriptionResultCacheMissing": "Los datos subyacentes han cambiado o han caducado. Actualiza la página.",
+    "insightAlert.config.granularity.tooltip": "Establezca cómo se agregan los datos antes de comprobar si hay anomalías.",
+    "insightAlert.config.metric": "Métrica",
+    "dashboard.tabs.add-button-tooltip": "Añadir nueva pestaña"
 }

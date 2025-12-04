@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Określa udział wartości metryki głównej w wartości metryki pomocniczej.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Oblicza bezwzględną różnicę między wartościami metryki głównej i pomocniczej.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Oblicza zarówno względną zmianę, jak i absolutną różnicę między wartościami metryk podstawowych i pomocniczych.",
-    "automations.alert.config.anomalyDetection.operatorName": "wykrywanie anomalii dla",
+    "automations.alert.config.anomalyDetection.operatorName": "ma anomalię",
     "automations.alert.config.anomalyDetection.withName": "z",
     "automations.alert.config.anomalyDetection.withSensitivity": "wrażliwość",
     "automations.alert.config.anomalyDetection.granularity.minute": "Co minutę",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "średni",
     "automations.alert.config.anomalyDetection.sensitivity.high": "wysoki",
     "automations.icon.tooltip.startsOn": "Zaczyna się od",
-    "automations.icon.tooltip.repeats": "Powtórzenia"
+    "automations.icon.tooltip.repeats": "Powtórzenia",
+    "properties.paging.title": "Stronicowanie",
+    "properties.paging.pageSize": "Rozmiar strony",
+    "properties.paging.pageSize.auto": "auto (domyślnie)",
+    "automations.menu.edit.unavailable": "Edycja jest niedostępna, brak powiązanego dashboardu"
 }

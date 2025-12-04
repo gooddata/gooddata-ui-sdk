@@ -84,5 +84,6 @@
     "drill.kda.drop": "드롭 {where} {title}",
     "drill.kda.increase": "증가 {where} {title}",
     "drill.kda.no_change": "오래된 {where} {title}",
-    "drill.kda.year_to_year": "전년 대비 변화"
+    "drill.kda.year_to_year": "전년 대비 변화",
+    "gd.gen-ai.drill_modal_picker.header.explain": "설명"
 }

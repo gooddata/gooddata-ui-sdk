@@ -812,5 +812,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Total) aggregation is not available when filtering the visualisation by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
     "shareDialog.share.link.helperTextWithTabs": "Link reflects current filters on active tab. Only accessible to users with dashboard access",
     "table.bulkActions.selectAll": "Select all",
-    "tabs.actions": "Actions for the current tab"
+    "tabs.actions": "Actions for the current tab",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisation needs refresh",
+    "visualization.ErrorDescriptionResultCacheMissing": "The underlying data has changed or expired. Please refresh the page.",
+    "visualizations.table.pagination.of": "of"
 }

@@ -3,7 +3,7 @@
 import { Suspense, lazy } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
@@ -18,13 +18,14 @@ const SemanticSearchTreeView = lazy(() =>
     })),
 );
 
+const SEMANTIC_SEARCH_TREE_VIEW_HEIGHT = 300 + 2;
+
 type Props = {
     content: SemanticSearchContents;
     useMarkdown?: boolean;
 };
 
 export function SemanticSearchContentsComponent({ content, useMarkdown }: Props) {
-    const intl = useIntl();
     const workspace = useWorkspaceStrict();
 
     // Keeping for backwards compatibility
@@ -49,9 +50,20 @@ export function SemanticSearchContentsComponent({ content, useMarkdown }: Props)
                 />
                 <FormattedMessage id="gd.gen-ai.semantic-search.title" />
             </header>
-            <Suspense fallback={null}>
-                <SemanticSearchTreeView workspace={workspace} content={content} locale={intl.locale} />
+            <Suspense fallback={<SemanticSearchTreeViewFallback />}>
+                <SemanticSearchTreeView
+                    workspace={workspace}
+                    content={content}
+                    maxHeight={SEMANTIC_SEARCH_TREE_VIEW_HEIGHT}
+                />
             </Suspense>
         </div>
     );
+}
+
+/**
+ * The fallback component for the semantic search tree view ensures that the correct height is set while loading.
+ */
+function SemanticSearchTreeViewFallback() {
+    return <div style={{ height: SEMANTIC_SEARCH_TREE_VIEW_HEIGHT }} />;
 }

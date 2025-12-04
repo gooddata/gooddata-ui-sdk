@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "セカンダリ基準値における主要基準値の割合を定量化します。",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "主要とセカンダリの基準値の差の絶対値を計算します。",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "主要とセカンダリの基準値の相対的な変化と絶対的な差の両方を計算します。",
-    "automations.alert.config.anomalyDetection.operatorName": "異常検知",
+    "automations.alert.config.anomalyDetection.operatorName": "異常がある",
     "automations.alert.config.anomalyDetection.withName": "と",
     "automations.alert.config.anomalyDetection.withSensitivity": "感性",
     "automations.alert.config.anomalyDetection.granularity.minute": "毎分",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "中",
     "automations.alert.config.anomalyDetection.sensitivity.high": "高い",
     "automations.icon.tooltip.startsOn": "開始日：",
-    "automations.icon.tooltip.repeats": "反復"
+    "automations.icon.tooltip.repeats": "反復",
+    "properties.paging.title": "ページング",
+    "properties.paging.pageSize": "ページサイズ",
+    "properties.paging.pageSize.auto": "自動 (規定値)",
+    "automations.menu.edit.unavailable": "編集アクションが利用できない、関連するダッシュボードがない"
 }
