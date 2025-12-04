@@ -18,10 +18,20 @@ import { useConfig } from "../../ConfigContext.js";
 type SemanticSearchTreeViewProps = {
     workspace: string;
     content: SemanticSearchContents;
-    locale: string;
+    maxHeight: number;
 };
 
-export function SemanticSearchTreeView({ workspace, content, locale }: SemanticSearchTreeViewProps) {
+export function SemanticSearchTreeView(props: SemanticSearchTreeViewProps) {
+    const intl = useIntl();
+
+    return (
+        <SemanticSearchIntlProvider locale={intl.locale}>
+            <SemanticSearchTreeViewImpl {...props} />
+        </SemanticSearchIntlProvider>
+    );
+}
+
+export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: SemanticSearchTreeViewProps) {
     const intl = useIntl();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
 
@@ -76,13 +86,6 @@ export function SemanticSearchTreeView({ workspace, content, locale }: SemanticS
     }
 
     return (
-        <SemanticSearchIntlProvider locale={locale}>
-            <LeveledSearchTreeView
-                items={items}
-                id={treeViewId}
-                onSelect={handleSelect}
-                maxHeight={300 + 2}
-            />
-        </SemanticSearchIntlProvider>
+        <LeveledSearchTreeView items={items} id={treeViewId} onSelect={handleSelect} maxHeight={maxHeight} />
     );
 }

@@ -84,5 +84,6 @@
     "drill.kda.drop": "Bırak {where} {title}",
     "drill.kda.increase": "Artır {where} {title}",
     "drill.kda.no_change": "Eski {where} {title}",
-    "drill.kda.year_to_year": "Yıldan yıla değişim"
+    "drill.kda.year_to_year": "Yıldan yıla değişim",
+    "gd.gen-ai.drill_modal_picker.header.explain": "Açıklayın"
 }

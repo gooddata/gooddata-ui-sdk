@@ -520,7 +520,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Määrittää ensisijaisen metriikan arvon osuuden toissijaisesta metriikasta.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Laskee ensisijaisen ja toissijaisen metriikan arvojen absoluuttisen eron.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Laskee sekä ensisijaisen että toissijaisen metriikan arvojen suhteellisen muutoksen että absoluuttisen eron.",
-    "automations.alert.config.anomalyDetection.operatorName": "poikkeamien havaitseminen kohteelle",
+    "automations.alert.config.anomalyDetection.operatorName": "jolla on poikkeavuus",
     "automations.alert.config.anomalyDetection.withName": "kanssa",
     "automations.alert.config.anomalyDetection.withSensitivity": "herkkyys",
     "automations.alert.config.anomalyDetection.granularity.minute": "Joka minuutti",
@@ -534,5 +534,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "keskinkertainen",
     "automations.alert.config.anomalyDetection.sensitivity.high": "korkea",
     "automations.icon.tooltip.startsOn": "Alkaa",
-    "automations.icon.tooltip.repeats": "Toistuu"
+    "automations.icon.tooltip.repeats": "Toistuu",
+    "properties.paging.title": "Sivutus",
+    "properties.paging.pageSize": "Sivun koko",
+    "properties.paging.pageSize.auto": "auto (oletus)",
+    "automations.menu.edit.unavailable": "Muokkaa toimintoa ei ole käytettävissä, siihen ei ole liitetty ohjauspaneelia"
 }

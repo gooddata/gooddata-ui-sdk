@@ -882,5 +882,13 @@
     "dashboard.tabs.move.right": "Sağa taşı",
     "dashboard.tabs.delete.disabled-tooltip": "Son sekmeyi silemezsiniz. Yalnızca bir sekme kaldığında sekme navigasyonu görüntüleme modunda görünmez.",
     "dashboard.tabs.rename": "Yeniden Adlandır",
-    "dashboard.tabs.accessibility.add-button-label": "Yeni sekme ekle"
+    "dashboard.tabs.accessibility.add-button-label": "Yeni sekme ekle",
+    "dialogs.automation.filters.tab.label": "SEKME",
+    "dialogs.automation.filters.tab.untitled": "Sekme",
+    "dialogs.schedule.email.tabs.info": "Gösterge tablosundaki tüm sekmeler dahil edilmiştir; her sekme ve dışa aktarma biçimi için ayrı bir dosya oluşturulur.",
+    "visualization.ErrorMessageResultCacheMissing": "Görselleştirmenin yenilenmesi gerekiyor",
+    "visualization.ErrorDescriptionResultCacheMissing": "Altta yatan veriler değişti veya süresi doldu. Sayfayı yenileyin.",
+    "insightAlert.config.granularity.tooltip": "Anomalileri kontrol etmeden önce verilerin nasıl toplanacağını ayarlayın.",
+    "insightAlert.config.metric": "Metrik",
+    "dashboard.tabs.add-button-tooltip": "Yeni sekme ekle"
 }

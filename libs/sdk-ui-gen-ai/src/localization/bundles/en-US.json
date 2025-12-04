@@ -280,7 +280,7 @@
         "comment": "Accessibility link to skip past navigation elements in the interface"
     },
     "gd.gen-ai.changeAnalysis.default_message": {
-        "value": "Here’s the change analysis for <metric>{title}</metric> between <b>{range}</b>.",
+        "value": "Here is the key driver analysis for <metric>{title}</metric> between <b>{range}</b>.",
         "comment": "Default message for change analysis"
     },
     "gd.gen-ai.changeAnalysis.splitter": {
@@ -294,6 +294,10 @@
     "gd.gen-ai.drill_modal_picker.label": {
         "value": "Drill modal picker",
         "comment": "Label for the drill modal picker"
+    },
+    "gd.gen-ai.drill_modal_picker.header.explain": {
+        "value": "Explain",
+        "comment": "Header for the drill modal picker explain section"
     },
     "drill.kda.from": {
         "value": "from",

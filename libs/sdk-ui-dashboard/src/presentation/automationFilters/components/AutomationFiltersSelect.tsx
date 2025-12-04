@@ -253,6 +253,8 @@ export function AutomationFiltersSelect({
     const tooltipText = isAddButtonDisabled ? tooltipTextValues.addDisabled : tooltipTextValues.add;
     const searchAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.searchAriaLabel" });
 
+    const disableFilters = !storeFilters && !!isDashboardAutomation;
+
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
             {hideTitle ? (
@@ -317,9 +319,9 @@ export function AutomationFiltersSelect({
                 ) : null}
 
                 <div
-                    className={`gd-automation-filters__wrapper${storeFilters ? "" : " gd-automation-filters__wrapper--disabled"}`}
+                    className={`gd-automation-filters__wrapper${storeFilters || !isDashboardAutomation ? "" : " gd-automation-filters__wrapper--disabled"}`}
                 >
-                    {!storeFilters && <div className="gd-automation-filters__overlay" />}
+                    {disableFilters ? <div className="gd-automation-filters__overlay" /> : null}
                     {shouldRenderByTab && tabFiltersData.processedFiltersByTab ? (
                         // Render filters grouped by tab with dividers between sections
                         <div
@@ -357,7 +359,7 @@ export function AutomationFiltersSelect({
                                         }
                                         overlayPositionType={overlayPositionType}
                                         showDivider={index < tabFiltersData.processedFiltersByTab!.length - 1}
-                                        storeFilters={storeFilters}
+                                        readonlyFilters={disableFilters}
                                         // Add button for each tab section
                                         addFilterButton={
                                             <AttributesDropdown
@@ -481,7 +483,7 @@ export function AutomationFiltersSelect({
                                             isCommonDateFilter={isCommonDateFilter}
                                             overlayPositionType={overlayPositionType}
                                             lockedFilters={lockedFilters}
-                                            storeFilters={storeFilters}
+                                            isReadOnly={disableFilters}
                                         />
                                     );
                                 })}
@@ -598,7 +600,7 @@ interface IAutomationFilterProps {
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
     lockedFilters: FilterContextItem[];
-    storeFilters: boolean;
+    isReadOnly: boolean;
 }
 
 function AutomationFilter({
@@ -609,7 +611,7 @@ function AutomationFilter({
     isCommonDateFilter,
     overlayPositionType,
     lockedFilters,
-    storeFilters,
+    isReadOnly,
 }: IAutomationFilterProps) {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -629,7 +631,7 @@ function AutomationFilter({
                 isLocked={isLocked}
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
-                readonly={!storeFilters}
+                readonly={isReadOnly}
             />
         );
     } else {
@@ -646,7 +648,7 @@ function AutomationFilter({
                 isLocked={isLocked}
                 isCommonDateFilter={isCommonDateFilter}
                 overlayPositionType={overlayPositionType}
-                readonly={!storeFilters}
+                readonly={isReadOnly}
             />
         );
     }
@@ -666,7 +668,7 @@ interface IAutomationFiltersTabSectionProps {
     showDivider?: boolean;
     /** Add filter button to render at the end of filters list */
     addFilterButton?: ReactNode;
-    storeFilters: boolean;
+    readonlyFilters: boolean;
 }
 
 /**
@@ -685,7 +687,7 @@ function AutomationFiltersTabSection({
     overlayPositionType,
     showDivider = false,
     addFilterButton,
-    storeFilters,
+    readonlyFilters,
 }: IAutomationFiltersTabSectionProps) {
     const intl = useIntl();
     const tabSectionLabelId = useIdPrefixed(`automation-filters-tab-${tabId}`);
@@ -742,7 +744,7 @@ function AutomationFiltersTabSection({
                                 isCommonDateFilter={isCommonDateFilter}
                                 overlayPositionType={overlayPositionType}
                                 lockedFilters={lockedFilters}
-                                storeFilters={storeFilters}
+                                isReadOnly={readonlyFilters}
                             />
                         );
                     })}

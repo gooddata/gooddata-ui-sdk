@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Quantifica la quota del valore della metrica primaria sul valore della metrica secondaria.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Calcola la differenza assoluta tra i valori della metrica primaria e secondaria.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Calcola sia la variazione relativa che la differenza assoluta tra i valori della metrica primaria e secondaria.",
-    "automations.alert.config.anomalyDetection.operatorName": "rilevamento delle anomalie per",
+    "automations.alert.config.anomalyDetection.operatorName": "ha un'anomalia",
     "automations.alert.config.anomalyDetection.withName": "con",
     "automations.alert.config.anomalyDetection.withSensitivity": "sensibilità",
     "automations.alert.config.anomalyDetection.granularity.minute": "Ogni minuto",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "media",
     "automations.alert.config.anomalyDetection.sensitivity.high": "alto",
     "automations.icon.tooltip.startsOn": "Inizia il",
-    "automations.icon.tooltip.repeats": "Ripetizioni"
+    "automations.icon.tooltip.repeats": "Ripetizioni",
+    "properties.paging.title": "Paging",
+    "properties.paging.pageSize": "Dimensione della pagina",
+    "properties.paging.pageSize.auto": "automatico (predefinito)",
+    "automations.menu.edit.unavailable": "L'azione di modifica non è disponibile, non c'è una dashboard associata"
 }

@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "기본 메트릭이 보조 메트릭에서 차지하는 비율을 정량화합니다.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "기본 메트릭 값 및 보조 메트릭 값 간의 절대 차이를 계산합니다.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "기본 메트릭 값 및 보조 메트릭 값 간의 상대적 변화와 절대적 차이를 모두 계산합니다.",
-    "automations.alert.config.anomalyDetection.operatorName": "이상 탐지용",
+    "automations.alert.config.anomalyDetection.operatorName": "이상 현상이 있습니다",
     "automations.alert.config.anomalyDetection.withName": "와 함께",
     "automations.alert.config.anomalyDetection.withSensitivity": "민감도",
     "automations.alert.config.anomalyDetection.granularity.minute": "매 분",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "중간",
     "automations.alert.config.anomalyDetection.sensitivity.high": "높음",
     "automations.icon.tooltip.startsOn": "시작 날짜",
-    "automations.icon.tooltip.repeats": "반복"
+    "automations.icon.tooltip.repeats": "반복",
+    "properties.paging.title": "페이징",
+    "properties.paging.pageSize": "페이지 크기",
+    "properties.paging.pageSize.auto": "자동(기본값)",
+    "automations.menu.edit.unavailable": "편집 작업을 사용할 수 없습니다, 관련 대시보드가 없습니다"
 }

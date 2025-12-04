@@ -712,7 +712,10 @@ export function useEditScheduledEmail({
     );
 
     const onApplyCurrentFilters = useCallback(() => {
-        const filtersByTabForNewAutomation = getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
+        // Widget schedules should never use per-tab filters, only dashboard schedules can have tabs
+        const filtersByTabForNewAutomation = widget
+            ? undefined
+            : getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
         if (filtersByTabForNewAutomation) {
             onFiltersByTabChange(filtersByTabForNewAutomation);
         } else {

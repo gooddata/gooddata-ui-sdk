@@ -127,9 +127,17 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
             const hasColumnWidths = columns.length > 0;
             const hasTextWrapping = value?.textWrapping !== undefined;
             const hasGrandTotalsPosition = value?.grandTotalsPosition !== undefined;
+            const hasPagination = value?.pagination !== undefined;
+            const hasPageSize = value?.pageSize !== undefined;
 
             // If no properties need to be preserved, keep original controls as-is
-            if (!hasColumnWidths && !hasTextWrapping && !hasGrandTotalsPosition) {
+            if (
+                !hasColumnWidths &&
+                !hasTextWrapping &&
+                !hasGrandTotalsPosition &&
+                !hasPagination &&
+                !hasPageSize
+            ) {
                 return acc;
             }
 
@@ -137,6 +145,8 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
                 ...(hasColumnWidths ? { columnWidths: columns } : {}),
                 ...(hasTextWrapping ? { textWrapping: value!.textWrapping } : {}),
                 ...(hasGrandTotalsPosition ? { grandTotalsPosition: value!.grandTotalsPosition } : {}),
+                ...(hasPagination ? { pagination: value!.pagination } : {}),
+                ...(hasPageSize ? { pageSize: value!.pageSize } : {}),
             };
 
             return acc;

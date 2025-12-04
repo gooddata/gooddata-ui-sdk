@@ -886,5 +886,13 @@
     "dashboard.tabs.move.right": "移右",
     "dashboard.tabs.delete.disabled-tooltip": "你唔可以刪除最後一個標籤。 當只剩下一個標籤頁時，標籤頁導航喺檢視模式下就唔會睇到。",
     "dashboard.tabs.rename": "改名",
-    "dashboard.tabs.accessibility.add-button-label": "加入新標籤"
+    "dashboard.tabs.accessibility.add-button-label": "加入新標籤",
+    "dialogs.automation.filters.tab.label": "標籤",
+    "dialogs.automation.filters.tab.untitled": "標籤",
+    "dialogs.schedule.email.tabs.info": "儀表板中的所有標籤都包括在內 — 每個標籤和匯出格式都會建立一個單獨的檔案。",
+    "visualization.ErrorMessageResultCacheMissing": "可視化需要更新",
+    "visualization.ErrorDescriptionResultCacheMissing": "基礎數據已更改或過期。 重新整理頁面。",
+    "insightAlert.config.granularity.tooltip": "設定在檢查異常之前如何匯總數據。",
+    "insightAlert.config.metric": "計量",
+    "dashboard.tabs.add-button-tooltip": "加入新標籤"
 }

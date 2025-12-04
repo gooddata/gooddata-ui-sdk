@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "按指標值過濾可視化時，匯總（總計）聚合不可用。若要使用總計（總計），請從篩選器欄中刪除所有指標值篩選器。",
     "shareDialog.share.link.helperTextWithTabs": "連結反映目前標籤頁的篩選條件。僅限擁有儀表板存取權限的使用者存取權。",
     "table.bulkActions.selectAll": "全選",
-    "tabs.actions": "目前選項卡的操作"
+    "tabs.actions": "目前選項卡的操作",
+    "visualization.ErrorMessageResultCacheMissing": "可視化效果需要更新",
+    "visualization.ErrorDescriptionResultCacheMissing": "基礎數據已更改或過期。請刷新頁面。",
+    "visualizations.table.pagination.of": "的"
 }

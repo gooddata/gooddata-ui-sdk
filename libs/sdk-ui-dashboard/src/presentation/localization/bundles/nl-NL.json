@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "Naar rechts",
     "dashboard.tabs.delete.disabled-tooltip": "Je kunt het laatste tabblad niet verwijderen. Tabbladnavigatie is niet zichtbaar in de weergavemodus als er nog maar één tabblad over is.",
     "dashboard.tabs.rename": "Hernoem",
-    "dashboard.tabs.accessibility.add-button-label": "Nieuw tabblad toevoegen"
+    "dashboard.tabs.accessibility.add-button-label": "Nieuw tabblad toevoegen",
+    "dialogs.automation.filters.tab.label": "TAB",
+    "dialogs.automation.filters.tab.untitled": "Tab",
+    "dialogs.schedule.email.tabs.info": "Alle tabbladen in het dashboard worden meegenomen - voor elk tabblad en elke exportindeling wordt een apart bestand gemaakt.",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisatie heeft een opfrisbeurt nodig",
+    "visualization.ErrorDescriptionResultCacheMissing": "De onderliggende gegevens zijn gewijzigd of verlopen. Vernieuw de pagina.",
+    "insightAlert.config.granularity.tooltip": "Stel in hoe de gegevens worden samengevoegd voordat ze worden gecontroleerd op afwijkingen.",
+    "insightAlert.config.metric": "Meetgegeven",
+    "dashboard.tabs.add-button-tooltip": "Nieuw tabblad toevoegen"
 }

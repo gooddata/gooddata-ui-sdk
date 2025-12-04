@@ -1724,8 +1724,24 @@ export type CachingConfiguration = {
      * memory usage will only go up.
      *
      * When non-positive number is specified, then no caching will be done.
+     *
+     * Note: When specified, this takes precedence over `maxExecutionsAge`.
      */
     maxExecutions?: number;
+
+    /**
+     * Maximum age of cached execution results. The value is in milliseconds.
+     *
+     * Items are not pro-actively pruned out as they age, but if you try to get an item that is too old,
+     * it'll drop it and make a new request to the backend. The purpose of the cache setting is not mainly
+     * to limit its size to prevent memory usage grow but to ensure that cached execution results are
+     * refreshed periodically to reflect any data changes on the backend.
+     *
+     * Only used when `maxExecutions` is not specified.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxExecutionsAge?: number;
 
     /**
      * Maximum number of execution result's pages to cache PER result. The window offset and limit are used as cache key.
@@ -1964,21 +1980,28 @@ export function withCaching(
     realBackend: IAnalyticalBackend,
     config: CachingConfiguration,
 ): IAnalyticalBackend {
+    assertPositiveOrUndefined(config.maxExecutions, "maxExecutions");
+    assertPositiveOrUndefined(config.maxExecutionsAge, "maxExecutionsAge");
     assertPositiveOrUndefined(config.maxCatalogOptions, "maxCatalogOptions");
     assertPositiveOrUndefined(config.maxGeoCollectionItemsPerResult, "maxGeoCollectionItemsPerResult");
     assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
     assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrlsAge, "maxSecuritySettingsOrgUrlsAge");
 
-    const execCaching = cachingEnabled(config.maxExecutions);
+    const execCaching = cachingEnabled(config.maxExecutionsAge) || cachingEnabled(config.maxExecutions);
     const catalogCaching = cachingEnabled(config.maxCatalogs);
     const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
 
+    // Determine execution cache configuration: count-based (maxExecutions) takes precedence over time-based (maxExecutionsAge)
+    const executionCacheOptions = cachingEnabled(config.maxExecutions)
+        ? { max: config.maxExecutions! }
+        : { max: 500, ttl: config.maxExecutionsAge! };
+
     const ctx: CachingContext = {
         caches: {
-            execution: execCaching ? new LRUCache({ max: config.maxExecutions! }) : undefined,
+            execution: execCaching ? new LRUCache(executionCacheOptions) : undefined,
             workspaceCatalogs: catalogCaching ? new LRUCache({ max: config.maxCatalogs! }) : undefined,
             securitySettings: securitySettingsCaching
                 ? new LRUCache({ max: config.maxSecuritySettingsOrgs! })

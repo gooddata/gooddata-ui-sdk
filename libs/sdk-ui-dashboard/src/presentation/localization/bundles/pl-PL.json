@@ -882,5 +882,13 @@
     "dashboard.tabs.move.right": "Przesuń w prawo",
     "dashboard.tabs.delete.disabled-tooltip": "Nie można usunąć ostatniej karty. Nawigacja kartami nie będzie widoczna w trybie podglądu, gdy pozostanie tylko jedna karta.",
     "dashboard.tabs.rename": "Zmień nazwę",
-    "dashboard.tabs.accessibility.add-button-label": "Dodaj nową kartę"
+    "dashboard.tabs.accessibility.add-button-label": "Dodaj nową kartę",
+    "dialogs.automation.filters.tab.label": "KARTA",
+    "dialogs.automation.filters.tab.untitled": "Karta",
+    "dialogs.schedule.email.tabs.info": "Wszystkie karty w pulpicie nawigacyjnym są uwzględnione — tworzony jest oddzielny plik dla każdej karty i formatu eksportu.",
+    "visualization.ErrorMessageResultCacheMissing": "Wizualizacja wymaga odświeżenia",
+    "visualization.ErrorDescriptionResultCacheMissing": "Dane źródłowe uległy zmianie lub wygasły. Odśwież stronę.",
+    "insightAlert.config.granularity.tooltip": "Ustaw, w jaki sposób dane są agregowane przed sprawdzeniem anomalii.",
+    "insightAlert.config.metric": "Metryka",
+    "dashboard.tabs.add-button-tooltip": "Dodaj nową kartę"
 }

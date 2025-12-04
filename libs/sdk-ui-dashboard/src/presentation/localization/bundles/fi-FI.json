@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "Siirrä oikealle",
     "dashboard.tabs.delete.disabled-tooltip": "Et voi poistaa viimeistä välilehteä. Välilehden navigointi ei näy katselutilassa, kun vain yksi välilehti on jäljellä.",
     "dashboard.tabs.rename": "Nimeä uudelleen",
-    "dashboard.tabs.accessibility.add-button-label": "Lisää uusi välilehti"
+    "dashboard.tabs.accessibility.add-button-label": "Lisää uusi välilehti",
+    "dialogs.automation.filters.tab.label": "VÄLILEHTI",
+    "dialogs.automation.filters.tab.untitled": "Välilehti",
+    "dialogs.schedule.email.tabs.info": "Kaikki koontinäytön välilehdet ovat mukana — jokaiselle välilehdelle ja vientimuodolle luodaan erillinen tiedosto.",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisointi tarvitsee päivityksen",
+    "visualization.ErrorDescriptionResultCacheMissing": "Taustatiedot muuttuivat tai vanhentuivat. Päivitä sivu.",
+    "insightAlert.config.granularity.tooltip": "Määritä, miten tiedot yhdistetään ennen poikkeamien tarkistamista.",
+    "insightAlert.config.metric": "Metriikka",
+    "dashboard.tabs.add-button-tooltip": "Lisää uusi välilehti"
 }

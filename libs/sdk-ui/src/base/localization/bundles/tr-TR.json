@@ -812,5 +812,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Toplam) toplama, görselleştirmeyi metrik değeriyle filtrelerken kullanılamaz. Rollup (Toplam) kullanmak için filtre çubuğundan tüm metrik değeri filtrelerini kaldırın.",
     "shareDialog.share.link.helperTextWithTabs": "Bağlantı, aktif sekmedeki mevcut filtreleri yansıtır. Yalnızca panoya erişimi olan kullanıcılar tarafından erişilebilir.",
     "table.bulkActions.selectAll": "Tümünü seç",
-    "tabs.actions": "Geçerli sekme için eylemler"
+    "tabs.actions": "Geçerli sekme için eylemler",
+    "visualization.ErrorMessageResultCacheMissing": "Görselleştirmenin yenilenmesi gerekiyor",
+    "visualization.ErrorDescriptionResultCacheMissing": "Altta yatan veriler değişti veya süresi doldu. Sayfayı yenileyin.",
+    "visualizations.table.pagination.of": "/"
 }

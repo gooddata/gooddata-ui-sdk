@@ -73,6 +73,7 @@ export * from "./RichText/index.js";
 export * from "./RecurrenceForm/index.js";
 export * from "./AddButton/index.js";
 export * from "./ZoomContext/ZoomContext.js";
+export * from "./FilterGroupItem/index.js";
 // export * from "./Table/index.js";
 /**
  * New components

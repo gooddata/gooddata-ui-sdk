@@ -802,5 +802,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "ロールアップ (合計) 集計は、メトリック値でビジュアライゼーションをフィルタリングしている場合は使用できません。ロールアップ（合計）を使用するには、フィルターバーからすべてのメトリック値フィルターを削除します。",
     "shareDialog.share.link.helperTextWithTabs": "リンクはアクティブなタブの現在のフィルターを反映します。ダッシュボードにアクセスできるユーザーのみがアクセスできます。",
     "table.bulkActions.selectAll": "すべて選択",
-    "tabs.actions": "現在のタブのアクション"
+    "tabs.actions": "現在のタブのアクション",
+    "visualization.ErrorMessageResultCacheMissing": "ビジュアライゼーションの刷新が必要",
+    "visualization.ErrorDescriptionResultCacheMissing": "基礎データが変更されたか、有効期限が切れた。ページを更新してください。",
+    "visualizations.table.pagination.of": "/"
 }

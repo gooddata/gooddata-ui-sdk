@@ -881,5 +881,13 @@
     "dashboard.tabs.move.right": "右に移動",
     "dashboard.tabs.delete.disabled-tooltip": "最後のタブは削除できません。タブが1つしか残っていない場合、表示モードではタブナビゲーションは表示されません。",
     "dashboard.tabs.rename": "名前変更",
-    "dashboard.tabs.accessibility.add-button-label": "新しいタブを追加する"
+    "dashboard.tabs.accessibility.add-button-label": "新しいタブを追加する",
+    "dialogs.automation.filters.tab.label": "タブ",
+    "dialogs.automation.filters.tab.untitled": "タブ",
+    "dialogs.schedule.email.tabs.info": "ダッシュボードのすべてのタブが含まれます - 各タブとエクスポート形式ごとに別々のファイルが作成されます。",
+    "visualization.ErrorMessageResultCacheMissing": "ビジュアライゼーションの刷新が必要",
+    "visualization.ErrorDescriptionResultCacheMissing": "基礎データが変更されたか、有効期限が切れた。ページを更新してください。",
+    "insightAlert.config.granularity.tooltip": "異常をチェックする前に、データをどのように集計するかを設定する。",
+    "insightAlert.config.metric": "基準",
+    "dashboard.tabs.add-button-tooltip": "新しいタブを追加する"
 }

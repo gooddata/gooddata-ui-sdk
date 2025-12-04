@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Kooste (Yhteensä) -aggregaatio ei ole käytettävissä, kun visualisointia suodatetaan metrisen arvon mukaan. Jos haluat käyttää yhdistelmää (yhteensä), poista kaikki mitta-arvosuodattimet suodatinpalkista.",
     "shareDialog.share.link.helperTextWithTabs": "Linkki heijastaa nykyisiä suodattimia aktiivisella välilehdellä. Käytettävissä vain käyttäjille, joilla on ohjauspaneelin käyttöoikeus.",
     "table.bulkActions.selectAll": "Valitse kaikki",
-    "tabs.actions": "Toiminnot nykyiselle välilehdelle"
+    "tabs.actions": "Toiminnot nykyiselle välilehdelle",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisointi tarvitsee päivityksen",
+    "visualization.ErrorDescriptionResultCacheMissing": "Taustatiedot muuttuivat tai vanhentuivat. Päivitä sivu.",
+    "visualizations.table.pagination.of": "–n"
 }

@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "L'aggregazione Rollup (Totale) non è disponibile quando si filtra la visualizzazione per valore metrico. Per utilizzare il Rollup (totale), rimuovere tutti i filtri dei valori metrici dalla barra dei filtri.",
     "shareDialog.share.link.helperTextWithTabs": "Il collegamento riflette i filtri correnti della scheda attiva. Accessibile solo agli utenti con accesso alla dashboard.",
     "table.bulkActions.selectAll": "Seleziona tutto",
-    "tabs.actions": "Azioni per la scheda corrente"
+    "tabs.actions": "Azioni per la scheda corrente",
+    "visualization.ErrorMessageResultCacheMissing": "La visualizzazione ha bisogno di una rinfrescata",
+    "visualization.ErrorDescriptionResultCacheMissing": "I dati sottostanti sono cambiati o scaduti. Aggiornare la pagina.",
+    "visualizations.table.pagination.of": "di"
 }

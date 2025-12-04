@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { IDrillEvent } from "@gooddata/sdk-ui";
 import {
@@ -36,17 +36,30 @@ export function DrillSelectDropdownMenu({ drillState, onClose, onSelect }: Drill
             const stringTitle = getKeyDriverCombinationItemTitle(intl, key);
             return {
                 stringTitle,
-                type: "interactive",
+                type: "interactive" as const,
                 id: `key-${i}`,
                 iconLeft: <UiIcon type="explainai" size={16} color="complementary-5" ariaHidden />,
                 data: {
                     name: stringTitle,
                     context: key,
                 },
-            } as IUiMenuInteractiveItem<IDrillSelectDropdownMenuItemData>;
+            };
         });
 
-        return items ?? [];
+        if (items) {
+            return [
+                {
+                    type: "static" as const,
+                    data: (
+                        <span className="gd-gen-ai-chat__visualization__drill-header">
+                            <FormattedMessage id="gd.gen-ai.drill_modal_picker.header.explain" />
+                        </span>
+                    ),
+                },
+                ...items,
+            ];
+        }
+        return [];
     }, [drillState?.keyDriverData, intl]);
 
     return (
@@ -55,6 +68,7 @@ export function DrillSelectDropdownMenu({ drillState, onClose, onSelect }: Drill
             onSelect={onSelect}
             shouldCloseOnSelect
             onClose={onClose}
+            size="small"
             ariaAttributes={{
                 id: "drill-select-menu",
                 "aria-label": intl.formatMessage({ id: "gd.gen-ai.drill_modal_picker.label" }),

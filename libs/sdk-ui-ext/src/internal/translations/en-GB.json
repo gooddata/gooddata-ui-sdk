@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Quantifies the share of the primary metric value in the secondary metric value.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Calculates the absolute difference between primary and secondary metric values.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
-    "automations.alert.config.anomalyDetection.operatorName": "anomaly detection for",
+    "automations.alert.config.anomalyDetection.operatorName": "has an anomaly",
     "automations.alert.config.anomalyDetection.withName": "with",
     "automations.alert.config.anomalyDetection.withSensitivity": "sensitivity",
     "automations.alert.config.anomalyDetection.granularity.minute": "Every minute",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "medium",
     "automations.alert.config.anomalyDetection.sensitivity.high": "high",
     "automations.icon.tooltip.startsOn": "Starts on",
-    "automations.icon.tooltip.repeats": "Repeats"
+    "automations.icon.tooltip.repeats": "Repeats",
+    "properties.paging.title": "Paging",
+    "properties.paging.pageSize": "Page size",
+    "properties.paging.pageSize.auto": "auto (default)",
+    "automations.menu.edit.unavailable": "Edit action is unavailable, no associated dashboard"
 }

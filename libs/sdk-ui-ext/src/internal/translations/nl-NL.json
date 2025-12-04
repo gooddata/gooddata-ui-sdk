@@ -509,7 +509,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Kwantificeert het deel van de primaire metrische waarde in de secundaire metrische waarde.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Berekent het absolute verschil tussen primaire en secundaire metrische waarden.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Berekent zowel de relatieve wijziging als het absolute verschil tussen primaire en secundaire metrische waarden.",
-    "automations.alert.config.anomalyDetection.operatorName": "anomaliedetectie voor",
+    "automations.alert.config.anomalyDetection.operatorName": "heeft een afwijking",
     "automations.alert.config.anomalyDetection.withName": "met",
     "automations.alert.config.anomalyDetection.withSensitivity": "gevoeligheid",
     "automations.alert.config.anomalyDetection.granularity.minute": "Elke minuut",
@@ -523,5 +523,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "gemiddeld",
     "automations.alert.config.anomalyDetection.sensitivity.high": "hoog",
     "automations.icon.tooltip.startsOn": "Begint op",
-    "automations.icon.tooltip.repeats": "Herhaalt"
+    "automations.icon.tooltip.repeats": "Herhaalt",
+    "properties.paging.title": "Oproep",
+    "properties.paging.pageSize": "Paginaformaat",
+    "properties.paging.pageSize.auto": "auto (standaard)",
+    "automations.menu.edit.unavailable": "Bewerk actie is niet beschikbaar, geen bijbehorend dashboard"
 }

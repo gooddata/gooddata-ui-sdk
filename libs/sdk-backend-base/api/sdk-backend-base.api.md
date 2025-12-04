@@ -286,6 +286,7 @@ export type CacheControl = {
 // @public
 export type CachingConfiguration = {
     maxExecutions?: number;
+    maxExecutionsAge?: number;
     maxResultWindows?: number;
     maxGeoCollectionItemsPerResult?: number;
     maxCatalogs?: number;

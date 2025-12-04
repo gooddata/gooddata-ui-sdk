@@ -805,5 +805,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por valor de métrica. Para utilizar Rollup (Total), elimine todos los filtros de valor de métrica de la barra de filtros.",
     "shareDialog.share.link.helperTextWithTabs": "El enlace refleja los filtros actuales en la pestaña activa. Sólo accesible para usuarios con acceso al panel de control.",
     "table.bulkActions.selectAll": "Seleccionar todo",
-    "tabs.actions": "Acciones para la pestaña actual"
+    "tabs.actions": "Acciones para la pestaña actual",
+    "visualization.ErrorMessageResultCacheMissing": "Hay que actualizar la visualización",
+    "visualization.ErrorDescriptionResultCacheMissing": "Los datos subyacentes han cambiado o han caducado. Actualiza la página.",
+    "visualizations.table.pagination.of": "de"
 }

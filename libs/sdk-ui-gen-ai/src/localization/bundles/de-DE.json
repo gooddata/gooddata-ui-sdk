@@ -84,5 +84,6 @@
     "drill.kda.drop": "Fallen {where} {title}",
     "drill.kda.increase": "Erhöhen {where} {title}",
     "drill.kda.no_change": "Altbacken {where} {title}",
-    "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr"
+    "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr",
+    "gd.gen-ai.drill_modal_picker.header.explain": "Erklären"
 }

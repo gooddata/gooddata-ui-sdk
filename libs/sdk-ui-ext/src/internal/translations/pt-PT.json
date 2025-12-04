@@ -510,7 +510,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Quantifica a proporção do valor métrico primário no valor métrico secundário.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Calcula a diferença absoluta entre os valores métricos primário e secundário.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Calcula a diferença relativa e a diferença absoluta entre os valores métricos primário e secundário.",
-    "automations.alert.config.anomalyDetection.operatorName": "Detecção de anomalias para",
+    "automations.alert.config.anomalyDetection.operatorName": "tem uma anomalia",
     "automations.alert.config.anomalyDetection.withName": "com",
     "automations.alert.config.anomalyDetection.withSensitivity": "sensibilidade",
     "automations.alert.config.anomalyDetection.granularity.minute": "A cada minuto",
@@ -524,5 +524,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "média",
     "automations.alert.config.anomalyDetection.sensitivity.high": "alto",
     "automations.icon.tooltip.startsOn": "Começa em",
-    "automations.icon.tooltip.repeats": "Repete"
+    "automations.icon.tooltip.repeats": "Repete",
+    "properties.paging.title": "Paginação",
+    "properties.paging.pageSize": "Tamanho da página",
+    "properties.paging.pageSize.auto": "automático (predefinição)",
+    "automations.menu.edit.unavailable": "A ação de edição não está disponível, sem painel associado"
 }

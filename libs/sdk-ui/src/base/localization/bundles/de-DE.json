@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Gesamt) Aggregation ist nicht verfügbar, wenn die Visualisierung nach Metrikwerten gefiltert wird. Um Rollup (Gesamt) zu verwenden, entfernen Sie alle Metrikwertfilter aus der Filterleiste.",
     "shareDialog.share.link.helperTextWithTabs": "Link spiegelt die aktuellen Filter auf der aktiven Registerkarte wider. Nur für Benutzer mit Dashboard-Zugriff zugänglich.",
     "table.bulkActions.selectAll": "Alle auswählen",
-    "tabs.actions": "Aktionen für die aktuelle Registerkarte"
+    "tabs.actions": "Aktionen für die aktuelle Registerkarte",
+    "visualization.ErrorMessageResultCacheMissing": "Visualisierung muss aktualisiert werden",
+    "visualization.ErrorDescriptionResultCacheMissing": "Die zugrundeliegenden Daten haben sich geändert oder sind abgelaufen. Aktualisieren Sie die Seite.",
+    "visualizations.table.pagination.of": "von"
 }

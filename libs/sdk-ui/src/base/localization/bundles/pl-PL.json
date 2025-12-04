@@ -813,5 +813,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Agregacja podsumowania (Suma) nie jest dostępna podczas filtrowania wizualizacji wg wartości metryki. Aby użyć podsumowania (Suma), usuń wszystkie filtry wartości metryki z paska filtrów.",
     "shareDialog.share.link.helperTextWithTabs": "Link odzwierciedla bieżące filtry na aktywnej karcie. Dostępny tylko dla użytkowników z dostępem do pulpitu nawigacyjnego.",
     "table.bulkActions.selectAll": "Zaznacz wszystko",
-    "tabs.actions": "Akcje dla bieżącej karty"
+    "tabs.actions": "Akcje dla bieżącej karty",
+    "visualization.ErrorMessageResultCacheMissing": "Wizualizacja wymaga odświeżenia",
+    "visualization.ErrorDescriptionResultCacheMissing": "Dane źródłowe uległy zmianie lub wygasły. Odśwież stronę.",
+    "visualizations.table.pagination.of": "z"
 }

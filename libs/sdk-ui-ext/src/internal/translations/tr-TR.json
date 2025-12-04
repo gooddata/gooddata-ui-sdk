@@ -507,7 +507,7 @@
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": "Birincil metrik değerinin ikincil metrik değerindeki payını ölçer.",
     "properties.comparison.calculationType.as.difference.tooltip.useIn": "Birincil ve ikincil metrik değerleri arasındaki mutlak farkı hesaplar.",
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": "Birincil ve ikincil metrik değerleri arasındaki göreceli değişimi ve mutlak farkı hesaplar.",
-    "automations.alert.config.anomalyDetection.operatorName": "için anomali tespiti",
+    "automations.alert.config.anomalyDetection.operatorName": "bir anormalliği var",
     "automations.alert.config.anomalyDetection.withName": "ile",
     "automations.alert.config.anomalyDetection.withSensitivity": "duyarlılık",
     "automations.alert.config.anomalyDetection.granularity.minute": "Her dakika",
@@ -521,5 +521,9 @@
     "automations.alert.config.anomalyDetection.sensitivity.medium": "orta düzey",
     "automations.alert.config.anomalyDetection.sensitivity.high": "yüksek",
     "automations.icon.tooltip.startsOn": "Başlangıç tarihi",
-    "automations.icon.tooltip.repeats": "Tekrarlar"
+    "automations.icon.tooltip.repeats": "Tekrarlar",
+    "properties.paging.title": "Sayfalama",
+    "properties.paging.pageSize": "Sayfa boyutu",
+    "properties.paging.pageSize.auto": "otomatik (varsayılan)",
+    "automations.menu.edit.unavailable": "Düzenleme eylemi kullanılamıyor, ilişkili pano yok"
 }

@@ -803,5 +803,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "按指标值筛选可视化时，汇总（总计）聚合不可用。要使用汇总（总计），请从筛选器栏中删除所有指标值筛选器。",
     "shareDialog.share.link.helperTextWithTabs": "链接反映当前标签页的筛选条件。仅限拥有仪表盘访问权限的用户访问。",
     "table.bulkActions.selectAll": "全选",
-    "tabs.actions": "当前选项卡的操作"
+    "tabs.actions": "当前选项卡的操作",
+    "visualization.ErrorMessageResultCacheMissing": "可视化效果需要更新",
+    "visualization.ErrorDescriptionResultCacheMissing": "基础数据已更改或过期。请刷新页面。",
+    "visualizations.table.pagination.of": "/"
 }

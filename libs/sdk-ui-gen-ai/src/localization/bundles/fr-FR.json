@@ -84,5 +84,6 @@
     "drill.kda.drop": "Chute {where} {title}",
     "drill.kda.increase": "Augmentation {where} {title}",
     "drill.kda.no_change": "Stale {where} {title}",
-    "drill.kda.year_to_year": "Variation d'une année sur l'autre"
+    "drill.kda.year_to_year": "Variation d'une année sur l'autre",
+    "gd.gen-ai.drill_modal_picker.header.explain": "Expliquer"
 }

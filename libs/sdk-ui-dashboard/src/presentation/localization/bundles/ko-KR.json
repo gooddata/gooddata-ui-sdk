@@ -882,5 +882,13 @@
     "dashboard.tabs.move.right": "오른쪽으로 이동",
     "dashboard.tabs.delete.disabled-tooltip": "마지막 탭은 삭제할 수 없습니다. 하나의 탭만 남아 있을 때는 보기 모드에서 탭 탐색이 표시되지 않습니다.",
     "dashboard.tabs.rename": "이름 변경",
-    "dashboard.tabs.accessibility.add-button-label": "새 탭 추가"
+    "dashboard.tabs.accessibility.add-button-label": "새 탭 추가",
+    "dialogs.automation.filters.tab.label": "탭",
+    "dialogs.automation.filters.tab.untitled": "탭",
+    "dialogs.schedule.email.tabs.info": "대시보드의 모든 탭이 포함됩니다 — 각 탭과 내보내기 형식에 대해 별도의 파일이 생성됩니다.",
+    "visualization.ErrorMessageResultCacheMissing": "시각화 새로 고침 필요",
+    "visualization.ErrorDescriptionResultCacheMissing": "기본 데이터가 변경되었거나 만료되었습니다. 페이지를 새로 고치십시오.",
+    "insightAlert.config.granularity.tooltip": "데이터가 이상치를 확인하기 전에 어떻게 집계되는지 설정하십시오.",
+    "insightAlert.config.metric": "메트릭",
+    "dashboard.tabs.add-button-tooltip": "새 탭 추가"
 }

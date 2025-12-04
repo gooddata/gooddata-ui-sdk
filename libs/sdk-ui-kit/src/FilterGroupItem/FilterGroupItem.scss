@@ -1,0 +1,134 @@
+@use "sass:list";
+@use "sass:map";
+@use "../../styles/scss/button";
+@use "../../styles/scss/mixins";
+@use "../../styles/scss/typo-mixins";
+@use "../../styles/scss/variables" as variables;
+
+.gd-filter-group-item {
+    @include typo-mixins.gd-font-base;
+    padding: 10px;
+    transition:
+        background-color 0.2s ease,
+        padding-left 0.2s ease;
+    position: relative;
+    display: flex;
+    border-radius: 0;
+
+    &:not(.error) {
+        cursor: pointer;
+    }
+
+    .gd-filter-group-item-chevron {
+        transition: transform 0.8s ease;
+        padding-right: 4px;
+        color: variables.$gd-color-state-blank;
+    }
+
+    &:not(.error):hover,
+    &.gd-is-active {
+        background-color: variables.$is-focused-background;
+
+        &::before {
+            transform: translateX(0) scaleX(1);
+            opacity: 1;
+        }
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background-color: variables.$gd-palette-primary-base;
+        transform: translateX(-2px) scaleX(0);
+        opacity: 0;
+        transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
+    }
+
+    &:not(.error):hover .gd-filter-group-item-chevron,
+    &.gd-is-active .gd-filter-group-item-chevron {
+        transform: translateX(4px);
+    }
+
+    &.gd-is-active:not(.error):hover {
+        background-color: variables.$gd-palette-primary-dimmed;
+
+        &::before {
+            transform: translateX(-2px) scaleX(0);
+            opacity: 0;
+        }
+
+        .gd-filter-group-item-chevron {
+            transform: translateX(0);
+            animation: none;
+        }
+    }
+
+    &.error:not(.gd-is-active) {
+        background-color: variables.$gd-palette-error-dimmed;
+    }
+
+    &.error.gd-is-active .gd-filter-group-item-icon {
+        color: variables.$default-gd-color-state-blank;
+    }
+
+    .gd-filter-group-item-icon {
+        margin-right: 4px;
+    }
+}
+
+.gd-filter-group-item-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-grow: 1;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.gd-filter-group-item-title,
+.gd-filter-group-item-subtitle {
+    max-width: 100%;
+    white-space: nowrap;
+    font-size: 12px;
+    color: variables.$gd-color-label;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    gap: 5px;
+}
+
+.gd-filter-group-item-subtitle {
+    display: inline-flex;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    color: variables.$gd-color-text;
+}
+
+.gd-filter-group-item-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.gd-filter-group-item-title-content {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.gd-filter-group-item-selected-items {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

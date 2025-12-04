@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useLayoutEffect, useRef } from "react";
-
 import { useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
 import { connect } from "react-redux";
@@ -9,6 +7,7 @@ import { connect } from "react-redux";
 import { isAssistantMessage, isUserMessage } from "../model.js";
 import { useCustomization } from "./CustomizationProvider.js";
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
+import { useMessageScroller } from "./messages/MessageScroller.js";
 import { RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 
 type MessagesComponentProps = {
@@ -64,23 +63,6 @@ function MessagesComponent({ messages, loading, initializing }: MessagesComponen
             </div>
         </div>
     );
-}
-
-function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
-    const scrollerRef = useRef<HTMLDivElement | null>(null);
-
-    const lastMessage = messages[messages.length - 1];
-    useLayoutEffect(() => {
-        // Last message will also change when it's loading state is updated
-        scrollerRef.current?.scrollTo({
-            top: scrollerRef.current?.scrollHeight,
-            behavior: "smooth",
-        });
-    }, [lastMessage]);
-
-    return {
-        scrollerRef,
-    };
 }
 
 const assertNever = (value: never): never => {

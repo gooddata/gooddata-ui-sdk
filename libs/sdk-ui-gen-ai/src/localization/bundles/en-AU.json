@@ -84,5 +84,6 @@
     "drill.kda.drop": "Drop {where} {title}",
     "drill.kda.increase": "Increase {where} {title}",
     "drill.kda.no_change": "Outdated {where} {title}",
-    "drill.kda.year_to_year": "Year on year change"
+    "drill.kda.year_to_year": "Year on year change",
+    "gd.gen-ai.drill_modal_picker.header.explain": "Explain"
 }

@@ -814,5 +814,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "L'agrégation Cumul (Total) n'est pas disponible en filtrant la visualisation par valeur de métrique. Pour utiliser Cumul (Total), supprimez tous les filtres de valeur de métrique de la barre de filtres.",
     "shareDialog.share.link.helperTextWithTabs": "Le lien reflète les filtres actuels sur l'onglet actif. Uniquement accessible aux utilisateurs ayant accès au tableau de bord.",
     "table.bulkActions.selectAll": "Sélectionner tout",
-    "tabs.actions": "Actions pour l'onglet en cours"
+    "tabs.actions": "Actions pour l'onglet en cours",
+    "visualization.ErrorMessageResultCacheMissing": "La visualisation a besoin d'être rafraîchie",
+    "visualization.ErrorDescriptionResultCacheMissing": "Les données sous-jacentes ont changé ou ont expiré. Actualiser la page.",
+    "visualizations.table.pagination.of": "de"
 }
