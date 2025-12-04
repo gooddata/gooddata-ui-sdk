@@ -1,6 +1,49 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 27 Nov 2025 07:59:24 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Dec 2025 08:44:09 GMT and should not be manually modified.
+
+## 11.12.0
+
+Thu, 04 Dec 2025 08:44:09 GMT
+
+### Updates
+
+- sdk-backend-spi: Expose `QueryMethod` across workspace `I*Query` interfaces.
+- sdk-backend-tiger: Add support for search endpoints across various query classes (Dashboards, Insights, Measures, Attributes, Facts) to support search functionality via POST requests.
+- sdk-ui-catalog: Add support for search endpoints in catalog queries to avoid issues with URL character limits when filtering on large datasets.
+- sdk-ui-gen-ai: Fix translation in semantic search tree view.
+- sdk-ui-gen-ai: Ensure AI assistant auto-scroll waits for async content (semantic search).
+- sdk-ui-kit: Update `checkCircle` icon.
+- sdk-ui-catalog: Explicitly set `UiTabs` background to resolve default background color issue.
+- sdk-ui-kit: Fix animation shift in the `LoadingSpinner` component.
+- sdk-ui-dashboard: keep KDA attribute popovers anchored within dialog
+- sdk-ui-kit: ensure users with WS.ANALYZE/VIEW only see the icon once a provider is set up
+- sdk-ui-dashboard: align key driver dialog with latest design & accessibility guidance
+- sdk-ui-gen-ai: manage users must see icon event when llm not defined
+- sdk-ui-dashboard: update accesibility ond key driver analysis list
+- sdk-ui-dashboard: Add the amount of found key driver to the attribute selection popup
+- sdk-ui-gen-ai: Prevent the chatbot icon from showing to manage-only users without AI access
+- sdk-ui-dashboard: Fix KDA year-over-year period comparison rendering.
+- sdk-ui-dashboard: frontend integration for anomaly detection alerts
+- sdk-ui-dashboard: make attribute selection in key driver analysis more convenient
+- sdk-ui-gen-ai: headline in chat is shown by normal colors, not using kpi style colors
+- sdk-ui-gen-ai: update design of escalation dialog to match latest's design
+- sdk-ui-gen-ai: unify the key driver analysis naming
+- sdk-ui-dashboard: filter out granularities that are lower than current schedule occurrence setting in org
+- sdk-ui-all: Update visuals for menu components in tabs.
+- sdk-backend-base: Add option to use TTL cache for executions (set as default in dashboards).
+- sdk-ui-all: Improve keyboard navigation in tabs.
+- sdk-ui-all: Support dashboard tabs in schedule dialog and in automations.
+- sdk-ui-pivot: Fix double execution bug in PivotTableNext with initial sort.
+- sdk-ui-pivot: Enhance pivot table loading readiness.
+- sdk-ui-pivot: Introduce pagination to pivot table.
+- sdk-ui: Communicate missing cache errors in charts with multiple result windows.
+- add filter group item UI component to sdk-ui-kit
+- sdk-ui-kit: Fix DropdownList No Data renderer to avoid invalid hook call order.
+- Fix: Sanitize invalid parent filter links during filter override merge (serialized filters delivered via URL parameter)
+- Added: Allow plugin customized dashboards to render without "Modify by plugin" overlays
+- sdk-ui-dashboard: Disable alert option in widget context menu if user can't create automations and doesn't have any existing alerts.
+- sdk-backend-tiger: Exclude alerts created on dashboard with evaluation frequency from schedule list.
 
 ## 11.11.0
 
