@@ -2,6 +2,123 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.12.0",
+            "tag": "@gooddata/sdk-ui-all_v11.12.0",
+            "date": "Thu, 04 Dec 2025 08:44:09 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-backend-spi: Expose `QueryMethod` across workspace `I*Query` interfaces."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add support for search endpoints across various query classes (Dashboards, Insights, Measures, Attributes, Facts) to support search functionality via POST requests."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add support for search endpoints in catalog queries to avoid issues with URL character limits when filtering on large datasets."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Fix translation in semantic search tree view."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Ensure AI assistant auto-scroll waits for async content (semantic search)."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Update `checkCircle` icon."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Explicitly set `UiTabs` background to resolve default background color issue."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix animation shift in the `LoadingSpinner` component."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: keep KDA attribute popovers anchored within dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: ensure users with WS.ANALYZE/VIEW only see the icon once a provider is set up"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: align key driver dialog with latest design & accessibility guidance"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: manage users must see icon event when llm not defined"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: update accesibility ond key driver analysis list"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add the amount of found key driver to the attribute selection popup"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Prevent the chatbot icon from showing to manage-only users without AI access"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix KDA year-over-year period comparison rendering."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: frontend integration for anomaly detection alerts"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: make attribute selection in key driver analysis more convenient"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: headline in chat is shown by normal colors, not using kpi style colors"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: update design of escalation dialog to match latest's design"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: unify the key driver analysis naming"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: filter out granularities that are lower than current schedule occurrence setting in org"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Update visuals for menu components in tabs."
+                    },
+                    {
+                        "comment": "sdk-backend-base: Add option to use TTL cache for executions (set as default in dashboards)."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve keyboard navigation in tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support dashboard tabs in schedule dialog and in automations."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix double execution bug in PivotTableNext with initial sort."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Enhance pivot table loading readiness."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Introduce pagination to pivot table."
+                    },
+                    {
+                        "comment": "sdk-ui: Communicate missing cache errors in charts with multiple result windows."
+                    },
+                    {
+                        "comment": "add filter group item UI component to sdk-ui-kit"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix DropdownList No Data renderer to avoid invalid hook call order."
+                    },
+                    {
+                        "comment": "Fix: Sanitize invalid parent filter links during filter override merge (serialized filters delivered via URL parameter)"
+                    },
+                    {
+                        "comment": "Added: Allow plugin customized dashboards to render without \"Modify by plugin\" overlays"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Disable alert option in widget context menu if user can't create automations and doesn't have any existing alerts."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Exclude alerts created on dashboard with evaluation frequency from schedule list."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.11.0",
             "tag": "@gooddata/sdk-ui-all_v11.11.0",
             "date": "Thu, 27 Nov 2025 07:59:24 GMT",
