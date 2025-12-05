@@ -121,50 +121,50 @@ export const transformCronExpressionToRecurrenceType = (
     switch (true) {
         case allowInheritValue && !cronExpression:
             return RECURRENCE_TYPES.INHERIT;
-        case allowHourlyRecurrence && hourlyCronRegex.test(cronExpression):
+        case allowHourlyRecurrence && hourlyCronRegex.test(cronExpression ?? ""):
             return RECURRENCE_TYPES.HOURLY;
-        case dailyCronRegex.test(cronExpression): {
+        case dailyCronRegex.test(cronExpression ?? ""): {
             if (!date) {
                 return RECURRENCE_TYPES.DAILY;
             }
 
-            const groups = cronExpression.match(dailyCronRegex);
-            const h = parseInt(groups[1], 10);
+            const groups = (cronExpression ?? "").match(dailyCronRegex);
+            const h = parseInt(groups?.[1] ?? "0", 10);
             if (h === hours) {
                 return RECURRENCE_TYPES.DAILY;
             }
             return RECURRENCE_TYPES.CRON;
         }
-        case weeklyCronRegex.test(cronExpression): {
+        case weeklyCronRegex.test(cronExpression ?? ""): {
             if (!date) {
                 return RECURRENCE_TYPES.WEEKLY;
             }
 
-            const groups = cronExpression.match(weeklyCronRegex);
-            const h = parseInt(groups[1], 10);
-            const d = groups[2];
+            const groups = (cronExpression ?? "").match(weeklyCronRegex);
+            const h = parseInt(groups?.[1] ?? "0", 10);
+            const d = groups?.[2];
 
             if (h === hours && d === dayOfWeekName) {
                 return RECURRENCE_TYPES.WEEKLY;
             }
             return RECURRENCE_TYPES.CRON;
         }
-        case monthlyCronRegex.test(cronExpression): {
+        case monthlyCronRegex.test(cronExpression ?? ""): {
             if (!date) {
                 return RECURRENCE_TYPES.MONTHLY;
             }
 
-            const groups = cronExpression.match(monthlyCronRegex);
-            const h = parseInt(groups[1], 10);
-            const d = groups[2];
-            const w = groups[3];
+            const groups = (cronExpression ?? "").match(monthlyCronRegex);
+            const h = parseInt(groups?.[1] ?? "0", 10);
+            const d = groups?.[2];
+            const w = groups?.[3];
 
             if (h === hours && d === dayOfWeekName && w === weekNumber) {
                 return RECURRENCE_TYPES.MONTHLY;
             }
             return RECURRENCE_TYPES.CRON;
         }
-        case monthlyFirstCronRegex.test(cronExpression): {
+        case monthlyFirstCronRegex.test(cronExpression ?? ""): {
             if (!date) {
                 return RECURRENCE_TYPES.MONTHLY;
             }
@@ -247,7 +247,7 @@ export const isCronExpressionValid = (
     ]);
 
     for (const regex of invalidExpressions) {
-        if (regex.test(expression)) {
+        if (regex?.test(expression ?? "")) {
             return false;
         }
     }

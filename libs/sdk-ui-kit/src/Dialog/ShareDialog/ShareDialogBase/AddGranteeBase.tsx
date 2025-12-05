@@ -37,7 +37,7 @@ export function AddGranteeBase({
     } = sharedObject;
 
     const backButtonRenderer = useCallback(() => {
-        return <BackButton onClick={onBackClick} className="s-share-dialog-navigate-back" />;
+        return <BackButton onClick={onBackClick ?? (() => {})} className="s-share-dialog-navigate-back" />;
     }, [onBackClick]);
 
     return (
@@ -65,7 +65,7 @@ export function AddGranteeBase({
                 appliedGrantees={appliedGrantees}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
                 sharedObjectRef={sharedObjectRef}
-                onAddUserOrGroups={onAddUserOrGroups}
+                onAddUserOrGroups={onAddUserOrGroups ?? (() => {})}
                 onDelete={onDelete}
                 onGranularGranteeChange={onGranularGranteeChange}
                 isGranteeShareLoading={isGranteeShareLoading}

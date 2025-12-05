@@ -42,6 +42,7 @@ import {
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers.js";
 import {
     PluggablePivotTable,
@@ -51,6 +52,8 @@ import {
 } from "../PluggablePivotTable.js";
 
 describe("PluggablePivotTable", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -71,6 +74,7 @@ describe("PluggablePivotTable", () => {
             onError: () => {},
             onLoadingChanged: () => {},
         },
+        messages,
     };
 
     function createComponent(props: IVisConstruct = defaultProps) {
@@ -129,6 +133,7 @@ describe("PluggablePivotTable", () => {
                     width: 123,
                     height: 234,
                 },
+                messages,
             };
         }
 

@@ -1,13 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { IntlShape, createIntl } from "react-intl";
 
-import { translations } from "../utils/translations.js";
+import { resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
 
-export function createIntlMock(locale = "en-US"): IntlShape {
+import { DEFAULT_MESSAGES } from "../utils/translations.js";
+
+/**
+ * @internal
+ */
+export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape {
     return createIntl({
         locale,
         messages: {
-            ...translations[locale],
+            ...resolveLocaleDefaultMessages(locale, DEFAULT_MESSAGES),
+            ...customMessages,
         },
     });
 }

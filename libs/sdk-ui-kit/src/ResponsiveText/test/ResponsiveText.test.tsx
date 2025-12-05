@@ -27,8 +27,8 @@ describe("ResponsiveText", () => {
         };
         render(<ResponsiveText {...props} />);
 
-        expect(screen.getByTitle(props.title)).toHaveClass("test-class");
-        expect(screen.getByTitle(props.title)).toBeInTheDocument();
+        expect(screen.getByTitle(props.title!)).toHaveClass("test-class");
+        expect(screen.getByTitle(props.title!)).toBeInTheDocument();
     });
 
     it("should add resize window event listener when component is mounted", async () => {

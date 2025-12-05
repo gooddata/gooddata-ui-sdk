@@ -54,7 +54,7 @@ export function generateHeaderMenuItemsGroups(
     featureFlags: ISettings,
     workspacePermissions: IWorkspacePermissions,
     hasAnalyticalDashboards: boolean = false,
-    workspaceId: string = undefined,
+    workspaceId?: string,
     hasNoDataSet: boolean = false,
     backendSupportsDataItem: boolean = false,
     backendSupportsCsvUploader: boolean = true,
@@ -66,7 +66,7 @@ export function generateHeaderMenuItemsGroups(
         return [];
     }
 
-    const pixelPerfectItemsGroup = [];
+    const pixelPerfectItemsGroup: IHeaderMenuItem[] = [];
     const insightItemsGroup = createInsightsItemsGroup(
         featureFlags,
         workspaceId,
@@ -247,9 +247,9 @@ function dataItemUrl(
     return withBaseUrl(baseUrl, `/modeler/#/workspaces/${workspaceId}`);
 }
 function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
-    return (
+    return Boolean(
         featureFlags.enableDataSection &&
-        (workspacePermissions.canInitData || workspacePermissions.canRefreshData)
+            (workspacePermissions.canInitData || workspacePermissions.canRefreshData),
     );
 }
 

@@ -41,7 +41,7 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
             isFocused={isFocused}
             icon={<SearchItemIcon item={item.data} icon={item.icon} />}
             details={<SearchItemDetails item={item.data} />}
-            resultCounter={<GroupResultCounter count={childCount} isExpanded={isExpanded} />}
+            resultCounter={<GroupResultCounter count={childCount ?? 0} isExpanded={isExpanded ?? false} />}
         >
             <span className={styles.textRow}>
                 {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} ariaHidden /> : null}

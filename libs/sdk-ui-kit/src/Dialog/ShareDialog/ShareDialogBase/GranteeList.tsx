@@ -25,7 +25,7 @@ export function GranteeList({
     onChange,
 }: IGranteesListProps) {
     const intl = useIntl();
-    const listRef = useRef(null);
+    const listRef = useRef<HTMLDivElement>(null);
 
     const sortedGrantees = useMemo(() => {
         return sortGranteeList(grantees, intl);
@@ -36,7 +36,7 @@ export function GranteeList({
 
         // Programatically return focus to the list after item is removed
         const listElement = listRef.current;
-        if (grantees.length > 1) {
+        if (grantees.length > 1 && listElement) {
             // Set tabindex to make it focusable and add it to tab order temporarily
             listElement.tabIndex = -1;
             listElement.focus();

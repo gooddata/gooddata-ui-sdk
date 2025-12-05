@@ -59,13 +59,13 @@ describe("BubbleTrigger", () => {
 
             expect(screen.queryByText("Bubble with some content")).not.toBeInTheDocument();
 
-            fireEvent.mouseEnter(screen.queryByText("Hover me"));
+            fireEvent.mouseEnter(screen.getByText("Hover me"));
 
             await waitFor(() => {
                 expect(screen.queryByText("Bubble with some content")).toBeInTheDocument();
             });
 
-            fireEvent.mouseLeave(screen.queryByText("Hover me"));
+            fireEvent.mouseLeave(screen.getByText("Hover me"));
 
             await waitFor(() => {
                 expect(screen.queryByText("Bubble with some content")).not.toBeInTheDocument();
@@ -75,7 +75,7 @@ describe("BubbleTrigger", () => {
         it("should hide bubble on mouse enter after set delay", async () => {
             renderBubbleHoverTrigger({ hoverHideDelay: 500 });
 
-            fireEvent.mouseEnter(screen.queryByText("Hover me"));
+            fireEvent.mouseEnter(screen.getByText("Hover me"));
 
             await waitFor(() => {
                 expect(screen.queryByText("Bubble with some content")).toBeInTheDocument();
@@ -89,7 +89,7 @@ describe("BubbleTrigger", () => {
         it("should not hide bubble on mouse enter after delay by default", async () => {
             renderBubbleHoverTrigger({});
 
-            fireEvent.mouseEnter(screen.queryByText("Hover me"));
+            fireEvent.mouseEnter(screen.getByText("Hover me"));
 
             await waitFor(
                 () => {
@@ -106,13 +106,13 @@ describe("BubbleTrigger", () => {
 
             expect(screen.queryByText("Bubble with some content")).not.toBeInTheDocument();
 
-            fireEvent.focus(screen.queryByText("Focus me"));
+            fireEvent.focus(screen.getByText("Focus me"));
 
             await waitFor(() => {
                 expect(screen.queryByText("Bubble with some content")).toBeInTheDocument();
             });
 
-            fireEvent.blur(screen.queryByText("Focus me"));
+            fireEvent.blur(screen.getByText("Focus me"));
 
             await waitFor(() => {
                 expect(screen.queryByText("Bubble with some content")).not.toBeInTheDocument();

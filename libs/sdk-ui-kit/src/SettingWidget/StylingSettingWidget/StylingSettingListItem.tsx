@@ -15,7 +15,7 @@ import { Item, ItemsWrapper, Separator } from "../../List/index.js";
 import { IOnOpenedChangeParams, Menu } from "../../Menu/index.js";
 import { ShortenedText } from "../../ShortenedText/index.js";
 
-interface IStylingSettingListItemProps<T> {
+interface IStylingSettingListItemProps<T extends StylingPickerItemContent> {
     item: IStylingPickerItem<T>;
     itemToColorPreview: (itemContent: T) => string[];
     isSelected: boolean;
@@ -50,7 +50,9 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
 
     const onOpenedChange = ({ opened }: IOnOpenedChangeParams) => setOpened(opened);
     const toggleMenu = () => {
-        onMenuToggle(ref);
+        if (ref) {
+            onMenuToggle?.(ref);
+        }
         setOpened(!opened);
     };
 
@@ -61,7 +63,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
             className={cx(
                 "gd-styling-picker-list-item",
                 "s-styling-picker-list-item",
-                `s-styling-picker-list-item-${stringUtils.simplifyText(name)}`,
+                `s-styling-picker-list-item-${stringUtils.simplifyText(name ?? "")}`,
                 {
                     "is-selected": isSelected,
                 },
@@ -69,12 +71,12 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
         >
             <label className="input-radio-label gd-styling-picker-list-item-content">
                 <input
-                    aria-label={stringUtils.simplifyText(name)}
+                    aria-label={stringUtils.simplifyText(name ?? "")}
                     type="radio"
                     className="input-radio"
                     readOnly
                     checked={isSelected}
-                    onClick={() => onClick(ref)}
+                    onClick={() => ref && onClick(ref)}
                 />
                 <ColorPreview className="gd-styling-picker-list-item-colors" colors={colorsPreview} />
                 <span className="input-label-text gd-styling-picker-list-item-text">
@@ -82,7 +84,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
                         className="gd-styling-picker-list-item-text-shortened"
                         tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                     >
-                        {name}
+                        {name ?? ""}
                     </ShortenedText>
                 </span>
             </label>
@@ -107,7 +109,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
                         <Separator />
                         <Item
                             className="s-styling-item-menu-item-delete"
-                            onClick={() => isDeletable && onDelete?.(ref)}
+                            onClick={() => isDeletable && ref && onDelete?.(ref)}
                             disabled={!isDeletable}
                         >
                             <BubbleHoverTrigger showDelay={0} hideDelay={0}>

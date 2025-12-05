@@ -2,10 +2,8 @@
 
 import { useIntl } from "react-intl";
 
-import { resolveLocale } from "@gooddata/sdk-ui";
-
 import { DateFilterOption } from "../interfaces/index.js";
-import { getDateFilterTitle } from "../utils/Translations/DateFilterTitle.js";
+import { getDateFilterTitleUsingTranslator } from "../utils/Translations/DateFilterTitle.js";
 
 interface IDateFilterTextLocalizedProps {
     dateFormat: string;
@@ -25,5 +23,5 @@ export const useDateFilterText = ({
     dateFormat: string;
 }) => {
     const intl = useIntl();
-    return getDateFilterTitle(filter, resolveLocale(intl.locale), dateFormat);
+    return getDateFilterTitleUsingTranslator(filter, intl, dateFormat);
 };

@@ -57,7 +57,7 @@ function NonContextToastsInteropInner({
                     // Some cases handle the duration in Redux and dismiss from there.
                     duration: message.duration ?? Infinity,
                     onDismiss: () => {
-                        dismissHandlerRef.current(message.id);
+                        dismissHandlerRef.current?.(message.id);
                         message.onDismiss?.();
                     },
                 })),

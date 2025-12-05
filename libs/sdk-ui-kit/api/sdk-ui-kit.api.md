@@ -117,7 +117,7 @@ export function alignConfigToAlignPoint({ triggerAlignPoint, overlayAlignPoint, 
 export type Alignment = {
     left: number;
     top: number;
-    right: number;
+    right?: number;
     width?: number;
     height?: number;
     align: string;
@@ -374,7 +374,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export const DefaultUiMenuStaticItem: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"AllTabs", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"AllTabs", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
 export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(props: Omit<{
@@ -391,10 +391,10 @@ export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = Empt
 export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen, }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen, }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected }: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
@@ -460,7 +460,7 @@ export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem>
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
 
 // @internal (undocumented)
-export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): any;
+export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): null;
 
 // @internal (undocumented)
 export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus, }: IDropdownProps): JSX.Element;
@@ -652,7 +652,7 @@ export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(item
 export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[] | undefined;
 
 // @internal (undocumented)
-export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement;
+export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement | undefined;
 
 // @internal
 export const getNextSiblings: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[];
@@ -687,7 +687,7 @@ export type GetPositionedSelfRegion = {
 export const getPreviousSiblings: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[];
 
 // @internal (undocumented)
-export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
+export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T | null;
 
 // @internal (undocumented)
 export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>(context: IUiMenuContext<T, M>) => string | undefined;
@@ -702,7 +702,7 @@ export function getTypedUiTabsContextStore<TTabProps extends Record<any, any> = 
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
-export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange, }: IGranteeItemProps): JSX.Element;
+export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange, }: IGranteeItemProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type GranteeStatus = "Inactive" | "Active";
@@ -3615,7 +3615,7 @@ export interface ILocaleSettingProps {
     // (undocumented)
     onLocaleSelected: (locale: ILocale) => void;
     // (undocumented)
-    selectedLocal: ILocale;
+    selectedLocal?: ILocale;
 }
 
 // @internal (undocumented)
@@ -3906,7 +3906,7 @@ export class Input extends PureComponent<InputPureProps, InputState> {
         value: string;
     };
     // (undocumented)
-    inputNodeRef: InputPure;
+    inputNodeRef: InputPure | null;
     // (undocumented)
     onChange: (value: string | number, e?: ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -3958,7 +3958,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
     // (undocumented)
     getLabelClassNames(className: string): string;
     // (undocumented)
-    inputNodeRef: HTMLInputElement;
+    inputNodeRef: HTMLInputElement | null;
     // (undocumented)
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -4150,7 +4150,7 @@ export interface INumericInputProps {
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element;
+export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
 
 // @internal (undocumented)
 export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig, }: IInvertableSelectItem): JSX.Element;
@@ -4257,13 +4257,13 @@ export interface IOverlayState {
     alignment: {
         left: number;
         top: number;
-        right: number;
+        right?: number;
         width?: number;
         height?: number;
         align: string;
     };
     // (undocumented)
-    observedHeight?: number;
+    observedHeight: number;
     // (undocumented)
     overflow?: string;
     // (undocumented)
@@ -4578,7 +4578,7 @@ export interface ISearchResultsAnnouncementProps {
 }
 
 // @internal (undocumented)
-export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean;
+export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean | undefined;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
@@ -5601,7 +5601,7 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 // @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
-    returnFocusTo?: string | RefObject<HTMLElement> | (() => HTMLElement | null);
+    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
 }
 
 // @internal (undocumented)
@@ -5734,13 +5734,13 @@ export interface IUiTreeviewContext<Levels extends any[], Level> {
     // (undocumented)
     itemsRef: MutableRefObject<UiRefsTree>;
     // (undocumented)
-    onClose: () => void;
+    onClose?: () => void;
     // (undocumented)
     onSelect: (event: MouseEvent_2 | KeyboardEvent_2, path: number[], item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>) => void;
     // (undocumented)
     selectedItemId: string | undefined;
     // (undocumented)
-    setFocusedPath: Dispatch<SetStateAction<number[] | undefined>>;
+    setFocusedPath: Dispatch<SetStateAction<number[]>>;
 }
 
 // @internal (undocumented)
@@ -5768,9 +5768,9 @@ export interface IUiTreeviewItemProps<T> {
     // (undocumented)
     childCount: number;
     // (undocumented)
-    isCompact: boolean;
+    isCompact?: boolean;
     // (undocumented)
-    isExpanded: boolean;
+    isExpanded?: boolean;
     // (undocumented)
     isFocused: boolean;
     // (undocumented)
@@ -5964,11 +5964,11 @@ export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSel
 
 // @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onFocusPrevious?: (event: T) => void;
-    onFocusNext?: (event: T) => void;
-    onFocusFirst?: (event: T) => void;
-    onFocusLast?: (event: T) => void;
-    onUnhandledKeyDown?: (event: T) => void;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -5981,36 +5981,36 @@ export const makeKeyboardNavigation: <ActionKeysMap extends {
 
 // @internal (undocumented)
 export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: (event: T) => void;
-    onClose?: (event: T) => void;
-    onFocusPrevious?: (event: T) => void;
-    onFocusNext?: (event: T) => void;
-    onFocusFirst?: (event: T) => void;
-    onFocusLast?: (event: T) => void;
-    onUnhandledKeyDown?: (event: T) => void;
+    onSelect?: ((event: T) => void) | undefined;
+    onClose?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: (event: T) => void;
-    onClose?: (event: T) => void;
-    onFocusPrevious?: (event: T) => void;
-    onFocusNext?: (event: T) => void;
-    onFocusFirst?: (event: T) => void;
-    onFocusLast?: (event: T) => void;
-    onEnterLevel?: (event: T) => void;
-    onLeaveLevel?: (event: T) => void;
-    onUnhandledKeyDown?: (event: T) => void;
+    onSelect?: ((event: T) => void) | undefined;
+    onClose?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onEnterLevel?: ((event: T) => void) | undefined;
+    onLeaveLevel?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: (event: T) => void;
-    onFocusPrevious?: (event: T) => void;
-    onFocusNext?: (event: T) => void;
-    onFocusFirst?: (event: T) => void;
-    onFocusLast?: (event: T) => void;
-    onUnhandledKeyDown?: (event: T) => void;
+    onSelect?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -6108,7 +6108,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     // (undocumented)
     context: ContextType<typeof OverlayContext>;
     // (undocumented)
-    static contextType: Context<OverlayController>;
+    static contextType: Context<OverlayController | undefined>;
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)
@@ -6128,7 +6128,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 }
 
 // @internal (undocumented)
-export const OverlayContext: Context<OverlayController>;
+export const OverlayContext: Context<OverlayController | undefined>;
 
 // @internal
 export class OverlayController {
@@ -6198,7 +6198,7 @@ export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 export const relatedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
-export const resolveRef: (ref: string | RefObject<HTMLElement> | (() => HTMLElement) | undefined | null) => HTMLElement;
+export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | undefined | null) => HTMLElement | null;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
@@ -6234,7 +6234,7 @@ export function ScreenReaderToast(): JSX.Element;
 export function ScrollableItem({ scrollIntoView, bottomMargin, isElementInvisibleCheck, className, children, onItemScrolled, tagName: TagName, }: IScrollableItemProps): JSX.Element;
 
 // @internal (undocumented)
-export const ScrollablePanel: ForwardRefExoticComponent<IScrollablePanelProps & RefAttributes<HTMLDivElement>>;
+export const ScrollablePanel: ForwardRefExoticComponent<IScrollablePanelProps & RefAttributes<HTMLDivElement | undefined>>;
 
 // @internal (undocumented)
 export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
@@ -6257,7 +6257,7 @@ export type SelectedTime = {
 };
 
 // @internal (undocumented)
-export function Separator(props: any): JSX.Element;
+export function Separator(props: HTMLAttributes<HTMLDivElement>): JSX.Element;
 
 // @internal (undocumented)
 export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): JSX.Element;
@@ -6319,7 +6319,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     // (undocumented)
     renderTextWithBubble(): ReactNode;
     // (undocumented)
-    textRef: RefObject<HTMLElement>;
+    textRef: RefObject<HTMLElement | null>;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void;
 }
@@ -6449,7 +6449,7 @@ export function ToastMessageList({ messages, onRemoveMessage, }: {
 }): JSX.Element;
 
 // @internal
-export function ToastsCenter(): JSX.Element;
+export function ToastsCenter(): JSX.Element | null;
 
 // @internal (undocumented)
 export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
@@ -6875,7 +6875,7 @@ export interface UiDateProps {
 }
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, accessibilityConfig, }: UiDrawerProps): JSX.Element;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, accessibilityConfig, }: UiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export interface UiDrawerProps extends IUiAutofocusOptions {
@@ -7464,20 +7464,20 @@ export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiM
 
 // @internal
 export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
-    ref: RefObject<HTMLDivElement>;
+    ref: RefObject<HTMLDivElement | null>;
     columns: UiAsyncTableColumnDefinitionResponsive<T>[];
 };
 
 // @internal (undocumented)
 export function useElementSize<T extends HTMLElement>(): {
-    ref: RefObject<T>;
+    ref: RefObject<T | null>;
     height: number;
     width: number;
 };
 
 // @internal (undocumented)
 export function useFocusWithinContainer(idToFocus?: string | null): {
-    containerRef: RefObject<HTMLElement>;
+    containerRef: RefObject<HTMLElement | null>;
 };
 
 // @internal
@@ -7519,9 +7519,9 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;
     onBlur: FocusEventHandler;
     focusedAction: "selectItem" | Action;
-    focusedItem: Item;
+    focusedItem: Item | undefined;
     setFocusedAction: Dispatch<SetStateAction<"selectItem" | Action>>;
-    setFocusedIndex: Dispatch<SetStateAction<number>>;
+    setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
 };
 
 // @internal
@@ -7534,7 +7534,7 @@ export const useOverlayController: () => OverlayController | undefined;
 export const useOverlayZIndex: (uuid: string) => number | undefined;
 
 // @internal
-export function useOverlayZIndexWithRegister(): number;
+export function useOverlayZIndexWithRegister(): number | undefined;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
@@ -7543,7 +7543,7 @@ export const useResponsiveContext: () => IResponsiveConfig;
 export function useScopedId<T>(item?: T, specifier?: string): string;
 
 // @internal
-export function useScopedIdOptional<T>(item?: T, specifier?: string): string;
+export function useScopedIdOptional<T>(item?: T, specifier?: string): string | undefined;
 
 // @internal (undocumented)
 export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {

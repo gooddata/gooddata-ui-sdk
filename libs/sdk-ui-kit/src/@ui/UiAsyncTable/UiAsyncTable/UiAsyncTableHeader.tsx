@@ -29,7 +29,7 @@ export function UiAsyncTableHeader<T>({
     return (
         <div
             tabIndex={0}
-            className={e("header", { small })}
+            className={e("header", { small: small ?? false })}
             role="row"
             aria-label={intl.formatMessage(messages["headerAriaLabel"])}
             onKeyDown={handleKeyDown}
@@ -46,7 +46,7 @@ export function UiAsyncTableHeader<T>({
             ) : null}
 
             {columns.map((column, index) => {
-                const width = getColumnWidth(!!column.renderMenu, largeRow, column.width);
+                const width = getColumnWidth(!!column.renderMenu, largeRow ?? false, column.width);
                 const sorted = sortBy && sortBy === column.key;
                 const desc = sorted && sortDirection === "desc";
                 const { sortable, renderMenu } = column;
@@ -55,11 +55,11 @@ export function UiAsyncTableHeader<T>({
                         key={index}
                         onClick={() => sortable && handleColumnClick(column.key)}
                         className={e("cell", {
-                            sorted,
-                            desc,
-                            sortable,
+                            sorted: sorted ?? false,
+                            desc: desc ?? false,
+                            sortable: sortable ?? false,
                             isFocused: isFocused(index),
-                            align: column.align,
+                            align: column.align ?? false,
                         })}
                         style={{ width }}
                         role="columnheader"

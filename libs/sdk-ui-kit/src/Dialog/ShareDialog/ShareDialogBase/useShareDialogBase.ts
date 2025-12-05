@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
@@ -33,15 +34,15 @@ interface IUseShareDialogStateReturnType {
     isUnderLenientControlNow: boolean;
     isLockedNow: boolean;
     onLoadGrantees: (grantees: GranteeItem[], groupAll: IGranteeGroupAll | undefined) => void;
-    onSharedGranteeDelete: (grantee: GranteeItem) => void;
+    onSharedGranteeDelete?: (grantee: GranteeItem) => void;
     onAddedGranteeDelete: (grantee: GranteeItem) => void;
     onGranteeAdd: (grantee: GranteeItem) => void;
     onAddGranteeButtonClick: () => void;
     onAddGranteeBackClick: () => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
     onLockChange: (isLocked: boolean) => void;
-    onGranularGranteeShareChange?: (grantee: GranteeItem) => void;
-    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeShareChange?: (grantee: IGranularGrantee) => void;
+    onGranularGranteeAddChange?: (grantee: IGranularGrantee) => void;
 }
 
 /**
@@ -58,7 +59,7 @@ const useShareDialogState = (
         isLocked: boolean,
         closeOnApply: boolean,
     ) => void,
-    applyShareGrantOnSelect: boolean,
+    applyShareGrantOnSelect?: boolean,
 ): IUseShareDialogStateReturnType => {
     const [dialogMode, setDialogMode] = useState<DialogModeType>("ShareGrantee");
     const [isGranteesLoading, setIsGranteesLoading] = useState(true);
@@ -219,8 +220,8 @@ export interface IUseShareDialogBaseReturnType {
     isUnderLenientControlNow: boolean;
     onLockChange: (locked: boolean) => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
-    onGranularGranteeShareChange?: (grantee: GranteeItem) => void;
-    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeShareChange?: (grantee: IGranularGrantee) => void;
+    onGranularGranteeAddChange?: (grantee: IGranularGrantee) => void;
 }
 
 /**
@@ -252,7 +253,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         onUnderLenientControlChange,
         onGranularGranteeAddChange,
         onGranularGranteeShareChange,
-    } = useShareDialogState(isUnderLenientControl, isLocked, onSubmit, applyShareGrantOnSelect);
+    } = useShareDialogState(isUnderLenientControl, isLocked, onSubmit, !!applyShareGrantOnSelect);
 
     const onLoadGranteesSuccess = useCallback(
         (result: GranteeItem[]) => {
@@ -350,7 +351,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
 
     return {
         onAddedGranteeDelete,
-        onSharedGranteeDelete,
+        onSharedGranteeDelete: onSharedGranteeDelete!,
         onAddGranteeBackClick,
         onAddGranteeButtonClick,
         onGranteeAdd,

@@ -57,13 +57,13 @@ export function LegacyList({
     width = 200,
     height = 300,
     itemHeight = 28,
-    itemHeightGetter = null,
+    itemHeightGetter = null as unknown as () => number,
     compensateBorder = true,
     scrollToSelected = false,
     dataSource,
     rowItem,
 }: ILegacyListProps) {
-    const [selected, setSelected] = useState<number>(null);
+    const [selected, setSelected] = useState<number | null>(null);
 
     useEffect(() => {
         if (scrollToSelected) {

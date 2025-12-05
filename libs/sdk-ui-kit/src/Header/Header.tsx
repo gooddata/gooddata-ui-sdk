@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MouseEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
@@ -41,7 +41,7 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
     const SAFETY_PADDING = 10;
 
     return Array.from(element.querySelectorAll(selector))
-        .map(getOuterWidth)
+        .map((el) => getOuterWidth(el as HTMLDivElement))
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
@@ -50,8 +50,8 @@ function AppHeaderCore({
     accountMenuItems = [],
     helpMenuItems = [],
     menuItemsGroups = [],
-    search = null,
-    notificationsPanel = null,
+    search,
+    notificationsPanel,
     workspacePicker,
     isAccessibilityCompliant,
     intl,
@@ -149,11 +149,11 @@ function AppHeaderCore({
     const createStyles = useCallback(() => {
         const { guid } = state;
 
-        const textColor = getTextColor(headerTextColor, headerColor);
-        const itemActiveColor = getItemActiveColor(activeColor, headerColor);
-        const itemHoverColor = getItemHoverColor(headerColor, activeColor);
-        const separatorColor = getSeparatorColor(headerColor, activeColor);
-        const workspacesPickerHoverColor = getWorkspacePickerHoverColor(headerColor);
+        const textColor = getTextColor(headerTextColor ?? "", headerColor ?? "");
+        const itemActiveColor = getItemActiveColor(activeColor ?? "", headerColor ?? "");
+        const itemHoverColor = getItemHoverColor(headerColor ?? "", activeColor ?? "");
+        const separatorColor = getSeparatorColor(headerColor ?? "", activeColor ?? "");
+        const workspacesPickerHoverColor = getWorkspacePickerHoverColor(headerColor ?? "");
 
         const css = [];
         css.push(`.${guid} { color: ${textColor}; background: ${headerColor}}`);
@@ -227,7 +227,7 @@ function AppHeaderCore({
             if (state.isHelpMenuOpen) {
                 setOverlayMenu(false);
             }
-            onMenuItemClick(item, event);
+            onMenuItemClick?.(item, event);
         },
         [state, setOverlayMenu, onMenuItemClick],
     );
@@ -261,7 +261,7 @@ function AppHeaderCore({
             }
 
             if (notificationsPanel) {
-                const AlertIcon = Icon["Alert"];
+                const AlertIcon = Icon["Alert" as keyof typeof Icon];
 
                 additionalItems.push({
                     key: "gs.header.notifications",
@@ -321,8 +321,8 @@ function AppHeaderCore({
     const getClassNames = useCallback(() => {
         return cx({
             "gd-header": true,
-            [state.guid]: true,
-            [className]: !!className,
+            [state.guid as string]: true,
+            [className as string]: !!className,
         });
     }, [state.guid, className]);
 
@@ -430,7 +430,7 @@ function AppHeaderCore({
             <button
                 className="logout-button gd-button s-logout"
                 onClick={(e: MouseEvent) => {
-                    onMenuItemClick(logoutMenuItem, e);
+                    onMenuItemClick?.(logoutMenuItem, e);
                 }}
             >
                 <LogoutIcon className="gd-icon-logout" color={theme?.palette?.complementary?.c0} />
@@ -455,7 +455,7 @@ function AppHeaderCore({
                 <div className="gd-header-menu-vertical-header">Menu</div>
                 <div className="gd-header-menu-vertical-content">
                     <HeaderMenu
-                        onMenuItemClick={handleMenuItemClick}
+                        onMenuItemClick={handleMenuItemClick as any}
                         sections={menuItemsGroupsToRender}
                         className="gd-header-menu-vertical"
                     />
@@ -486,12 +486,12 @@ function AppHeaderCore({
     ]);
 
     const renderOverlayMenu = useCallback(() => {
-        let content = renderVerticalMenu();
+        let content: ReactElement | null = renderVerticalMenu();
         if (state.isSearchMenuOpen) {
             content = renderSearchMenu();
         }
         if (state.isNotificationsMenuOpen) {
-            content = renderNotificationsOverlay();
+            content = renderNotificationsOverlay() ?? null;
         }
 
         return (
@@ -572,7 +572,7 @@ function AppHeaderCore({
                 {showChatItem ? (
                     <HeaderChatButton
                         title={intl.formatMessage({ id: "gs.header.ai" })}
-                        onClick={onChatItemClick}
+                        onClick={onChatItemClick ?? (() => {})}
                     />
                 ) : null}
 
@@ -593,19 +593,19 @@ function AppHeaderCore({
 
                 {helpMenuItems.length ? (
                     <HeaderHelp
-                        onMenuItemClick={onMenuItemClick}
+                        onMenuItemClick={onMenuItemClick as any}
                         className="gd-header-measure"
                         helpMenuDropdownAlignPoints={helpDropdownAlign}
                         items={helpMenuItems}
                         disableDropdown={disableHelpDropdown}
-                        onHelpClicked={onHelpClick}
+                        onHelpClicked={onHelpClick as (isOpen?: boolean) => void}
                         helpRedirectUrl={helpRedirectUrl}
                     />
                 ) : null}
 
                 <HeaderAccount
                     userName={userName}
-                    onMenuItemClick={onMenuItemClick}
+                    onMenuItemClick={onMenuItemClick as any}
                     className="gd-header-measure"
                     items={accountMenuItems}
                 />
@@ -663,7 +663,7 @@ function AppHeaderCore({
     return (
         <header aria-label={applicationHeaderAccessibilityLabel} className={getClassNames()} ref={nodeRef}>
             {isAccessibilityCompliant
-                ? renderAccessibilityLogo(logoLinkClassName, organizationName)
+                ? renderAccessibilityLogo(logoLinkClassName, organizationName ?? "")
                 : renderLogo(logoLinkClassName)}
 
             {workspacePicker}

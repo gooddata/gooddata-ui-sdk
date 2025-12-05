@@ -180,20 +180,23 @@ describe("transformCronExpressionToRecurrenceType with date", () => {
         ["", true, true, undefined, "inherit"],
         [undefined, true, true, undefined, "inherit"],
         [undefined, true, false, undefined, "cron"],
-    ])(
-        "should correctly identify %s with hourly %s and date %s as %s",
-        (cronExpression, allowHourly, allowInherit, date, expected) => {
-            expect(
-                transformCronExpressionToRecurrenceType(
-                    date,
-                    cronExpression,
-                    allowHourly,
-                    allowInherit,
-                    "Monday",
-                ),
-            ).toEqual(expected);
-        },
-    );
+    ])("should correctly identify %s with hourly %s and date %s as %s", ((
+        cronExpression: string | undefined,
+        allowHourly: boolean,
+        allowInherit: boolean,
+        date: Date | undefined,
+        expected: string,
+    ) => {
+        expect(
+            transformCronExpressionToRecurrenceType(
+                date ?? null,
+                cronExpression,
+                allowHourly,
+                allowInherit,
+                "Monday",
+            ),
+        ).toEqual(expected);
+    }) as any);
 });
 
 describe("transformCronExpressionToRecurrenceType without date, default Monday", () => {
@@ -233,20 +236,22 @@ describe("transformCronExpressionToRecurrenceType without date, default Monday",
         ["", true, true, "inherit"],
         [undefined, true, true, "inherit"],
         [undefined, true, false, "cron"],
-    ])(
-        "should correctly identify %s with hourly %s as %s",
-        (cronExpression, allowHourly, allowInherit, expected) => {
-            expect(
-                transformCronExpressionToRecurrenceType(
-                    null,
-                    cronExpression,
-                    allowHourly,
-                    allowInherit,
-                    "Monday",
-                ),
-            ).toEqual(expected);
-        },
-    );
+    ])("should correctly identify %s with hourly %s as %s", ((
+        cronExpression: string | undefined,
+        allowHourly: boolean,
+        allowInherit: boolean,
+        expected: string,
+    ) => {
+        expect(
+            transformCronExpressionToRecurrenceType(
+                null,
+                cronExpression,
+                allowHourly,
+                allowInherit,
+                "Monday",
+            ),
+        ).toEqual(expected);
+    }) as any);
 });
 
 describe("transformRecurrenceTypeToDescription", () => {
@@ -277,7 +282,12 @@ describe("transformRecurrenceTypeToDescription", () => {
         [RECURRENCE_TYPES.CRON, d1, "Sunday", ""],
 
         [RECURRENCE_TYPES.INHERIT, d1, "Sunday", ""],
-    ])("should correctly describe %s", (recurrenceType, date, weekStart: WeekStart, expected) => {
+    ])("should correctly describe %s", ((
+        recurrenceType: string,
+        date: Date | null,
+        weekStart: WeekStart,
+        expected: string,
+    ) => {
         expect(transformRecurrenceTypeToDescription(intl, recurrenceType, date, weekStart)).toEqual(expected);
-    });
+    }) as any);
 });

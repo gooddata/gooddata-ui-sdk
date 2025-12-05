@@ -17,7 +17,7 @@ import { DEFAULT_LOCALE } from "../types.js";
  */
 export interface ILocaleSettingProps {
     isChecked: boolean;
-    selectedLocal: ILocale;
+    selectedLocal?: ILocale;
     onChecked: () => void;
     onLocaleSelected: (locale: ILocale) => void;
 }

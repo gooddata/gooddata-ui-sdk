@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { groupBy, takeWhile } from "lodash-es";
 
 import { IDateDataset, IDateDatasetHeader } from "./typings.js";
@@ -7,7 +8,7 @@ import { IDateDataset, IDateDatasetHeader } from "./typings.js";
  * @internal
  */
 export const isDateDatasetHeader = (obj: unknown): obj is IDateDatasetHeader => {
-    return obj && (obj as IDateDatasetHeader).type === "header";
+    return !!obj && (obj as IDateDatasetHeader).type === "header";
 };
 
 function hasSameRelevance<T extends IDateDataset>(dateDatasets: ReadonlyArray<T | IDateDatasetHeader>) {
@@ -15,7 +16,7 @@ function hasSameRelevance<T extends IDateDataset>(dateDatasets: ReadonlyArray<T 
     return relevanceCount === 1;
 }
 
-const relevanceComparator = <T extends IDateDataset>(a: T, b: T) => b.relevance - a.relevance; // descending sort
+const relevanceComparator = <T extends IDateDataset>(a: T, b: T) => (b.relevance ?? 0) - (a.relevance ?? 0); // descending sort
 
 const titleComparator = <T extends IDateDataset>(a: T, b: T) => {
     return a.title.localeCompare(b.title);
@@ -82,12 +83,12 @@ function addUnrelatedDateDataset<T extends IDateDataset>(
 /**
  * @internal
  */
-export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T {
+export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T | null {
     if (hasSameRelevance(items)) {
         return null;
     }
 
-    return sortByRelevanceAndTitle(items).at(0);
+    return sortByRelevanceAndTitle(items).at(0) ?? null;
 }
 
 /**
@@ -101,7 +102,7 @@ export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): A
     const items = sortByRelevanceAndTitle(dateDatasets);
 
     if (!hasSameRelevance(items)) {
-        const nonZeroRelevanceItemsCount = takeWhile(items, (i) => i.relevance > 0).length;
+        const nonZeroRelevanceItemsCount = takeWhile(items, (i) => (i.relevance ?? 0) > 0).length;
         const othersIndex = Math.min(MAX_RECOMMENDED_ITEMS, nonZeroRelevanceItemsCount);
         const recommendedItems = [recommendedHeader, ...items.slice(0, othersIndex)];
 
@@ -143,8 +144,8 @@ export function preselectDateDataset<T extends IDateDataset>(
  */
 export function sortDateDatasets<T extends IDateDataset>(
     dateDatasets: T[],
-    recommendedDate: T = null,
-    unrelatedDate: T = null,
+    recommendedDate?: T,
+    unrelatedDate?: T,
 ): Array<T | IDateDatasetHeader> {
     let items = recommendedDate
         ? preselectDateDataset(dateDatasets, recommendedDate)

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { afterEach, describe, expect, it } from "vitest";
 
 import { removeFromDom } from "../../utils/domUtilities.js";
@@ -8,7 +9,7 @@ describe("addCssToStylesheet", () => {
     const sheets: HTMLElement[] = [];
 
     const getElements = (id: string): NodeListOf<HTMLElement> => document.querySelectorAll(`#${id}`);
-    const getElement = (id: string): HTMLElement => document.querySelector(`#${id}`);
+    const getElement = (id: string): HTMLElement | null => document.querySelector(`#${id}`);
 
     afterEach(() => {
         sheets.forEach((sheet) => {

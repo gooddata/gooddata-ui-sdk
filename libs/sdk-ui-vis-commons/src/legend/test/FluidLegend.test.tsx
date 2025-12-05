@@ -4,15 +4,14 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
-import { messagesMap } from "@gooddata/sdk-ui";
+import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { FluidLegend } from "../FluidLegend.js";
 import { ISeriesItem } from "../types.js";
 
 describe("FluidLegend", () => {
-    // Define locale and messages
     const DefaultLocale = "en-US";
-    const messages = messagesMap[DefaultLocale];
+    const messages = DEFAULT_MESSAGES[DefaultLocale];
 
     function renderComponent(customProps: any = {}) {
         const props = {

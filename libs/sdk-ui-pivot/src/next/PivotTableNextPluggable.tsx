@@ -7,9 +7,7 @@ import { isEqual } from "lodash-es";
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
 
 /**
- * Memoized wrapper for the AgGridReact component, intended to be used in PluggablePivotTableNext
- *
- * @internal
+ * Memoized wrapper for the AgGridReact component
  */
 export const CorePivotTableNext = memo(PivotTableNextImplementation, (prevProps, nextProps) => {
     const deepEqualPropsChanged = [

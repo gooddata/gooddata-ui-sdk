@@ -72,7 +72,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<
             [this.state.bubbleId]: true,
         });
 
-        const TagName = tagName;
+        const TagName = tagName as ElementType;
         let BubbleElement;
         let WrappedTrigger;
 

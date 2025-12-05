@@ -9,7 +9,12 @@ import {
     insightVisualizationUrl,
     uriRef,
 } from "@gooddata/sdk-model";
-import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/internal";
+import {
+    BaseVisualization,
+    DEFAULT_LANGUAGE,
+    DEFAULT_MESSAGES,
+    FullVisualizationCatalog,
+} from "@gooddata/sdk-ui-ext/internal";
 
 import { ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
 import { IScenario } from "../../src/index.js";
@@ -72,6 +77,7 @@ export async function mountInsight(
             onError={() => {}}
             pushData={() => {}}
             onLoadingChanged={() => {}}
+            messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}
             drillableItems={drillableItems}
         />,
     );

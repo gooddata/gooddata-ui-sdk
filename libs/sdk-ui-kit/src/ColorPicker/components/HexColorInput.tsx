@@ -18,9 +18,10 @@ export const HexColorInput = memo(function HexColorInput(props: IHexColorInputPr
     const { initColor, onInputChanged, placeholder = "", label = "" } = props;
 
     const onInputChange = useCallback(
-        (value: string): void => {
-            if (isHexColorValid(value)) {
-                const newHsl = getHslFromHexColor(value);
+        (value: string | number): void => {
+            const stringValue = String(value);
+            if (isHexColorValid(stringValue)) {
+                const newHsl = getHslFromHexColor(stringValue);
                 onInputChanged(newHsl);
             }
         },

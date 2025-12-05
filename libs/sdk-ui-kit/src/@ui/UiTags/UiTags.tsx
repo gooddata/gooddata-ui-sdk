@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
@@ -125,8 +125,8 @@ export function UiTags({
                                     <UiPopover
                                         onOpen={onMoreOpen}
                                         onClose={onMoreClose}
-                                        initialFocus={tooltipTagsContainerRef}
-                                        returnFocusTo={rootRef}
+                                        initialFocus={tooltipTagsContainerRef as RefObject<HTMLElement>}
+                                        returnFocusTo={rootRef as RefObject<HTMLElement>}
                                         anchor={
                                             <UiButton
                                                 tabIndex={-1}
@@ -146,7 +146,9 @@ export function UiTags({
                                                 onKeyDown={handleKeyDown}
                                                 className={e("tags-more-tooltip")}
                                                 ref={(ref) => {
-                                                    tooltipTagsContainerRef.current = ref;
+                                                    (
+                                                        tooltipTagsContainerRef as RefObject<HTMLDivElement | null>
+                                                    ).current = ref;
                                                     setTooltipContainer(ref);
                                                 }}
                                                 tabIndex={0}
@@ -158,7 +160,7 @@ export function UiTags({
                                                             tag={tag}
                                                             deleteLabel={removeLabel}
                                                             ref={(ref) => {
-                                                                interactionState.current.tags[tag.id] = ref;
+                                                                interactionState.current.tags[tag.id] = ref!;
                                                             }}
                                                             isDeletable={isDeletable}
                                                             isDisabled={readOnly}
@@ -175,7 +177,7 @@ export function UiTags({
                                             <>
                                                 <UiButton
                                                     ref={(ref) => {
-                                                        interactionState.current.close = ref;
+                                                        interactionState.current.close = ref!;
                                                     }}
                                                     label={closeLabel}
                                                     variant={"secondary"}
@@ -194,7 +196,7 @@ export function UiTags({
                         <UiTag
                             tag={tag}
                             ref={(ref) => {
-                                interactionState.current.tags[tag.id] = ref;
+                                interactionState.current.tags[tag.id] = ref!;
                             }}
                             isDeletable={isDeletable}
                             isDisabled={readOnly}
@@ -237,12 +239,12 @@ export function UiTags({
                                 />
                             }
                             title={addLabel}
-                            initialFocus={inputRef}
+                            initialFocus={inputRef as RefObject<HTMLElement>}
                             content={({ onClose }) => (
                                 <Input
                                     label={nameLabel}
                                     ref={(ref) => {
-                                        inputRef.current = ref?.inputNodeRef?.inputNodeRef;
+                                        inputRef.current = ref?.inputNodeRef?.inputNodeRef ?? null;
                                         interactionState.current.input = inputRef.current;
                                     }}
                                     value={tag}
@@ -267,7 +269,7 @@ export function UiTags({
                                         variant={"secondary"}
                                         onClick={onClose}
                                         ref={(ref) => {
-                                            interactionState.current.close = ref;
+                                            interactionState.current.close = ref!;
                                         }}
                                     />
                                     <UiButton
@@ -279,7 +281,7 @@ export function UiTags({
                                             onClose();
                                         }}
                                         ref={(ref) => {
-                                            interactionState.current.save = ref;
+                                            interactionState.current.save = ref!;
                                         }}
                                     />
                                 </>

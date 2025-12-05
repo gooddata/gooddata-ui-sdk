@@ -143,7 +143,7 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
 }
 
 /**
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/date_filter_component.html | DateFilter} is a component for configuring a date filter value.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/filters/date_filter | DateFilter} is a component for configuring a date filter value.
  *
  * @public
  */

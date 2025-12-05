@@ -33,6 +33,9 @@ export function AutoSize({ children }: IAutoSizeProps) {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const updateSize = useCallback(() => {
+        if (!wrapperRef.current) {
+            return;
+        }
         const { width, height } = elementRegion(wrapperRef.current);
 
         setState({

@@ -153,10 +153,12 @@ export function HubspotConversionTouchPointDialogBase({
     }, []);
 
     const onHubspotFormSubmitted = () => {
-        if (!window.hbspt.isSuccessMessageShow) {
+        if (!window.hbspt?.isSuccessMessageShow) {
             onFormSubmitted?.();
             onClose();
-            window.hbspt.isSuccessMessageShow = true;
+            if (window.hbspt) {
+                window.hbspt.isSuccessMessageShow = true;
+            }
         }
     };
 

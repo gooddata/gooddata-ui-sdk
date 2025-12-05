@@ -22,6 +22,25 @@ export const getActiveTab = (state: TabsState): TabState | undefined => {
     return state.tabs.find((tab) => tab.localIdentifier === state.activeTabLocalIdentifier);
 };
 
+/**
+ * Gets a tab by its local identifier, or the active tab if no identifier is provided.
+ *
+ * @param state - The tabs state
+ * @param tabLocalIdentifier - Optional tab local identifier. If not provided, returns the active tab.
+ * @returns The tab state or undefined if not found
+ *
+ * @internal
+ */
+export const getTabOrActive = (state: TabsState, tabLocalIdentifier?: string): TabState | undefined => {
+    if (!state.tabs) {
+        return;
+    }
+    if (tabLocalIdentifier) {
+        return state.tabs.find((tab) => tab.localIdentifier === tabLocalIdentifier);
+    }
+    return getActiveTab(state);
+};
+
 // Re-export for convenience
 export type { DateFilterConfigState, FilterContextState, LayoutState };
 

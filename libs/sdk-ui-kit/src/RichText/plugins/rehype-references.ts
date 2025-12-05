@@ -18,12 +18,12 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], s
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    const { metricDef } = createMetricValue(intl, text, metric, separators);
+                    const { metricDef } = createMetricValue(intl, text, metric!, separators);
                     return [metricDef];
                 },
                 onTextRawReference: (ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    const { value, formattedValue } = createMetricValue(intl, null, metric);
+                    const { value, formattedValue } = createMetricValue(intl, null, metric!, separators);
                     return value === null ? "" : formattedValue;
                 },
             });
@@ -92,7 +92,7 @@ function iterateTree(
     }
     if (node.children) {
         // has children
-        node.children = node.children.reduce((acc, child) => {
+        node.children = node.children.reduce<Parent[]>((acc, child) => {
             return [...acc, ...iterateTree(child as HtmlNode, callbacks)];
         }, []);
         return [node];

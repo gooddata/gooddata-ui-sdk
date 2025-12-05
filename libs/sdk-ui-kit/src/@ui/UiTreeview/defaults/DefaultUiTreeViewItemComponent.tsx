@@ -30,8 +30,8 @@ export function DefaultUiTreeViewItemComponent<Level>({
             className={e("item", {
                 isFocused,
                 isSelected,
-                isCompact,
-                isExpanded,
+                isCompact: isCompact ?? false,
+                isExpanded: isExpanded ?? false,
                 isDisabled: !!item.isDisabled,
             })}
             onClick={item.isDisabled ? undefined : onSelect}

@@ -97,7 +97,7 @@ export function ShareGranteeBase({
             hideSubmitButton={applyShareGrantOnSelect}
             initialFocus={ADD_GRANTEE_ID}
         >
-            <AdminInformationMessage isVisible={shouldDisplayAdminMessage} />
+            <AdminInformationMessage isVisible={shouldDisplayAdminMessage ?? false} />
             {isShareGrantHidden ? null : (
                 <ShareGranteeContent
                     currentUserPermissions={currentUserPermissions}
@@ -109,7 +109,7 @@ export function ShareGranteeBase({
                     onDelete={onGranteeDelete}
                     onChange={onGranularGranteeChange}
                     isGranteeShareLoading={isGranteeShareLoading}
-                    applyShareGrantOnSelect={applyShareGrantOnSelect}
+                    applyShareGrantOnSelect={!!applyShareGrantOnSelect}
                     headline={dialogLabels.shareGrantHeadline}
                 />
             )}

@@ -129,7 +129,7 @@ Events do not bubble and are not cancelable. Here is how you can subscribe to on
 -   `insightLoaded` - insight data is fully loaded.
 
 All events are not cancelable and do not bubble. For more information on the event payload, see the callback description of [the
-InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties).
+InsightView component](https://www.gooddata.com/docs/gooddata-ui/latest/learn/visualize_data/insightview#properties).
 
 ```html
 <gd-insight insight="my-insight" id="some-dom-id"></gd-insight>

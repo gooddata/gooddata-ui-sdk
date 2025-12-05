@@ -7,6 +7,7 @@ import {
     KeyboardEvent as ReactKeyboardEvent,
     MouseEvent as ReactMouseEvent,
     ReactNode,
+    Ref,
     createRef,
 } from "react";
 
@@ -152,7 +153,7 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
 }
 
 export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePickerState> {
-    private rootRef: HTMLElement;
+    private rootRef: HTMLElement | null = null;
     private datePickerContainerRef = createRef<HTMLDivElement>();
     private inputRef = createRef<HTMLInputElement>();
 
@@ -178,10 +179,10 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         const { alignPoints, date, dateFormat } = props;
 
         this.state = {
-            align: alignPoints[0].align,
+            align: alignPoints?.[0]?.align ?? "bl tl",
             selectedDate: date,
             monthDate: date,
-            inputValue: formatDate(date || new Date(), dateFormat),
+            inputValue: formatDate(date || new Date(), dateFormat ?? DEFAULT_DATE_FORMAT),
             isOpen: false,
         };
 
@@ -201,7 +202,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         const { date, dateFormat } = this.props;
 
         this.setState({ selectedDate: this.updateDate(date || new Date()) });
-        this.setState({ inputValue: formatDate(date || new Date(), dateFormat) });
+        this.setState({ inputValue: formatDate(date || new Date(), dateFormat ?? DEFAULT_DATE_FORMAT) });
         window.addEventListener("resize", this.resizeHandler);
         document.addEventListener("mousedown", this.handleClickOutside);
     }
@@ -209,11 +210,14 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
     public override UNSAFE_componentWillReceiveProps(nextProps: DatePickerProps): void {
         const { props } = this;
 
-        if (props.date > nextProps.date || props.date < nextProps.date) {
+        const propsDate = props.date?.getTime() ?? 0;
+        const nextPropsDate = nextProps.date?.getTime() ?? 0;
+
+        if (propsDate !== nextPropsDate) {
             const selectedDate = this.updateDate(nextProps.date || new Date());
             this.setState({ selectedDate });
             this.setState({ monthDate: selectedDate });
-            this.setState({ inputValue: formatDate(selectedDate, props.dateFormat) });
+            this.setState({ inputValue: formatDate(selectedDate, props.dateFormat ?? DEFAULT_DATE_FORMAT) });
         }
     }
 
@@ -226,7 +230,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         if (
             this.datePickerContainerRef.current &&
             !this.datePickerContainerRef.current.contains(event.target as Node) &&
-            this.inputRef &&
+            this.inputRef.current &&
             !this.inputRef.current.contains(event.target as Node)
         ) {
             this.setState({ isOpen: false });
@@ -280,13 +284,13 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
     }
 
     private handleInputBlur(e: FocusEvent<HTMLInputElement>) {
-        this.props.onBlur(e.target.value);
+        this.props.onBlur?.(e.target.value);
     }
 
     private handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
 
-        const parsedDate = parseDate(value, this.props.dateFormat);
+        const parsedDate = parseDate(value, this.props.dateFormat ?? DEFAULT_DATE_FORMAT);
 
         this.props.onValidateInput?.(value);
 
@@ -299,7 +303,9 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                     monthDate: parsedDate,
                 },
                 () => {
-                    this.props.onChange(this.state.selectedDate);
+                    if (this.state.selectedDate) {
+                        this.props.onChange?.(this.state.selectedDate);
+                    }
                 },
             );
         } else {
@@ -317,7 +323,8 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                     monthDate: undefined,
                 },
                 () => {
-                    this.props.onChange(null);
+                    // Signal invalid state by passing null
+                    this.props.onChange?.(null as unknown as Date);
                 },
             );
         }
@@ -329,30 +336,32 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
             return;
         }
 
-        if (isSameDay(this.state.selectedDate, newlySelectedDate)) {
+        if (this.state.selectedDate && isSameDay(this.state.selectedDate, newlySelectedDate)) {
             this.setState({ isOpen: false });
             return;
         }
 
-        this.inputRef.current.focus();
+        this.inputRef.current?.focus();
 
-        this.props.onValidateInput?.(formatDate(newlySelectedDate, this.props.dateFormat));
+        this.props.onValidateInput?.(
+            formatDate(newlySelectedDate, this.props.dateFormat ?? DEFAULT_DATE_FORMAT),
+        );
 
         this.setState(
             {
                 selectedDate: newlySelectedDate,
                 monthDate: newlySelectedDate,
-                inputValue: formatDate(newlySelectedDate, this.props.dateFormat),
+                inputValue: formatDate(newlySelectedDate, this.props.dateFormat ?? DEFAULT_DATE_FORMAT),
                 isOpen: false,
             },
             () => {
-                this.props.onChange(newlySelectedDate);
+                this.props.onChange?.(newlySelectedDate);
             },
         );
     }
 
     private handleMonthChanged(month: Date) {
-        this.inputRef.current.focus();
+        this.inputRef.current?.focus();
         this.setState({ monthDate: month });
     }
 
@@ -369,7 +378,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         const { alignPoints } = this.props;
         const container = this.datePickerContainerRef.current?.parentElement;
 
-        if (!alignPoints || !container) {
+        if (!alignPoints || !container || !this.rootRef) {
             return;
         }
 
@@ -386,7 +395,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                 align,
             },
             () => {
-                this.props.onAlign(align);
+                this.props.onAlign?.(align);
             },
         );
     }
@@ -424,7 +433,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
             <div
                 data-testid="datepicker"
                 className={this.getComponentClasses()}
-                ref={this.setComponentRef}
+                ref={this.setComponentRef as Ref<HTMLDivElement>}
                 onClick={this.handleWrapperClick}
             >
                 <input
@@ -464,7 +473,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                             selected={selectedDate}
                             month={monthDate}
                             onMonthChange={this.handleMonthChanged}
-                            weekStartsOn={convertWeekStart(this.props.weekStart)}
+                            weekStartsOn={convertWeekStart(this.props.weekStart ?? "Sunday")}
                             onDayClick={this.handleCustomDayClick}
                         />
                     </div>

@@ -65,9 +65,8 @@ const parse = (value: any | string, separators: Separators) => {
 };
 
 const isValid = (value: any, separators: Separators) => {
-    return (
-        getFormatValidationRegExp(separators).test(value) && Math.abs(parse(value, separators)) <= MAX_NUMBER
-    );
+    const parsed = parse(value, separators);
+    return getFormatValidationRegExp(separators).test(value) && Math.abs(parsed ?? 0) <= MAX_NUMBER;
 };
 
 const format = (value: any, { thousand, decimal }: Separators) => {
@@ -111,7 +110,7 @@ export class InputWithNumberFormat extends PureComponent<
     InputWithNumberFormatProps,
     InputWithNumberFormatState
 > {
-    private input: InputPure;
+    private input: InputPure | null = null;
 
     static defaultProps = {
         ...InputPure.defaultProps,
@@ -149,12 +148,13 @@ export class InputWithNumberFormat extends PureComponent<
         }
 
         this.setState({ value });
-        onChange(parse(value, separators));
+        const parsedValue = parse(value, separators);
+        onChange?.(parsedValue as number);
     };
 
     onFocus = (e: FocusEvent<HTMLInputElement>): void => {
         this.setState({ isFocused: true });
-        this.props.onFocus(e);
+        this.props.onFocus?.(e);
     };
 
     onBlur = (e: FocusEvent<HTMLInputElement>): void => {
@@ -165,14 +165,14 @@ export class InputWithNumberFormat extends PureComponent<
             value: format(parse(value, separators), separators),
             isFocused: false,
         });
-        onBlur(e);
+        onBlur?.(e);
     };
 
     handleCaretShift(e: ChangeEvent<HTMLInputElement>): void {
-        const caretPosition = e.target.selectionStart - 1;
+        const caretPosition = (e.target.selectionStart ?? 1) - 1;
 
         this.setState({}, () => {
-            this.input.inputNodeRef.setSelectionRange(caretPosition, caretPosition);
+            this.input?.inputNodeRef?.setSelectionRange(caretPosition, caretPosition);
         });
     }
 
@@ -184,7 +184,7 @@ export class InputWithNumberFormat extends PureComponent<
                     this.input = ref;
                 }}
                 onFocus={this.onFocus}
-                onChange={this.onChange}
+                onChange={this.onChange as InputPureProps["onChange"]}
                 onBlur={this.onBlur}
                 value={this.state.value}
             />

@@ -47,5 +47,8 @@ export const useSkeletonItem = <T extends { id: string }>(
         }
     }, [computedColumnWidths, columnWidths]);
 
-    return useMemo(() => skeletonItemFactory(columnWidths), [columnWidths]);
+    return useMemo(
+        () => skeletonItemFactory(columnWidths.filter((w): w is number => w !== undefined)),
+        [columnWidths],
+    );
 };

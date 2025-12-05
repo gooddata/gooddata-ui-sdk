@@ -89,7 +89,7 @@ export interface ILegacyInvertableListState {
  * @deprecated This component is deprecated use InvertableList instead
  */
 export function LegacyInvertableList<T>({
-    className = undefined as string,
+    className = undefined as unknown as string,
     filteredItemsCount,
     getItemKey = guidFor,
     height,
@@ -311,7 +311,7 @@ export function LegacyInvertableList<T>({
                 clearOnEsc
                 isSearch
                 isSmall={smallSearch}
-                onChange={onSearch}
+                onChange={onSearch as any}
                 placeholder={searchPlaceholder}
                 value={searchString}
             />

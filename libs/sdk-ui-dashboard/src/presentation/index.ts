@@ -21,4 +21,4 @@ export * from "./dashboardSettingsDialog/index.js";
 export * from "./insightList/index.js";
 export * from "./cancelEditDialog/index.js";
 export * from "./export/index.js";
-export { translations } from "./localization/index.js";
+export { resolveMessages, DEFAULT_MESSAGES } from "./localization/index.js";

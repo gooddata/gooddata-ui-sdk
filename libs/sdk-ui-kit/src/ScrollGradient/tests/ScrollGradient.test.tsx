@@ -100,7 +100,7 @@ describe("ScrollGradient", () => {
 
         beforeEach(() => {
             onScroll = vi.fn();
-            spy = vi.spyOn(window, "getComputedStyle");
+            spy = vi.spyOn(window, "getComputedStyle") as ReturnType<typeof vi.spyOn>;
             spy.mockReturnValue({ width: "185px" } as CSSStyleDeclaration);
         });
 
@@ -113,7 +113,7 @@ describe("ScrollGradient", () => {
         it("propagate scroll handler", async () => {
             renderScrollGradient(800, { onScroll });
             expect(onScroll).not.toHaveBeenCalled();
-            fireEvent.scroll(document.querySelector(".gd-gradient-content"), { target: { scrollY: 100 } });
+            fireEvent.scroll(document.querySelector(".gd-gradient-content")!, { target: { scrollY: 100 } });
             expect(onScroll).toHaveBeenCalled();
         });
 
@@ -147,7 +147,7 @@ describe("ScrollGradient", () => {
             expect(data().right).toBe(0);
             expect(data().content).toBe(null);
             expect(getComputedStyleMock).not.toHaveBeenCalled();
-            act(() => data().setContent(content));
+            act(() => data().setContent(content as unknown as HTMLElement));
 
             expect(data().right).toBe(space);
             expect(data().content).toBe(content);
@@ -162,7 +162,7 @@ describe("ScrollGradient", () => {
             const content = document.createElement("div");
             vi.spyOn(content, "offsetHeight", "get").mockReturnValue(height);
             vi.spyOn(content, "scrollHeight", "get").mockReturnValue(contentHeight);
-            const scrollTopSpy = vi.spyOn(content, "scrollTop", "get");
+            const scrollTopSpy = vi.spyOn(content, "scrollTop", "get") as ReturnType<typeof vi.spyOn>;
             scrollTopSpy.mockReturnValue(scrollTop);
 
             return {
@@ -238,13 +238,14 @@ describe("ScrollGradient", () => {
     });
 
     describe("useContentHeight", () => {
-        let raf: ReturnType<typeof vi.spyOn>, handler: FrameRequestCallback;
+        let raf: ReturnType<typeof vi.spyOn>;
+        let handler: FrameRequestCallback;
 
         beforeEach(() => {
             raf = vi.spyOn(window, "requestAnimationFrame").mockImplementation((h) => {
                 handler = h;
                 return 1;
-            });
+            }) as ReturnType<typeof vi.spyOn>;
         });
 
         it("determine content height from element", () => {

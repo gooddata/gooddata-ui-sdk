@@ -31,11 +31,14 @@ import {
 } from "../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
 
 const { Department, Region } = ReferenceMd;
 
 describe("PluggableColumnBarCharts", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         element: () => document.querySelector("body"),
@@ -47,6 +50,7 @@ describe("PluggableColumnBarCharts", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: () => {},
+        messages,
     } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {
@@ -62,6 +66,7 @@ describe("PluggableColumnBarCharts", () => {
             dimensions: { height: null },
             locale: "en-US",
             custom: {},
+            messages,
         };
         const emptyPropertiesMeta = {};
 

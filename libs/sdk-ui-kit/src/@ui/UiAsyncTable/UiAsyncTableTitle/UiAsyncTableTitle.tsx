@@ -59,7 +59,7 @@ const useAsyncTableTitle = (
                         ariaLabel: placeholder,
                     }}
                     value={searchValue}
-                    onChange={setSearchValue}
+                    onChange={(value) => setSearchValue(String(value))}
                 />
             </div>
         ) : null;

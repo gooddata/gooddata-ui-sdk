@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Ref, useEffect, useMemo, useRef, useState } from "react";
 
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { isEnterKey } from "../../../utils/events.js";
@@ -24,13 +24,13 @@ export function UiAsyncTableBody<T extends { id: string }>({
     shouldLoadNextPage,
     renderItem,
 }: UiAsyncTableBodyProps<T>) {
-    const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow);
+    const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
 
     const { handleKeyDown, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
 
     return (
-        <UiPagedVirtualList<T>
+        <UiPagedVirtualList
             maxHeight={maxHeight}
             itemHeight={itemHeight}
             itemsGap={0}
@@ -48,11 +48,12 @@ export function UiAsyncTableBody<T extends { id: string }>({
             tabIndex={items.length ? 0 : -1}
             customKeyboardNavigationHandler={handleKeyDown}
         >
-            {(item, itemIndex) => {
+            {(item: T, focusedIndex?: number) => {
+                const itemIndex = focusedIndex ?? 0;
                 return renderItem(
                     item,
                     itemIndex,
-                    focusedItemRef,
+                    focusedItemRef as Ref<HTMLElement>,
                     itemIndex === focusedRowIndex,
                     focusedColumnIndex,
                 );
@@ -70,7 +71,7 @@ const useAsyncTableBodyKeyboardNavigation = (
     const [focusedRowIndex, setFocusedRowIndex] = useState<number>(0);
     const [focusedColumnIndex, setFocusedColumnIndex] = useState<number | undefined>(undefined);
 
-    const focusedItemRef = useRef<HTMLElement | undefined>(undefined);
+    const focusedItemRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (scrollToIndex !== undefined) {

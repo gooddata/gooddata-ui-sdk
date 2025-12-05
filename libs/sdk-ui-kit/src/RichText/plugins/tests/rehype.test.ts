@@ -205,7 +205,7 @@ function em(id: string, title: string, value: number, formatable: boolean): Eval
             formatable,
             coordinates: [],
             rawValue: value,
-        } as DataPoint,
+        } as unknown as DataPoint,
         count: 1,
     };
 }

@@ -104,8 +104,8 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
     }, []);
 
     const toggleDropdownOpened = useCallback(
-        (e: SyntheticEvent<HTMLElement>) => {
-            toggleButtonEl.current = e.currentTarget;
+        (e: SyntheticEvent) => {
+            toggleButtonEl.current = e.currentTarget as HTMLElement;
 
             setShowDropdown((prevState) => !prevState);
             toggleCustomFormatDialog();
@@ -148,7 +148,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
             ),
         [intl, selectedPreset.name],
     );
-    const anchorEl = anchorElementSelector || toggleButtonEl.current;
+    const anchorEl = anchorElementSelector ?? toggleButtonEl.current ?? undefined;
     const customPreset = getCustomFormatPreset();
 
     return (
@@ -177,7 +177,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
                 <CustomFormatDialog
                     onApply={onCustomFormatDialogApply}
                     onCancel={onCustomFormatDialogCancel}
-                    formatString={selectedFormat || defaultCustomFormat}
+                    formatString={selectedFormat ?? defaultCustomFormat ?? ""}
                     separators={separators}
                     anchorEl={anchorEl}
                     positioning={customFormatDialogPositioning}

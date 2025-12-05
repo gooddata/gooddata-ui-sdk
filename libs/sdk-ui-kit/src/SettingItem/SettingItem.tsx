@@ -97,7 +97,12 @@ export function SettingItem({
                         <div className="gd-setting-item-value">{value}</div>
                         <div className="gd-setting-item-action">
                             <BubbleHoverTrigger>
-                                {getActionElement(actionType, actionValue, isDisableAction, onAction)}
+                                {getActionElement(
+                                    actionType,
+                                    actionValue,
+                                    isDisableAction ?? false,
+                                    onAction!,
+                                )}
                                 {actionTooltipText ? (
                                     <Bubble
                                         className={cx(className, "bubble-primary")}

@@ -21,7 +21,7 @@ export function UiAsyncTableCheckbox({
 }: UiAsyncTableCheckboxProps) {
     return (
         <div
-            className={e("cell", { checkbox: true, focused: isCellFocused })}
+            className={e("cell", { checkbox: true, focused: isCellFocused ?? false })}
             role={header ? "undefined" : "gridcell"}
             aria-labelledby={header ? undefined : getColumnHeaderId("checkbox")}
             aria-describedby={header ? ASYNC_TABLE_SELECTED_COUNT_ID : undefined}
@@ -36,7 +36,7 @@ export function UiAsyncTableCheckbox({
             ref={cellRef as Ref<HTMLDivElement>}
         >
             <UiCheckbox
-                checked={checked}
+                checked={checked ?? false}
                 preventDefault
                 indeterminate={indeterminate}
                 disabled={disabled}

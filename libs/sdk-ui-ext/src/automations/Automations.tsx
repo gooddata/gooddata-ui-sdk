@@ -43,7 +43,7 @@ export function Automations({
     tableVariant = "regular",
     isMobileView = false,
     enableBulkActions = true,
-    invalidateItemsRef,
+    onInvalidateCallbackChange,
     renderToolbarCustomElement,
     dashboardUrlBuilder = buildDashboardUrl,
     widgetUrlBuilder = buildWidgetUrl,
@@ -74,7 +74,7 @@ export function Automations({
                                         widgetUrlBuilder={widgetUrlBuilder}
                                         editAutomation={editAutomation}
                                         onLoad={onLoad}
-                                        invalidateItemsRef={invalidateItemsRef}
+                                        onInvalidateCallbackChange={onInvalidateCallbackChange}
                                         renderToolbarCustomElement={renderToolbarCustomElement}
                                         locale={locale}
                                     />

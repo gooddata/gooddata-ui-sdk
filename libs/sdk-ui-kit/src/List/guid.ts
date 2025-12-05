@@ -39,7 +39,7 @@ export function guidFor(obj: any): string {
         writable: false,
         configurable: false,
         enumerable: false,
-        value: null,
+        value: null as unknown as string,
     };
 
     if (obj[GUID_KEY]) return obj[GUID_KEY];

@@ -5,7 +5,7 @@ import cx from "classnames";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { messagesMap } from "@gooddata/sdk-ui";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { typedUiMenuContextStore } from "../context.js";
 import { b } from "../menuBem.js";
@@ -49,7 +49,7 @@ describe("UiMenu", () => {
 
     const DefaultLocale = "en-US";
 
-    const messages = messagesMap[DefaultLocale];
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
 
     const renderMenu = (props: Partial<UiMenuProps> = {}) => {
         const defaultAriaAttributes = {
@@ -250,7 +250,7 @@ describe("UiMenu", () => {
         }
 
         renderMenu({
-            InteractiveItem: CustomInteractiveItemComponent,
+            InteractiveItem: CustomInteractiveItemComponent as any,
         });
 
         // Check that custom component is rendered
@@ -271,7 +271,7 @@ describe("UiMenu", () => {
         }
 
         renderMenu({
-            StaticItem: CustomStaticItemComponent,
+            StaticItem: CustomStaticItemComponent as any,
         });
 
         // Check that custom static component is rendered
@@ -418,7 +418,7 @@ describe("UiMenu", () => {
         }
 
         renderMenu({
-            GroupItem: CustomGroupItemComponent,
+            GroupItem: CustomGroupItemComponent as any,
         });
 
         // Check that custom component is rendered

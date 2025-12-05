@@ -83,7 +83,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
 
-    const invalidateItemsRef = useAutomationsInvalidateRef();
+    const { onInvalidateCallbackChange } = useAutomationsInvalidateRef();
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -148,7 +148,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                         enableBulkActions={enableBulkActions}
                         availableFilters={availableFilters}
                         locale={locale}
-                        invalidateItemsRef={invalidateItemsRef}
+                        onInvalidateCallbackChange={onInvalidateCallbackChange}
                         renderToolbarCustomElement={() =>
                             canCreateAutomation ? (
                                 <CreateButton

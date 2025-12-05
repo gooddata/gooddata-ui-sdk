@@ -86,6 +86,12 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
     }
 
     return (
-        <LeveledSearchTreeView items={items} id={treeViewId} onSelect={handleSelect} maxHeight={maxHeight} />
+        <LeveledSearchTreeView
+            items={items}
+            id={treeViewId}
+            onSelect={handleSelect}
+            maxHeight={maxHeight}
+            tabIndex={0}
+        />
     );
 }

@@ -95,7 +95,8 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/geo_area_chart.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/geo_area_chart",
             supportsExport: true,
             supportsZooming: false,
         };

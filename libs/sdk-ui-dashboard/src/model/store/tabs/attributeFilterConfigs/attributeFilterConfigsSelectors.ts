@@ -107,3 +107,27 @@ export const selectAttributeFilterConfigsDisplayAsLabelMap: DashboardSelector<Ma
             return map;
         }, new Map());
     });
+
+/**
+ * Get a map of attribute filter modes keyed by tab identifier.
+ *
+ * @remarks
+ * Returns a record where each key is a tab identifier and the value is a Map of attribute filter modes
+ * for that tab. Useful when you need to access filter modes for all tabs at once.
+ *
+ * @internal
+ */
+export const selectAttributeFilterConfigsModeMapByTab: DashboardSelector<
+    Record<string, Map<string, DashboardAttributeFilterConfigMode>>
+> = createSelector(selectAttributeFilterConfigsOverridesByTab, (overridesByTab) => {
+    const result: Record<string, Map<string, DashboardAttributeFilterConfigMode>> = {};
+
+    for (const [tabId, configs] of Object.entries(overridesByTab)) {
+        result[tabId] = configs.reduce((map, config) => {
+            map.set(config.localIdentifier, config.mode ?? DashboardAttributeFilterConfigModeValues.ACTIVE);
+            return map;
+        }, new Map<string, DashboardAttributeFilterConfigMode>());
+    }
+
+    return result;
+});

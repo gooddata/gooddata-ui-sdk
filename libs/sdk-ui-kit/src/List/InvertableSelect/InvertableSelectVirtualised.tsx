@@ -254,7 +254,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             } else {
                 const isSelected = getIsItemSelected(item);
 
-                if (isSpaceKey(e)) {
+                if (e && isSpaceKey(e)) {
                     if (isSelected) {
                         deselectItems([item]);
                     } else {
@@ -262,7 +262,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                     }
                 }
 
-                if (isEnterKey(e) && canSubmitOnKeyDown) {
+                if (e && isEnterKey(e) && canSubmitOnKeyDown) {
                     onApplyButtonClick?.();
                 }
             }
@@ -343,7 +343,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
                 focusedAction: item === focusedItem ? focusedAction : undefined,
-                listRef: containerRef,
+                listRef: containerRef as any,
                 index: items.indexOf(item) + 1,
                 itemsCount: items.length,
             });
@@ -363,8 +363,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     );
 
     const handleSearchBarKeyDown = useCallback(
-        (e) => {
-            if (isEscapeKey(e) && searchString.length > 0) {
+        (e: KeyboardEvent) => {
+            if (isEscapeKey(e) && (searchString?.length ?? 0) > 0) {
                 e.stopPropagation();
             }
         },
@@ -384,10 +384,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             }
 
             const elementToFocus = document.getElementById(
-                scopedIdStoreValue.makeId({ item: focusedItem, specifier: SELECT_ITEM_ACTION }),
+                scopedIdStoreValue.makeId({ item: focusedItem as T, specifier: SELECT_ITEM_ACTION }),
             );
 
-            listRef.current.scrollToItem(focusedItem);
+            listRef.current?.scrollToItem(focusedItem);
 
             if (!elementToFocus) {
                 return;
@@ -401,7 +401,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     const handleBlur = useCallback<FocusEventHandler>(
         // Select the default action when the focus leaves the list
         (e) => {
-            if (containerRef.current.contains(e.relatedTarget)) {
+            if (containerRef.current?.contains(e.relatedTarget)) {
                 return;
             }
 
@@ -439,10 +439,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             : {};
 
     return (
-        <ScopedIdStore value={scopedIdStoreValue}>
+        <ScopedIdStore value={scopedIdStoreValue as any}>
             <div className="gd-invertable-select">
                 <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
-                    {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
+                    {renderSearchBar({ onSearch: onSearch ?? (() => {}), searchPlaceholder, searchString })}
                 </div>
                 {isLoading ? (
                     <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
@@ -455,16 +455,17 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                             checked: selectionState !== "none",
                             onToggle: onSelectAllCheckboxToggle,
                             onChange: onSelectAllCheckboxChange,
-                            isFiltered: searchString?.length > 0,
-                            totalItemsCount,
+                            isFiltered: (searchString?.length ?? 0) > 0,
+                            totalItemsCount: totalItemsCount ?? 0,
                             isPartialSelection: selectionState === "partial",
                         })}
                         {items.length > 0 && (
                             <Measure client>
                                 {({ measureRef, contentRect }) => {
                                     const maxHeight = adaptiveHeight
-                                        ? contentRect?.client.height
-                                        : Math.min(items.length, DEFAULT_VISIBLE_ITEMS_COUNT) * itemHeight;
+                                        ? (contentRect?.client?.height ?? 0)
+                                        : Math.min(items.length, DEFAULT_VISIBLE_ITEMS_COUNT) *
+                                          (itemHeight ?? 0);
 
                                     return isLoading ? (
                                         <LoadingMask height={height} />
@@ -481,11 +482,11 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                             >
                                                 <UiPagedVirtualList<T>
                                                     items={items}
-                                                    itemHeight={itemHeight}
+                                                    itemHeight={itemHeight ?? 0}
                                                     itemsGap={0}
                                                     itemPadding={0}
-                                                    skeletonItemsCount={nextPageItemPlaceholdersCount}
-                                                    hasNextPage={nextPageItemPlaceholdersCount > 0}
+                                                    skeletonItemsCount={nextPageItemPlaceholdersCount ?? 0}
+                                                    hasNextPage={(nextPageItemPlaceholdersCount ?? 0) > 0}
                                                     loadNextPage={onLoadNextPage}
                                                     isLoading={isLoadingNextPage}
                                                     maxHeight={maxHeight}
@@ -519,13 +520,18 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                         className="gd-invertable-select-status-bar"
                         aria-label={formatMessage({ id: "attributesDropdown.selectedValues" })}
                     >
-                        {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
+                        {renderStatusBar({
+                            getItemTitle,
+                            isInverted,
+                            selectedItems,
+                            selectedItemsLimit: selectedItemsLimit ?? 0,
+                        })}
                     </div>
                 )}
                 <UiSearchResultsAnnouncement
-                    totalResults={searchString && !isLoading ? totalItemsCount : undefined}
+                    totalResults={searchString && !isLoading ? (totalItemsCount ?? 0) : undefined}
                     resultValues={
-                        totalItemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                        (totalItemsCount ?? 0) <= DETAILED_ANNOUNCEMENT_THRESHOLD
                             ? items.map(getItemTitle)
                             : undefined
                     }
@@ -585,7 +591,7 @@ function defaultStatusBar<T>({
             isInverted={isInverted}
             selectedItems={selectedItems}
             getItemTitle={getItemTitle}
-            selectedItemsLimit={selectedItemsLimit}
+            selectedItemsLimit={selectedItemsLimit ?? 0}
         />
     );
 }

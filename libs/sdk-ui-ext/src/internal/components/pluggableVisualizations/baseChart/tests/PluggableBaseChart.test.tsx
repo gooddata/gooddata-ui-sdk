@@ -7,7 +7,6 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    DefaultLocale,
     IDrillEventIntersectionElement,
     ILocale,
     VisualizationEnvironment,
@@ -24,6 +23,7 @@ import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties.js";
 import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel.js";
 import {
     createDrillDefinition,
@@ -38,6 +38,8 @@ const { Region } = ReferenceMd;
 function noop() {}
 
 describe("PluggableBaseChart", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const noneEnvironment: VisualizationEnvironment = "none";
     const dummyLocale: ILocale = "en-US";
     const backend = dummyBackend();
@@ -62,6 +64,7 @@ describe("PluggableBaseChart", () => {
         visualizationProperties: {},
         callbacks,
         renderFun: mockRenderFun,
+        messages: DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
     } as unknown as IVisConstruct;
 
     function createComponent(props = defaultProps) {
@@ -73,7 +76,7 @@ describe("PluggableBaseChart", () => {
 
         return (
             <BaseChartConfigurationPanel
-                locale={DefaultLocale}
+                locale={DEFAULT_LANGUAGE}
                 properties={properties}
                 propertiesMeta={null}
                 insight={insight}
@@ -109,6 +112,7 @@ describe("PluggableBaseChart", () => {
             dimensions: { height: null },
             locale: dummyLocale,
             custom: {},
+            messages,
         };
 
         visualization.update(options, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
@@ -134,6 +138,7 @@ describe("PluggableBaseChart", () => {
             dimensions: { height: null },
             locale: dummyLocale,
             custom: {},
+            messages,
         };
 
         visualization.update(
@@ -157,6 +162,7 @@ describe("PluggableBaseChart", () => {
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {},
+            messages,
         };
 
         const visualizationProperties = {
@@ -185,6 +191,7 @@ describe("PluggableBaseChart", () => {
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {},
+            messages,
         };
 
         visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, null, executionFactory);
@@ -236,6 +243,7 @@ describe("PluggableBaseChart", () => {
             dimensions: { height: 50 },
             locale: dummyLocale,
             custom: {},
+            messages,
         };
 
         const visualizationProperties = { controls: { legend: {} } };
@@ -511,6 +519,7 @@ describe("PluggableBaseChart", () => {
                     dimensions: { height: 5, width },
                     locale: dummyLocale,
                     custom: {},
+                    messages,
                 };
 
                 const visualizationProperties = {
@@ -581,7 +590,7 @@ describe("PluggableBaseChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

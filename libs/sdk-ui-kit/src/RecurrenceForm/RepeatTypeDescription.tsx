@@ -27,7 +27,12 @@ export function RepeatTypeDescription({
     return (
         <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
             <span>
-                {transformRecurrenceTypeToDescription(intl, repeatType, startDate, weekStart)}
+                {transformRecurrenceTypeToDescription(
+                    intl,
+                    repeatType,
+                    startDate ?? null,
+                    weekStart ?? "Sunday",
+                )}
                 {showTimezone && timezone ? (
                     <>
                         {" "}

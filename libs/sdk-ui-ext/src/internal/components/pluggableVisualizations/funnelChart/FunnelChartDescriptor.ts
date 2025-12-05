@@ -46,6 +46,8 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
 
     public getMeta(): IVisualizationMeta {
         return {
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/funnel_chart",
             supportsExport: true,
             supportsZooming: false,
         };

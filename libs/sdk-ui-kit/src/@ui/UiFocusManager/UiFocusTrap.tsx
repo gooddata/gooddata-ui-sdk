@@ -61,7 +61,7 @@ export function UiFocusTrap({
     focusCheckFn?: (element: HTMLElement) => boolean;
 }) {
     const rootElement = root || <div className="gd-focus-trap" style={{ display: "contents" }} />;
-    const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn);
+    const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn ?? (() => true));
 
     return cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
 }

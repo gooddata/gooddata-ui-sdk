@@ -25,7 +25,7 @@ export const getOppositeBasicPlacement = (
 ) => {
     const parsedPlacement = parsePlacement(arrowPlacement);
     const { basicPlacement, axisPlacement } = parsedPlacement;
-    const opposite = oppositeSides[basicPlacement] as Placement;
+    const opposite = oppositeSides[basicPlacement as keyof typeof oppositeSides] as Placement;
 
     if (behaviour === "popover") {
         return `${opposite}-${axisPlacement}` as Placement;
@@ -52,7 +52,7 @@ export const getDimensionsFromRect = (rect: DOMRect | { width: number; height: n
 
 export const getDimensionsFromRef = (ref: MutableRefObject<ReferenceType | null>) => {
     const rect = ref?.current?.getBoundingClientRect?.();
-    return getDimensionsFromRect(rect);
+    return getDimensionsFromRect(rect ?? null);
 };
 
 //get border radius from style variable, in case of scoped theme get directly from theme

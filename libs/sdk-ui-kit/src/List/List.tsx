@@ -78,7 +78,7 @@ export function List<T>({
     items = [],
     itemsCount = items.length,
     itemHeight = DEFAULT_ITEM_HEIGHT,
-    itemHeightGetter = null,
+    itemHeightGetter = null as unknown as (index: number) => number,
     maxVisibleItemsCount = MAX_VISIBLE_ITEMS_COUNT,
     renderItem,
 

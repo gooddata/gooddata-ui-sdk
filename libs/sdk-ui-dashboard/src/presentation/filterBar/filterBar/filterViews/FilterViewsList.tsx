@@ -309,7 +309,7 @@ export function FilterViewsList({
     const handleBlur = useCallback<FocusEventHandler>(
         // Select the default action when the focus leaves the list
         (e) => {
-            if (containerRef.current.contains(e.relatedTarget)) {
+            if (containerRef.current?.contains(e.relatedTarget)) {
                 return;
             }
 

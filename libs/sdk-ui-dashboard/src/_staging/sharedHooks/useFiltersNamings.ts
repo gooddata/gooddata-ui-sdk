@@ -97,7 +97,6 @@ function transformFiltersToNamings(
 ): (FilterNaming | undefined)[] {
     const {
         intl,
-        locale,
         dateFormat,
         getAttributeFilterDisplayFormFromMap,
         attrMap,
@@ -153,7 +152,11 @@ function transformFiltersToNamings(
                 dateFilterOptionInfo.dateFilterOption,
                 dateFilterOptionInfo.excludeCurrentPeriod,
             );
-            const subtitle = DateFilterHelpers.getDateFilterTitle(dateFilterOption, locale, dateFormat);
+            const subtitle = DateFilterHelpers.getDateFilterTitleUsingTranslator(
+                dateFilterOption,
+                intl,
+                dateFormat,
+            );
 
             const a = filter;
             if (isDashboardDateFilterWithDimension(a)) {

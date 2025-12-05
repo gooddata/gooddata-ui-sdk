@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.13.0-alpha.0",
+    "version": "11.13.0-alpha.1",
     "description": "GoodData GenAI SDK",
     "repository": {
         "type": "git",
@@ -86,6 +86,7 @@
         "copy-to-clipboard": "^3.3.3",
         "default-import": "1.1.5",
         "immer": "10.1.1",
+        "lodash-es": "^4.17.21",
         "react-intl": "7.1.11",
         "react-loading-skeleton": "^3.4.0",
         "react-markdown": "^10.1.0",
@@ -107,6 +108,7 @@
         "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.3.0",
+        "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",
         "@types/raf": "^3.4.0",
         "@types/react": "19.1.11",

@@ -53,7 +53,7 @@ export interface InputPureProps extends IDomNativeProps {
  * @internal
  */
 export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
-    public inputNodeRef: HTMLInputElement;
+    public inputNodeRef: HTMLInputElement | null = null;
     private autofocusDispatcher: () => void = () => {};
 
     static defaultProps = {
@@ -82,7 +82,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
 
     override componentDidMount(): void {
         const { autofocus } = this.props;
-        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, autofocus);
+        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, autofocus ?? false);
     }
 
     override componentWillUnmount(): void {
@@ -92,12 +92,12 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
     override componentDidUpdate(prevProps: Readonly<InputPureProps>) {
         if (prevProps.autofocus !== this.props.autofocus) {
             this.autofocusDispatcher();
-            this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus);
+            this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus ?? false);
         }
     }
 
     onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        this.props.onChange((e.target as HTMLInputElement).value, e);
+        this.props.onChange?.((e.target as HTMLInputElement).value, e);
     };
 
     onKeyPress = (e: KeyboardEvent): void => {
@@ -107,10 +107,10 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
                     e.stopPropagation();
                     this.onClear();
                 }
-                this.props.onEscKeyPress(e);
+                this.props.onEscKeyPress?.(e);
                 break;
             case ENUM_KEY_CODE.KEY_CODE_ENTER:
-                this.props.onEnterKeyPress();
+                this.props.onEnterKeyPress?.();
                 break;
             default:
                 break;
@@ -118,7 +118,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
     };
 
     onClear = (e?: ChangeEvent<HTMLInputElement>): void => {
-        this.props.onChange("", e);
+        this.props.onChange?.("", e);
         this.autofocusDispatcher = runAutofocus(this.inputNodeRef, true);
     };
 
@@ -273,11 +273,11 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
                     autoComplete={isSearch ? "off" : autocomplete}
                     data-testid={dataTestId}
                 />
-                {this.renderSearch(isSearch)}
-                {this.renderClearIcon(clearOnEsc)}
-                {this.renderPrefix(prefix)}
-                {this.renderSuffix(suffix)}
-                {this.renderIconButton(iconButton, iconButtonLabel, onIconButtonClick)}
+                {this.renderSearch(isSearch ?? false)}
+                {this.renderClearIcon(clearOnEsc ?? false)}
+                {this.renderPrefix(prefix ?? "")}
+                {this.renderSuffix(suffix ?? "")}
+                {this.renderIconButton(iconButton!, iconButtonLabel ?? "", onIconButtonClick!)}
             </div>
         );
     }
@@ -286,12 +286,12 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         const { className, label } = this.props;
 
         return label ? (
-            <label className={this.getLabelClassNames(className)}>
+            <label className={this.getLabelClassNames(className ?? "")}>
                 {this.renderLabel(label)}
                 {this.renderInput()}
             </label>
         ) : (
-            <div className={this.getLabelClassNames(className)}>{this.renderInput()}</div>
+            <div className={this.getLabelClassNames(className ?? "")}>{this.renderInput()}</div>
         );
     }
 

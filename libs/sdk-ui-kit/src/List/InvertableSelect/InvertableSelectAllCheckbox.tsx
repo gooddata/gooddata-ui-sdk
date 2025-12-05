@@ -49,7 +49,7 @@ export function InvertableSelectAllCheckbox({
             onToggle();
         }
         if (isEnterKey(event) && !isApplyDisabled) {
-            onApplyButtonClick();
+            onApplyButtonClick?.();
         }
     };
 

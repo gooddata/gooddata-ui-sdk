@@ -66,7 +66,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
 
 function getElementToFocus(
     element: HTMLElement | null | undefined,
-    initialFocus?: string | RefObject<HTMLElement>,
+    initialFocus?: string | RefObject<HTMLElement | null>,
     includeHidden?: boolean,
 ) {
     const initialFocusElement = resolveRef(initialFocus);

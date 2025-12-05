@@ -1,6 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, ISettings, insightSanitize } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    IInsightDefinition,
+    ISettings,
+    insightProperties,
+    insightSanitize,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IPivotTableNextProps } from "@gooddata/sdk-ui-pivot/next";
 
@@ -27,6 +33,7 @@ import {
     sortsInsightConversion,
     totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { getPageSizeFromProperties, getPaginationFromProperties } from "../../../utils/propertiesHelper.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT } from "../constants.js";
 import {
@@ -106,6 +113,12 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
                 },
                 pivotTableNextConfigFromInsight,
             ),
+            pageSize: insightConversion("pageSize", { cardinality: "scalar" }, (insight) => {
+                const pagination = getPaginationFromProperties(insightProperties(insight));
+                const pageSize = getPageSizeFromProperties(insightProperties(insight));
+                // Only include pageSize when pagination is enabled and pageSize is set
+                return pagination?.enabled && pageSize !== undefined ? pageSize : undefined;
+            }),
             locale: localeInsightConversion("locale"),
             execConfig: executionConfigInsightConversion("execConfig"),
         }),
@@ -115,7 +128,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
     public getMeta(): IVisualizationMeta {
         return {
             documentationUrl:
-                "https://www.gooddata.com/docs/cloud/experimental-features/enhanced-pivot-table/",
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pivot_table_next",
             supportsExport: true,
             supportsZooming: false,
         };

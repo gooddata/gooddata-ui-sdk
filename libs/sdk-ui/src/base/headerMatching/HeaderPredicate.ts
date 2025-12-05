@@ -16,7 +16,7 @@ export interface IHeaderPredicateContext {
  *
  * @remarks
  * When the function returns true, it means the IMappingHeader is matched.
- * See {@link https://sdk.gooddata.com/gooddata-ui/docs/ht_create_predicates.html | documentation} for more information.
+ * See {@link https://www.gooddata.com/docs/gooddata-ui/latest/learn/add_interactivity/predicates | documentation} for more information.
  *
  * @public
  */

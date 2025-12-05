@@ -1,51 +1,55 @@
 // (C) 2024-2025 GoodData Corporation
+import { memoize } from "lodash-es";
 
+import { ITranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
-import { de_DE } from "./bundles/de-DE.localization-bundle.js";
-import { en_AU } from "./bundles/en-AU.localization-bundle.js";
-import { en_GB } from "./bundles/en-GB.localization-bundle.js";
 import { en_US } from "./bundles/en-US.localization-bundle.js";
-import { es_419 } from "./bundles/es-419.localization-bundle.js";
-import { es_ES } from "./bundles/es-ES.localization-bundle.js";
-import { fi_FI } from "./bundles/fi-FI.localization-bundle.js";
-import { fr_CA } from "./bundles/fr-CA.localization-bundle.js";
-import { fr_FR } from "./bundles/fr-FR.localization-bundle.js";
-import { it_IT } from "./bundles/it-IT.localization-bundle.js";
-import { ja_JP } from "./bundles/ja-JP.localization-bundle.js";
-import { ko_KR } from "./bundles/ko-KR.localization-bundle.js";
-import { nl_NL } from "./bundles/nl-NL.localization-bundle.js";
-import { pl_PL } from "./bundles/pl-PL.localization-bundle.js";
-import { pt_BR } from "./bundles/pt-BR.localization-bundle.js";
-import { pt_PT } from "./bundles/pt-PT.localization-bundle.js";
-import { ru_RU } from "./bundles/ru-RU.localization-bundle.js";
-import { sl_SI } from "./bundles/sl-SI.localization-bundle.js";
-import { tr_TR } from "./bundles/tr-TR.localization-bundle.js";
-import { zh_Hans } from "./bundles/zh-Hans.localization-bundle.js";
-import { zh_Hant } from "./bundles/zh-Hant.localization-bundle.js";
-import { zh_HK } from "./bundles/zh-HK.localization-bundle.js";
 
-export const translations: { [locale: string]: Record<string, string> } = {
-    "de-DE": de_DE,
-    "en-AU": en_AU,
-    "en-GB": en_GB,
-    "en-US": translationUtils.removeMetadata(en_US),
-    "es-419": es_419,
-    "es-ES": es_ES,
-    "fi-FI": fi_FI,
-    "fr-CA": fr_CA,
-    "fr-FR": fr_FR,
-    "it-IT": it_IT,
-    "ja-JP": ja_JP,
-    "nl-NL": nl_NL,
-    "pt-BR": pt_BR,
-    "pt-PT": pt_PT,
-    "ru-RU": ru_RU,
-    "zh-Hans": zh_Hans,
-    "zh-Hant": zh_Hant,
-    "zh-HK": zh_HK,
-    "tr-TR": tr_TR,
-    "pl-PL": pl_PL,
-    "ko-KR": ko_KR,
-    "sl-SI": sl_SI,
+const asyncGenAiTranslations: { [locale: string]: () => Promise<ITranslations> } = {
+    "en-US": () => Promise.resolve(translationUtils.removeMetadata(en_US)),
+    "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
+    "en-AU": () => import("./bundles/en-AU.localization-bundle.js").then((module) => module.en_AU),
+    "en-GB": () => import("./bundles/en-GB.localization-bundle.js").then((module) => module.en_GB),
+    "es-419": () => import("./bundles/es-419.localization-bundle.js").then((module) => module.es_419),
+    "es-ES": () => import("./bundles/es-ES.localization-bundle.js").then((module) => module.es_ES),
+    "fi-FI": () => import("./bundles/fi-FI.localization-bundle.js").then((module) => module.fi_FI),
+    "fr-CA": () => import("./bundles/fr-CA.localization-bundle.js").then((module) => module.fr_CA),
+    "fr-FR": () => import("./bundles/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
+    "it-IT": () => import("./bundles/it-IT.localization-bundle.js").then((module) => module.it_IT),
+    "ja-JP": () => import("./bundles/ja-JP.localization-bundle.js").then((module) => module.ja_JP),
+    "nl-NL": () => import("./bundles/nl-NL.localization-bundle.js").then((module) => module.nl_NL),
+    "pt-BR": () => import("./bundles/pt-BR.localization-bundle.js").then((module) => module.pt_BR),
+    "pt-PT": () => import("./bundles/pt-PT.localization-bundle.js").then((module) => module.pt_PT),
+    "ru-RU": () => import("./bundles/ru-RU.localization-bundle.js").then((module) => module.ru_RU),
+    "zh-Hans": () => import("./bundles/zh-Hans.localization-bundle.js").then((module) => module.zh_Hans),
+    "zh-Hant": () => import("./bundles/zh-Hant.localization-bundle.js").then((module) => module.zh_Hant),
+    "zh-HK": () => import("./bundles/zh-HK.localization-bundle.js").then((module) => module.zh_HK),
+    "tr-TR": () => import("./bundles/tr-TR.localization-bundle.js").then((module) => module.tr_TR),
+    "pl-PL": () => import("./bundles/pl-PL.localization-bundle.js").then((module) => module.pl_PL),
+    "ko-KR": () => import("./bundles/ko-KR.localization-bundle.js").then((module) => module.ko_KR),
+    "sl-SI": () => import("./bundles/sl-SI.localization-bundle.js").then((module) => module.sl_SI),
 };
+
+/**
+ * Asynchronously loads translations for the specified locale.
+ *
+ * @param locale - The locale to load translations for
+ * @returns Promise resolving to translations object
+ * @internal
+ */
+const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
+    const loader = asyncGenAiTranslations[locale] || asyncGenAiTranslations["en-US"];
+    return loader();
+};
+
+/**
+ * Resolves translation messages for the given locale.
+ * Memoized to cache promises and prevent duplicate async imports.
+ *
+ * @internal
+ */
+export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+
+export const DEFAULT_LANGUAGE = "en-US";
+export const DEFAULT_MESSAGES = { [DEFAULT_LANGUAGE]: translationUtils.removeMetadata(en_US) };

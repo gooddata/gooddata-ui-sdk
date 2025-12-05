@@ -124,7 +124,9 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.required" });
         }
         if (!validDefinition) {
-            onInvalidDefinition(stylingItem?.ref);
+            if (stylingItem?.ref) {
+                onInvalidDefinition?.(stylingItem.ref);
+            }
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
         }
         return undefined;
@@ -154,8 +156,8 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                 className,
             )}
             onClose={() => {
-                onExit(nameField, definitionField);
-                onClose();
+                onExit?.(nameField, definitionField);
+                onClose?.();
             }}
             displayCloseButton
             submitOnEnterKey={false}
@@ -169,8 +171,8 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                                 "gd-button-primary gd-button-icon-only gd-icon-navigateleft s-navigate-back-button"
                             }
                             onClick={() => {
-                                onExit(nameField, definitionField);
-                                onClose();
+                                onExit?.(nameField, definitionField);
+                                onClose?.();
                             }}
                         />
                     </div>
@@ -221,10 +223,10 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                             {examples.map((example, index) => (
                                 <StylingExample
                                     key={index}
-                                    name={example.name}
+                                    name={example.name ?? ""}
                                     colors={exampleToColorPreview(example.content)}
                                     onClick={() => {
-                                        setNameField(example.name);
+                                        setNameField(example.name ?? "");
                                         setDefinitionField(JSON.stringify(example.content, null, 4));
                                     }}
                                 />
@@ -238,10 +240,10 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                 showProgressIndicator={showProgressIndicator}
                 link={link}
                 errorMessage={errorMessage}
-                onSubmit={() => onSubmit(getFinalStylingItem(stylingItem, definitionField, nameField))}
+                onSubmit={() => onSubmit?.(getFinalStylingItem(stylingItem!, definitionField, nameField))}
                 onCancel={() => {
-                    onExit(nameField, definitionField);
-                    onCancel();
+                    onExit?.(nameField, definitionField);
+                    onCancel?.();
                 }}
                 onHelpClick={onHelpClick}
             />

@@ -1,13 +1,37 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentClass, ComponentType, FC, JSX, ReactNode } from "react";
+import { ComponentClass, ComponentType, FC, JSX, ReactNode, useEffect, useState } from "react";
 
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import type { IntlConfig } from "react-intl/src/types.js";
 
 import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
-import { ITranslations, messagesMap } from "./messagesMap.js";
+import { DEFAULT_MESSAGES, ITranslations, resolveMessages } from "./messagesMap.js";
 import { wrapDisplayName } from "../react/wrapDisplayName.js";
+
+/**
+ * @internal
+ */
+export function useResolveMessages(
+    locale: ILocale,
+    resolveMessages: (locale: string) => Promise<ITranslations>,
+    defaultMessages: Record<string, ITranslations>,
+): Record<string, ITranslations> {
+    const [messages, setMessages] = useState<Record<string, ITranslations>>(defaultMessages);
+    useEffect(() => {
+        if (messages[locale]) {
+            return;
+        }
+
+        resolveMessages(locale).then((messages) => {
+            setMessages((current) => ({ ...current, [locale]: messages }));
+        });
+        // we don't want to re-run this effect when the messages change its used as guard
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [locale, resolveMessages]);
+
+    return messages;
+}
 
 /**
  * @internal
@@ -16,7 +40,7 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
     return createIntl({
         locale,
         messages: {
-            ...resolveLocaleDefaultMessages(locale, messagesMap),
+            ...resolveLocaleDefaultMessages("en-US", DEFAULT_MESSAGES), // there's nothing more than default en-US in the map
             ...customMessages,
         },
         // Suppress MISSING_TRANSLATION errors in test environments
@@ -39,12 +63,17 @@ export function withIntlForTest<P>(
 ): ComponentType<P> {
     function WithIntl(props: P) {
         const locale = customLocale || DefaultLocale;
-        const messages = customMessages || resolveLocaleDefaultMessages(locale, messagesMap);
+        const messages = useResolveMessages(locale, resolveMessages, DEFAULT_MESSAGES);
+
+        const effectiveMessages = customMessages || messages[locale];
+        if (!effectiveMessages) {
+            return null;
+        }
 
         return (
             <IntlProvider
                 locale={locale as string}
-                messages={messages}
+                messages={effectiveMessages}
                 onError={(error) => {
                     // Suppress MISSING_TRANSLATION errors to improve test performance
                     if (!error.message?.includes("MISSING_TRANSLATION")) {
@@ -70,10 +99,14 @@ export function withIntl<P>(
 ): ComponentType<P> {
     function WithIntl(props: P) {
         const locale = customLocale || DefaultLocale;
-        const messages = customMessages || resolveLocaleDefaultMessages(locale, messagesMap);
+        const messages = useResolveMessages(locale, resolveMessages, DEFAULT_MESSAGES);
+        const effectiveMessages = customMessages || messages[locale];
+        if (!effectiveMessages) {
+            return null;
+        }
 
         return (
-            <IntlProvider locale={locale as string} messages={messages}>
+            <IntlProvider locale={locale as string} messages={effectiveMessages}>
                 <WrappedComponent {...(props as P & JSX.IntrinsicAttributes)} />
             </IntlProvider>
         );
@@ -97,9 +130,13 @@ export function Intl({
     forTest?: boolean;
 }) {
     const locale = customLocale ?? DefaultLocale;
-    const messages = customMessages ?? resolveLocaleDefaultMessages(locale, messagesMap);
+    const messages = useResolveMessages(locale, resolveMessages, DEFAULT_MESSAGES);
+    const effectiveMessages = customMessages || messages[locale];
+    if (!effectiveMessages) {
+        return null;
+    }
 
-    const props: IntlConfig = { locale, messages };
+    const props: IntlConfig = { locale, messages: effectiveMessages };
 
     if (forTest) {
         // this pattern is used, because sometimes, passing undefined can bypass the defaultProp in the other component,

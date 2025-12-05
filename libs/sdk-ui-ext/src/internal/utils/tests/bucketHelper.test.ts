@@ -3,7 +3,7 @@ import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IBucket } from "@gooddata/sdk-model";
-import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
@@ -55,6 +55,9 @@ import {
     transformMeasureBuckets,
 } from "../bucketHelper.js";
 import { createInternalIntl } from "../internalIntlProvider.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../translations.js";
+
+const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };
@@ -195,7 +198,7 @@ describe("Bucket title", () => {
 
     it("should set translated bucket titles for all buckets except filters when intl provided", () => {
         const visualizationType = VisualizationTypes.BAR;
-        const intl = createInternalIntl(DefaultLocale);
+        const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
@@ -230,7 +233,7 @@ describe("Bucket title", () => {
 
     it("should not create bucket titles for disabled buckets", () => {
         const visualizationType = VisualizationTypes.PIE;
-        const intl = createInternalIntl(DefaultLocale);
+        const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");

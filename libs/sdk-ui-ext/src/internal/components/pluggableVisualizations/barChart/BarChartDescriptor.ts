@@ -73,7 +73,8 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/bar_chart",
             supportsExport: true,
             supportsZooming: true,
         };

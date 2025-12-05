@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useEffect } from "react";
+
+import { RefObject, useEffect } from "react";
 
 import { EditorSelection, Transaction } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
-export function useCodemirrorChange(viewRef: MutableRefObject<EditorView>, value: string) {
+export function useCodemirrorChange(viewRef: RefObject<EditorView | null>, value: string) {
     // Handle external value changes
     useEffect(() => {
         const view = viewRef.current;

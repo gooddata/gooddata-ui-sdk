@@ -38,7 +38,7 @@ export const DefaultUiMenuContent = memo(function DefaultUiMenuContent<T extends
         <>
             {item.showComponentOnly ? null : <DefaultUiMenuHeader />}
             <div className={e("content-container")}>
-                <ContentComponent onBack={handleBack} onClose={onClose} />
+                <ContentComponent onBack={handleBack} onClose={onClose ?? (() => {})} />
             </div>
         </>
     );

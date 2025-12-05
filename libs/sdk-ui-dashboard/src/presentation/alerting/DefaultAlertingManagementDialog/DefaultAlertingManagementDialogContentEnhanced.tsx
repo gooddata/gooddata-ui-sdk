@@ -75,7 +75,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const { returnFocusTo } = useAlertingDialogAccessibility();
 
-    const invalidateItemsRef = useAutomationsInvalidateRef();
+    const { onInvalidateCallbackChange } = useAutomationsInvalidateRef();
     const isMobile = isMobileView();
 
     // Check if widget has metrics for alert creation
@@ -141,7 +141,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         enableBulkActions={enableBulkActions}
                         availableFilters={availableFilters}
                         locale={intl.locale}
-                        invalidateItemsRef={invalidateItemsRef}
+                        onInvalidateCallbackChange={onInvalidateCallbackChange}
                         renderToolbarCustomElement={() =>
                             managementDialogContext.widgetRef && canCreateAutomation ? (
                                 <CreateButton

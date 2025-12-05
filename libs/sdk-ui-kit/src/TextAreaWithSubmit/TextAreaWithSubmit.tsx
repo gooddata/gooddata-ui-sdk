@@ -5,7 +5,6 @@ import {
     KeyboardEvent,
     MouseEvent as ReactMouseEvent,
     ReactNode,
-    RefObject,
     useCallback,
     useEffect,
     useMemo,
@@ -34,23 +33,23 @@ export function TextAreaWithSubmit({
 }: ITextAreaWithSubmitProps) {
     const [value, setValue] = useState(defaultValue);
     const [isEditing, setIsEditing] = useState(false);
-    const root: RefObject<any> = useRef(null);
-    const textarea: RefObject<HTMLTextAreaElement> = useRef(null);
+    const root = useRef<HTMLDivElement | null>(null);
+    const textarea = useRef<HTMLTextAreaElement | null>(null);
     const focusTimeoutRef = useRef<number>(0);
 
     const onSelectStart = useCallback((e: Event): void => {
         e.stopPropagation();
     }, []);
 
-    const isClickOutsideTextarea = useCallback((clickedTarget: EventTarget): boolean => {
-        return textarea.current && !textarea.current.contains(clickedTarget as HTMLElement);
+    const isClickOutsideTextarea = useCallback((clickedTarget: EventTarget | null): boolean => {
+        return !!textarea.current && !textarea.current.contains(clickedTarget as HTMLElement);
     }, []);
 
     const onDocumentClick = useCallback(
         (e: MouseEvent): void => {
             if (isClickOutsideTextarea(e.target)) {
                 const textAreaNode = textarea.current;
-                textAreaNode.blur();
+                textAreaNode?.blur();
             }
         },
         [isClickOutsideTextarea],

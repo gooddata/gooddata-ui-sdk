@@ -32,7 +32,7 @@ function WrappedHeaderMenu({
 
                 const itemClassNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                     active: item.isActive,
-                    [item.className]: !!item.className,
+                    [item.className as string]: !!item.className,
                 });
 
                 return (

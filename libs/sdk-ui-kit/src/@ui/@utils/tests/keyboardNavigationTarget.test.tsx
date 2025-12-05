@@ -4,16 +4,13 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { messagesMap } from "@gooddata/sdk-ui";
-
 import { useKeyboardNavigationTarget } from "../useKeyboardNavigationTarget.js";
 
 describe("useKeyboardNavigationTarget", () => {
     const renderHook = () => {
         const DefaultLocale = "en-US";
         const onFocus = vi.fn();
-
-        const messages = messagesMap[DefaultLocale];
+        const messages = {};
 
         function Component() {
             const { targetRef } = useKeyboardNavigationTarget({

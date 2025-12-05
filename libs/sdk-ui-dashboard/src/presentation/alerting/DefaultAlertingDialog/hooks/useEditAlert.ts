@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -156,18 +156,22 @@ export function useEditAlert({
     // Computed values
     const isNewAlert = !alertToEdit;
 
+    const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);
+
+    useEffect(() => {
+        if (insight) {
+            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+        }
+    }, [insight, locale]);
+
     const measureFormatMap = useMemo(() => {
         return getMeasureFormatsFromExecution(execResult?.executionResult);
     }, [execResult?.executionResult]);
 
     const supportedMeasures = useMemo(
         () =>
-            getSupportedInsightMeasuresByInsight(
-                insight ? fillMissingTitles(insight, locale, 9999) : insight,
-                catalogDateDatasets,
-                canManageComparison,
-            ),
-        [insight, locale, catalogDateDatasets, canManageComparison],
+            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
+        [effectiveInsight, catalogDateDatasets, canManageComparison],
     );
 
     const supportedAttributes = useMemo(

@@ -3,21 +3,23 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { DefaultLocale } from "@gooddata/sdk-ui";
 
 import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggablePieChart } from "../PluggablePieChart.js";
 
 describe("PluggablePieChart", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps = {
-        locale: DefaultLocale,
+        locale: DEFAULT_LANGUAGE,
         projectId: "PROJECTID",
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
@@ -28,6 +30,7 @@ describe("PluggablePieChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages,
     };
 
     function createComponent(props = defaultProps) {
@@ -189,7 +192,7 @@ describe("PluggablePieChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

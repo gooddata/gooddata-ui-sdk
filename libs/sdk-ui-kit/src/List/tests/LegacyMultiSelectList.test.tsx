@@ -24,10 +24,10 @@ describe("LegacyMultiSelectList", () => {
     const items: any[] = [firstItem, secondItem];
 
     function renderList(customProps: Partial<ILegacyMultiSelectListProps<any>> = {}) {
-        const isSelected = (item: any) => customProps.selection?.includes(item);
-        const itemsCount = customProps.itemsCount || customProps.items.length;
+        const isSelected = (item: any) => customProps.selection?.includes(item) ?? false;
+        const itemsCount = customProps.itemsCount || customProps.items?.length || 0;
         const props = {
-            items: customProps.items,
+            items: customProps.items ?? [],
             itemsCount,
             width: 100,
             height: 100,
@@ -173,7 +173,7 @@ describe("LegacyMultiSelectList", () => {
                     tagName: "Attribute",
                 });
 
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     "Attribute is All",
                 );
             });
@@ -186,7 +186,7 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     "Attribute is (None)",
                 );
             });
@@ -200,7 +200,7 @@ describe("LegacyMultiSelectList", () => {
                     tagName: "Attribute",
                 });
 
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}`,
                 );
             });
@@ -215,7 +215,7 @@ describe("LegacyMultiSelectList", () => {
                     tagName: "Attribute",
                 });
 
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     `Attribute is All except ${firstItem.title}`,
                 );
             });
@@ -230,7 +230,7 @@ describe("LegacyMultiSelectList", () => {
                     tagName: "Attribute",
                 });
 
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     `Attribute is All except ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
@@ -245,7 +245,7 @@ describe("LegacyMultiSelectList", () => {
                     tagName: "Attribute",
                 });
 
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
@@ -259,7 +259,7 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent?.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}, N/A (2)`,
                 );
             });

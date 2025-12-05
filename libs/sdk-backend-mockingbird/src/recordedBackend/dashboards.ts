@@ -274,17 +274,52 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             };
         }
 
-        walkLayout(savedDashboard.layout!, {
-            widgetCallback: (widget) => {
-                if (isKpiWidgetDefinition(widget) || isInsightWidgetDefinition(widget)) {
-                    const newId = uuidv4();
+        // Walk root layout to assign widget identities
+        if (savedDashboard.layout) {
+            walkLayout(savedDashboard.layout, {
+                widgetCallback: (widget) => {
+                    if (isKpiWidgetDefinition(widget) || isInsightWidgetDefinition(widget)) {
+                        const newId = uuidv4();
 
-                    (widget as any).identifier = newId;
-                    (widget as any).uri = newId;
-                    (widget as any).ref = idRef(newId);
+                        (widget as any).identifier = newId;
+                        (widget as any).uri = newId;
+                        (widget as any).ref = idRef(newId);
+                    }
+                },
+            });
+        }
+
+        // Walk tab layouts to assign widget identities (when tabs are enabled)
+        if (savedDashboard.tabs) {
+            savedDashboard.tabs.forEach((tab) => {
+                if (tab.layout) {
+                    walkLayout(tab.layout, {
+                        widgetCallback: (widget) => {
+                            if (isKpiWidgetDefinition(widget) || isInsightWidgetDefinition(widget)) {
+                                const newId = uuidv4();
+
+                                (widget as any).identifier = newId;
+                                (widget as any).uri = newId;
+                                (widget as any).ref = idRef(newId);
+                            }
+                        },
+                    });
+
+                    // Also assign filter context identity for each tab
+                    if (isFilterContextDefinition(tab.filterContext)) {
+                        const newId = uuidv4();
+                        const { identifier = newId, uri = newId, ref = idRef(newId) } = tab.filterContext;
+
+                        tab.filterContext = {
+                            ...tab.filterContext,
+                            identifier,
+                            uri,
+                            ref,
+                        };
+                    }
                 }
-            },
-        });
+            });
+        }
 
         this.addOrUpdateLocalDashboard(savedDashboard as IDashboard);
 

@@ -14,16 +14,19 @@ function UiAsyncTableDropdownItem({
     isUnderlined,
 }: UiAsyncTableDropdownItemProps) {
     return (
-        <div className={e("dropdown-item-container", { underlined: isUnderlined })}>
+        <div className={e("dropdown-item-container", { underlined: isUnderlined ?? false })}>
             <div
-                className={e("dropdown-item", { selected: isSelected, "multi-select": isMultiSelect })}
+                className={e("dropdown-item", {
+                    selected: isSelected ?? false,
+                    "multi-select": isMultiSelect ?? false,
+                })}
                 onClick={onClick}
                 role="menuitem"
                 aria-disabled={false}
             >
                 {isMultiSelect ? (
                     <div className={e("dropdown-item-checkbox")}>
-                        <UiCheckbox preventDefault checked={isSelected} tabIndex={-1} />
+                        <UiCheckbox preventDefault checked={isSelected ?? false} tabIndex={-1} />
                     </div>
                 ) : null}
                 <div className={e("dropdown-item-label-primary")}>{label}</div>

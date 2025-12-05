@@ -143,14 +143,14 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
 export interface IUiTreeviewContext<Levels extends any[], Level> {
     items: UiLeveledTreeView<LevelTypesUnion<Levels>>[] | UiStaticTreeView<Level>[];
     itemsRef: MutableRefObject<UiRefsTree>;
-    onClose: () => void;
+    onClose?: () => void;
     onSelect: (
         event: MouseEvent | KeyboardEvent,
         path: number[],
         item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
     ) => void;
     isItemFocusable: (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => boolean;
-    setFocusedPath: Dispatch<SetStateAction<number[] | undefined>>;
+    setFocusedPath: Dispatch<SetStateAction<number[]>>;
     selectedItemId: string | undefined;
 }
 
@@ -163,9 +163,9 @@ export interface IUiTreeviewItemProps<T> {
     item: IUiTreeViewItem<T>;
 
     isFocused: boolean;
-    isExpanded: boolean;
+    isExpanded?: boolean;
     isSelected: boolean;
-    isCompact: boolean;
+    isCompact?: boolean;
     level: number;
     ariaAttributes: UiTreeViewItemAriaAttributes;
 

@@ -54,7 +54,7 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
     const returnFocusOnUnmountOptions =
         typeof enableReturnFocusOnUnmount === "object" ? enableReturnFocusOnUnmount : {};
 
-    const focusTrapConnectors = useUiFocusTrapConnectors(focusCheckFn);
+    const focusTrapConnectors = useUiFocusTrapConnectors(focusCheckFn ?? (() => true));
     const tabOutConnectors = useUiTabOutHandlerConnectors(tabOutHandler);
     const autofocusConnectors = useUiAutofocusConnectors(autofocusOptions);
     const returnFocusConnectors = useUiReturnFocusOnUnmountConnectors(returnFocusOnUnmountOptions);

@@ -26,7 +26,7 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
 ) {
     const canBeDeleted = isDeletable && (tag.isDeletable ?? true);
     return (
-        <div className={e("tag", { isFocused })} role="listitem" style={{ maxWidth }}>
+        <div className={e("tag", { isFocused: isFocused ?? false })} role="listitem" style={{ maxWidth }}>
             <UiTagComponent
                 ref={ref}
                 tabIndex={-1}

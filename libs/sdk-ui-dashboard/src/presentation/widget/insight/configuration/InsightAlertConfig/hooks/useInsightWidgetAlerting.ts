@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IInsight,
     IInsightWidget,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -160,14 +161,16 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         [insight, catalogDateDatasets],
     );
 
+    const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);
+    useEffect(() => {
+        if (insight) {
+            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+        }
+    }, [insight, locale]);
     const supportedMeasures = useMemo(
         () =>
-            getSupportedInsightMeasuresByInsight(
-                insight ? fillMissingTitles(insight, locale, 9999) : insight,
-                catalogDateDatasets,
-                canManageComparison,
-            ),
-        [insight, locale, catalogDateDatasets, canManageComparison],
+            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
+        [effectiveInsight, catalogDateDatasets, canManageComparison],
     );
     const defaultMeasure = supportedMeasures[0];
 
@@ -250,16 +253,16 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         if (alerts.length === 0) {
             automationInteraction({
                 type: "alertInitialized",
-                automation_visualization_type: insight?.insight.visualizationUrl,
+                automation_visualization_type: effectiveInsight?.insight.visualizationUrl,
             });
         }
-    }, [alerts.length, automationInteraction, insight?.insight.visualizationUrl]);
+    }, [alerts.length, automationInteraction, effectiveInsight?.insight.visualizationUrl]);
 
     const initiateAlertCreation = () => {
         setViewMode("create");
         automationInteraction({
             type: "alertInitialized",
-            automation_visualization_type: insight?.insight.visualizationUrl,
+            automation_visualization_type: effectiveInsight?.insight.visualizationUrl,
         });
     };
 

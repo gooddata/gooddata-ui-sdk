@@ -5,6 +5,7 @@ import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
@@ -46,4 +47,13 @@ export class DependencyWheelChartDescriptor
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public override getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/dependency_wheel_chart",
+            supportsExport: true,
+            supportsZooming: false,
+        };
+    }
 }

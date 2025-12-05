@@ -89,7 +89,7 @@ export function ShareDialogBase(props: IShareDialogBaseProps) {
                         onGranteeDelete={onSharedGranteeDelete}
                         onLockChange={onLockChange}
                         onUnderLenientControlChange={onUnderLenientControlChange}
-                        onGranularGranteeChange={onGranularGranteeShareChange}
+                        onGranularGranteeChange={onGranularGranteeShareChange as any}
                         isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                     />
                 ) : (
@@ -106,7 +106,7 @@ export function ShareDialogBase(props: IShareDialogBaseProps) {
                         onCancel={handleCancel}
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
-                        onGranularGranteeChange={onGranularGranteeAddChange}
+                        onGranularGranteeChange={onGranularGranteeAddChange as any}
                         isGranteeShareLoading={isGranteeShareLoading}
                     />
                 )}

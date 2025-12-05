@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Added: Enable enableHighchartsAccessibility feature flag by default",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

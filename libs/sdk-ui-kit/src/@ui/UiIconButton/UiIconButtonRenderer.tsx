@@ -85,7 +85,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
         ref,
     ) => {
         const iconSize = getButtonIconSize(size);
-        const testId = dataTestId || `${stringUtils.simplifyText(label)}`;
+        const testId = dataTestId || `${stringUtils.simplifyText(label ?? "")}`;
         return (
             <button
                 ref={ref}
@@ -93,7 +93,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                     type: iconAfter ? "dropdownButton" : "button",
                     size,
                     variant,
-                    active: isActive,
+                    active: isActive ?? false,
                 })}
                 id={id}
                 disabled={isDisabled}

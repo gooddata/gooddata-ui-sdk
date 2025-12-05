@@ -140,7 +140,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     }
 
     checkTitle(): void {
-        const element = this.props.getElement(this);
+        const element = this.props.getElement!(this);
         const title = this.props.children;
         const elementWidth = getElementWidth(element);
         const ellipsisPosition = this.props.ellipsisPosition;
@@ -174,7 +174,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     }
 
     renderText(): ReactNode {
-        const TagName = this.props.tagName;
+        const TagName = this.props.tagName as ElementType;
         return (
             <TagName
                 ref={this.textRef}

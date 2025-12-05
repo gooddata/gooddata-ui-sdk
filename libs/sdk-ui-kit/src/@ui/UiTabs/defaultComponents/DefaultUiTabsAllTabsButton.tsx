@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { Ref } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -18,7 +18,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
     TTabActionProps extends Record<any, any> = EmptyObject,
 >(
     { isOpen, onClick }: IUiTabComponentProps<"AllTabsButton", TTabProps, TTabActionProps>,
-    ref: RefObject<HTMLElement>,
+    ref: Ref<HTMLElement>,
 ) {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
@@ -33,7 +33,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
                 ariaExpanded: isOpen,
             }}
             onClick={onClick}
-            ref={ref as RefObject<HTMLButtonElement>}
+            ref={ref as Ref<HTMLButtonElement>}
             disableAnimation
         />
     ) : (
@@ -46,7 +46,7 @@ function DefaultUiTabsAllTabsButtonNotWrapped<
                 ariaExpanded: isOpen,
             }}
             onClick={onClick}
-            ref={ref as RefObject<HTMLButtonElement>}
+            ref={ref as Ref<HTMLButtonElement>}
             disableIconAnimation
         />
     );

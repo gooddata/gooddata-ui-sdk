@@ -5,7 +5,7 @@ copyright: (C) 2020 GoodData Corporation
 id: pivot_table_component
 ---
 
-> **Notice**: This component will be replaced by [PivotTableNext](pivot_table_next_component.md) in the next major release.
+> **Notice**: This component will be replaced by [PivotTableNext](pivot_table_next.md) in the next major release.
 
 A **pivot table** expands capabilities of a regular (flat) table by allowing you to reorganize and summarize selected data beyond the typical row-column relationship.
 

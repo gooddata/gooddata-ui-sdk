@@ -47,8 +47,8 @@ export function useResponsiveTags(
                         tags,
                         container,
                         tagsContainerWidth,
-                        hiddenContainer,
-                        addButton,
+                        hiddenContainer ?? undefined,
+                        addButton ?? undefined,
                     );
 
                 setShowedTags(showedTags);
@@ -59,7 +59,7 @@ export function useResponsiveTags(
             }
             case "multi-line": {
                 const { showedTags, hiddenTags, availableWidth, lastAvailableWidth } =
-                    recalculateMultiLineTags(tags, tagsContainerWidth, addButton);
+                    recalculateMultiLineTags(tags, tagsContainerWidth, addButton ?? undefined);
 
                 setShowedTags(showedTags);
                 setHiddenTags(hiddenTags);
@@ -68,8 +68,16 @@ export function useResponsiveTags(
                 break;
             }
         }
+    }, [
+        tagsContainerWidth,
+        tags,
+        allContainerRef,
+        hiddenTagsContainerRef,
+        addButtonRef,
+        mode,
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tagsContainerWidth, tags, allContainerRef, hiddenTagsContainerRef, addButtonRef, mode, ...deps]);
+        ...(deps ?? []),
+    ]);
 
     useLayoutEffect(() => {
         const width = tooltipTagsContainer?.offsetWidth ?? 0;

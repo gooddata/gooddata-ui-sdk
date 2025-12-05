@@ -58,7 +58,7 @@ export function DefaultUiTabsContainer<
     });
 
     const scopedIdStoreValue = useScopedIdStoreValue<IUiTab<TTabProps, TTabActionProps> | undefined>(
-        (item) => item?.id,
+        (item) => item?.id ?? "",
     );
 
     const { containerRef: focusContainerRef } = useFocusWithinContainer(
@@ -77,7 +77,13 @@ export function DefaultUiTabsContainer<
     }, [focusedItemContainerId, selectedTabId, isOverflowing]);
 
     return (
-        <div className={UiTabsBem.b({ size, overflow: true, "disable-border": disableBottomBorder })}>
+        <div
+            className={UiTabsBem.b({
+                size: size ?? "medium",
+                overflow: true,
+                "disable-border": disableBottomBorder ?? false,
+            })}
+        >
             <div
                 className={UiTabsBem.e("container")}
                 ref={useCombineRefs(resizeContainerRef, focusContainerRef)}
@@ -90,7 +96,7 @@ export function DefaultUiTabsContainer<
                 aria-expanded={accessibilityConfig?.ariaExpanded}
                 role={accessibilityConfig?.role}
             >
-                <ScopedIdStore value={scopedIdStoreValue}>
+                <ScopedIdStore value={scopedIdStoreValue as any}>
                     {tabs.map((tab) => {
                         const isSelected = selectedTabId === tab.id;
                         const onSelect = () => onTabSelect(tab);

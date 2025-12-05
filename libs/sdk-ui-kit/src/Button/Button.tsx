@@ -100,7 +100,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
         : ariaDescribedByFromConfig;
 
     const effectiveValue = useMemo(() => value ?? children, [children, value]);
-    const testId = dataTestId || getGeneratedTestId(effectiveValue, title, ariaLabel);
+    const testId = dataTestId || getGeneratedTestId(effectiveValue, title ?? "", ariaLabel ?? "");
 
     const classNames = useMemo(() => {
         const generatedSeleniumClass =

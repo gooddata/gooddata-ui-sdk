@@ -77,7 +77,7 @@ export function CoreHeaderWorkspacePicker({
     const dropdownClassNames = cx({
         "gd-header-project-wrapper": true,
         "gd-header-measure": true,
-        [className]: !!className,
+        [className as string]: !!className,
     });
     const noMatchingWorkspacesId = isRenamingProjectToWorkspaceEnabled
         ? "gs.header.projectPicker.noMatchingWorkspaces"
@@ -97,11 +97,11 @@ export function CoreHeaderWorkspacePicker({
             }}
             renderButton={({ isOpen, toggleDropdown, dropdownId, buttonRef }) => (
                 <HeaderWorkspacePickerButton
-                    title={selectedWorkspace?.title}
+                    title={selectedWorkspace?.title ?? ""}
                     isOpen={isOpen}
                     onClick={toggleDropdown}
                     dropdownId={dropdownId}
-                    buttonRef={buttonRef}
+                    buttonRef={buttonRef as any}
                 />
             )}
             renderBody={({ closeDropdown, isMobile }) => (

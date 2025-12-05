@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useMemo } from "react";
+
+import { RefObject, useMemo } from "react";
 
 import {
     CompletionSource,
@@ -16,7 +17,7 @@ export function useAutocompletion({
     whenTyping,
     activateOnTypingDelay,
 }: {
-    handleCompletion: MutableRefObject<CompletionSource>;
+    handleCompletion: RefObject<CompletionSource | undefined>;
     aboveCursor?: boolean;
     whenTyping?: boolean;
     activateOnTypingDelay?: number;
@@ -26,7 +27,7 @@ export function useAutocompletion({
             override: handleCompletion.current
                 ? [
                       (context) => {
-                          return handleCompletion.current(context);
+                          return handleCompletion.current!(context);
                       },
                   ]
                 : [],

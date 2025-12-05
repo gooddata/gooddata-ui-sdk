@@ -9,10 +9,13 @@ import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableXirr } from "../PluggableXirr.js";
 
 describe("PluggableXirr", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -31,6 +34,7 @@ describe("PluggableXirr", () => {
         },
         renderFun: mockRenderFun,
         unmountFun: vi.fn(),
+        messages,
     };
 
     afterEach(() => {
@@ -72,6 +76,7 @@ describe("PluggableXirr", () => {
                     drillableItems,
                 },
                 locale: "en-US",
+                messages,
             };
         }
 
@@ -141,7 +146,7 @@ describe("PluggableXirr", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

@@ -11,7 +11,7 @@ import { IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
-import { IUiTabAction, IUiTabComponentProps } from "../types.js";
+import { IUiTab, IUiTabAction, IUiTabComponentProps } from "../types.js";
 
 type IMenuItemType<
     TTabProps extends Record<any, any> = EmptyObject,
@@ -59,8 +59,8 @@ export function DefaultUiTabsTabActions<
                           tooltip: action.tooltip,
                           tooltipWidth: action.tooltipWidth,
                           data: {
-                              onSelect: ((ctx) => {
-                                  action.onSelect(ctx);
+                              onSelect: ((ctx: { tab: IUiTab<TTabProps, TTabActionProps> }) => {
+                                  action.onSelect?.(ctx);
                                   onActionTriggered({ action, tab, location });
                                   if (action.closeOnSelect !== false) {
                                       onToggleOpen(false);

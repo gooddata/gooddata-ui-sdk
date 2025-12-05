@@ -93,7 +93,7 @@ export type AnyPlaceholderOf<T> = AnyPlaceholder<T> | PlaceholderOf<T>;
 
 // @internal
 export class ArithmeticMeasureTitleFactory {
-    constructor(locale: ILocale);
+    constructor(locale: ILocale, messages: Record<string, string>);
     getTitle(arithmeticMeasureProps: IArithmeticMeasureTitleProps, measureTitleProps: IMeasureTitleProps[]): string | null;
 }
 
@@ -398,6 +398,14 @@ export type DataViewWindow = {
 // @public
 export function decompressFromUrl<T>(compressedData: string): T | undefined;
 
+// @internal (undocumented)
+export const DEFAULT_LANGUAGE = "en-US";
+
+// @internal (undocumented)
+export const DEFAULT_MESSAGES: {
+    "en-US": Record<string, string>;
+};
+
 // @public
 export const DefaultColorPalette: IColorPalette;
 
@@ -412,7 +420,7 @@ export const DefaultLocale: ILocale;
 
 // @internal
 export class DerivedMeasureTitleSuffixFactory {
-    constructor(locale: ILocale);
+    constructor(locale: ILocale, messages: Record<string, string>);
     getSuffix(overTimeComparisonType: OverTimeComparisonType): string;
 }
 
@@ -469,7 +477,10 @@ export function fillMissingFormat(item: IAttributeOrMeasure): IAttributeOrMeasur
 export function fillMissingFormats<T extends IInsightDefinition>(insight: T): T;
 
 // @internal
-export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
+export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): Promise<T>;
+
+// @internal
+export function fillMissingTitlesWithMessages<T extends IInsightDefinition>(insight: T, locale: ILocale, messages: ITranslations, maxArithmeticMeasureTitleLength?: number): T;
 
 // @public (undocumented)
 export type FilterOrMultiValuePlaceholder = ValueOrMultiValuePlaceholder<IFilter> | ValueOrMultiValuePlaceholder<IDateFilter> | ValueOrMultiValuePlaceholder<IMeasureFilter> | ValueOrMultiValuePlaceholder<IAttributeFilter> | ValueOrMultiValuePlaceholder<IAbsoluteDateFilter> | ValueOrMultiValuePlaceholder<IRelativeDateFilter> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter> | ValueOrMultiValuePlaceholder<IMeasureValueFilter> | ValueOrMultiValuePlaceholder<IRankingFilter>;
@@ -520,7 +531,7 @@ export function getIntersectionAttributes(fromAttribute: IAttributeDescriptor, a
 export function getIntersectionPartAfter(intersection: IDrillEventIntersectionElement[], localIdentifier: string): IDrillEventIntersectionElement[];
 
 // @internal
-export function getIntl(locale?: ILocale): IntlShape;
+export function getIntl(locale: ILocale | undefined, messages: Record<string, string>): IntlShape;
 
 // @internal (undocumented)
 export const getInvalidDatapointsInTree: <T extends IInvalidNode<any>>(rootNode: T) => IInvalidDatapoint[];
@@ -559,7 +570,7 @@ export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]): {
 };
 
 // @internal
-export function getTranslation(translationId: string | MessageDescriptor, locale: ILocale, values?: {}): string;
+export function getTranslation(translationId: string | MessageDescriptor, locale: ILocale, messages: Record<string, string>, values?: {}): string;
 
 // @internal (undocumented)
 export const getUpdatedInvalidTree: <T extends IInvalidNode<any>, P extends IInvalidNodePath<T>>(rootNode: T, updater: (node: IInvalidNodeAtPath<T, P>) => IInvalidNodeAtPath<T, P>, path?: P) => T;
@@ -1155,6 +1166,8 @@ export interface IIntlWrapperProps {
     children?: ReactNode;
     // (undocumented)
     locale?: string;
+    // (undocumented)
+    messages?: Record<string, string>;
 }
 
 // @internal (undocumented)
@@ -1252,7 +1265,7 @@ function Intl_2({ children, customLocale, customMessages, forTest, }: {
     customLocale?: ILocale;
     customMessages?: ITranslations;
     forTest?: boolean;
-}): JSX.Element;
+}): JSX.Element | null;
 export { Intl_2 as Intl }
 
 // @internal (undocumented)
@@ -1261,7 +1274,7 @@ export const IntlTranslationsProvider: FC<WithIntlProps<ITranslationsProviderPro
 };
 
 // @internal (undocumented)
-export function IntlWrapper({ locale, children }: IIntlWrapperProps): JSX.Element;
+export function IntlWrapper({ locale, children }: IIntlWrapperProps): JSX.Element | null;
 
 // @internal (undocumented)
 export interface IOpenAsReportUiConfig {
@@ -2082,11 +2095,6 @@ export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
 export const messages: Record<string, MessageDescriptor>;
 
 // @internal (undocumented)
-export const messagesMap: {
-    [locale: string]: ITranslations;
-};
-
-// @internal (undocumented)
 export const navigate: (url?: string) => void;
 
 // @public
@@ -2199,6 +2207,9 @@ export const resolveLocale: (locale: unknown) => ILocale;
 export const resolveLocaleDefaultMessages: (locale: string, messagesMap: {
     [locale: string]: ITranslations;
 }) => ITranslations;
+
+// @internal (undocumented)
+export const resolveMessages: (locale: string) => Promise<ITranslations>;
 
 // @public
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
@@ -2413,6 +2424,9 @@ export const usePrevious: <T>(value: T) => T;
 
 // @internal
 export const usePropState: <T>(prop: T) => readonly [T, Dispatch<SetStateAction<T>>];
+
+// @internal (undocumented)
+export function useResolveMessages(locale: ILocale, resolveMessages: (locale: string) => Promise<ITranslations>, defaultMessages: Record<string, ITranslations>): Record<string, ITranslations>;
 
 // @public
 export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;

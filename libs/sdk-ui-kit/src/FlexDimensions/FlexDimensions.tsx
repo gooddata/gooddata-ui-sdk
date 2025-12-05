@@ -18,7 +18,7 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
         measureWidth: true,
         measureHeight: true,
     };
-    private wrapperRef: RefObject<HTMLDivElement> = createRef();
+    private wrapperRef: RefObject<HTMLDivElement | null> = createRef();
     private readonly throttledUpdateSize: ReturnType<typeof throttle>;
 
     constructor(props: IFlexDimensionsProps) {
@@ -52,6 +52,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     }
 
     updateSize = (): void => {
+        if (!this.wrapperRef.current) {
+            return;
+        }
         const { width, height } = elementRegion(this.wrapperRef.current);
 
         this.setState({

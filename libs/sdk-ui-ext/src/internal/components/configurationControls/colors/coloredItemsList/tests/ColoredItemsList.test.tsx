@@ -14,7 +14,7 @@ const defaultProps: IColoredItemsListProps = {
     colorPalette,
     inputItems: [],
     onSelect: () => {},
-    intl: createInternalIntl(),
+    intl: createInternalIntl("en-US", {}),
     chartFillIgnoredMeasures: [],
 };
 

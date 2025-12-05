@@ -107,7 +107,7 @@ export function ShareDialog({
     const affectedSharedObject = useMemo<IAffectedSharedObject>(() => {
         return mapSharedObjectToAffectedSharedObject(
             sharedObject,
-            owner,
+            owner!,
             isLockingSupported,
             isLeniencyControlSupported,
             areGranularPermissionsSupported,

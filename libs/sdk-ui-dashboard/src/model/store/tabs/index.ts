@@ -50,6 +50,7 @@ export type {
     IChangeAttributeSelectionModePayload,
     IChangeAttributeLimitingItemsPayload,
     IApplyWorkingSelectionPayload,
+    IAddAttributeFilterDisplayFormPayload,
 } from "./filterContext/filterContextReducers.js";
 export type { TabsReducer } from "./tabsReducers.js";
 export {

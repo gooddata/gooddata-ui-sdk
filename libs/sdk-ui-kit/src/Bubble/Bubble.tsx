@@ -150,7 +150,7 @@ export const Bubble = memo(
         const { role, ariaLabelledBy } = accessibilityConfig ?? {};
 
         const arrowOffsets = useMemo(
-            () => ({
+            (): ArrowOffsets => ({
                 ...arrowOffsetsProp,
                 ...ARROW_OFFSETS,
             }),
@@ -158,7 +158,7 @@ export const Bubble = memo(
         );
 
         const arrowDirections = useMemo(
-            () => ({
+            (): ArrowDirections => ({
                 ...arrowDirectionsProp,
                 ...ARROW_DIRECTIONS,
             }),
@@ -175,12 +175,13 @@ export const Bubble = memo(
                 return alignPoints.map((item) => {
                     const key = arrowOffsetsKeys.find(getKey.bind(null, item.align));
                     const existingOffset = item.offset || { x: 0, y: 0 };
+                    const arrowOffset = key ? arrowOffsets[key] : [0, 0];
 
                     return {
                         ...item,
                         offset: {
-                            x: existingOffset.x + arrowOffsets[key][0],
-                            y: existingOffset.y + arrowOffsets[key][1],
+                            x: (existingOffset.x ?? 0) + arrowOffset[0],
+                            y: (existingOffset.y ?? 0) + arrowOffset[1],
                         },
                     };
                 });
@@ -205,7 +206,7 @@ export const Bubble = memo(
                 const key = Object.keys(arrowDirections).find((arrowDirection) =>
                     alignPoints.match(arrowDirection),
                 );
-                return arrowDirections[key] || "none";
+                return (key ? arrowDirections[key] : undefined) || "none";
             },
             [arrowDirections],
         );

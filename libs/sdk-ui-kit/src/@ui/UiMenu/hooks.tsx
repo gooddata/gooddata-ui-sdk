@@ -93,7 +93,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
 
     // If the focusedId is no longer viable, refocus the default one
     useEffect(() => {
-        if (!getFocusableItem(items, focusedId)) {
+        if (!focusedId || !getFocusableItem(items, focusedId)) {
             setFocusedId_internal(unwrapGroupItems(items).find(isItemFocusable)?.id ?? undefined);
         }
     }, [items, focusedId, isItemFocusable]);
@@ -213,8 +213,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         isItemFocusable,
         makeItemId,
         scrollToView,
-        menuComponentRef,
-        itemsContainerRef,
+        menuComponentRef: menuComponentRef as RefObject<HTMLElement>,
+        itemsContainerRef: itemsContainerRef as RefObject<HTMLElement>,
 
         InteractiveItemWrapper: InteractiveItemWrapperComponent,
         InteractiveItem: InteractiveItemComponent,

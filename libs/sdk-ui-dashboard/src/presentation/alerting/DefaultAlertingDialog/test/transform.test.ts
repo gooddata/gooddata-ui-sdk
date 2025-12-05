@@ -9,7 +9,7 @@ import {
     IAutomationMetadataObject,
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
-import { createIntlMock } from "@gooddata/sdk-ui";
+import { createIntlMock } from "@gooddata/sdk-ui-ext/internal";
 
 import {
     AlertAttribute,

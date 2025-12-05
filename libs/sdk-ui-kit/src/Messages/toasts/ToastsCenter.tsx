@@ -73,7 +73,7 @@ const MESSAGE_FRESH_TIME = 1000; // ms
  * To get the screen reader to read the repeated message, we need to add a silent character to the end of the message.
  * We cycle through the silent characters to make sure each new message is unique to the one before it.
  */
-function useMessageForScreenReader(message: IMessage | undefined) {
+function useMessageForScreenReader(message: IMessage | null | undefined) {
     const [displayedMessage, setDisplayedMessage] = useState("");
     // Do not read the old existing message on the first render.
     // There is an exception to this, if the message is fresh, we still want to read it.

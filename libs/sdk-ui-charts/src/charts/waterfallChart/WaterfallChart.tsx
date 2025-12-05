@@ -96,7 +96,7 @@ const WrappedWaterfallChart = withChart(waterfallChartDefinition)(CoreWaterfallC
  * Waterfall charts can be segmented by either multiple measures or an attribute.
  *
  * See {@link IWaterfallChartProps} to learn how to configure the WaterfallChart and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/waterfall_chart_component.html | Waterfall chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/waterfall_chart | Waterfall chart documentation} for more information.
  *
  * @public
  */

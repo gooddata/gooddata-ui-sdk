@@ -67,7 +67,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
             enabled: false,
         },
         accessibility: {
-            enabled: config?.enableHighchartsAccessibility ?? false,
+            enabled: config?.enableHighchartsAccessibility ?? true,
         },
         title: {
             // setting title to empty string prevents it from being shown

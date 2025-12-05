@@ -20,7 +20,7 @@ export function collectReferences(content: string) {
 
     while (parts) {
         const { id, ref } = createReference(parts);
-        if (ref) {
+        if (ref?.type) {
             map[id] = {
                 ref,
                 type: ref.type,
@@ -52,7 +52,7 @@ export function createReference(parts: RegExpExecArray): { id: string; ref: Iden
     };
 }
 
-function normalizeType(type: string): "displayForm" | "measure" {
+function normalizeType(type: string): "displayForm" | "measure" | null {
     if (type === "label" || type === "displayForm") {
         return "displayForm";
     }

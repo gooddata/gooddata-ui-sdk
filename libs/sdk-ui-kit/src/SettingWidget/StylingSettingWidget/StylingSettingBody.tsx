@@ -11,7 +11,7 @@ import { StylingSettingListItem } from "./StylingSettingListItem.js";
 import { DialogListLoading } from "../../Dialog/DialogList/DialogListLoading.js";
 import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
 
-interface IStylingSettingBodyProps<T> {
+interface IStylingSettingBodyProps<T extends StylingPickerItemContent> {
     isMobile: boolean;
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];
@@ -19,9 +19,9 @@ interface IStylingSettingBodyProps<T> {
     emptyMessage: () => ReactElement;
     isLoading?: boolean;
     onListActionClick?: () => void;
-    initiallySelectedItemRef: ObjRef;
-    selectedItemRef: ObjRef;
-    onItemClick: (ref: ObjRef) => void;
+    initiallySelectedItemRef: ObjRef | null;
+    selectedItemRef: ObjRef | null;
+    onItemClick: (ref: ObjRef | null) => void;
     onItemEdit?: (item: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
     onItemMenuToggle?: (ref: ObjRef) => void;
@@ -82,7 +82,7 @@ export function StylingSettingBody<T extends StylingPickerItemContent>({
                             onItemClick={onItemClick}
                             onItemEdit={isMobile || !isEditingSupported ? undefined : onItemEdit}
                             onItemDelete={isMobile || !isEditingSupported ? undefined : onItemDelete}
-                            initiallySelectedItemRef={initiallySelectedItemRef}
+                            initiallySelectedItemRef={initiallySelectedItemRef ?? undefined}
                             selectedItemRef={selectedItemRef}
                             onItemMenuToggle={onItemMenuToggle}
                         />

@@ -25,7 +25,7 @@ export function getItemOnFocusedPath<T>(
         const index = focusedPath[i];
         if (index < currentLevel.length) {
             currentItem = currentLevel[index];
-            currentLevel = currentItem.children;
+            currentLevel = currentItem.children ?? [];
         }
     }
 
@@ -35,19 +35,22 @@ export function getItemOnFocusedPath<T>(
 /**
  * @internal
  **/
-export function getRefOnFocusedPath(items: UiRefsTree, focusedPath: number[]): HTMLDivElement | undefined {
+export function getRefOnFocusedPath(
+    items: UiRefsTree,
+    focusedPath: number[],
+): HTMLDivElement | null | undefined {
     const key = convertPathToKey(focusedPath);
 
     return items[key];
 }
 
 type ItemsState = [
-    Record<string, UiStateTreeItem> | undefined,
-    Dispatch<SetStateAction<Record<string, UiStateTreeItem> | undefined>>,
+    Record<string, UiStateTreeItem>,
+    Dispatch<SetStateAction<Record<string, UiStateTreeItem>>>,
 ];
 
 type GetItemState = (path: number[]) => [
-    UiStateTreeItem | undefined,
+    UiStateTreeItem,
     {
         toggle: (state: boolean) => void;
         toggleAll: (state: boolean) => void;
@@ -86,7 +89,7 @@ export function itemsState(
         // Toggle all
         const toggleAll = (expanded: boolean) => {
             state[1]((st) => {
-                const updated = Object.entries(st).map(([key, prop]) => {
+                const updated = Object.entries(st ?? {}).map(([key, prop]) => {
                     return [key, { ...prop, expanded }];
                 });
                 return Object.fromEntries(updated);
@@ -294,7 +297,12 @@ function getItemsPathEntries<T = unknown>(
 
         entries.push([convertPathToKey(itemPath), item, expanded]);
         entries.push(
-            ...getItemsPathEntries(item.children ?? [], getState, itemPath, expanded && state.expanded),
+            ...getItemsPathEntries(
+                item.children ?? [],
+                getState,
+                itemPath,
+                expanded && (state?.expanded ?? false),
+            ),
         );
     }
 

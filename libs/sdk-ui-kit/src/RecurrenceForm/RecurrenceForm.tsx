@@ -89,7 +89,13 @@ function RecurrenceFormCore({
     const [dateValue, setDateValue] = useState<Date | null>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        mapRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence, showInheritValue, weekStart),
+        mapRecurrenceType(
+            dateValue,
+            cronExpression,
+            allowHourlyRecurrence ?? false,
+            showInheritValue ?? false,
+            weekStart,
+        ),
     );
     const [inheritRecurrenceType] = useState<RecurrenceType>(
         mapRecurrenceType(dateValue, placeholder, allowHourlyRecurrence, false, weekStart),
@@ -98,7 +104,9 @@ function RecurrenceFormCore({
     const onDateChange = useCallback(
         (date: Date, valid: boolean) => {
             setDateValue(date);
-            const newExpression = constructCronExpression(date, recurrenceType, cronExpression, weekStart);
+            const newExpression =
+                constructCronExpression(date, recurrenceType, cronExpression ?? "", weekStart ?? "Sunday") ??
+                "";
             onChange(
                 newExpression,
                 date,
@@ -111,7 +119,8 @@ function RecurrenceFormCore({
     const onRepeatTypeChange = useCallback(
         (type: RecurrenceType) => {
             setRecurrenceType(type);
-            const newExpression = constructCronExpression(dateValue, type, cronValue, weekStart);
+            const newExpression =
+                constructCronExpression(dateValue, type, cronValue ?? "", weekStart ?? "Sunday") ?? "";
             onChange(
                 newExpression,
                 dateValue,
@@ -137,7 +146,7 @@ function RecurrenceFormCore({
                 <DateTime
                     label={startLabel ?? intl.formatMessage({ id: messages["starts"].id })}
                     date={dateValue}
-                    onDateChange={onDateChange}
+                    onDateChange={onDateChange as (date: Date | null, valid: boolean) => void}
                     locale={locale}
                     dateFormat={dateFormat}
                     timezone={timezone}

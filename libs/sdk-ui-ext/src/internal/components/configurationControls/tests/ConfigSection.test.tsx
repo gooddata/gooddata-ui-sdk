@@ -4,18 +4,19 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { DefaultLocale } from "@gooddata/sdk-ui";
-
 import { InternalIntlWrapper, createInternalIntl } from "../../../utils/internalIntlProvider.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection.js";
 
 describe("ConfigSection", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const defaultProps = {
         id: "id",
         properties: {},
         propertiesMeta: {},
         title: "properties.legend.title",
-        intl: createInternalIntl(DefaultLocale),
+        intl: createInternalIntl(DEFAULT_LANGUAGE, messages),
         pushData: () => {},
     };
 

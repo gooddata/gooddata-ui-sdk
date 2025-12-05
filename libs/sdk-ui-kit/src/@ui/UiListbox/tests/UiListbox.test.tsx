@@ -195,11 +195,11 @@ describe("UiListbox", () => {
         const listbox = screen.getByRole("listbox");
 
         // Initial focus is on first item
-        expect(listbox).toHaveAttribute("aria-activedescendant", expect.stringContaining(mockItems[0].id));
+        expect(listbox).toHaveAttribute("aria-activedescendant", expect.stringContaining(mockItems[0].id!));
 
         // Navigate down
         fireEvent.keyDown(listbox, { code: "ArrowDown" });
-        expect(listbox).toHaveAttribute("aria-activedescendant", expect.stringContaining(mockItems[1].id));
+        expect(listbox).toHaveAttribute("aria-activedescendant", expect.stringContaining(mockItems[1].id!));
     });
 
     it("should call onClose after selection", () => {

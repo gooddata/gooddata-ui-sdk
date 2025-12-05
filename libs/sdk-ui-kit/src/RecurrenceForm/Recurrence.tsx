@@ -64,7 +64,7 @@ export function Recurrence({
     closeOnParentScroll,
 }: IRecurrenceProps) {
     const { cronError, handleChange, handleOnBlur } = useCronValidation({
-        allowHourlyRecurrence,
+        allowHourlyRecurrence: allowHourlyRecurrence ?? false,
         onCronValueChange,
     });
 
@@ -104,22 +104,22 @@ export function Recurrence({
                     />
                     {isSpecified && showRepeatTypeDescription ? (
                         <RepeatTypeDescription
-                            repeatType={isInherit ? inheritRecurrenceType : recurrenceType}
+                            repeatType={isInherit ? (inheritRecurrenceType ?? "") : recurrenceType}
                             startDate={startDate}
                             weekStart={weekStart}
-                            timezone={timezone}
+                            timezone={timezone ?? ""}
                             showTimezone={Boolean(showTimezoneInOccurrence && !isInherit)}
                         />
                     ) : null}
                     {isCron ? (
                         <CronExpression
-                            expression={isInherit ? cronPlaceholder : cronValue}
+                            expression={isInherit ? (cronPlaceholder ?? "") : (cronValue ?? "")}
                             description={cronDescription}
                             onChange={handleChange}
                             allowHourlyRecurrence={allowHourlyRecurrence}
-                            timezone={timezone}
+                            timezone={timezone ?? ""}
                             showTimezone={showTimezoneInOccurrence}
-                            validationError={cronError}
+                            validationError={cronError ?? undefined}
                             onBlur={handleOnBlur}
                             accessibilityConfig={{
                                 ariaDescribedBy: cronError ? errorId : undefined,

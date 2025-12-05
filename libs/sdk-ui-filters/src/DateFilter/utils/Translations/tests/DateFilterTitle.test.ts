@@ -2,6 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import {
     absoluteFormFilter,
@@ -15,11 +16,7 @@ import {
 } from "./fixtures.js";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
 import { IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
-import {
-    getDateFilterRepresentation,
-    getDateFilterTitle,
-    getDateFilterTitleUsingTranslator,
-} from "../DateFilterTitle.js";
+import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "../DateFilterTitle.js";
 import { IDateAndMessageTranslator } from "../Translators.js";
 
 const serializingTranslator: IDateAndMessageTranslator = {
@@ -210,39 +207,17 @@ describe("getDateFilterTitleUsingTranslator", () => {
     });
 });
 
-describe("getDateFilterTitle", () => {
-    it("should return title build using real translations for some date option", () => {
-        const filter = { ...relativePresetFilter, name: "" };
-        const expected = "From 5 days ago to 5 days ahead";
-        const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
-        expect(actual).toEqual(expected);
-    });
-
-    describe("with disabled time", () => {
-        it("should return title with desired format", () => {
-            const filter = { ...absoluteFormFilter };
-            const expected = "01/01/2019 – 02/01/2019";
-            const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
-            expect(actual).toEqual(expected);
-        });
-    });
-
-    describe("with enabled time", () => {
-        it("should return title containing time with desired format", () => {
-            const filter = { ...absoluteFormFilterWithTime };
-            const expected = "01/01/2019, 01:00 – 02/01/2019, 16:55";
-            const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT_WITH_TIME);
-            expect(actual).toEqual(expected);
-        });
-    });
-});
-
 describe("getDateFilterRepresentation", () => {
     describe("with disabled time", () => {
         it("should return title with desired format", () => {
             const filter = { ...absoluteFormFilter };
             const expected = "01/01/2019 – 02/01/2019";
-            const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT);
+            const actual = getDateFilterRepresentation(
+                filter,
+                "en-US",
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                DEFAULT_DATE_FORMAT,
+            );
             expect(actual).toEqual(expected);
         });
     });
@@ -251,7 +226,12 @@ describe("getDateFilterRepresentation", () => {
         it("should return title containing time with desired format", () => {
             const filter = { ...absoluteFormFilterWithTime };
             const expected = "01/01/2019, 01:00 – 02/01/2019, 16:55";
-            const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT_WITH_TIME);
+            const actual = getDateFilterRepresentation(
+                filter,
+                "en-US",
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                DEFAULT_DATE_FORMAT_WITH_TIME,
+            );
             expect(actual).toEqual(expected);
         });
     });

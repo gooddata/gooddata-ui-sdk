@@ -99,22 +99,22 @@ export function DefaultUiTabsAllTabs<
                         <AllTabsButton
                             onClick={toggleDropdown}
                             isOpen={isOpen}
-                            ref={buttonRef}
+                            ref={buttonRef as RefObject<HTMLElement>}
                             ariaAttributes={ariaAttributes}
                         />
                     )}
                     renderBody={({ ariaAttributes }) => (
-                        <ScopedIdStore value={scopedIdStoreValue}>
+                        <ScopedIdStore value={scopedIdStoreValue as any}>
                             <div
                                 className={UiTabsBem.e("tab-list", { mobile: isMobile })}
-                                role="grid"
                                 ref={containerRef as RefObject<HTMLDivElement>}
                                 onKeyDown={onKeyboardNavigation}
                                 tabIndex={-1}
-                                id={scopedIdStoreValue.containerId}
-                                {...ariaAttributes}
                                 aria-label={"TODO"}
                                 aria-rowcount={tabs.length}
+                                {...ariaAttributes}
+                                role="grid"
+                                id={scopedIdStoreValue.containerId}
                             >
                                 {tabs.map((item, index) => (
                                     <TabListItem

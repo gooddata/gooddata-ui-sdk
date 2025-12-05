@@ -85,6 +85,9 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
 
     const measureRootDimensions = useCallback((): void => {
         const rootElement = rootRef.current;
+        if (!rootElement) {
+            return;
+        }
         const rootElementFontSize = getComputedStyle(rootElement).fontSize;
 
         setTextareaWidth(rootElement.offsetWidth);
@@ -95,7 +98,9 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         const componentElement = textareaRef.current;
 
         if (componentElement) {
-            window.clearTimeout(focusTimeoutRef.current);
+            if (focusTimeoutRef.current !== null) {
+                window.clearTimeout(focusTimeoutRef.current);
+            }
             // without the timeout the focus sometimes got stolen by the previously active item for some reason
             focusTimeoutRef.current = window.setTimeout(() => {
                 componentElement.focus();
@@ -135,8 +140,8 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         };
 
         if (rootNode) {
-            rootNode.addEventListener("dragstart", onSelectStart);
-            rootNode.addEventListener("selectstart", onSelectStart);
+            rootNode.addEventListener("dragstart", onSelectStart as EventListener);
+            rootNode.addEventListener("selectstart", onSelectStart as EventListener);
             resizeObserverRef.current = new ResizeObserver(() => {
                 setRootWidth(rootNode.offsetWidth);
             });
@@ -152,8 +157,8 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
 
         return () => {
             if (rootNode) {
-                rootNode.removeEventListener("dragstart", onSelectStart);
-                rootNode.removeEventListener("selectstart", onSelectStart);
+                rootNode.removeEventListener("dragstart", onSelectStart as EventListener);
+                rootNode.removeEventListener("selectstart", onSelectStart as EventListener);
                 if (resizeObserverRef.current) {
                     resizeObserverRef.current.unobserve(rootNode);
                 }
@@ -224,7 +229,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
 
     const isClickOutsideTextarea = (target: EventTarget | null): boolean => {
         const textAreaNode = textareaRef.current;
-        return textAreaNode && !textAreaNode.contains(target as Node);
+        return !!textAreaNode && !textAreaNode.contains(target as Node);
     };
 
     const renderTextarea = (style = {}): ReactNode => {
@@ -258,9 +263,9 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
 
         const style = {
             width: textareaWidth,
-            fontSize: `${textareaFontSize}px`,
+            fontSize: `${textareaFontSize ?? 14}px`,
             // http://stackoverflow.com/a/6295222
-            lineHeight: `${textareaFontSize * 1.25}px`,
+            lineHeight: `${(textareaFontSize ?? 14) * 1.25}px`,
         };
 
         return (

@@ -46,7 +46,8 @@ export class PieChartDescriptor extends BaseChartDescriptor implements IVisualiz
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pie_chart",
             supportsExport: true,
             supportsZooming: false,
         };

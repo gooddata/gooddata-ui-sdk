@@ -31,6 +31,7 @@ import {
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
     createDrillEvent,
@@ -58,6 +59,7 @@ describe("PluggableAreaChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages: DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
     } as unknown as IVisConstruct;
 
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
@@ -425,6 +427,7 @@ describe("PluggableAreaChart", () => {
             dimensions: { height: 5 },
             locale: "en-US",
             custom: {},
+            messages: DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
         };
         const emptyPropertiesMeta = {};
 
@@ -695,7 +698,12 @@ describe("PluggableAreaChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update(
+                { messages: DEFAULT_MESSAGES[DEFAULT_LANGUAGE] },
+                testMocks.insightWithSingleMeasure,
+                {},
+                executionFactory,
+            );
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

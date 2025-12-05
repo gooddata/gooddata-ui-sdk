@@ -8,8 +8,8 @@ import { DialogListItemBasic } from "../DialogListItemBasic.js";
 import { IDialogListItemComponentProps } from "../typings.js";
 
 describe("DialogListItemBasic", () => {
-    const createComponent = (props?: IDialogListItemComponentProps) => {
-        return render(<DialogListItemBasic {...props} />);
+    const createComponent = (props?: Partial<IDialogListItemComponentProps>) => {
+        return render(<DialogListItemBasic {...(props as IDialogListItemComponentProps)} />);
     };
 
     it("should call onClick when clicked on item", async () => {

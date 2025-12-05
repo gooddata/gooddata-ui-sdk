@@ -49,6 +49,7 @@ export interface IAutomationsProps {
     isMobileView?: boolean;
     enableBulkActions?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    onInvalidateCallbackChange?: (callback: (() => void) | undefined) => void;
     renderToolbarCustomElement?: () => ReactNode;
     onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
@@ -182,6 +183,7 @@ export interface IAutomationsCoreProps {
     isMobileView?: boolean;
     enableBulkActions: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    onInvalidateCallbackChange?: (callback: (() => void) | undefined) => void;
     locale: string;
     renderToolbarCustomElement?: () => ReactNode;
     dashboardUrlBuilder: IDashboardUrlBuilder;
@@ -381,6 +383,7 @@ export interface IAutomationIconTooltipProps {
     content?: ReactNode;
     sections: ITooltipSection[];
     children: ReactNode;
+    align?: string;
 }
 
 export interface IAutomationIconProps {

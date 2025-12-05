@@ -48,7 +48,8 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/bubble_chart",
             supportsExport: true,
             supportsZooming: true,
         };

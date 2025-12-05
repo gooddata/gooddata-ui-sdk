@@ -21,7 +21,6 @@ import { messages } from "../messages.js";
 import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
 import { getNextRunFromCron, getWidgetId, getWidgetName, getWorkspaceId } from "../utils.js";
-
 export const useAutomationColumns = ({
     type,
     timezone,

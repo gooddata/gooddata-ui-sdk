@@ -56,6 +56,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     width?: number;
     height?: number;
     locale?: ILocale;
+    messages: Record<string, string>;
     dateFormat?: string;
     drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
@@ -286,6 +287,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             const constructorParams: IVisConstruct = {
                 projectId,
                 locale,
+                messages: this.props.messages,
                 environment,
                 backend: props.backend.withCorrelation({ visualizationId }),
                 element: () => {
@@ -444,6 +446,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
                 sourceInsightId: this.props.sourceInsightId,
                 configurationPanelRenderers: this.props.configurationPanelRenderers,
             },
+            messages: this.props.messages,
             config: this.props.config,
             theme: this.props.theme,
             executionConfig: this.props.executionConfig,

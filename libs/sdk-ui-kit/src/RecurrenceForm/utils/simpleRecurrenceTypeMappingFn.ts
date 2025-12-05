@@ -59,7 +59,7 @@ export const simpleRecurrenceTypeMappingFn = (
     _showInheritValue?: boolean,
     weekStart?: WeekStart,
 ): RecurrenceType => {
-    const normalizedCron = cronExpression?.trim() ?? getDefaultCronExpression(allowHourlyRecurrence);
+    const normalizedCron = cronExpression?.trim() ?? getDefaultCronExpression(allowHourlyRecurrence ?? false);
     // Hourly patterns (only if allowed)
     if (allowHourlyRecurrence && HOURLY_PATTERNS.some((pattern) => pattern.test(normalizedCron))) {
         return RECURRENCE_TYPES.HOURLY;
@@ -71,7 +71,8 @@ export const simpleRecurrenceTypeMappingFn = (
     }
 
     // Weekly patterns (only first day of week based on weekStart)
-    const weeklyPatterns = getWeeklyPatterns(weekStart);
+    // Default to Monday when weekStart is undefined
+    const weeklyPatterns = getWeeklyPatterns(weekStart ?? "Monday");
     if (weeklyPatterns.some((pattern) => pattern.test(normalizedCron))) {
         return RECURRENCE_TYPES.WEEKLY;
     }

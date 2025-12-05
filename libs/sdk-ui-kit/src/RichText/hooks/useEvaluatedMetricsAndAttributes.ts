@@ -49,13 +49,13 @@ export function useEvaluatedMetricsAndAttributes(
     } = useExecutionDataView(
         {
             execution:
-                enabled && items.length > 0 && !isFiltersLoading
+                enabled && items.length > 0 && !isFiltersLoading && backend && workspace
                     ? backend
                           .workspace(workspace)
                           .execution()
                           .forItems(items, filters)
                           .withExecConfig(execConfig)
-                    : null,
+                    : undefined,
         },
         [execConfig.timestamp, execConfig.dataSamplingPercentage, isFiltersLoading],
     );
@@ -149,7 +149,7 @@ function getMeasures(references: ReferenceMap) {
         .filter(Boolean);
 
     return metrics.map((ref, i) => {
-        return newMeasure(ref, (m) => {
+        return newMeasure(ref!, (m) => {
             m.localId(`m_${i}`);
             return m;
         });
@@ -162,7 +162,7 @@ function getLabels(references: ReferenceMap) {
         .filter(Boolean);
 
     const items = attributes.map((ref, i) => {
-        return newAttribute(ref, (m) => {
+        return newAttribute(ref!, (m) => {
             m.localId(`m_${i}`);
             return m;
         });

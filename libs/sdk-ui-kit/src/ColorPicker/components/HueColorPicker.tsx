@@ -37,6 +37,9 @@ export const HueColorPicker = memo(function HueColorPicker({ initColor, onChange
 
     const handleChange = useCallback(
         (e: TouchEvent | MouseEvent): void => {
+            if (!hueContainer.current) {
+                return;
+            }
             const change = calculateHueChange(e, initColor.h, hueContainer.current);
             if (change && onChange) {
                 onChange(change);

@@ -41,8 +41,8 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         super.componentWillUnmount();
 
         const { body } = document;
-        body.style.overflow = this.state.overflow;
-        body.scrollTop = this.state.scrollTop;
+        body.style.overflow = this.state.overflow ?? "";
+        body.scrollTop = this.state.scrollTop ?? 0;
     }
 
     public override getOverlayStyles = (): CSSProperties => {

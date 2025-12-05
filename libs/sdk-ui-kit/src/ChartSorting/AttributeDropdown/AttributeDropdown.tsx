@@ -49,7 +49,7 @@ const getSortTypeItems = (
     const sortTypeItems: ISortTypeItem[] = [];
     const bucketItem = bucketItems[available.itemId.localIdentifier];
 
-    if (available.attributeSort.normalSortEnabled && bucketItem.type === "attribute") {
+    if (available.attributeSort?.normalSortEnabled && bucketItem.type === "attribute") {
         sortTypeItems.push(
             {
                 id: SORT_TARGET_TYPE.ALPHABETICAL_ASC,
@@ -67,7 +67,7 @@ const getSortTypeItems = (
             },
         );
     }
-    if (available.attributeSort.normalSortEnabled && bucketItem.type === "chronologicalDate") {
+    if (available.attributeSort?.normalSortEnabled && bucketItem.type === "chronologicalDate") {
         sortTypeItems.push(
             {
                 id: SORT_TARGET_TYPE.DATE_ASC,
@@ -85,7 +85,7 @@ const getSortTypeItems = (
             },
         );
     }
-    if (available.attributeSort.areaSortEnabled || available.metricSorts?.length > 0) {
+    if (available.attributeSort?.areaSortEnabled || (available.metricSorts?.length ?? 0) > 0) {
         sortTypeItems.push(
             {
                 id: SORT_TARGET_TYPE.NUMERICAL_ASC,
@@ -103,7 +103,7 @@ const getSortTypeItems = (
             },
         );
     }
-    if (available.attributeSort.normalSortEnabled && bucketItem.type === "genericDate") {
+    if (available.attributeSort?.normalSortEnabled && bucketItem.type === "genericDate") {
         sortTypeItems.push({
             id: SORT_TARGET_TYPE.DEFAULT,
             title: intl.formatMessage({ id: "sorting.type.default" }),
@@ -154,11 +154,16 @@ const buildSortItem = (
 ) => {
     if (type === "alphabetical" || type === "date" || type === "default") {
         return newAttributeSort(localIdentifier, sortDirection);
-    } else if (availableSorts.attributeSort.areaSortEnabled) {
+    } else if (availableSorts.attributeSort?.areaSortEnabled) {
         return newAttributeAreaSort(localIdentifier, sortDirection);
     } else {
-        const { measureLocatorItem } = availableSorts.metricSorts[0].locators.find(isMeasureLocator);
-        return newMeasureSort(measureLocatorItem.measureIdentifier, sortDirection);
+        const measureLocator = availableSorts.metricSorts?.[0]?.locators.find(isMeasureLocator);
+        const measureLocatorItem = measureLocator?.measureLocatorItem;
+        if (measureLocatorItem) {
+            return newMeasureSort(measureLocatorItem.measureIdentifier, sortDirection);
+        }
+        // Fallback to attribute sort if no measure locator found
+        return newAttributeSort(localIdentifier, sortDirection);
     }
 };
 

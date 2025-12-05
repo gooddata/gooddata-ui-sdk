@@ -23,19 +23,19 @@ export class Input extends PureComponent<InputPureProps, InputState> {
     static defaultProps = {
         ...InputPure.defaultProps,
     };
-    public inputNodeRef: InputPure;
+    public inputNodeRef: InputPure | null = null;
 
     constructor(props: InputPureProps) {
         super(props);
         const { value } = props;
 
         this.state = {
-            value: toValidValue(value),
+            value: toValidValue(value ?? ""),
         };
     }
 
     override UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void {
-        const validValue = toValidValue(nextProps.value);
+        const validValue = toValidValue(nextProps.value ?? "");
         if (this.props.value !== validValue) {
             this.valueChanged(validValue);
         }
@@ -51,7 +51,7 @@ export class Input extends PureComponent<InputPureProps, InputState> {
                 value,
             });
 
-            this.props.onChange(value, e);
+            this.props.onChange?.(value, e);
         }
     }
 

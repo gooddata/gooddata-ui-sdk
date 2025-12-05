@@ -47,11 +47,11 @@ export const POSITION_SAME_AS_TARGET = "sameAsTarget";
 const OVERLAY_CONTENT_CLASS = "gd-overlay-content";
 const VISIBLE_PART_TOLERANCE = 0.01;
 
-function exceedsThreshold(firstNumber: number, secondNumber: number) {
+function exceedsThreshold(firstNumber: number | undefined, secondNumber: number | undefined) {
     return (
         (firstNumber === undefined && secondNumber !== undefined) ||
         (firstNumber !== undefined && secondNumber === undefined) ||
-        Math.abs(firstNumber - secondNumber) > 2
+        Math.abs((firstNumber ?? 0) - (secondNumber ?? 0)) > 2
     );
 }
 
@@ -127,7 +127,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 
         this.state = {
             alignment: {
-                align: props.alignPoints[0].align,
+                align: props.alignPoints?.[0]?.align ?? "cc cc",
                 left: INIT_STATE_ALIGN,
                 top: INIT_STATE_ALIGN,
                 right: 0,
@@ -164,7 +164,9 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 
         window.addEventListener("resize", this.resizeHandler);
 
-        this.observer?.observe(this.overlayRef.current);
+        if (this.overlayRef.current) {
+            this.observer?.observe(this.overlayRef.current);
+        }
 
         this.addListeners(this.props);
 
@@ -245,10 +247,10 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         const { alignPoints, alignTo, positionType } = this.props;
         const overlay = this.overlayRef.current;
 
-        if (!alignPoints || !overlay) {
+        if (!alignPoints || !overlay || !alignTo) {
             return;
         }
-        const isSameAsTarget = this.isSameAsTargetPosition(positionType);
+        const isSameAsTarget = this.isSameAsTargetPosition(positionType ?? "absolute");
         const optimalAlign = getOptimalAlignment({
             targetRegion: elementRegion(alignTo, isSameAsTarget),
             selfRegion: elementRegion(overlay),
@@ -257,30 +259,30 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         });
 
         // process also if visiblePart is 1 to get dimensions of the overlay
-        const shouldApplyConstraints = this.props.ensureVisibility && optimalAlign.visiblePart > 0;
+        const shouldApplyConstraints = this.props.ensureVisibility && (optimalAlign.visiblePart ?? 0) > 0;
 
         const constrainedAlignment = shouldApplyConstraints
             ? this.calculateConstrainedAlignment(optimalAlign.alignment, overlay, positionType === "fixed")
             : optimalAlign.alignment;
 
-        const visiblePartChanged = this.hasVisiblePartChanged(optimalAlign.visiblePart);
+        const visiblePartChanged = this.hasVisiblePartChanged(optimalAlign.visiblePart ?? 0);
         const alignmentChanged = alignExceedsThreshold(this.state.alignment, constrainedAlignment);
 
         if (alignmentChanged || visiblePartChanged) {
             this.setState(
                 (prevState) => ({
                     alignment: alignmentChanged ? constrainedAlignment : prevState.alignment,
-                    visiblePart: visiblePartChanged ? optimalAlign.visiblePart : prevState.visiblePart,
+                    visiblePart: visiblePartChanged ? (optimalAlign.visiblePart ?? 0) : prevState.visiblePart,
                 }),
                 () => {
                     const alignmentToReport = alignmentChanged
                         ? constrainedAlignment
                         : optimalAlign.alignment;
-                    this.props.onAlign(alignmentToReport);
+                    this.props.onAlign?.(alignmentToReport);
                 },
             );
         } else {
-            this.props.onAlign(optimalAlign.alignment);
+            this.props.onAlign?.(optimalAlign.alignment);
         }
     };
 
@@ -372,7 +374,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         const { alignment } = this.state;
 
         const position = this.isSameAsTargetPosition(positionType)
-            ? isFixedPosition(alignTo)
+            ? isFixedPosition(alignTo ?? "body")
                 ? "fixed"
                 : "absolute"
             : positionType;
@@ -439,7 +441,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     }
 
     private isSameAsTargetPosition = (
-        positionType: OverlayPositionType,
+        positionType: OverlayPositionType | undefined,
     ): positionType is SameAsTargetPosition => {
         return positionType === POSITION_SAME_AS_TARGET;
     };
@@ -466,7 +468,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 
         // non-ignored node clicked, give shouldCloseOnClick the chance
         // to override closing the dialog
-        return this.props.shouldCloseOnClick(e);
+        return this.props.shouldCloseOnClick?.(e) ?? true;
     };
 
     private hasClickedOnIgnoredNode = (e: any) => {
@@ -481,7 +483,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             return true;
         }
 
-        const ignoredRefElements = [this.overlayRef.current, ...this.props.ignoreClicksOn];
+        const ignoredRefElements = [this.overlayRef.current, ...(this.props.ignoreClicksOn ?? [])];
         const clickInsideIgnoredRefElement = ignoredRefElements.some((ref: any) => {
             return ref?.contains(clickedElement);
         });
@@ -489,7 +491,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             return true;
         }
 
-        return this.props.ignoreClicksOnByClass.some((selector) => clickedElement.closest(selector));
+        return (this.props.ignoreClicksOnByClass ?? []).some((selector) => clickedElement.closest(selector));
     };
 
     private isAligned = () => {
@@ -517,7 +519,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         }
 
         if (this.isEventOnParent(e)) {
-            this.props.onClose();
+            this.props.onClose?.();
         }
     }
 
@@ -526,12 +528,12 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             return;
         }
 
-        this.props.onClose();
+        this.props.onClose?.();
     };
 
     public closeOnOutsideClick(e: Event): void {
         if (this.shouldCloseOnClick(e)) {
-            this.props.onClose();
+            this.props.onClose?.();
         }
     }
 
@@ -541,7 +543,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             this.props.closeOnEscape &&
             e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE
         ) {
-            this.props.onClose();
+            this.props.onClose?.();
         }
     }
 
@@ -566,8 +568,8 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     };
 
     private renderMask = (): false | ReactElement => {
-        const styles = {
-            zIndex: this.context ? this.context.getZIndex(this.id) : null,
+        const styles: CSSProperties = {
+            zIndex: this.context ? this.context.getZIndex(this.id) : undefined,
         };
         return this.props.isModal ? (
             <div
@@ -582,7 +584,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 
     private createResizeObserver(): ResizeObserver | undefined {
         // With 100% or more threshold, don't use ResizeObserver
-        if (this.props.resizeObserverThreshold >= 1) {
+        if ((this.props.resizeObserverThreshold ?? 1) >= 1) {
             return undefined;
         }
 
@@ -590,7 +592,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             const newHeightCandidate = entries[0].contentRect.height;
             const heightDiffersByThreshold =
                 Math.abs(this.state.observedHeight - newHeightCandidate) / this.state.observedHeight >
-                this.props.resizeObserverThreshold;
+                (this.props.resizeObserverThreshold ?? 1);
 
             if (heightDiffersByThreshold) {
                 this.resizeHandler();

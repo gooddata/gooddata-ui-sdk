@@ -16,7 +16,7 @@ const bodyMock = componentMock<IDropdownBodyRenderProps>();
 const buttonMock = componentMock<IDropdownButtonRenderProps>();
 
 const getButton = () => document.querySelector(buttonMock.selector);
-const clickButton = async () => await userEvent.click(getButton());
+const clickButton = async () => await userEvent.click(getButton()!);
 const getBody = () => document.querySelector(bodyMock.selector);
 
 const renderDropdown = (props: Partial<IDropdownProps> = {}) => {

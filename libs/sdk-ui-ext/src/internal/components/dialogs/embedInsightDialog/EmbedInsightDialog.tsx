@@ -24,7 +24,7 @@ import { insightViewEmbeddedCodeGenerator } from "../../../utils/embeddingInsigh
 import { FullVisualizationCatalog } from "../../VisualizationCatalog.js";
 
 const INSIGHT_VIEW_PROPERTIES_LINK =
-    "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";
+    "https://www.gooddata.com/docs/gooddata-ui/latest/learn/visualize_data/insightview#properties";
 
 /**
  * @internal

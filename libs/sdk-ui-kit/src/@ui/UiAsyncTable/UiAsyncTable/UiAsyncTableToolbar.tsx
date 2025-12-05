@@ -24,7 +24,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
 
     return hasContent ? (
         <div className={e("toolbar")}>
-            <div className={e("toolbar-top", { "mobile-view": isMobileView })}>
+            <div className={e("toolbar-top", { "mobile-view": isMobileView ?? false })}>
                 {isSmall ? null : renderBulkActions()}
                 {renderFilters()}
                 {renderSearchSection()}
@@ -82,7 +82,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
 
         if (bulkActions) {
             return (
-                <div className={e("toolbar-bulk-actions", { "mobile-view": isMobileView })}>
+                <div className={e("toolbar-bulk-actions", { "mobile-view": isMobileView ?? false })}>
                     <div className={e("toolbar-checkbox-section")}>
                         <UiTooltip
                             anchor={
@@ -102,7 +102,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                             {selectedMessage}
                         </div>
                     </div>
-                    {selectedItemIds?.length > 0 ? (
+                    {(selectedItemIds?.length ?? 0) > 0 ? (
                         <UiAsyncTableBulkActions bulkActions={bulkActions} />
                     ) : null}
                 </div>
@@ -168,7 +168,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                                     ariaLabel: accessibilityConfig?.searchAriaLabel ?? placeholder,
                                 }}
                                 value={searchValue}
-                                onChange={setSearchValue}
+                                onChange={(value) => setSearchValue(String(value))}
                             />
                         </div>
                     </>

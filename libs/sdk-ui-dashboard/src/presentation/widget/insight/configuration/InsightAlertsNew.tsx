@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 
-import { IAutomationMetadataObject, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsight, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
     OverlayController,
@@ -168,14 +168,16 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
+    const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);
+    useEffect(() => {
+        if (insight) {
+            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+        }
+    }, [insight, locale]);
     const supportedMeasures = useMemo(
         () =>
-            getSupportedInsightMeasuresByInsight(
-                insight ? fillMissingTitles(insight, locale, 9999) : insight,
-                catalogDateDatasets,
-                canManageComparison,
-            ),
-        [insight, locale, catalogDateDatasets, canManageComparison],
+            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
+        [effectiveInsight, catalogDateDatasets, canManageComparison],
     );
 
     return (

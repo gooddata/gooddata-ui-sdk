@@ -161,7 +161,7 @@ interface IRichTextEditProps {
 }
 
 function RichTextEdit({ value, onChange, placeholder, rows = 10, autoResize = false }: IRichTextEditProps) {
-    const textareaRef = useRef(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const intl = useIntl();
     const placeholderText =
         placeholder ?? `${intl.formatMessage({ id: "richText.placeholder" })}\n${RICH_TEXT_PLACEHOLDER}`;
@@ -175,6 +175,9 @@ function RichTextEdit({ value, onChange, placeholder, rows = 10, autoResize = fa
     const handleInput = useCallback(() => {
         if (autoResize) {
             const textarea = textareaRef.current;
+            if (!textarea) {
+                return;
+            }
 
             // Reset height to calculate new content height
             textarea.style.height = "auto";
@@ -248,8 +251,8 @@ function RichTextView({
     LoadingComponent = DefaultLoadingComponent,
 }: IRichTextViewProps) {
     const intl = useIntl();
-    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters, {
-        enabled: referencesEnabled,
+    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters ?? [], {
+        enabled: referencesEnabled ?? false,
         isFiltersLoading,
         ...execConfig,
     });

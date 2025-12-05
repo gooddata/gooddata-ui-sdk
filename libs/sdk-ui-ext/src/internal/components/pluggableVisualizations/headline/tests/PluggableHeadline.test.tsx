@@ -18,10 +18,13 @@ import {
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableHeadline } from "../PluggableHeadline.js";
 
 describe("PluggableHeadline", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -40,6 +43,7 @@ describe("PluggableHeadline", () => {
             onLoadingChanged: vi.fn(),
             onError: vi.fn(),
         },
+        messages,
     };
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
@@ -95,6 +99,7 @@ describe("PluggableHeadline", () => {
                     drillableItems,
                 },
                 locale: "en-US",
+                messages,
             };
         }
         const emptyPropertiesMeta = {};
@@ -892,6 +897,7 @@ describe("PluggableHeadline", () => {
                     ...customProps,
                 },
                 locale: "en-US",
+                messages,
             };
         }
         const emptyPropertiesMeta = {};

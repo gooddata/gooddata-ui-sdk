@@ -47,6 +47,8 @@ export class SankeyChartDescriptor extends BigChartDescriptor implements IVisual
 
     public getMeta(): IVisualizationMeta {
         return {
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/sankey_chart",
             supportsExport: true,
             supportsZooming: false,
         };

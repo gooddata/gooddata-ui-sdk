@@ -28,8 +28,8 @@ export { BaseVisualization } from "./components/BaseVisualization.js";
 
 export type { IVisualizationCatalog } from "./components/VisualizationCatalog.js";
 export { DefaultVisualizationCatalog, FullVisualizationCatalog } from "./components/VisualizationCatalog.js";
-export { translations } from "./utils/translations.js";
-
+export { resolveMessages, DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "./utils/translations.js";
+export { createIntlMock } from "./tests/testIntlProvider.js";
 export type {
     IVisualization,
     IVisConstruct,

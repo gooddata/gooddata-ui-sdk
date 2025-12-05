@@ -103,7 +103,12 @@ export function Tabs({
                 >
                     <span>
                         {tab.icon ? <i className={tab.icon} /> : null}
-                        {tab.iconOnly ? null : <FormattedMessage id={tab.id} values={tab.values ?? {}} />}
+                        {tab.iconOnly ? null : (
+                            <FormattedMessage
+                                id={tab.id}
+                                values={(tab.values ?? {}) as Record<string, string>}
+                            />
+                        )}
                     </span>
                 </div>
             );

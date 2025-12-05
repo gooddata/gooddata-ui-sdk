@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { DefaultLocale, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
     expectedInsightDefDepartment,
@@ -21,6 +21,7 @@ import {
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
     createDrillEvent,
@@ -32,6 +33,8 @@ import { PluggableTreemap } from "../PluggableTreemap.js";
 const { Department, Region } = ReferenceMd;
 
 describe("PluggableTreemap", () => {
+    const messages = DEFAULT_MESSAGES[DefaultLocale as keyof typeof DEFAULT_MESSAGES];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -47,6 +50,7 @@ describe("PluggableTreemap", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages,
     } as unknown as IVisConstruct;
 
     afterEach(() => {
@@ -393,7 +397,7 @@ describe("PluggableTreemap", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

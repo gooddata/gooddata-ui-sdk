@@ -13,7 +13,12 @@ import {
     insightTitle,
     insightVisualizationUrl,
 } from "@gooddata/sdk-model";
-import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/internal";
+import {
+    BaseVisualization,
+    DEFAULT_MESSAGES,
+    FullVisualizationCatalog,
+    IGdcConfig,
+} from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
@@ -86,7 +91,6 @@ const ReportReadyResolver = andResolver(
 
 export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const isPivotTableNext = testScenario.vis === "PivotTableNext";
-
     const settings = {
         ...DefaultSettings,
         ...testScenario.backendSettings,
@@ -103,12 +107,15 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
 
     // Extract drillableItems from the test scenario props
     const drillableItems = testScenario.props["drillableItems"];
+    const locale = "en-US";
 
     /*
      * Note: for KD rendering the story passes width&height explicitly. this is to emulate plug vis behavior where
      * context sets/determines both and sends them down.
      */
     return () => {
+        const messages = DEFAULT_MESSAGES;
+
         return wrapper(
             <ScreenshotReadyWrapper className="plugviz-report" resolver={ReportReadyResolver}>
                 <h3>
@@ -123,6 +130,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             projectId={testScenario.workspaceType}
                             insight={insight}
                             visualizationClass={visClass}
+                            messages={messages[locale]}
                             visualizationCatalog={FullVisualizationCatalog}
                             onError={action("onError")}
                             pushData={action("pushData")}
@@ -144,6 +152,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             width={1362}
                             height={362}
                             visualizationClass={visClass}
+                            messages={messages[locale]}
                             visualizationCatalog={FullVisualizationCatalog}
                             onError={action("onError")}
                             pushData={action("pushData")}
@@ -165,6 +174,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             insight={insight}
                             width={665}
                             height={362}
+                            messages={messages[locale]}
                             visualizationClass={visClass}
                             visualizationCatalog={FullVisualizationCatalog}
                             onError={action("onError")}

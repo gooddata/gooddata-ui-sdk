@@ -13,12 +13,15 @@ import {
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 
 import { IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js";
 
 const PROJECT_ID = "PROJECTID";
 const visualizationUrl = "local:pushpin";
 
 describe("PluggableGeoPushpinChartNext", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -39,6 +42,7 @@ describe("PluggableGeoPushpinChartNext", () => {
             backend,
             visualizationProperties: {},
             renderFun: mockRenderFun,
+            messages,
         } as unknown as IVisConstruct;
 
         return { visualization: new PluggableGeoPushpinChartNext(props), onError };
@@ -66,7 +70,7 @@ describe("PluggableGeoPushpinChartNext", () => {
         const onError = vi.fn();
         const { visualization } = createComponent(onError);
 
-        visualization.update({}, insightWithoutLocation, {}, executionFactory);
+        visualization.update({ messages }, insightWithoutLocation, {}, executionFactory);
 
         expect(onError).toHaveBeenCalledTimes(1);
         expect(onError).toHaveBeenCalledWith(expect.any(GeoLocationMissingSdkError));
@@ -76,7 +80,9 @@ describe("PluggableGeoPushpinChartNext", () => {
         const onError = vi.fn();
         const { visualization } = createComponent(onError);
 
-        expect(() => visualization.update({}, insightWithLocation, {}, executionFactory)).not.toThrow();
+        expect(() =>
+            visualization.update({ messages }, insightWithLocation, {}, executionFactory),
+        ).not.toThrow();
 
         expect(onError).not.toHaveBeenCalled();
     });

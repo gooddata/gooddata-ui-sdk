@@ -27,7 +27,11 @@ export function MenuOpenedByClick(props: IMenuOpenedBySharedProps): ReactElement
             // would get notified, he would set opened state from true to false, and then toggler element click
             // handler would get notified, that would toggle it back to true, so menu would stay opened. This
             // is be solved by OutsideClickHandler ignoring clicks that are inside of togglerWrapped.
-            <OutsideClickHandler onOutsideClick={outsideClick} useCapture toggler={togglerRef.current}>
+            <OutsideClickHandler
+                onOutsideClick={outsideClick}
+                useCapture
+                toggler={togglerRef.current ?? undefined}
+            >
                 {wrapperProps.children}
             </OutsideClickHandler>
         ),

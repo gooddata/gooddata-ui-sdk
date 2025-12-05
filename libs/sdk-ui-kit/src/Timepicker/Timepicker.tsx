@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, RefObject, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import moment from "moment";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -82,6 +82,9 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     }, [time, skipNormalizeTime, timeAnchor, selectedTime]);
 
     const updateDropdownWidth = useCallback(() => {
+        if (!dropdownRef.current) {
+            return;
+        }
         const { width } = dropdownRef.current.getBoundingClientRect();
         setDropdownWidth(width);
     }, []);
@@ -171,7 +174,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
                         dropdownId={dropdownId}
                         onClick={openDropdown}
                         iconLeft="gd-icon-timer"
-                        buttonRef={buttonRef}
+                        buttonRef={buttonRef as RefObject<HTMLElement>}
                     />
                 )}
                 renderBody={useCallback(

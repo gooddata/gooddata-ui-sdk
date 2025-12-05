@@ -145,12 +145,12 @@ const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
  * have one or two axes. If a combo chart has two axes, it is often referred to as a dual axis chart.
  *
  * By default, a combo chart is displayed as a combination of a column chart and a line chart, with the secondary axis
- * enabled (you can [disable it](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html#disable-the-secondary-axis)).
+ * enabled (you can [disable it](https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/combo_chart#disable-the-secondary-axis)).
  *
  * The chart types used to display primary and secondary measures can be customized in {@link IChartConfig}.
  *
  * See {@link IComboChartProps} to learn how to configure the ComboChart and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html | combo chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/combo_chart | combo chart documentation} for more information.
  *
  * @public
  */

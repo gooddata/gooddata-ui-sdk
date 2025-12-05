@@ -217,7 +217,7 @@ const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
  * Areas for multiple measures stack by default. Alternatively, the areas can overlap if `{ stackMeasures: false }`.
  *
  * See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html | area chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/area_chart | area chart documentation} for more information.
  *
  * @public
  */

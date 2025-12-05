@@ -27,7 +27,7 @@ export function DefaultUiTabsTab<
 
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
-    const isOverflowing = tab.label.length > maxLabelLength;
+    const isOverflowing = maxLabelLength !== undefined && tab.label.length > maxLabelLength;
 
     const [isActionsOpen, setIsActionsOpen] = useState(false);
     const handleToggleActionsOpen = useCallback(
@@ -59,7 +59,7 @@ export function DefaultUiTabsTab<
             className={UiTabsBem.e("tab-wrapper", {
                 selected: isSelected,
                 variant: tab.variant ?? "default",
-                focused: isFocused,
+                focused: isFocused ?? false,
                 "actions-open": isActionsOpen,
             })}
         >

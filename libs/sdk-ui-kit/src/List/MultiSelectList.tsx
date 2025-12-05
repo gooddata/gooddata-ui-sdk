@@ -87,28 +87,29 @@ function MultiSelectListCore<T>({
     );
 
     const isEmpty = useCallback(() => {
-        if (selectedItems.length === 0) {
+        if ((selectedItems?.length ?? 0) === 0) {
             return !isInverted;
         }
 
         if (isSearching) {
-            return items.every((item) => !isSelected(item));
+            return (items ?? []).every((item) => !isSelected?.(item));
         }
 
         return (
-            (selectedItems.length === 0 && !isInverted) || (selectedItems.length === itemsCount && isInverted)
+            ((selectedItems?.length ?? 0) === 0 && !isInverted) ||
+            ((selectedItems?.length ?? 0) === itemsCount && isInverted)
         );
     }, [selectedItems, isInverted, isSearching, items, isSelected, itemsCount]);
 
     const isIndefiniteSelection = useCallback(() => {
-        if (selectedItems.length === 0) {
+        if ((selectedItems?.length ?? 0) === 0) {
             return false;
         }
 
         if (isSearching) {
-            const selectedItems = items.filter((item) => isSelected(item));
+            const filteredSelectedItems = (items ?? []).filter((item) => isSelected?.(item));
 
-            const selectedItemsCount = selectedItems.length;
+            const selectedItemsCount = filteredSelectedItems.length;
 
             return selectedItemsCount !== 0 && selectedItemsCount !== filteredItemsCount;
         }
@@ -117,24 +118,24 @@ function MultiSelectListCore<T>({
 
     const isAllSelected = useCallback(() => {
         if (isSearching) {
-            const selectedItemsCount = items.filter((item) => isSelected(item)).length;
-            const totalItemsCount = items.filter((item) => item !== null).length;
+            const selectedItemsCount = (items ?? []).filter((item) => isSelected?.(item)).length;
+            const totalItemsCount = (items ?? []).filter((item) => item !== null).length;
             return selectedItemsCount === totalItemsCount;
         }
 
-        return isInverted ? selectedItems.length === 0 : selectedItems.length === itemsCount;
+        return isInverted ? (selectedItems?.length ?? 0) === 0 : (selectedItems?.length ?? 0) === itemsCount;
     }, [isInverted, itemsCount, isSearching, items, isSelected, selectedItems]);
 
     const onActionCheckboxChange = useCallback(() => {
         if (isAllSelected() || (!isInverted && isSearching && isIndefiniteSelection() && !isEmpty())) {
-            return onSelectNone();
+            return onSelectNone?.();
         }
 
-        return onSelectAll();
+        return onSelectAll?.();
     }, [onSelectAll, onSelectNone, isInverted, isSearching, isAllSelected, isEmpty, isIndefiniteSelection]);
 
     const renderSearchResultsLength = useCallback(() => {
-        if (isSearching && itemsCount > 0) {
+        if (isSearching && (itemsCount ?? 0) > 0) {
             return (
                 <span className="gd-list-actions-selection-size s-list-search-selection-size">
                     {intl.formatMessage({ id: "gs.list.searchResults" })} ({itemsCount})
@@ -214,9 +215,9 @@ function MultiSelectListCore<T>({
             </span>
         );
 
-        const selectionItemsStr = getSelectionString(selectedItems);
+        const selectionItemsStr = getSelectionString(selectedItems ?? []);
 
-        const isSelectionEmpty = selectedItems.length === 0;
+        const isSelectionEmpty = (selectedItems?.length ?? 0) === 0;
 
         const invertedInfo =
             !isSelectionEmpty && isInverted ? (
@@ -235,7 +236,8 @@ function MultiSelectListCore<T>({
             </span>
         );
 
-        const selectionLengthInfo = selectedItems.length > 1 ? `\xa0(${selectedItems.length})` : null;
+        const selectionLengthInfo =
+            (selectedItems?.length ?? 0) > 1 ? `\xa0(${selectedItems?.length})` : null;
 
         const is = <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>;
 
@@ -277,12 +279,12 @@ function MultiSelectListCore<T>({
                     itemHeight={itemHeight}
                     itemsCount={itemsCount}
                     renderItem={useCallback(
-                        ({ item }) => {
+                        ({ item }: { item: T }) => {
                             return renderItem({
                                 item,
                                 isSelected: isSelected
                                     ? isSelected(item)
-                                    : selectedItems.some((_item) => _item === item),
+                                    : (selectedItems ?? []).some((_item) => _item === item),
                             });
                         },
                         [renderItem, isSelected, selectedItems],

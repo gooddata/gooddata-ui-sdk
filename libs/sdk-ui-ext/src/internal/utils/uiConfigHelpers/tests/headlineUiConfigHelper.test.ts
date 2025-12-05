@@ -4,7 +4,7 @@ import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IBucket, ITheme, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
-import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
+import { BucketNames } from "@gooddata/sdk-ui";
 import { CalculateAs, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
@@ -12,6 +12,7 @@ import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { createInternalIntl } from "../../internalIntlProvider.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../translations.js";
 import {
     buildHeadlineVisualizationConfig,
     getComparisonColorPalette,
@@ -22,8 +23,10 @@ import {
 } from "../headlineUiConfigHelper.js";
 
 describe("headlineUiConfigHelper", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     describe("getHeadlineUiConfig", () => {
-        const intl = createInternalIntl(DefaultLocale);
+        const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
 
         describe("'canAddItems' property", () => {
             const uiConfig = getHeadlineUiConfig(
@@ -174,7 +177,7 @@ describe("headlineUiConfigHelper", () => {
                 },
             };
 
-            expect(buildHeadlineVisualizationConfig(properties, {}, { config })).toEqual({
+            expect(buildHeadlineVisualizationConfig(properties, { messages }, { messages, config })).toEqual({
                 ...config,
                 ...properties.controls,
                 colorPalette: DEFAULT_COMPARISON_PALETTE,

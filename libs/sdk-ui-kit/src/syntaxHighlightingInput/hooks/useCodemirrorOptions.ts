@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { EditorView, placeholder } from "@codemirror/view";
@@ -32,7 +33,7 @@ export function useCodemirrorOptions({ placeholderText, labelText }: IUseCodemir
 
     // ARIA
     const ariaExtension = EditorView.contentAttributes.of({
-        "aria-label": labelText || placeholderText,
+        "aria-label": labelText ?? placeholderText ?? "",
         tabIndex: "0", // Ensure the input is focusable
     });
 

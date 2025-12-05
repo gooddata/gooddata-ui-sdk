@@ -58,7 +58,7 @@ interface IComponentTableRowProps<TProps extends object> {
     cellWidth?: number;
     cellHeight?: number;
     align?: "center" | "flex-start";
-    cellStyle?: (props: TProps) => CSSProperties;
+    cellStyle?: (props: TProps) => CSSProperties | undefined;
 }
 
 interface IComponentTableCellProps<TProps extends object> {
@@ -69,7 +69,7 @@ interface IComponentTableCellProps<TProps extends object> {
     cellHeight?: number;
     debug?: boolean;
     align?: "center" | "flex-start";
-    cellStyle?: (props: TProps) => CSSProperties;
+    cellStyle?: (props: TProps) => CSSProperties | undefined;
 }
 
 const GAP = 10;

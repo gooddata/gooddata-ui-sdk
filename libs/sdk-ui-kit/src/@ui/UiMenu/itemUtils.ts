@@ -132,7 +132,7 @@ export const getItemInteractiveParent = <T extends IUiMenuItemData = object>(
             return false;
         }
 
-        return item.subItems.some((subMenuItem) => subMenuItem.id === itemId);
+        return item.subItems?.some((subMenuItem) => subMenuItem.id === itemId) ?? false;
     });
 
     if (parent?.type === "interactive") {

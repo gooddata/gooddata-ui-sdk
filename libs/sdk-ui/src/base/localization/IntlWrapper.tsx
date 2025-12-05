@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 
 import { IntlProvider } from "react-intl";
 
-import { resolveLocaleDefaultMessages } from "./intlUtils.js";
+import { resolveLocale, useResolveMessages } from "./intlUtils.js";
 import { DefaultLocale } from "./Locale.js";
-import { messagesMap } from "./messagesMap.js";
+import { DEFAULT_MESSAGES, resolveMessages } from "./messagesMap.js";
 
 /**
  * @internal
@@ -14,16 +14,21 @@ import { messagesMap } from "./messagesMap.js";
 export interface IIntlWrapperProps {
     locale?: string;
     children?: ReactNode;
+    messages?: Record<string, string>;
 }
 
 /**
  * @internal
  */
 export function IntlWrapper({ locale = DefaultLocale, children }: IIntlWrapperProps) {
-    const messages = useMemo(() => resolveLocaleDefaultMessages(locale, messagesMap), [locale]);
+    const validatedLocale = resolveLocale(locale);
+    const messages = useResolveMessages(validatedLocale, resolveMessages, DEFAULT_MESSAGES);
+    if (!messages[validatedLocale]) {
+        return null;
+    }
 
     return (
-        <IntlProvider locale={locale} messages={messages}>
+        <IntlProvider locale={validatedLocale} messages={messages[validatedLocale]}>
             {children}
         </IntlProvider>
     );

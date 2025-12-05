@@ -15,7 +15,7 @@ const messages = {
     "message.accessibility.dismiss.notification": "Dismiss notification",
 };
 
-function renderMessage(options: Partial<IMessageProps>, children: ReactElement = null) {
+function renderMessage(options: Partial<IMessageProps>, children?: ReactElement) {
     return render(
         <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
             <Message type={"success"} {...options}>

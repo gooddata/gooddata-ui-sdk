@@ -230,7 +230,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
     return (
         <div className="gd-invertable-select" style={adaptiveWidth ? undefined : { width }}>
             <div className="gd-invertable-select-search-bar">
-                {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
+                {renderSearchBar({ onSearch: onSearch ?? (() => {}), searchPlaceholder, searchString })}
             </div>
             {isLoading ? (
                 <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
@@ -243,8 +243,8 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                         checked: selectionState !== "none",
                         onToggle: onSelectAllCheckboxToggle,
                         onChange: onSelectAllCheckboxChange,
-                        isFiltered: searchString?.length > 0,
-                        totalItemsCount,
+                        isFiltered: (searchString?.length ?? 0) > 0,
+                        totalItemsCount: totalItemsCount ?? 0,
                         isPartialSelection: selectionState === "partial",
                     })}
                     {items.length > 0 && (
@@ -256,11 +256,11 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                                             className={cx(className, {
                                                 "is-multiselect": !isSingleSelect,
                                             })}
-                                            width={adaptiveWidth ? contentRect?.client.width : width}
+                                            width={adaptiveWidth ? contentRect?.client?.width : width}
                                             height={
                                                 adaptiveHeight
-                                                    ? contentRect?.client.height
-                                                    : Math.min(items.length, 10) * itemHeight
+                                                    ? contentRect?.client?.height
+                                                    : Math.min(items.length, 10) * (itemHeight ?? 28)
                                             }
                                             items={items}
                                             itemHeight={itemHeight}
@@ -335,7 +335,7 @@ function defaultStatusBar<T>({
             isInverted={isInverted}
             selectedItems={selectedItems}
             getItemTitle={getItemTitle}
-            selectedItemsLimit={selectedItemsLimit}
+            selectedItemsLimit={selectedItemsLimit ?? 0}
         />
     );
 }

@@ -24,6 +24,7 @@ import {
     OverlayControllerProvider,
     ScrollablePanel,
     UiIcon,
+    UiIconButton,
     UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
@@ -479,10 +480,15 @@ export function AlertingDialogRenderer({
                                                         <FormattedMessage id="insightAlert.config.granularity" />
                                                         <UiTooltip
                                                             anchor={
-                                                                <UiIcon
-                                                                    type="question"
-                                                                    size={12}
-                                                                    color="complementary-6"
+                                                                <UiIconButton
+                                                                    icon="question"
+                                                                    variant="tertiary"
+                                                                    size="xsmall"
+                                                                    accessibilityConfig={{
+                                                                        ariaLabel: intl.formatMessage({
+                                                                            id: "insightAlert.config.granularity",
+                                                                        }),
+                                                                    }}
                                                                 />
                                                             }
                                                             content={

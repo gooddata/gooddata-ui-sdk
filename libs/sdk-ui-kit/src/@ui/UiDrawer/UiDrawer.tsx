@@ -37,7 +37,7 @@ export function UiDrawer({
     accessibilityConfig,
 }: UiDrawerProps) {
     const ref = useRef(null);
-    const { isOpen, isFullyOpen, view, style } = useToggleDrawer(open, transition);
+    const { isOpen, isFullyOpen, view, style } = useToggleDrawer(open ?? false, transition ?? {});
 
     const handleKeyDown = useMemo(
         () =>

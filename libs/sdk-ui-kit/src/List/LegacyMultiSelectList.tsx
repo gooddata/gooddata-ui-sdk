@@ -65,7 +65,7 @@ function LegacyMultiSelectList<T>({
     onSelectAll = () => {},
     onSelectNone = () => {},
     onSelectOnly = () => {},
-    rowItem: rowItemProp = null as ReactElement,
+    rowItem: rowItemProp = null as unknown as ReactElement,
     selectAllCheckbox = false,
     tagName = "",
     intl,

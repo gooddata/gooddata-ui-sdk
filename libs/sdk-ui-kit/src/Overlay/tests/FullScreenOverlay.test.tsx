@@ -11,12 +11,12 @@ import { FullScreenOverlay } from "../FullScreenOverlay.js";
 describe("FullScreen Overlay", () => {
     let root: Root;
     let container: HTMLDivElement;
-    let overlayRef: RefObject<FullScreenOverlay>;
+    let overlayRef: RefObject<FullScreenOverlay | null>;
 
     beforeEach(() => {
         container = document.createElement("div");
         document.body.appendChild(container);
-        overlayRef = createRef<FullScreenOverlay>();
+        overlayRef = createRef<FullScreenOverlay | null>();
 
         root = createRoot(container);
         flushSync(() => {

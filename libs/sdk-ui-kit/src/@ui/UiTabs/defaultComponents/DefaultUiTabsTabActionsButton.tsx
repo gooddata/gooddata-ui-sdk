@@ -27,7 +27,7 @@ export function DefaultUiTabsTabActionsButton<
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { size } = store.useContextStoreValues(["size"]);
 
-    if (tab.actions.length === 0) {
+    if ((tab.actions ?? []).length === 0) {
         return null;
     }
 
