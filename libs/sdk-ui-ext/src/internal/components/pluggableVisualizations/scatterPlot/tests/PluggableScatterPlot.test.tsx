@@ -8,10 +8,13 @@ import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
 
 describe("PluggableScatterPlot", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -27,6 +30,7 @@ describe("PluggableScatterPlot", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages,
     };
 
     function createComponent(props = defaultProps) {
@@ -217,7 +221,7 @@ describe("PluggableScatterPlot", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

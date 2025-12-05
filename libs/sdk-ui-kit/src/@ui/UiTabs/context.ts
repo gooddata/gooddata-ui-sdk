@@ -5,7 +5,7 @@ import { EmptyObject } from "@gooddata/util";
 
 import { IUiTabContext } from "./types.js";
 
-const UiTabsContextStore = createContextStore<IUiTabContext<unknown, unknown>>("UiTabs");
+const UiTabsContextStore = createContextStore<IUiTabContext<Record<any, any>, Record<any, any>>>("UiTabs");
 
 /**
  * @internal
@@ -14,5 +14,5 @@ export function getTypedUiTabsContextStore<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
 >() {
-    return UiTabsContextStore as IContextStore<IUiTabContext<TTabProps, TTabActionProps>>;
+    return UiTabsContextStore as unknown as IContextStore<IUiTabContext<TTabProps, TTabActionProps>>;
 }

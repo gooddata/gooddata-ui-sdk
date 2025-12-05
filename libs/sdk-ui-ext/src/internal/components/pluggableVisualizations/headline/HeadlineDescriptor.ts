@@ -107,7 +107,8 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
 
     public getMeta(settings?: ISettings): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/headline",
             supportsExport: settings?.enableHeadlineExport ?? true,
             supportsZooming: false,
         };

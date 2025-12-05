@@ -22,7 +22,7 @@ import { getGranteeItemTestId } from "./utils.js";
 import { LoadingMask } from "../../../LoadingMask/index.js";
 import { Typography } from "../../../Typography/index.js";
 
-export function EmptyRenderer(): ReactElement {
+export function EmptyRenderer(): ReactElement | null {
     return null;
 }
 

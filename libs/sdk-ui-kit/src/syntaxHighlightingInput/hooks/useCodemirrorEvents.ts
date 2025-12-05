@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject } from "react";
+
+import { RefObject } from "react";
 
 import { completionStatus } from "@codemirror/autocomplete";
 import { EditorView } from "@codemirror/view";
@@ -8,8 +9,8 @@ export function useCodemirrorEvents({
     handleFocus,
     handleBlur,
 }: {
-    handleFocus: MutableRefObject<(event: FocusEvent, view: EditorView) => void>;
-    handleBlur: MutableRefObject<(event: FocusEvent, view: EditorView) => void>;
+    handleFocus: RefObject<((event: FocusEvent, view: EditorView) => void) | undefined>;
+    handleBlur: RefObject<((event: FocusEvent, view: EditorView) => void) | undefined>;
 }) {
     // Dom events handlers
     const domEventsExtension = EditorView.domEventHandlers({

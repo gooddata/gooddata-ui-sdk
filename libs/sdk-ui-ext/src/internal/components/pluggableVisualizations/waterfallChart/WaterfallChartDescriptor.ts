@@ -46,7 +46,8 @@ export class WaterfallChartDescriptor extends BaseChartDescriptor implements IVi
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/waterfall_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/waterfall_chart",
             supportsExport: true,
             supportsZooming: false,
         };

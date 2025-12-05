@@ -22,6 +22,7 @@ import {
 } from "../../interfaces/VisualizationDescriptor.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../utils/translations.js";
 import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
 import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
@@ -82,6 +83,8 @@ class DummyClassDescriptor extends BaseChartDescriptor {
 }
 
 describe("BaseVisualization", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const defaultVisualizationsCatalog = new CatalogViaTypeToClassMap({
         table: DummyClassDescriptor,
         // include tablenext so tests work when enableNewPivotTable is on
@@ -98,6 +101,7 @@ describe("BaseVisualization", () => {
         drillableItems: [],
         onError: () => {},
         onExportReady: () => {},
+        messages,
         onLoadingChanged: () => {},
         afterRender: () => {},
         pushData: () => {},
@@ -355,6 +359,7 @@ describe("BaseVisualization", () => {
                 height: undefined,
             },
             locale: undefined,
+            messages,
         });
     });
 
@@ -386,6 +391,7 @@ describe("BaseVisualization", () => {
                 },
                 dimensions: { height: undefined },
                 locale: undefined,
+                messages,
             });
         });
     });

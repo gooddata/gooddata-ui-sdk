@@ -55,10 +55,10 @@ describe("color conversions", () => {
     });
 
     describe("#getColorStyle", () => {
-        it("should return style with red background color and null border color", () => {
+        it("should return style with red background color and undefined border color", () => {
             const expectedResult: CSSProperties = {
                 backgroundColor: "hsl(0, 100%, 50%)",
-                borderColor: null,
+                borderColor: undefined,
             };
 
             const result = getColorStyle(redHsl);

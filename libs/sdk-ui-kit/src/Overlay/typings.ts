@@ -66,7 +66,7 @@ export interface IOverlayState {
     alignment: {
         left: number;
         top: number;
-        right: number;
+        right?: number;
         width?: number;
         height?: number;
         align: string;
@@ -74,5 +74,5 @@ export interface IOverlayState {
     visiblePart: number;
     overflow?: string;
     scrollTop?: number;
-    observedHeight?: number;
+    observedHeight: number;
 }

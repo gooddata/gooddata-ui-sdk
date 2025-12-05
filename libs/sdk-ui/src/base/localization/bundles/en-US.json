@@ -1319,6 +1319,18 @@
         "value": "Visualization legend",
         "comment": "Title for the legend section in visualization properties. The legend provides a key to the colors and patterns used in the chart."
     },
+    "properties.color.total": {
+        "value": "Total",
+        "comment": "Label for total values color configuration"
+    },
+    "properties.color.positive": {
+        "value": "Positive",
+        "comment": "Label for positive values color configuration"
+    },
+    "properties.color.negative": {
+        "value": "Negative",
+        "comment": "Label for negative values color configuration"
+    },
     "attrf.all": {
         "value": "All",
         "comment": "Option to select all items in an attribute filter. When selected, the filter will include all possible values of the attribute."

@@ -3,15 +3,18 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
-
+import { IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableWaterfallChart } from "../PluggableWaterfallChart.js";
 
 describe("PluggableWaterfallChart", () => {
+    const messages = DEFAULT_MESSAGES[DefaultLocale as keyof typeof DEFAULT_MESSAGES];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -27,6 +30,7 @@ describe("PluggableWaterfallChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages,
     };
 
     function createComponent(props = defaultProps) {
@@ -159,7 +163,7 @@ describe("PluggableWaterfallChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

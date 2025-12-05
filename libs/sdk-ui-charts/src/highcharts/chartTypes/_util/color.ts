@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
+import { defineMessages } from "react-intl";
 
 import { IColorPalette, IRgbColorValue } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
@@ -38,6 +39,12 @@ export const DEFAULT_WATERFALL_COLORS = [
     "properties.color.positive",
     "properties.color.negative",
 ];
+
+export const DEFAULT_WATERFALL_COLORS_MESSAGES = defineMessages({
+    "properties.color.total": { id: "properties.color.total" },
+    "properties.color.positive": { id: "properties.color.positive" },
+    "properties.color.negative": { id: "properties.color.negative" },
+});
 
 /**
  * @internal

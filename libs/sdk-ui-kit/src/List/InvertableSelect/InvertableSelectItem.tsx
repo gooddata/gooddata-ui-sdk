@@ -70,7 +70,7 @@ export function InvertableSelectItem({
         <div
             className={cx({
                 "gd-list-item": true,
-                [`s-${stringUtils.simplifyText(title)}`]: true,
+                [`s-${stringUtils.simplifyText(title ?? "")}`]: true,
                 "has-only-visible": true,
                 "is-selected": isSelected,
                 "is-disabled": isDisabled,

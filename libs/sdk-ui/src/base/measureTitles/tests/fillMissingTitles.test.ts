@@ -30,8 +30,8 @@ describe("measureTitleHelper", () => {
             return matchingMeasure === undefined ? undefined : matchingMeasure.measure.title;
         }
 
-        it("should set title of derived measures based on master title when master is NOT renamed", () => {
-            const result = fillMissingTitles(insightWithPoP, locale, 1000);
+        it("should set title of derived measures based on master title when master is NOT renamed", async () => {
+            const result = await fillMissingTitles(insightWithPoP, locale, 1000);
 
             expect(getMeasureTitle(result, "m1")).toEqual("# Accounts with AD Query");
 
@@ -42,8 +42,8 @@ describe("measureTitleHelper", () => {
             );
         });
 
-        it("should set title of derived measures based on master alias when master is renamed", () => {
-            const result = fillMissingTitles(insightWithPoPAndAlias, locale, 1000);
+        it("should set title of derived measures based on master alias when master is renamed", async () => {
+            const result = await fillMissingTitles(insightWithPoPAndAlias, locale, 1000);
 
             expect(getMeasureTitle(result, "m1")).toEqual("# Accounts with AD Query");
 
@@ -52,8 +52,8 @@ describe("measureTitleHelper", () => {
             expect(getMeasureTitle(result, "m1_previous_period")).toEqual("AD Queries - period ago");
         });
 
-        it("should ignore title attribute when it is included in derived / arithmetic measure (computed title)", () => {
-            const result = fillMissingTitles(insightWithArithmeticAndDerivedMeasures, locale, 1000);
+        it("should ignore title attribute when it is included in derived / arithmetic measure (computed title)", async () => {
+            const result = await fillMissingTitles(insightWithArithmeticAndDerivedMeasures, locale, 1000);
 
             expect(getMeasureTitle(result, "am1")).toEqual(
                 "Sum of AD Accounts and AD Accounts - SP year ago",
@@ -62,8 +62,8 @@ describe("measureTitleHelper", () => {
             expect(getMeasureTitle(result, "m1_pop")).toEqual("AD Accounts - SP year ago");
         });
 
-        it("should set title of derived based on master title even when it is located in a different bucket", () => {
-            const result = fillMissingTitles(insightWithMultipleMeasureBuckets, locale, 1000);
+        it("should set title of derived based on master title even when it is located in a different bucket", async () => {
+            const result = await fillMissingTitles(insightWithMultipleMeasureBuckets, locale, 1000);
 
             expect(bucketMeasures(insightBucket(result, "measures")!)).toEqual([
                 {
@@ -120,8 +120,8 @@ describe("measureTitleHelper", () => {
             ]);
         });
 
-        it("should set correct titles to arithmetic measures in simple tree", () => {
-            const result = fillMissingTitles(insightWithArithmeticMeasureTree, locale, 1000);
+        it("should set correct titles to arithmetic measures in simple tree", async () => {
+            const result = await fillMissingTitles(insightWithArithmeticMeasureTree, locale, 1000);
 
             expect(getMeasureTitle(result, "tree_level_0")).toEqual("Sum of AD Accounts and KD Accounts");
 
@@ -134,8 +134,8 @@ describe("measureTitleHelper", () => {
             );
         });
 
-        it("should respect max arithmetic measure title length", () => {
-            const result = fillMissingTitles(insightWithArithmeticMeasureTree, locale, 50);
+        it("should respect max arithmetic measure title length", async () => {
+            const result = await fillMissingTitles(insightWithArithmeticMeasureTree, locale, 50);
 
             expect(getMeasureTitle(result, "tree_level_0")).toEqual("Sum of AD Accounts and KD Accounts");
 
@@ -148,8 +148,8 @@ describe("measureTitleHelper", () => {
             );
         });
 
-        it("should set correct titles to arithmetic measures in the complex tree", () => {
-            const result = fillMissingTitles(insightWithComplexArithmeticMeasureTree, locale, 1000);
+        it("should set correct titles to arithmetic measures in the complex tree", async () => {
+            const result = await fillMissingTitles(insightWithComplexArithmeticMeasureTree, locale, 1000);
 
             expect(
                 getMeasureTitle(result, "arithmetic_measure_created_from_complicated_arithmetic_measures"),

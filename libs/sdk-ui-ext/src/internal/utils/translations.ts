@@ -1,34 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
+import { memoize, merge } from "lodash-es";
+import type { IntlShape } from "react-intl";
 
-import { merge } from "lodash-es";
-import { IntlShape } from "react-intl";
-
-import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
+import {
+    DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
+    ITranslations,
+    resolveMessages as sdkUiresolveMessages,
+} from "@gooddata/sdk-ui";
+// eslint-disable-next-line import/order
 import { translationUtils } from "@gooddata/util";
-
-import { IDropdownItem } from "../interfaces/Dropdown.js";
-import { de_DE } from "../translations/de-DE.localization-bundle.js";
-import { en_AU } from "../translations/en-AU.localization-bundle.js";
-import { en_GB } from "../translations/en-GB.localization-bundle.js";
-import { en_US } from "../translations/en-US.localization-bundle.js";
-import { es_419 } from "../translations/es-419.localization-bundle.js";
-import { es_ES } from "../translations/es-ES.localization-bundle.js";
-import { fi_FI } from "../translations/fi-FI.localization-bundle.js";
-import { fr_CA } from "../translations/fr-CA.localization-bundle.js";
-import { fr_FR } from "../translations/fr-FR.localization-bundle.js";
-import { it_IT } from "../translations/it-IT.localization-bundle.js";
-import { ja_JP } from "../translations/ja-JP.localization-bundle.js";
-import { ko_KR } from "../translations/ko-KR.localization-bundle.js";
-import { nl_NL } from "../translations/nl-NL.localization-bundle.js";
-import { pl_PL } from "../translations/pl-PL.localization-bundle.js";
-import { pt_BR } from "../translations/pt-BR.localization-bundle.js";
-import { pt_PT } from "../translations/pt-PT.localization-bundle.js";
-import { ru_RU } from "../translations/ru-RU.localization-bundle.js";
-import { sl_SI } from "../translations/sl-SI.localization-bundle.js";
-import { tr_TR } from "../translations/tr-TR.localization-bundle.js";
-import { zh_Hans } from "../translations/zh-Hans.localization-bundle.js";
-import { zh_Hant } from "../translations/zh-Hant.localization-bundle.js";
-import { zh_HK } from "../translations/zh-HK.localization-bundle.js";
+// eslint-disable-next-line import/order
+import type { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(
     translationId: string,
@@ -46,35 +28,64 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
     });
 }
 
-const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
-    "en-US": translationUtils.removeMetadata(en_US),
-    "de-DE": de_DE,
-    "es-ES": es_ES,
-    "fr-FR": fr_FR,
-    "ja-JP": ja_JP,
-    "nl-NL": nl_NL,
-    "pt-BR": pt_BR,
-    "pt-PT": pt_PT,
-    "zh-Hans": zh_Hans,
-    "ru-RU": ru_RU,
-    "it-IT": it_IT,
-    "es-419": es_419,
-    "fr-CA": fr_CA,
-    "en-GB": en_GB,
-    "en-AU": en_AU,
-    "fi-FI": fi_FI,
-    "zh-Hant": zh_Hant,
-    "zh-HK": zh_HK,
-    "tr-TR": tr_TR,
-    "pl-PL": pl_PL,
-    "ko-KR": ko_KR,
-    "sl-SI": sl_SI,
+import { en_US } from "../translations/en-US.localization-bundle.js";
+
+const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations> } = {
+    "en-US": () => Promise.resolve(translationUtils.removeMetadata(en_US)),
+    "de-DE": () => import("../translations/de-DE.localization-bundle.js").then((module) => module.de_DE),
+    "es-ES": () => import("../translations/es-ES.localization-bundle.js").then((module) => module.es_ES),
+    "fr-FR": () => import("../translations/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
+    "ja-JP": () => import("../translations/ja-JP.localization-bundle.js").then((module) => module.ja_JP),
+    "nl-NL": () => import("../translations/nl-NL.localization-bundle.js").then((module) => module.nl_NL),
+    "pt-BR": () => import("../translations/pt-BR.localization-bundle.js").then((module) => module.pt_BR),
+    "pt-PT": () => import("../translations/pt-PT.localization-bundle.js").then((module) => module.pt_PT),
+    "zh-Hans": () =>
+        import("../translations/zh-Hans.localization-bundle.js").then((module) => module.zh_Hans),
+    "ru-RU": () => import("../translations/ru-RU.localization-bundle.js").then((module) => module.ru_RU),
+    "it-IT": () => import("../translations/it-IT.localization-bundle.js").then((module) => module.it_IT),
+    "es-419": () => import("../translations/es-419.localization-bundle.js").then((module) => module.es_419),
+    "fr-CA": () => import("../translations/fr-CA.localization-bundle.js").then((module) => module.fr_CA),
+    "en-GB": () => import("../translations/en-GB.localization-bundle.js").then((module) => module.en_GB),
+    "en-AU": () => import("../translations/en-AU.localization-bundle.js").then((module) => module.en_AU),
+    "fi-FI": () => import("../translations/fi-FI.localization-bundle.js").then((module) => module.fi_FI),
+    "zh-Hant": () =>
+        import("../translations/zh-Hant.localization-bundle.js").then((module) => module.zh_Hant),
+    "zh-HK": () => import("../translations/zh-HK.localization-bundle.js").then((module) => module.zh_HK),
+    "tr-TR": () => import("../translations/tr-TR.localization-bundle.js").then((module) => module.tr_TR),
+    "pl-PL": () => import("../translations/pl-PL.localization-bundle.js").then((module) => module.pl_PL),
+    "ko-KR": () => import("../translations/ko-KR.localization-bundle.js").then((module) => module.ko_KR),
+    "sl-SI": () => import("../translations/sl-SI.localization-bundle.js").then((module) => module.sl_SI),
 };
 
 /**
+ * Asynchronously loads translations for the specified locale, merging sdk-ui-ext translations
+ * with sdk-ui translations.
+ *
+ * @param locale - The locale to load translations for
+ * @returns Promise resolving to merged translations object
  * @internal
  */
-export const translations: { [locale: string]: Record<string, string> } = merge(
-    sdkUiTranslations, // we use also some of the sdk-ui strings here so we need to merge them in here
-    sdkUiExtTranslations,
-);
+const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
+    const sdkUiExtLoader = asyncSdkUiExtTranslations[locale] || asyncSdkUiExtTranslations["en-US"];
+    const [sdkUiExtTranslations, sdkUiTranslations] = await Promise.all([
+        sdkUiExtLoader(),
+        sdkUiresolveMessages(locale),
+    ]);
+    return merge({}, sdkUiTranslations, sdkUiExtTranslations);
+};
+
+/**
+ * Resolves translation messages for the given locale.
+ * Memoized to cache promises and prevent duplicate async imports.
+ *
+ * @internal
+ */
+export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+
+export const DEFAULT_LANGUAGE = "en-US";
+export const DEFAULT_MESSAGES = {
+    [DEFAULT_LANGUAGE]: {
+        ...translationUtils.removeMetadata(en_US),
+        ...DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE],
+    },
+};

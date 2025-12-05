@@ -1,5 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
+import { RefCallback } from "react";
+
 import cx from "classnames";
 
 import { useGradientColor } from "./hooks/useGradientColor.js";
@@ -31,7 +33,7 @@ export function ScrollGradient({
             <div
                 className={cx("gd-gradient-content", contentClassName)}
                 onScroll={onScrollHandler}
-                ref={setContent}
+                ref={setContent as RefCallback<HTMLDivElement>}
             >
                 {children}
             </div>

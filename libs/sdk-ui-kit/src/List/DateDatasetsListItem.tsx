@@ -44,7 +44,7 @@ export function DateDatasetsListItem({
         "gd-list-item",
         "gd-list-item-shortened",
         `s-${id}`,
-        `s-${stringUtils.simplifyText(title)}`,
+        `s-${stringUtils.simplifyText(title ?? "")}`,
         {
             "is-selected": isSelected,
             "is-unrelated": isUnrelated,
@@ -58,7 +58,7 @@ export function DateDatasetsListItem({
 
     return (
         <div className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
+            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title ?? ""}</ShortenedText>
         </div>
     );
 }

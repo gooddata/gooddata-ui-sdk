@@ -11,7 +11,7 @@ import { resolveRef } from "./utils.js";
  * @internal
  */
 export interface IUiReturnFocusOnUnmountOptions {
-    returnFocusTo?: string | RefObject<HTMLElement> | (() => HTMLElement | null);
+    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
 }
 
 /**

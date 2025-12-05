@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 
 import { CustomFormats, IntlProvider } from "react-intl";
 
-import { DefaultLocale, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
+import { DefaultLocale, resolveLocale, useResolveMessages } from "@gooddata/sdk-ui";
 
-import { translations } from "../../internal/utils/translations.js";
+import { DEFAULT_MESSAGES, resolveMessages } from "../../internal/utils/translations.js";
 
 const formats: CustomFormats = {
     time: {
@@ -40,9 +40,12 @@ export interface IIntlWrapperProps {
  * @internal
  */
 export function IntlWrapper({ children, locale = DefaultLocale }: IIntlWrapperProps) {
-    const messages = useMemo(() => resolveLocaleDefaultMessages(locale, translations), [locale]);
+    const messages = useResolveMessages(resolveLocale(locale), resolveMessages, DEFAULT_MESSAGES);
+    if (!messages[locale]) {
+        return null;
+    }
     return (
-        <IntlProvider locale={locale} messages={messages} formats={formats}>
+        <IntlProvider locale={locale} messages={messages[locale]} formats={formats}>
             {children}
         </IntlProvider>
     );

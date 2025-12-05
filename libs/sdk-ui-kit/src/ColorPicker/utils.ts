@@ -37,10 +37,12 @@ function getHslColorString(hue: number, saturation: number, lightness: number): 
     return `hsl(${hue}, ${Math.round(saturation * 100)}%, ${Math.round(lightness * 100)}%)`;
 }
 
+export type BorderColor = "#ccc";
+
 export function getColorStyle(hslColor: ColorFormats.HSL): CSSProperties {
     return {
         backgroundColor: getHslColorString(hslColor.h, hslColor.s, hslColor.l),
-        borderColor: hslColor.l > 0.95 ? "#ccc" : null,
+        borderColor: hslColor.l > 0.95 ? ("#ccc" as BorderColor) : undefined,
     };
 }
 
@@ -69,7 +71,7 @@ export function calculateHueChange(
     e: TouchEvent | MouseEvent,
     hue: number,
     container: HTMLDivElement,
-): ColorFormats.HSL {
+): ColorFormats.HSL | undefined {
     e.preventDefault();
     const containerWidth = container.clientWidth;
 
@@ -94,5 +96,5 @@ export function calculateHueChange(
         };
     }
 
-    return null;
+    return undefined;
 }

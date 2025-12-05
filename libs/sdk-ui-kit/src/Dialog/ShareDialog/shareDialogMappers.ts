@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     AccessGranteeDetail,
     IAvailableUserAccessGrantee,
@@ -175,7 +176,7 @@ export const mapUserAccessToGrantee = (userAccess: IUserAccess, currentUser: IUs
         email: user.email,
         isOwner: false,
         isCurrentUser: getIsGranteeCurrentUser(user.ref, currentUser),
-        status: mapUserStatusToGranteeStatus(user.status),
+        status: mapUserStatusToGranteeStatus(user.status!),
     };
 };
 
@@ -188,7 +189,7 @@ export const mapUserGroupAccessToGrantee = (userGroupAccess: IUserGroupAccess): 
     return {
         type,
         id: userGroup.ref,
-        name: userGroup.name,
+        name: userGroup.name ?? "",
     };
 };
 
@@ -208,7 +209,7 @@ export const mapGranularUserAccessToGrantee = (
         email: user.email,
         isOwner: false,
         isCurrentUser: getIsGranteeCurrentUser(user.ref, currentUser),
-        status: mapUserStatusToGranteeStatus(user.status),
+        status: mapUserStatusToGranteeStatus(user.status!),
         permissions,
         inheritedPermissions,
     };
@@ -225,7 +226,7 @@ export const mapGranularUserGroupAccessToGrantee = (
     return {
         type,
         id: userGroup.ref,
-        name: userGroup.name,
+        name: userGroup.name ?? "",
         permissions,
         inheritedPermissions,
     };
@@ -263,7 +264,8 @@ export const mapAccessGranteeDetailToGrantee = (
         return mapGranularRulesAccessToGrantee(accessGranteeDetail);
     }
 
-    return undefined;
+    // Return a dummy grantee for exhaustive checking - this should never be reached
+    throw new Error(`Unknown access grantee detail type`);
 };
 
 /**

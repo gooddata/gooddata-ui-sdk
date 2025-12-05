@@ -248,7 +248,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
             setImmediate(value);
             // The input element is loosing focus after the selection,
             // therefore it needs to be focused explicitly.
-            inputRef.current?.inputNodeRef.inputNodeRef.focus();
+            inputRef.current?.inputNodeRef?.inputNodeRef?.focus();
         },
         [setImmediate],
     );

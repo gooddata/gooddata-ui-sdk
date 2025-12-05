@@ -107,7 +107,7 @@ const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
  *
  * @remarks
  * See {@link IHeatmapProps} to learn how to configure the Heatmap and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html | heatmap documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/heatmap | heatmap documentation} for more information.
  *
  * @public
  */

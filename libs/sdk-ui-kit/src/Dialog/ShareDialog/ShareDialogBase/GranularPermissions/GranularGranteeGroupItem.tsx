@@ -18,10 +18,10 @@ interface IGranularGranteeGroupItemProps {
     grantee: IGranularGranteeGroup | IGranteeRules;
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
-    isGranteeShareLoading: boolean;
+    isGranteeShareLoading?: boolean;
     mode: DialogModeType;
     id?: string;
-    onChange: (grantee: GranteeItem) => void;
+    onChange?: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
@@ -79,7 +79,7 @@ export function GranularGranteeGroupItem({
                 grantee={grantee}
                 granteePossibilities={granteePossibilities}
                 handleToggleDropdown={handleToggleDropdown}
-                onChange={onChange}
+                onChange={onChange ?? (() => {})}
                 onDelete={onDelete}
                 isDropdownDisabled={!granteePossibilities.change.enabled || isGranteeShareLoading}
                 bubbleTextId={granteePossibilities.change.tooltip}

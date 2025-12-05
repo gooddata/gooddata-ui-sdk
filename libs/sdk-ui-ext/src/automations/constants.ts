@@ -186,12 +186,9 @@ export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
         ...titleIconProps,
     },
     automationDetails: {
-        type: "questionMark",
-        backgroundSize: 14,
+        type: "question",
         color: "complementary-6",
-        backgroundColor: "complementary-6",
-        backgroundType: "border",
-        size: 9,
+        size: 16,
     },
     SUCCESS: {
         type: "checkCircle",

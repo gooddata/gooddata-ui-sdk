@@ -45,14 +45,16 @@ export function MenuOpener(props: IMenuOpenerProps) {
         return { ...defaultProps, ...definedProps } as IMenuOpenerProps & typeof defaultProps;
     }, [definedProps]);
 
-    const Component = useMemo(() => {
+    const Component = useMemo((): ElementType => {
         switch (propsWithDefaults.openAction) {
             case "click":
                 return MenuOpenedByClick;
             case "hover":
                 return MenuOpenedByHover;
+            default:
+                return MenuOpenedByHover;
         }
-    }, [propsWithDefaults.openAction]) as ElementType;
+    }, [propsWithDefaults.openAction]);
 
     return (
         <Component

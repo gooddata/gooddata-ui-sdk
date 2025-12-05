@@ -8,6 +8,10 @@ exports[`save dashboard handler > for a new dashboard > should emit correct even
     "type": "GDC.DASH/EVT.COMMAND.STARTED",
   },
   {
+    "correlationId": undefined,
+    "type": "GDC.DASH/EVT.TAB.SWITCHED",
+  },
+  {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.SAVED",
   },

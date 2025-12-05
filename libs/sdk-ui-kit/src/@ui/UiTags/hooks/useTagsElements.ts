@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useRef, useState } from "react";
 
 import { useElementSize } from "../../hooks/useElementSize.js";
@@ -19,7 +20,7 @@ export function useTagsElements() {
     const tooltipTagsContainerRef = useRef<HTMLDivElement>(null);
     const hiddenTagsContainerRef = useRef<HTMLButtonElement>(null);
     const addButtonRef = useRef<HTMLDivElement>(null);
-    const [tooltipTagsContainer, setTooltipContainer] = useState<HTMLDivElement>(null);
+    const [tooltipTagsContainer, setTooltipContainer] = useState<HTMLDivElement | null>(null);
 
     return {
         rootRef,

@@ -9,7 +9,7 @@ import { NavigationDirection } from "../typings/navigation.js";
 /**
  * Removes the element specified from the DOM
  */
-export const removeFromDom = (element: HTMLElement): void => {
+export const removeFromDom = (element: HTMLElement | null): void => {
     if (element?.parentNode) {
         element.parentNode.removeChild(element);
     }

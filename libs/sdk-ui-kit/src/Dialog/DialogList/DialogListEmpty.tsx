@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 import cx from "classnames";
 
-export function DialogListEmpty({ message, className }: { message: ReactElement; className?: string }) {
+export function DialogListEmpty({ message, className }: { message?: ReactElement; className?: string }) {
     return (
         <div
             aria-label="dialog-list-empty"

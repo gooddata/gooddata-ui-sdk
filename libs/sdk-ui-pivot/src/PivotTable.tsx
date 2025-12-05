@@ -170,7 +170,7 @@ function RenderPivotTable(props: IPivotTableProps) {
 const WrappedPivotTable = withContexts(RenderPivotTable);
 
 /**
- * [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html)
+ * [PivotTable](https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pivot_table)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  *
  * @public

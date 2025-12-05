@@ -107,7 +107,7 @@ const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
  * two measures or for tracking the magnitude of two measures from the same chart.
  *
  * See {@link IScatterPlotProps} to learn how to configure the ScatterPlot and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html | scatter plot documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/scatter_plot | scatter plot documentation} for more information.
  *
  * @public
  */

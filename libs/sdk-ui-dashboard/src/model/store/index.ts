@@ -175,6 +175,7 @@ export {
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
+    selectOriginalFilterContextFiltersByTab,
     selectFiltersWithInvalidSelection,
     selectAttributeFilterDescendants,
     selectAttributeFilterDisplayFormByLocalId,
@@ -186,6 +187,11 @@ export {
     selectPreloadedAttributesWithReferences,
     selectDefaultFilterOverrides,
     selectNamesOfFiltersWithInvalidSelection,
+    selectFilterContextAttributeFiltersByTab,
+    selectFilterContextAttributeFilterByDisplayFormForTab,
+    selectFilterContextAttributeFilterByLocalIdForTab,
+    selectFilterContextDateFiltersWithDimensionForTab,
+    selectFilterContextDateFilterByDataSetForTab,
 } from "./tabs/filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./tabs/filterContext/filterContextUtils.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
@@ -280,6 +286,7 @@ export {
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterConfigsModeMapByTab,
 } from "./tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export { DEFAULT_TAB_ID } from "./tabs/tabsState.js";
 export type { TabsState, TabState } from "./tabs/tabsState.js";
@@ -308,6 +315,7 @@ export type {
     IChangeAttributeSelectionModePayload,
     IChangeAttributeLimitingItemsPayload,
     IApplyWorkingSelectionPayload,
+    IAddAttributeFilterDisplayFormPayload,
     FilterContextState,
     IWorkingFilterContextDefinition,
     WorkingDashboardAttributeFilter,
@@ -326,6 +334,7 @@ export {
     selectDateFilterConfigsOverridesByTab,
     selectDateFilterConfigsModeMap,
     selectEffectiveDateFiltersModeMap,
+    selectDateFilterConfigsModeMapByTab,
 } from "./tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 export {
     selectInsights,

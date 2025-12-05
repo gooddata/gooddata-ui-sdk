@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
-
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 
 import {
@@ -439,15 +437,15 @@ const resetIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
     state.filterValidationMessages.incompatibleDefaultFiltersOverride = false;
 };
 
-const setAutomationsInvalidateRef: UiReducer<PayloadAction<MutableRefObject<() => void> | undefined>> = (
+const setAutomationsInvalidateCallback: UiReducer<PayloadAction<(() => void) | undefined>> = (
     state,
     action,
 ) => {
-    state.automationsManagement.invalidateItemsRef = action.payload;
+    state.automationsManagement.invalidateItemsCallback = action.payload;
 };
 
 const invalidateAutomationItems: UiReducer = (state) => {
-    state.automationsManagement.invalidateItemsRef?.current?.();
+    state.automationsManagement.invalidateItemsCallback?.();
 };
 
 export const uiReducers = {
@@ -510,6 +508,6 @@ export const uiReducers = {
     changeIgnoreExecutionTimestamp,
     setIncompatibleDefaultFiltersOverrideMessage,
     resetIncompatibleDefaultFiltersOverrideMessage,
-    setAutomationsInvalidateRef,
+    setAutomationsInvalidateCallback,
     invalidateAutomationItems,
 };

@@ -4,7 +4,7 @@ import { IntlShape, createIntl } from "react-intl";
 
 import { DefaultLocale, ILocale, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations.js";
+import { DEFAULT_MESSAGES } from "./translations.js";
 
 /**
  * Test intl utils
@@ -13,6 +13,6 @@ import { translations } from "./translations.js";
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     return createIntl({
         locale,
-        messages: resolveLocaleDefaultMessages(locale, translations),
+        messages: resolveLocaleDefaultMessages(locale, DEFAULT_MESSAGES),
     });
 }

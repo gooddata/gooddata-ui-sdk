@@ -21,5 +21,8 @@ export const getSelectedMenuId = <T extends IUiMenuItemData = object, M = object
     context: IUiMenuContext<T, M>,
 ): string | undefined => {
     const { focusedItem, shownCustomContentItemId, items } = context;
-    return shownCustomContentItemId || getItemInteractiveParent(items, focusedItem.id)?.id;
+    return (
+        shownCustomContentItemId ||
+        (focusedItem ? getItemInteractiveParent(items, focusedItem.id)?.id : undefined)
+    );
 };

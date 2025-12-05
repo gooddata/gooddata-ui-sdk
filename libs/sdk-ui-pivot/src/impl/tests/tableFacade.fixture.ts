@@ -2,7 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
-import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES, DataViewFacade, getIntl } from "@gooddata/sdk-ui";
 
 import { ICorePivotTableProps } from "../../publicTypes.js";
 import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "../privateTypes.js";
@@ -49,7 +49,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
 function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableProps {
     return {
         execution: dv.result().transform(),
-        intl: getIntl(),
+        intl: getIntl(DEFAULT_LANGUAGE, DEFAULT_MESSAGES[DEFAULT_LANGUAGE]),
         afterRender: () => {},
         onColumnResized: () => {},
         onDrill: () => {},

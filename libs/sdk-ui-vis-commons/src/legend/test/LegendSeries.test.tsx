@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { messagesMap } from "@gooddata/sdk-ui";
+import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { LegendSeries } from "../LegendSeries.js";
 import { ISeriesItem } from "../types.js";
@@ -24,9 +24,8 @@ vi.mock("../visibilityDetection.js", () => ({
 }));
 
 describe("LegendSeries", () => {
-    // Define locale and messages
     const DefaultLocale = "en-US";
-    const messages = messagesMap[DefaultLocale];
+    const messages = DEFAULT_MESSAGES[DefaultLocale];
 
     const series: ISeriesItem[] = [
         {

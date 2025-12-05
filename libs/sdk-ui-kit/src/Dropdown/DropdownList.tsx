@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
+import { Fragment, KeyboardEvent, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -170,7 +170,7 @@ export function DropdownList<T>({
         }
 
         if (typeof footer === "function") {
-            return footer(closeDropdown);
+            return footer(closeDropdown!);
         }
 
         return footer;
@@ -178,15 +178,15 @@ export function DropdownList<T>({
 
     const onChange = useCallback(
         (search: string | number) => {
-            onSearch(search.toString());
+            onSearch?.(search.toString());
             setCurrentSearchString(search.toString());
         },
         [onSearch],
     );
 
     const onEscKeyPress = useCallback(
-        (e) => {
-            if (currentSearchString.length > 0) {
+        (e: KeyboardEvent) => {
+            if ((currentSearchString ?? "").length > 0) {
                 e.stopPropagation();
             }
         },
@@ -268,7 +268,7 @@ export function DropdownList<T>({
                                 role={listProps.accessibilityConfig?.role}
                                 aria-labelledby={listProps.accessibilityConfig?.ariaLabelledBy}
                             >
-                                <UiPagedVirtualList
+                                <UiPagedVirtualList<T>
                                     maxHeight={effectiveMaxHeight}
                                     items={items}
                                     itemHeight={effectiveItemHeight}
@@ -282,7 +282,7 @@ export function DropdownList<T>({
                                 >
                                     {(item) => {
                                         const rowIndex = items.indexOf(item);
-                                        const listWidth = isMobile ? autoSize.width : width;
+                                        const listWidth = isMobile ? autoSize.width : (width ?? 0);
                                         return listProps.renderItem({
                                             rowIndex,
                                             item,

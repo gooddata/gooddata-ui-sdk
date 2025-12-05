@@ -93,7 +93,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected constructor(props: IVisConstruct) {
         this.callbacks = props.callbacks;
         this.locale = props.locale ?? DefaultLocale;
-        this.intl = createInternalIntl(this.locale);
+        this.intl = createInternalIntl(this.locale, props.messages);
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.propertiesAffectingReferencePoint = [];

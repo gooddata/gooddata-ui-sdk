@@ -88,11 +88,11 @@ export function EmbedInsightDialogBase({
                     onTabSelect={(tab) => {
                         onTabChange(tab.id.includes("react") ? "react" : "webComponents");
                     }}
-                    selectedTabId={dialogEmbedTabLabels[embedTab].id}
+                    selectedTabId={dialogEmbedTabLabels[embedTab]?.id ?? ""}
                 />
             ) : null}
             <EmbedInsightContent
-                integrationDocLink={integrationDocLink}
+                integrationDocLink={integrationDocLink ?? ""}
                 code={code}
                 embedTypeOptions={embedTypeOptions}
                 onCopyCode={onAreaCopy}

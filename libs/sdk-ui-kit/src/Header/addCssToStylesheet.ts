@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { removeFromDom } from "../utils/domUtilities.js";
 
@@ -14,7 +14,7 @@ import { removeFromDom } from "../utils/domUtilities.js";
  */
 export function addCssToStylesheet(sheetId: string, rules: string, clear = false): HTMLStyleElement {
     const stylesNode = document.createTextNode(rules);
-    let exStyleSheet = document.getElementById(sheetId) as HTMLStyleElement;
+    let exStyleSheet = document.getElementById(sheetId) as HTMLStyleElement | null;
 
     // clear stylesheet
     if (clear && exStyleSheet) {

@@ -907,6 +907,18 @@ export interface ChangeFilterContextSelectionPayload {
      * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
     resetOthers: boolean;
+
+    /**
+     * Optional tab local identifier to apply filters to a specific tab.
+     * If not provided, filters will be applied to the currently active tab.
+     *
+     * @remarks
+     * When specified, the command will apply filters to the specified tab instead of the active tab.
+     * If the tab does not exist, the command will fail with an error.
+     *
+     * @internal
+     */
+    tabLocalIdentifier?: string;
 }
 
 /**
@@ -963,6 +975,13 @@ export interface ChangeFilterContextSelectionParams {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     resetOthers?: boolean;
     correlationId?: string;
+    /**
+     * Optional tab local identifier to apply filters to a specific tab.
+     * If not provided, filters will be applied to the currently active tab.
+     *
+     * @internal
+     */
+    tabLocalIdentifier?: string;
 }
 
 /**
@@ -985,6 +1004,7 @@ export function changeFilterContextSelectionByParams({
     attributeFilterConfigs = [],
     resetOthers = false,
     correlationId,
+    tabLocalIdentifier,
 }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -993,6 +1013,7 @@ export function changeFilterContextSelectionByParams({
             filters,
             attributeFilterConfigs,
             resetOthers,
+            tabLocalIdentifier,
         },
     };
 }

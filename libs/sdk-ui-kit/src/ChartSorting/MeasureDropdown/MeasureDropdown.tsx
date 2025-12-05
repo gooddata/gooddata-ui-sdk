@@ -61,6 +61,9 @@ const getItems = (
     if (measures) {
         measures.forEach((measure) => {
             const measureLocator = measure.locators.find(isMeasureLocator);
+            if (!measureLocator) {
+                return;
+            }
             const bucketItem = measureNames[measureLocator.measureLocatorItem.measureIdentifier];
             if (bucketItem) {
                 measureValues.push({
@@ -81,22 +84,27 @@ const getButtonValue = (
     intl: IntlShape,
     measureNames: IBucketItemDescriptors,
 ): IMeasureDropdownValue => {
-    let buttonValue: IMeasureDropdownValue;
     if (isAttributeAreaSort(currentItem)) {
-        buttonValue = {
+        return {
             id: "aggregation",
             title: intl.formatMessage({ id: "sorting.sum.of.all.measure" }),
         };
     } else if (isMeasureSort(currentItem)) {
         const measureLocator = currentItem.measureSortItem.locators.find(isMeasureLocator);
-        buttonValue = {
-            id: measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.name,
-            title: measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.name,
-            sequenceNumber: measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.sequenceNumber,
-        };
+        if (measureLocator) {
+            return {
+                id: measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.name ?? "",
+                title: measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.name ?? "",
+                sequenceNumber:
+                    measureNames[measureLocator.measureLocatorItem.measureIdentifier]?.sequenceNumber,
+            };
+        }
     }
 
-    return buttonValue;
+    return {
+        id: "",
+        title: "",
+    };
 };
 
 const getMeasureIconClassNameBySelected = (id: string): string => {
@@ -118,8 +126,8 @@ export function MeasureDropdown({
 }: MeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
-    const measures: MeasureSortSuggestion[] = availableSorts.metricSorts;
-    const areaSortEnabled = availableSorts.attributeSort.areaSortEnabled;
+    const measures: MeasureSortSuggestion[] = availableSorts.metricSorts ?? [];
+    const areaSortEnabled = availableSorts.attributeSort?.areaSortEnabled ?? false;
     const items = getItems(intl, measures, bucketItems, areaSortEnabled, availableSorts.itemId);
     const disableDropdown = items.length === 1;
     const buttonValue = getButtonValue(currentItem, intl, bucketItems);

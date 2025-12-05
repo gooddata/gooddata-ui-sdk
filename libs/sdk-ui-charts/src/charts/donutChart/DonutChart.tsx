@@ -110,7 +110,7 @@ const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
  * number of slices that will be charted.
  *
  * See {@link IDonutChartProps} to learn how to configure the DonutChart and
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html | donut chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/donut_chart | donut chart documentation} for more information.
  *
  * @public
  */

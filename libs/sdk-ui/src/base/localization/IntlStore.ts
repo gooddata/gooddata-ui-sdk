@@ -1,28 +1,25 @@
 // (C) 2007-2023 GoodData Corporation
-import { isEmpty } from "lodash-es";
 import { IntlShape, MessageDescriptor, createIntl } from "react-intl";
 
 import { DefaultLocale, ILocale } from "./Locale.js";
-import { messagesMap } from "./messagesMap.js";
+//import { resolveMessages } from "./messagesMap.js";
+//import { messagesMap } from "./messagesMap.js";
 
 const intlStore: { [key in ILocale]?: IntlShape } = {};
 
 /**
- * Gets react-intl's IntlShape set up for the provided locale.
+ * Gets react-intl's IntlShape set up for the provided locale and messages
  *
  * @param locale - one of the supported locales, if not specified returns shape for `DefaultLocale`
+ * @param messages - messages to use for the intl shape
  * @internal
  */
-export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
-    let usedLocale = locale;
-    if (isEmpty(locale)) {
-        usedLocale = DefaultLocale;
-    }
+export function getIntl(locale: ILocale = DefaultLocale, messages: Record<string, string>): IntlShape {
     return (
-        intlStore[usedLocale] ||
-        (intlStore[usedLocale] = createIntl({
-            locale: usedLocale,
-            messages: messagesMap[locale],
+        intlStore[locale] ||
+        (intlStore[locale] = createIntl({
+            locale,
+            messages: messages,
         }))
     );
 }
@@ -40,9 +37,10 @@ export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
 export function getTranslation(
     translationId: string | MessageDescriptor,
     locale: ILocale,
+    messages: Record<string, string>,
     values = {},
 ): string {
-    const intl = getIntl(locale);
+    const intl = getIntl(locale, messages);
     const desc =
         typeof translationId === "object"
             ? { ...translationId, defaultMessage: translationId.id }

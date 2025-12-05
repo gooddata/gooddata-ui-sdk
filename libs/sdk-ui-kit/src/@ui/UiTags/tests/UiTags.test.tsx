@@ -14,9 +14,9 @@ const shortTags: UiTagsProps["tags"] = [
 ];
 
 describe("UiTags", () => {
-    let onTagAdd;
-    let onTagClick;
-    let onTagRemove;
+    let onTagAdd: ReturnType<typeof vi.fn>;
+    let onTagClick: ReturnType<typeof vi.fn>;
+    let onTagRemove: ReturnType<typeof vi.fn>;
 
     const renderTag = (tags: UiTagsProps["tags"], props: Partial<UiTagsProps> = {}) => {
         const defaultAriaAttributes: IAccessibilityConfigBase = {

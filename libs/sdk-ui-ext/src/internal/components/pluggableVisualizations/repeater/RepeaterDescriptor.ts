@@ -74,7 +74,8 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/repeater_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/repeater_chart",
             supportsExport: false,
             supportsZooming: false,
         };

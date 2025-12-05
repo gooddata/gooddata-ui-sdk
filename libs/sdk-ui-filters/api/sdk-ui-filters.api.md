@@ -37,6 +37,7 @@ import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { MutableRefObject } from 'react';
@@ -227,9 +228,8 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
 // @beta (undocumented)
 export const DateFilterHelpers: {
     validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
-    getDateFilterTitle: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
     getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string) => string;
-    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, dateFormat?: string) => string;
+    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string) => string;
     granularityIntlCodes: {
         "GDC.time.year": GranularityIntlKey;
         "GDC.time.week_us": GranularityIntlKey;

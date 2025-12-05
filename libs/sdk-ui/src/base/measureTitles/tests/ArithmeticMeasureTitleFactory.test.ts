@@ -1,10 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
+import { resolveMessages } from "../../localization/messagesMap.js";
 import { ArithmeticMeasureTitleFactory } from "../ArithmeticMeasureTitleFactory.js";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../MeasureTitle.js";
 
 describe("ArithmeticMeasureTitleFactory", () => {
+    let messages: Record<string, string> = {};
+    beforeAll(async () => {
+        messages = await resolveMessages("en-US");
+    });
     describe("getTitle", () => {
         const MEASURE_TITLE_1: IMeasureTitleProps = {
             localIdentifier: "m1",
@@ -21,7 +26,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         };
 
         it("should return null when zero master measures is referenced by the arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: [],
@@ -31,7 +36,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return null when a single master measures is referenced by the arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1"],
@@ -42,7 +47,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return null when the first master measure is not found", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -53,7 +58,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return null when the second master measure is not found", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -64,7 +69,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return null when the first master measure does not have title", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -81,7 +86,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return null when the second master measure does not have title", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -98,7 +103,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for sum arithmetic measure with default master measure titles", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -109,7 +114,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for sum arithmetic measure with renamed master measure titles", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -134,7 +139,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for sum arithmetic measure with three master measures", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "sum",
                 masterMeasureLocalIdentifiers: ["m1", "m2", "m3"],
@@ -149,7 +154,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for difference arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "difference",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -160,7 +165,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for multiplication arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "multiplication",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -171,7 +176,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for ratio arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "ratio",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -182,7 +187,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should return correct title for change arithmetic measure", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "change",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
@@ -193,7 +198,7 @@ describe("ArithmeticMeasureTitleFactory", () => {
         });
 
         it("should throw error when unsupported arithmetic operator is provided", () => {
-            const titleFactory = new ArithmeticMeasureTitleFactory("en-US");
+            const titleFactory = new ArithmeticMeasureTitleFactory("en-US", messages);
             const arithmeticMeasureProps: IArithmeticMeasureTitleProps = {
                 operator: "unsupported_operator",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],

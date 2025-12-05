@@ -1,4 +1,5 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
 import { GD_COLOR_HIGHLIGHT } from "../utils/constants.js";
 
 const HEX3_REGEX = /^#([\da-f])([\da-f])([\da-f])/i;
@@ -16,7 +17,7 @@ interface IRgbaColor {
  * into dojo.Color object.
  */
 export function toColor(hexColor: string): IRgbaColor {
-    let parsed: number[];
+    let parsed: number[] = [0, 0, 0];
     const p = parseInt;
     const color = hexColor.replace(/\s*/g, ""); // Remove all spaces
     const hex3Match = HEX3_REGEX.exec(color);

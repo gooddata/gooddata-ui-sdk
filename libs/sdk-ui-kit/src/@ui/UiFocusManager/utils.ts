@@ -7,7 +7,9 @@ import { NavigationDirection } from "../../typings/navigation.js";
 /**
  * @internal
  */
-export const resolveRef = (ref: string | RefObject<HTMLElement> | (() => HTMLElement) | undefined | null) => {
+export const resolveRef = (
+    ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | undefined | null,
+) => {
     if (!ref) {
         return null;
     }

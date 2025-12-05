@@ -99,7 +99,8 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/geo_pushpin_chart",
             supportsExport: true,
             supportsZooming: false,
         };

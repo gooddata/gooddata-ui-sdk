@@ -47,7 +47,8 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/scatter_plot",
             supportsExport: true,
             supportsZooming: true,
         };

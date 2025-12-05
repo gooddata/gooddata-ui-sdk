@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useMemo } from "react";
+
+import { RefObject, useMemo } from "react";
 
 import { EditorView, ViewUpdate } from "@codemirror/view";
 
@@ -7,8 +8,8 @@ export function useChangeHandler({
     handleChange,
     handleCursor,
 }: {
-    handleChange: MutableRefObject<(value: string) => void>;
-    handleCursor: MutableRefObject<(from: number, to: number) => void>;
+    handleChange: RefObject<(value: string) => void>;
+    handleCursor: RefObject<((from: number, to: number) => void) | undefined>;
 }) {
     // Create an extension for handling changes
     const changeHandlerExtension = useMemo(() => {

@@ -28,7 +28,7 @@ export function ShareGranteeContent({
                 <Typography tagName="h3">{headline}</Typography>
                 <AddUserOrGroupButton
                     onClick={onAddGrantee}
-                    isDisabled={isLoading || (applyShareGrantOnSelect && isGranteeShareLoading)}
+                    isDisabled={isLoading || (!!applyShareGrantOnSelect && !!isGranteeShareLoading)}
                 />
             </div>
             {isLoading ? (

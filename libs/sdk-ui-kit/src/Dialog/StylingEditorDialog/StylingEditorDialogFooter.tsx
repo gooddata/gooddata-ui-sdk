@@ -53,13 +53,13 @@ export function StylingEditorDialogFooter({
                 <Button
                     className="gd-button-secondary s-dialog-cancel-button"
                     value={intl.formatMessage({ id: "cancel" })}
-                    onClick={() => onCancel()}
+                    onClick={() => onCancel?.()}
                 />
                 <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                     <Button
                         className="gd-button-action s-dialog-submit-button"
                         value={intl.formatMessage({ id: "save" })}
-                        onClick={() => onSubmit()}
+                        onClick={() => onSubmit?.()}
                         disabled={disableSubmit}
                     />
                     {errorMessage && disableSubmit ? (

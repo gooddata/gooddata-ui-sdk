@@ -166,7 +166,7 @@ function DescriptionPanelContentCore({
                 <div className="gd-description-panel-content">
                     {useRichText ? (
                         <RichText
-                            value={description}
+                            value={description ?? ""}
                             renderMode="view"
                             referencesEnabled={useReferences}
                             filters={filters}
@@ -175,7 +175,7 @@ function DescriptionPanelContentCore({
                             execConfig={execConfig}
                         />
                     ) : (
-                        <EllipsisText text={description} />
+                        <EllipsisText text={description ?? ""} />
                     )}
                 </div>
             )}

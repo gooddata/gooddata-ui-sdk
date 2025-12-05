@@ -45,7 +45,7 @@ export function AddGranteeSelect({
     const selectRef = useRef<SelectInstance<any, false>>(null);
 
     useEffect(() => {
-        selectRef.current.focus();
+        selectRef.current?.focus();
     }, []);
 
     const onSelect = useCallback(
@@ -138,17 +138,17 @@ export function AddGranteeSelect({
                 defaultMenuIsOpen
                 classNamePrefix="gd-share-dialog"
                 components={{
-                    DropdownIndicator: EmptyRenderer,
-                    IndicatorSeparator: EmptyRenderer,
-                    Input: InputRendered,
-                    Option: OptionRenderer,
-                    GroupHeading: GroupHeadingRenderer,
-                    LoadingMessage: LoadingMessageRenderer,
-                    LoadingIndicator: EmptyRenderer,
-                    MenuList: MenuListRendered,
-                    NoOptionsMessage: NoOptionsMessageRenderer,
+                    DropdownIndicator: EmptyRenderer as any,
+                    IndicatorSeparator: EmptyRenderer as any,
+                    Input: InputRendered as any,
+                    Option: OptionRenderer as any,
+                    GroupHeading: GroupHeadingRenderer as any,
+                    LoadingMessage: LoadingMessageRenderer as any,
+                    LoadingIndicator: EmptyRenderer as any,
+                    MenuList: MenuListRendered as any,
+                    NoOptionsMessage: NoOptionsMessageRenderer as any,
                 }}
-                loadOptions={loadOptions}
+                loadOptions={loadOptions as any}
                 defaultOptions
                 placeholder={intl.formatMessage({
                     id: "shareDialog.share.grantee.add.search.placeholder",

@@ -47,7 +47,7 @@ function WrappedFilterLabel({
                 return renderSelectionLabel(intl.formatMessage({ id: "gs.filterLabel.none" }));
             }
 
-            if (hasEllipsis && selectionSize > 0) {
+            if (hasEllipsis && selectionSize !== undefined && selectionSize > 0) {
                 return renderSelectionLabel(`(${selectionSize})`);
             }
         }

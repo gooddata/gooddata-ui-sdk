@@ -7,10 +7,13 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableRepeater } from "../PluggableRepeater.js";
 
 describe("PluggableRepeater", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -27,6 +30,7 @@ describe("PluggableRepeater", () => {
         visualizationProperties: {},
         renderFun: mockRenderFun,
         unmountFun: () => {},
+        messages,
     };
 
     afterEach(() => {
@@ -74,7 +78,12 @@ describe("PluggableRepeater", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithOneColumnAndOneAttribute, {}, executionFactory);
+            visualization.update(
+                { messages },
+                testMocks.insightWithOneColumnAndOneAttribute,
+                {},
+                executionFactory,
+            );
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

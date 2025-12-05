@@ -73,7 +73,7 @@ const WrappedHeadline = withContexts(RenderHeadline);
  * You can add one item to each section. If you add two items, the headline also displays the change in percent.
  *
  * See {@link IHeadlineProps} to learn how to configure the Headline and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html | headline documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/headline | headline documentation} for more information.
  *
  * @public
  */

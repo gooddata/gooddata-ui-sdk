@@ -5,7 +5,7 @@ import {
     ComponentType,
     KeyboardEvent,
     ReactNode,
-    RefObject,
+    Ref,
     useCallback,
     useEffect,
     useImperativeHandle,
@@ -85,7 +85,7 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 
 function UiPagedVirtualListNotWrapped<T>(
     props: UiPagedVirtualListProps<T>,
-    ref: RefObject<IUiPagedVirtualListImperativeHandle<T>>,
+    ref: Ref<IUiPagedVirtualListImperativeHandle<T>>,
 ) {
     const {
         SkeletonItem = UiSkeleton,
@@ -125,7 +125,7 @@ function UiPagedVirtualListNotWrapped<T>(
 
     // when tabindex is -1 this keyboard navigation and focusIndex is not used at all
     const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
-        items,
+        items ?? [],
         onKeyDownSelect,
         onKeyDownConfirm,
         closeDropdown,
@@ -144,7 +144,7 @@ function UiPagedVirtualListNotWrapped<T>(
         >
             <div
                 ref={scrollContainerRef}
-                className={e("scroll-container", { hover: scrollbarHoverEffect })}
+                className={e("scroll-container", { hover: scrollbarHoverEffect ?? false })}
                 style={{ height, paddingTop: itemsGap + containerPadding }}
             >
                 <ListElement

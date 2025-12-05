@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { BubbleTrigger, IBubbleTriggerProps } from "./BubbleTrigger.js";
 
 export const SHOW_DELAY = 425;
@@ -26,7 +27,7 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
         enabled: true,
     };
 
-    scheduleId: number;
+    scheduleId: number = 0;
 
     public override componentWillUnmount(): void {
         this.cancelBubbleVisibilityChange();

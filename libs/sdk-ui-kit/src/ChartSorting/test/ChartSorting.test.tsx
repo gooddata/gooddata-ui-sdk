@@ -1,10 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { messagesMap } from "@gooddata/sdk-ui";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
     multipleAttributesSortConfig,
@@ -42,8 +41,6 @@ const bucketItems: IBucketItemDescriptors = {
 
 const DefaultLocale = "en-US";
 
-const messages = messagesMap[DefaultLocale];
-
 const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {
         ...singleNormalAttributeSortConfig,
@@ -53,9 +50,9 @@ const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     };
 
     return render(
-        <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+        <IntlWrapper key={DefaultLocale} locale={DefaultLocale}>
             <ChartSortingWithIntl {...defaultProps} {...props} />
-        </IntlProvider>,
+        </IntlWrapper>,
     );
 };
 
@@ -156,7 +153,7 @@ describe("ChartSorting", () => {
 
         it("should allow to change metric dropdown", () => {
             fireEvent.click(screen.getByText("Snapshot (M1)"));
-            fireEvent.click(screen.getByText("Timeline").closest("button"));
+            fireEvent.click(screen.getByText("Timeline").closest("button")!);
             expect(screen.getByText("Timeline (M2)")).toBeInTheDocument();
         });
     });
@@ -176,7 +173,7 @@ describe("ChartSorting", () => {
             const onApply = vi.fn();
             renderComponent({ onApply });
 
-            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button")!);
             expect(screen.getByText(/Apply/i).closest("button")).toHaveClass("disabled");
             expect(onApply).not.toHaveBeenCalled();
         });
@@ -187,7 +184,7 @@ describe("ChartSorting", () => {
 
             fireEvent.click(screen.getByText("Z to A"));
             fireEvent.click(screen.getByText("A to Z"));
-            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button")!);
 
             expect(screen.getByText(/Apply/i).closest("button")).not.toHaveClass("disabled");
             expect(onApply).toHaveBeenCalled();
@@ -202,7 +199,7 @@ describe("ChartSorting", () => {
 
             fireEvent.click(screen.getByText("Z to A"));
             fireEvent.click(screen.getByText("A to Z"));
-            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button")!);
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -223,7 +220,7 @@ describe("ChartSorting", () => {
 
             fireEvent.click(screen.getByText("Smallest to largest"));
             fireEvent.click(screen.getByText("Largest to smallest"));
-            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button")!);
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -243,13 +240,13 @@ describe("ChartSorting", () => {
                 ...multipleAttributesSortConfig,
             });
 
-            const secondAttribute = screen.getByText("Smallest to largest").closest("button");
+            const secondAttribute = screen.getByText("Smallest to largest").closest("button")!;
             fireEvent.click(secondAttribute);
 
             const secondSort = screen.queryAllByText("Largest to smallest")[1];
             fireEvent.click(secondSort);
 
-            fireEvent.click(screen.getByText(/Apply/i).closest("button"));
+            fireEvent.click(screen.getByText(/Apply/i).closest("button")!);
             await waitFor(() => {
                 expect(onApply).toHaveBeenCalledWith([
                     {

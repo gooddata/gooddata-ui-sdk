@@ -38,7 +38,7 @@ const defaultProps: IShareDialogBaseProps = {
     sharedObject: {
         ref: idRef("sharedObject"),
         shareStatus: "shared",
-        owner: undefined,
+        owner: undefined as any,
         isLeniencyControlSupported: false,
         isLocked: false,
         isUnderLenientControl: false,
@@ -83,7 +83,7 @@ describe("useShareDialogBase", () => {
             };
 
             expect(result.current.isShareDialogDirty).toEqual(false);
-            act(() => result.current.onGranularGranteeShareChange(updatedGrantee));
+            act(() => result.current.onGranularGranteeShareChange!(updatedGrantee));
             expect(result.current.isShareDialogDirty).toEqual(true);
             act(() => result.current.onSubmitShareGrantee());
 
@@ -160,7 +160,7 @@ describe("useShareDialogBase", () => {
             expect(result.current.isShareDialogDirty).toEqual(false);
             expect(result.current.isAddDialogDirty).toEqual(false);
 
-            act(() => result.current.onGranularGranteeShareChange(updatedGrantee));
+            act(() => result.current.onGranularGranteeShareChange!(updatedGrantee));
             expect(result.current.granteesToAdd).toEqual([]);
             expect(result.current.isShareDialogDirty).toEqual(true);
             expect(result.current.isAddDialogDirty).toEqual(false);

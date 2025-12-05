@@ -230,7 +230,7 @@ export { getTranslation, getIntl } from "./localization/IntlStore.js";
 export type { IIntlWrapperProps } from "./localization/IntlWrapper.js";
 export { IntlWrapper } from "./localization/IntlWrapper.js";
 export type { ITranslations } from "./localization/messagesMap.js";
-export { messagesMap } from "./localization/messagesMap.js";
+export { resolveMessages, DEFAULT_MESSAGES, DEFAULT_LANGUAGE } from "./localization/messagesMap.js";
 export type {
     ITranslationsComponentProps,
     ITranslationsProviderOwnProps,
@@ -247,6 +247,7 @@ export {
     totalColumnTitleFromIntl,
     clusterTitleFromIntl,
     resolveLocaleDefaultMessages,
+    useResolveMessages,
 } from "./localization/intlUtils.js";
 
 /*
@@ -285,7 +286,7 @@ export {
 
 export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasureTitleFactory.js";
 export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory.js";
-export { fillMissingTitles } from "./measureTitles/fillMissingTitles.js";
+export { fillMissingTitles, fillMissingTitlesWithMessages } from "./measureTitles/fillMissingTitles.js";
 export { ignoreTitlesForSimpleMeasures } from "./measureTitles/ignoreTitlesForSimpleMeasures.js";
 export type { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle.js";
 

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { mapValues, merge } from "lodash-es";
 
 import { elementRegion } from "./domUtilities.js";
@@ -90,25 +91,25 @@ function getAlignPointRatios(alignPointAlign: string) {
 
 function getRegionOffset(region: IRegion, ratio: IOffset, direction: number = 1) {
     return {
-        x: region.width * ratio.x * direction,
-        y: region.height * ratio.y * direction,
+        x: region.width * (ratio.x ?? 0) * direction,
+        y: region.height * (ratio.y ?? 0) * direction,
     };
 }
 
-function getAlignPointOffset(alignPointOffset: IOffset) {
+function getAlignPointOffset(alignPointOffset: IOffset | undefined) {
     return merge({}, DEFAULT_OFFSET_VALUES, alignPointOffset);
 }
 
 function addOffset(position: IOffset, offset: IOffset) {
     return {
-        x: position.x + offset.x,
-        y: position.y + offset.y,
+        x: (position.x ?? 0) + (offset.x ?? 0),
+        y: (position.y ?? 0) + (offset.y ?? 0),
     };
 }
 function subtractOffset(position: IOffset, offset: IOffset) {
     return {
-        x: position.x - offset.x,
-        y: position.y - offset.y,
+        x: (position.x ?? 0) - (offset.x ?? 0),
+        y: (position.y ?? 0) - (offset.y ?? 0),
     };
 }
 
@@ -265,7 +266,7 @@ export function getOptimalAlignment({
     getDocumentRegion = getDefaultDocumentRegion,
 }: GetOptimalAlignment): IOptimalAlignment {
     let optimalAlign = getOptimalAlignmentForRegion({
-        boundaryRegion: getViewportRegion(ignoreScrollOffsets),
+        boundaryRegion: getViewportRegion(ignoreScrollOffsets ?? false),
         targetRegion,
         selfRegion,
         alignPoints,

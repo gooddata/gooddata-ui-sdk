@@ -54,11 +54,11 @@ describe("Styling editor dialog", () => {
         renderEditor();
         const examples = screen.getAllByLabelText("Styling example action");
 
-        fireEvent.click(examples.at(0));
+        fireEvent.click(examples.at(0)!);
         expect(screen.getByDisplayValue("Theme green")).toBeInTheDocument();
         expect(screen.getByDisplayValue(/palette/).innerHTML).toContain(referenceTheme("green"));
 
-        fireEvent.click(examples.at(1));
+        fireEvent.click(examples.at(1)!);
         expect(screen.getByDisplayValue("Theme blue")).toBeInTheDocument();
         expect(screen.getByDisplayValue(/palette/).innerHTML).toContain(referenceTheme("blue"));
     });
@@ -131,7 +131,7 @@ describe("Styling editor dialog", () => {
         const saveButton = screen.getByText("Save").closest("button");
 
         expect(saveButton).toHaveClass("disabled");
-        fireEvent.click(screen.getAllByLabelText("Styling example action").at(0));
+        fireEvent.click(screen.getAllByLabelText("Styling example action").at(0)!);
         expect(saveButton).not.toHaveClass("disabled");
     });
 

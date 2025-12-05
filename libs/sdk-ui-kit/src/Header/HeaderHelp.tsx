@@ -68,7 +68,9 @@ export function CoreHeaderHelp({
                 onClick={() => {
                     menuItemClicked(item);
                 }}
-                className={cx("gd-list-item gd-list-help-menu-item", { [item.className]: !!item.className })}
+                className={cx("gd-list-item gd-list-help-menu-item", {
+                    [item.className as string]: !!item.className,
+                })}
             >
                 {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                 {item.icon ? item.icon : null}
@@ -89,7 +91,7 @@ export function CoreHeaderHelp({
 
     const menuItemClicked = (...args: any[]) => {
         toggleHelpMenu(false);
-        onMenuItemClick(...args);
+        onMenuItemClick?.(...args);
     };
 
     /**

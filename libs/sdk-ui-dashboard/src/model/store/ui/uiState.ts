@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
-
 import { Identifier, ObjRef, Uri } from "@gooddata/sdk-model";
 
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
@@ -55,7 +53,7 @@ export interface UiState {
         context?: IAlertDialogContext;
     };
     automationsManagement: {
-        invalidateItemsRef?: MutableRefObject<() => void>;
+        invalidateItemsCallback?: () => void;
     };
     saveAsDialog: {
         open: boolean;
@@ -143,7 +141,7 @@ export const uiInitialState: UiState = {
         returnFocusTo: undefined,
     },
     automationsManagement: {
-        invalidateItemsRef: undefined,
+        invalidateItemsCallback: undefined,
     },
     saveAsDialog: {
         open: false,

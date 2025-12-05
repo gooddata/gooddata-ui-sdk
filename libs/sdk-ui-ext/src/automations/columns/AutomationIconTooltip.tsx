@@ -44,15 +44,17 @@ function AutomationIconTooltipCore({
     );
 }
 
-export function AutomationIconTooltip({ header, content, sections, children }: IAutomationIconTooltipProps) {
+export function AutomationIconTooltip({
+    header,
+    content,
+    sections,
+    children,
+    align,
+}: IAutomationIconTooltipProps) {
     return (
         <BubbleHoverTrigger hideDelay={300} eventsOnBubble>
             {children}
-            <Bubble
-                className="bubble-light"
-                alignPoints={[{ align: "bc tc" }]}
-                arrowStyle={{ display: "none" }}
-            >
+            <Bubble className="bubble-light" alignPoints={[{ align }]} arrowStyle={{ display: "none" }}>
                 <AutomationIconTooltipCore header={header} content={content} sections={sections} />
             </Bubble>
         </BubbleHoverTrigger>

@@ -16,6 +16,7 @@ export type LeveledSearchTreeViewProps = {
     maxHeight?: number;
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
     onFocus?: (nodeId?: string) => void;
+    tabIndex?: number;
 };
 
 /**
@@ -23,7 +24,7 @@ export type LeveledSearchTreeViewProps = {
  * @internal
  */
 export function LeveledSearchTreeView(props: LeveledSearchTreeViewProps) {
-    const { id, items, maxHeight = 500, onSelect, onFocus } = props;
+    const { id, items, maxHeight = 500, onSelect, onFocus, tabIndex = -1 } = props;
     const intl = useIntl();
 
     return (
@@ -32,7 +33,7 @@ export function LeveledSearchTreeView(props: LeveledSearchTreeViewProps) {
             maxHeight={maxHeight}
             ariaAttributes={{
                 id,
-                tabIndex: -1,
+                tabIndex,
                 "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
             }}
             expandedMode="default-collapsed"

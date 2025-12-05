@@ -73,7 +73,8 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/bullet_chart",
             supportsExport: true,
             supportsZooming: true,
         };

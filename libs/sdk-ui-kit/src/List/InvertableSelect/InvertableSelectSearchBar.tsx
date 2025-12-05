@@ -32,7 +32,7 @@ export function InvertableSelectSearchBar({
         <Input
             className={cx(["gd-invertable-select-search-input gd-flex-item-mobile", className])}
             value={searchString}
-            onChange={onSearch}
+            onChange={onSearch as any}
             placeholder={searchPlaceholder ?? intl.formatMessage({ id: "gs.list.search.placeholder" })}
             autofocus
             clearOnEsc

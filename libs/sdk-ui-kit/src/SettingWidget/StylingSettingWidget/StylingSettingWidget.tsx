@@ -82,11 +82,11 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
     const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
 
-    const initiallySelectedItemRef = selectedItemRef || null;
-    const [currentItemRef, setCurrentItemRef] = useState<ObjRef>(initiallySelectedItemRef);
+    const initiallySelectedItemRef = selectedItemRef ?? null;
+    const [currentItemRef, setCurrentItemRef] = useState<ObjRef | null>(initiallySelectedItemRef);
 
     useEffect(() => {
-        setCurrentItemRef(selectedItemRef);
+        setCurrentItemRef(selectedItemRef ?? null);
     }, [selectedItemRef]);
 
     useEffect(() => {
@@ -97,8 +97,10 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
     }, [currentItemRef, customItems, customItems.length, initiallySelectedItemRef]);
 
     const onItemClick = useCallback(
-        (ref: ObjRef) => {
-            onItemSelect(ref);
+        (ref: ObjRef | null) => {
+            if (ref) {
+                onItemSelect(ref);
+            }
             setCurrentItemRef(ref);
         },
         [onItemSelect],
@@ -110,12 +112,14 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
     );
 
     const handleCancel = useCallback(() => {
-        setCurrentItemRef(selectedItemRef);
+        setCurrentItemRef(selectedItemRef ?? null);
         onCancel?.();
     }, [onCancel, selectedItemRef]);
 
     const handleApply = useCallback(() => {
-        onApply?.(currentItemRef);
+        if (currentItemRef) {
+            onApply?.(currentItemRef);
+        }
     }, [onApply, currentItemRef]);
 
     return (

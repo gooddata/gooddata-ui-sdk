@@ -156,7 +156,7 @@ import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui
 import { ITableDataAttributeScope } from '@gooddata/sdk-ui';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { ITranslations } from '@gooddata/sdk-ui';
+import type { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -188,7 +188,6 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
-import { RefObject } from 'react';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
@@ -672,7 +671,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @internal
-export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
+export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, tabLocalIdentifier, }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
 
 // @public
 export interface ChangeFilterContextSelectionParams {
@@ -684,6 +683,8 @@ export interface ChangeFilterContextSelectionParams {
     filters: (IDashboardFilter | FilterContextItem)[];
     // (undocumented)
     resetOthers?: boolean;
+    // @internal
+    tabLocalIdentifier?: string;
 }
 
 // @public
@@ -691,6 +692,8 @@ export interface ChangeFilterContextSelectionPayload {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     filters: (IDashboardFilter | FilterContextItem)[];
     resetOthers: boolean;
+    // @internal
+    tabLocalIdentifier?: string;
 }
 
 // @alpha
@@ -2123,6 +2126,8 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
 export interface DashboardFilterContextChangedPayload {
     readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     readonly filterContext: IFilterContextDefinition;
+    // @internal
+    readonly tabLocalIdentifier?: string;
 }
 
 // @alpha
@@ -3485,6 +3490,9 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 // @alpha
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
+// @internal (undocumented)
+export const DEFAULT_MESSAGES: Record<string, ITranslations>;
+
 // @internal
 export const DEFAULT_TAB_ID = "defaultTabId";
 
@@ -4489,6 +4497,13 @@ export interface IAddAttributeFilterButtonProps {
 }
 
 // @internal (undocumented)
+export interface IAddAttributeFilterDisplayFormPayload {
+    // (undocumented)
+    readonly displayForm: IAttributeDisplayFormMetadataObject;
+    readonly tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
 export interface IAddAttributeFilterPayload {
     // (undocumented)
     readonly displayForm: ObjRef;
@@ -4657,6 +4672,7 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly isResultOfMigration?: boolean;
     // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
@@ -4687,6 +4703,7 @@ export interface IChangeAttributeTitlePayload {
 export interface IClearAttributeFiltersSelectionPayload {
     // (undocumented)
     readonly filterLocalIds: string[];
+    readonly tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
@@ -7045,6 +7062,7 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly negativeSelection: boolean;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
@@ -7055,6 +7073,7 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
+    readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly type: "allTime";
 }
@@ -7073,6 +7092,7 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
+    readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly to?: DateString | number;
     // (undocumented)
@@ -8638,6 +8658,9 @@ export type ResolvedEntitlements = IEntitlementDescriptor[];
 // @alpha
 export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnalyticalBackend, workspace?: string): Promise<IResolvedFilterValues>;
 
+// @internal
+export const resolveMessages: (locale: string) => Promise<any>;
+
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
 
@@ -8942,6 +8965,9 @@ export const selectAttributeFilterConfigsDisplayAsLabelMap: DashboardSelector<Ma
 
 // @alpha
 export const selectAttributeFilterConfigsModeMap: DashboardSelector<Map<string, DashboardAttributeFilterConfigMode>>;
+
+// @internal
+export const selectAttributeFilterConfigsModeMapByTab: DashboardSelector<Record<string, Map<string, DashboardAttributeFilterConfigMode>>>;
 
 // @alpha
 export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboardAttributeFilterConfig[]>;
@@ -9249,6 +9275,9 @@ export const selectDateFilterConfigOverridesByTab: DashboardSelector<Record<stri
 // @alpha
 export const selectDateFilterConfigsModeMap: DashboardSelector<Map<string, DashboardDateFilterConfigMode>>;
 
+// @internal
+export const selectDateFilterConfigsModeMapByTab: DashboardSelector<Record<string, Map<string, DashboardDateFilterConfigMode>>>;
+
 // @alpha
 export const selectDateFilterConfigsOverrides: DashboardSelector<IDashboardDateFilterConfigItem[]>;
 
@@ -9525,11 +9554,20 @@ export const selectFilterBarExpanded: DashboardSelector<boolean>;
 // @public
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => (state: DashboardState) => IDashboardAttributeFilter | undefined;
 
+// @internal
+export const selectFilterContextAttributeFilterByDisplayFormForTab: (displayForm: ObjRef, tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter | undefined>;
+
 // @public
 export const selectFilterContextAttributeFilterByLocalId: (localId: string) => DashboardSelector<IDashboardAttributeFilter | undefined>;
 
+// @internal
+export const selectFilterContextAttributeFilterByLocalIdForTab: (localId: string, tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter | undefined>;
+
 // @public
 export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]>;
+
+// @internal
+export const selectFilterContextAttributeFiltersByTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @public
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined>;
@@ -9537,8 +9575,14 @@ export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilt
 // @public
 export const selectFilterContextDateFilterByDataSet: (dataSet: ObjRef) => (state: DashboardState) => IDashboardDateFilter | undefined;
 
+// @internal
+export const selectFilterContextDateFilterByDataSetForTab: (dataSet: ObjRef, tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter | undefined>;
+
 // @public
 export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]>;
+
+// @internal
+export const selectFilterContextDateFiltersWithDimensionForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter[]>;
 
 // @public
 export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefinition>;
@@ -9993,6 +10037,89 @@ export const selectOriginalFilterContextDefinition: DashboardSelector<IFilterCon
 export const selectOriginalFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 
 // @internal
+export const selectOriginalFilterContextFiltersByTab: ((state: DashboardState) => Record<string, FilterContextItem[]>) & {
+    clearCache: () => void;
+    resultsCount: () => number;
+    resetResultsCount: () => void;
+} & {
+    resultFunc: (resultFuncArgs_0: Record<string, IFilterContextDefinition | undefined>) => Record<string, FilterContextItem[]>;
+    memoizedResultFunc: ((resultFuncArgs_0: Record<string, IFilterContextDefinition | undefined>) => Record<string, FilterContextItem[]>) & {
+        clearCache: () => void;
+        resultsCount: () => number;
+        resetResultsCount: () => void;
+    };
+    lastResult: () => Record<string, FilterContextItem[]>;
+    dependencies: [((state: DashboardState) => Record<string, IFilterContextDefinition | undefined>) & {
+        clearCache: () => void;
+        resultsCount: () => number;
+        resetResultsCount: () => void;
+    } & {
+        resultFunc: (resultFuncArgs_0: Record<string, FilterContextState>) => Record<string, IFilterContextDefinition | undefined>;
+        memoizedResultFunc: ((resultFuncArgs_0: Record<string, FilterContextState>) => Record<string, IFilterContextDefinition | undefined>) & {
+            clearCache: () => void;
+            resultsCount: () => number;
+            resetResultsCount: () => void;
+        };
+        lastResult: () => Record<string, IFilterContextDefinition | undefined>;
+        dependencies: [((state: DashboardState) => Record<string, FilterContextState>) & {
+            clearCache: () => void;
+            resultsCount: () => number;
+            resetResultsCount: () => void;
+        } & {
+            resultFunc: (resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>;
+            memoizedResultFunc: ((resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>) & {
+                clearCache: () => void;
+                resultsCount: () => number;
+                resetResultsCount: () => void;
+            };
+            lastResult: () => Record<string, FilterContextState>;
+            dependencies: [((state: DashboardState) => TabState[]) & {
+                clearCache: () => void;
+                resultsCount: () => number;
+                resetResultsCount: () => void;
+            } & {
+                resultFunc: (resultFuncArgs_0: TabState[] | undefined) => TabState[];
+                memoizedResultFunc: ((resultFuncArgs_0: TabState[] | undefined) => TabState[]) & {
+                    clearCache: () => void;
+                    resultsCount: () => number;
+                    resetResultsCount: () => void;
+                };
+                lastResult: () => TabState[];
+                dependencies: [DashboardSelector<TabState[] | undefined>];
+                recomputations: () => number;
+                resetRecomputations: () => void;
+                dependencyRecomputations: () => number;
+                resetDependencyRecomputations: () => void;
+            } & {
+                argsMemoize: weakMapMemoize;
+                memoize: weakMapMemoize;
+            }];
+            recomputations: () => number;
+            resetRecomputations: () => void;
+            dependencyRecomputations: () => number;
+            resetDependencyRecomputations: () => void;
+        } & {
+            argsMemoize: weakMapMemoize;
+            memoize: weakMapMemoize;
+        }];
+        recomputations: () => number;
+        resetRecomputations: () => void;
+        dependencyRecomputations: () => number;
+        resetDependencyRecomputations: () => void;
+    } & {
+        argsMemoize: weakMapMemoize;
+        memoize: weakMapMemoize;
+    }];
+    recomputations: () => number;
+    resetRecomputations: () => void;
+    dependencyRecomputations: () => number;
+    resetDependencyRecomputations: () => void;
+} & {
+    argsMemoize: weakMapMemoize;
+    memoize: weakMapMemoize;
+};
+
+// @internal
 export const selectOtherContextAttributeFilters: (ref?: ObjRef) => DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @internal
@@ -10013,7 +10140,7 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
 // @internal
 export const selectPreloadedAttributesWithReferences: DashboardSelector<IAttributeWithReferences[] | undefined>;
 
-// @alpha
+// @alpha @deprecated
 export const selectRawExportOverridesForInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IRawExportCustomOverrides | undefined>;
 
 // @internal (undocumented)
@@ -10337,6 +10464,8 @@ export function setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier:
 export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
     displayAsLabel: ObjRef | undefined;
     localIdentifier: string;
+    // @internal
+    tabLocalIdentifier?: string;
 }
 
 // @alpha
@@ -10934,7 +11063,7 @@ payload: ObjRef;
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
 readonly addAttributeFilterDisplayForm: (state: WritableDraft<TabsState>, action: {
-payload: IAttributeDisplayFormMetadataObject;
+payload: IAttributeDisplayFormMetadataObject | IAddAttributeFilterDisplayFormPayload;
 type: string;
 }) => void | TabsState | WritableDraft<TabsState>;
 readonly addAttributeFilter: (state: WritableDraft<TabsState>, action: {
@@ -11196,13 +11325,6 @@ export function TopBar(props: ITopBarProps): ReactElement;
 // @public (undocumented)
 export type TopBarComponentProvider = (props: ITopBarProps) => CustomTopBarComponent;
 
-// @internal (undocumented)
-export const translations: {
-    [locale: string]: ITranslations;
-} & {
-    [locale: string]: Record<string, string>;
-};
-
 // @beta
 export interface TriggerEvent extends IDashboardCommand {
     // (undocumented)
@@ -11298,7 +11420,7 @@ export const uiActions: {
     changeIgnoreExecutionTimestamp: ActionCreatorWithPayload<boolean, "uiSlice/changeIgnoreExecutionTimestamp">;
     setIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/setIncompatibleDefaultFiltersOverrideMessage">;
     resetIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/resetIncompatibleDefaultFiltersOverrideMessage">;
-    setAutomationsInvalidateRef: ActionCreatorWithOptionalPayload<MutableRefObject<() => void> | undefined, "uiSlice/setAutomationsInvalidateRef">;
+    setAutomationsInvalidateCallback: ActionCreatorWithOptionalPayload<(() => void) | undefined, "uiSlice/setAutomationsInvalidateCallback">;
     invalidateAutomationItems: ActionCreatorWithoutPayload<"uiSlice/invalidateAutomationItems">;
 };
 
@@ -11321,7 +11443,7 @@ export interface UiState {
     automationsInvalidateRef?: () => void;
     // (undocumented)
     automationsManagement: {
-        invalidateItemsRef?: MutableRefObject<() => void>;
+        invalidateItemsCallback?: () => void;
     };
     // (undocumented)
     cancelEditModeDialog: {
@@ -11503,7 +11625,9 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
 
 // @alpha
-export const useAutomationsInvalidateRef: () => RefObject<() => void>;
+export const useAutomationsInvalidateRef: () => {
+    onInvalidateCallbackChange: (callback: (() => void) | undefined) => void;
+};
 
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;

@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { Parent, Point } from "unist";
 
 import { REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
@@ -16,7 +17,7 @@ export function remarkReferences() {
                         const end: Point = {
                             line: start.line,
                             column: start.column + part.length,
-                            offset: start.offset + part.length,
+                            offset: (start.offset ?? 0) + part.length,
                         };
 
                         nodes.push({
@@ -46,7 +47,7 @@ function iterateTree(node: Parent, callbacks: { onText: (text: TextNode) => Pare
 
     // has children
     if (node.children) {
-        node.children = node.children.reduce((acc, child) => {
+        node.children = node.children.reduce<Parent[]>((acc, child) => {
             return [...acc, ...iterateTree(child as Parent, callbacks)];
         }, []);
         return [node];

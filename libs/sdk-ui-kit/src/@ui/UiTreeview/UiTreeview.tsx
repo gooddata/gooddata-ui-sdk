@@ -14,7 +14,6 @@ import {
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
-import { b } from "./treeviewBem.js";
 import {
     IUiLeveledTreeViewProps,
     IUiStaticTreeViewProps,
@@ -60,7 +59,7 @@ export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>) {
  * @internal
  */
 export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>) {
-    return <UiTreeview<Levels, unknown> {...props} />;
+    return <UiTreeview<Levels, unknown> {...(props as any)} />;
 }
 
 function UiTreeview<Levels extends unknown[], Level>({
@@ -95,8 +94,9 @@ function UiTreeview<Levels extends unknown[], Level>({
     const treeViewId = ariaAttributes.id;
     const itemsRef = useRef<UiRefsTree>({});
 
+    const stateHook = useState<Record<string, UiStateTreeItem>>({});
     const getState = itemsState(
-        useState<Record<string, UiStateTreeItem>>({}),
+        stateHook,
         {
             expanded: expandedMode === "default-expanded",
         },
@@ -149,6 +149,7 @@ function UiTreeview<Levels extends unknown[], Level>({
             }
 
             function doSelect() {
+                if (!item) return;
                 if (event.nativeEvent instanceof KeyboardEvent) {
                     onSelect?.(
                         item.item,
@@ -190,8 +191,8 @@ function UiTreeview<Levels extends unknown[], Level>({
                         return;
                     }
                     // Toggle group is leaf-only selection mode
-                    const [state, { toggle }] = getState(path);
-                    toggle(!state.expanded);
+                    const [leafState, { toggle: leafToggle }] = getState(path);
+                    leafToggle(!leafState?.expanded);
                     break;
                 }
             }
@@ -205,10 +206,10 @@ function UiTreeview<Levels extends unknown[], Level>({
 
     const contextRef = useAutoupdateRef<IUiTreeviewContext<Levels, Level>>({
         itemsRef,
-        items,
+        items: items as any,
         onClose,
         selectedItemId,
-        onSelect: onSelectHandle,
+        onSelect: onSelectHandle as any,
         isItemFocusable,
         setFocusedPath,
     });
@@ -238,26 +239,26 @@ function UiTreeview<Levels extends unknown[], Level>({
                         });
                     },
                     onEnterLevel: () => {
-                        const [state, { toggle }] = getState(focusedPath);
-                        if (!focusedItem.children?.length) {
+                        const [enterState, { toggle: enterToggle }] = getState(focusedPath);
+                        if (!focusedItem?.children?.length) {
                             return;
                         }
-                        if (state.expanded) {
+                        if (enterState?.expanded) {
                             setFocusedPath((prevPath) => {
                                 return getNextPathIndex(items, getState, prevPath, isItemFocusable);
                             });
                         } else {
-                            toggle(true);
+                            enterToggle(true);
                         }
                     },
                     onLeaveLevel: () => {
-                        const [state, { toggle }] = getState(focusedPath);
-                        if (!focusedItem.children?.length || !state.expanded) {
+                        const [leaveState, { toggle: leaveToggle }] = getState(focusedPath);
+                        if (!focusedItem?.children?.length || !leaveState?.expanded) {
                             setFocusedPath((prevPath) => {
                                 return getParentPathIndex(items, getState, prevPath, isItemFocusable);
                             });
                         } else {
-                            toggle(false);
+                            leaveToggle(false);
                         }
                     },
                     onSelect: (e) => {
@@ -267,7 +268,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                     },
                     onClose,
                     onUnhandledKeyDown: (event) => {
-                        onUnhandledKeyDown(event, contextRef.current);
+                        onUnhandledKeyDown(event, contextRef.current as any);
                     },
                 },
                 {
@@ -294,27 +295,31 @@ function UiTreeview<Levels extends unknown[], Level>({
     useUiTreeViewEventSubscriber("keydown", handleKeyDown);
 
     return (
-        <div className={b()} style={{ width, maxWidth, maxHeight }} data-testid={dataTestId}>
-            <UiTreeviewRoot handleKeyDown={handleKeyDown} ariaAttributes={ariaAttributes} path={focusedPath}>
-                {items.map((item, index) => (
-                    <UITreeviewItem
-                        ItemComponent={ItemComponent}
-                        itemsRef={itemsRef}
-                        onSelect={onSelectHandle}
-                        onHover={onHoverHandle}
-                        getState={getState}
-                        focusedItem={focusedItem}
-                        selectedItemId={selectedItemId}
-                        itemDataTestId={itemDataTestId}
-                        isCompact={isCompact}
-                        isDisabledFocusable={isDisabledFocusable}
-                        item={item}
-                        key={index}
-                        treeViewId={treeViewId}
-                        path={[index]}
-                    />
-                ))}
-            </UiTreeviewRoot>
-        </div>
+        <UiTreeviewRoot
+            handleKeyDown={handleKeyDown}
+            ariaAttributes={ariaAttributes}
+            path={focusedPath}
+            style={{ width, maxWidth, maxHeight }}
+            dataTestId={dataTestId}
+        >
+            {items.map((item, index) => (
+                <UITreeviewItem
+                    ItemComponent={ItemComponent}
+                    itemsRef={itemsRef}
+                    onSelect={onSelectHandle}
+                    onHover={onHoverHandle}
+                    getState={getState}
+                    focusedItem={focusedItem}
+                    selectedItemId={selectedItemId}
+                    itemDataTestId={itemDataTestId}
+                    isCompact={isCompact}
+                    isDisabledFocusable={isDisabledFocusable}
+                    item={item}
+                    key={index}
+                    treeViewId={treeViewId}
+                    path={[index]}
+                />
+            ))}
+        </UiTreeviewRoot>
     );
 }

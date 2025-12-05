@@ -100,13 +100,20 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
         const hasIconBefore = !!iconBefore;
         const hasIconAfter = !!iconAfter;
 
-        const testId = dataTestId || getGeneratedTestId(label, accessibilityConfig?.ariaLabel);
+        const testId = dataTestId || getGeneratedTestId(label, accessibilityConfig?.ariaLabel ?? "");
 
         return (
             <button
                 id={id}
                 ref={ref}
-                className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter, isSelected })}
+                className={b({
+                    size,
+                    variant,
+                    isLoading: isLoading ?? false,
+                    hasIconBefore,
+                    hasIconAfter,
+                    isSelected: isSelected ?? false,
+                })}
                 disabled={isDisabled}
                 tabIndex={tabIndex}
                 onClick={onClick}

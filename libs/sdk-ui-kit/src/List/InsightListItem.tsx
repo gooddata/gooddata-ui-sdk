@@ -163,7 +163,7 @@ function InsightListItemCore({
 
     const visualizationListItemClassname = useMemo(
         () =>
-            cx("gd-visualizations-list-item", `s-${stringUtils.simplifyText(title)}`, {
+            cx("gd-visualizations-list-item", `s-${stringUtils.simplifyText(title ?? "")}`, {
                 "is-selected": isSelected,
             }),
         [title, isSelected],
@@ -197,7 +197,9 @@ function InsightListItemCore({
                         tooltipAlignPoints={tooltipAlignPoints}
                         displayTooltip={!showDescriptionPanel}
                     >
-                        {isLoading ? intl.formatMessage({ id: "gs.visualizationsList.loading" }) : title}
+                        {isLoading
+                            ? intl.formatMessage({ id: "gs.visualizationsList.loading" })
+                            : (title ?? "")}
                     </ShortenedText>
                 </div>
                 <div className="gd-visualizations-list-item-content-date">

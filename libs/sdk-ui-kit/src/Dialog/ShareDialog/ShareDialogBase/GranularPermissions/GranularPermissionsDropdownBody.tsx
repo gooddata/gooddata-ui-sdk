@@ -217,7 +217,7 @@ export function GranularPermissionsDropdownBody({
                                     permission={permissionItem}
                                     selectedPermission={selectedPermission}
                                     toggleDropdown={toggleDropdown}
-                                    onChange={handleOnChange}
+                                    onChange={handleOnChange as (grantee: GranteeItem) => void}
                                     handleSetSelectedPermission={handleSetSelectedPermission}
                                     bubbleTextId={permissionItem.tooltip}
                                     showBubble={!permissionItem.enabled}
@@ -232,7 +232,7 @@ export function GranularPermissionsDropdownBody({
                     <RemoveItem
                         disabled={!granteePossibilities.remove.enabled}
                         onClick={handleOnDelete}
-                        tooltipId={granteePossibilities.remove.tooltip}
+                        tooltipId={granteePossibilities.remove.tooltip ?? ""}
                     />
                 </ItemsWrapper>
             </div>

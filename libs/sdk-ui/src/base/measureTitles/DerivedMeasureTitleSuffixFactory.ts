@@ -14,13 +14,15 @@ import { ILocale } from "../localization/Locale.js";
  */
 export class DerivedMeasureTitleSuffixFactory {
     private readonly locale: ILocale;
+    private readonly messages: Record<string, string>;
 
     /**
      * Create a new instance of the class.
      * @param locale - The locale used for translation.
      */
-    constructor(locale: ILocale) {
+    constructor(locale: ILocale, messages: Record<string, string>) {
         this.locale = locale;
+        this.messages = messages;
     }
 
     /**
@@ -50,6 +52,6 @@ export class DerivedMeasureTitleSuffixFactory {
     }
 
     private translateKey(localizationKey: MessageDescriptor): string {
-        return getTranslation(localizationKey, this.locale);
+        return getTranslation(localizationKey, this.locale, this.messages);
     }
 }

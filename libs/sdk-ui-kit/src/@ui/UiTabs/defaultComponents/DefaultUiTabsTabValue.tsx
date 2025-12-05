@@ -17,7 +17,7 @@ export function DefaultUiTabsTabValue<
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { maxLabelLength } = store.useContextStoreValues(["maxLabelLength"]);
 
-    const isOverflowing = tab.label.length > maxLabelLength;
+    const isOverflowing = maxLabelLength !== undefined && tab.label.length > maxLabelLength;
 
     return (
         <ShortenedText
@@ -26,7 +26,9 @@ export function DefaultUiTabsTabValue<
             tagName={"div"}
             tooltipAlignPoints={[{ align: "cl cr" }]}
         >
-            {isOverflowing ? tab.label.substring(0, maxLabelLength) + "…" : tab.label}
+            {isOverflowing && maxLabelLength !== undefined
+                ? tab.label.substring(0, maxLabelLength) + "…"
+                : tab.label}
         </ShortenedText>
     );
 }

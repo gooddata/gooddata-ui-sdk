@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { differenceWith, partition } from "lodash-es";
 import { IntlShape } from "react-intl";
 
@@ -116,7 +117,7 @@ export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string =
     } else {
         exhaustiveCheck(grantee);
     }
-    return undefined;
+    return "";
 };
 
 /**
@@ -197,7 +198,7 @@ export const getAppliedGrantees = (
  */
 export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): string => {
     const prefixValue = prefix ? `${prefix}-` : "";
-    const id = objRefToString(grantee.id).split("/").pop();
+    const id = objRefToString(grantee.id).split("/").pop() ?? "";
     return `s-gd-grantee-item-id-${prefixValue}${stringUtils.simplifyText(id)}`;
 };
 
@@ -205,7 +206,7 @@ export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): s
  * @internal
  */
 export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
-    const id = objRefToString(grantee.id).split("/").pop();
+    const id = objRefToString(grantee.id).split("/").pop() ?? "";
     return `gd-granular-grantee-item-id-${stringUtils.simplifyText(id)}`;
 };
 

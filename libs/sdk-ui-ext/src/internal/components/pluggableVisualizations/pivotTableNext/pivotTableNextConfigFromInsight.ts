@@ -12,7 +12,10 @@ import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next
 
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { PropWithMeta } from "../../../utils/embeddingCodeGenerator/index.js";
-import { getTextWrappingFromProperties } from "../../../utils/propertiesHelper.js";
+import {
+    getPaginationFromProperties,
+    getTextWrappingFromProperties,
+} from "../../../utils/propertiesHelper.js";
 import { createPivotTableNextConfig } from "../pivotTableNext/PluggablePivotTableNext.js";
 
 const AG_GRID_TOKEN_PLACEHOLDER: PivotTableNextConfig = {
@@ -40,6 +43,8 @@ export function pivotTableNextConfigFromInsight(
     const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
     const grandTotalsPosition = insightProperties(insight)?.["controls"]?.grandTotalsPosition;
     const grandTotalsPositionProp = isEmpty(grandTotalsPosition) ? {} : { grandTotalsPosition };
+    const pagination = getPaginationFromProperties(insightProperties(insight));
+    const paginationProp = isEmpty(pagination) ? {} : { pagination };
     const columnSizing: IColumnSizing = {
         columnWidths: insightProperties(insight)?.["controls"]?.columnWidths,
         defaultWidth: "autoresizeAll",
@@ -53,6 +58,7 @@ export function pivotTableNextConfigFromInsight(
         ...metricsPositionProp,
         ...columnHeadersPositionProp,
         ...grandTotalsPositionProp,
+        ...paginationProp,
         columnSizing,
         textWrapping,
         ...AG_GRID_TOKEN_PLACEHOLDER,

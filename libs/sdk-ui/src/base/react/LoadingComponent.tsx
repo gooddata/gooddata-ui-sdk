@@ -23,7 +23,7 @@ const baseAnimationDuration = 1.4;
  * Component that renders a default loading indicator.
  *
  * @remarks
- * See {@link https://sdk.gooddata.com/gooddata-ui/docs/loading_component.html | LoadingComponent }
+ * See {@link https://www.gooddata.com/docs/gooddata-ui/latest/learn/add_interactivity/loading_component | LoadingComponent }
  *
  * @public
  */

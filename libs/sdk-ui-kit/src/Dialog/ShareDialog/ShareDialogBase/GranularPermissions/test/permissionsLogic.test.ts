@@ -68,7 +68,7 @@ describe("permissions logic", () => {
             permissions: ["EDIT"],
             inheritedPermissions: [],
             type: "granularUser",
-        } as IGranularGrantee;
+        } as unknown as IGranularGrantee;
 
         const granteeDirectEditIndirectEdit = {
             permissions: ["EDIT"],
@@ -80,7 +80,7 @@ describe("permissions logic", () => {
             permissions: ["SHARE"],
             inheritedPermissions: [],
             type: "granularUser",
-        } as IGranularGrantee;
+        } as unknown as IGranularGrantee;
 
         const granteeDirectViewIndirectShare = {
             permissions: ["VIEW"],
@@ -91,13 +91,13 @@ describe("permissions logic", () => {
             permissions: [],
             inheritedPermissions: ["VIEW"],
             type: "granularUser",
-        } as IGranularGrantee;
+        } as unknown as IGranularGrantee;
 
         const granteeIndirectShare = {
             permissions: [],
             inheritedPermissions: ["SHARE"],
             type: "granularUser",
-        } as IGranularGrantee;
+        } as unknown as IGranularGrantee;
 
         function getMockGrantee(baseGrantee: Partial<IGranularGrantee>, type: string): IGranularGrantee {
             return {

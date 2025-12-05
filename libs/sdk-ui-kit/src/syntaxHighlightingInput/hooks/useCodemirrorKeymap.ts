@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useMemo } from "react";
+
+import { RefObject, useMemo } from "react";
 
 import { startCompletion } from "@codemirror/autocomplete";
 import { defaultKeymap, historyKeymap } from "@codemirror/commands";
@@ -8,7 +9,7 @@ import { EditorView, keymap } from "@codemirror/view";
 export function useCodemirrorKeymap({
     handleKeyDown,
 }: {
-    handleKeyDown: MutableRefObject<(event: KeyboardEvent, view: EditorView) => boolean>;
+    handleKeyDown: RefObject<((event: KeyboardEvent, view: EditorView) => boolean) | undefined>;
 }) {
     // Keymap extension
     const keymapExtension = useMemo(() => {

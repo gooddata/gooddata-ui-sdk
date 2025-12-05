@@ -98,7 +98,8 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_next.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/geo_pushpin_chart_next",
             supportsExport: true,
             supportsZooming: false,
         };

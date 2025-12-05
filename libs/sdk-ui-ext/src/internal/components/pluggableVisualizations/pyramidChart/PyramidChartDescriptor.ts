@@ -46,6 +46,8 @@ export class PyramidChartDescriptor extends BaseChartDescriptor implements IVisu
 
     public getMeta(): IVisualizationMeta {
         return {
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pyramid_chart",
             supportsExport: true,
             supportsZooming: false,
         };

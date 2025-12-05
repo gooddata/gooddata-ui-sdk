@@ -35,7 +35,9 @@ export function ScrollableItem({
     useEffect(() => {
         if (scrollIntoView) {
             const element = item.current;
-            scroll.scrollIntoView(element, bottomMargin, isElementInvisibleCheck);
+            if (element) {
+                scroll.scrollIntoView(element, bottomMargin, isElementInvisibleCheck);
+            }
             if (onItemScrolled) {
                 onItemScrolled();
             }

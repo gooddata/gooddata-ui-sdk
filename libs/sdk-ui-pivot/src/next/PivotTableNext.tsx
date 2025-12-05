@@ -62,6 +62,7 @@ export function PivotTableNext(props: IPivotTableNextProps) {
 }
 
 /**
+ * This component needs to be wrapped with intl
  * @internal
  */
 export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {

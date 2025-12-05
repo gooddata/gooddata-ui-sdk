@@ -4,7 +4,7 @@ import { ReactNode, useCallback, useEffect, useRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
-    toggler: HTMLDivElement;
+    toggler?: HTMLDivElement;
     useCapture?: boolean;
     children?: ReactNode;
 }

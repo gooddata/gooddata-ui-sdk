@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, MouseEvent, ReactNode, RefObject } from "react";
+import { CSSProperties, HTMLAttributes, MouseEvent, ReactNode, RefObject } from "react";
 
 import classnames from "classnames";
 
@@ -48,7 +48,7 @@ export function ItemsWrapper({
 /**
  * @internal
  */
-export function Separator(props) {
+export function Separator(props: HTMLAttributes<HTMLDivElement>) {
     return <div className="gd-list-item gd-list-item-separator" {...props} />;
 }
 

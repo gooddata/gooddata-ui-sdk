@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, RefObject } from "react";
 
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -158,7 +158,7 @@ export function RepeatTypeSelect({
                     }}
                     dropdownId={dropdownId}
                     isOpen={isOpen}
-                    buttonRef={buttonRef}
+                    buttonRef={buttonRef as RefObject<HTMLElement>}
                 />
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => {

@@ -1,30 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 
-import { LRUCache } from "lru-cache";
 import { IntlConfig, IntlProvider, IntlShape, createIntl } from "react-intl";
 
-import { DefaultLocale, ILocale, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
+import { DefaultLocale, ILocale, resolveLocale, useResolveMessages } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations.js";
+import { DEFAULT_MESSAGES, resolveMessages } from "./translations.js";
 
-const INTL_CACHE_SIZE = 20;
-const INTL_CACHE_KEY = "messages";
-const intlCache = new LRUCache<string, IntlConfig>({ max: INTL_CACHE_SIZE });
-
-export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
-    const cachedIntlConfig = intlCache.get(INTL_CACHE_KEY);
-    if (cachedIntlConfig?.locale === locale) {
-        return createIntl(cachedIntlConfig);
-    }
-    const strings = resolveLocaleDefaultMessages(locale, translations);
-
-    intlCache.set(INTL_CACHE_KEY, {
+export function createInternalIntl(
+    locale: ILocale = DefaultLocale,
+    messages: Record<string, string>,
+): IntlShape {
+    // Create intl with empty messages - translations should be loaded via InternalIntlWrapper
+    const config: IntlConfig = {
         locale,
-        messages: strings,
-    });
-    return createIntl(intlCache.get(INTL_CACHE_KEY));
+        messages,
+    };
+    return createIntl(config);
 }
 
 interface IInternalIntlWrapperProps {
@@ -33,10 +26,13 @@ interface IInternalIntlWrapperProps {
 }
 
 export function InternalIntlWrapper({ locale = DefaultLocale, children }: IInternalIntlWrapperProps) {
-    const messages = useMemo(() => resolveLocaleDefaultMessages(locale, translations), [locale]);
+    const messages = useResolveMessages(resolveLocale(locale), resolveMessages, DEFAULT_MESSAGES);
 
+    if (!messages[locale]) {
+        return null;
+    }
     return (
-        <IntlProvider locale={locale} messages={messages}>
+        <IntlProvider locale={locale} messages={messages[locale]}>
             {children}
         </IntlProvider>
     );

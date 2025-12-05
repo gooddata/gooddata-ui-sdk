@@ -2,6 +2,7 @@
 
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
 
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
@@ -16,9 +17,15 @@ import {
     selectIsCrossFiltering,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
+    selectAttributeFilterConfigsOverrides,
+    selectAttributeFilterConfigsOverridesByTab,
+} from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEffectiveDateFilterOptions } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectFilterContextDefinition } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextDefinition,
+    selectFilterContextDefinitionsByTab,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -26,16 +33,40 @@ import { DashboardContext } from "../../types/commonTypes.js";
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
+    tabLocalIdentifier?: string,
 ): SagaIterator<void> {
-    const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
-        selectFilterContextDefinition,
-    );
-    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
-        selectAttributeFilterConfigsOverrides,
-    );
+    let filterContext: ReturnType<typeof selectFilterContextDefinition>;
+    let attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>;
+
+    if (tabLocalIdentifier) {
+        // Read from specific tab
+        const filterContextsByTab: ReturnType<typeof selectFilterContextDefinitionsByTab> = yield select(
+            selectFilterContextDefinitionsByTab,
+        );
+        const attributeFilterConfigsByTab: ReturnType<typeof selectAttributeFilterConfigsOverridesByTab> =
+            yield select(selectAttributeFilterConfigsOverridesByTab);
+
+        invariant(
+            filterContextsByTab[tabLocalIdentifier],
+            `Filter context not found for tab ${tabLocalIdentifier}`,
+        );
+
+        filterContext = filterContextsByTab[tabLocalIdentifier]!;
+        attributeFilterConfigs = attributeFilterConfigsByTab[tabLocalIdentifier] ?? [];
+    } else {
+        // Read from active tab (default behavior)
+        filterContext = yield select(selectFilterContextDefinition);
+        attributeFilterConfigs = yield select(selectAttributeFilterConfigsOverrides);
+    }
 
     yield dispatchDashboardEvent(
-        filterContextChanged(ctx, filterContext, attributeFilterConfigs, cmd.correlationId),
+        filterContextChanged(
+            ctx,
+            filterContext,
+            attributeFilterConfigs,
+            cmd.correlationId,
+            tabLocalIdentifier,
+        ),
     );
 }
 

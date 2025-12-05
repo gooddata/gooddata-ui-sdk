@@ -17,7 +17,7 @@ import {
     isRelativeDateFilterPreset,
     isUpperBound,
 } from "@gooddata/sdk-model";
-import { ILocale, getIntl } from "@gooddata/sdk-ui";
+import { ILocale, ITranslations, getIntl } from "@gooddata/sdk-ui";
 
 import { IDateAndMessageTranslator, IMessageTranslator } from "./Translators.js";
 import { messages } from "../../../locales.js";
@@ -236,7 +236,7 @@ const getRelativePresetFilterRepresentation = (
 ): string =>
     formatRelativeDateRange(filter.from, filter.to, filter.granularity, translator, filter.boundedFilter);
 
-const getDateFilterRepresentationByFilterType = (
+export const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
@@ -263,21 +263,7 @@ const getDateFilterRepresentationByFilterType = (
 // | { filter: IAbsoluteFilterForm } |
 // ...
 /**
- * Gets the filter title favoring custom name if specified.
- * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
- */
-export const getDateFilterTitle = (
-    filter: DateFilterOption,
-    locale: ILocale,
-    dateFormat: string = DEFAULT_DATE_FORMAT,
-): string => {
-    const translator = getIntl(locale);
-
-    return getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
-};
-
-/**
- * Gets the filter title favoring custom name if specified. This function is only for mock purpose.
+ * Gets the filter title using provided intl object.
  * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
 export const getDateFilterTitleUsingTranslator = (
@@ -313,9 +299,10 @@ const getDateFilterRepresentationUsingTranslator = (
 export const getDateFilterRepresentation = (
     filter: DateFilterOption,
     locale: ILocale,
+    messages: ITranslations,
     dateFormat: string = DEFAULT_DATE_FORMAT,
 ): string => {
-    const translator = getIntl(locale);
+    const translator = getIntl(locale, messages);
 
     return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
 };

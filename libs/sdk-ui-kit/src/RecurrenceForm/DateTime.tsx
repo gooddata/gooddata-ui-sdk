@@ -60,7 +60,7 @@ export function DateTime({
 
     const validate = useCallback(
         (selectedDate: string) => {
-            const parsedDate = parseDate(selectedDate, dateFormat);
+            const parsedDate = parseDate(selectedDate, dateFormat ?? "");
 
             if (selectedDate.length === 0) {
                 setInvalidDatapoints(() => [
@@ -79,7 +79,7 @@ export function DateTime({
 
     const handleDateChange = useCallback(
         (selectedDate: Date | null) => {
-            const newDate = normalizeTime(date, selectedDate, TIME_ANCHOR);
+            const newDate = normalizeTime(date ?? undefined, selectedDate ?? undefined, TIME_ANCHOR);
             onDateChange(newDate, !!selectedDate);
         },
         [date, onDateChange],
@@ -103,7 +103,7 @@ export function DateTime({
 
     const handleTimeChange = useCallback(
         (selectedTime: Date | null) => {
-            const newDate = normalizeTime(selectedTime, date, TIME_ANCHOR);
+            const newDate = normalizeTime(selectedTime ?? undefined, date ?? undefined, TIME_ANCHOR);
             onDateChange(newDate, !!selectedTime);
         },
         [date, onDateChange],
@@ -126,14 +126,14 @@ export function DateTime({
                     <div className="gd-recurrence-form-date">
                         <Datepicker
                             className={datePickerClassNames}
-                            date={date}
+                            date={date ?? undefined}
                             dateFormat={dateFormat}
                             locale={locale}
                             placeholder={dateFormat}
                             onChange={handleDateChange}
                             onValidateInput={handleDateValidate}
                             onBlur={handleDateBlur}
-                            weekStart={weekStart}
+                            weekStart={weekStart ?? undefined}
                             accessibilityConfig={{
                                 ariaDescribedBy: isValid
                                     ? dateFormatId

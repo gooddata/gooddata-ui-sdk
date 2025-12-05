@@ -54,8 +54,8 @@ export function FormattedPreview({
     const { formattedValue, colors: formattedColors } = getFormattedNumber(previewNumber, format, separators);
 
     if (colors) {
-        style.color = formattedColors.color;
-        style.backgroundColor = formattedColors.backgroundColor;
+        style.color = formattedColors.color ?? "";
+        style.backgroundColor = formattedColors.backgroundColor ?? "";
     }
 
     return <Label value={formattedValue} className={customClassName} style={style} />;

@@ -34,7 +34,7 @@ import { filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
 import { AddDateFilterPayload } from "../../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
-import { TabsState, getActiveTab } from "../tabsState.js";
+import { TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<TabsState, A>;
 
@@ -154,33 +154,50 @@ const removeAttributeFilterDisplayForms: FilterContextReducer<PayloadAction<ObjR
         });
 };
 
+/**
+ * @internal
+ */
+export interface IAddAttributeFilterDisplayFormPayload {
+    readonly displayForm: IAttributeDisplayFormMetadataObject;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
+}
+
 const addAttributeFilterDisplayForm: FilterContextReducer<
-    PayloadAction<IAttributeDisplayFormMetadataObject>
+    PayloadAction<IAttributeDisplayFormMetadataObject | IAddAttributeFilterDisplayFormPayload>
 > = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    // Handle both old and new payload formats for backward compatibility
+    const displayForm = "displayForm" in action.payload ? action.payload.displayForm : action.payload;
+    const tabLocalIdentifier =
+        "tabLocalIdentifier" in action.payload ? action.payload.tabLocalIdentifier : undefined;
+
+    const targetTab = getTabOrActive(state, tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
     }
 
     invariant(
-        activeTab.filterContext.attributeFilterDisplayForms,
+        targetTab.filterContext.attributeFilterDisplayForms,
         "attempting to work with uninitialized state",
     );
 
     // if there is already a display form with the same ref, replace it
-    const existing = activeTab.filterContext.attributeFilterDisplayForms.find((df) =>
-        areObjRefsEqual(df, action.payload.ref),
+    const existing = targetTab.filterContext.attributeFilterDisplayForms.find((df) =>
+        areObjRefsEqual(df, displayForm.ref),
     );
     if (existing) {
-        activeTab.filterContext.attributeFilterDisplayForms =
-            activeTab.filterContext.attributeFilterDisplayForms.filter(
-                (df) => !areObjRefsEqual(df, action.payload),
+        targetTab.filterContext.attributeFilterDisplayForms =
+            targetTab.filterContext.attributeFilterDisplayForms.filter(
+                (df) => !areObjRefsEqual(df, displayForm),
             );
     }
-    activeTab.filterContext.attributeFilterDisplayForms.push(action.payload);
+    targetTab.filterContext.attributeFilterDisplayForms.push(displayForm);
 };
 
 //
@@ -207,6 +224,11 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly dataSet?: ObjRef;
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 /**
@@ -221,6 +243,11 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 /**
@@ -229,17 +256,17 @@ export interface IUpsertDateFilterNonAllTimePayload {
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
     }
 
     const filterContextDefinition = action.payload.isWorkingSelectionChange
-        ? activeTab.filterContext.workingFilterContextDefinition
-        : activeTab.filterContext.filterContextDefinition;
+        ? targetTab.filterContext.workingFilterContextDefinition
+        : targetTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const dateDataSet = action.payload.dataSet;
@@ -338,17 +365,22 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     readonly isResultOfMigration?: boolean;
     readonly isSelectionInvalid?: boolean;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
     }
 
     const {
@@ -361,8 +393,8 @@ const updateAttributeFilterSelection: FilterContextReducer<
         isSelectionInvalid,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
-        ? activeTab.filterContext.workingFilterContextDefinition
-        : activeTab.filterContext.filterContextDefinition;
+        ? targetTab.filterContext.workingFilterContextDefinition
+        : targetTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const existingFilterIndex = filterContextDefinition.filters.findIndex(
@@ -400,7 +432,7 @@ const updateAttributeFilterSelection: FilterContextReducer<
 
     // update original filters to not show "reset filters" button, that will revert filter to the wrong state
     if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
-        const originalFilter = activeTab.filterContext.originalFilterContextDefinition?.filters.find(
+        const originalFilter = targetTab.filterContext.originalFilterContextDefinition?.filters.find(
             (item: FilterContextItem) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
@@ -416,13 +448,13 @@ const updateAttributeFilterSelection: FilterContextReducer<
     // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
     if (isSelectionInvalid) {
         // Add filterLocalId to the array if not already present
-        if (!activeTab.filterContext.filtersWithInvalidSelection.includes(filterLocalId)) {
-            activeTab.filterContext.filtersWithInvalidSelection.push(filterLocalId);
+        if (!targetTab.filterContext.filtersWithInvalidSelection.includes(filterLocalId)) {
+            targetTab.filterContext.filtersWithInvalidSelection.push(filterLocalId);
         }
     } else {
         // Remove filterLocalId from the array if present
-        activeTab.filterContext.filtersWithInvalidSelection =
-            activeTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
+        targetTab.filterContext.filtersWithInvalidSelection =
+            targetTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
     }
 };
 
@@ -693,34 +725,39 @@ const setAttributeFilterDependentDateFilters: FilterContextReducer<
  */
 export interface IClearAttributeFiltersSelectionPayload {
     readonly filterLocalIds: string[];
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 const clearAttributeFiltersSelection: FilterContextReducer<
     PayloadAction<IClearAttributeFiltersSelectionPayload>
 > = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
     }
 
     const { filterLocalIds } = action.payload;
 
     filterLocalIds.forEach((filterLocalId) => {
         invariant(
-            activeTab.filterContext?.filterContextDefinition,
+            targetTab.filterContext?.filterContextDefinition,
             "Attempt to edit uninitialized filter context",
         );
-        const currentFilterIndex = activeTab.filterContext!.filterContextDefinition.filters.findIndex(
+        const currentFilterIndex = targetTab.filterContext!.filterContextDefinition.filters.findIndex(
             (item) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
 
         invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
 
-        const currentFilter = activeTab.filterContext!.filterContextDefinition.filters[
+        const currentFilter = targetTab.filterContext!.filterContextDefinition.filters[
             currentFilterIndex
         ] as IDashboardAttributeFilter;
 
@@ -743,6 +780,11 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly isWorkingSelectionChange?: boolean;
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     readonly isResultOfMigration?: boolean;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 /**
@@ -752,12 +794,12 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     state,
     action,
 ) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.filterContext) {
-        activeTab.filterContext = { ...filterContextInitialState };
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
     }
 
     const {
@@ -768,8 +810,8 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
         isResultOfMigration,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
-        ? activeTab.filterContext.workingFilterContextDefinition
-        : activeTab.filterContext.filterContextDefinition;
+        ? targetTab.filterContext.workingFilterContextDefinition
+        : targetTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const currentFilterIndex = filterContextDefinition.filters.findIndex(
@@ -798,7 +840,7 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 
     // update original filters to not show "reset filters" button, that will revert filter to wrong state
     if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
-        const originalFilter = activeTab.filterContext.originalFilterContextDefinition?.filters.find(
+        const originalFilter = targetTab.filterContext.originalFilterContextDefinition?.filters.find(
             (item: FilterContextItem) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );

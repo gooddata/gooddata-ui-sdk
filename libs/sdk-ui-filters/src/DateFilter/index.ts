@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { defaultDateFilterOptions } from "./constants/config.js";
 import { granularityIntlCodes } from "./constants/i18n.js";
 import {
@@ -16,7 +17,6 @@ import {
     formatAbsoluteDateRange,
     formatRelativeDateRange,
     getDateFilterRepresentation,
-    getDateFilterTitle,
     getDateFilterTitleUsingTranslator,
 } from "./utils/Translations/DateFilterTitle.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
@@ -31,7 +31,6 @@ export type {
  */
 const DateFilterHelpers = {
     validateFilterOption,
-    getDateFilterTitle,
     getDateFilterTitleUsingTranslator,
     getDateFilterRepresentation,
     granularityIntlCodes,

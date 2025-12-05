@@ -22,7 +22,7 @@ export function useAsyncTableResponsiveColumns<T>(
     const { flexibleWidth, staticWidth } = columns.reduce(
         (acc, column) => {
             if (column.renderMenu) {
-                acc.staticWidth += getColumnWidth(true, isLargeRow);
+                acc.staticWidth += getColumnWidth(true, isLargeRow) ?? 0;
             } else {
                 acc.flexibleWidth += column.width ?? 0;
             }

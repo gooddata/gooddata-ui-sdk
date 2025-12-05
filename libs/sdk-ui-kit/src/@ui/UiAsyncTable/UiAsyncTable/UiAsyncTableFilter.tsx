@@ -143,18 +143,18 @@ function useAsyncTableFilterState({
 }: UiAsyncTableFilterProps) {
     const intl = useIntl();
     const [checkedItems, setCheckedItems] = useState<Map<string, UiAsyncTableFilterOption>>(
-        getFilterOptionsMap(selected),
+        getFilterOptionsMap(selected ?? []),
     );
     const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
 
     useEffect(() => {
-        setCheckedItems(getFilterOptionsMap(selected));
+        setCheckedItems(getFilterOptionsMap(selected ?? []));
     }, [selected]);
 
     const filteredOptions = useMemo(() => {
         const searchLowerCased = debouncedSearchValue.toLowerCase();
         const filteredOptions = options.filter((option) =>
-            option.label.toLowerCase().includes(searchLowerCased),
+            (option.label ?? "").toLowerCase().includes(searchLowerCased),
         );
         if (isMultiSelect && filteredOptions.length > 0) {
             return [
@@ -260,7 +260,7 @@ function useAsyncTableFilterState({
 
     const onCancelFactory = useCallback(
         (closeDropdown: () => void) => () => {
-            setCheckedItems(getFilterOptionsMap(selected));
+            setCheckedItems(getFilterOptionsMap(selected ?? []));
             closeDropdown();
         },
         [selected],

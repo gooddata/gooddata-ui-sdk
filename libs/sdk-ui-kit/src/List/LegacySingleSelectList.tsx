@@ -52,7 +52,7 @@ export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>
         onRangeChange = () => {},
         onScrollStart = () => {},
         onSelect = () => {},
-        rowItem = null as ReactElement,
+        rowItem = null as unknown as ReactElement,
         scrollToSelected = false,
         selection = {},
     } = props;

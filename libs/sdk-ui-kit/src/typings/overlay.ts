@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { IRegion } from "./domUtilities.js";
 import { IAlignPoint } from "./positioning.js";
 
@@ -44,7 +45,7 @@ export type GetOptimalAlignmentForRegion = {
 export type Alignment = {
     left: number;
     top: number;
-    right: number;
+    right?: number;
     width?: number;
     height?: number;
     align: string;

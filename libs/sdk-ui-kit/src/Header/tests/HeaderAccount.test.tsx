@@ -33,7 +33,7 @@ describe("HeaderAccount", () => {
     it("should open menu on click", async () => {
         const clickSpy = vi.fn();
         render(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
-        await userEvent.click(document.querySelector(".gd-header-account"));
+        await userEvent.click(document.querySelector(".gd-header-account")!);
         await userEvent.click(screen.getByText("Account"));
 
         await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));

@@ -12,15 +12,18 @@ import {
     insightRef,
     isObjRef,
 } from "@gooddata/sdk-model";
+import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { SaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
+import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
+    selectInsightByRef,
     selectInsightByWidgetRef,
-    selectRawExportOverridesForInsightByRef,
+    selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -67,8 +70,15 @@ export function* saveScheduledEmailHandler(
         selectInsightByWidgetRef(ref),
     );
 
-    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsightByRef>> = insight
-        ? yield select(selectRawExportOverridesForInsightByRef(insightRef(insight)))
+    const locale = yield select(selectLocale);
+    const messages = yield call(resolveMessages, locale);
+    const lookupInsight = insight ? yield select(selectInsightByRef(insightRef(insight))) : undefined;
+    const filledInsight = lookupInsight
+        ? yield call(fillMissingTitles, lookupInsight, locale, messages)
+        : undefined;
+
+    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = filledInsight
+        ? yield select(selectRawExportOverridesForInsight(filledInsight))
         : undefined;
 
     if (csvRawRequest && widgetId) {

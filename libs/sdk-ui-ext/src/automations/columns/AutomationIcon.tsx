@@ -49,6 +49,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         return (
             <AutomationIconTooltip
                 header={failedHeaderText}
+                align="bc tc"
                 sections={[
                     {
                         header: intl.formatMessage(messages.automationIconTooltipStatus),
@@ -72,6 +73,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         return (
             <AutomationIconTooltip
                 header={formatCellValue(automation.title)}
+                align="cr cl"
                 sections={[
                     ...(automation.created
                         ? [

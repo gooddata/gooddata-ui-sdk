@@ -9,7 +9,7 @@ A **pivot table** expands capabilities of a regular (flat) table by allowing you
 
 **PivotTableNext** is the new implementation of the pivot table component, built on AG Grid Enterprise. It offers improved performance, better accessibility, and enhanced features compared to the original PivotTable component.
 
-> **Note**: The legacy `PivotTable` component will be replaced in a the next major release by `PivotTableNext`.
+> **Note**: In the next major release, `PivotTableNext` will be renamed to `PivotTable`, and the legacy `PivotTable` component will be removed.
 
 ## Key Features
 

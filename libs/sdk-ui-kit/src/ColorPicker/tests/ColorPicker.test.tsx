@@ -51,7 +51,7 @@ describe("ColorPicker", () => {
     it("Should select color from picker and change and set proper values", () => {
         renderComponent();
 
-        fireEvent.click(document.querySelector(".s-color-120"));
+        fireEvent.click(document.querySelector(".s-color-120")!);
 
         expect(screen.getByLabelText("current-color")).toHaveStyle(defaultStyle);
         expect(screen.getByLabelText("new-color")).toHaveStyle({ backgroundColor: "hsl(0, 50%, 70%)" });
@@ -73,7 +73,7 @@ describe("ColorPicker", () => {
             g: 140,
             b: 140,
         };
-        fireEvent.click(document.querySelector(".s-color-120"));
+        fireEvent.click(document.querySelector(".s-color-120")!);
         fireEvent.click(screen.getByRole("button", { name: "ok" }));
         fireEvent.click(screen.getByRole("button", { name: "cancel" }));
 

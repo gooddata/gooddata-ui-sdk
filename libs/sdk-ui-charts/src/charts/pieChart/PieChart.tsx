@@ -101,7 +101,7 @@ const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
  * Pie charts can be segmented by either multiple measures or an attribute.
  *
  * See {@link IPieChartProps} to learn how to configure the PieChart and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html | pie chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pie_chart | pie chart documentation} for more information.
  *
  * @public
  */

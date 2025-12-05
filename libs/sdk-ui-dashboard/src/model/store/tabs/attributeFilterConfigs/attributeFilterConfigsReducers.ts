@@ -7,7 +7,7 @@ import {
     SetDashboardAttributeFilterConfigModePayload,
 } from "../../../../model/commands/dashboard.js";
 import { TabsReducer } from "../tabsReducers.js";
-import { TabsState, getActiveTab } from "../tabsState.js";
+import { TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 type AttributeFilterConfigReducer<A extends Action> = CaseReducer<TabsState, A>;
 
@@ -49,27 +49,27 @@ const changeAttributeFilterConfigMode: AttributeFilterConfigReducer<
 const changeDisplayAsLabel: AttributeFilterConfigReducer<
     PayloadAction<SetDashboardAttributeFilterConfigDisplayAsLabelPayload>
 > = (state, action) => {
-    const { localIdentifier, displayAsLabel } = action.payload;
+    const { localIdentifier, displayAsLabel, tabLocalIdentifier } = action.payload;
 
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const targetTab = getTabOrActive(state, tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.attributeFilterConfigs) {
-        activeTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
+    if (!targetTab.attributeFilterConfigs) {
+        targetTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
     }
-    const existingConfig = activeTab.attributeFilterConfigs.attributeFilterConfigs?.find(
+    const existingConfig = targetTab.attributeFilterConfigs.attributeFilterConfigs?.find(
         (item) => item.localIdentifier === localIdentifier,
     );
 
     if (existingConfig) {
         existingConfig.displayAsLabel = displayAsLabel;
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
+        targetTab.attributeFilterConfigs.attributeFilterConfigs = [
+            ...(targetTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
         ];
     } else {
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs || []),
+        targetTab.attributeFilterConfigs.attributeFilterConfigs = [
+            ...(targetTab.attributeFilterConfigs.attributeFilterConfigs || []),
             action.payload,
         ];
     }

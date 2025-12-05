@@ -3,9 +3,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { parse } from "date-fns";
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { createIntlMock } from "@gooddata/sdk-ui";
+import { ITranslations, createIntlMock, resolveMessages } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
 import { DatePickerProps, WrappedDatePicker } from "../Datepicker.js";
@@ -13,6 +13,10 @@ import { DatePickerProps, WrappedDatePicker } from "../Datepicker.js";
 const defaultDateFormat = "MM/dd/yyyy";
 
 describe("DatePicker", () => {
+    let zhHansMessages: ITranslations;
+    beforeAll(async () => {
+        zhHansMessages = await resolveMessages("zh-Hans");
+    });
     const defaultProps = {
         align: "tr tl",
         intl: createIntlMock(),
@@ -97,7 +101,7 @@ describe("DatePicker", () => {
 
     it("should translate calendar in zh-Hans locale and searches for Sunday string", async () => {
         createComponent({
-            intl: createIntlMock({}, "zh-Hans"),
+            intl: createIntlMock(zhHansMessages, "zh-Hans"),
         });
 
         await openCalendar();
@@ -136,7 +140,7 @@ describe("DatePicker", () => {
                 suppressConsole(
                     () =>
                         createComponent({
-                            intl: createIntlMock({}, "cs"),
+                            intl: createIntlMock({}, "en-US"),
                             date: parse("02/01/2015", defaultDateFormat, new Date()),
                             dateFormat: "yyyy/MM/dd",
                         }),
@@ -223,7 +227,7 @@ describe("DatePicker", () => {
                     const onChange = vi.fn();
                     createComponent({
                         onChange,
-                        intl: createIntlMock({}, "zh-Hans"),
+                        intl: createIntlMock(zhHansMessages, "zh-Hans"),
                         dateFormat: "yyyy/MM/dd",
                     });
 
@@ -255,7 +259,7 @@ describe("DatePicker", () => {
 
                     const outsideDay = document.querySelector(".rdp-outside");
                     const button = outsideDay?.querySelector("button");
-                    fireEvent.click(button || outsideDay);
+                    fireEvent.click(button || outsideDay!);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(expect.any(Date));
                     });
@@ -295,7 +299,7 @@ describe("DatePicker", () => {
 
             const dayCell = document.querySelector(".rdp-day");
             const button = dayCell?.querySelector("button");
-            fireEvent.click(button || dayCell);
+            fireEvent.click(button || dayCell!);
             testClosedCalendar();
         });
     });

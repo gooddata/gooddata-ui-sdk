@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { Ref, useCallback, useMemo } from "react";
+import { Ref, useCallback, useContext, useMemo } from "react";
+
+import { IntlContext } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -47,8 +49,8 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 isFiltersTooLarge={isFiltersTooLarge}
                 bulkActions={bulkActions}
                 selectedItemIds={selectedItemIds}
-                setSelectedItemIds={setSelectedItemIds}
-                totalItemsCount={totalItemsCount}
+                setSelectedItemIds={setSelectedItemIds ?? (() => {})}
+                totalItemsCount={totalItemsCount ?? 0}
                 items={items}
                 variant={variant}
                 isMobileView={isMobileView}
@@ -107,7 +109,9 @@ const useAsyncTable = <T extends { id: string }>({
     const isSmall = variant === "small";
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
-            onSort?.(key);
+            if (key !== undefined) {
+                onSort?.(key);
+            }
         },
         [onSort],
     );
@@ -115,9 +119,9 @@ const useAsyncTable = <T extends { id: string }>({
     const onItemSelect = useCallback(
         (item: T) => {
             const filteredItemIds = selectedItemIds?.filter((id) => id !== item.id) ?? [];
-            setSelectedItemIds(
+            setSelectedItemIds?.(
                 filteredItemIds.length === selectedItemIds?.length
-                    ? [...selectedItemIds, item.id]
+                    ? [...(selectedItemIds ?? []), item.id]
                     : filteredItemIds,
             );
         },
@@ -142,10 +146,10 @@ const useAsyncTable = <T extends { id: string }>({
             widthProp ??
             columns.reduce(
                 (acc, column) => {
-                    const columnWidth = getColumnWidth(!!column.renderMenu, isLargeRow, column.width);
+                    const columnWidth = getColumnWidth(!!column.renderMenu, isLargeRow, column.width) ?? 0;
                     return acc + columnWidth;
                 },
-                SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH),
+                SCROLLBAR_WIDTH + (bulkActions ? CHECKBOX_COLUMN_WIDTH : 0),
             )
         );
     }, [columns, bulkActions, widthProp, isLargeRow]);
@@ -241,9 +245,13 @@ const useAsyncTable = <T extends { id: string }>({
  * @internal
  */
 export function UiAsyncTable<T extends { id: string }>(props: UiAsyncTableProps<T>) {
-    return (
-        <IntlWrapper locale={props.locale}>
-            <AsyncTableCore {...props} />
-        </IntlWrapper>
-    );
+    const intlContext = useContext(IntlContext);
+    if (!intlContext) {
+        return (
+            <IntlWrapper locale={props.locale}>
+                <AsyncTableCore {...props} />
+            </IntlWrapper>
+        );
+    }
+    return <AsyncTableCore {...props} />;
 }

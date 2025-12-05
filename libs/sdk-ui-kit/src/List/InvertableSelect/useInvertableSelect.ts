@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { differenceBy, intersectionBy, keyBy } from "lodash-es"; /**
@@ -35,7 +36,7 @@ export function useInvertableSelect<T>({
 
     numberOfHiddenSelectedItems = 0,
 }: IUseInvertableSelectProps<T>) {
-    const isSearch = searchString?.length > 0;
+    const isSearch = (searchString?.length ?? 0) > 0;
     const isSelectionEmpty = selectedItems.length === 0;
 
     const selectionMap = useMemo(() => {
@@ -43,11 +44,11 @@ export function useInvertableSelect<T>({
     }, [selectedItems, getItemKey]);
 
     const itemsNotInSelection = useMemo(
-        () => differenceBy(items, selectedItems, getItemKey),
+        () => differenceBy(items, selectedItems, getItemKey!),
         [items, selectedItems, getItemKey],
     );
     const itemsInSelection = useMemo(
-        () => intersectionBy(items, selectedItems, getItemKey),
+        () => intersectionBy(items, selectedItems, getItemKey!),
         [items, selectedItems, getItemKey],
     );
 
@@ -115,7 +116,7 @@ export function useInvertableSelect<T>({
 
     const getIsItemSelected = useCallback(
         (item: T) => {
-            const itemKey = getItemKey(item);
+            const itemKey = getItemKey!(item);
             return isInverted ? !selectionMap[itemKey] : !!selectionMap[itemKey];
         },
         [isInverted, selectionMap, getItemKey],
@@ -139,13 +140,13 @@ export function useInvertableSelect<T>({
     const selectItems = useCallback(
         (items: T[]) => {
             const newItems = isInverted
-                ? differenceBy(selectedItems, items, getItemKey)
+                ? differenceBy(selectedItems, items, getItemKey!)
                 : selectedItems.concat(items);
 
             if (
                 !isSearch &&
                 !isInverted &&
-                newItems.length === totalItemsCount + numberOfHiddenSelectedItems
+                newItems.length === (totalItemsCount ?? 0) + numberOfHiddenSelectedItems
             ) {
                 // Selecting last item -> select all
                 selectAll();
@@ -169,12 +170,12 @@ export function useInvertableSelect<T>({
         (items: T[]) => {
             const newItems = isInverted
                 ? selectedItems.concat(items)
-                : differenceBy(selectedItems, items, getItemKey);
+                : differenceBy(selectedItems, items, getItemKey!);
 
             if (
                 !isSearch &&
                 isInverted &&
-                newItems.length === totalItemsCount + numberOfHiddenSelectedItems
+                newItems.length === (totalItemsCount ?? 0) + numberOfHiddenSelectedItems
             ) {
                 selectNone();
             } else {

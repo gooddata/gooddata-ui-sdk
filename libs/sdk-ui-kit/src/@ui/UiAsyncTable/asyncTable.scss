@@ -335,16 +335,18 @@
     &__dropdown-item-label-secondary {
         margin-top: 2px;
         font-size: var(--gd-table-dropdown-item-font-size);
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     &__dropdown-item-label-primary {
+        flex-shrink: 0;
+        max-width: 180px;
         color: var(--gd-palette-complementary-8);
     }
 
     &__dropdown-item-label-secondary {
-        overflow: hidden;
-        text-overflow: ellipsis;
         color: var(--gd-palette-complementary-6);
         margin-left: var(--gd-spacing-5px);
     }

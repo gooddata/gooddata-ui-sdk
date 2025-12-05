@@ -227,7 +227,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         return !searchString || getItemTitle(option).toLowerCase().includes(searchString.toLowerCase());
     });
 
-    const renderButton = useMemo((): IDropdownInvertableSelectProps<T>["renderButton"] => {
+    const renderButton = useMemo((): ((props: IDropdownButtonRenderProps) => ReactNode) => {
         return (
             props.renderButton ??
             (({ toggleDropdown }) => (

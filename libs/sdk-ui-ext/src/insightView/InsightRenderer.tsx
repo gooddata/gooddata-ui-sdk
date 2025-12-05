@@ -29,17 +29,26 @@ import {
     IExportFunction,
     IExtendedExportConfig,
     ILocale,
+    ITranslations,
     IntlWrapper,
     LoadingComponent,
     OnError,
     fillMissingFormats,
-    fillMissingTitles,
+    fillMissingTitlesWithMessages,
     ignoreTitlesForSimpleMeasures,
+    useResolveMessages,
     withContexts,
 } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { FullVisualizationCatalog, IInsightViewProps, IVisProps, IVisualization } from "../internal/index.js";
+import {
+    DEFAULT_MESSAGES,
+    FullVisualizationCatalog,
+    IInsightViewProps,
+    IVisProps,
+    IVisualization,
+    resolveMessages,
+} from "../internal/index.js";
 
 /**
  * @internal
@@ -72,7 +81,9 @@ const visualizationUriRootStyle: CSSProperties = {
 // this needs to be a pure component as it can happen that this might be rendered multiple times
 // with the same props (referentially) - this might make the rendered visualization behave unpredictably
 // and is bad for performance so we need to make sure the re-renders are performed only if necessary
-class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedComponentProps> {
+class InsightRendererCore extends PureComponent<
+    IInsightRendererProps & WrappedComponentProps & { messages: ITranslations }
+> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private containerRef = createRef<HTMLDivElement>();
@@ -126,6 +137,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
 
         const visProps: IVisProps = {
             locale: this.props.locale,
+            messages: this.props.messages,
             dateFormat: responsiveUiDateFormat,
             a11yTitle: this.props.widget?.title,
             a11yDescription: this.props.widget?.description,
@@ -150,7 +162,13 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
         };
 
         const visClass = insightVisualizationType(this.props.insight);
-        let insight = fillMissingFormats(fillMissingTitles(this.props.insight, this.props.locale));
+        const filled = fillMissingTitlesWithMessages(
+            this.props.insight,
+            this.props.locale,
+            this.props.messages,
+            undefined,
+        );
+        let insight = fillMissingFormats(filled);
 
         /**
          * Ignore titles for simple measures in all visualizations except for repeater.
@@ -163,7 +181,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
         if (visClass !== "repeater") {
             insight = ignoreTitlesForSimpleMeasures(insight);
         }
-        this.visualization.update(visProps, insight, {}, this.getExecutionFactory());
+        this.visualization?.update(visProps, insight, {}, this.getExecutionFactory());
     };
 
     private setupVisualization = async () => {
@@ -210,6 +228,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
             },
             environment: "dashboards", // TODO get rid of this
             locale: this.props.locale,
+            messages: this.props.messages,
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.props.insight),
             featureFlags: this.props.settings,
@@ -366,6 +385,7 @@ export function InsightRenderer(props: IInsightRendererProps) {
         onExportReady: onExportReadyCallback,
         onLoadingChanged: onLoadingChangedCallback,
         onDataView: onDataViewCallback,
+        locale,
         ...resProps
     } = props;
 
@@ -376,15 +396,22 @@ export function InsightRenderer(props: IInsightRendererProps) {
     const onLoadingChanged = useUpdatableCallback(onLoadingChangedCallback);
     const onDataView = useUpdatableCallback(onDataViewCallback);
 
+    const messages = useResolveMessages(locale, resolveMessages, DEFAULT_MESSAGES);
+    if (!messages[locale]) {
+        return null;
+    }
+
     return (
-        <IntlWrapper locale={props.locale}>
+        <IntlWrapper locale={locale}>
             <IntlInsightRenderer
                 pushData={onPushData}
                 onDrill={onDrill}
                 onError={onError}
                 onExportReady={onExportReady}
+                messages={messages[locale]}
                 onLoadingChanged={onLoadingChanged}
                 onDataView={onDataView}
+                locale={locale}
                 {...resProps}
             />
         </IntlWrapper>

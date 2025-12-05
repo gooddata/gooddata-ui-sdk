@@ -54,25 +54,29 @@ export const defaultThemeMetadataObject: IThemeDefinition = {
  */
 export const getColorsPreviewFromTheme = (theme: ITheme): string[] => {
     const { theme: defaultTheme } = defaultThemeMetadataObject;
+    const defaultPalette = defaultTheme?.palette;
+    const defaultComplementary = defaultPalette?.complementary;
+    const defaultPrimary = defaultPalette?.primary;
 
     const color1 =
         theme.dashboards?.navigation?.backgroundColor ||
         theme.palette?.complementary?.c1 ||
-        defaultTheme.palette.complementary.c1;
+        defaultComplementary?.c1 ||
+        "";
     const color2 =
         theme.dashboards?.content?.backgroundColor ||
         theme.palette?.complementary?.c0 ||
-        defaultTheme.palette.complementary.c0;
-    const color3 = theme.palette?.primary?.base || defaultTheme.palette.primary.base;
+        defaultComplementary?.c0 ||
+        "";
+    const color3 = theme.palette?.primary?.base || defaultPrimary?.base || "";
     const color4 =
         theme.dashboards?.content?.kpiWidget?.kpi?.primaryMeasureColor ||
         theme.palette?.complementary?.c9 ||
-        defaultTheme.palette.complementary.c9;
+        defaultComplementary?.c9 ||
+        "";
     const color5 =
-        theme.dashboards?.title?.color ||
-        theme.palette?.complementary?.c8 ||
-        defaultTheme.palette.complementary.c8;
-    const color6 = theme.palette?.complementary?.c7 || defaultTheme.palette.complementary.c7;
+        theme.dashboards?.title?.color || theme.palette?.complementary?.c8 || defaultComplementary?.c8 || "";
+    const color6 = theme.palette?.complementary?.c7 || defaultComplementary?.c7 || "";
 
     return [color1, color2, color3, color4, color5, color6];
 };

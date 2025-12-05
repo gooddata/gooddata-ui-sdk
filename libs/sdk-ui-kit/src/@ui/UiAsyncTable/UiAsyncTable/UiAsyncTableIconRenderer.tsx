@@ -10,5 +10,5 @@ export function UiAsyncTableIconRenderer<T>({
     item,
 }: IUiAsyncTableIconRendererProps<T>): ReactElement | null {
     const content = renderIcon?.(item);
-    return content && <div className={className}>{content}</div>;
+    return content ? <div className={className}>{content}</div> : null;
 }

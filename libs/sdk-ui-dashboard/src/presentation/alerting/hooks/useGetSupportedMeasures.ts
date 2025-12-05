@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { IInsight } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
@@ -25,14 +25,15 @@ export const useGetSupportedMeasures = (insight: IInsight | undefined): AlertMet
     const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const locale = useDashboardSelector(selectLocale);
-
+    const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(undefined);
+    useEffect(() => {
+        if (insight) {
+            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+        }
+    }, [insight, locale]);
     return useMemo(
         () =>
-            getSupportedInsightMeasuresByInsight(
-                insight ? fillMissingTitles(insight, locale, 9999) : insight,
-                catalogDateDatasets,
-                canManageComparison,
-            ),
-        [insight, locale, catalogDateDatasets, canManageComparison],
+            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
+        [effectiveInsight, catalogDateDatasets, canManageComparison],
     );
 };

@@ -103,8 +103,8 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "executionResults/upsertExecutionResult",
     "loadingSlice/setLoadingError",
     "automations/setAutomationsError",
-    // Automation management actions contain non-serializable refs
-    "uiSlice/setAutomationsInvalidateRef",
+    // Automation management actions contain non-serializable callbacks
+    "uiSlice/setAutomationsInvalidateCallback",
     "uiSlice/invalidateAutomationItems",
 ];
 

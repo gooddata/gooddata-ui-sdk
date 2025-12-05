@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { ActionsApi_ResolveAllSettingsWithoutWorkspace } from "@gooddata/api-client-tiger/actions";
 import {
     EntitiesApi_CreateEntityUserSettings,

@@ -74,7 +74,8 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/line_chart",
             supportsExport: true,
             supportsZooming: true,
         };

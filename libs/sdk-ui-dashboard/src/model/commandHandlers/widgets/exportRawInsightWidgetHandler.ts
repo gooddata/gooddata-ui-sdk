@@ -17,13 +17,17 @@ import {
     insightRef,
     newDefForInsight,
 } from "@gooddata/sdk-model";
+import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
-import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
+import { selectExportResultPollingTimeout, selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
-import { selectRawExportOverridesForInsightByRef } from "../../store/insights/insightsSelectors.js";
+import {
+    selectInsightByRef,
+    selectRawExportOverridesForInsight,
+} from "../../store/insights/insightsSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
@@ -72,8 +76,12 @@ export function* exportRawInsightWidgetHandler(
     // execution definition must be defined at this point
     invariant(preparedExecutionDefinition);
 
-    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsightByRef>> = yield select(
-        selectRawExportOverridesForInsightByRef(insightRef(insight)),
+    const selectedInsight = yield select(selectInsightByRef(insightRef(insight)));
+    const locale = yield select(selectLocale);
+    const filledInsight = yield call(fillMissingTitles, selectedInsight, locale, undefined);
+
+    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = yield select(
+        selectRawExportOverridesForInsight(filledInsight),
     );
 
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(

@@ -24,7 +24,7 @@ describe("LegacySingleSelectList", () => {
         return render(
             <LegacySingleSelectList
                 items={options.items}
-                itemsCount={options.items.length}
+                itemsCount={options.items?.length ?? 0}
                 selection={options.selection}
                 width={100}
                 height={100}

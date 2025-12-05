@@ -31,7 +31,7 @@ export const useKeyboardNavigationTarget = ({
             ref.id = navigationId;
             ref.tabIndex = tabIndex;
             ref.role = "navigation";
-            ref.setAttribute("aria-label", label);
+            ref.setAttribute("aria-label", label ?? "");
             if (onFocus) {
                 ref.addEventListener("focus", onFocus);
                 return () => {

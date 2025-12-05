@@ -67,7 +67,7 @@ export function useTagsInteractions(
             id: tag,
             label: tag,
         };
-        onTagAdd(newTag);
+        onTagAdd?.(newTag);
         setTag("");
     }, [tag, onTagAdd]);
 
@@ -81,7 +81,7 @@ export function useTagsInteractions(
             if (deletedHiddenTag !== -1) {
                 setHiddenFocusedIndex(Math.min(deletedHiddenTag, hiddenTags.length - 1));
             }
-            onTagRemove(tag);
+            onTagRemove?.(tag);
         },
         [hiddenTags, onTagRemove, showedTags],
     );
@@ -97,7 +97,7 @@ export function useTagsInteractions(
                 setHiddenFocusedIndex(hiddenTag);
             }
 
-            onTagClick(tag);
+            onTagClick?.(tag);
         },
         [hiddenTags, onTagClick, showedTags],
     );

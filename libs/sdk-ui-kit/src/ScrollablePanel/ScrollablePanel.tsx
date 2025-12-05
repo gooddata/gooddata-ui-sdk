@@ -52,7 +52,7 @@ export const ScrollablePanel = forwardRef<HTMLDivElement | undefined, IScrollabl
             ...divProps
         } = props;
         const containerRef = useRef<HTMLDivElement | null>(null);
-        useImperativeHandle(ref, () => containerRef.current);
+        useImperativeHandle(ref, () => containerRef.current ?? undefined);
 
         const memoizeContext = useMemo(() => {
             return {

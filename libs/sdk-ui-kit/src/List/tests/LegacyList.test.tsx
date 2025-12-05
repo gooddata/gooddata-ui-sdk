@@ -48,9 +48,9 @@ class DummyDataSource<T extends { title: string }> {
     public isLoading$: any;
     public firstLoad$: any;
     public finishedReload$: any;
-    public rows: T[];
-    public rowsCount: number;
-    public totalRowsCount: number | T[];
+    public rows!: T[];
+    public rowsCount!: number;
+    public totalRowsCount!: number | T[];
 
     constructor(initialRows: T[] = [], moreRows: T[] = [], maxResponseTime: number = MAX_RESPONSE_TIME) {
         this.initialRows = initialRows;

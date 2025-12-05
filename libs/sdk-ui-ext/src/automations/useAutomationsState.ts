@@ -23,7 +23,7 @@ export const useAutomationsState = ({
     pageSize,
     availableFilters,
     preselectedFilters,
-    invalidateItemsRef,
+    onInvalidateCallbackChange,
     tableVariant,
     isMobileView,
     enableBulkActions,
@@ -150,12 +150,10 @@ export const useAutomationsState = ({
         }));
     }, []);
 
-    // Set the ref for invalidating items from outside
+    // notify external systems about the change
     useEffect(() => {
-        if (invalidateItemsRef) {
-            invalidateItemsRef.current = resetState;
-        }
-    }, [invalidateItemsRef, resetState]);
+        onInvalidateCallbackChange?.(resetState);
+    }, [resetState, onInvalidateCallbackChange]);
 
     useEffect(() => {
         if (filtersRefFirstRun.current) {

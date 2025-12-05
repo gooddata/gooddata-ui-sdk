@@ -459,7 +459,7 @@ describe("UiTreeview", () => {
             fireEvent.click(screen.getByText("Parent A Folder A File A1"));
 
             expect(onSelect).toHaveBeenCalledWith(
-                treeStatic[0].children[0].children[0].item,
+                treeStatic[0].children![0].children![0].item,
                 { newTab: false, type: "mouse" },
                 expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
             );
@@ -812,7 +812,7 @@ describe("UiTreeview", () => {
             fireEvent.keyDown(listbox, { code: "Enter" });
 
             expect(onSelect).toHaveBeenCalledWith(
-                treeStatic[0].children[0].item,
+                treeStatic[0].children![0].item,
                 { newTab: false, type: "keyboard" },
                 expect.objectContaining({ nativeEvent: expect.any(KeyboardEvent) }),
             );
@@ -831,7 +831,7 @@ describe("UiTreeview", () => {
             fireEvent.keyDown(listbox, { code: "Space" });
 
             expect(onSelect).toHaveBeenCalledWith(
-                treeStatic[0].children[0].item,
+                treeStatic[0].children![0].item,
                 { newTab: false, type: "keyboard" },
                 expect.objectContaining({ nativeEvent: expect.any(KeyboardEvent) }),
             );
@@ -902,7 +902,7 @@ describe("UiTreeview", () => {
             fireEvent.click(screen.getByText("Parent A Folder A File A1"));
 
             expect(onSelect).toHaveBeenCalledWith(
-                treeStatic[0].children[0].children[0].item,
+                treeStatic[0].children![0].children![0].item,
                 { newTab: false, type: "mouse" },
                 expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
             );
@@ -1016,7 +1016,7 @@ describe("UiTreeview", () => {
 
             // onSelect should be called
             expect(onSelect).toHaveBeenCalledWith(
-                treeStatic[0].children[0].children[0].item,
+                treeStatic[0].children![0].children![0].item,
                 { newTab: false, type: "mouse" },
                 expect.objectContaining({ nativeEvent: expect.any(MouseEvent) }),
             );

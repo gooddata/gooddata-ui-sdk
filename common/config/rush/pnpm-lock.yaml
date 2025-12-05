@@ -4010,6 +4010,9 @@ importers:
       immer:
         specifier: 10.1.1
         version: 10.1.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       react-intl:
         specifier: 7.1.11
         version: 7.1.11(react@19.1.1)(typescript@5.8.3)
@@ -4068,6 +4071,9 @@ importers:
       '@testing-library/react':
         specifier: 16.3.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: ^22.13.0
         version: 22.18.5

@@ -33,7 +33,7 @@ export const MultiSelectListItem = memo(function MultiSelectListItem({
     const classNames = useMemo(() => {
         return cx({
             "gd-list-item": true,
-            [`s-${stringUtils.simplifyText(title)}`]: true,
+            [`s-${stringUtils.simplifyText(title ?? "")}`]: true,
             "has-only-visible": true,
             "is-selected": isSelected,
         });

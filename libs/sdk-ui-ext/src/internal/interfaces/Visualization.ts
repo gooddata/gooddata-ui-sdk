@@ -56,6 +56,7 @@ export interface IVisConstruct {
     callbacks: IVisCallbacks;
     environment?: VisualizationEnvironment;
     locale?: ILocale;
+    messages: Record<string, string>;
     // TODO: rename to settings
     featureFlags?: ISettings;
     visualizationProperties: VisualizationProperties;
@@ -93,6 +94,7 @@ export interface IVisProps {
     dimensions?: IDimensions;
     custom?: ICustomProps;
     locale?: ILocale;
+    messages: Record<string, string>;
     dateFormat?: string;
     config?: IGdcConfig;
     executionConfig?: IExecutionConfig;

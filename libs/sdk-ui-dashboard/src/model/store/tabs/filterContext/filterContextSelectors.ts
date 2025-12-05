@@ -113,6 +113,24 @@ export const selectOriginalFilterContextDefinitionsByTab = createSelector(
 );
 
 /**
+ * Returns original (persisted) filters for each tab keyed by identifier.
+ *
+ * @internal
+ */
+export const selectOriginalFilterContextFiltersByTab = createSelector(
+    selectOriginalFilterContextDefinitionsByTab,
+    (definitionsByTab) => {
+        return Object.entries(definitionsByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [identifier, definition]) => {
+                acc[identifier] = definition?.filters ?? [];
+                return acc;
+            },
+            {},
+        );
+    },
+);
+
+/**
  * This selector returns array of filter localIds that have invalid selections.
  *
  * @returns Array of filter localIds with invalid selections.
@@ -500,6 +518,45 @@ export const selectFilterContextDateFilterIndexByDataSet: (
 );
 
 /**
+ * Returns date filters with dimension for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Date filters with dimension for the specified tab
+ *
+ * @internal
+ */
+export const selectFilterContextDateFiltersWithDimensionForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardDateFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectFiltersByTab, (filtersByTab): IDashboardDateFilter[] => {
+        const filters = filtersByTab[tabLocalIdentifier] ?? [];
+        return filters.filter(isDashboardDateFilterWithDimension);
+    }),
+);
+
+/**
+ * Creates a selector for selecting date filter by its dataset from a specific tab.
+ *
+ * @param dataSet - Date dataset ref
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Date filter matching the dataset, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextDateFilterByDataSetForTab: (
+    dataSet: ObjRef,
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+    (dataSet: ObjRef, tabLocalIdentifier: string) =>
+        createSelector(
+            selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier),
+            (dateFilters) => {
+                return dateFilters.find((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+            },
+        ),
+);
+
+/**
  * Creates a selector for selecting draggable filter's index by its ref:
  * dataSet ref for date filters {@link @gooddata/sdk-model#ObjRef}
  * localIdentifier for attribute filters
@@ -569,6 +626,74 @@ export const selectFilterContextAttributeFilterByLocalId: (
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
     ),
+);
+
+/**
+ * Returns attribute filters for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Attribute filters for the specified tab
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFiltersByTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardAttributeFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectFiltersByTab, (filtersByTab): IDashboardAttributeFilter[] => {
+        const filters = filtersByTab[tabLocalIdentifier] ?? [];
+        return filters.filter(isDashboardAttributeFilter);
+    }),
+);
+
+/**
+ * Creates a selector for selecting attribute filter by its display form from a specific tab.
+ *
+ * @param displayForm - Display form ref
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Attribute filter matching the display form, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilterByDisplayFormForTab: (
+    displayForm: ObjRef,
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardAttributeFilter | undefined> = createMemoizedSelector(
+    (displayForm: ObjRef, tabLocalIdentifier: string) =>
+        createSelector(
+            selectAttributeFilterDisplayFormsMap,
+            selectFilterContextAttributeFiltersByTab(tabLocalIdentifier),
+            (attributeDisplayFormsMap, attributeFilters) => {
+                const df = attributeDisplayFormsMap.get(displayForm);
+                if (!df) {
+                    return undefined;
+                }
+                // try matching both uri and id in case the type of ref is different from what is in the ref field
+                return attributeFilters.find(
+                    (filter) =>
+                        areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
+                        areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
+                );
+            },
+        ),
+);
+
+/**
+ * Creates a selector for selecting attribute filter by its localId from a specific tab.
+ *
+ * @param localId - Filter local identifier
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Attribute filter matching the local id, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilterByLocalIdForTab: (
+    localId: string,
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardAttributeFilter | undefined> = createMemoizedSelector(
+    (localId: string, tabLocalIdentifier: string) =>
+        createSelector(selectFilterContextAttributeFiltersByTab(tabLocalIdentifier), (attributeFilters) =>
+            attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
+        ),
 );
 
 /**

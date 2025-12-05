@@ -28,6 +28,7 @@ export function buildSemanticSearchTreeViewItems({
 }: BuildSearchOverlayItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter(thresholdFilter(threshold))
+        .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
         .map((item): SearchTreeViewItem => {
             // Items are not actually disabled, but we need to display the lock icon for locked items,
             // so this API is used for that purpose as a convenience.

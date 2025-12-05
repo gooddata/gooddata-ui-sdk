@@ -114,7 +114,8 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
 
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html",
+            documentationUrl:
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/pivot_table",
             supportsExport: true,
             supportsZooming: false,
         };

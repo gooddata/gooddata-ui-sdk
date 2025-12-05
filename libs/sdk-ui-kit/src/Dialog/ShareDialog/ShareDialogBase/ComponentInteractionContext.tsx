@@ -26,7 +26,7 @@ type ComponentInteractionContextType = {
 
 const defaultContext: ComponentInteractionContextType = {
     onInteraction: () => {},
-    currentUser: undefined,
+    currentUser: undefined as unknown as IUser,
 };
 
 const ComponentInteractionContext = createContext<ComponentInteractionContextType>(defaultContext);
@@ -69,7 +69,7 @@ export function ComponentInteractionProvider({
             onInteraction({
                 ...data,
                 flowId,
-                currentUserPermission,
+                currentUserPermission: currentUserPermission!,
                 isSharedObjectLocked,
                 sharedObjectStatus,
                 isCurrentUserWorkspaceManager,

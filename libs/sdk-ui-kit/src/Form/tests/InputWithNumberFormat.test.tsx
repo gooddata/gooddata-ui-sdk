@@ -7,13 +7,13 @@ import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat.js";
 import { Separators } from "../typings.js";
 
 class InputWithNumberFormatFragment {
-    public value: number | string = undefined;
+    public value: number | string | null = null;
     private input: any;
     constructor({ separators, value }: { separators?: Separators; value?: number } = {}) {
-        this.value = value;
+        this.value = value ?? null;
         render(
             <InputWithNumberFormat
-                value={this.value}
+                value={this.value ?? undefined}
                 onChange={(v) => {
                     this.value = v;
                 }}

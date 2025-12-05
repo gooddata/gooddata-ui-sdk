@@ -114,7 +114,7 @@ const WrappedTreemap = withChart(treemapDefinition)(CoreTreemap);
  * Treemaps are useful for comparing proportions within the hierarchy.
  *
  * See {@link ITreemapProps} to learn how to configure the Treemap and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html | treemap documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/treemap | treemap documentation} for more information.
  *
  * @public
  */

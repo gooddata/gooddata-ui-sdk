@@ -95,3 +95,27 @@ export const selectEffectiveDateFiltersModeMap: DashboardSelector<
         }, new Map());
     },
 );
+
+/**
+ * Get a map of date filter modes keyed by tab identifier.
+ *
+ * @remarks
+ * Returns a record where each key is a tab identifier and the value is a Map of date filter modes
+ * for that tab. Useful when you need to access filter modes for all tabs at once.
+ *
+ * @internal
+ */
+export const selectDateFilterConfigsModeMapByTab: DashboardSelector<
+    Record<string, Map<string, DashboardDateFilterConfigMode>>
+> = createSelector(selectDateFilterConfigsOverridesByTab, (overridesByTab) => {
+    const result: Record<string, Map<string, DashboardDateFilterConfigMode>> = {};
+
+    for (const [tabId, configs] of Object.entries(overridesByTab)) {
+        result[tabId] = configs.reduce((map, config) => {
+            map.set(serializeObjRef(config.dateDataSet), config.config.mode);
+            return map;
+        }, new Map<string, DashboardDateFilterConfigMode>());
+    }
+
+    return result;
+});

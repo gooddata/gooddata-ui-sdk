@@ -113,8 +113,13 @@ function walkProps<TProps>(
     const importsUsed: IImportInfo[] = [];
 
     // we ignore undefined values and functions as there is no bullet-proof way to serialize them
+    // Note: isEmpty() returns true for primitive values like numbers/booleans, so we check for them explicitly
+    // Non-empty strings are handled correctly by isEmpty(), but we explicitly check to be safe
     const propPairsIgnoredFunctions = Object.entries<PropWithMeta<any>>(props).filter(
-        ([_, meta]) => meta !== undefined && !(typeof meta.value === "function") && !isEmpty(meta.value),
+        ([_, meta]) =>
+            meta !== undefined &&
+            !(typeof meta.value === "function") &&
+            (typeof meta.value === "number" || typeof meta.value === "boolean" || !isEmpty(meta.value)),
     );
 
     //omit chart configuration when define in config
@@ -126,9 +131,14 @@ function walkProps<TProps>(
             return `const ${key} = "${value}";`;
         }
 
+        // Primitives (numbers, booleans) don't need type annotations or factory notation
+        if (typeof value === "number" || typeof value === "boolean") {
+            return `const ${key} = ${value};`;
+        }
+
         const rhsValue = extendedFactoryNotationFor(value, additionalFactories ?? []);
 
-        const needsType = language === "ts";
+        const needsType = language === "ts" && meta.typeImport;
         if (needsType) {
             const typeDeclaration =
                 meta.cardinality === "array" ? `${meta.typeImport.name}[]` : meta.typeImport.name;

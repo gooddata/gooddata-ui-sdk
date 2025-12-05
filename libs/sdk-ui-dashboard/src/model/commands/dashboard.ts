@@ -742,6 +742,13 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
      *  Display as label of the attribute filter. Used to present filter in UI
      */
     displayAsLabel: ObjRef | undefined;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     *
+     * @internal
+     */
+    tabLocalIdentifier?: string;
 }
 
 /**

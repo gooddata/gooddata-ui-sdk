@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { permissionsFilter, thresholdFilter } from "./filters/items.filters.js";
@@ -20,6 +21,7 @@ export function buildSemanticSearchItems({
 }: BuildSemanticSearchItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter(thresholdFilter(threshold))
+        .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
         .map((item): SearchTreeViewItem => {
             // Do not show relationships for dashboard items
             if (item.type === "dashboard") {

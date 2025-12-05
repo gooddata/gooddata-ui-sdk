@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject, ReactNode, useEffect, useMemo, useRef } from "react";
+import { KeyboardEvent, ReactNode, RefObject, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
 
@@ -50,7 +50,11 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     const itemsContainerRef = useRef<HTMLDivElement>(null);
 
     const UiMenuContextStore = typedUiMenuContextStore<T, M>();
-    const contextStoreValue = useUiMenuContextValue(props, menuComponentRef, itemsContainerRef);
+    const contextStoreValue = useUiMenuContextValue(
+        props,
+        menuComponentRef as RefObject<HTMLElement>,
+        itemsContainerRef as RefObject<HTMLElement>,
+    );
 
     const handleKeyDown = useKeyNavigation<T, M>({
         menuContextValue: contextStoreValue,
@@ -105,7 +109,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
             >
                 {shownCustomContentItemId ? (
                     <ContentWrapper keyboardNavigationHandler={handleKeyDownInCustomContent}>
-                        <Content item={getContentItem(items, shownCustomContentItemId)} />
+                        <Content item={getContentItem(items, shownCustomContentItemId)!} />
                     </ContentWrapper>
                 ) : (
                     <>
@@ -115,13 +119,13 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                                 "container-bottom-padding": containerBottomPadding,
                                 "container-top-padding": containerTopPadding,
                             })}
-                            ref={itemsContainerRef as MutableRefObject<HTMLDivElement>}
+                            ref={itemsContainerRef as RefObject<HTMLDivElement>}
                         >
                             <menu
                                 className={e("items")}
                                 tabIndex={0}
                                 onKeyDown={handleKeyDown}
-                                aria-activedescendant={makeItemId(focusedItem)}
+                                aria-activedescendant={focusedItem ? makeItemId(focusedItem) : undefined}
                                 {...ariaAttributes}
                                 role="menu"
                                 ref={menuComponentRef}

@@ -19,7 +19,6 @@ import {
     measureLocalId,
     measureTitle,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 import { ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
@@ -110,6 +109,7 @@ export const selectInsightByWidgetRef: (ref: ObjRef | undefined) => DashboardSel
  * 3. Use the title of the measure from the catalog.
  *
  * @alpha
+ * @deprecated This selector does not fill in missing titles for derived and arithmetic measures.
  */
 const selectRawExportMeasureOverridesForInsightByRef: (
     ref: ObjRef | undefined,
@@ -119,17 +119,12 @@ const selectRawExportMeasureOverridesForInsightByRef: (
             selectInsightByRef(ref),
             selectCatalogMeasures,
             selectLocale,
-            (insight, catalogMeasures, locale) => {
+            (insight, catalogMeasures, _locale) => {
                 if (!insight) {
                     return undefined;
                 }
 
-                // fill the missing titles for derived and arithmetic measures,
-                // we need to do this because the rest of the logic needs the titles of the measures
-                // explicitly set in the insight definition if possible
-                const filledInsight = fillMissingTitles(insight, locale);
-
-                return insightMeasures(filledInsight).reduce(
+                return insightMeasures(insight).reduce(
                     (overrides, measure) => {
                         const localId = measureLocalId(measure);
 
@@ -166,6 +161,134 @@ const selectRawExportMeasureOverridesForInsightByRef: (
     },
 );
 
+/**
+ * Selects raw export custom measure overrides for insight.
+ *
+ * @privateRemarks
+ * For a given insight, this selector will return a mapping of measure localId to
+ * the custom title that should be used when raw exporting the insight.
+ * The order of precedence is:
+ * 1. If the measure has an alias in the insight definition, use that.
+ * 2. If the measure has a title in the insight definition, use that.
+ * 3. Use the title of the measure from the catalog.
+ *
+ * @alpha
+ */
+const selectRawExportMeasureOverridesForInsight: (
+    insight: IInsight | undefined,
+) => DashboardSelector<IRawExportCustomOverrides["measures"] | undefined> = createMemoizedSelector(
+    (insight: IInsight | undefined) => {
+        return createSelector(selectCatalogMeasures, (catalogMeasures) => {
+            if (!insight) {
+                return undefined;
+            }
+
+            // the insight needs to have missing titles for derived and arithmetic measures already filled
+            return insightMeasures(insight).reduce(
+                (overrides, measure) => {
+                    const localId = measureLocalId(measure);
+
+                    // first, try getting the title from the insight itself,
+                    // giving precedence to the alias over the title.
+                    // this should also cover the case of derived measures without renames,
+                    // because they have been processed by fillMissingTitles
+                    const titleFromInsightMeasure = measureAlias(measure) || measureTitle(measure);
+                    if (titleFromInsightMeasure) {
+                        overrides[localId] = {
+                            title: titleFromInsightMeasure,
+                        };
+                        return overrides;
+                    }
+
+                    // otherwise, get it from the catalog.
+                    // we only need to look at the measures, any fact-based measures should have the title set in the
+                    // insight itself
+                    const catalogMeasure = catalogMeasures.find((m) =>
+                        areObjRefsEqual(m.measure.ref, measureItem(measure)),
+                    );
+                    if (catalogMeasure) {
+                        overrides[localId] = {
+                            title: catalogMeasure.measure.title,
+                        };
+                    }
+
+                    return overrides;
+                },
+                {} as Record<string, IRawExportCustomOverride>,
+            );
+        });
+    },
+);
+
+/**
+ * Selects raw export custom display form overrides for insight by ref.
+ *
+ * @privateRemarks
+ * For a given insight (identified by its ref), this selector will return a mapping of attribute localId to
+ * the custom title that should be used when raw exporting the insight.
+ * The order of precedence is:
+ * 1. If the attribute has an alias in the insight definition, use that.
+ * 2. Use the title of the attribute from the catalog, trying normal attributes first and then date datasets.
+ *
+ * @alpha
+ */
+const selectRawExportDisplayFormOverridesForInsight: (
+    insight: IInsight | undefined,
+) => DashboardSelector<IRawExportCustomOverrides["displayForms"] | undefined> = createMemoizedSelector(
+    (insight: IInsight | undefined) => {
+        return createSelector(
+            selectCatalogAttributeDisplayForms,
+            selectCatalogDateDatasets,
+            (catalogAttributeDisplayForms, catalogDateDatasets) => {
+                if (!insight) {
+                    return undefined;
+                }
+
+                return insightAttributes(insight).reduce(
+                    (overrides, attribute) => {
+                        const localId = attributeLocalId(attribute);
+
+                        // first, try getting the title from the insight itself
+                        const titleFromInsightAttribute = attributeAlias(attribute);
+                        if (titleFromInsightAttribute) {
+                            overrides[localId] = {
+                                title: titleFromInsightAttribute,
+                            };
+                            return overrides;
+                        }
+
+                        // otherwise, get it from the catalog.
+                        // first try the attributes
+                        const catalogDisplayForm = catalogAttributeDisplayForms.find((a) =>
+                            areObjRefsEqual(a.ref, attributeDisplayFormRef(attribute)),
+                        );
+                        if (catalogDisplayForm) {
+                            overrides[localId] = {
+                                title: catalogDisplayForm.title,
+                            };
+                            return overrides;
+                        }
+
+                        // then try the date datasets
+                        catalogDateDatasets.forEach((dateDataset) => {
+                            const catalogDateAttribute = dateDataset.dateAttributes.find((a) =>
+                                areObjRefsEqual(a.defaultDisplayForm.ref, attributeDisplayFormRef(attribute)),
+                            );
+                            if (catalogDateAttribute) {
+                                overrides[localId] = {
+                                    title: catalogDateAttribute.defaultDisplayForm.title,
+                                };
+                            }
+                        });
+
+                        return overrides;
+                    },
+                    {} as Record<string, IRawExportCustomOverride>,
+                );
+            },
+        );
+    },
+);
 /**
  * Selects raw export custom display form overrides for insight by ref.
  *
@@ -240,6 +363,7 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
 /**
  * Selects raw export custom overrides for insight by ref.
  *
+ * @deprecated The insights reached by refs don't have missing titles for derived and arithmetic measures filled in.
  * @alpha
  */
 export const selectRawExportOverridesForInsightByRef: (
@@ -249,6 +373,29 @@ export const selectRawExportOverridesForInsightByRef: (
         return createSelector(
             selectRawExportMeasureOverridesForInsightByRef(ref),
             selectRawExportDisplayFormOverridesForInsightByRef(ref),
+            (measureOverrides, displayFormOverrides) => {
+                return {
+                    measures: measureOverrides,
+                    displayForms: displayFormOverrides,
+                };
+            },
+        );
+    },
+);
+
+/**
+ * Selects raw export custom overrides for insight. Note that it's recommended to use
+ * fillMissingTitles to fill in missing titles for derived and arithmetic measures.
+ *
+ * @alpha
+ */
+export const selectRawExportOverridesForInsight: (
+    insight: IInsight | undefined,
+) => DashboardSelector<IRawExportCustomOverrides | undefined> = createMemoizedSelector(
+    (insight: IInsight | undefined) => {
+        return createSelector(
+            selectRawExportMeasureOverridesForInsight(insight),
+            selectRawExportDisplayFormOverridesForInsight(insight),
             (measureOverrides, displayFormOverrides) => {
                 return {
                     measures: measureOverrides,

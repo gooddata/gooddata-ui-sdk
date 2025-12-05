@@ -22,7 +22,7 @@ export function UiIconBackground({
 }) {
     return size ? (
         <div
-            className={b({ color, type, shape })}
+            className={b({ color: color ?? false, type, shape })}
             style={{
                 width: size,
                 height: size,

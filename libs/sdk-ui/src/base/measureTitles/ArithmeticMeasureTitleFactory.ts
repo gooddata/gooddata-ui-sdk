@@ -14,13 +14,15 @@ import { ILocale } from "../localization/Locale.js";
  */
 export class ArithmeticMeasureTitleFactory {
     private readonly locale: ILocale;
+    private readonly messages: Record<string, string>;
 
     /**
      * Create a new instance of the class.
      * @param locale - The locale used for translation.
      */
-    constructor(locale: ILocale) {
+    constructor(locale: ILocale, messages: Record<string, string>) {
         this.locale = locale;
+        this.messages = messages;
     }
 
     /**
@@ -89,6 +91,6 @@ export class ArithmeticMeasureTitleFactory {
     }
 
     private translateKey(localizationKey: MessageDescriptor, values: any): string {
-        return getTranslation(localizationKey, this.locale, values);
+        return getTranslation(localizationKey, this.locale, this.messages, values);
     }
 }

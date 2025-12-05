@@ -107,7 +107,7 @@ const WrappedBubbleChart = withChart(bubbleChartDefinition)(CoreBubbleChart);
  * attribute, with each bubble (an attribute item) noted with a different color.
  *
  * See {@link IBubbleChartProps} to learn how to configure the BubbleChart and the
- * {@link https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html | bubble chart documentation} for more information.
+ * {@link https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/bubble_chart | bubble chart documentation} for more information.
  *
  * @public
  */

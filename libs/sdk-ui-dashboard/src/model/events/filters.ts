@@ -702,6 +702,13 @@ export interface DashboardFilterContextChangedPayload {
      * The new value of the attribute filter configs.
      */
     readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    /**
+     * The tab local identifier where the filter change was applied.
+     * Only present when filters were applied to a specific tab (not the active tab).
+     *
+     * @internal
+     */
+    readonly tabLocalIdentifier?: string;
 }
 
 /**
@@ -728,6 +735,7 @@ export function filterContextChanged(
     filterContext: IFilterContextDefinition,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     correlationId?: string,
+    tabLocalIdentifier?: string,
 ): DashboardFilterContextChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
@@ -736,6 +744,7 @@ export function filterContextChanged(
         payload: {
             filterContext,
             attributeFilterConfigs,
+            tabLocalIdentifier,
         },
     };
 }

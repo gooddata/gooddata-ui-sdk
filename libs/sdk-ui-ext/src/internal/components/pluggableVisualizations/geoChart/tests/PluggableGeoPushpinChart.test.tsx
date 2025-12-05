@@ -8,10 +8,13 @@ import { IInsightDefinition, newAttribute, newBucket, newInsightDefinition } fro
 import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
 
 describe("PluggableGeoPushpinChart", () => {
+    const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
+
     const mockElement = document.createElement("div");
     const mockConfigElement = document.createElement("div");
     const mockRenderFun = vi.fn();
@@ -27,6 +30,7 @@ describe("PluggableGeoPushpinChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
+        messages,
     } as unknown as IVisConstruct;
 
     function createComponent(props: IVisConstruct = defaultProps) {
@@ -394,7 +398,7 @@ describe("PluggableGeoPushpinChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel
@@ -428,10 +432,10 @@ describe("PluggableGeoPushpinChart", () => {
             });
 
             // without this update this.visualizationProperties is not defined on visualization
-            visualization.update({}, insight, {}, executionFactory);
+            visualization.update({ messages }, insight, {}, executionFactory);
 
-            const generatedBuckets = visualization.getExecution({}, insight, executionFactory).definition
-                .buckets;
+            const generatedBuckets = visualization.getExecution({ messages }, insight, executionFactory)
+                .definition.buckets;
             expect(generatedBuckets.find((b) => b.localIdentifier === "latitude")).toMatchSnapshot();
             expect(generatedBuckets.find((b) => b.localIdentifier === "longitude")).toMatchSnapshot();
         });
@@ -459,10 +463,10 @@ describe("PluggableGeoPushpinChart", () => {
             });
 
             // without this update this.visualizationProperties is not defined on visualization
-            visualization.update({}, insight, {}, executionFactory);
+            visualization.update({ messages }, insight, {}, executionFactory);
 
-            const generatedBuckets = visualization.getExecution({}, insight, executionFactory).definition
-                .buckets;
+            const generatedBuckets = visualization.getExecution({ messages }, insight, executionFactory)
+                .definition.buckets;
             expect(generatedBuckets.length).toBe(0);
         });
     });

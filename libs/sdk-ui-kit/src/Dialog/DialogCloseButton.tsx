@@ -10,7 +10,10 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IDialogCloseButtonProps } from "./typings.js";
 import { Button } from "../Button/index.js";
 
-const DialogCloseButtonCore = memo<IDialogCloseButtonProps>(function DialogCloseButton({
+/**
+ * @internal
+ */
+export const DialogCloseButtonCore = memo<IDialogCloseButtonProps>(function DialogCloseButton({
     className,
     accessibilityConfig,
     onClose,
@@ -41,7 +44,10 @@ const DialogCloseButtonCore = memo<IDialogCloseButtonProps>(function DialogClose
  */
 export function DialogCloseButton(props: IDialogCloseButtonProps) {
     return (
-        <IntlWrapper>
+        // TODO: local has to be passed as a prop
+        // pay attention since there is focus manager and different locales are loaded asynchronously
+        // there is delay and focus manager could failed because children are not rendered yet
+        <IntlWrapper locale="en-US">
             <DialogCloseButtonCore {...props} />
         </IntlWrapper>
     );

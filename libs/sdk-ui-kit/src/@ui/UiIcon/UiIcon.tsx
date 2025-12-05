@@ -53,7 +53,7 @@ export function UiIcon({
             shape={backgroundShape}
         >
             <svg
-                className={b({ color, layout, disableAnimation })}
+                className={b({ color: color ?? false, layout, disableAnimation: disableAnimation ?? false })}
                 width={size}
                 height={size}
                 viewBox="0 0 20 20"

@@ -104,7 +104,7 @@ export function useCodemirror({
                 extensions: [
                     bracketMatching(),
                     domEventsExtension,
-                    ...beforeExtensions,
+                    ...(beforeExtensions ?? []),
                     keymapExtension,
                     syntaxHighlighting(customHighlightStyle),
                     EditorView.lineWrapping,
@@ -115,7 +115,7 @@ export function useCodemirror({
                     ariaExtension,
                     autocompletionExtension,
                     autocompleteHoverExtension,
-                    ...extensions,
+                    ...(extensions ?? []),
                 ],
             }),
             parent: editorRef.current,

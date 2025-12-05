@@ -159,7 +159,7 @@ export const SingleSelectListItem = forwardRef<
     }, [title, checkOverflow]);
 
     const getClassNames = () => {
-        const testClassName = `s-${stringUtils.simplifyText(title)}`;
+        const testClassName = `s-${stringUtils.simplifyText(title ?? "")}`;
         return cx("gd-list-item", className, testClassName, {
             "is-selected": isSelected,
             "is-submenu": isMenu,
