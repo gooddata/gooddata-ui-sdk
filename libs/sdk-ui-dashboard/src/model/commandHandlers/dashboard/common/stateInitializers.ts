@@ -403,6 +403,10 @@ function* actionsToInitializeOrFillNewDashboard(
         ? {
               ...dashboard,
               layout: (dashboard?.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+              tabs: dashboard.tabs?.map((tab) => ({
+                  ...tab,
+                  layout: dashboardLayoutSanitize(tab?.layout ?? EmptyDashboardLayout, insights, settings),
+              })),
               filterContext: sanitizedFilterContext,
           }
         : null;
@@ -659,11 +663,11 @@ export function* actionsToInitializeExistingDashboard(
     // Process tabs with complete filterContext initialization for each tab
     let tabsAction = null;
     const validationResults: ValidationResult[] = [];
-    if (enableDashboardTabs && dashboard?.tabs && dashboard.tabs.length > 0) {
+    if (enableDashboardTabs && customizedDashboard?.tabs && customizedDashboard.tabs.length > 0) {
         // Process each tab to build complete TabState with filterContext
         const processedTabs: TabState[] = [];
 
-        for (const tab of dashboard.tabs) {
+        for (const tab of customizedDashboard.tabs as IDashboardTab<IDashboardWidget>[]) {
             const isActiveTab = tab.localIdentifier === effectiveActiveTabId;
             // Override default filters are only applied to the active tab
             const overrideDefaultFilters =

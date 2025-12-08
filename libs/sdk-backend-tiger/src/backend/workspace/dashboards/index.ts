@@ -374,39 +374,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         // Process root-level filter context for backward compatibility
-        let filterContext;
-        if (dashboard.filterContext) {
-            filterContext = isFilterContextDefinition(dashboard.filterContext)
-                ? await this.createFilterContext(dashboard.filterContext)
-                : dashboard.filterContext;
-        }
+        const filterContext = await this.processFilterContextForCreation(dashboard.filterContext);
 
         // Process filter contexts for each tab if tabs are present
-        let dashboardWithTabFilterContexts = dashboard;
-        if (dashboard.tabs && dashboard.tabs.length > 0) {
-            const tabsWithProcessedFilterContexts = await Promise.all(
-                dashboard.tabs.map(async (tab) => {
-                    if (!tab.filterContext) {
-                        return tab;
-                    }
-
-                    // Create or use existing filter context for this tab
-                    const tabFilterContext = isFilterContextDefinition(tab.filterContext)
-                        ? await this.createFilterContext(tab.filterContext)
-                        : tab.filterContext;
-
-                    return {
-                        ...tab,
-                        filterContext: tabFilterContext,
-                    };
-                }),
-            );
-
-            dashboardWithTabFilterContexts = {
-                ...dashboard,
-                tabs: tabsWithProcessedFilterContexts,
-            };
-        }
+        const dashboardWithTabFilterContexts = await this.processDashboardTabsFilterContexts(dashboard);
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
@@ -1398,6 +1369,38 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         } catch {
             return buildDashboardPermissions([]);
         }
+    };
+
+    private processFilterContextForCreation = async (
+        filterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
+    ): Promise<IFilterContext | ITempFilterContext | undefined> => {
+        if (!filterContext) {
+            return undefined;
+        }
+        return isFilterContextDefinition(filterContext)
+            ? this.createFilterContext(filterContext)
+            : filterContext;
+    };
+
+    private processDashboardTabsFilterContexts = async (
+        dashboard: IDashboardDefinition,
+    ): Promise<IDashboardDefinition> => {
+        if (!dashboard.tabs || dashboard.tabs.length === 0) {
+            return dashboard;
+        }
+
+        const tabsWithProcessedFilterContexts = await Promise.all(
+            dashboard.tabs.map(async (tab) => {
+                // Create or use existing filter context for this tab
+                const tabFilterContext = await this.processFilterContextForCreation(tab.filterContext);
+                return tabFilterContext ? { ...tab, filterContext: tabFilterContext } : tab;
+            }),
+        );
+
+        return {
+            ...dashboard,
+            tabs: tabsWithProcessedFilterContexts,
+        };
     };
 
     private processFilterContextUpdate = async (

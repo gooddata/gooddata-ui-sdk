@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import { IDropdownItem } from "../../../interfaces/Dropdown.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import DropdownControl, { IDropdownControlProps } from "../DropdownControl.js";
+import { DropdownControl, IDropdownControlProps } from "../DropdownControl.js";
 
 describe("DropdownControl", () => {
     const defaultProps = {

@@ -22,6 +22,7 @@ import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
     IMeasureMetadataObjectDefinition,
+    MetricType,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
 } from "./measure/index.js";
@@ -52,6 +53,7 @@ export type {
     IMeasureMetadataObjectBase,
     IMetadataObjectDefinition,
     IMeasureMetadataObjectDefinition,
+    MetricType,
     IDataSetMetadataObject,
     IVariableMetadataObject,
     IDashboardMetadataObject,

@@ -43,4 +43,4 @@ const colorAssignment = scenariosFor<ILineChartProps>("LineChart", LineChart)
         (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount)),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

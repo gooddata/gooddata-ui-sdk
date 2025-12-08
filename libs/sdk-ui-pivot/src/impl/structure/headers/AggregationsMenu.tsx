@@ -27,9 +27,14 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import menuHelper, { getAttributeDescriptorsLocalId } from "./aggregationsMenuHelper.js";
+import {
+    getAttributeDescriptorsLocalId,
+    getTotalsForAttributeHeader,
+    getTotalsForMeasureHeader,
+    isTotalEnabledForAttribute,
+} from "./aggregationsMenuHelper.js";
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
-import AggregationsSubMenu from "./AggregationsSubMenu.js";
+import { AggregationsSubMenu } from "./AggregationsSubMenu.js";
 import { messages } from "../../../locales.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { TableDescriptor } from "../tableDescriptor.js";
@@ -75,7 +80,7 @@ function MenuToggler() {
     );
 }
 
-export default function AggregationsMenu({
+export function AggregationsMenu({
     intl,
     colId,
     getTableDescriptor,
@@ -98,14 +103,10 @@ export default function AggregationsMenu({
         const columnTotals = getColumnTotals?.() ?? [];
 
         if (isGroupedHeader) {
-            return menuHelper.getTotalsForAttributeHeader(
-                columnTotals,
-                measureLocalIdentifiers,
-                ignoreMeasures,
-            );
+            return getTotalsForAttributeHeader(columnTotals, measureLocalIdentifiers, ignoreMeasures);
         }
 
-        return menuHelper.getTotalsForMeasureHeader(columnTotals, measureLocalIdentifiers[0]);
+        return getTotalsForMeasureHeader(columnTotals, measureLocalIdentifiers[0]);
     };
 
     const getRowTotalsWrapper = useCallback(
@@ -117,14 +118,10 @@ export default function AggregationsMenu({
             const rowTotals = getRowTotals?.() ?? [];
 
             if (isGroupedHeader) {
-                return menuHelper.getTotalsForAttributeHeader(
-                    rowTotals,
-                    measureLocalIdentifiers,
-                    ignoreMeasures,
-                );
+                return getTotalsForAttributeHeader(rowTotals, measureLocalIdentifiers, ignoreMeasures);
             }
 
-            return menuHelper.getTotalsForMeasureHeader(rowTotals, measureLocalIdentifiers[0]);
+            return getTotalsForMeasureHeader(rowTotals, measureLocalIdentifiers[0]);
         },
         [getRowTotals],
     );
@@ -199,7 +196,7 @@ export default function AggregationsMenu({
             const columnAttributeIdentifiers = getAttributeDescriptorsLocalId(columnAttributeDescriptors);
 
             return availableTotalTypes.map((totalType: TotalType) => {
-                const isSelected = menuHelper.isTotalEnabledForAttribute(
+                const isSelected = isTotalEnabledForAttribute(
                     rowAttributeIdentifiers,
                     columnAttributeIdentifiers,
                     totalType,

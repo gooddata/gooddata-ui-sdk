@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import LabelRotationControl from "./components/configurationControls/axis/LabelRotationControl.js";
-import LabelSubsection from "./components/configurationControls/axis/LabelSubsection.js";
-import NamePositionControl from "./components/configurationControls/axis/NamePositionControl.js";
-import NameSubsection from "./components/configurationControls/axis/NameSubsection.js";
-import ColorDropdown from "./components/configurationControls/colors/colorDropdown/ColorDropdown.js";
-import ColoredItemContent from "./components/configurationControls/colors/coloredItemsList/ColoredItemContent.js";
-import LegendSection from "./components/configurationControls/legend/LegendSection.js";
-import MinMaxControl from "./components/configurationControls/MinMaxControl.js";
+import { LabelRotationControl } from "./components/configurationControls/axis/LabelRotationControl.js";
+import { LabelSubsection } from "./components/configurationControls/axis/LabelSubsection.js";
+import { NamePositionControl } from "./components/configurationControls/axis/NamePositionControl.js";
+import { NameSubsection } from "./components/configurationControls/axis/NameSubsection.js";
+import { ColorDropdown } from "./components/configurationControls/colors/colorDropdown/ColorDropdown.js";
+import { ColoredItemContent } from "./components/configurationControls/colors/coloredItemsList/ColoredItemContent.js";
+import { LegendSection } from "./components/configurationControls/legend/LegendSection.js";
+import { MinMaxControl } from "./components/configurationControls/MinMaxControl.js";
 import * as Axis from "./constants/axis.js";
 import * as DrillablePredicatesUtils from "./utils/drillablePredicates.js";
 export {

@@ -3,14 +3,14 @@
 import { memo, useEffect } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { isTotalSectionEnabled } from "../../../utils/propertiesHelper.js";
 import { getTranslation } from "../../../utils/translations.js";
-import ConfigSection from "../ConfigSection.js";
-import InputControl from "../InputControl.js";
+import { ConfigSection } from "../ConfigSection.js";
+import { InputControl } from "../InputControl.js";
 
 export interface ITotalSectionProps {
     controlsDisabled: boolean;
@@ -21,13 +21,13 @@ export interface ITotalSectionProps {
 
 const MAX_BUCKET_ITEM_NAME = 50;
 
-function TotalSection({
-    intl,
+export const TotalSection = memo(function TotalSection({
     controlsDisabled,
     properties,
     propertiesMeta,
     pushData,
-}: ITotalSectionProps & WrappedComponentProps) {
+}: ITotalSectionProps) {
+    const intl = useIntl();
     const hasTotalMeasure = properties.controls?.["total"]?.measures?.length > 0;
     const isToggleDisabled = controlsDisabled || hasTotalMeasure;
     //always toggle to false when the control is disabled, otherwise depend on the properties config
@@ -76,6 +76,4 @@ function TotalSection({
             />
         </ConfigSection>
     );
-}
-
-export default injectIntl(memo(TotalSection));
+});

@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -15,13 +15,13 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { ImageControl } from "../configurationControls/ImageControl.js";
 import { RowHeightControl } from "../configurationControls/RowHeightControl.js";
 import { TextWrappingControl } from "../configurationControls/TextWrappingControl.js";
 import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
 
-export default class RepeaterConfigurationPanel extends ConfigurationPanelContent {
+export class RepeaterConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData } = this.props;
 

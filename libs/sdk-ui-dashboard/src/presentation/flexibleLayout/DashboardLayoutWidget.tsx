@@ -5,9 +5,11 @@ import { Ref, useRef } from "react";
 import cx from "classnames";
 
 import {
+    IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
     IInsight,
     ISettings,
+    ScreenSize,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
@@ -70,6 +72,24 @@ import {
 import { useWidgetExportData } from "../export/index.js";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
 
+function logInvalidWidth(
+    isValid: boolean,
+    widgetId: string,
+    gridWidth: number,
+    parentWidth: number | undefined,
+): void {
+    if (!isValid) {
+        console.error(
+            `DashboardLayoutWidget: Widget ID: ${widgetId} has width set to ${gridWidth} which is bigger than the parent container's width ${parentWidth} or parent container has a column direction set and the widget width is smaller than the parent!`,
+        );
+    }
+}
+
+function calculateHeight(currentSize: IDashboardLayoutSize, screen: ScreenSize): number | undefined {
+    const hasRatioHeight = Boolean(currentSize.heightAsRatio) && !currentSize.gridHeight;
+    return hasRatioHeight ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen) : undefined;
+}
+
 /**
  * Tests in KD require widget index for css selectors.
  * Widget index equals to the widget order in the layout.
@@ -127,24 +147,21 @@ export function DashboardLayoutWidget({
     //  be allowed? undefined widget will make things explode down the line away so..
     const widget = item.widget()!;
     const isCustom = isCustomWidget(widget);
-    const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustom);
+    const isPlaceholder = isPlaceholderWidget(widget);
+    const isDraggableWidgetType = !isPlaceholder && !isCustom;
     const { isSelected } = useWidgetSelection(widget.ref);
-    const isRichText = isRichTextWidget(widget);
-    const isRichTextWidgetInEditState = isSelected && isRichText;
+    const isRichTextWidgetInEditState = isSelected && isRichTextWidget(widget);
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
     const exportData = useWidgetExportData(widget);
     const { enableRowEndHotspot } = useShouldShowRowEndHotspot(item, rowIndex);
     const { direction } = getLayoutConfiguration(item.section().layout().raw());
 
+    const canDrag = isInEditMode && isDraggableWidgetType && !isRichTextWidgetInEditState;
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
-            dragItem: () => {
-                return createDraggableItem(item, insights, settings);
-            },
-            canDrag: isInEditMode && isDraggableWidgetType && !isRichTextWidgetInEditState,
-            dragStart: (item) => {
-                dispatch(uiActions.setDraggingWidgetSource(item));
-            },
+            dragItem: () => createDraggableItem(item, insights, settings),
+            canDrag,
+            dragStart: (dragItem) => dispatch(uiActions.setDraggingWidgetSource(dragItem)),
             dragEnd: handleDragEnd,
         },
         [item, insights, isInEditMode, isDraggableWidgetType, isRichTextWidgetInEditState],
@@ -154,10 +171,7 @@ export function DashboardLayoutWidget({
 
     const currentSize = item.size()[screen]!;
     const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode);
-    const height =
-        currentSize.heightAsRatio && !currentSize.gridHeight
-            ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
-            : undefined;
+    const height = calculateHeight(currentSize, screen);
 
     const allowOverflow = !!currentSize.heightAsRatio;
 
@@ -175,25 +189,20 @@ export function DashboardLayoutWidget({
     );
 
     const contentRef = useRef<HTMLDivElement | null>(null);
-    function getWidthInPx(): number {
-        return contentRef?.current
-            ? contentRef.current.getBoundingClientRect().width
-            : DEFAULT_COLUMN_CLIENT_WIDTH;
-    }
-
-    function getHeightInPx(): number {
-        return contentRef?.current
-            ? contentRef.current.getBoundingClientRect().height
-            : DEFAULT_WIDTH_RESIZER_HEIGHT;
-    }
-
-    function getGridColumnWidth(): number {
-        const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth || DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
-        const columnWidthInPx = getWidthInPx();
-        return (columnWidthInPx + 20) / columnWidthInGC;
-    }
+    const getWidthInPx = () =>
+        contentRef.current?.getBoundingClientRect().width ?? DEFAULT_COLUMN_CLIENT_WIDTH;
+    const getHeightInPx = () =>
+        contentRef.current?.getBoundingClientRect().height ?? DEFAULT_WIDTH_RESIZER_HEIGHT;
+    const getGridColumnWidth = () => {
+        const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth ?? DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN;
+        return (getWidthInPx() + 20) / columnWidthInGC;
+    };
 
     const canShowHotspot = isInEditMode && !isDragging;
+    const isNotPlaceholder = !isAnyPlaceholderWidget(widget);
+    const isStandardWidget = isNotPlaceholder && !isCustomWidget(widget);
+    const canShowWidgetHotspots = canShowHotspot && isStandardWidget;
+    const canShowResizeOverlay = canShowHotspot && isNotPlaceholder && isActive;
 
     const className = cx({
         "custom-height": true,
@@ -201,12 +210,22 @@ export function DashboardLayoutWidget({
     });
 
     const { isValid, parentWidth } = useWidthValidation(item.size());
+    logInvalidWidth(isValid, widget.identifier, currentSize.gridWidth, parentWidth);
 
-    if (!isValid) {
-        console.error(
-            `DashboardLayoutWidget: Widget ID: ${widget.identifier} has width set to ${currentSize.gridWidth} which is bigger than the parent container's width ${parentWidth} or parent container has a column direction set and the widget width is smaller than the parent!`,
-        );
-    }
+    const isInFirstRow = rowIndex === 0;
+    const wrapperRef = isInEditMode ? (dragRef as unknown as Ref<HTMLDivElement>) : undefined;
+    const wrapperClassName = cx([
+        "dashboard-widget-draggable-wrapper",
+        {
+            "gd-custom-widget-export": isCustom && isExport,
+            "gd-nested-layout-widget-wrapper": isNestedLayout,
+            "gd-widget-export": isSnapshotAccessibilityEnabled && isExport,
+        },
+    ]);
+    const isInsertedByPlugin = sectionModifications.includes("insertedByPlugin");
+    const shouldRenderOverlay = isInEditMode && overlayShow && !isInsertedByPlugin;
+    const handleHideOverlay = () =>
+        dispatch(uiActions.toggleWidgetsOverlay({ refs: [item.ref()], visible: false }));
 
     return (
         <DefaultWidgetRenderer
@@ -220,24 +239,14 @@ export function DashboardLayoutWidget({
             getLayoutDimensions={getLayoutDimensions}
             rowIndex={rowIndex}
         >
-            <div
-                ref={isInEditMode ? (dragRef as unknown as Ref<HTMLDivElement> | undefined) : undefined}
-                className={cx([
-                    "dashboard-widget-draggable-wrapper",
-                    {
-                        "gd-custom-widget-export": isCustom && isExport,
-                        "gd-nested-layout-widget-wrapper": isNestedLayout,
-                        "gd-widget-export": isSnapshotAccessibilityEnabled && isExport,
-                    },
-                ])}
-            >
-                {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
+            <div ref={wrapperRef} className={wrapperClassName}>
+                {canShowWidgetHotspots ? (
                     <Hotspot
                         dropZoneType="prev"
                         direction={direction}
                         layoutPath={item.index()}
                         isOverNestedLayout={isNestedLayout}
-                        isInFirstRow={rowIndex === 0}
+                        isInFirstRow={isInFirstRow}
                     />
                 ) : null}
                 <DashboardItemPathAndSizeProvider layoutItem={item}>
@@ -258,62 +267,41 @@ export function DashboardLayoutWidget({
                         />
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
-                {canShowHotspot && !isAnyPlaceholderWidget(widget) && isActive ? (
+                {canShowResizeOverlay ? (
                     <ResizeOverlay
                         isActive={isActive}
                         isResizingColumnOrRow={isResizingColumnOrRow}
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                         isOverNestedLayout={isNestedLayout}
-                        isInFirstRow={rowIndex === 0}
+                        isInFirstRow={isInFirstRow}
                     />
                 ) : null}
-                {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
-                    <>
-                        {isCustomWidget(widget) ? null : (
-                            <>
-                                <Hotspot
-                                    dropZoneType="next"
-                                    direction={direction}
-                                    layoutPath={item.index()}
-                                    hideDropTarget={enableRowEndHotspot}
-                                    isOverNestedLayout={isNestedLayout}
-                                    isInFirstRow={rowIndex === 0}
-                                />
-                            </>
-                        )}
-                    </>
+                {canShowWidgetHotspots ? (
+                    <Hotspot
+                        dropZoneType="next"
+                        direction={direction}
+                        layoutPath={item.index()}
+                        hideDropTarget={enableRowEndHotspot}
+                        isOverNestedLayout={isNestedLayout}
+                        isInFirstRow={isInFirstRow}
+                    />
                 ) : null}
             </div>
-            {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
-                <>
-                    {isCustomWidget(widget) ? null : (
-                        <>
-                            <WidthResizerHotspot
-                                item={item}
-                                getGridColumnHeightInPx={getHeightInPx}
-                                getGridColumnWidth={getGridColumnWidth}
-                                getLayoutDimensions={getLayoutDimensions}
-                                rowIndex={rowIndex}
-                            />
-                        </>
-                    )}
-                </>
+            {canShowWidgetHotspots ? (
+                <WidthResizerHotspot
+                    item={item}
+                    getGridColumnHeightInPx={getHeightInPx}
+                    getGridColumnWidth={getGridColumnWidth}
+                    getLayoutDimensions={getLayoutDimensions}
+                    rowIndex={rowIndex}
+                />
             ) : null}
 
             <DashboardItemOverlay
                 type="column"
-                onHide={() =>
-                    dispatch(
-                        uiActions.toggleWidgetsOverlay({
-                            refs: [item.ref()],
-                            visible: false,
-                        }),
-                    )
-                }
-                render={
-                    Boolean(isInEditMode && overlayShow) && !sectionModifications.includes("insertedByPlugin")
-                }
+                onHide={handleHideOverlay}
+                render={shouldRenderOverlay}
                 modifications={itemModifications}
             />
         </DefaultWidgetRenderer>

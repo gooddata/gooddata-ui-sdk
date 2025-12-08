@@ -4,6 +4,7 @@ import { ReactNode, Ref } from "react";
 
 import { SortDirection } from "@gooddata/sdk-model";
 
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { IconType } from "../@types/icon.js";
 
 /**
@@ -152,6 +153,7 @@ export interface UiAsyncTableFilterOption {
 export interface UiAsyncTableBulkAction {
     label: string;
     onClick: () => void;
+    accessibilityConfig?: IAccessibilityConfigBase;
 }
 
 /**
@@ -241,6 +243,7 @@ export type UiAsyncTableDropdownItemProps = {
     isSelected?: boolean;
     isMultiSelect?: boolean;
     isUnderlined?: boolean;
+    accessibilityConfig?: IAccessibilityConfigBase;
 };
 
 export interface UiAsyncTableBulkActionsProps {

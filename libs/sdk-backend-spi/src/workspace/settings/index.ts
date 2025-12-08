@@ -1,6 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+import {
+    type DashboardFiltersApplyMode,
+    IAlertDefault,
+    IMetricFormatOverrideSetting,
+    ISeparators,
+} from "@gooddata/sdk-model";
 
 import { IUserWorkspaceSettings, IWorkspaceSettings } from "../../common/settings.js";
 
@@ -172,4 +177,21 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     deleteColorPalette(): Promise<void>;
+
+    /**
+     * Sets metric format override for the current workspace.
+     *
+     * @param override - mapping of metric types to custom format strings.
+     *
+     * @returns promise
+     */
+    setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
+
+    /**
+     * Deletes metric format override from workspace settings,
+     * returning to inherited organization-level format.
+     *
+     * @returns promise
+     */
+    deleteMetricFormatOverride(): Promise<void>;
 }

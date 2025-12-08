@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import PreviewRows from "../shared/PreviewRows.js";
+import { PreviewRows } from "../shared/PreviewRows.js";
 
 interface IExtendedPreviewProps {
     format: string;

@@ -12,7 +12,7 @@ import {
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+export const stacking = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 600 },

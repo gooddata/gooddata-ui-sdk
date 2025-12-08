@@ -112,5 +112,3 @@ export const ColorOverlay = memo(function ColorOverlay({
         </Overlay>
     );
 });
-
-export default ColorOverlay;

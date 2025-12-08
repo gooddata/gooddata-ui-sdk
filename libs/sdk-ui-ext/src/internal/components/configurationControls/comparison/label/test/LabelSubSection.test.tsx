@@ -22,7 +22,7 @@ import {
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../../ComparisonValuePath.js";
-import LabelSubSection from "../LabelSubSection.js";
+import { LabelSubSection } from "../LabelSubSection.js";
 
 const TITLE_TEXT_QUERY = "Label";
 
@@ -87,8 +87,8 @@ describe("LabelSubSection", () => {
     });
 
     it("Should render label input control with ratio calculation", () => {
-        const MockInputControl = vi.spyOn(InputControl, "default");
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+        const MockInputControl = vi.spyOn(InputControl, "InputControl");
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
         renderLabelSubSection();
 
         expect(MockCheckboxControl).toHaveBeenCalledWith(
@@ -120,8 +120,8 @@ describe("LabelSubSection", () => {
     });
 
     it("Should render label input control with change calculation", () => {
-        const MockInputControl = vi.spyOn(InputControl, "default");
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+        const MockInputControl = vi.spyOn(InputControl, "InputControl");
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
 
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -183,7 +183,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should disabled label input when position on top", () => {
-        const MockInputControl = vi.spyOn(InputControl, "default");
+        const MockInputControl = vi.spyOn(InputControl, "InputControl");
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -206,7 +206,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should not show disabled message in case position is not on top", () => {
-        const MockInputControl = vi.spyOn(InputControl, "default");
+        const MockInputControl = vi.spyOn(InputControl, "InputControl");
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -228,7 +228,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should show disabled message in case position is on top and control is disabled by configuration", () => {
-        const MockInputControl = vi.spyOn(InputControl, "default");
+        const MockInputControl = vi.spyOn(InputControl, "InputControl");
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,

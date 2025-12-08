@@ -12,7 +12,7 @@ import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortCon
 import { IReferencePoint, IVisConstruct, IVisProps } from "../../../interfaces/Visualization.js";
 import { getBucketItems } from "../../../utils/bucketHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
-import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel.js";
+import { BarChartConfigurationPanel } from "../../configurationPanels/BarChartConfigurationPanel.js";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
 
 /**
@@ -123,70 +123,103 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
 
         if (viewBy.length === 2 && !isEmpty(measures)) {
-            if (measures.length >= 2 && !canSortStackTotalValue) {
-                return {
-                    defaultSort: [
-                        newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
-                        newMeasureSort(measures[0].localIdentifier, "desc"),
-                    ],
-                    availableSorts: [
-                        newAvailableSortsGroup(viewBy[0].localIdentifier),
-                        newAvailableSortsGroup(
-                            viewBy[1].localIdentifier,
-                            measures.map((m) => m.localIdentifier),
-                        ),
-                    ],
-                };
-            }
-
-            return {
-                defaultSort: [
-                    newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
-                    isStacked
-                        ? newAttributeAreaSort(viewBy[1].localIdentifier, "desc")
-                        : newMeasureSort(measures[0].localIdentifier, "desc"),
-                ],
-                availableSorts: [
-                    newAvailableSortsGroup(viewBy[0].localIdentifier),
-                    newAvailableSortsGroup(
-                        viewBy[1].localIdentifier,
-                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
-                        true,
-                        isStacked || measures.length > 1,
-                    ),
-                ],
-            };
+            return this.getSortForTwoViewBy(measures, viewBy, stackBy, isStacked, canSortStackTotalValue);
         }
 
         if (!isEmpty(viewBy) && isStacked) {
-            return {
-                defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
-                availableSorts: [
-                    newAvailableSortsGroup(
-                        viewBy[0].localIdentifier,
-                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
-                    ),
-                ],
-            };
+            return this.getSortForStackedSingleViewBy(measures, viewBy, stackBy);
         }
 
         if (!isEmpty(viewBy) && !isEmpty(measures)) {
-            return {
-                defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
-                availableSorts: [
-                    newAvailableSortsGroup(
-                        viewBy[0].localIdentifier,
-                        measures.map((m) => m.localIdentifier),
-                        true,
-                        measures.length > 1,
-                    ),
-                ],
-            };
+            return this.getSortForUnstackedSingleViewBy(measures, viewBy);
         }
 
         return {
             defaultSort: [],
             availableSorts: [],
+        };
+    }
+
+    private getSortForTwoViewBy(
+        measures: ReturnType<typeof getBucketItems>,
+        viewBy: ReturnType<typeof getBucketItems>,
+        stackBy: ReturnType<typeof getBucketItems>,
+        isStacked: boolean,
+        canSortStackTotalValue: boolean,
+    ): {
+        defaultSort: ISortConfig["defaultSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const hasMultipleMeasuresWithoutStackTotal = measures.length >= 2 && !canSortStackTotalValue;
+
+        if (hasMultipleMeasuresWithoutStackTotal) {
+            return {
+                defaultSort: [
+                    newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
+                    newMeasureSort(measures[0].localIdentifier, "desc"),
+                ],
+                availableSorts: [
+                    newAvailableSortsGroup(viewBy[0].localIdentifier),
+                    newAvailableSortsGroup(
+                        viewBy[1].localIdentifier,
+                        measures.map((m) => m.localIdentifier),
+                    ),
+                ],
+            };
+        }
+
+        const secondViewBySort = isStacked
+            ? newAttributeAreaSort(viewBy[1].localIdentifier, "desc")
+            : newMeasureSort(measures[0].localIdentifier, "desc");
+        const measureIds = isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
+
+        return {
+            defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc"), secondViewBySort],
+            availableSorts: [
+                newAvailableSortsGroup(viewBy[0].localIdentifier),
+                newAvailableSortsGroup(
+                    viewBy[1].localIdentifier,
+                    measureIds,
+                    true,
+                    isStacked || measures.length > 1,
+                ),
+            ],
+        };
+    }
+
+    private getSortForStackedSingleViewBy(
+        measures: ReturnType<typeof getBucketItems>,
+        viewBy: ReturnType<typeof getBucketItems>,
+        stackBy: ReturnType<typeof getBucketItems>,
+    ): {
+        defaultSort: ISortConfig["defaultSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const measureIds = isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
+
+        return {
+            defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
+            availableSorts: [newAvailableSortsGroup(viewBy[0].localIdentifier, measureIds)],
+        };
+    }
+
+    private getSortForUnstackedSingleViewBy(
+        measures: ReturnType<typeof getBucketItems>,
+        viewBy: ReturnType<typeof getBucketItems>,
+    ): {
+        defaultSort: ISortConfig["defaultSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        return {
+            defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
+            availableSorts: [
+                newAvailableSortsGroup(
+                    viewBy[0].localIdentifier,
+                    measures.map((m) => m.localIdentifier),
+                    true,
+                    measures.length > 1,
+                ),
+            ],
         };
     }
     private isSortDisabled(referencePoint: IReferencePoint) {

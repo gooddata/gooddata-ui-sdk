@@ -53,7 +53,7 @@ import {
     getDefaultRepeaterUiConfig,
     setRepeaterUiConfig,
 } from "../../../utils/uiConfigHelpers/repeaterUiConfigHelper.js";
-import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
+import { RepeaterConfigurationPanel } from "../../configurationPanels/RepeaterConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 
 /**

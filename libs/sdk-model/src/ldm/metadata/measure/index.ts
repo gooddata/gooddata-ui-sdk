@@ -1,6 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { IAuditable } from "../../../base/metadata.js";
 import { IMetadataObject, IMetadataObjectDefinition, isMetadataObject } from "../types.js";
+
+/**
+ * Metric type categorizes metric semantics (e.g., currency).
+ *
+ * @public
+ */
+export type MetricType = "UNSPECIFIED" | "CURRENCY";
 
 /**
  * @public
@@ -18,6 +26,12 @@ export interface IMeasureMetadataObjectBase {
      * Prefer set format value, if the format is empty string backend implementation-dependent default will be used.
      */
     format: string;
+
+    /**
+     * Metric type categorizes metric semantics (e.g., currency).
+     * When set to "CURRENCY", the metric should use currency-related formats.
+     */
+    metricType?: MetricType;
 
     /**
      * Measure is locked for editing

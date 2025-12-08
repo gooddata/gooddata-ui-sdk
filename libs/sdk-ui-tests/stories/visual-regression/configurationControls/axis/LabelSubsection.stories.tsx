@@ -33,6 +33,7 @@ const commonScenarios: INeobackstopConfig = {
     },
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "11 Configuration Controls/Axis/LabelSubsection",
 };

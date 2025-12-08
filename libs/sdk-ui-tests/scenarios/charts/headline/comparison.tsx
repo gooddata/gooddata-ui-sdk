@@ -82,7 +82,7 @@ export const comparisonDisabled: IComparison = {
     enabled: false,
 };
 
-export default scenariosFor<IHeadlineProps>("Headline", Headline)
+export const comparison = scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames("comparison")
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

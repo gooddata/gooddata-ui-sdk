@@ -25,7 +25,10 @@ import {
     getValidDrillOriginAttributes,
     isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../../../_staging/drills/drillingUtils.js";
-import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../types.js";
+import {
+    IDrillToUrlAttributeDefinition,
+    IGlobalDrillDownAttributeHierarchyDefinition,
+} from "../../../../../types.js";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -219,6 +222,45 @@ export const getGlobalDrillDownMappedConfigForWidget = (
             localIdentifier,
             complete: true,
             widgetRef: widget.ref,
+        };
+    });
+};
+
+/**
+ * @internal
+ */
+export const getDrillToUrlMappedConfigForWidget = (
+    widgetDrillToUrls: IDrillToUrlAttributeDefinition[],
+    supportedItemsForWidget: IAvailableDrillTargets,
+    widget: IInsightWidget,
+): IDrillToUrlConfig[] => {
+    return widgetDrillToUrls.map((drillToUrl): IDrillToUrlConfig => {
+        const originLocalIdentifier = getDrillOriginLocalIdentifier(drillToUrl);
+        const localIdentifier = `${originLocalIdentifier}_${objRefToString(drillToUrl.target)}`;
+        const insightAttributeDisplayForm = supportedItemsForWidget.attributes?.find(
+            (attribute) => attribute.attribute.attributeHeader.localIdentifier === originLocalIdentifier,
+        )?.attribute.attributeHeader.ref;
+
+        if (!insightAttributeDisplayForm) {
+            throw new Error(
+                `Insight attribute display form not found for origin local identifier: ${originLocalIdentifier}`,
+            );
+        }
+
+        return {
+            type: "attribute",
+            drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
+            originLocalIdentifier: originLocalIdentifier,
+            title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
+            attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+            localIdentifier,
+            complete: true,
+            widgetRef: widget.ref,
+            urlDrillTarget: {
+                insightAttributeDisplayForm,
+                drillToAttributeDisplayForm: drillToUrl.target,
+                implicit: true,
+            },
         };
     });
 };

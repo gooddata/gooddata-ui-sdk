@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import ConfigSubsection from "./ConfigSubsection.js";
-import DropdownControl from "./DropdownControl.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { grandTotalsPositionDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -16,13 +16,13 @@ export interface IGrandTotalsControlProps {
     showDisabledMessage?: boolean;
 }
 
-function GrandTotalsControl({
+export function GrandTotalsControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     showDisabledMessage = false,
-}: IGrandTotalsControlProps & WrappedComponentProps) {
+}: IGrandTotalsControlProps) {
+    const intl = useIntl();
     const grandTotalsPosition = properties?.controls?.["grandTotalsPosition"] ?? "pinnedBottom";
 
     return (
@@ -40,5 +40,3 @@ function GrandTotalsControl({
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(GrandTotalsControl);

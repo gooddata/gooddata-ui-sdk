@@ -11,6 +11,7 @@ import {
 } from "./init.js";
 import { IStoryParameters } from "../../_infra/backstopScenario.js";
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "18 Kda/Dialog/Normal",
 };

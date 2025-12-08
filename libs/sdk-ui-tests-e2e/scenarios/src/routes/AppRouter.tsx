@@ -2,9 +2,9 @@
 
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
-import ComponentResolver from "./ComponentResolver";
+import { ComponentResolver } from "./ComponentResolver";
 
-export default function AppRouter() {
+export function AppRouter() {
     return (
         <div>
             <Router>

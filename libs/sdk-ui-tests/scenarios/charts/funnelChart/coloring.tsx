@@ -73,4 +73,4 @@ const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelCha
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

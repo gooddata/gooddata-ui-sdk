@@ -2310,8 +2310,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.0
-        version: 3.3.0
+        specifier: 3.3.2
+        version: 3.3.2
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -5409,8 +5409,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.0
-        version: 3.3.0
+        specifier: 3.3.2
+        version: 3.3.2
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../sdk-backend-base
@@ -7596,8 +7596,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.0
-        version: 3.3.0
+        specifier: 3.3.2
+        version: 3.3.2
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -9822,8 +9822,8 @@ packages:
       text-encoding: 0.7.0
     dev: false
 
-  /@gooddata/fixtures@3.3.0:
-    resolution: {integrity: sha512-1vmBybYJGv3PxHhtDZRdmsoaSsvpzl958/E+4892k/bWfGKYv4qNSSyrZsm5hi8SvaEJYlwVuAOANpZUugEEmQ==}
+  /@gooddata/fixtures@3.3.2:
+    resolution: {integrity: sha512-fe2C0viBlBT8fNF++siAA4aw1sS8FEzDMzpOgD7tjmha9dEp/D48EDC1FcUfE/6n14J9RVAYBHOxG694ig8FAw==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 10.43.0

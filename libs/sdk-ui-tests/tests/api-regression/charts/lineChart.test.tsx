@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 
-import lineChartScenario from "../../../scenarios/charts/lineChart/index.js";
+import { lineChart as lineChartScenario } from "../../../scenarios/charts/lineChart/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

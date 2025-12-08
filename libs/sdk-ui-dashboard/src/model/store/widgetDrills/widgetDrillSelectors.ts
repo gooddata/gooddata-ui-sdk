@@ -35,7 +35,11 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { DashboardDrillDefinition, IGlobalDrillDownAttributeHierarchyDefinition } from "../../../types.js";
+import {
+    DashboardDrillDefinition,
+    IDrillToUrlAttributeDefinition,
+    IGlobalDrillDownAttributeHierarchyDefinition,
+} from "../../../types.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import {
@@ -60,6 +64,8 @@ import {
 } from "../catalog/catalogSelectors.js";
 import {
     selectDisableDefaultDrills,
+    selectEnableDrillToUrlByDefault,
+    selectEnableImplicitDrillToUrl,
     selectEnableKDCrossFiltering,
     selectEnableKda,
     selectIsDisabledCrossFiltering,
@@ -73,6 +79,7 @@ import { keyDriverAnalysisSupportedGranularities } from "../keyDriverAnalysis/co
 import { selectDisableDashboardCrossFiltering, selectDisableDashboardKda } from "../meta/metaSelectors.js";
 import {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
+    selectIgnoredDrillToUrlAttributesByWidgetRef,
     selectWidgetDrills,
 } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector } from "../types.js";
@@ -138,6 +145,80 @@ function createDrillDefinition(
     };
 }
 
+function isAttributeNotIgnored(
+    attrRef: ObjRef,
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+    ignoredDrillDownHierarchies: IDrillDownReference[],
+    allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    supportsAttributeHierarchies?: boolean,
+): boolean {
+    const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
+        existBlacklistHierarchyPredicate(reference, hierarchy, attrRef),
+    );
+    const isNotIgnored = ignoredIndex < 0;
+
+    if (!supportsAttributeHierarchies) {
+        return isNotIgnored;
+    }
+
+    const attributeHierarchyExist = allCatalogAttributesMap.get(attrRef);
+    return isNotIgnored && !!attributeHierarchyExist;
+}
+
+function findDescendantForAttribute(
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+    attributeRef: ObjRef,
+    ignoredDrillDownHierarchies: IDrillDownReference[],
+    allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    supportsAttributeHierarchies?: boolean,
+): HierarchyDescendant | undefined {
+    const attributes = getHierarchyAttributes(hierarchy);
+    const hierarchyRef = getHierarchyRef(hierarchy);
+    const hierarchyAttributes = attributes.filter((attrRef) =>
+        isAttributeNotIgnored(
+            attrRef,
+            hierarchy,
+            ignoredDrillDownHierarchies,
+            allCatalogAttributesMap,
+            supportsAttributeHierarchies,
+        ),
+    );
+
+    const foundAttributeIndex = hierarchyAttributes.findIndex((ref) => areObjRefsEqual(ref, attributeRef));
+    if (foundAttributeIndex < 0) {
+        return undefined;
+    }
+
+    const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
+    if (!foundDescendant) {
+        return undefined;
+    }
+
+    return { hierarchyRef, descendantRef: foundDescendant };
+}
+
+function getDescendantsForDrillAttribute(
+    drill: IAvailableDrillTargetAttribute,
+    allCatalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
+    ignoredDrillDownHierarchies: IDrillDownReference[],
+    allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    supportsAttributeHierarchies?: boolean,
+): HierarchyDescendant[] {
+    const attributeRef = drill.attribute.attributeHeader.formOf.ref;
+
+    return compact(
+        allCatalogAttributeHierarchies.map((hierarchy) =>
+            findDescendantForAttribute(
+                hierarchy,
+                attributeRef,
+                ignoredDrillDownHierarchies,
+                allCatalogAttributesMap,
+                supportsAttributeHierarchies,
+            ),
+        ),
+    );
+}
+
 function getDrillDownDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithHierarchyDescendants: HierarchyDescendantsByAttributeId,
@@ -152,41 +233,13 @@ function getDrillDownDefinitionsWithPredicates(
     // For the future, we may consider not creating this at all and always generate on the fly.
     if (ignoredDrillDownHierarchies?.length) {
         return availableDrillAttributes.flatMap((drill) => {
-            const attributeRef = drill.attribute.attributeHeader.formOf.ref;
-            const attributeDescendants: HierarchyDescendant[] = [];
-            allCatalogAttributeHierarchies.forEach((hierarchy) => {
-                const attributes = getHierarchyAttributes(hierarchy);
-                const hierarchyRef = getHierarchyRef(hierarchy);
-                const hierarchyAttributes = attributes.filter((attrRef) => {
-                    const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                        existBlacklistHierarchyPredicate(reference, hierarchy, attrRef),
-                    );
-
-                    if (supportsAttributeHierarchies) {
-                        const attribueHierarchyExist = allCatalogAttributesMap.get(attrRef);
-
-                        return ignoredIndex < 0 && attribueHierarchyExist;
-                    } else {
-                        return ignoredIndex < 0;
-                    }
-                });
-
-                const foundAttributeIndex = hierarchyAttributes.findIndex((ref) =>
-                    areObjRefsEqual(ref, attributeRef),
-                );
-
-                if (foundAttributeIndex < 0) {
-                    return;
-                }
-
-                const foundDescendant = hierarchyAttributes[foundAttributeIndex + 1];
-
-                if (!foundDescendant) {
-                    return;
-                }
-
-                attributeDescendants.push({ hierarchyRef, descendantRef: foundDescendant });
-            });
+            const attributeDescendants = getDescendantsForDrillAttribute(
+                drill,
+                allCatalogAttributeHierarchies,
+                ignoredDrillDownHierarchies,
+                allCatalogAttributesMap,
+                supportsAttributeHierarchies,
+            );
 
             return attributeDescendants.map((descendant) => {
                 return createDrillDefinition(
@@ -223,6 +276,8 @@ function getDrillDownDefinitionsWithPredicates(
 function getDrillToUrlDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithDisplayFormLink: Array<ICatalogAttribute>,
+    ignoredDrillToUrlAttributes: ObjRef[],
+    enableImplicitDrillToUrl: boolean,
 ): IImplicitDrillWithPredicates[] {
     const matchingAvailableDrillAttributes = availableDrillAttributes.filter((candidate) => {
         return attributesWithDisplayFormLink.some((attr) =>
@@ -230,7 +285,18 @@ function getDrillToUrlDefinitionsWithPredicates(
         );
     });
 
-    return matchingAvailableDrillAttributes.map((targetAttribute): IImplicitDrillWithPredicates => {
+    const filterIgnoredDrillToUrlAttributes = (targetAttribute: IAvailableDrillTargetAttribute) => {
+        if (!enableImplicitDrillToUrl) {
+            return true;
+        }
+        return !ignoredDrillToUrlAttributes?.some((ignoredAttributeRef) =>
+            areObjRefsEqual(targetAttribute.attribute.attributeHeader.ref, ignoredAttributeRef),
+        );
+    };
+
+    const mapDrillTargetToDefinition = (
+        targetAttribute: IAvailableDrillTargetAttribute,
+    ): IImplicitDrillWithPredicates => {
         const matchingCatalogAttribute = attributesWithDisplayFormLink.find((attr) =>
             areObjRefsEqual(attr.attribute.ref, targetAttribute.attribute.attributeHeader.formOf.ref),
         );
@@ -256,7 +322,11 @@ function getDrillToUrlDefinitionsWithPredicates(
                 HeaderPredicates.uriMatch(targetAttribute.attribute.attributeHeader.uri),
             ],
         };
-    });
+    };
+
+    return matchingAvailableDrillAttributes
+        .filter(filterIgnoredDrillToUrlAttributes)
+        .map(mapDrillTargetToDefinition);
 }
 
 function getDrillDefinitionsWithPredicates(
@@ -543,15 +613,97 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
 /**
  * @internal
  */
+export const selectDrillsToUrlAttributeByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<IDrillToUrlAttributeDefinition[]> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectDrillTargetsByWidgetRef(ref),
+        selectIgnoredDrillToUrlAttributesByWidgetRef(ref),
+        selectInsightByWidgetRef(ref),
+        selectAllCatalogDisplayFormsMap,
+        selectAllCatalogAttributesMap,
+        selectEnableDrillToUrlByDefault,
+        selectEnableImplicitDrillToUrl,
+        (
+            availableDrillTargets,
+            ignoredDrillToUrlAttributes,
+            widgetInsight,
+            allCatalogDisplayFormsMap,
+            allCatalogAttributesMap,
+            enableDrillToUrlByDefault,
+            enableImplicitDrillToUrl,
+        ): IDrillToUrlAttributeDefinition[] => {
+            if (!enableImplicitDrillToUrl) {
+                return [];
+            }
+            const disableDrillIntoURL =
+                widgetInsight?.insight?.properties?.["controls"]?.disableDrillIntoURL ?? true;
+            if (!enableDrillToUrlByDefault && disableDrillIntoURL) {
+                return [];
+            }
+
+            return (
+                availableDrillTargets?.availableDrillTargets?.attributes
+                    ?.map((attribute) => {
+                        if (
+                            ignoredDrillToUrlAttributes.some((ignoredAttributeRef) =>
+                                areObjRefsEqual(attribute.attribute.attributeHeader.ref, ignoredAttributeRef),
+                            )
+                        ) {
+                            return undefined;
+                        }
+                        const catalogDisplayForm = allCatalogDisplayFormsMap.get(
+                            attribute.attribute.attributeHeader.ref,
+                        );
+                        if (!catalogDisplayForm) {
+                            return undefined;
+                        }
+                        const catalogAttribute = allCatalogAttributesMap.get(catalogDisplayForm.attribute);
+                        if (!catalogAttribute) {
+                            return undefined;
+                        }
+                        const linkDisplayForm = catalogAttribute?.attribute.displayForms.find(
+                            (df) => df.displayFormType === "GDC.link",
+                        );
+                        if (!linkDisplayForm) {
+                            return undefined;
+                        }
+                        return {
+                            type: "drillToUrl" as const,
+                            origin: localIdRef(attribute.attribute.attributeHeader.localIdentifier),
+                            target: linkDisplayForm.ref,
+                        };
+                    })
+                    .filter((definition) => definition !== undefined) ?? []
+            );
+        },
+    ),
+);
+
+/**
+ * @internal
+ */
 export const selectImplicitDrillsToUrlByWidgetRef: (
     ref: ObjRef,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDisplayFormLink,
-        (availableDrillTargets, attributesWithLink) => {
+        selectIgnoredDrillToUrlAttributesByWidgetRef(ref),
+        selectEnableImplicitDrillToUrl,
+        (
+            availableDrillTargets,
+            attributesWithLink,
+            ignoredDrillToUrlAttributes,
+            enableImplicitDrillToUrl,
+        ) => {
             const availableDrillAttributes = availableDrillTargets?.availableDrillTargets?.attributes ?? [];
-            return getDrillToUrlDefinitionsWithPredicates(availableDrillAttributes, attributesWithLink);
+            return getDrillToUrlDefinitionsWithPredicates(
+                availableDrillAttributes,
+                attributesWithLink,
+                ignoredDrillToUrlAttributes,
+                enableImplicitDrillToUrl,
+            );
         },
     ),
 );
@@ -709,6 +861,9 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
         selectKdaByWidgetRef(ref),
+        selectInsightByWidgetRef(ref),
+        selectEnableDrillToUrlByDefault,
+        selectEnableImplicitDrillToUrl,
         (
             catalogIsLoaded,
             accessibleDashboardsLoaded,
@@ -717,14 +872,22 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             implicitDrillToUrlDrills,
             crossFiltering,
             keyDriverAnalysis,
+            insight,
+            enableDrillToUrlByDefault,
+            enableImplicitDrillToUrl,
         ) => {
+            const disableDrillIntoURL = insight?.insight.properties["controls"]?.disableDrillIntoURL ?? true;
+            const isDrillToUrlDisabled = enableImplicitDrillToUrl
+                ? !enableDrillToUrlByDefault && disableDrillIntoURL
+                : true;
+
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
             return drillActive
                 ? compact([
                       ...configuredDrills,
                       ...implicitDrillDownDrills,
-                      ...implicitDrillToUrlDrills,
+                      ...(isDrillToUrlDisabled ? [] : implicitDrillToUrlDrills),
                       crossFiltering,
                       keyDriverAnalysis,
                   ])
@@ -782,10 +945,12 @@ export const selectDrillableItemsByWidgetRef: (ref: ObjRef) => DashboardSelector
 export const selectImplicitDrillsByAvailableDrillTargets: (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+    disableDrillIntoURL: boolean | undefined,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector(
     (
         availableDrillTargets: IAvailableDrillTargets | undefined,
         ignoredDrillDownHierarchies: IDrillDownReference[] | undefined = [],
+        disableDrillIntoURL: boolean | undefined,
     ) =>
         createSelector(
             selectAttributesWithDisplayFormLink,
@@ -794,6 +959,8 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectSupportsAttributeHierarchies,
             selectAllCatalogAttributeHierarchies,
             selectBackendCapabilities,
+            selectEnableDrillToUrlByDefault,
+            selectEnableImplicitDrillToUrl,
             (
                 attributesWithLink,
                 attributesWithHierarchyDescendants,
@@ -801,7 +968,10 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                 isDrillDownEnabled,
                 allCatalogHierarchies,
                 backendCapabilities,
+                enableDrillToUrlByDefault,
+                enableImplicitDrillToUrl,
             ) => {
+                const isDrillToUrlDisabled = !enableDrillToUrlByDefault && disableDrillIntoURL;
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = isDrillDownEnabled
                     ? getDrillDownDefinitionsWithPredicates(
@@ -816,9 +986,13 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(
                     availableDrillAttributes,
                     attributesWithLink,
+                    [],
+                    enableImplicitDrillToUrl,
                 );
 
-                return [...drillDownDrills, ...drillToUrlDrills];
+                return !enableImplicitDrillToUrl || isDrillToUrlDisabled
+                    ? drillDownDrills
+                    : [...drillDownDrills, ...drillToUrlDrills];
             },
         ),
 );
@@ -829,13 +1003,19 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
 export const selectDrillableItemsByAvailableDrillTargets: (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+    disableDrillIntoURL: boolean | undefined,
 ) => DashboardSelector<IHeaderPredicate[]> = createMemoizedSelector(
     (
         availableDrillTargets: IAvailableDrillTargets | undefined,
         ignoredDrillDownHierarchies: IDrillDownReference[] | undefined,
+        disableDrillIntoURL: boolean | undefined,
     ) =>
         createSelector(
-            selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets, ignoredDrillDownHierarchies),
+            selectImplicitDrillsByAvailableDrillTargets(
+                availableDrillTargets,
+                ignoredDrillDownHierarchies,
+                disableDrillIntoURL,
+            ),
             (implicitDrillDowns) => {
                 return implicitDrillDowns.flatMap((implicitDrill) => implicitDrill.predicates);
             },

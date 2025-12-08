@@ -47,19 +47,65 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 
 let previousChart: any = null;
 
-function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
-    // Check if Windows High Contrast Mode is active
-    const isHighContrast = isHighContrastMode();
-
+function getBackgroundColor(theme: ITheme | undefined): string {
     // This way it is possible to rewrite css variables in the limited scope.
     const themedBackground = `var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, ${styleVariables.gdColorBackground}))`;
-    const backgroundColor = theme ? themedBackground : styleVariables.gdColorBackground;
-    const axisLineColor =
+    return theme ? themedBackground : styleVariables.gdColorBackground;
+}
+
+function getAxisLineColor(theme: ITheme | undefined): string {
+    return (
         theme?.chart?.axisColor ??
         theme?.chart?.axis?.color ??
         theme?.palette?.complementary?.c4 ??
-        styleVariables.gdColorAxisLine;
+        styleVariables.gdColorAxisLine
+    );
+}
 
+function getActiveDataLabelColor(
+    isHighContrast: boolean,
+    isBackplateStyle: boolean,
+    theme: ITheme | undefined,
+): string {
+    if (isHighContrast) {
+        return "CanvasText";
+    }
+    if (isBackplateStyle) {
+        return getBackplateLabelColor(theme);
+    }
+    return getBlackLabelStyle(theme).color;
+}
+
+function getStackLabelsConfig(isBackplateStyle: boolean, theme: ITheme | undefined): any {
+    return isBackplateStyle
+        ? getBackplateStackedLabelStyling(theme)
+        : { style: getBlackStackedLabelStyle(theme) };
+}
+
+function handleTouchDeviceClick(context: any): void {
+    // Close opened tooltip on previous clicked chart
+    // (click between multiple charts on dashboards)
+    const currentChart = context.series.chart;
+    const currentId = currentChart?.container?.id;
+    const prevId = previousChart?.container?.id;
+    const previousChartDisconnected = isEmpty(previousChart);
+
+    if (previousChart && !previousChartDisconnected && prevId !== currentId) {
+        // Remove line chart point bubble
+        invoke(previousChart, "hoverSeries.onMouseOut");
+        previousChart.tooltip.hide();
+    }
+
+    if (!previousChart || prevId !== currentId) {
+        previousChart = currentChart;
+    }
+}
+
+function getThemedConfiguration(theme: ITheme | undefined, config?: IChartConfig): any {
+    // Check if Windows High Contrast Mode is active
+    const isHighContrast = isHighContrastMode();
+    const backgroundColor = getBackgroundColor(theme);
+    const axisLineColor = getAxisLineColor(theme);
     const isBackplateStyle = config?.dataLabels?.style === "backplate";
 
     return {
@@ -79,11 +125,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         },
         drilldown: {
             activeDataLabelStyle: {
-                color: isHighContrast
-                    ? "CanvasText"
-                    : isBackplateStyle
-                      ? getBackplateLabelColor(theme)
-                      : getBlackLabelStyle(theme).color,
+                color: getActiveDataLabelColor(isHighContrast, isBackplateStyle, theme),
                 textDecoration: "none",
             },
             activeAxisLabelStyle: {
@@ -124,21 +166,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
                     events: {
                         click(this: any) {
                             if (isTouchDevice) {
-                                // Close opened tooltip on previous clicked chart
-                                // (click between multiple charts on dashboards)
-                                const currentChart = this.series.chart;
-                                const currentId = currentChart?.container?.id;
-                                const prevId = previousChart?.container?.id;
-                                const previousChartDisconnected = isEmpty(previousChart);
-                                if (previousChart && !previousChartDisconnected && prevId !== currentId) {
-                                    // Remove line chart point bubble
-                                    invoke(previousChart, "hoverSeries.onMouseOut");
-                                    previousChart.tooltip.hide();
-                                }
-
-                                if (!previousChart || prevId !== currentId) {
-                                    previousChart = currentChart;
-                                }
+                                handleTouchDeviceClick(this);
                             }
                         },
                     },
@@ -172,9 +200,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         yAxis: [
             {
                 lineColor: axisLineColor,
-                stackLabels: isBackplateStyle
-                    ? getBackplateStackedLabelStyling(theme)
-                    : { style: getBlackStackedLabelStyle(theme) },
+                stackLabels: getStackLabelsConfig(isBackplateStyle, theme),
             },
         ],
     };

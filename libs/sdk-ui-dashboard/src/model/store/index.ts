@@ -110,6 +110,7 @@ export {
     selectEnablePreserveFilterSelectionDuringInit,
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
+    selectEnableImplicitDrillToUrl,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -204,6 +205,7 @@ export {
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsToUrlByWidgetRef,
+    selectDrillsToUrlAttributeByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
 

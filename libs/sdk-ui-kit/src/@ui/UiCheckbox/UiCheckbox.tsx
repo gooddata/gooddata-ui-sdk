@@ -36,7 +36,7 @@ export function UiCheckbox({
     label,
 }: UiCheckboxProps) {
     return (
-        <label className={b()} {...accessibilityConfigToAttributes(accessibilityConfig)}>
+        <label className={b()}>
             <input
                 type="checkbox"
                 className={e("input")}
@@ -46,6 +46,7 @@ export function UiCheckbox({
                 aria-checked={indeterminate ? "mixed" : checked}
                 onClick={(e) => preventDefault && e.stopPropagation()}
                 tabIndex={tabIndex}
+                {...accessibilityConfigToAttributes(accessibilityConfig)}
             />
             <span className={e("box", { checked, indeterminate, disabled })} />
             {label ? <span className={e("label") + " gd-label"}>{label}</span> : null}

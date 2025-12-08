@@ -14,6 +14,7 @@ import {
     getSectionIndex,
     serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
@@ -22,6 +23,29 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
+
+function getResolvedSectionPath(
+    itemPath: ILayoutItemPath | undefined,
+    sectionIndex: number,
+): ILayoutSectionPath {
+    return itemPath === undefined ? { parent: undefined, sectionIndex } : asSectionPath(itemPath);
+}
+
+function getResolvedItemPath(
+    itemPath: ILayoutItemPath | undefined,
+    sectionIndex: number,
+    itemIndex: number,
+): ILayoutItemPath {
+    return itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+}
+
+function getResolvedItemIndex(itemPath: ILayoutItemPath | undefined, itemIndex: number): number {
+    return itemPath === undefined ? itemIndex : getItemIndex(itemPath);
+}
+
+function getResolvedSectionIndex(itemPath: ILayoutItemPath | undefined, sectionIndex: number): number {
+    return itemPath === undefined ? sectionIndex : getSectionIndex(itemPath);
+}
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -115,10 +139,16 @@ export function* removeSectionItemSaga(
     const { fromSection, itemToRemove } = validateAndResolve(commandCtx);
     const { sectionIndex, itemIndex, itemPath, eager, stashIdentifier } = cmd.payload;
 
-    if (eager && fromSection.items.length === 1) {
+    const resolvedItemPath = getResolvedItemPath(itemPath, sectionIndex, itemIndex);
+    const resolvedSectionPath = getResolvedSectionPath(itemPath, sectionIndex);
+    const resolvedItemIndex = getResolvedItemIndex(itemPath, itemIndex);
+    const resolvedSectionIndex = getResolvedSectionIndex(itemPath, sectionIndex);
+    const shouldRemoveSection = eager && fromSection.items.length === 1;
+
+    if (shouldRemoveSection) {
         yield put(
             tabsActions.removeSection({
-                index: itemPath === undefined ? { parent: undefined, sectionIndex } : asSectionPath(itemPath),
+                index: resolvedSectionPath,
                 stashIdentifier,
                 undo: {
                     cmd: originalCmd,
@@ -137,8 +167,8 @@ export function* removeSectionItemSaga(
             layoutSectionItemRemoved(
                 ctx,
                 itemToRemove,
-                itemPath === undefined ? itemIndex : getItemIndex(itemPath),
-                itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
+                resolvedItemIndex,
+                resolvedItemPath,
                 sectionWithEmptyItems,
                 stashIdentifier,
                 cmd.correlationId,
@@ -151,8 +181,8 @@ export function* removeSectionItemSaga(
             layoutSectionRemoved(
                 ctx,
                 sectionWithEmptyItems,
-                itemPath === undefined ? sectionIndex : getSectionIndex(itemPath),
-                itemPath === undefined ? { parent: undefined, sectionIndex } : asSectionPath(itemPath),
+                resolvedSectionIndex,
+                resolvedSectionPath,
                 true,
                 undefined,
                 cmd.correlationId,
@@ -161,7 +191,7 @@ export function* removeSectionItemSaga(
     } else {
         yield put(
             tabsActions.removeSectionItem({
-                itemIndex: itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
+                itemIndex: resolvedItemPath,
                 stashIdentifier,
                 undo: {
                     cmd: originalCmd,
@@ -175,8 +205,8 @@ export function* removeSectionItemSaga(
             layoutSectionItemRemoved(
                 ctx,
                 itemToRemove,
-                itemPath === undefined ? itemIndex : getItemIndex(itemPath),
-                itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
+                resolvedItemIndex,
+                resolvedItemPath,
                 undefined,
                 stashIdentifier,
                 cmd.correlationId,

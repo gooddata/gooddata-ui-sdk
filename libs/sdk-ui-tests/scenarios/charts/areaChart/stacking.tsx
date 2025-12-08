@@ -11,7 +11,7 @@ import {
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+export const stacking = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.Stacking)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

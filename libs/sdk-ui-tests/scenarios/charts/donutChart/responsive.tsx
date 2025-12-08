@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { DonutChart } from "@gooddata/sdk-ui-charts";
 
 import { DonutChartWithSingleMeasureAndViewBy } from "./base.js";
@@ -28,4 +29,4 @@ const scenarios = responsiveScenarios(
     false,
 );
 
-export default [...scenarios];
+export const responsive = [...scenarios];

@@ -16,7 +16,7 @@ import {
     getHeadlineData,
 } from "./utils/XirrTransformationUtils.js";
 import { IChartConfig } from "../../../interfaces/index.js";
-import LegacyHeadline from "../../headline/internal/headlines/LegacyHeadline.js";
+import { LegacyHeadline } from "../../headline/internal/headlines/LegacyHeadline.js";
 import {
     HeadlineFiredDrillEvent,
     IHeadlineFiredDrillEventItemContext,
@@ -36,7 +36,7 @@ export interface IXirrTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-export default function XirrTransformation({
+export function XirrTransformation({
     drillableItems = [],
     config = {},
     onDrill = () => true,

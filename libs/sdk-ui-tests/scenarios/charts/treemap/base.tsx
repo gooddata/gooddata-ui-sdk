@@ -24,7 +24,7 @@ export const TreemapWithViewByDateAndStackByDate = {
     segmentBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
 };
 
-export default scenariosFor<ITreemapProps>("Treemap", Treemap)
+export const base = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

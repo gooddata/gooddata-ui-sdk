@@ -2,10 +2,10 @@
 
 import { memo } from "react";
 
-import LegendPositionControl from "./LegendPositionControl.js";
+import { LegendPositionControl } from "./LegendPositionControl.js";
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import ConfigSection from "../ConfigSection.js";
+import { ConfigSection } from "../ConfigSection.js";
 
 export interface ILegendSection {
     controlsDisabled: boolean;
@@ -15,7 +15,7 @@ export interface ILegendSection {
     pushData: (data: any) => any;
 }
 
-const LegendSection = memo(function LegendSection({
+export const LegendSection = memo(function LegendSection({
     controlsDisabled = false,
     properties = {},
     propertiesMeta = {},
@@ -53,5 +53,3 @@ const LegendSection = memo(function LegendSection({
         </ConfigSection>
     );
 });
-
-export default LegendSection;

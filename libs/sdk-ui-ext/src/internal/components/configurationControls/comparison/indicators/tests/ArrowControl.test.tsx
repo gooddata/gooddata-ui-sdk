@@ -9,7 +9,7 @@ import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as CheckboxControl from "../../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../../ComparisonValuePath.js";
-import ArrowControl from "../ArrowControl.js";
+import { ArrowControl } from "../ArrowControl.js";
 
 const TITLE_TEXT_QUERY = "Arrow";
 const CHECKBOX_SELECTOR = "input";
@@ -56,7 +56,7 @@ describe("ArrowControl", () => {
     });
 
     it("Should render arrow control unchecked status", () => {
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
         renderArrowControl();
 
         expect(MockCheckboxControl).toHaveBeenCalledWith(
@@ -70,7 +70,7 @@ describe("ArrowControl", () => {
     });
 
     it("Should render arrow control checked status", () => {
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "default");
+        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
         renderArrowControl({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {

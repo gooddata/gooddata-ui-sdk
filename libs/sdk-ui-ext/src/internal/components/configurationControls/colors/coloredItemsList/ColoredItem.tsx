@@ -2,17 +2,17 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
-import ColoredItemContent from "./ColoredItemContent.js";
+import { ColoredItemContent } from "./ColoredItemContent.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
 import { getTranslation } from "../../../../utils/translations.js";
 import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
-import ColorDropdown from "../colorDropdown/ColorDropdown.js";
+import { ColorDropdown } from "../colorDropdown/ColorDropdown.js";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -25,8 +25,9 @@ export interface IColoredItemProps {
     patternFillIndex?: number | PatternFillName;
 }
 
-const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
-    const { item, colorPalette, intl, onSelect, chartFill, patternFillIndex } = props;
+export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
+    const intl = useIntl();
+    const { item, colorPalette, onSelect, chartFill, patternFillIndex } = props;
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -73,5 +74,3 @@ const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & Wrapped
         </ColorDropdown>
     );
 });
-
-export default injectIntl(ColoredItem);

@@ -17,7 +17,7 @@ export interface IPushpinSizeLegendProps {
     showMiddleCircle: boolean;
 }
 
-export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): ReactElement | null {
+export function PushpinSizeLegend(props: IPushpinSizeLegendProps): ReactElement | null {
     const { sizes = [], format, numericSymbols = [], measureName, isSmall, showMiddleCircle } = props;
     const sizeData = getSizeData(sizes);
 

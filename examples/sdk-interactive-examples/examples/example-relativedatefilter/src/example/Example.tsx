@@ -11,7 +11,7 @@ import {
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 const primaryMeasures: IMeasure[] = [Catalog.GrossProfit];
 const secondaryMeasures: IMeasure[] = [Catalog.NrOfOrders];
@@ -29,7 +29,7 @@ const filters: IFilter[] = [
 ];
 const style = { height: 400 };
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1>Gross profit and # of Orders</h1>

@@ -85,6 +85,8 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
 
 export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): ICatalogItem {
     const updatedAt = measure.updated || measure.created;
+    const format = measure.format && measure.format.length > 0 ? measure.format : null;
+
     return {
         identifier: measure.id,
         type: "measure",
@@ -98,6 +100,8 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         isLocked: measure.isLocked ?? false,
         isEditable: true,
         isHidden: measure.isHidden,
+        format,
+        metricType: measure.metricType,
     };
 }
 

@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { messages } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import AttributeDropdownBody from "./AttributeDropdownBody.js";
+import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 import { ICatalogAttributeData } from "./types.js";
 
@@ -15,7 +15,7 @@ interface IAttributeDropdownProps {
     rowIndex: number;
 }
 
-function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
+export function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
     const { formatMessage } = useIntl();
     const { getValidAttributes, onCompleteAttribute } = useAttributeHierarchyDialog();
 
@@ -64,5 +64,3 @@ function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
         />
     );
 }
-
-export default AttributeDropdown;

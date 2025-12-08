@@ -63,7 +63,7 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     onError?: OnError;
 }
 
-function GeoChartRenderer({
+export function GeoChartRenderer({
     config = { mapboxToken: "" },
     drillableItems,
     drillConfig,
@@ -645,5 +645,3 @@ function GeoChartRenderer({
 
     return <div className={classNames} ref={chartRef} />;
 }
-
-export default GeoChartRenderer;

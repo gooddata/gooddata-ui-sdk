@@ -133,7 +133,7 @@ export const BarChartStackByDate = {
     stackBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
-export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+export const base = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 600 },

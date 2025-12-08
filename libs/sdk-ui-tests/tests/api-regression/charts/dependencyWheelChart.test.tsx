@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 
-import dependencyWheelChartScenarios from "../../../scenarios/charts/dependencyWheelChart/index.js";
+import { dependencyWheelChart as dependencyWheelChartScenarios } from "../../../scenarios/charts/dependencyWheelChart/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

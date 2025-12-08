@@ -12,6 +12,7 @@ import {
 import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "18 Kda/Dialog/Themed",
 };

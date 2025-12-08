@@ -47,4 +47,4 @@ const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount, ReferenceMd.Won)),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

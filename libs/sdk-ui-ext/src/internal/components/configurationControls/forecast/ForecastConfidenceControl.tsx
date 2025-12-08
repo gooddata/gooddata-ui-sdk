@@ -2,13 +2,13 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { confidenceDropdownItems } from "../../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
-import DropdownControl from "../DropdownControl.js";
+import { DropdownControl } from "../DropdownControl.js";
 
 export interface IForecastConfidenceControl {
     disabled: boolean;
@@ -18,11 +18,12 @@ export interface IForecastConfidenceControl {
     pushData: (data: any) => any;
 }
 
-const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
-    props: IForecastConfidenceControl & WrappedComponentProps,
+export const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
+    props: IForecastConfidenceControl,
 ) {
+    const intl = useIntl();
     const generateDropdownItems = () => {
-        return getTranslatedDropdownItems(confidenceDropdownItems, props.intl);
+        return getTranslatedDropdownItems(confidenceDropdownItems, intl);
     };
 
     return (
@@ -38,5 +39,3 @@ const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
         />
     );
 });
-
-export default injectIntl(ForecastConfidenceControl);

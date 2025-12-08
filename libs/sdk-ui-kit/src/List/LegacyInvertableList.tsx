@@ -7,8 +7,8 @@ import { has, keyBy, take } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
-import LegacyMultiSelectList from "./LegacyMultiSelectList.js";
-import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
+import { LegacyMultiSelectListWithIntl } from "./LegacyMultiSelectList.js";
+import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
 import { Input } from "../Form/index.js";
 import { Message } from "../Messages/index.js";
 
@@ -360,7 +360,7 @@ export function LegacyInvertableList<T>({
         };
 
         return (
-            <LegacyMultiSelectList
+            <LegacyMultiSelectListWithIntl
                 {...listProps}
                 onSelect={onSelectHandler}
                 onSelectAll={onSelectAll}
@@ -444,5 +444,3 @@ export function LegacyInvertableList<T>({
         </div>
     );
 }
-
-export default LegacyInvertableList;

@@ -1,4 +1,3 @@
-// (C) 2021 GoodData Corporation
-import { newDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+// (C) 2021-2025 GoodData Corporation
 
-export default newDashboardEngine;
+export { newDashboardEngine } from "@gooddata/sdk-ui-dashboard";

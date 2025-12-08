@@ -20,6 +20,18 @@ import { CustomElementContext } from "../context.js";
 
 type IInsightView = typeof InsightView;
 
+function parseFilters(stringifiedFilters: string | null | undefined) {
+    if (!stringifiedFilters) {
+        return undefined;
+    }
+    try {
+        return stringToFilters(stringifiedFilters);
+    } catch (e) {
+        console.error("Invalid filters not used in <gd-insight> component", e, stringifiedFilters);
+        return undefined;
+    }
+}
+
 export class Insight extends CustomElementAdapter<IInsightView> {
     static get observedAttributes() {
         return ["workspace", "insight", "locale", "title", "mapbox", "filters"];
@@ -40,38 +52,32 @@ export class Insight extends CustomElementAdapter<IInsightView> {
         // Collect the rest of the props
         const extraProps: Partial<ComponentProps<typeof Component>> = { config: {} };
 
-        if (this.hasAttribute("locale")) {
-            extraProps.locale = resolveLocale(this.getAttribute("locale"));
+        const localeAttr = this.getAttribute("locale");
+        if (localeAttr !== null) {
+            extraProps.locale = resolveLocale(localeAttr);
         }
 
-        if (this.hasAttribute("title")) {
-            // title can be either string or boolean. We can't accept function in attribute.
-            // Empty string means a shortcut attribute = true. Any other notation is taken as a string literal
-            //  including <... title="true"> = the title is set to the string "true"
-            extraProps.showTitle = this.getAttribute("title") || true;
+        // title can be either string or boolean. We can't accept function in attribute.
+        // Empty string means a shortcut attribute = true. Any other notation is taken as a string literal
+        //  including <... title="true"> = the title is set to the string "true"
+        const titleAttr = this.getAttribute("title");
+        if (titleAttr !== null) {
+            extraProps.showTitle = titleAttr || true;
         }
 
-        if (this.hasAttribute("mapbox") || mapboxToken) {
-            extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
+        const mapboxAttr = this.getAttribute("mapbox");
+        if (mapboxAttr || mapboxToken) {
+            extraProps.config!.mapboxToken = (mapboxAttr || mapboxToken) ?? "";
         }
 
-        if (this.hasAttribute("agGrid") || agGridToken) {
-            extraProps.config!.agGridToken = (this.getAttribute("agGrid") || agGridToken) ?? "";
+        const agGridAttr = this.getAttribute("agGrid");
+        if (agGridAttr || agGridToken) {
+            extraProps.config!.agGridToken = (agGridAttr || agGridToken) ?? "";
         }
 
-        if (this.hasAttribute("filters")) {
-            const stringifiedFilters = this.getAttribute("filters");
-            if (stringifiedFilters) {
-                try {
-                    extraProps.filters = stringToFilters(stringifiedFilters);
-                } catch (e) {
-                    console.error(
-                        "Invalid filters not used in <gd-insight> component",
-                        e,
-                        stringifiedFilters,
-                    );
-                }
-            }
+        const filters = parseFilters(this.getAttribute("filters"));
+        if (filters) {
+            extraProps.filters = filters;
         }
 
         return (

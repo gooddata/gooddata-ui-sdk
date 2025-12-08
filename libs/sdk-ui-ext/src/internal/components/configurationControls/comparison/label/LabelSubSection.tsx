@@ -13,9 +13,9 @@ import {
 import { comparisonMessages, messages } from "../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import CheckboxControl from "../../CheckboxControl.js";
-import ConfigSubsection from "../../ConfigSubsection.js";
-import InputControl from "../../InputControl.js";
+import { CheckboxControl } from "../../CheckboxControl.js";
+import { ConfigSubsection } from "../../ConfigSubsection.js";
+import { InputControl } from "../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
     COMPARISON_LABEL_EQUALS_VALUE_PATH,
@@ -85,7 +85,7 @@ function getDisabledMessageId(
     return undefined;
 }
 
-function LabelSubSection({
+export function LabelSubSection({
     sectionDisabled,
     showDisabledMessage,
     defaultLabelKeys,
@@ -195,5 +195,3 @@ function LabelSubSection({
         </ConfigSubsection>
     );
 }
-
-export default LabelSubSection;

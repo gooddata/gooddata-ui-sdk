@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IXirrProps } from "@gooddata/sdk-ui-charts";
 
-import xirrScenarios from "../../../scenarios/charts/xirr/index.js";
+import { xirr as xirrScenarios } from "../../../scenarios/charts/xirr/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

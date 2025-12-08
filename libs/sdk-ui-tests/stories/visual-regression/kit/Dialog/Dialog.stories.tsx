@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { PureComponent, ReactElement } from "react";
+import { ReactElement, memo, useState } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
@@ -21,35 +21,33 @@ import {
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
-class DialogExamples extends PureComponent {
-    override state = {
-        dialogOpen: false,
-        confirmDialogOpen: false,
-        confirmDialogWithNoSubmitButtonOpen: false,
-        confirmDialogWithWarningOpen: false,
-        confirmDialogWithProgress: false,
-        exportDialogOpen: false,
-        communityDialogOpen: false,
-        stylingEditorOpen: false,
+const DialogExamples = memo(function DialogExamples() {
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+    const [confirmDialogWithNoSubmitButtonOpen, setConfirmDialogWithNoSubmitButtonOpen] = useState(false);
+    const [confirmDialogWithWarningOpen, setConfirmDialogWithWarningOpen] = useState(false);
+    const [confirmDialogWithProgress, setConfirmDialogWithProgress] = useState(false);
+    const [exportDialogOpen, setExportDialogOpen] = useState(false);
+    const [communityDialogOpen, setCommunityDialogOpen] = useState(false);
+    const [stylingEditorOpen, setStylingEditorOpen] = useState(false);
+
+    const onExportCancel = () => {
+        setExportDialogOpen(false);
     };
 
-    private onExportCancel = () => {
-        this.setState({ exportDialogOpen: false });
-    };
-
-    private onExportSubmit = (values: any) => {
+    const onExportSubmit = (values: any) => {
         console.log("values: ", values); // eslint-disable-line no-console
-        this.setState({ exportDialogOpen: false });
+        setExportDialogOpen(false);
     };
 
-    public renderDialogContent(): ReactElement {
+    const renderDialogContent = (): ReactElement => {
         return (
             <Dialog
                 onCancel={() => {
-                    this.setState({ dialogOpen: false });
+                    setDialogOpen(false);
                 }}
                 onSubmit={() => {
-                    this.setState({ dialogOpen: false });
+                    setDialogOpen(false);
                 }}
                 displayCloseButton
                 accessibilityConfig={{ titleElementId: "dialog-title" }}
@@ -62,16 +60,16 @@ class DialogExamples extends PureComponent {
                 </div>
             </Dialog>
         );
-    }
+    };
 
-    public renderConfirmDialogContent(): ReactElement {
+    const renderConfirmDialogContent = (): ReactElement => {
         return (
             <ConfirmDialog
                 onCancel={() => {
-                    this.setState({ confirmDialogOpen: false });
+                    setConfirmDialogOpen(false);
                 }}
                 onSubmit={() => {
-                    this.setState({ confirmDialogOpen: false });
+                    setConfirmDialogOpen(false);
                 }}
                 isPositive={false}
                 headline="Discard changes"
@@ -81,13 +79,13 @@ class DialogExamples extends PureComponent {
                 <p>All your unsaved changes will be lost. Is this OK?</p>
             </ConfirmDialog>
         );
-    }
+    };
 
-    public renderConfirmDialogWithNoSubmitButtonContent(): ReactElement {
+    const renderConfirmDialogWithNoSubmitButtonContent = (): ReactElement => {
         return (
             <ConfirmDialog
                 onCancel={() => {
-                    this.setState({ confirmDialogWithNoSubmitButtonOpen: false });
+                    setConfirmDialogWithNoSubmitButtonOpen(false);
                 }}
                 isPositive={false}
                 headline="Click cancel button please"
@@ -96,16 +94,16 @@ class DialogExamples extends PureComponent {
                 <p>This dialog does nothing</p>
             </ConfirmDialog>
         );
-    }
+    };
 
-    public renderConfirmDialogWithProgressIndicator(): ReactElement {
+    const renderConfirmDialogWithProgressIndicator = (): ReactElement => {
         return (
             <ConfirmDialog
                 onCancel={() => {
-                    this.setState({ confirmDialogWithProgress: false });
+                    setConfirmDialogWithProgress(false);
                 }}
                 onSubmit={() => {
-                    this.setState({ confirmDialogWithProgress: false });
+                    setConfirmDialogWithProgress(false);
                 }}
                 showProgressIndicator
                 headline="Progress indicator"
@@ -115,16 +113,16 @@ class DialogExamples extends PureComponent {
                 <p>Progress indicators inform users about the status of ongoing processes...</p>
             </ConfirmDialog>
         );
-    }
+    };
 
-    public renderConfirmDialogWithWarningContent(): ReactElement {
+    const renderConfirmDialogWithWarningContent = (): ReactElement => {
         return (
             <ConfirmDialog
                 onCancel={() => {
-                    this.setState({ confirmDialogWithWarningOpen: false });
+                    setConfirmDialogWithWarningOpen(false);
                 }}
                 onSubmit={() => {
-                    this.setState({ confirmDialogWithWarningOpen: false });
+                    setConfirmDialogWithWarningOpen(false);
                 }}
                 isPositive={false}
                 headline="Discard changes"
@@ -135,9 +133,9 @@ class DialogExamples extends PureComponent {
                 <p>All your unsaved changes will be lost. Is this OK?</p>
             </ConfirmDialog>
         );
-    }
+    };
 
-    public renderExportDialogContent(): ReactElement {
+    const renderExportDialogContent = (): ReactElement => {
         return (
             <ExportDialog
                 displayCloseButton
@@ -154,18 +152,18 @@ class DialogExamples extends PureComponent {
                 mergeHeadersDisabled={false}
                 mergeHeadersText="Keep attribute cells merged"
                 mergeHeadersTitle="CELLS"
-                onCancel={this.onExportCancel}
-                onSubmit={this.onExportSubmit}
+                onCancel={onExportCancel}
+                onSubmit={onExportSubmit}
             />
         );
-    }
+    };
 
-    public renderCommunityEditionDialogContent(): ReactElement {
+    const renderCommunityEditionDialogContent = (): ReactElement => {
         return (
             <IntlWrapper>
                 <CommunityEditionDialog
                     onClose={() => {
-                        this.setState({ communityDialogOpen: false });
+                        setCommunityDialogOpen(false);
                     }}
                     headerText="About GoodData.CN community edition"
                     infoText="The community edition is meant for evaluation purposes only."
@@ -184,9 +182,9 @@ class DialogExamples extends PureComponent {
                 />
             </IntlWrapper>
         );
-    }
+    };
 
-    public renderStylingEditorDialogContent(): ReactElement {
+    const renderStylingEditorDialogContent = (): ReactElement => {
         const theme = (color: string) => {
             return {
                 palette: {
@@ -232,176 +230,161 @@ class DialogExamples extends PureComponent {
                     "#94A1AD",
                     "#E2E7EC",
                 ]}
-                onSubmit={() => this.setState({ stylingEditorOpen: false })}
-                onCancel={() => this.setState({ stylingEditorOpen: false })}
-                onClose={() => this.setState({ stylingEditorOpen: false })}
+                onSubmit={() => setStylingEditorOpen(false)}
+                onCancel={() => setStylingEditorOpen(false)}
+                onClose={() => setStylingEditorOpen(false)}
             />
         );
-    }
+    };
 
-    public renderDialogExample(): ReactElement {
+    const renderDialogExample = (): ReactElement => {
         return (
             <div id="dialog-example">
                 <Button
                     value="Open dialog"
                     className="gd-button-positive s-dialog-button"
                     onClick={() => {
-                        this.setState({ dialogOpen: !this.state.dialogOpen });
+                        setDialogOpen(!dialogOpen);
                     }}
                 />
-                {this.state.dialogOpen ? this.renderDialogContent() : null}
+                {dialogOpen ? renderDialogContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderConfirmDialogExample(): ReactElement {
+    const renderConfirmDialogExample = (): ReactElement => {
         return (
             <div id="confirm-dialog-example">
                 <Button
                     value="Open confirm dialog"
                     className="gd-button-positive s-confirm-dialog-button"
                     onClick={() => {
-                        this.setState({ confirmDialogOpen: !this.state.confirmDialogOpen });
+                        setConfirmDialogOpen(!confirmDialogOpen);
                     }}
                 />
-                {this.state.confirmDialogOpen ? this.renderConfirmDialogContent() : null}
+                {confirmDialogOpen ? renderConfirmDialogContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderConfirmDialogWithNoSubmitButtonExample(): ReactElement {
+    const renderConfirmDialogWithNoSubmitButtonExample = (): ReactElement => {
         return (
             <div id="confirm-dialog-with-no-submit-button-example">
                 <Button
                     value="Open confirm dialog with no submit button"
                     className="gd-button-positive s-confirm-dialog-with-no-submit-button"
                     onClick={() => {
-                        this.setState({
-                            confirmDialogWithNoSubmitButtonOpen:
-                                !this.state.confirmDialogWithNoSubmitButtonOpen,
-                        });
+                        setConfirmDialogWithNoSubmitButtonOpen(!confirmDialogWithNoSubmitButtonOpen);
                     }}
                 />
-                {this.state.confirmDialogWithNoSubmitButtonOpen
-                    ? this.renderConfirmDialogWithNoSubmitButtonContent()
-                    : null}
+                {confirmDialogWithNoSubmitButtonOpen ? renderConfirmDialogWithNoSubmitButtonContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderConfirmDialogWithWithProgressExample(): ReactElement {
+    const renderConfirmDialogWithWithProgressExample = (): ReactElement => {
         return (
             <div id="confirm-dialog-with-progress-example">
                 <Button
                     value="Open confirm dialog with progress example"
                     className="gd-button-positive s-confirm-dialog-with-warning-button"
                     onClick={() => {
-                        this.setState({
-                            confirmDialogWithProgress: !this.state.confirmDialogWithProgress,
-                        });
+                        setConfirmDialogWithProgress(!confirmDialogWithProgress);
                     }}
                 />
-                {this.state.confirmDialogWithProgress
-                    ? this.renderConfirmDialogWithProgressIndicator()
-                    : null}
+                {confirmDialogWithProgress ? renderConfirmDialogWithProgressIndicator() : null}
             </div>
         );
-    }
+    };
 
-    public renderConfirmDialogWithWarningExample(): ReactElement {
+    const renderConfirmDialogWithWarningExample = (): ReactElement => {
         return (
             <div id="confirm-dialog-with-warning-example">
                 <Button
                     value="Open confirm dialog with warning"
                     className="gd-button-positive s-confirm-dialog-with-warning-button"
                     onClick={() => {
-                        this.setState({
-                            confirmDialogWithWarningOpen: !this.state.confirmDialogWithWarningOpen,
-                        });
+                        setConfirmDialogWithWarningOpen(!confirmDialogWithWarningOpen);
                     }}
                 />
-                {this.state.confirmDialogWithWarningOpen
-                    ? this.renderConfirmDialogWithWarningContent()
-                    : null}
+                {confirmDialogWithWarningOpen ? renderConfirmDialogWithWarningContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderExportDialogExample(): ReactElement {
+    const renderExportDialogExample = (): ReactElement => {
         return (
             <div id="export-dialog-example">
                 <Button
                     value="Open export dialog"
                     className="gd-button-positive s-export-dialog-button"
                     onClick={() => {
-                        this.setState({ exportDialogOpen: !this.state.exportDialogOpen });
+                        setExportDialogOpen(!exportDialogOpen);
                     }}
                 />
-                {this.state.exportDialogOpen ? this.renderExportDialogContent() : null}
+                {exportDialogOpen ? renderExportDialogContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderCommunityEditionDialogExample(): ReactElement {
+    const renderCommunityEditionDialogExample = (): ReactElement => {
         return (
             <div id="community-dialog-example">
                 <Button
                     value="Open community edition dialog"
                     className="gd-button-positive s-community-dialog-button"
                     onClick={() => {
-                        this.setState({ communityDialogOpen: !this.state.communityDialogOpen });
+                        setCommunityDialogOpen(!communityDialogOpen);
                     }}
                 />
-                {this.state.communityDialogOpen ? this.renderCommunityEditionDialogContent() : null}
+                {communityDialogOpen ? renderCommunityEditionDialogContent() : null}
             </div>
         );
-    }
+    };
 
-    public renderStylingEditorDialog(): ReactElement {
+    const renderStylingEditorDialog = (): ReactElement => {
         return (
             <div id="styling-editor-dialog-example">
                 <Button
                     value="Open styling editor dialog"
                     className="gd-button-positive s-styling-editor-dialog-button"
                     onClick={() => {
-                        this.setState({ stylingEditorOpen: !this.state.stylingEditorOpen });
+                        setStylingEditorOpen(!stylingEditorOpen);
                     }}
                 />
-                {this.state.stylingEditorOpen ? this.renderStylingEditorDialogContent() : null}
+                {stylingEditorOpen ? renderStylingEditorDialogContent() : null}
             </div>
         );
-    }
+    };
 
-    public override render(): ReactElement {
-        return (
-            <div className="library-component screenshot-target">
-                <h4>Dialog</h4>
-                {this.renderDialogExample()}
+    return (
+        <div className="library-component screenshot-target">
+            <h4>Dialog</h4>
+            {renderDialogExample()}
 
-                <h4>Confirm dialog</h4>
-                {this.renderConfirmDialogExample()}
+            <h4>Confirm dialog</h4>
+            {renderConfirmDialogExample()}
 
-                <h4>Confirm dialog with no submit button</h4>
-                {this.renderConfirmDialogWithNoSubmitButtonExample()}
+            <h4>Confirm dialog with no submit button</h4>
+            {renderConfirmDialogWithNoSubmitButtonExample()}
 
-                <h4>Confirm dialog with warning</h4>
-                {this.renderConfirmDialogWithWarningExample()}
+            <h4>Confirm dialog with warning</h4>
+            {renderConfirmDialogWithWarningExample()}
 
-                <h4>Confirm dialog with progress indicator</h4>
-                {this.renderConfirmDialogWithWithProgressExample()}
+            <h4>Confirm dialog with progress indicator</h4>
+            {renderConfirmDialogWithWithProgressExample()}
 
-                <h4>Export dialog</h4>
-                {this.renderExportDialogExample()}
+            <h4>Export dialog</h4>
+            {renderExportDialogExample()}
 
-                <h4>Community edition dialog</h4>
-                {this.renderCommunityEditionDialogExample()}
+            <h4>Community edition dialog</h4>
+            {renderCommunityEditionDialogExample()}
 
-                <h4>Styling editor dialog</h4>
-                {this.renderStylingEditorDialog()}
-            </div>
-        );
-    }
-}
+            <h4>Styling editor dialog</h4>
+            {renderStylingEditorDialog()}
+        </div>
+    );
+});
 
 const confirmDialogWithWarningProps = {
     clickSelector: "#confirm-dialog-with-warning-example button",
@@ -456,6 +439,7 @@ const screenshotPropsThemed: INeobackstopConfig = {
     "styling-editor-dialog": stylingEditorDialogProps,
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/Dialog",
 };

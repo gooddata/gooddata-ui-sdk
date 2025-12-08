@@ -16,4 +16,4 @@ const dataLabelScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", Scatte
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", ScatterPlotWithMeasuresAndAttribute, dataLabelCustomizer);
 
-export default [dataLabelScenarios];
+export const customization = [dataLabelScenarios];

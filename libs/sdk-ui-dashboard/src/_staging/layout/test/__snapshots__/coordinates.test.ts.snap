@@ -14,6 +14,7 @@ exports[`coordinates > findItem > should find nested item (insight4) in the layo
     "identifier": "insight4",
     "ignoreDashboardFilters": [],
     "ignoredDrillDownHierarchies": [],
+    "ignoredDrillToUrlAttributes": [],
     "insight": {
       "identifier": "insight4",
     },
@@ -41,6 +42,7 @@ exports[`coordinates > findItem > should find root item (insight1) in the layout
     "identifier": "insight1",
     "ignoreDashboardFilters": [],
     "ignoredDrillDownHierarchies": [],
+    "ignoredDrillToUrlAttributes": [],
     "insight": {
       "identifier": "insight1",
     },
@@ -73,6 +75,7 @@ exports[`coordinates > findSection > layout item path > should find nested secti
         "identifier": "insight4",
         "ignoreDashboardFilters": [],
         "ignoredDrillDownHierarchies": [],
+        "ignoredDrillToUrlAttributes": [],
         "insight": {
           "identifier": "insight4",
         },
@@ -108,6 +111,7 @@ exports[`coordinates > findSection > layout item path > should find root section
         "identifier": "insight1",
         "ignoreDashboardFilters": [],
         "ignoredDrillDownHierarchies": [],
+        "ignoredDrillToUrlAttributes": [],
         "insight": {
           "identifier": "insight1",
         },
@@ -150,6 +154,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                   "identifier": "insight2",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight2",
                   },
@@ -174,6 +179,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                   "identifier": "insight3",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight3",
                   },
@@ -206,6 +212,7 @@ exports[`coordinates > findSection > layout item path > should find root section
                   "identifier": "insight4",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight4",
                   },
@@ -249,6 +256,7 @@ exports[`coordinates > findSection > layout section path > should find nested se
         "identifier": "insight4",
         "ignoreDashboardFilters": [],
         "ignoredDrillDownHierarchies": [],
+        "ignoredDrillToUrlAttributes": [],
         "insight": {
           "identifier": "insight4",
         },
@@ -284,6 +292,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
         "identifier": "insight1",
         "ignoreDashboardFilters": [],
         "ignoredDrillDownHierarchies": [],
+        "ignoredDrillToUrlAttributes": [],
         "insight": {
           "identifier": "insight1",
         },
@@ -326,6 +335,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                   "identifier": "insight2",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight2",
                   },
@@ -350,6 +360,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                   "identifier": "insight3",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight3",
                   },
@@ -382,6 +393,7 @@ exports[`coordinates > findSection > layout section path > should find root sect
                   "identifier": "insight4",
                   "ignoreDashboardFilters": [],
                   "ignoredDrillDownHierarchies": [],
+                  "ignoredDrillToUrlAttributes": [],
                   "insight": {
                     "identifier": "insight4",
                   },
@@ -426,6 +438,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight2",
           },
@@ -450,6 +463,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight3",
           },
@@ -482,6 +496,7 @@ exports[`coordinates > findSections > layout item path > should find nested sect
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight4",
           },
@@ -519,6 +534,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight1",
           },
@@ -561,6 +577,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight2",
                     },
@@ -585,6 +602,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight3",
                     },
@@ -617,6 +635,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight4",
                     },
@@ -657,6 +676,7 @@ exports[`coordinates > findSections > layout item path > should find root sectio
           "identifier": "insight5",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight5",
           },
@@ -694,6 +714,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight2",
           },
@@ -718,6 +739,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight3",
           },
@@ -750,6 +772,7 @@ exports[`coordinates > findSections > layout section path > should find nested s
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight4",
           },
@@ -787,6 +810,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight1",
           },
@@ -829,6 +853,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight2",
                     },
@@ -853,6 +878,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight3",
                     },
@@ -885,6 +911,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight4",
                     },
@@ -925,6 +952,7 @@ exports[`coordinates > findSections > layout section path > should find root sec
           "identifier": "insight5",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight5",
           },
@@ -962,6 +990,7 @@ exports[`coordinates > findSections > layout section path > should return nested
           "identifier": "insight2",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight2",
           },
@@ -986,6 +1015,7 @@ exports[`coordinates > findSections > layout section path > should return nested
           "identifier": "insight3",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight3",
           },
@@ -1018,6 +1048,7 @@ exports[`coordinates > findSections > layout section path > should return nested
           "identifier": "insight4",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight4",
           },
@@ -1055,6 +1086,7 @@ exports[`coordinates > findSections > layout section path > should return root s
           "identifier": "insight1",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight1",
           },
@@ -1097,6 +1129,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                     "identifier": "insight2",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight2",
                     },
@@ -1121,6 +1154,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                     "identifier": "insight3",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight3",
                     },
@@ -1153,6 +1187,7 @@ exports[`coordinates > findSections > layout section path > should return root s
                     "identifier": "insight4",
                     "ignoreDashboardFilters": [],
                     "ignoredDrillDownHierarchies": [],
+                    "ignoredDrillToUrlAttributes": [],
                     "insight": {
                       "identifier": "insight4",
                     },
@@ -1193,6 +1228,7 @@ exports[`coordinates > findSections > layout section path > should return root s
           "identifier": "insight5",
           "ignoreDashboardFilters": [],
           "ignoredDrillDownHierarchies": [],
+          "ignoredDrillToUrlAttributes": [],
           "insight": {
             "identifier": "insight5",
           },

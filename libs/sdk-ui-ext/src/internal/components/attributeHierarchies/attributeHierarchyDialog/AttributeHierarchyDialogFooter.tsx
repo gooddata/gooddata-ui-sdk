@@ -13,7 +13,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 const HOW_TO_WORK_DOCUMENTATION_LINK =
     "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/";
 
-function AttributeHierarchyDialogFooter() {
+export function AttributeHierarchyDialogFooter() {
     const { formatMessage } = useIntl();
     const {
         isEditing,
@@ -89,5 +89,3 @@ function AttributeHierarchyDialogFooter() {
         </div>
     );
 }
-
-export default AttributeHierarchyDialogFooter;

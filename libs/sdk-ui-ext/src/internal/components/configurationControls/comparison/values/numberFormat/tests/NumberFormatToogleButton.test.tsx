@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 import { IFormatPreset, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
 import { TEST_PERCENT_ROUNDED_FORMAT_PRESET } from "../../../../../../tests/testDataProvider.js";
-import NumberFormatToggleButton from "../NumberFormatToggleButton.js";
+import { NumberFormatToggleButton } from "../NumberFormatToggleButton.js";
 
 const DROPDOWN_BUTTON_SELECTOR = ".dropdown-button";
 

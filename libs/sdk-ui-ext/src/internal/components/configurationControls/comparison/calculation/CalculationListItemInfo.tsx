@@ -2,14 +2,14 @@
 
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 
-import CalculationListItemInfoSection from "./CalculationListItemInfoSection.js";
+import { CalculationListItemInfoSection } from "./CalculationListItemInfoSection.js";
 
 interface ICalculationItemInfoProps {
     title: string;
     calculationType: CalculationType;
 }
 
-function CalculationListItemInfo({ title, calculationType }: ICalculationItemInfoProps) {
+export function CalculationListItemInfo({ title, calculationType }: ICalculationItemInfoProps) {
     return (
         <div className="calculation-item-info">
             <h3 className="calculation-item-info-header">{title}</h3>
@@ -39,5 +39,3 @@ function CalculationListItemInfo({ title, calculationType }: ICalculationItemInf
         </div>
     );
 }
-
-export default CalculationListItemInfo;

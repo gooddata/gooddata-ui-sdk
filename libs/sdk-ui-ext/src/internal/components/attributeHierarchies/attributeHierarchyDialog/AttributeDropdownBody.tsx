@@ -33,7 +33,12 @@ const TABS: ITab[] = [
     },
 ];
 
-function AttributeDropdownBody({ items, isLoading, closeDropdown, onSelect }: IAttributeDropdownBodyProps) {
+export function AttributeDropdownBody({
+    items,
+    isLoading,
+    closeDropdown,
+    onSelect,
+}: IAttributeDropdownBodyProps) {
     const { formatMessage } = useIntl();
 
     const [selectedTab, setSelectedTab] = useState<string>(CatalogAttributeDataType.ATTRIBUTE);
@@ -82,5 +87,3 @@ function AttributeDropdownBody({ items, isLoading, closeDropdown, onSelect }: IA
         />
     );
 }
-
-export default AttributeDropdownBody;

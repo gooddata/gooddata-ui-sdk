@@ -9,7 +9,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 
 const ATTRIBUTE_HIERARCHY_TITLE_ROW = 1;
 
-function AttributeHierarchyDialogHeader() {
+export function AttributeHierarchyDialogHeader() {
     const { formatMessage } = useIntl();
     const { title, onUpdateTitle } = useAttributeHierarchyDialog();
 
@@ -28,5 +28,3 @@ function AttributeHierarchyDialogHeader() {
         </div>
     );
 }
-
-export default AttributeHierarchyDialogHeader;

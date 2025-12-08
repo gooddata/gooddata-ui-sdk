@@ -83,7 +83,7 @@ const others = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         },
     });
 
-export default [
+export const axisCustomization = [
     twoMeasures,
     twoMeasuresNoSlicing,
     multipleMeasures,

@@ -66,5 +66,3 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
         </div>
     );
 });
-
-export default OperatorDropdownItem;

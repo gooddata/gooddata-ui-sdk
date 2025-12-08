@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
-import heatmapScenarios from "../../../scenarios/charts/heatmap/index.js";
+import { heatmap as heatmapScenarios } from "../../../scenarios/charts/heatmap/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

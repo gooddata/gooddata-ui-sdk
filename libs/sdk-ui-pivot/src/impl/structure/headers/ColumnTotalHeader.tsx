@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { IHeaderParams } from "ag-grid-community";
 
-import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
+import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
 import { IMenu } from "../../../publicTypes.js";
 import { isEmptyScopeCol, isSliceCol } from "../tableDescriptorTypes.js";
 
@@ -12,7 +12,7 @@ export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     menu?: () => IMenu;
 }
 
-export default function ColumnTotalHeader({
+export function ColumnTotalHeader({
     getTableDescriptor,
     getExecutionDefinition,
     getColumnTotals,

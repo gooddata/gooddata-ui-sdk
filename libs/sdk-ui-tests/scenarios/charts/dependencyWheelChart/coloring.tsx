@@ -56,4 +56,4 @@ const colorAssignment = scenariosFor<IDependencyWheelChartProps>("DependencyWhee
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

@@ -6,7 +6,7 @@ import { stringUtils } from "@gooddata/util";
 const CLASS_OPERATOR_DROPDOWN_BUTTON = ".s-mvf-operator-dropdown-button";
 const CLASS_OPERATOR_DROPDOWN_BODY = ".s-mvf-operator-dropdown-body";
 
-export default class MeasureValueFilterFragment {
+export class MeasureValueFilterFragment {
     public getOperatorDropdown = (): HTMLElement => document.querySelector(CLASS_OPERATOR_DROPDOWN_BODY);
 
     public getOperatorDropdownButton = () => document.querySelector(CLASS_OPERATOR_DROPDOWN_BUTTON);

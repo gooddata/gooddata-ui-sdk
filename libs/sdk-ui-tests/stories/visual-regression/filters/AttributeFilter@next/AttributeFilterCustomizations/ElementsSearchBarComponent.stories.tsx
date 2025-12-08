@@ -38,6 +38,7 @@ function EmptyElementsSearchBar() {
     return <div style={{ paddingBottom: 10 }} />;
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters@next/Customization/ElementsSearchBarComponent",
 };

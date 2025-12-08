@@ -7,7 +7,7 @@ export interface IDrillMeasureSelectorItemProps {
     onClick: (item: IAvailableDrillTargetMeasure) => void;
 }
 
-function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
+export function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
     const onClick = () => {
         props.onClick(props.item);
     };
@@ -23,5 +23,3 @@ function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
         </a>
     );
 }
-
-export default DrillMeasureSelectorItem;

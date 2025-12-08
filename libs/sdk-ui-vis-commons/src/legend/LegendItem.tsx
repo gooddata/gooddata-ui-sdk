@@ -158,7 +158,7 @@ function getIconStyle(
     }
 }
 
-function LegendItem({
+export const LegendItem = withTheme(function LegendItem({
     item,
     index,
     width,
@@ -240,6 +240,4 @@ function LegendItem({
             </div>
         </button>
     );
-}
-
-export default withTheme(LegendItem);
+});

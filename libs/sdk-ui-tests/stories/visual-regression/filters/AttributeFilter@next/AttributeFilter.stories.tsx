@@ -23,6 +23,7 @@ const backend = StorybookBackend();
  *  not visible)
  */
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters@next/AttributeFilter",
 };

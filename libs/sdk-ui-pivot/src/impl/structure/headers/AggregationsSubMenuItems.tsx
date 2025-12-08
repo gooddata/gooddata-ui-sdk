@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { Header, Item } from "@gooddata/sdk-ui-kit";
 
-import menuHelper from "./aggregationsMenuHelper.js";
+import { isTotalEnabledForSubMenuAttribute } from "./aggregationsMenuHelper.js";
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 
@@ -72,11 +72,7 @@ export function AggregationsSubMenuItems({
     const attributeItems = attributeDescriptors.map(
         (_attributeDescriptor: IAttributeDescriptor, headerIndex: number) => {
             const attributeLocalIdentifier = attributeDescriptorLocalId(attributeDescriptors[headerIndex]);
-            const isSelected = menuHelper.isTotalEnabledForSubMenuAttribute(
-                attributeLocalIdentifier,
-                totalType,
-                totals,
-            );
+            const isSelected = isTotalEnabledForSubMenuAttribute(attributeLocalIdentifier, totalType, totals);
             const onClick = () =>
                 onAggregationSelect({
                     type: totalType,

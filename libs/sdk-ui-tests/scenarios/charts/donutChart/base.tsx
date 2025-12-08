@@ -21,7 +21,7 @@ export const DonutChartWithSingleMeasureAndViewBy = {
  *  revisit how to test these cases
  */
 
-export default scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
+export const base = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

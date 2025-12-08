@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
-import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
+import { DrillMeasureSelectorList } from "./DrillMeasureSelectorList.js";
 
 export interface IDrillMeasureSelectorBodyProps {
     supportedItems: IAvailableDrillTargetMeasure[];
@@ -14,7 +14,7 @@ export interface IDrillMeasureSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-function DrillMeasureSelectorBody({
+export function DrillMeasureSelectorBody({
     supportedItems,
     onSelect,
     onCloseDropdown,
@@ -43,5 +43,3 @@ function DrillMeasureSelectorBody({
         </div>
     );
 }
-
-export default DrillMeasureSelectorBody;

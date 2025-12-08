@@ -13,33 +13,149 @@ import { IExecutionResultEnvelope } from "../../../../model/index.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 import { IInsightMenuItem } from "../types.js";
 
+const getPresentationExportItems = (
+    intl: IntlShape,
+    config: IUseInsightMenuConfig,
+    presentationTooltip: string,
+): IInsightMenuItem[] => {
+    const {
+        isExportPngImageVisible,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+        onExportPngImage,
+    } = config;
+
+    const pngImageItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportPngImage",
+        itemName: intl.formatMessage({ id: "options.menu.export.image.PNG" }),
+        icon: "gd-icon-type-image",
+        className: "gd-export-options-png",
+        disabled: exportPngImageDisabled,
+        tooltip: exportPngImageDisabled ? presentationTooltip : undefined,
+        onClick: onExportPngImage,
+    };
+
+    const pdfPresentationItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportPdfPresentation",
+        itemName: intl.formatMessage({ id: "options.menu.export.presentation.PDF" }),
+        icon: "gd-icon-type-pdf",
+        className: "gd-export-options-pdf-presentation",
+        disabled: exportPdfPresentationDisabled,
+        tooltip: exportPdfPresentationDisabled ? presentationTooltip : undefined,
+        onClick: onExportPdfPresentation,
+    };
+
+    const pptxPresentationItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportPptxPresentation",
+        itemName: intl.formatMessage({ id: "options.menu.export.presentation.PPTX" }),
+        icon: "gd-icon-type-slides",
+        className: "gd-export-options-pptx-presentation",
+        disabled: exportPowerPointPresentationDisabled,
+        tooltip: exportPowerPointPresentationDisabled ? presentationTooltip : undefined,
+        onClick: onExportPowerPointPresentation,
+    };
+
+    return compact([isExportPngImageVisible && pngImageItem, pdfPresentationItem, pptxPresentationItem]);
+};
+
+const getDataExportGroupItems = (
+    intl: IntlShape,
+    config: IUseInsightMenuConfig,
+    tooltip: string,
+): IInsightMenuItem[] => {
+    const {
+        isExportPdfTabularVisible,
+        exportXLSXDisabled,
+        exportCSVDisabled,
+        exportCSVRawDisabled,
+        exportPdfTabularDisabled,
+        onExportXLSX,
+        onExportCSV,
+        onExportRawCSV,
+        onExportPdfTabular,
+    } = config;
+
+    const xlsxItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportXLSX",
+        itemName: intl.formatMessage({ id: "widget.options.menu.XLSX" }),
+        icon: "gd-icon-type-sheet",
+        className: "gd-export-options-xlsx",
+        disabled: exportXLSXDisabled,
+        tooltip: exportXLSXDisabled ? tooltip : undefined,
+        onClick: onExportXLSX,
+    };
+
+    const pdfTabularItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportPDFFormatted",
+        itemName: intl.formatMessage({
+            id: "widget.options.menu.exportToPDF.formatted",
+        }),
+        icon: "gd-icon-type-pdf",
+        className: "gd-export-options-pdf-data",
+        disabled: exportPdfTabularDisabled,
+        tooltip: exportPdfTabularDisabled ? tooltip : undefined,
+        onClick: onExportPdfTabular,
+    };
+
+    const csvFormattedItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportCSVFormatted",
+        itemName: intl.formatMessage({
+            id: "widget.options.menu.exportToCSV.formatted",
+        }),
+        icon: "gd-icon-type-csv-formatted",
+        className: "gd-export-options-csv",
+        disabled: exportCSVDisabled,
+        tooltip: exportCSVDisabled ? tooltip : undefined,
+        onClick: onExportCSV,
+    };
+
+    const csvRawItem: IInsightMenuItem = {
+        type: "button" as const,
+        itemId: "ExportCSVRaw",
+        itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV.raw" }),
+        icon: "gd-icon-type-csv-raw",
+        className: "gd-export-options-csv-raw",
+        disabled: exportCSVRawDisabled,
+        tooltip: exportCSVRawDisabled ? tooltip : undefined,
+        onClick: onExportRawCSV,
+    };
+
+    return compact([xlsxItem, isExportPdfTabularVisible && pdfTabularItem, csvFormattedItem, csvRawItem]);
+};
+
+const getDataExportGroup = (
+    intl: IntlShape,
+    config: IUseInsightMenuConfig,
+    tooltip: string,
+): IInsightMenuItem[] => {
+    const items = getDataExportGroupItems(intl, config, tooltip);
+
+    return [
+        {
+            type: "group" as const,
+            itemId: "ExportGroup",
+            itemName: intl.formatMessage({ id: "options.menu.export.header.data" }),
+            items,
+        },
+    ];
+};
+
 const getExportMenuItems = (
     intl: IntlShape,
     config: IUseInsightMenuConfig,
     execution?: IExecutionResultEnvelope,
 ): IInsightMenuItem[] => {
-    const {
-        isExportVisible,
-        isExportRawVisible,
-        isExportPngImageVisible,
-        isExportPdfTabularVisible,
-        exportPdfPresentationDisabled,
-        exportPowerPointPresentationDisabled,
-        exportXLSXDisabled,
-        exportCSVDisabled,
-        exportCSVRawDisabled,
-        exportPngImageDisabled,
-        exportPdfTabularDisabled,
-        onExportPdfPresentation,
-        onExportPowerPointPresentation,
-        onExportXLSX,
-        onExportCSV,
-        onExportRawCSV,
-        onExportPngImage,
-        onExportPdfTabular,
-        isExporting,
-        disabledReason,
-    } = config;
+    const { isExportVisible, isExportRawVisible, isExporting, disabledReason } = config;
+
     const tooltipId = getExportTooltipId({
         isRawExportsEnabled: isExportRawVisible,
         isExporting,
@@ -51,108 +167,15 @@ const getExportMenuItems = (
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
 
-    return [
-        // Presentation exports section - only shown if isExportVisible is true
-        ...(isExportVisible
-            ? [
-                  ...(isExportPngImageVisible
-                      ? [
-                            {
-                                type: "button" as const,
-                                itemId: "ExportPngImage",
-                                itemName: intl.formatMessage({ id: "options.menu.export.image.PNG" }),
-                                icon: "gd-icon-type-image",
-                                className: "gd-export-options-png",
-                                disabled: exportPngImageDisabled,
-                                tooltip: exportPngImageDisabled ? presentationTooltip : undefined,
-                                onClick: onExportPngImage,
-                            },
-                        ]
-                      : []),
-                  {
-                      type: "button" as const,
-                      itemId: "ExportPdfPresentation",
-                      itemName: intl.formatMessage({ id: "options.menu.export.presentation.PDF" }),
-                      icon: "gd-icon-type-pdf",
-                      className: "gd-export-options-pdf-presentation",
-                      disabled: exportPdfPresentationDisabled,
-                      tooltip: exportPdfPresentationDisabled ? presentationTooltip : undefined,
-                      onClick: onExportPdfPresentation,
-                  },
-                  {
-                      type: "button" as const,
-                      itemId: "ExportPptxPresentation",
-                      itemName: intl.formatMessage({ id: "options.menu.export.presentation.PPTX" }),
-                      icon: "gd-icon-type-slides",
-                      className: "gd-export-options-pptx-presentation",
-                      disabled: exportPowerPointPresentationDisabled,
-                      tooltip: exportPowerPointPresentationDisabled ? presentationTooltip : undefined,
-                      onClick: onExportPowerPointPresentation,
-                  },
-              ]
-            : []),
+    // Presentation exports section - only shown if isExportVisible is true
+    const presentationItems = isExportVisible
+        ? getPresentationExportItems(intl, config, presentationTooltip)
+        : [];
 
-        // Data exports section - only shown if isExportRawVisible is true
-        ...(isExportRawVisible
-            ? [
-                  {
-                      type: "group" as const,
-                      itemId: "ExportGroup",
-                      itemName: intl.formatMessage({ id: "options.menu.export.header.data" }),
-                      items: [
-                          {
-                              type: "button" as const,
-                              itemId: "ExportXLSX",
-                              itemName: intl.formatMessage({ id: "widget.options.menu.XLSX" }),
-                              icon: "gd-icon-type-sheet",
-                              className: "gd-export-options-xlsx",
-                              disabled: exportXLSXDisabled,
-                              tooltip: exportXLSXDisabled ? tooltip : undefined,
-                              onClick: onExportXLSX,
-                          },
-                          ...(isExportPdfTabularVisible
-                              ? [
-                                    {
-                                        type: "button" as const,
-                                        itemId: "ExportPDFFormatted",
-                                        itemName: intl.formatMessage({
-                                            id: "widget.options.menu.exportToPDF.formatted",
-                                        }),
-                                        icon: "gd-icon-type-pdf",
-                                        className: "gd-export-options-pdf-data",
-                                        disabled: exportPdfTabularDisabled,
-                                        tooltip: exportPdfTabularDisabled ? tooltip : undefined,
-                                        onClick: onExportPdfTabular,
-                                    },
-                                ]
-                              : []),
-                          {
-                              type: "button" as const,
-                              itemId: "ExportCSVFormatted",
-                              itemName: intl.formatMessage({
-                                  id: "widget.options.menu.exportToCSV.formatted",
-                              }),
-                              icon: "gd-icon-type-csv-formatted",
-                              className: "gd-export-options-csv",
-                              disabled: exportCSVDisabled,
-                              tooltip: exportCSVDisabled ? tooltip : undefined,
-                              onClick: onExportCSV,
-                          },
-                          {
-                              type: "button" as const,
-                              itemId: "ExportCSVRaw",
-                              itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV.raw" }),
-                              icon: "gd-icon-type-csv-raw",
-                              className: "gd-export-options-csv-raw",
-                              disabled: exportCSVRawDisabled,
-                              tooltip: exportCSVRawDisabled ? tooltip : undefined,
-                              onClick: onExportRawCSV,
-                          },
-                      ],
-                  },
-              ]
-            : []),
-    ];
+    // Data exports section - only shown if isExportRawVisible is true
+    const dataExportItems = isExportRawVisible ? getDataExportGroup(intl, config, tooltip) : [];
+
+    return [...presentationItems, ...dataExportItems];
 };
 
 /**

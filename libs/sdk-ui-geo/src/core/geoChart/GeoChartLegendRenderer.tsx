@@ -24,8 +24,8 @@ import {
     shouldRenderCircleLegendInsidePopUp,
     shouldRenderMiddleCircle,
 } from "./helpers/geoChart/responsive.js";
-import PushpinCategoryLegend, { HEIGHT_OF_SIZE_LEGEND } from "./legends/PushpinCategoryLegend.js";
-import PushpinSizeLegend from "./legends/PushpinSizeLegend.js";
+import { HEIGHT_OF_SIZE_LEGEND, PushpinCategoryLegend } from "./legends/PushpinCategoryLegend.js";
+import { PushpinSizeLegend } from "./legends/PushpinSizeLegend.js";
 import { IAvailableLegends, IGeoData } from "../../GeoChart.js";
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
@@ -74,7 +74,7 @@ function getClassnames(props: IGeoChartLegendRendererProps, availableLegends: IA
     });
 }
 
-export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps): ReactElement | null {
+export function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps): ReactElement | null {
     const { categoryItems = [], geoData = {}, height, numericSymbols = [] } = props;
     const position = props.position ?? "top";
 

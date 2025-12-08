@@ -2,14 +2,14 @@
 
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
-import DrillMeasureSelectorItem from "./DrillMeasureSelectorItem.js";
+import { DrillMeasureSelectorItem } from "./DrillMeasureSelectorItem.js";
 
 export interface IDrillMeasureSelectorListProps {
     supportedItems: IAvailableDrillTargetMeasure[];
     onSelect: (item: IAvailableDrillTargetMeasure) => void;
 }
 
-function DrillMeasureSelectorList(props: IDrillMeasureSelectorListProps) {
+export function DrillMeasureSelectorList(props: IDrillMeasureSelectorListProps) {
     return (
         <div className="gd-drill-measure-selector-list">
             {props.supportedItems.map((item) => (
@@ -22,5 +22,3 @@ function DrillMeasureSelectorList(props: IDrillMeasureSelectorListProps) {
         </div>
     );
 }
-
-export default DrillMeasureSelectorList;

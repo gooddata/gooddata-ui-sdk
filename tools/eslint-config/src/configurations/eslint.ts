@@ -6,6 +6,18 @@ const configuration: IConfiguration = {
     extends: ["eslint:recommended"],
     rules: {
         "no-console": [2, { allow: ["warn", "error"] }],
+        "no-restricted-exports": [
+            2,
+            {
+                restrictDefaultExports: {
+                    direct: true,
+                    named: true,
+                    defaultFrom: true,
+                    namedFrom: true,
+                    namespaceFrom: true,
+                },
+            },
+        ],
         "no-duplicate-imports": "error",
         "no-restricted-imports": [
             "error",

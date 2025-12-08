@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { IGeoData } from "../../../GeoChart.js";
-import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer.js";
+import { GeoChartRenderer, IGeoChartRendererProps } from "../GeoChartRenderer.js";
 
 const intl = createIntlMock();
 

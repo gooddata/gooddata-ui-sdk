@@ -326,4 +326,4 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
         config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
     });
 
-export default [totalsForRows, totalsForColumns, totalsForRowsAndColumns];
+export const totals = [totalsForRows, totalsForColumns, totalsForRowsAndColumns];

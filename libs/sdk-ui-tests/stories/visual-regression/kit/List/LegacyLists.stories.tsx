@@ -135,6 +135,7 @@ const customMessages = {
 
 const WithIntl = withIntl(LegacyListExamples, undefined, customMessages);
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/Legacy Lists",
 };

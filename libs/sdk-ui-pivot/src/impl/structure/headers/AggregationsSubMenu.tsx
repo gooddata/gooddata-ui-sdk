@@ -31,7 +31,7 @@ export interface IAggregationsSubMenuProps {
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }
 
-export default function AggregationsSubMenu({
+export function AggregationsSubMenu({
     intl,
     totalType,
     toggler,

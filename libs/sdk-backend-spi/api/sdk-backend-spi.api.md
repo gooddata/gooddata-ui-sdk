@@ -91,6 +91,7 @@ import type { IMemoryItemMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
+import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { INotification } from '@gooddata/sdk-model';
 import { INotificationChannelExternalRecipient } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
@@ -1406,6 +1407,7 @@ export interface IOrganizationSettingsService {
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
+    setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
     // @alpha
     setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
@@ -1971,6 +1973,7 @@ export interface IWorkspaceSettingsService {
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
+    deleteMetricFormatOverride(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
@@ -1984,6 +1987,7 @@ export interface IWorkspaceSettingsService {
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
+    setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;

@@ -7,12 +7,12 @@ import { ComboChart } from "@gooddata/sdk-ui-charts";
 
 import { GranularitySelector } from "./GranularitySelector.js";
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 // Try changing default granularity to Catalog.DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default 👇
 const defaultGranularity = Catalog.DateDatasets.CustomerCreatedDate.CustomerCreatedDateQuarterYear.Default;
 
-export default function Example() {
+export function Example() {
     const [granularity, setGranularity] = useState(defaultGranularity);
 
     return (

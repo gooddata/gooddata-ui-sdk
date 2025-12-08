@@ -10,7 +10,7 @@ export interface IDrillAttributeSelectorListProps {
     onCloseDropdown: () => void;
 }
 
-function DrillAttributeSelectorList(props: IDrillAttributeSelectorListProps) {
+export function DrillAttributeSelectorList(props: IDrillAttributeSelectorListProps) {
     return (
         <div className="gd-drill-attribute-selector-list">
             {props.supportedItems.map((item) => (
@@ -24,5 +24,3 @@ function DrillAttributeSelectorList(props: IDrillAttributeSelectorListProps) {
         </div>
     );
 }
-
-export default DrillAttributeSelectorList;

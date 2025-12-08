@@ -62,6 +62,7 @@ import {
     IColorPaletteMetadataObject,
     ILlmEndpointBase,
     ILlmEndpointOpenAI,
+    IMetricFormatOverrideSetting,
     INotificationChannelMetadataObject,
     IOrganizationDescriptor,
     ISeparators,
@@ -74,7 +75,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
+import { RecordedAttributeHierarchiesService } from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
 import { RecordedCatalogFactory } from "./catalog.js";
 import { RecordedDashboards } from "./dashboards.js";
@@ -297,6 +298,12 @@ function recordedWorkspace(
                 async deleteTheme(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setMetricFormatOverride(_override: IMetricFormatOverrideSetting): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteMetricFormatOverride(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {
@@ -507,6 +514,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
                 setAttachmentSizeLimit: () => Promise.resolve(),
+                setMetricFormatOverride: () => Promise.resolve(),
             };
         },
         notificationChannels(): IOrganizationNotificationChannelService {

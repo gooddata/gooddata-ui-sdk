@@ -93,7 +93,7 @@ const orientationConfigScenarios = scenariosFor<IWaterfallChartProps>("Waterfall
             yaxis: { min: "0", max: "130000000", name: { position: "low" } },
         },
     });
-export default [
+export const customization = [
     legendScenarios,
     ...legendResponziveScenarios,
     dataLabelScenarios,

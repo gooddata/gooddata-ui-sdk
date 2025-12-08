@@ -18,7 +18,7 @@ export const SankeyChartWithMeasureAttributeTo = {
     measure: ReferenceMd.Amount,
     attributeTo: ReferenceMd.Region.Default,
 };
-export default scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
+export const base = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 800 },

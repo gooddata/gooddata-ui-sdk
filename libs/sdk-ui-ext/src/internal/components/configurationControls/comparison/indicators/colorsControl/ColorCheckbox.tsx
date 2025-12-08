@@ -9,7 +9,7 @@ import { Checkbox } from "@gooddata/sdk-ui-kit";
 import { comparisonMessages } from "../../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
-import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 import { COMPARISON_COLOR_CONFIG_DISABLED } from "../../ComparisonValuePath.js";
 
 interface IColorItemProps {
@@ -19,7 +19,7 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-function ColorCheckbox({ disabled, showDisabledMessage, properties, pushData }: IColorItemProps) {
+export function ColorCheckbox({ disabled, showDisabledMessage, properties, pushData }: IColorItemProps) {
     const { formatMessage } = useIntl();
 
     const checked = !properties?.controls?.comparison?.colorConfig?.disabled;
@@ -38,5 +38,3 @@ function ColorCheckbox({ disabled, showDisabledMessage, properties, pushData }: 
         </DisabledBubbleMessage>
     );
 }
-
-export default ColorCheckbox;

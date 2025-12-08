@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -28,7 +28,7 @@ function KpiLoading() {
     return <LoadingComponent inline />;
 }
 
-function CoreKpi(props: IKpiProps & WrappedComponentProps) {
+function CoreKpi(props: IKpiProps) {
     const {
         backend,
         workspace,
@@ -41,8 +41,8 @@ function CoreKpi(props: IKpiProps & WrappedComponentProps) {
         onLoadingChanged,
         onLoadingFinish,
         onLoadingStart,
-        intl,
     } = props;
+    const intl = useIntl();
 
     invariant(
         backend && workspace,
@@ -109,13 +109,11 @@ const getMeasureFormat = (result: DataViewFacade) => {
     return headerItems?.[0]?.measureHeaderItem?.format;
 };
 
-const IntlKpi = injectIntl(CoreKpi);
-
 function RenderKpi(props: IKpiProps) {
     const { locale } = props;
     return (
         <IntlWrapper locale={locale}>
-            <IntlKpi {...props} />
+            <CoreKpi {...props} />
         </IntlWrapper>
     );
 }

@@ -25,7 +25,7 @@ import {
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper.js";
-import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel.js";
+import { ScatterPlotConfigurationPanel } from "../../configurationPanels/ScatterPlotConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

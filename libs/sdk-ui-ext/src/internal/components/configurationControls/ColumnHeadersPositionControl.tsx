@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
-import ConfigSubsection from "./ConfigSubsection.js";
-import DropdownControl from "./DropdownControl.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
 import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
@@ -24,16 +24,16 @@ export interface IColumnHeadersPositionControlProps {
     enableNewPivotTable?: boolean;
 }
 
-function ColumnHeadersPositionControl({
+export function ColumnHeadersPositionControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     defaultValue = "top",
     insight,
     isLoading,
     enableNewPivotTable = true,
-}: IColumnHeadersPositionControlProps & WrappedComponentProps) {
+}: IColumnHeadersPositionControlProps) {
+    const intl = useIntl();
     const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
         ? (properties?.controls?.["columnHeadersPosition"] ?? defaultValue)
         : defaultValue;
@@ -60,5 +60,3 @@ function ColumnHeadersPositionControl({
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(ColumnHeadersPositionControl);

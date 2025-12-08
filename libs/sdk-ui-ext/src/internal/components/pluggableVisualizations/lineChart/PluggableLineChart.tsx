@@ -40,7 +40,7 @@ import {
 } from "../../../utils/propertiesHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper.js";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
+import { LineChartBasedConfigurationPanel } from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     addIntersectionFiltersToInsight,

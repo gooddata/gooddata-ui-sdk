@@ -12,7 +12,7 @@ import { comparisonPositionDropdownItems } from "../../../../constants/dropdowns
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../../utils/translations.js";
-import DropdownControl from "../../DropdownControl.js";
+import { DropdownControl } from "../../DropdownControl.js";
 import { COMPARISON_POSITION_VALUE_PATH } from "../ComparisonValuePath.js";
 
 interface IPositionControlProps {
@@ -22,7 +22,7 @@ interface IPositionControlProps {
     pushData: PushDataCallback;
 }
 
-function ComparisonPositionControl({
+export function ComparisonPositionControl({
     disabled,
     showDisabledMessage,
     properties,
@@ -48,5 +48,3 @@ function ComparisonPositionControl({
         </div>
     );
 }
-
-export default ComparisonPositionControl;

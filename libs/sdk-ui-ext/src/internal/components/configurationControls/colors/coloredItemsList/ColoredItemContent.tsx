@@ -62,5 +62,3 @@ export const ColoredItemContent = memo(function ColoredItemContent({
         </div>
     );
 });
-
-export default ColoredItemContent;

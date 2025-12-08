@@ -16,6 +16,34 @@ import { AlertAttribute, AlertMetric } from "../../types.js";
 import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { convertThresholdValue } from "../utils/threshold.js";
 
+function clearValueForRelativeOperator(
+    changeValue: (value: number) => void,
+    setValue: (value: number | undefined) => void,
+) {
+    changeValue(undefined!);
+    setValue(undefined);
+}
+
+function calculateAndSetComparisonValue(
+    getMetricValue: (measure?: IMeasure, attr?: IAttribute, value?: string | null) => number | undefined,
+    changeValue: (value: number) => void,
+    setValue: (value: number | undefined) => void,
+    measure?: IMeasure,
+    attribute?: IAttribute,
+    selectedValue?: string | null,
+) {
+    const val = getMetricValue(measure, attribute, selectedValue);
+    if (val === undefined) {
+        return;
+    }
+    changeValue(val);
+    setValue(convertThresholdValue(String(val), measure?.measure.format));
+}
+
+function parseInputValue(e: string | number): number | undefined {
+    return e === "" ? undefined : parseFloat(String(e));
+}
+
 export function useThresholdValue(
     changeValue: (value: number) => void,
     getMetricValue: (measure?: IMeasure, attr?: IAttribute, value?: string | null) => number | undefined,
@@ -45,17 +73,19 @@ export function useThresholdValue(
 
         // If user selects a relative operator, clear the value if not touched, it not make sense
         if (relativeOperator) {
-            changeValue(undefined!);
-            setValue(undefined);
-
-            // If user select comparison operator try to calculate the value based on the selected measure and attribute
-        } else {
-            const val = getMetricValue(selectedMeasure?.measure, selectedAttribute?.attribute, selectedValue);
-            if (val !== undefined) {
-                changeValue(val);
-                setValue(convertThresholdValue(String(val), selectedMeasure?.measure.measure.format));
-            }
+            clearValueForRelativeOperator(changeValue, setValue);
+            return;
         }
+
+        // If user select comparison operator try to calculate the value based on the selected measure and attribute
+        calculateAndSetComparisonValue(
+            getMetricValue,
+            changeValue,
+            setValue,
+            selectedMeasure?.measure,
+            selectedAttribute?.attribute,
+            selectedValue,
+        );
     }, [
         isNewAlert,
         changeValue,
@@ -69,7 +99,7 @@ export function useThresholdValue(
 
     const onChange = useCallback(
         (e: string | number, event?: ChangeEvent<HTMLInputElement>) => {
-            const val = e === "" ? undefined : parseFloat(String(e));
+            const val = parseInputValue(e);
             if (val) {
                 setHasValidationError(false);
             }

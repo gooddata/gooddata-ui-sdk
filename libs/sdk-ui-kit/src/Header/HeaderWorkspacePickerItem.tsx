@@ -16,7 +16,7 @@ export interface IHeaderWorkspacePickerItemProps {
     intl: IntlShape;
 }
 
-export function CoreHeaderWorkspacePickerItem({
+function CoreHeaderWorkspacePickerItem({
     intl,
     title,
     isLoading,

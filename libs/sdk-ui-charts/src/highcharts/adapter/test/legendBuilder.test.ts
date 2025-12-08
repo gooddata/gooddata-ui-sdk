@@ -10,7 +10,7 @@ import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { generateChartOptions } from "../../chartTypes/_util/test/helper.js";
-import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder.js";
+import { buildLegendOptions, getLegendItems, shouldLegendBeEnabled } from "../legendBuilder.js";
 
 const rec = recordedDataFacade;
 

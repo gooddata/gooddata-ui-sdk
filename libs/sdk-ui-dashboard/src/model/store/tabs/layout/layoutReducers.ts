@@ -753,6 +753,32 @@ const replaceWidgetBlacklistHierarchies = adaptLayoutReducer(withUndo(replaceWid
 //
 //
 
+type ReplaceWidgetBlacklistAttributes = {
+    ref: ObjRef;
+    blacklistAttributes: ObjRef[];
+};
+
+//
+const replaceWidgetBlacklistAttributesCore: CoreLayoutReducer<ReplaceWidgetBlacklistAttributes> = (
+    state,
+    action,
+) => {
+    invariant(state.layout);
+
+    const { blacklistAttributes, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.ignoredDrillToUrlAttributes = blacklistAttributes ?? [];
+};
+
+// Wrap with undo and adapt to TabsState
+const replaceWidgetBlacklistAttributes = adaptLayoutReducer(withUndo(replaceWidgetBlacklistAttributesCore));
+//
+//
+//
+
 type ReplaceWidgetDrillDownIntersectionIgnoredAttributes = {
     ref: ObjRef;
     ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
@@ -1248,6 +1274,7 @@ export const layoutReducers = {
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills,
     replaceWidgetBlacklistHierarchies,
+    replaceWidgetBlacklistAttributes,
     replaceWidgetDrillDownIntersectionIgnoredAttributes,
     replaceInsightWidgetVisProperties,
     replaceInsightWidgetVisConfiguration,

@@ -99,6 +99,84 @@ export function getXAxes(
     ];
 }
 
+function getScatterOrBubbleYAxes(
+    dv: DataViewFacade,
+    firstMeasureGroupItem: any,
+    secondMeasureGroupItem: any,
+): IAxis[] {
+    const hasSecondaryMeasure = !dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
+
+    if (!hasSecondaryMeasure) {
+        return [{ label: "" }];
+    }
+
+    const noPrimaryMeasures = dv.def().isBucketEmpty(BucketNames.MEASURES);
+    const measureItem = noPrimaryMeasures ? firstMeasureGroupItem : secondMeasureGroupItem;
+    return [{ ...measureItem }];
+}
+
+function getHeatmapYAxes(stackByAttribute: IUnwrappedAttributeHeadersWithItems): IAxis[] {
+    return [
+        {
+            label: stackByAttribute ? stackByAttribute.formOf.name : "",
+        },
+    ];
+}
+
+interface IMeasureInAxis {
+    name: string;
+    format: string;
+    index: number;
+}
+interface IMeasuresInAxes {
+    measuresInFirstAxis: IMeasureInAxis[];
+    measuresInSecondAxis: IMeasureInAxis[];
+}
+
+function addSeriesIndicesToAxis(axis: IAxis | null, measuresInAxis: IMeasureInAxis[]): IAxis | null {
+    if (!axis) {
+        return null;
+    }
+    return {
+        ...axis,
+        seriesIndices: measuresInAxis.map(({ index }) => index),
+    };
+}
+
+function getDualAxesYAxes(
+    secondaryAxisMeasures: string[],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+): IAxis[] {
+    const { measuresInFirstAxis, measuresInSecondAxis }: IMeasuresInAxes = assignMeasuresToAxes(
+        secondaryAxisMeasures,
+        measureGroup,
+    );
+
+    const firstAxis = addSeriesIndicesToAxis(
+        createYAxisItem(measuresInFirstAxis, false),
+        measuresInFirstAxis,
+    );
+    const secondAxis = addSeriesIndicesToAxis(
+        createYAxisItem(measuresInSecondAxis, true),
+        measuresInSecondAxis,
+    );
+
+    return compact([firstAxis, secondAxis]);
+}
+
+function getDefaultYAxes(measureGroupItems: any[], firstMeasureGroupItem: any): IAxis[] {
+    // if more than one measure and NOT dual, then have empty item name
+    const hasMoreThanOneMeasure = measureGroupItems.length > 1;
+    const nonDualMeasureAxis = hasMoreThanOneMeasure ? { label: "" } : {};
+    return [
+        {
+            ...firstMeasureGroupItem,
+            ...nonDualMeasureAxis,
+            seriesIndices: range(measureGroupItems.length),
+        },
+    ];
+}
+
 export function getYAxes(
     dv: DataViewFacade,
     config: IChartConfig,
@@ -114,94 +192,28 @@ export function getYAxes(
 
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
-    const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const noPrimaryMeasures = dv.def().isBucketEmpty(BucketNames.MEASURES);
 
     const { measures: secondaryAxisMeasures = [] as string[] } =
         (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
 
-    let yAxes: IAxis[] = [];
-
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const hasSecondaryMeasure = !dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
-
-        if (hasSecondaryMeasure) {
-            if (noPrimaryMeasures) {
-                yAxes = [
-                    {
-                        ...firstMeasureGroupItem,
-                    },
-                ];
-            } else {
-                yAxes = [
-                    {
-                        ...secondMeasureGroupItem,
-                    },
-                ];
-            }
-        } else {
-            yAxes = [{ label: "" }];
-        }
-    } else if (isHeatmap(type)) {
-        yAxes = [
-            {
-                label: stackByAttribute ? stackByAttribute.formOf.name : "",
-            },
-        ];
-    } else if (
-        isOneOfTypes(type, supportedDualAxesChartTypes) &&
-        !isEmpty(measureGroupItems) &&
-        !isEmpty(secondaryAxisMeasures)
-    ) {
-        const { measuresInFirstAxis, measuresInSecondAxis }: IMeasuresInAxes = assignMeasuresToAxes(
-            secondaryAxisMeasures,
-            measureGroup,
-        );
-
-        let firstAxis: IAxis = createYAxisItem(measuresInFirstAxis, false);
-        let secondAxis: IAxis = createYAxisItem(measuresInSecondAxis, true);
-
-        if (firstAxis) {
-            firstAxis = {
-                ...firstAxis,
-                seriesIndices: measuresInFirstAxis.map(({ index }: any) => index),
-            };
-        }
-        if (secondAxis) {
-            secondAxis = {
-                ...secondAxis,
-                seriesIndices: measuresInSecondAxis.map(({ index }: any) => index),
-            };
-        }
-
-        yAxes = compact([firstAxis, secondAxis]);
-    } else {
-        // if more than one measure and NOT dual, then have empty item name
-        const nonDualMeasureAxis = hasMoreThanOneMeasure
-            ? {
-                  label: "",
-              }
-            : {};
-        yAxes = [
-            {
-                ...firstMeasureGroupItem,
-                ...nonDualMeasureAxis,
-                seriesIndices: range(measureGroupItems.length),
-            },
-        ];
+        return getScatterOrBubbleYAxes(dv, firstMeasureGroupItem, secondMeasureGroupItem);
     }
 
-    return yAxes;
-}
+    if (isHeatmap(type)) {
+        return getHeatmapYAxes(stackByAttribute);
+    }
 
-interface IMeasureInAxis {
-    name: string;
-    format: string;
-    index: number;
-}
-interface IMeasuresInAxes {
-    measuresInFirstAxis: IMeasureInAxis[];
-    measuresInSecondAxis: IMeasureInAxis[];
+    const isDualAxes =
+        isOneOfTypes(type, supportedDualAxesChartTypes) &&
+        !isEmpty(measureGroupItems) &&
+        !isEmpty(secondaryAxisMeasures);
+
+    if (isDualAxes) {
+        return getDualAxesYAxes(secondaryAxisMeasures, measureGroup);
+    }
+
+    return getDefaultYAxes(measureGroupItems, firstMeasureGroupItem);
 }
 
 function assignMeasuresToAxes(

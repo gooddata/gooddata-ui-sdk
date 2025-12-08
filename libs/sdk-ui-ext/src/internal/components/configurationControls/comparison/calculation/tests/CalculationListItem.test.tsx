@@ -4,7 +4,7 @@ import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import CalculationListItem from "../CalculationListItem.js";
+import { CalculationListItem } from "../CalculationListItem.js";
 
 const ITEM_SELECTED_SELECTOR = ".s-calculation-list-item.is-selected";
 const ITEM_SELECTOR = ".s-calculation-list-item";

@@ -16,7 +16,7 @@ import {
     isWaterfall,
 } from "../_util/common.js";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring.js";
-import BulletChartColorStrategy from "../bulletChart/bulletChartColoring.js";
+import { BulletChartColorStrategy } from "../bulletChart/bulletChartColoring.js";
 import { HeatmapColorStrategy } from "../heatmap/heatmapColoring.js";
 import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring.js";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring.js";

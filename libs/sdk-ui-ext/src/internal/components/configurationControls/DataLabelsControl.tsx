@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import DropdownControl from "./DropdownControl.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 
 export interface IDataLabelsControlProps {
     pushData: (data: any) => any;
@@ -21,10 +21,9 @@ export interface IDataLabelsControlProps {
     enableStyleSelector?: boolean;
 }
 
-function DataLabelsControl({
+export function DataLabelsControl({
     pushData,
     properties,
-    intl,
     isDisabled,
     showDisabledMessage = false,
     defaultValue = "auto",
@@ -32,7 +31,8 @@ function DataLabelsControl({
     enableSeparateTotalLabels = false,
     enablePercentLabels,
     enableStyleSelector,
-}: IDataLabelsControlProps & WrappedComponentProps) {
+}: IDataLabelsControlProps) {
+    const intl = useIntl();
     const dataLabels = properties?.controls?.["dataLabels"]?.visible ?? defaultValue;
     const totalLabels = properties?.controls?.["dataLabels"]?.totalsVisible ?? defaultValue;
     const dataLabelStyle = properties?.controls?.["dataLabels"]?.style ?? "auto";
@@ -100,5 +100,3 @@ function DataLabelsControl({
         </div>
     );
 }
-
-export default injectIntl(DataLabelsControl);

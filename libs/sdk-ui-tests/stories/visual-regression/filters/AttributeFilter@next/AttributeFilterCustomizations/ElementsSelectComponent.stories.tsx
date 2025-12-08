@@ -32,6 +32,7 @@ function CustomElementsSelect(_props: IAttributeFilterElementsSelectProps) {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters@next/Customization/ElementsSelectComponent",
 };

@@ -5,7 +5,7 @@ import { MouseEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useS
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
 import { debounce } from "lodash-es";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -45,7 +45,10 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
 
-function AppHeaderCore({
+/**
+ * @internal
+ */
+export const AppHeader = withTheme(function AppHeader({
     logoHref = "/",
     accountMenuItems = [],
     helpMenuItems = [],
@@ -54,7 +57,6 @@ function AppHeaderCore({
     notificationsPanel,
     workspacePicker,
     isAccessibilityCompliant,
-    intl,
     logoUrl,
     logoTitle,
     organizationName,
@@ -78,7 +80,8 @@ function AppHeaderCore({
     onChatItemClick,
     onLogoClick,
     onMenuItemClick,
-}: IAppHeaderProps & WrappedComponentProps) {
+}: IAppHeaderProps) {
+    const intl = useIntl();
     const [state, setState] = useState<IAppHeaderState>({
         childrenWidth: 0,
         guid: `header-${uuid()}`,
@@ -670,11 +673,4 @@ function AppHeaderCore({
             {renderNav()}
         </header>
     );
-}
-
-/**
- * @internal
- */
-export const AppHeader = withTheme(
-    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
-);
+});

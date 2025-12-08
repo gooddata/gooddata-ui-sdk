@@ -3,6 +3,7 @@
 import {
     type DashboardFiltersApplyMode,
     IAlertDefault,
+    IMetricFormatOverrideSetting,
     IOpenAiConfig,
     ISeparators,
     ISettings,
@@ -189,6 +190,15 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     deleteColorPalette(): Promise<void>;
+
+    /**
+     * Sets metric format override for organization.
+     *
+     * @param override - mapping of metric types to custom format strings.
+     *
+     * @returns promise
+     */
+    setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
 
     /**
      * Get all current organization settings.

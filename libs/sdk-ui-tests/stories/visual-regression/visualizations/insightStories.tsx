@@ -25,7 +25,7 @@ import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
-import AllTestScenarioGroups from "../../../scenarios/index.js";
+import { allScenarios } from "../../../scenarios/index.js";
 import { IScenario, MapboxToken, ScenarioGroup } from "../../../src/index.js";
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
@@ -194,7 +194,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
 }
 
 const ScenarioGroupsByVis = sortBy(
-    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 

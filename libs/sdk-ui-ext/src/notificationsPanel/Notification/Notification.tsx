@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Fragment, KeyboardEvent, useCallback } from "react";
+import { Fragment, KeyboardEvent, ReactNode, useCallback } from "react";
 
 import { compact } from "lodash-es";
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
@@ -42,6 +42,30 @@ export interface INotificationsProps {
 }
 
 const { b, e } = bem("gd-ui-ext-notification");
+
+function handleScheduleNotificationClick(
+    exports: IExportResult[],
+    isExpired: boolean,
+    addWarning: ReturnType<typeof useToastMessage>["addWarning"],
+): void {
+    if (isExpired) {
+        addWarning(messages.notificationExpired);
+        return;
+    }
+    const downloadableExports = compact(exports.map(mapToDownloadableFile));
+    if (downloadableExports.length > 0) {
+        downloadFiles(downloadableExports);
+    }
+}
+
+function handleAlertNotificationClick(
+    notification: IAlertNotification | IScheduleNotification,
+    closeNotificationsPanel: () => void,
+    onNotificationClick?: (notification: IAlertNotification | IScheduleNotification) => void,
+): void {
+    closeNotificationsPanel();
+    onNotificationClick?.(notification);
+}
 
 /**
  * @internal
@@ -94,17 +118,9 @@ export function Notification({
             markNotificationAsRead(notification.id);
         }
         if (notification.notificationType === "scheduleNotification") {
-            if (isExpired) {
-                addWarning(messages.notificationExpired);
-                return;
-            }
-            const downloadableExports = compact(exports.map(mapToDownloadableFile));
-            if (downloadableExports.length > 0) {
-                downloadFiles(downloadableExports);
-            }
+            handleScheduleNotificationClick(exports, isExpired, addWarning);
         } else {
-            closeNotificationsPanel();
-            onNotificationClick?.(notification);
+            handleAlertNotificationClick(notification, closeNotificationsPanel, onNotificationClick);
         }
     }, [
         onNotificationClick,
@@ -148,54 +164,13 @@ export function Notification({
                         ) : null}{" "}
                         {notificationTitle}
                     </div>
-                    {isError ? (
-                        <div className={e("error")}>
-                            <div className={e("error-icon")}>
-                                <UiIcon type="crossCircle" size={12} color="error" />
-                            </div>
-                            <div>
-                                {errorTitle}{" "}
-                                <Popup
-                                    popup={
-                                        <div className={e("error-popup")}>
-                                            {errorMessage}
-                                            <br />
-                                            <FormattedMessage id="notifications.panel.error.traceId" />:{" "}
-                                            {traceId}
-                                        </div>
-                                    }
-                                >
-                                    {({ toggle, id }) => (
-                                        <UiButton
-                                            dataId="notification-error"
-                                            id={id}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                toggle();
-                                            }}
-                                            onKeyDown={(e) => {
-                                                e.stopPropagation();
-                                            }}
-                                            variant="tertiary"
-                                            size="small"
-                                            label={intl.formatMessage({
-                                                id: "notifications.panel.error.learnMore",
-                                            })}
-                                        />
-                                    )}
-                                </Popup>
-                            </div>
-                        </div>
-                    ) : actions.length ? (
-                        <div className={e("links")}>
-                            {actions.map((action, index) => (
-                                <Fragment key={index}>
-                                    {!!index && "・"}
-                                    {action}
-                                </Fragment>
-                            ))}
-                        </div>
-                    ) : null}
+                    <NotificationContent
+                        isError={isError}
+                        errorTitle={errorTitle}
+                        errorMessage={errorMessage}
+                        traceId={traceId}
+                        actions={actions}
+                    />
                 </div>
                 <div className={e("time")}>
                     <NotificationTime config={getDateTimeConfig(notification.createdAt)} />
@@ -327,6 +302,80 @@ function FileLink({ notification }: { notification: IAlertNotification | ISchedu
                 <FormattedMessage id="notifications.panel.dashboardLinkHint" />{" "}
             </Bubble>
         </BubbleHoverTrigger>
+    );
+}
+
+interface INotificationContentProps {
+    isError: boolean;
+    errorTitle: ReactNode;
+    errorMessage: ReactNode;
+    traceId: string | undefined;
+    actions: ReactNode[];
+}
+
+function NotificationContent({
+    isError,
+    errorTitle,
+    errorMessage,
+    traceId,
+    actions,
+}: INotificationContentProps) {
+    const intl = useIntl();
+
+    if (isError) {
+        return (
+            <div className={e("error")}>
+                <div className={e("error-icon")}>
+                    <UiIcon type="crossCircle" size={12} color="error" />
+                </div>
+                <div>
+                    {errorTitle}{" "}
+                    <Popup
+                        popup={
+                            <div className={e("error-popup")}>
+                                {errorMessage}
+                                <br />
+                                <FormattedMessage id="notifications.panel.error.traceId" />: {traceId}
+                            </div>
+                        }
+                    >
+                        {({ toggle, id }) => (
+                            <UiButton
+                                dataId="notification-error"
+                                id={id}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggle();
+                                }}
+                                onKeyDown={(e) => {
+                                    e.stopPropagation();
+                                }}
+                                variant="tertiary"
+                                size="small"
+                                label={intl.formatMessage({
+                                    id: "notifications.panel.error.learnMore",
+                                })}
+                            />
+                        )}
+                    </Popup>
+                </div>
+            </div>
+        );
+    }
+
+    if (!actions.length) {
+        return null;
+    }
+
+    return (
+        <div className={e("links")}>
+            {actions.map((action, index) => (
+                <Fragment key={index}>
+                    {!!index && "・"}
+                    {action}
+                </Fragment>
+            ))}
+        </div>
     );
 }
 

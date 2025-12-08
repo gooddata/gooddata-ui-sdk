@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ChangeEvent, FocusEvent, PureComponent } from "react";
+import { ChangeEvent, FocusEvent, memo, useEffect, useRef, useState } from "react";
 
 import { memoize } from "lodash-es";
 
@@ -70,7 +70,7 @@ const isValid = (value: any, separators: Separators) => {
 };
 
 const format = (value: any, { thousand, decimal }: Separators) => {
-    if (value === null) {
+    if (value === null || value === undefined) {
         return "";
     }
 
@@ -84,7 +84,7 @@ const format = (value: any, { thousand, decimal }: Separators) => {
  * @internal
  */
 export interface InputWithNumberFormatOwnProps {
-    separators: Separators;
+    separators?: Separators;
 }
 
 /**
@@ -106,88 +106,69 @@ export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPu
  * @internal
  */
 
-export class InputWithNumberFormat extends PureComponent<
-    InputWithNumberFormatProps,
-    InputWithNumberFormatState
-> {
-    private input: InputPure | null = null;
+export const InputWithNumberFormat = memo(function InputWithNumberFormat({
+    separators = DEFAULT_SEPARATORS,
+    value: propValue,
+    onChange,
+    onFocus,
+    onBlur,
+    ...restProps
+}: InputWithNumberFormatProps) {
+    const inputRef = useRef<InputPure | null>(null);
+    const [value, setValue] = useState(() => format(propValue, separators));
+    const [isFocused, setIsFocused] = useState(false);
 
-    static defaultProps = {
-        ...InputPure.defaultProps,
-        separators: DEFAULT_SEPARATORS,
+    useEffect(() => {
+        if (!isFocused) {
+            setValue(format(propValue, separators));
+        }
+    }, [propValue, isFocused, separators]);
+
+    const handleCaretShift = (e: ChangeEvent<HTMLInputElement>) => {
+        const caretPosition = (e.target.selectionStart ?? 1) - 1;
+
+        // Use setTimeout to ensure the DOM has updated before setting selection
+        setTimeout(() => {
+            inputRef.current?.inputNodeRef?.setSelectionRange(caretPosition, caretPosition);
+        }, 0);
     };
 
-    constructor(props: InputWithNumberFormatProps) {
-        super(props);
-
-        this.state = {
-            value: format(props.value, props.separators),
-            isFocused: false,
-        };
-    }
-
-    override UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void {
-        const { value, separators } = this.props;
-        const { isFocused } = this.state;
-
-        if (value !== newValue && !isFocused) {
-            this.setState({ value: format(newValue, separators) });
-        }
-    }
-
-    onChange = (value: number, e: ChangeEvent<HTMLInputElement>): void => {
-        const { separators, onChange } = this.props;
-
-        if (this.state.value === value) {
+    const handleChange = (newValue: number, e: ChangeEvent<HTMLInputElement>): void => {
+        if (value === newValue) {
             return;
         }
 
-        if (!isValid(value, separators)) {
-            this.handleCaretShift(e);
+        if (!isValid(newValue, separators)) {
+            handleCaretShift(e);
             return;
         }
 
-        this.setState({ value });
-        const parsedValue = parse(value, separators);
+        setValue(newValue);
+        const parsedValue = parse(newValue, separators);
         onChange?.(parsedValue as number);
     };
 
-    onFocus = (e: FocusEvent<HTMLInputElement>): void => {
-        this.setState({ isFocused: true });
-        this.props.onFocus?.(e);
+    const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
+        setIsFocused(true);
+        onFocus?.(e);
     };
 
-    onBlur = (e: FocusEvent<HTMLInputElement>): void => {
-        const { separators, onBlur } = this.props;
-        const { value } = this.state;
-
-        this.setState({
-            value: format(parse(value, separators), separators),
-            isFocused: false,
-        });
+    const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
+        setValue(format(parse(value, separators), separators));
+        setIsFocused(false);
         onBlur?.(e);
     };
 
-    handleCaretShift(e: ChangeEvent<HTMLInputElement>): void {
-        const caretPosition = (e.target.selectionStart ?? 1) - 1;
-
-        this.setState({}, () => {
-            this.input?.inputNodeRef?.setSelectionRange(caretPosition, caretPosition);
-        });
-    }
-
-    override render() {
-        return (
-            <InputPure
-                {...this.props}
-                ref={(ref) => {
-                    this.input = ref;
-                }}
-                onFocus={this.onFocus}
-                onChange={this.onChange as InputPureProps["onChange"]}
-                onBlur={this.onBlur}
-                value={this.state.value}
-            />
-        );
-    }
-}
+    return (
+        <InputPure
+            {...restProps}
+            ref={(ref) => {
+                inputRef.current = ref;
+            }}
+            onFocus={handleFocus}
+            onChange={handleChange as InputPureProps["onChange"]}
+            onBlur={handleBlur}
+            value={value}
+        />
+    );
+});

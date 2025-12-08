@@ -9,6 +9,7 @@ const items = Array.from({ length: 100 }, (_, index) => ({
     title: `Item ${index + 1}`,
 }));
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiPagedVirtualList",
 };

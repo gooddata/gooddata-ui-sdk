@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import autohidePieLabels from "../autohidePieLabels.js";
+import { autohidePieLabels } from "../autohidePieLabels.js";
 
 function setupMockData(indexOfFirst: number, indexOfSecond: number): any {
     const positions = [

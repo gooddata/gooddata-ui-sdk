@@ -15,7 +15,7 @@ const secondaryMeasure = newPreviousPeriodMeasure(
 
 const thisMonthDateFilter = newRelativeDateFilter(Catalog.DateDatasets.Date, "GDC.time.month", 0, 0);
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1>Gross profit this month vs previous</h1>

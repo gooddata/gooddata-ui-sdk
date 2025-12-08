@@ -32,7 +32,7 @@ import { IColorMapping } from "../../../interfaces/index.js";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
-class BulletChartColorStrategy extends ColorStrategy {
+export class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
@@ -136,5 +136,3 @@ class BulletChartColorStrategy extends ColorStrategy {
         });
     }
 }
-
-export default BulletChartColorStrategy;

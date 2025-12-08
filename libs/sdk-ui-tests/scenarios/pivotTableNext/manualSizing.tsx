@@ -120,4 +120,4 @@ const withAllAutoresizing = scenariosFor<IPivotTableNextProps>("PivotTableNext",
             return props;
         }),
     );
-export default [justManualResizing, withColumnAutoresize, withGrowToFit, withAllAutoresizing];
+export const manualSizing = [justManualResizing, withColumnAutoresize, withGrowToFit, withAllAutoresizing];

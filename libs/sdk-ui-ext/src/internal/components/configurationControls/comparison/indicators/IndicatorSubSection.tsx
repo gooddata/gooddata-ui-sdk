@@ -3,12 +3,12 @@
 import { IColorPalette } from "@gooddata/sdk-model";
 import { PushDataCallback } from "@gooddata/sdk-ui";
 
-import ArrowControl from "./ArrowControl.js";
-import ColorsControl from "./colorsControl/ColorsControl.js";
+import { ArrowControl } from "./ArrowControl.js";
+import { ColorsControl } from "./colorsControl/ColorsControl.js";
 import { comparisonMessages } from "../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import ConfigSubsection from "../../ConfigSubsection.js";
+import { ConfigSubsection } from "../../ConfigSubsection.js";
 
 interface IIndicatorSubSectionProps {
     sectionDisabled: boolean;
@@ -18,7 +18,7 @@ interface IIndicatorSubSectionProps {
     pushData: PushDataCallback;
 }
 
-function IndicatorSubSection({
+export function IndicatorSubSection({
     sectionDisabled,
     showDisabledMessage,
     properties,
@@ -45,5 +45,3 @@ function IndicatorSubSection({
         </ConfigSubsection>
     );
 }
-
-export default IndicatorSubSection;

@@ -2,13 +2,13 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
-import DropdownControl from "../DropdownControl.js";
+import { DropdownControl } from "../DropdownControl.js";
 
 export interface ILegendPositionControl {
     disabled: boolean;
@@ -18,11 +18,10 @@ export interface ILegendPositionControl {
     pushData: (data: any) => any;
 }
 
-const LegendPositionControl = memo(function LegendPositionControl(
-    props: ILegendPositionControl & WrappedComponentProps,
-) {
+export const LegendPositionControl = memo(function LegendPositionControl(props: ILegendPositionControl) {
+    const intl = useIntl();
     const generateDropdownItems = () => {
-        return getTranslatedDropdownItems(legendPositionDropdownItems, props.intl);
+        return getTranslatedDropdownItems(legendPositionDropdownItems, intl);
     };
 
     return (
@@ -38,5 +37,3 @@ const LegendPositionControl = memo(function LegendPositionControl(
         />
     );
 });
-
-export default injectIntl(LegendPositionControl);

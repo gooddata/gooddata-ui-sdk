@@ -700,6 +700,12 @@ function AutomationFiltersTabSection({
         return null;
     }
 
+    const content = (
+        <span className="gd-automation-filters__tab-title s-automation-filters-tab-title">
+            {displayTitle}
+        </span>
+    );
+
     return (
         <>
             <div
@@ -710,7 +716,7 @@ function AutomationFiltersTabSection({
                 <div className="gd-automation-filters__tab-header">
                     <span className="gd-automation-filters__tab-label">{tabLabel}</span>
                     <UiTooltip
-                        content={displayTitle}
+                        content={content}
                         triggerBy={["hover", "focus"]}
                         optimalPlacement
                         anchor={

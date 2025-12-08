@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { formatDropdownItems } from "../../../constants/dropdowns.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
-import DropdownControl from "../DropdownControl.js";
+import { DropdownControl } from "../DropdownControl.js";
 
 export interface ILabelFormatControl {
     disabled: boolean;
@@ -34,14 +34,14 @@ const getControlProperties = (
     };
 };
 
-function LabelFormatControlComponent({
+export function LabelFormatControl({
     disabled,
     properties,
     axis,
     configPanelDisabled,
     pushData,
-    intl,
-}: ILabelFormatControl & WrappedComponentProps) {
+}: ILabelFormatControl) {
+    const intl = useIntl();
     const { axisVisible, axisLabelsEnabled, axisFormat } = getControlProperties(properties, axis);
     const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
 
@@ -58,5 +58,3 @@ function LabelFormatControlComponent({
         />
     );
 }
-
-export const LabelFormatControl = injectIntl(LabelFormatControlComponent);

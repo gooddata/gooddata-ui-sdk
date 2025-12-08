@@ -27,7 +27,7 @@ const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 /**
  * @public
  */
-function InsightTitle({ title }: IInsightTitleProps) {
+export function InsightTitle({ title }: IInsightTitleProps) {
     return (
         <div className="insight-title-outer">
             <div className="insight-title">
@@ -41,5 +41,3 @@ function InsightTitle({ title }: IInsightTitleProps) {
         </div>
     );
 }
-
-export default InsightTitle;

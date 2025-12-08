@@ -75,7 +75,7 @@ import {
     setBaseChartUiConfigRecommendations,
 } from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper.js";
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper.js";
-import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel.js";
+import { BaseChartConfigurationPanel } from "../../configurationPanels/BaseChartConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 

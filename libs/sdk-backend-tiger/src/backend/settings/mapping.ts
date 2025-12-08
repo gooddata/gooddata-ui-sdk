@@ -61,6 +61,10 @@ export function mapTypeToKey(
             return "enableAccessibilityMode";
         case "REGISTERED_PLUGGABLE_APPLICATIONS":
             return "registeredPluggableApplications";
+        case "ENABLE_DRILL_TO_URL_BY_DEFAULT":
+            return "enableDrillToUrlByDefault";
+        case "METRIC_FORMAT_OVERRIDE":
+            return "metricFormatOverride";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "OPERATOR_OVERRIDES":
@@ -73,10 +77,8 @@ export function mapTypeToKey(
         case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
         case "DATA_LOCALE":
         case "LDM_DEFAULT_LOCALE":
-        case "ENABLE_DRILL_TO_URL_BY_DEFAULT":
         case "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS":
         case "MAX_ZOOM_LEVEL":
-        case "METRIC_FORMAT_OVERRIDE":
         case "SORT_CASE_SENSITIVE":
         case "ENABLE_AI_ON_DATA":
         case undefined:

@@ -2,7 +2,7 @@
 
 import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
 
-import AttributeHierarchyDialogCore from "./AttributeHierarchyDialogCore.js";
+import { AttributeHierarchyDialogCore } from "./AttributeHierarchyDialogCore.js";
 import { AttributeHierarchyDialogProvider } from "./AttributeHierarchyDialogProvider.js";
 
 /**

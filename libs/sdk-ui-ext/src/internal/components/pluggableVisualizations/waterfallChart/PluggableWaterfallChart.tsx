@@ -44,7 +44,7 @@ import {
     getWaterfallTotalColumnName,
     setWaterfallChartUiConfig,
 } from "../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
-import WaterfallChartConfigurationPanel from "../../configurationPanels/WaterfallChartConfigurationPanel.js";
+import { WaterfallChartConfigurationPanel } from "../../configurationPanels/WaterfallChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

@@ -8,7 +8,7 @@ import { IntlShape } from "react-intl";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
 import { IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
-import AggregationsMenu from "./AggregationsMenu.js";
+import { AggregationsMenu } from "./AggregationsMenu.js";
 import { IMenu } from "../../../publicTypes.js";
 import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
@@ -42,7 +42,7 @@ export interface IHeaderCellProps extends ICommonHeaderParams {
     isFocused?: boolean;
 }
 
-export default function HeaderCell({
+export function HeaderCell({
     sortDirection = null,
     textAlign = ALIGN_LEFT,
     menuPosition = ALIGN_LEFT,

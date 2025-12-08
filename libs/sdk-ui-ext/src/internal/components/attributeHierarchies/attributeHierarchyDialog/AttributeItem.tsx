@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import AttributeDropdown from "./AttributeDropdown.js";
-import AttributeItemActions from "./AttributeItemActions.js";
+import { AttributeDropdown } from "./AttributeDropdown.js";
+import { AttributeItemActions } from "./AttributeItemActions.js";
 import { IAttributeData } from "./types.js";
 
 interface IAttributeItemCellProps {
@@ -9,7 +9,7 @@ interface IAttributeItemCellProps {
     attribute: IAttributeData;
 }
 
-function AttributeItem({ rowIndex, attribute }: IAttributeItemCellProps) {
+export function AttributeItem({ rowIndex, attribute }: IAttributeItemCellProps) {
     const { title, completed, icon } = attribute;
 
     return (
@@ -29,5 +29,3 @@ function AttributeItem({ rowIndex, attribute }: IAttributeItemCellProps) {
         </div>
     );
 }
-
-export default AttributeItem;

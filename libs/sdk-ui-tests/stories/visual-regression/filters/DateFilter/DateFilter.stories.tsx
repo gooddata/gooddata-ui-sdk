@@ -27,6 +27,7 @@ const filterOptions: IDateFilterOptionsByType = {
     ...defaultDateFilterOptions,
     absoluteForm: fixedAbsoluteDateForm,
 };
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters/DateFilter",
 };

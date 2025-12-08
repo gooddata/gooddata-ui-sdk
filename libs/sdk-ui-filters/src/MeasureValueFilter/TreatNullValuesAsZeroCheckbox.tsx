@@ -11,7 +11,7 @@ interface ITreatNullValuesAsZeroCheckboxProps {
     onChange: (checked: boolean) => void;
 }
 
-function TreatNullValuesAsZeroCheckbox({
+export function TreatNullValuesAsZeroCheckbox({
     checked = false,
     onChange,
     intl,
@@ -41,5 +41,3 @@ function TreatNullValuesAsZeroCheckbox({
         </label>
     );
 }
-
-export default TreatNullValuesAsZeroCheckbox;

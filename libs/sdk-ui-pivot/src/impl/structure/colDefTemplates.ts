@@ -6,8 +6,8 @@ import { invariant } from "ts-invariant";
 import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
 
 import { headerClassFactory } from "./colDefHeaderClass.js";
-import ColumnTotalHeader from "./headers/ColumnTotalHeader.js";
-import MixedValuesColumnHeader from "./headers/MixedValuesColumnHeader.js";
+import { ColumnTotalHeader } from "./headers/ColumnTotalHeader.js";
+import { MixedValuesColumnHeader } from "./headers/MixedValuesColumnHeader.js";
 import { isSeriesCol } from "./tableDescriptorTypes.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";
 import { AVAILABLE_TOTALS } from "../base/constants.js";

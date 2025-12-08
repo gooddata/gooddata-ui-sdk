@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
-import OperatorDropdownItem from "./OperatorDropdownItem.js";
+import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownBodyProps {
@@ -16,7 +16,7 @@ interface IOperatorDropdownBodyProps {
     alignTo: string;
 }
 
-const OperatorDropdownBody = memo(function OperatorDropdownBody({
+export const OperatorDropdownBody = memo(function OperatorDropdownBody({
     onSelect,
     onClose,
     selectedOperator,
@@ -84,5 +84,3 @@ const OperatorDropdownBody = memo(function OperatorDropdownBody({
         </Overlay>
     );
 });
-
-export default OperatorDropdownBody;

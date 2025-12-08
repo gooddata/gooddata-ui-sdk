@@ -33,8 +33,8 @@ import {
     shouldShowFluid,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
-import type { IGeoChartRendererProps } from "./GeoChartRenderer.js";
+import { GeoChartLegendRenderer, IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
+import { IGeoChartRendererProps } from "./GeoChartRenderer.js";
 import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
@@ -42,7 +42,11 @@ import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/r
 
 export type { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 
-const GeoChartRendererLazy = lazy(() => import("./GeoChartRenderer.js"));
+const GeoChartRendererLazy = lazy(() =>
+    import("./GeoChartRenderer.js").then((module) => ({
+        default: module.GeoChartRenderer,
+    })),
+);
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

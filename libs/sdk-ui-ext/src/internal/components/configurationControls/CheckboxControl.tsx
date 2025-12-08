@@ -3,11 +3,11 @@
 import { ChangeEvent, useCallback } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
-import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface ICheckboxControlProps {
     valuePath: string;
@@ -21,18 +21,18 @@ export interface ICheckboxControlProps {
     isValueInverted?: boolean;
 }
 
-function CheckboxControl({
+export function CheckboxControl({
     checked = false,
     disabled = false,
     showDisabledMessage = false,
     labelText,
-    intl,
     valuePath,
     disabledMessageId,
     properties,
     pushData,
     isValueInverted = false,
-}: ICheckboxControlProps & WrappedComponentProps) {
+}: ICheckboxControlProps) {
+    const intl = useIntl();
     const onValueChanged = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             const clonedProperties = cloneDeep(properties);
@@ -63,5 +63,3 @@ function CheckboxControl({
         </DisabledBubbleMessage>
     );
 }
-
-export default injectIntl(CheckboxControl);

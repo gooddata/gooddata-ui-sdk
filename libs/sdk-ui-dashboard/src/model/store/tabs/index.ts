@@ -61,6 +61,7 @@ export {
     selectTabById,
     selectHasTabs,
     selectTabsState,
+    selectFirstTabLocalIdentifier,
 } from "./tabsSelectors.js";
 export type {
     TabsState,

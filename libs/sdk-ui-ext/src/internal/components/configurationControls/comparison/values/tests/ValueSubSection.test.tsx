@@ -18,7 +18,7 @@ import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.j
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
 import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
 import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
-import ValueSubSection from "../ValueSubSection.js";
+import { ValueSubSection } from "../ValueSubSection.js";
 
 const TITLE_TEXT_QUERY = "Value";
 
@@ -65,7 +65,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render number format control", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
+        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
         renderValueSubSection();
 
         expect(MockNumberFormatControl).toHaveBeenCalledWith(
@@ -83,7 +83,10 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render comparison position control", () => {
-        const MockComparisonPositionControl = vi.spyOn(ComparisonPositionControl, "default");
+        const MockComparisonPositionControl = vi.spyOn(
+            ComparisonPositionControl,
+            "ComparisonPositionControl",
+        );
         renderValueSubSection();
 
         expect(MockComparisonPositionControl).toHaveBeenCalledWith(
@@ -97,7 +100,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should select default format while format is empty", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
+        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
         renderValueSubSection({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {
@@ -115,7 +118,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render sub-format when calculation type is change (difference)", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "default");
+        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
         renderValueSubSection({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {

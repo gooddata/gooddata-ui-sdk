@@ -116,4 +116,4 @@ const withAllAutoresizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTa
             return props;
         }),
     );
-export default [justManualResizing, withColumnAutoresize, withGrowToFit, withAllAutoresizing];
+export const manualSizing = [justManualResizing, withColumnAutoresize, withGrowToFit, withAllAutoresizing];

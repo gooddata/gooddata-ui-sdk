@@ -23,7 +23,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAttributeListItemProps) {
+export function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
         return cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
@@ -47,5 +47,3 @@ function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAtt
 export const getAttributeListItemTitle = (item: ICatalogAttribute, title?: string) => {
     return title ?? item.attribute.title;
 };
-
-export default AttributeListItem;

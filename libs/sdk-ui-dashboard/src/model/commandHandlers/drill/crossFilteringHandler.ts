@@ -4,7 +4,12 @@ import { isEmpty } from "lodash-es";
 import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
-import { IDashboardAttributeFilter, areObjRefsEqual, isDashboardAttributeFilter } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilter,
+    ObjRef,
+    areObjRefsEqual,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import { CrossFiltering } from "../../commands/drill.js";
@@ -33,6 +38,60 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
+
+function findMatchingVirtualFilter(
+    currentVirtualFilters: IDashboardAttributeFilter[],
+    attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
+    displayForm: ObjRef,
+    primaryLabel: ObjRef | undefined,
+): IDashboardAttributeFilter | undefined {
+    return currentVirtualFilters.find((vf) => {
+        const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(vf.attributeFilter.localIdentifier!);
+        const useDisplayAsLabel = displayForm && primaryLabel && !areObjRefsEqual(displayForm, primaryLabel);
+        const displayFormMatches =
+            // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
+            vfDisplayAsLabel || useDisplayAsLabel ? areObjRefsEqual(vfDisplayAsLabel, displayForm) : true;
+
+        return areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) && displayFormMatches;
+    });
+}
+
+function shouldUpdateExistingFiltering(
+    crossFilteringItemByWidget: { filterLocalIdentifiers: string[] } | undefined,
+    drillIntersectionFiltersLength: number,
+): boolean {
+    /**
+     * Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
+     * cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
+     * Otherwise we would want the cross-filtering to be reset together with all virtual filters.
+     */
+    return (
+        !isEmpty(crossFilteringItemByWidget) &&
+        crossFilteringItemByWidget!.filterLocalIdentifiers.length <= drillIntersectionFiltersLength
+    );
+}
+
+function createVirtualFilter(
+    drillFilterData: ReturnType<typeof convertIntersectionToAttributeFilters>[number],
+    existingLocalIdentifier: string | undefined,
+    filtersCount: number,
+    index: number,
+): IDashboardAttributeFilter {
+    const { displayForm, attributeElements, negativeSelection, title } =
+        drillFilterData.attributeFilter.attributeFilter;
+
+    return {
+        attributeFilter: {
+            displayForm,
+            attributeElements,
+            negativeSelection,
+            localIdentifier:
+                existingLocalIdentifier ?? generateFilterLocalIdentifier(displayForm, filtersCount + index),
+            selectionMode: "multi",
+            title,
+        },
+    };
+}
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(
@@ -73,49 +132,30 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
         yield select(selectAttributeFilterConfigsDisplayAsLabelMap);
 
-    const shouldUpdateExistingCrossFiltering =
-        !isEmpty(crossFilteringItemByWidget) &&
-        /**
-         * Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
-         * cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
-         * Otherwise we would want the cross-filtering to be reset together with all virtual filters.
-         */
-        crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
+    const shouldUpdateExisting = shouldUpdateExistingFiltering(
+        crossFilteringItemByWidget,
+        drillIntersectionFilters.length,
+    );
 
-    const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }, i) => {
-        const { displayForm, attributeElements, negativeSelection, title } = attributeFilter.attributeFilter;
+    const virtualFilters = drillIntersectionFilters.map((drillFilterData, i) => {
+        const { displayForm } = drillFilterData.attributeFilter.attributeFilter;
+        const { primaryLabel } = drillFilterData;
 
-        const existingVirtualFilter = shouldUpdateExistingCrossFiltering
-            ? currentVirtualFilters.find((vf) => {
-                  const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(
-                      vf.attributeFilter.localIdentifier!,
-                  );
-                  const useDisplayAsLabel =
-                      displayForm && primaryLabel && !areObjRefsEqual(displayForm, primaryLabel);
-                  // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
-                  return (
-                      areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) &&
-                      (vfDisplayAsLabel || useDisplayAsLabel
-                          ? areObjRefsEqual(vfDisplayAsLabel, displayForm)
-                          : true)
-                  );
-              })
+        const existingVirtualFilter = shouldUpdateExisting
+            ? findMatchingVirtualFilter(
+                  currentVirtualFilters,
+                  attributeFilterDisplayAsLabelMap,
+                  displayForm,
+                  primaryLabel,
+              )
             : undefined;
 
-        const dashboardFilter: IDashboardAttributeFilter = {
-            attributeFilter: {
-                displayForm,
-                attributeElements,
-                negativeSelection,
-                localIdentifier:
-                    existingVirtualFilter?.attributeFilter.localIdentifier ??
-                    generateFilterLocalIdentifier(displayForm, filtersCount + i),
-                selectionMode: "multi",
-                title,
-            },
-        };
-
-        return dashboardFilter;
+        return createVirtualFilter(
+            drillFilterData,
+            existingVirtualFilter?.attributeFilter.localIdentifier,
+            filtersCount,
+            i,
+        );
     });
 
     const correlation = `crossFiltering_${uuid()}`;
@@ -128,7 +168,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     }
 
     // Cleanup of previous cross-filtering state
-    if (!shouldUpdateExistingCrossFiltering) {
+    if (!shouldUpdateExisting) {
         yield call(
             removeAttributeFiltersHandler,
             ctx,

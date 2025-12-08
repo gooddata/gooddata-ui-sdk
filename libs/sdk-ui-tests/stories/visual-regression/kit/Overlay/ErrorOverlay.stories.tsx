@@ -49,6 +49,7 @@ const customMessages = {
 const WrappedErrorOverlayExampleDefault = withIntl(ErrorOverlayExampleDefault);
 const WrappedErrorOverlayExampleCustom = withIntl(ErrorOverlayExampleCustom, undefined, customMessages);
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/ErrorOverlay",
 };

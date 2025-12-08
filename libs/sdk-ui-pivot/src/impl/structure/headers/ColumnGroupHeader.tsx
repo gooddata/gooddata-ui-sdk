@@ -2,7 +2,7 @@
 
 import { IHeaderGroupParams } from "ag-grid-community";
 
-import HeaderCell, { ALIGN_LEFT, ICommonHeaderParams } from "./HeaderCell.js";
+import { ALIGN_LEFT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
 import { IMenu } from "../../../publicTypes.js";
 import { agColId } from "../tableDescriptorTypes.js";
 
@@ -10,7 +10,7 @@ export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
     menu?: () => IMenu;
 }
 
-export default function ColumnGroupHeader({
+export function ColumnGroupHeader({
     menu,
     columnGroup,
     intl,

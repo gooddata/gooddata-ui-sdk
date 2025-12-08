@@ -24,6 +24,7 @@ const DefaultPropertiesMeta = {
     legend_section: { collapsed: false },
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "11 Configuration Controls/Legend/LegendSection",
 };

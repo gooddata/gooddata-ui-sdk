@@ -3,17 +3,17 @@
 import { MouseEvent, ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { IHeaderMenuItem, IHeaderMenuProps } from "./typings.js";
 
-function WrappedHeaderMenu({
+export const HeaderMenu = memo(function HeaderMenu({
     className = "",
     onMenuItemClick = (v) => v,
     sections = [],
-    intl,
-}: IHeaderMenuProps & WrappedComponentProps): ReactNode {
+}: IHeaderMenuProps): ReactNode {
+    const intl = useIntl();
     const classNames = useMemo(() => cx("gd-header-menu", className), [className]);
 
     const ariaLabel = useMemo(() => intl.formatMessage({ id: "gs.header.menu.accessibility.label" }), [intl]);
@@ -71,6 +71,4 @@ function WrappedHeaderMenu({
     }, [sections, ariaLabel, renderSection]);
 
     return <div className={classNames}>{renderSections()}</div>;
-}
-
-export const HeaderMenu = memo(injectIntl(WrappedHeaderMenu));
+});

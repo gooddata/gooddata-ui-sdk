@@ -89,7 +89,7 @@ function buildHierarchyItemList(
     return items;
 }
 
-function AttributeHierarchyDropdown({
+export function AttributeHierarchyDropdown({
     config,
     attributeDescriptor,
     onSelect,
@@ -156,5 +156,3 @@ function AttributeHierarchyDropdown({
         />
     );
 }
-
-export default AttributeHierarchyDropdown;

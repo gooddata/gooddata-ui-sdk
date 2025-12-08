@@ -53,6 +53,58 @@ import { useDashboard } from "../hooks/useDashboard.js";
 import { IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
+
+function resolveCoreComponents(props: IDashboardProps) {
+    return {
+        ErrorComponent: props.ErrorComponent ?? DefaultError,
+        LoadingComponent: props.LoadingComponent ?? DefaultLoading,
+        LayoutComponent: props.LayoutComponent ?? DefaultDashboardLayout,
+        ButtonBarComponent: props.ButtonBarComponent ?? DefaultButtonBar,
+        MenuButtonComponent: props.MenuButtonComponent ?? DefaultMenuButton,
+        TopBarComponent: props.TopBarComponent ?? RenderModeAwareTopBar,
+        ToolbarComponent: props.ToolbarComponent ?? HiddenToolbar,
+        TitleComponent: props.TitleComponent ?? RenderModeAwareTitle,
+    };
+}
+
+function resolveDialogComponents(props: IDashboardProps) {
+    return {
+        ScheduledEmailDialogComponent: props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog,
+        ScheduledEmailManagementDialogComponent:
+            props.ScheduledEmailManagementDialogComponent ?? DefaultScheduledEmailManagementDialog,
+        ShareDialogComponent: props.ShareDialogComponent ?? DefaultShareDialog,
+        AlertingManagementDialogComponent:
+            props.AlertingManagementDialogComponent ?? DefaultAlertingManagementDialogNew,
+        AlertingDialogComponent: props.AlertingDialogComponent ?? DefaultAlertingDialogNew,
+        SaveAsDialogComponent: props.SaveAsDialogComponent ?? DefaultSaveAsDialog,
+        DashboardSettingsDialogComponent:
+            props.DashboardSettingsDialogComponent ?? DefaultDashboardSettingsDialog,
+    };
+}
+
+function resolveLayoutComponents(props: IDashboardProps) {
+    return {
+        FilterBarComponent: props.FilterBarComponent ?? RenderModeAwareFilterBar,
+        SidebarComponent: props.SidebarComponent ?? RenderModeAwareDashboardSidebar,
+        EmptyLayoutDropZoneBodyComponent:
+            props.EmptyLayoutDropZoneBodyComponent ?? DefaultEmptyLayoutDropZoneBody,
+        SaveButtonComponent: props.SaveButtonComponent ?? DefaultSaveButton,
+        SettingButtonComponent: props.SettingButtonComponent ?? DefaultSettingButton,
+    };
+}
+
+function resolveComponentsWithDefaults(props: IDashboardProps) {
+    return {
+        ...resolveCoreComponents(props),
+        ...resolveDialogComponents(props),
+        ...resolveLayoutComponents(props),
+    };
+}
+
+function shouldUseThemeProvider(props: IDashboardProps, hasThemeProvider: boolean): boolean {
+    return Boolean(props.theme || (!hasThemeProvider && !props.disableThemeLoading));
+}
+
 /**
  * @internal
  */
@@ -85,6 +137,8 @@ export function DashboardRenderer(props: IDashboardProps) {
         showAsTableButtonComponentProvider,
     } = useDashboard(props);
 
+    const components = resolveComponentsWithDefaults(props);
+
     const dashboardRender = (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
@@ -116,9 +170,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                     slideConfig={props.config?.slideConfig}
                                 >
                                     <DashboardComponentsProvider
-                                        ErrorComponent={props.ErrorComponent ?? DefaultError}
-                                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
+                                        ErrorComponent={components.ErrorComponent}
+                                        LoadingComponent={components.LoadingComponent}
+                                        LayoutComponent={components.LayoutComponent}
                                         InsightComponentProvider={insightProvider}
                                         InsightBodyComponentProvider={insightBodyProvider}
                                         InsightMenuButtonComponentProvider={insightMenuButtonProvider}
@@ -132,39 +186,27 @@ export function DashboardRenderer(props: IDashboardProps) {
                                         RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
                                         VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
                                         WidgetComponentProvider={widgetProvider}
-                                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
-                                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                                        TopBarComponent={props.TopBarComponent ?? RenderModeAwareTopBar}
-                                        ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
-                                        TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
+                                        ButtonBarComponent={components.ButtonBarComponent}
+                                        MenuButtonComponent={components.MenuButtonComponent}
+                                        TopBarComponent={components.TopBarComponent}
+                                        ToolbarComponent={components.ToolbarComponent}
+                                        TitleComponent={components.TitleComponent}
                                         ScheduledEmailDialogComponent={
-                                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
+                                            components.ScheduledEmailDialogComponent
                                         }
                                         ScheduledEmailManagementDialogComponent={
-                                            props.ScheduledEmailManagementDialogComponent ??
-                                            DefaultScheduledEmailManagementDialog
+                                            components.ScheduledEmailManagementDialogComponent
                                         }
-                                        ShareDialogComponent={
-                                            props.ShareDialogComponent ?? DefaultShareDialog
-                                        }
+                                        ShareDialogComponent={components.ShareDialogComponent}
                                         AlertingManagementDialogComponent={
-                                            props.AlertingManagementDialogComponent ??
-                                            DefaultAlertingManagementDialogNew
+                                            components.AlertingManagementDialogComponent
                                         }
-                                        AlertingDialogComponent={
-                                            props.AlertingDialogComponent ?? DefaultAlertingDialogNew
-                                        }
-                                        SaveAsDialogComponent={
-                                            props.SaveAsDialogComponent ?? DefaultSaveAsDialog
-                                        }
+                                        AlertingDialogComponent={components.AlertingDialogComponent}
+                                        SaveAsDialogComponent={components.SaveAsDialogComponent}
                                         DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                                         DashboardDateFilterComponentProvider={dateFilterProvider}
-                                        FilterBarComponent={
-                                            props.FilterBarComponent ?? RenderModeAwareFilterBar
-                                        }
-                                        SidebarComponent={
-                                            props.SidebarComponent ?? RenderModeAwareDashboardSidebar
-                                        }
+                                        FilterBarComponent={components.FilterBarComponent}
+                                        SidebarComponent={components.SidebarComponent}
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
                                         RichTextWidgetComponentSet={richTextWidgetComponentSet}
                                         VisualizationSwitcherWidgetComponentSet={
@@ -174,17 +216,13 @@ export function DashboardRenderer(props: IDashboardProps) {
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
                                         DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={
-                                            props.EmptyLayoutDropZoneBodyComponent ??
-                                            DefaultEmptyLayoutDropZoneBody
+                                            components.EmptyLayoutDropZoneBodyComponent
                                         }
-                                        SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
+                                        SaveButtonComponent={components.SaveButtonComponent}
                                         DashboardContentComponentProvider={dashboardContentProvider}
-                                        SettingButtonComponent={
-                                            props.SettingButtonComponent ?? DefaultSettingButton
-                                        }
+                                        SettingButtonComponent={components.SettingButtonComponent}
                                         DashboardSettingsDialogComponent={
-                                            props.DashboardSettingsDialogComponent ??
-                                            DefaultDashboardSettingsDialog
+                                            components.DashboardSettingsDialogComponent
                                         }
                                         ShowAsTableButtonComponentProvider={
                                             showAsTableButtonComponentProvider
@@ -211,7 +249,7 @@ export function DashboardRenderer(props: IDashboardProps) {
         </BackendProvider>
     );
 
-    if (props.theme || (!hasThemeProvider && !props.disableThemeLoading)) {
+    if (shouldUseThemeProvider(props, hasThemeProvider)) {
         return (
             <ThemeProvider
                 theme={props.theme}

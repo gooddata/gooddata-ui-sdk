@@ -24,7 +24,7 @@ import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/V
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
-import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel.js";
+import { BaseChartConfigurationPanel } from "../../../configurationPanels/BaseChartConfigurationPanel.js";
 import {
     createDrillDefinition,
     createDrillEvent,

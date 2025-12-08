@@ -2267,6 +2267,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "f_owner.department_id.departmenthyperlink",
+          "type": "displayForm",
+        },
         "id": "f_owner.department_id",
         "ref": {
           "identifier": "f_owner.department_id",
@@ -3417,6 +3421,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "label.f_opportunity.opportunity.sfdcurl",
+          "type": "displayForm",
+        },
         "id": "attr.f_opportunity.opportunity",
         "ref": {
           "identifier": "attr.f_opportunity.opportunity",
@@ -4022,6 +4030,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "label.f_product.product.link",
+          "type": "displayForm",
+        },
         "id": "attr.f_product.product",
         "ref": {
           "identifier": "attr.f_product.product",
@@ -4313,6 +4325,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+          "type": "displayForm",
+        },
         "id": "productthatisrenamedtotestthelongattributename",
         "ref": {
           "identifier": "productthatisrenamedtotestthelongattributename",
@@ -4459,6 +4475,10 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "f_owner.region_id.regionhyperlink",
+          "type": "displayForm",
+        },
         "id": "f_owner.region_id",
         "ref": {
           "identifier": "f_owner.region_id",
@@ -12186,6 +12206,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "f_owner.department_id.departmenthyperlink",
+          "type": "displayForm",
+        },
         "id": "f_owner.department_id",
         "ref": {
           "identifier": "f_owner.department_id",
@@ -13336,6 +13360,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "label.f_opportunity.opportunity.sfdcurl",
+          "type": "displayForm",
+        },
         "id": "attr.f_opportunity.opportunity",
         "ref": {
           "identifier": "attr.f_opportunity.opportunity",
@@ -13941,6 +13969,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "label.f_product.product.link",
+          "type": "displayForm",
+        },
         "id": "attr.f_product.product",
         "ref": {
           "identifier": "attr.f_product.product",
@@ -14232,6 +14264,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+          "type": "displayForm",
+        },
         "id": "productthatisrenamedtotestthelongattributename",
         "ref": {
           "identifier": "productthatisrenamedtotestthelongattributename",
@@ -14378,6 +14414,10 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
             "uri": "sanitize_uri",
           },
         ],
+        "drillToAttributeLink": {
+          "identifier": "f_owner.region_id.regionhyperlink",
+          "type": "displayForm",
+        },
         "id": "f_owner.region_id",
         "ref": {
           "identifier": "f_owner.region_id",

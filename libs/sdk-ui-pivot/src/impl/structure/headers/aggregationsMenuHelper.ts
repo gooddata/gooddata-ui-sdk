@@ -35,7 +35,7 @@ function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentif
     return sameMeasureLocalIdentifiers.length === measureLocalIdentifiers2.length;
 }
 
-function getTotalsForAttributeHeader(
+export function getTotalsForAttributeHeader(
     totals: ITotal[],
     measureLocalIdentifiers: string[],
     ignoreMeasures: boolean = false,
@@ -59,7 +59,7 @@ function getTotalsForAttributeHeader(
     }, []);
 }
 
-function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: string): IColumnTotal[] {
+export function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: string): IColumnTotal[] {
     return totals.reduce((turnedOnAttributes: IColumnTotal[], total: ITotal) => {
         if (total.measureIdentifier === measureLocalIdentifier) {
             const totalHeaderType = turnedOnAttributes.find((turned) => turned.type === total.type);
@@ -76,7 +76,7 @@ function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: str
     }, []);
 }
 
-function isTotalEnabledForAttribute(
+export function isTotalEnabledForAttribute(
     attributeLocalIdentifier: string[],
     columnAttributeLocalIdentifier: string[],
     totalType: TotalType,
@@ -95,7 +95,7 @@ function isTotalEnabledForAttribute(
     return columns || rows;
 }
 
-function isTotalEnabledForSubMenuAttribute(
+export function isTotalEnabledForSubMenuAttribute(
     attributeLocalIdentifier: string,
     totalType: TotalType,
     totals: IColumnTotal[],
@@ -145,11 +145,3 @@ export function getAttributeDescriptorsLocalId(attributeDescriptors: IAttributeD
 
     return [];
 }
-
-export default {
-    getTotalsForAttributeHeader,
-    getTotalsForMeasureHeader,
-    isTotalEnabledForAttribute,
-    isTotalEnabledForSubMenuAttribute,
-    getUpdatedColumnOrRowTotals,
-};

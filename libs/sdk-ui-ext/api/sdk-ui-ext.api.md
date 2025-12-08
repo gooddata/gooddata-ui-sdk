@@ -10,7 +10,6 @@ import { ComponentType } from 'react';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
-import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
@@ -52,8 +51,6 @@ import { RefObject } from 'react';
 import { UiAsyncTableVariant } from '@gooddata/sdk-ui-kit';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
@@ -743,9 +740,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const InsightError: FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
-    WrappedComponent: ComponentType<IInsightErrorProps & WrappedComponentProps>;
-};
+export function InsightError({ error, ErrorComponent, height, clientHeight, }: IInsightErrorProps): JSX.Element;
 
 // @internal
 export function InsightRenderer(props: IInsightRendererProps): JSX.Element;

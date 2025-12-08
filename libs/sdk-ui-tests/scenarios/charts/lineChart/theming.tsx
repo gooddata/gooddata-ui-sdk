@@ -6,7 +6,7 @@ import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<ILineChartProps>("LineChart", LineChart)
+export const theming = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

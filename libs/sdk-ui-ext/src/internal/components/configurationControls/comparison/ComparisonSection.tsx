@@ -4,15 +4,15 @@ import { IColorPalette } from "@gooddata/sdk-model";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
 import { CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
 
-import CalculationControl from "./calculation/CalculationControl.js";
+import { CalculationControl } from "./calculation/CalculationControl.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "./ComparisonValuePath.js";
-import IndicatorSubSection from "./indicators/IndicatorSubSection.js";
-import LabelSubSection from "./label/LabelSubSection.js";
-import ValueSubSection from "./values/ValueSubSection.js";
+import { IndicatorSubSection } from "./indicators/IndicatorSubSection.js";
+import { LabelSubSection } from "./label/LabelSubSection.js";
+import { ValueSubSection } from "./values/ValueSubSection.js";
 import { comparisonMessages } from "../../../../locales.js";
 import { IComparisonControlProperties } from "../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import ConfigSection from "../ConfigSection.js";
+import { ConfigSection } from "../ConfigSection.js";
 
 interface IComparisonSectionProps {
     controlDisabled: boolean;
@@ -25,7 +25,7 @@ interface IComparisonSectionProps {
     pushData: PushDataCallback;
 }
 
-function ComparisonSection({
+export function ComparisonSection({
     controlDisabled,
     disabledByVisualization,
     defaultCalculationType,
@@ -89,5 +89,3 @@ function ComparisonSection({
         </ConfigSection>
     );
 }
-
-export default ComparisonSection;

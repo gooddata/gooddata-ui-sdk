@@ -21,7 +21,7 @@ function getEffectiveTitle(pageTitle: string, brandTitle: string): string {
 /**
  * @internal
  */
-export default function DocumentHeader({
+export function DocumentHeader({
     pageTitle = "",
     brandTitle = "",
     appleTouchIconUrl = "",

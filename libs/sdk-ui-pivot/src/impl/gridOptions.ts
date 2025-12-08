@@ -34,8 +34,8 @@ import {
     rowMeasureTemplate,
     totalSubTotalColumnTemplate,
 } from "./structure/colDefTemplates.js";
-import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
-import ColumnHeader from "./structure/headers/ColumnHeader.js";
+import { ColumnGroupHeader } from "./structure/headers/ColumnGroupHeader.js";
+import { ColumnHeader } from "./structure/headers/ColumnHeader.js";
 import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";

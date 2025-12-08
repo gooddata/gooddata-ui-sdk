@@ -157,7 +157,7 @@ const stackingWithoutDualAxis = scenariosFor<IComboChartProps>("ComboChart", Com
         },
     });
 
-export default [
+export const stacking = [
     stackMeasuresDiffCharts,
     stackMeasuresToPercentDiffCharts,
     stackMeasuresBothChartsColumn,

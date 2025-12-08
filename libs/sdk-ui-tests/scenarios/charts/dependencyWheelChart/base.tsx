@@ -18,7 +18,7 @@ export const DependencyWheelChartWithMeasureAttributeTo = {
     measure: ReferenceMd.Amount,
     attributeTo: ReferenceMd.Region.Default,
 };
-export default scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
+export const base = scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 800 },

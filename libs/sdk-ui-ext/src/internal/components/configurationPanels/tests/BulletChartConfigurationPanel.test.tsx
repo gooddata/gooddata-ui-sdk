@@ -9,7 +9,7 @@ import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { emptyInsight } from "../../../tests/mocks/testMocks.js";
 import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks.js";
-import BulletChartConfigurationPanel from "../BulletChartConfigurationPanel.js";
+import { BulletChartConfigurationPanel } from "../BulletChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 function testInsight(buckets: IBucket[]): IInsightDefinition {

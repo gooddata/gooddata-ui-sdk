@@ -55,7 +55,7 @@ export const ComboChartViewByDate = {
     viewBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
-export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+export const base = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

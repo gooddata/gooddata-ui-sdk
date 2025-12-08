@@ -2,14 +2,14 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { rotationDropdownItems } from "../../../constants/dropdowns.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
-import DropdownControl from "../DropdownControl.js";
+import { DropdownControl } from "../DropdownControl.js";
 
 export interface ILabelRotationControl {
     disabled: boolean;
@@ -19,7 +19,9 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-function LabelRotationControl(props: ILabelRotationControl & WrappedComponentProps) {
+export const LabelRotationControl = memo(function LabelRotationControl(props: ILabelRotationControl) {
+    const intl = useIntl();
+
     const getControlProperties = (): IVisualizationProperties => {
         const axisProperties = props.properties?.controls?.[props.axis];
 
@@ -46,9 +48,7 @@ function LabelRotationControl(props: ILabelRotationControl & WrappedComponentPro
             showDisabledMessage={!props.configPanelDisabled && isDisabled}
             properties={props.properties}
             pushData={props.pushData}
-            items={getTranslatedDropdownItems(rotationDropdownItems, props.intl)}
+            items={getTranslatedDropdownItems(rotationDropdownItems, intl)}
         />
     );
-}
-
-export default injectIntl(memo(LabelRotationControl));
+});

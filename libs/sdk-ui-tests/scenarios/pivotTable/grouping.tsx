@@ -13,7 +13,7 @@ const PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasu
     rows: [ReferenceMd.Department.Default, ReferenceMd.Product.Name],
 };
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const grouping = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("grouping")
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

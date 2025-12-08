@@ -56,11 +56,21 @@ export const useDrillDialogInsightDrills = ({
         [disableDrillDownOnInsight, drillTargets],
     );
 
+    const disableDrillIntoURL = insight.insight.properties["controls"]?.disableDrillIntoURL ?? true;
+
     const implicitDrillDefinitions = useDashboardSelector(
-        selectImplicitDrillsByAvailableDrillTargets(drillTargets, widget.ignoredDrillDownHierarchies),
+        selectImplicitDrillsByAvailableDrillTargets(
+            drillTargets,
+            widget.ignoredDrillDownHierarchies,
+            disableDrillIntoURL,
+        ),
     );
     const drillableItems = useDashboardSelector(
-        selectDrillableItemsByAvailableDrillTargets(drillTargets, widget.ignoredDrillDownHierarchies),
+        selectDrillableItemsByAvailableDrillTargets(
+            drillTargets,
+            widget.ignoredDrillDownHierarchies,
+            disableDrillIntoURL,
+        ),
     );
     const onDrill = onDrillFn
         ? (event: IDrillEvent) => {

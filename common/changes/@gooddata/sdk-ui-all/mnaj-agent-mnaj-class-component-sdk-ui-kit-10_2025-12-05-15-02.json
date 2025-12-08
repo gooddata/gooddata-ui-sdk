@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "chore: Rewrite InputWithNumberFormat as a functional component",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "cursoragent@cursor.com"
+}

@@ -53,4 +53,4 @@ const colorAssignment = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyCha
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

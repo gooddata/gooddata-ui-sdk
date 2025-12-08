@@ -71,4 +71,4 @@ const dualAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineCha
         axisNameCustomization,
     );
 
-export default [axisConfig, singleAxisNameScenarios, dualAxisNameScenarios];
+export const axisCustomization = [axisConfig, singleAxisNameScenarios, dualAxisNameScenarios];

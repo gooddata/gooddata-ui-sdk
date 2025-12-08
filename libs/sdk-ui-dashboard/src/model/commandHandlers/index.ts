@@ -124,6 +124,7 @@ import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
 import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";
 import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
 import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
+import { removeDrillToUrlForInsightWidgetHandler } from "./widgets/removeDrillToUrlForInsightWidgetHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -209,6 +210,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED": attributeHierarchyModifiedHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN": removeDrillDownForInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL": removeDrillToUrlForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN": addDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN": modifyDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,

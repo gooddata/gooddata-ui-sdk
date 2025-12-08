@@ -33,7 +33,7 @@ export const BulletChartWithAllMeasuresMeasuresAndTwoViewByDates = {
     viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
-export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+export const base = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

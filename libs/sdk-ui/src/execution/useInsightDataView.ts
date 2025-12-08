@@ -115,6 +115,12 @@ export interface IUseInsightDataViewConfig {
  */
 export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
+type ConfigValue<T> = T | ((def: IExecutionDefinition) => T);
+
+function resolveConfigValue<T>(value: ConfigValue<T>, definition: IExecutionDefinition): T {
+    return typeof value === "function" ? (value as (def: IExecutionDefinition) => T)(definition) : value;
+}
+
 /**
  * React hook to get data for a specific insight.
  *
@@ -155,18 +161,19 @@ export function useInsightDataView(
 
     if (insightExecution) {
         if (sorts) {
-            const resolvedSorts = typeof sorts === "function" ? sorts(insightExecution.definition) : sorts;
-            insightExecution = insightExecution.withSorting(...resolvedSorts);
+            insightExecution = insightExecution.withSorting(
+                ...resolveConfigValue(sorts, insightExecution.definition),
+            );
         }
         if (dimensions) {
-            const resolvedDimensions =
-                typeof dimensions === "function" ? dimensions(insightExecution.definition) : dimensions;
-            insightExecution = insightExecution.withDimensions(...resolvedDimensions);
+            insightExecution = insightExecution.withDimensions(
+                ...resolveConfigValue(dimensions, insightExecution.definition),
+            );
         }
         if (dateFormat) {
-            const resolvedDateFormat =
-                typeof dateFormat === "function" ? dateFormat(insightExecution.definition) : dateFormat;
-            insightExecution = insightExecution.withDateFormat(resolvedDateFormat);
+            insightExecution = insightExecution.withDateFormat(
+                resolveConfigValue(dateFormat, insightExecution.definition),
+            );
         }
     }
 

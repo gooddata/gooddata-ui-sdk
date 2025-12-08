@@ -47,4 +47,4 @@ const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletCha
         (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Won, ReferenceMd.Amount)),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

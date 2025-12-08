@@ -25,7 +25,7 @@ export const HeatmapWithNullDataPoints = {
  *  - tooltip for chart with small width and long names
  *  - all of these are visual verification of bugfixes.. need to find a good way to do this (or just don't do it?)
  */
-export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
+export const base = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 800 },

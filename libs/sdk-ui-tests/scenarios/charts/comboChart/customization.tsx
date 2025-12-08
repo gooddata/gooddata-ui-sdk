@@ -129,7 +129,7 @@ const thresholdComboZonesWithExcludedScenario = scenariosFor<IComboChartProps>("
         },
     });
 
-export default [
+export const customization = [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,

@@ -29,7 +29,7 @@ import {
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
-import buildLegendOptions from "./adapter/legendBuilder.js";
+import { buildLegendOptions } from "./adapter/legendBuilder.js";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,

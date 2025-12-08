@@ -55,13 +55,13 @@ export { SingleSelectListItem } from "./ListItem.js";
 
 // components from goodstrap/lib root which have its new equivalent
 export type { ILegacyInvertableListProps } from "./LegacyInvertableList.js";
-export { default as LegacyInvertableList } from "./LegacyInvertableList.js";
+export { LegacyInvertableList } from "./LegacyInvertableList.js";
 export type { ILegacyListProps, ILegacyListState } from "./LegacyList.js";
 export { LegacyList } from "./LegacyList.js";
 export type { ILegacyListItemProps } from "./LegacyListItem.js";
 export { LegacyListItem } from "./LegacyListItem.js";
 export type { ILegacyMultiSelectListProps } from "./LegacyMultiSelectList.js";
-export { default as LegacyMultiSelectList } from "./LegacyMultiSelectList.js";
+export { LegacyMultiSelectListWithIntl as LegacyMultiSelectList } from "./LegacyMultiSelectList.js";
 export type { ILegacyMultiSelectListItemProps } from "./LegacyMultiSelectListItem.js";
 export { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
 export type {

@@ -77,6 +77,7 @@ import {
     ModifyDrillsForInsightWidget,
     RefreshInsightWidget,
     RemoveDrillDownForInsightWidget,
+    RemoveDrillToUrlForInsightWidget,
     RemoveDrillsForInsightWidget,
 } from "./insight.js";
 import {
@@ -465,6 +466,8 @@ export type {
     RemoveDrillsForInsightWidgetPayload,
     RemoveDrillDownForInsightWidget,
     RemoveDrillDownForInsightWidgetPayload,
+    RemoveDrillToUrlForInsightWidget,
+    RemoveDrillToUrlForInsightWidgetPayload,
     AddDrillDownForInsightWidget,
     AddDrillDownForInsightWidgetPayload,
     ModifyDrillDownForInsightWidget,
@@ -502,6 +505,7 @@ export {
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
     removeDrillDownForInsightWidget,
+    removeDrillToUrlForInsightWidget,
     addDrillDownForInsightWidget,
     modifyDrillDownForInsightWidget,
     refreshInsightWidget,
@@ -681,6 +685,7 @@ export type DashboardCommands =
     | SetDashboardAttributeFilterConfigMode
     | SetDashboardAttributeFilterConfigDisplayAsLabel
     | RemoveDrillDownForInsightWidget
+    | RemoveDrillToUrlForInsightWidget
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget
     | CrossFiltering

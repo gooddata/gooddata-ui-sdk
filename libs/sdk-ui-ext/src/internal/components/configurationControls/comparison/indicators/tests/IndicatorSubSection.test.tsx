@@ -10,7 +10,7 @@ import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as ArrowControl from "../ArrowControl.js";
 import * as ColorsControl from "../colorsControl/ColorsControl.js";
-import IndicatorSubSection from "../IndicatorSubSection.js";
+import { IndicatorSubSection } from "../IndicatorSubSection.js";
 
 const TITLE_TEXT_QUERY = "Indicator";
 
@@ -50,7 +50,7 @@ describe("IndicatorSubSection", () => {
     });
 
     it("Should render arrow control", () => {
-        const MockArrowControl = vi.spyOn(ArrowControl, "default");
+        const MockArrowControl = vi.spyOn(ArrowControl, "ArrowControl");
         renderIndicatorSubSection();
 
         expect(MockArrowControl).toHaveBeenCalledWith(
@@ -64,7 +64,7 @@ describe("IndicatorSubSection", () => {
     });
 
     it("Should render color control", () => {
-        const MockColorControl = vi.spyOn(ColorsControl, "default");
+        const MockColorControl = vi.spyOn(ColorsControl, "ColorsControl");
         renderIndicatorSubSection();
 
         const { sectionDisabled, ...expected } = DEFAULT_PROPS;

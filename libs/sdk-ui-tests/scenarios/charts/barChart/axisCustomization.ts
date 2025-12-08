@@ -135,4 +135,9 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         },
     });
 
-export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig, dualAxisLabelRotation];
+export const axisCustomization = [
+    axisConfig,
+    singleAxisNameConfig,
+    dualAxisNameConfig,
+    dualAxisLabelRotation,
+];

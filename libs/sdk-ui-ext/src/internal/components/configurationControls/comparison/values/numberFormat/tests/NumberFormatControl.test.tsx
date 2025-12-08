@@ -15,7 +15,7 @@ import {
 } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH } from "../../../ComparisonValuePath.js";
-import NumberFormatControl from "../NumberFormatControl.js";
+import { NumberFormatControl } from "../NumberFormatControl.js";
 
 const DROPDOWN_BUTTON_SELECTOR = ".s-number-format-toggle-button button";
 const TITLE_TEXT_QUERY = "Format";

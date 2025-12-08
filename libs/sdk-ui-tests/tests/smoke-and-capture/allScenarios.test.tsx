@@ -11,7 +11,7 @@ import { IInsight, IInsightDefinition, defFingerprint, insightTitle } from "@goo
 
 import { storeDirectoryFor } from "./store.js";
 import { readJsonSync, writeAsJsonSync } from "./utils.js";
-import allScenarios from "../../scenarios/index.js";
+import { allScenarios } from "../../scenarios/index.js";
 import { IScenario } from "../../src/index.js";
 import { ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";

@@ -78,4 +78,4 @@ const axisConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
         },
     });
 
-export default [axisConfig, singleAxisNameConfig];
+export const axisCustomization = [axisConfig, singleAxisNameConfig];

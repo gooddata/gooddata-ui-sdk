@@ -3,9 +3,11 @@
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import type { ISeparators, MetricType } from "@gooddata/sdk-model";
 import { UiDate, UiIcon, type UiTagDef, UiTags, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
+import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import type { ICatalogItem } from "../catalogItem/index.js";
 import type { ObjectType } from "../objectType/types.js";
 
@@ -18,6 +20,11 @@ type Props = {
     onTagAdd: (tag: UiTagDef) => void;
     onTagRemove: (tag: UiTagDef) => void;
     onIsHiddenChange: (isHidden: boolean) => void;
+    onMetricTypeChange?: (metricType: MetricType | undefined) => void;
+    onFormatChange?: (format: string | null) => void;
+    separators?: ISeparators;
+    currencyFormatOverride?: string | null;
+    enableMetricFormatOverrides?: boolean;
 };
 
 export function CatalogDetailTabMetadata({
@@ -27,8 +34,14 @@ export function CatalogDetailTabMetadata({
     onTagAdd,
     onTagRemove,
     onIsHiddenChange,
+    onMetricTypeChange,
+    onFormatChange,
+    separators,
+    currencyFormatOverride,
+    enableMetricFormatOverrides,
 }: Props) {
     const intl = useIntl();
+    const isMeasure = item.type === "measure";
 
     return (
         <div className="gd-analytics-catalog-detail__tab-content">
@@ -92,6 +105,18 @@ export function CatalogDetailTabMetadata({
                             <span className="input-label-text" />
                         </label>
                     }
+                />
+            ) : null}
+            {isMeasure && enableMetricFormatOverrides ? (
+                <CatalogDetailMetricSettings
+                    metricType={item.metricType}
+                    format={item.format}
+                    canEdit={canEdit}
+                    separators={separators}
+                    currencyFormatOverride={currencyFormatOverride}
+                    onMetricTypeChange={onMetricTypeChange}
+                    onFormatChange={onFormatChange}
+                    enableMetricFormatOverrides={enableMetricFormatOverrides}
                 />
             ) : null}
             <CatalogDetailContentRow

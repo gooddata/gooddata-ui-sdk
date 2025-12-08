@@ -7,12 +7,12 @@ import { useIntl } from "react-intl";
 import { PushDataCallback } from "@gooddata/sdk-ui";
 import { CalculationType } from "@gooddata/sdk-ui-charts";
 
-import CalculationListItem from "./CalculationListItem.js";
+import { CalculationListItem } from "./CalculationListItem.js";
 import { comparisonMessages } from "../../../../../locales.js";
 import { calculationDropdownItems } from "../../../../constants/dropdowns.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import DropdownControl from "../../DropdownControl.js";
+import { DropdownControl } from "../../DropdownControl.js";
 import { COMPARISON_CALCULATION_TYPE_VALUE_PATH } from "../ComparisonValuePath.js";
 
 interface ICalculationControlProps {
@@ -27,7 +27,7 @@ const CALCULATION_DROPDOWN_WIDTH = 194;
 
 const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
 
-function CalculationControl({
+export function CalculationControl({
     disabled,
     defaultCalculationType,
     properties,
@@ -65,5 +65,3 @@ function CalculationControl({
         </div>
     );
 }
-
-export default CalculationControl;

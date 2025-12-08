@@ -100,6 +100,42 @@ export function modifyBucketsAttributesForDrillDown(
     return removeRankingFiltersForRemovedAttributes(removedInvalidSorts);
 }
 
+function filterValidColumnWidths(columnWidths: ColumnWidthItem[] | undefined, identifiers: string[]) {
+    return (columnWidths ?? []).filter((columnWidth: ColumnWidthItem) => {
+        if (isAttributeColumnWidthItem(columnWidth)) {
+            return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
+        }
+        return true;
+    });
+}
+
+function buildPreservedControlProperties(
+    value: Record<string, unknown>,
+    columns: ColumnWidthItem[],
+): Record<string, unknown> | null {
+    const hasColumnWidths = columns.length > 0;
+    const hasTextWrapping = value?.["textWrapping"] !== undefined;
+    const hasGrandTotalsPosition = value?.["grandTotalsPosition"] !== undefined;
+    const hasPagination = value?.["pagination"] !== undefined;
+    const hasPageSize = value?.["pageSize"] !== undefined;
+
+    // If no properties need to be preserved, keep original controls as-is
+    const hasAnyProperty =
+        hasColumnWidths || hasTextWrapping || hasGrandTotalsPosition || hasPagination || hasPageSize;
+
+    if (!hasAnyProperty) {
+        return null;
+    }
+
+    return {
+        ...(hasColumnWidths ? { columnWidths: columns } : {}),
+        ...(hasTextWrapping ? { textWrapping: value!["textWrapping"] } : {}),
+        ...(hasGrandTotalsPosition ? { grandTotalsPosition: value!["grandTotalsPosition"] } : {}),
+        ...(hasPagination ? { pagination: value!["pagination"] } : {}),
+        ...(hasPageSize ? { pageSize: value!["pageSize"] } : {}),
+    };
+}
+
 function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
     const properties: VisualizationProperties = insightProperties(insight);
 
@@ -117,37 +153,12 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
                 return acc;
             }
 
-            const columns = (value?.columnWidths ?? []).filter((columnWidth: ColumnWidthItem) => {
-                if (isAttributeColumnWidthItem(columnWidth)) {
-                    return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
-                }
-                return true;
-            });
+            const columns = filterValidColumnWidths(value?.columnWidths, identifiers);
+            const preservedProperties = buildPreservedControlProperties(value, columns);
 
-            const hasColumnWidths = columns.length > 0;
-            const hasTextWrapping = value?.textWrapping !== undefined;
-            const hasGrandTotalsPosition = value?.grandTotalsPosition !== undefined;
-            const hasPagination = value?.pagination !== undefined;
-            const hasPageSize = value?.pageSize !== undefined;
-
-            // If no properties need to be preserved, keep original controls as-is
-            if (
-                !hasColumnWidths &&
-                !hasTextWrapping &&
-                !hasGrandTotalsPosition &&
-                !hasPagination &&
-                !hasPageSize
-            ) {
-                return acc;
+            if (preservedProperties) {
+                acc[key] = preservedProperties;
             }
-
-            acc[key] = {
-                ...(hasColumnWidths ? { columnWidths: columns } : {}),
-                ...(hasTextWrapping ? { textWrapping: value!.textWrapping } : {}),
-                ...(hasGrandTotalsPosition ? { grandTotalsPosition: value!.grandTotalsPosition } : {}),
-                ...(hasPagination ? { pagination: value!.pagination } : {}),
-                ...(hasPageSize ? { pageSize: value!.pageSize } : {}),
-            };
 
             return acc;
         },

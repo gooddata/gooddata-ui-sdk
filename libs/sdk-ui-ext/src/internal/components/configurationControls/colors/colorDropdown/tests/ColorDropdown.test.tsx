@@ -12,7 +12,7 @@ import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent.js";
-import ColorDropdown, { IColorDropdownOwnProps, ISelectableChild, IconPosition } from "../ColorDropdown.js";
+import { ColorDropdown, IColorDropdownOwnProps, ISelectableChild, IconPosition } from "../ColorDropdown.js";
 
 export type IMockItemProps = IColoredItemContentProps & ISelectableChild;
 

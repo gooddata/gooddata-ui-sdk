@@ -12,7 +12,7 @@ import { IComparisonControlProperties } from "../../../../../../interfaces/Contr
 import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_COLOR_CONFIG_POSITIVE } from "../../../ComparisonValuePath.js";
-import ColorItem from "../ColorItem.js";
+import { ColorItem } from "../ColorItem.js";
 
 const POSITIVE_LABEL_TEXT_QUERY = "Primary > Secondary";
 const NEGATIVE_LABEL_TEXT_QUERY = "Primary < Secondary";

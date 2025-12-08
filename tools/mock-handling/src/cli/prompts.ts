@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
+
 import pkg, { DistinctQuestion } from "inquirer";
 
 const { prompt } = pkg;
-import getBackend from "../backend.js";
+import { getBackend } from "../backend.js";
 
 export async function promptTigerToken(): Promise<string> {
     const tigerTokenQuestion: DistinctQuestion = {

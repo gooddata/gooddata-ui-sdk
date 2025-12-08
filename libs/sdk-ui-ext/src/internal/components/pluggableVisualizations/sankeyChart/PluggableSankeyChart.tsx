@@ -25,7 +25,7 @@ import {
     configBuckets,
     configSankeyUiConfig,
 } from "../../../utils/uiConfigHelpers/sankeyChartUiConfigHelper.js";
-import SankeyChartConfigurationPanel from "../../configurationPanels/SankeyChartConfigurationPanel.js";
+import { SankeyChartConfigurationPanel } from "../../configurationPanels/SankeyChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

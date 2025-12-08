@@ -3,13 +3,13 @@
 import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 const revenue = Catalog.GrossProfit;
 // Try uncomment lines below 👇
 const config: IPivotTableConfig = { columnSizing: { growToFit: true, defaultWidth: "viewport" } };
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1>Pivot table</h1>

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import DrillMeasureSelectorBody from "./DrillMeasureSelectorBody.js";
+import { DrillMeasureSelectorBody } from "./DrillMeasureSelectorBody.js";
 
 export interface IDrillMeasureSelectorProps {
     items: IAvailableDrillTargetMeasure[];

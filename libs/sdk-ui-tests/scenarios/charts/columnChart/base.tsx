@@ -75,7 +75,7 @@ export const ColumnChartStackByDate = {
  *  - colum chart used to have test with small height - perhaps should add set of special stories to test this for
  *  all charts?
  */
-export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+export const base = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 600 },

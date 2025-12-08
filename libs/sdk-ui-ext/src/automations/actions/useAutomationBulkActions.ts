@@ -6,6 +6,12 @@ import { useIntl } from "react-intl";
 
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
+import {
+    BULK_DELETE_CONFIRM_DIALOG_ID,
+    BULK_PAUSE_CONFIRM_DIALOG_ID,
+    BULK_RESUME_CONFIRM_DIALOG_ID,
+    BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID,
+} from "../constants.js";
 import { messages } from "../messages.js";
 import { IUseAutomationBulkActionsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
@@ -43,6 +49,10 @@ export const useAutomationBulkActions = ({
                         onConfirm: () => bulkDeleteAutomations(selected),
                     });
                 },
+                accessibilityConfig: {
+                    ariaHaspopup: "dialog" as const,
+                    ariaControls: BULK_DELETE_CONFIRM_DIALOG_ID,
+                },
             },
         ];
     }, [
@@ -71,6 +81,10 @@ export const useAutomationBulkActions = ({
                         automationsType,
                         onConfirm: () => bulkUnsubscribeFromAutomations(selected),
                     });
+                },
+                accessibilityConfig: {
+                    ariaHaspopup: "dialog" as const,
+                    ariaControls: BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID,
                 },
             },
         ];
@@ -101,6 +115,10 @@ export const useAutomationBulkActions = ({
                         onConfirm: () => bulkPauseAutomations(selected),
                     });
                 },
+                accessibilityConfig: {
+                    ariaHaspopup: "dialog" as const,
+                    ariaControls: BULK_PAUSE_CONFIRM_DIALOG_ID,
+                },
             },
         ];
     }, [
@@ -129,6 +147,10 @@ export const useAutomationBulkActions = ({
                         automationsType,
                         onConfirm: () => bulkResumeAutomations(selected),
                     });
+                },
+                accessibilityConfig: {
+                    ariaHaspopup: "dialog" as const,
+                    ariaControls: BULK_RESUME_CONFIRM_DIALOG_ID,
                 },
             },
         ];

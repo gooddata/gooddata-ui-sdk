@@ -16,4 +16,4 @@ const colorsAndPalette = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", RepeaterWithOneAttributeAndInlineVisualisation, coloringCustomizer);
 
-export default [colorsAndPalette];
+export const coloring = [colorsAndPalette];

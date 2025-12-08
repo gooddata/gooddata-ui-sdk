@@ -31,10 +31,7 @@ export interface ChartSortingOwnProps {
  */
 export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
 
-/**
- * @internal
- */
-export function ChartSorting({
+function ChartSorting({
     currentSort,
     availableSorts,
     intl,

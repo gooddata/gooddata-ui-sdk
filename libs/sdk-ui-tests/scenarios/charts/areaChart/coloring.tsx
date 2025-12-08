@@ -7,7 +7,7 @@ import { scenariosFor } from "../../../src/index.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+export const coloring = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({
         groupUnder: "coloring",

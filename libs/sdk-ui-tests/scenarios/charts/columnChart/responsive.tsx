@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 
@@ -43,4 +44,4 @@ const complexCcenarios = responsiveScenarios(
     false,
 );
 
-export default [...complexCcenarios, ...simpleScenarios];
+export const responsive = [...complexCcenarios, ...simpleScenarios];

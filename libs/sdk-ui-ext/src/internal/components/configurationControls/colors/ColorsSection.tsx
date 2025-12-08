@@ -2,21 +2,21 @@
 
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IColor } from "@gooddata/sdk-model";
 import { ChartFillType } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import ColoredItemsList from "./coloredItemsList/ColoredItemsList.js";
+import { ColoredItemsList } from "./coloredItemsList/ColoredItemsList.js";
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
 import { IColorConfiguration, IColoredItem } from "../../../interfaces/Colors.js";
 import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
 import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
-import ConfigSection from "../../configurationControls/ConfigSection.js";
-import DropdownControl from "../DropdownControl.js";
+import { ConfigSection } from "../../configurationControls/ConfigSection.js";
+import { DropdownControl } from "../DropdownControl.js";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
@@ -35,7 +35,7 @@ export interface IColorsSectionProps {
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
-function ColorsSection({
+export function ColorsSection({
     controlsDisabled,
     properties,
     propertiesMeta,
@@ -43,12 +43,12 @@ function ColorsSection({
     hasMeasures,
     colors,
     isLoading,
-    intl,
     isChartAccessibilityFeaturesEnabled,
     supportsChartFill,
     chartFillIgnoredMeasures = [],
     isChartFillDisabled,
-}: IColorsSectionProps & WrappedComponentProps) {
+}: IColorsSectionProps) {
+    const intl = useIntl();
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
         const result = getProperties(properties, mappingHeader, color);
@@ -181,5 +181,3 @@ function ColorsSection({
         </ConfigSection>
     );
 }
-
-export default injectIntl(ColorsSection);

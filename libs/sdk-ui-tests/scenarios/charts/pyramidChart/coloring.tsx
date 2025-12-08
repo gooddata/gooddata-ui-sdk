@@ -73,4 +73,4 @@ const colorAssignment = scenariosFor<IPyramidChartProps>("PyramidChart", Pyramid
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

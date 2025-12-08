@@ -32,7 +32,7 @@ export interface IPreviewNumberRowsProps {
     separators?: ISeparators;
 }
 
-function PreviewRows({
+export function PreviewRows({
     previewNumbers = [0, 1.234, 1234.567, 1234567.891],
     format,
     separators,
@@ -50,5 +50,3 @@ function PreviewRows({
         </>
     );
 }
-
-export default PreviewRows;

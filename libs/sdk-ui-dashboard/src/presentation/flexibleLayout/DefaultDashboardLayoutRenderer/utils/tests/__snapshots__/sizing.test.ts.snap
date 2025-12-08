@@ -297,6 +297,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "area",
             },
@@ -333,6 +334,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "bar",
             },
@@ -369,6 +371,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "bubble",
             },
@@ -405,6 +408,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "bullet",
             },
@@ -441,6 +445,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "column",
             },
@@ -477,6 +482,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "combo",
             },
@@ -513,6 +519,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "combo2",
             },
@@ -549,6 +556,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "donut",
             },
@@ -585,6 +593,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "funnel",
             },
@@ -621,6 +630,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "headline",
             },
@@ -657,6 +667,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "heatmap",
             },
@@ -693,6 +704,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "line",
             },
@@ -734,6 +746,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "pushpin",
             },
@@ -770,6 +783,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "pie",
             },
@@ -806,6 +820,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "scatter",
             },
@@ -842,6 +857,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "table",
             },
@@ -878,6 +894,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "treemap",
             },
@@ -914,6 +931,7 @@ exports[`sizing > unifyDashboardLayoutItemHeights > should unify dashboard layou
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "xirr",
             },

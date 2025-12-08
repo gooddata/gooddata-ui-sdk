@@ -3,12 +3,12 @@
 import { useCallback, useMemo } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IPushData } from "@gooddata/sdk-ui";
 
-import ConfigSection from "./ConfigSection.js";
-import DropdownControl from "./DropdownControl.js";
+import { ConfigSection } from "./ConfigSection.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 
@@ -21,13 +21,13 @@ export interface IPagingSectionProps {
 
 const DEFAULT_PAGE_SIZE = -1;
 
-function PagingSection({
+export function PagingSection({
     properties,
     propertiesMeta,
     pushData,
     isDisabled = false,
-    intl,
-}: IPagingSectionProps & WrappedComponentProps) {
+}: IPagingSectionProps) {
+    const intl = useIntl();
     const paginationEnabled = !!properties?.controls?.["pagination"]?.enabled;
     const pageSize = properties?.controls?.["pageSize"] ?? DEFAULT_PAGE_SIZE;
     const pageSizeDropdownItems = useMemo(
@@ -95,5 +95,3 @@ function PagingSection({
         </ConfigSection>
     );
 }
-
-export default injectIntl(PagingSection);

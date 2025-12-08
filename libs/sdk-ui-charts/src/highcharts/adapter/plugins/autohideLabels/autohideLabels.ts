@@ -12,8 +12,8 @@ import {
     autohideColumnTotalLabels,
     handleColumnLabelsOutsideChart,
 } from "./autohideColumnLabels.js";
-import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape.js";
-import autohidePieLabels from "./autohidePieLabels.js";
+import { autohideLabelsOverlappingItsShape } from "./autohideLabelsOverlappingItsShape.js";
+import { autohidePieLabels } from "./autohidePieLabels.js";
 import {
     getDataLabelsGdcTotalsVisible,
     getDataLabelsGdcVisible,
@@ -22,7 +22,7 @@ import {
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
-const autohideLabels = (Highcharts: any): void => {
+export const autohideLabels = (Highcharts: any): void => {
     Highcharts.wrap(
         Highcharts.Chart.prototype,
         "hideOverlappingLabels",
@@ -87,5 +87,3 @@ const autohideLabels = (Highcharts: any): void => {
         },
     );
 };
-
-export default autohideLabels;

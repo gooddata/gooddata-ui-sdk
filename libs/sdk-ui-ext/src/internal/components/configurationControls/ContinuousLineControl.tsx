@@ -3,7 +3,7 @@
 import { ChangeEvent } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -19,14 +19,15 @@ export interface IContinuousLineControlProps {
     pushData(data: any): void;
 }
 
-function ContinuousLineControl({
+export function ContinuousLineControl({
     properties,
     valuePath = "continuousLine.enabled",
     checked = false,
     disabled = false,
     pushData,
-    intl,
-}: IContinuousLineControlProps & WrappedComponentProps) {
+}: IContinuousLineControlProps) {
+    const intl = useIntl();
+
     const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
         set(clonedProperties, `controls.${valuePath}`, event.target.checked);
@@ -61,5 +62,3 @@ function ContinuousLineControl({
         </BubbleHoverTrigger>
     );
 }
-
-export default injectIntl(ContinuousLineControl);

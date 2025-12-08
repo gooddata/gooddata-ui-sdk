@@ -2,15 +2,15 @@
 
 import { ReactNode, memo } from "react";
 
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { SectionName } from "../../configurationPanels/sectionName.js";
-import CheckboxControl from "../CheckboxControl.js";
-import ConfigSection from "../ConfigSection.js";
+import { CheckboxControl } from "../CheckboxControl.js";
+import { ConfigSection } from "../ConfigSection.js";
 
 export interface IInteractionsSectionProps {
     controlsDisabled?: boolean;
@@ -22,6 +22,7 @@ export interface IInteractionsSectionProps {
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
+    enableImplicitDrillToUrl?: boolean;
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
@@ -36,7 +37,7 @@ export function QuestionMarkTooltip(props: { tooltipText: string }) {
     );
 }
 
-function InteractionsSection({
+export const InteractionsSection = memo(function InteractionsSection({
     areControlsDisabledGetter,
     properties,
     propertiesMeta,
@@ -45,8 +46,10 @@ function InteractionsSection({
     supportsAlertConfiguration,
     supportsDrillDownConfiguration,
     supportsScheduledExportsConfiguration,
-}: IInteractionsSectionProps & WrappedComponentProps) {
+    enableImplicitDrillToUrl,
+}: IInteractionsSectionProps) {
     const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
+    const isDrillIntoURLDisabled = properties?.controls?.["disableDrillIntoURL"] ?? true;
     const isAlertsDisabled = properties?.controls?.["disableAlerts"] ?? false;
     const isScheduledExportsDisabled = properties?.controls?.["disableScheduledExports"] ?? false;
     const isSeparatorVisible =
@@ -102,8 +105,17 @@ function InteractionsSection({
                 />
             ) : null}
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
+            {enableImplicitDrillToUrl ? (
+                <CheckboxControl
+                    valuePath="disableDrillIntoURL"
+                    labelText={messages["interactionsDrillIntoURL"].id}
+                    properties={properties}
+                    disabled={areControlsDisabledGetter("interactions.drill_into_url")}
+                    checked={!isDrillIntoURLDisabled}
+                    pushData={pushData}
+                    isValueInverted
+                />
+            ) : null}
         </ConfigSection>
     );
-}
-
-export default injectIntl(memo(InteractionsSection));
+});

@@ -3,7 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+import { IAlertDefault, IMetricFormatOverrideSetting, ISeparators } from "@gooddata/sdk-model";
 
 import { TigerSettingsType } from "../../types/index.js";
 import { convertApiError } from "../../utils/errorHandling.js";
@@ -41,6 +41,10 @@ export class TigerSettingsService<T> {
 
     public async setColorPalette(colorPaletteId: string): Promise<void> {
         return this.setSetting("ACTIVE_COLOR_PALETTE", { value: colorPaletteId });
+    }
+
+    public async setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void> {
+        return this.setSetting("METRIC_FORMAT_OVERRIDE", override);
     }
 
     protected async setSetting(type: TigerSettingsType, content: any): Promise<void> {

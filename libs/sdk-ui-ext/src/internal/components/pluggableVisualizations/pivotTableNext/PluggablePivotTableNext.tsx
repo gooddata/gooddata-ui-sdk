@@ -76,7 +76,7 @@ import {
     getPivotTableNextMeasuresLimit,
     setPivotTableNextUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
-import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
+import { PivotTableConfigurationPanel } from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
     addIntersectionFiltersToInsight,

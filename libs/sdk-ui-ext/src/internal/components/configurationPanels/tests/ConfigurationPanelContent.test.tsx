@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import { ConfigurationPanelContent, IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 class DummyConfigurationPanel extends ConfigurationPanelContent {
     constructor(props: IConfigurationPanelContentProps) {

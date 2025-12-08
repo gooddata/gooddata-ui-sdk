@@ -67,6 +67,7 @@ function UiDateExamples() {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiDate",
 };

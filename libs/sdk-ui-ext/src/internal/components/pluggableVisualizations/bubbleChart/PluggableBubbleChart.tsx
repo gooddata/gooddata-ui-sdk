@@ -29,7 +29,7 @@ import {
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper.js";
-import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel.js";
+import { BubbleChartConfigurationPanel } from "../../configurationPanels/BubbleChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

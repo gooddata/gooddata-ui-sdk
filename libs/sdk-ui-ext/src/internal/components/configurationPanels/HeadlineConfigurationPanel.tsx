@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent, IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
@@ -19,12 +19,12 @@ import {
     getComparisonDefaultCalculationType,
     isComparisonEnabled,
 } from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
-import ComparisonSection from "../configurationControls/comparison/ComparisonSection.js";
+import { ComparisonSection } from "../configurationControls/comparison/ComparisonSection.js";
 
 const BUBBLE_ARROW_OFFSETS = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];
 
-class HeadlineConfigurationPanel extends ConfigurationPanelContent<
+export class HeadlineConfigurationPanel extends ConfigurationPanelContent<
     IConfigurationPanelContentProps<IHeadlinePanelConfig>
 > {
     protected renderConfigurationPanel(): ReactNode {
@@ -63,5 +63,3 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
         );
     }
 }
-
-export default HeadlineConfigurationPanel;

@@ -9,7 +9,7 @@ import { scenariosFor } from "../../src/index.js";
 
 // todo: some scenarios were commented out during neobackstop creation, make an option to disable only their adding to 04
 
-export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
+export const sorting = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("sorting")
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

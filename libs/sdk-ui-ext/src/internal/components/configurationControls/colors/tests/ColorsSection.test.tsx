@@ -10,7 +10,7 @@ import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
 import { IColorConfiguration } from "../../../../interfaces/Colors.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection.js";
+import { COLOR_MAPPING_CHANGED, ColorsSection, IColorsSectionProps } from "../ColorsSection.js";
 
 const colors: IColorConfiguration = {
     colorPalette: DefaultColorPalette,

@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
 import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
 import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../../utils/controlsHelper.js";
-import ConfigSubsection from "../configurationControls/ConfigSubsection.js";
-import InputControl from "../configurationControls/InputControl.js";
+import { ConfigSubsection } from "../configurationControls/ConfigSubsection.js";
+import { InputControl } from "../configurationControls/InputControl.js";
 
 const defaultMinMaxControlState = {
     minScale: {
@@ -25,7 +25,8 @@ const defaultMinMaxControlState = {
     },
 };
 
-function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
+export function MinMaxControl(props: IMinMaxControlProps) {
+    const intl = useIntl();
     const [state, setState] = useState<IMinMaxControlState>(defaultMinMaxControlState);
 
     // Handle getDerivedStateFromProps logic
@@ -39,7 +40,7 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
         minInputValidateAndPushData(
             data,
             state,
-            props,
+            { ...props, intl },
             (newState: Partial<IMinMaxControlState>) =>
                 setState((prevState) => ({ ...prevState, ...newState })),
             defaultMinMaxControlState,
@@ -50,7 +51,7 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
         maxInputValidateAndPushData(
             data,
             state,
-            props,
+            { ...props, intl },
             (newState: Partial<IMinMaxControlState>) =>
                 setState((prevState) => ({ ...prevState, ...newState })),
             defaultMinMaxControlState,
@@ -136,5 +137,3 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(MinMaxControl);

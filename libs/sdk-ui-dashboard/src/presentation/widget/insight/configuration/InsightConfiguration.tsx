@@ -7,7 +7,7 @@ import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@
 import { stringUtils } from "@gooddata/util";
 
 import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
-import InsightFilters from "./InsightFilters.js";
+import { InsightFilters } from "./InsightFilters.js";
 import { InsightTitleConfig } from "./InsightTitleConfig.js";
 import {
     changeInsightWidgetDescription,

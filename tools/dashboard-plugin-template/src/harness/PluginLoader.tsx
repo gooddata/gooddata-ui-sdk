@@ -9,7 +9,7 @@ import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@good
 
 // this import will be renamed in plugin-toolkit
 import { PluginToolbar } from "./PluginToolbar.js";
-import PluginFactory from "../plugin/index.js";
+import { PluginFactory } from "../plugin/index.js";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 const Config: DashboardConfig = {

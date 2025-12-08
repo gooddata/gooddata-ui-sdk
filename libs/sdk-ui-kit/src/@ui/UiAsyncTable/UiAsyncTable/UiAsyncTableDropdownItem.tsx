@@ -2,16 +2,18 @@
 
 import { UiCheckbox } from "../../../@ui/UiCheckbox/UiCheckbox.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
+import { accessibilityConfigToAttributes } from "../../../typings/utilities.js";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableDropdownItemProps } from "../types.js";
 
-function UiAsyncTableDropdownItem({
+export function UiAsyncTableDropdownItem({
     label,
     secondaryLabel,
     onClick,
     isSelected,
     isMultiSelect,
     isUnderlined,
+    accessibilityConfig,
 }: UiAsyncTableDropdownItemProps) {
     return (
         <div className={e("dropdown-item-container", { underlined: isUnderlined ?? false })}>
@@ -23,6 +25,7 @@ function UiAsyncTableDropdownItem({
                 onClick={onClick}
                 role="menuitem"
                 aria-disabled={false}
+                {...accessibilityConfigToAttributes(accessibilityConfig)}
             >
                 {isMultiSelect ? (
                     <div className={e("dropdown-item-checkbox")}>
@@ -38,5 +41,3 @@ function UiAsyncTableDropdownItem({
         </div>
     );
 }
-
-export default UiAsyncTableDropdownItem;

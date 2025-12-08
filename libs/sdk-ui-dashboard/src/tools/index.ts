@@ -1,3 +1,7 @@
-// (C) 2022-2024 GoodData Corporation
-export type { InsightWidgetModifications } from "./InsightWidgetBuilder.js";
-export { newInsightWidget, InsightWidgetBuilder } from "./InsightWidgetBuilder.js";
+// (C) 2022-2025 GoodData Corporation
+
+export {
+    newInsightWidget,
+    InsightWidgetBuilder,
+    type InsightWidgetModifications,
+} from "./InsightWidgetBuilder.js";

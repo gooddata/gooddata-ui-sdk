@@ -19,7 +19,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps) {
+export function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         return cx(`s-${stringUtils.simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
@@ -40,5 +40,3 @@ function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps
 export const getDateAttributeListItemTitle = (item: ICatalogDateDataset, title?: string) => {
     return title ?? item.dataSet.title;
 };
-
-export default DateAttributeListItem;

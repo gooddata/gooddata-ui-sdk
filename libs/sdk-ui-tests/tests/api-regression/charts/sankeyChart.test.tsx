@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 
-import sankeyChartScenarios from "../../../scenarios/charts/sankeyChart/index.js";
+import { sankeyChart as sankeyChartScenarios } from "../../../scenarios/charts/sankeyChart/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

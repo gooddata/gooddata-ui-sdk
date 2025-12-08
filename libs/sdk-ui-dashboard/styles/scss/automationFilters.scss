@@ -111,7 +111,16 @@
         display: flex;
         flex-direction: column;
         width: 140px;
+        max-width: 140px;
         flex-shrink: 0;
+
+        // Ensure all children respect the max width
+        * {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     &__tab-label {
@@ -124,14 +133,11 @@
     }
 
     &__tab-title {
-        color: var(--gd-palette-complementary-8);
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         display: block;
+        max-width: 300px;
     }
 
     &__tab-filters {

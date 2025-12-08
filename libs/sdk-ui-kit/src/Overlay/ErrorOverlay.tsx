@@ -2,7 +2,7 @@
 
 import { ReactNode, memo, useMemo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -36,8 +36,8 @@ function ErrorOverlayCore({
     buttonTitle,
     onButtonClick,
     className,
-    intl,
-}: IErrorOverlayProps & WrappedComponentProps) {
+}: IErrorOverlayProps) {
+    const intl = useIntl();
     const theme = useTheme();
 
     const IconComponent = useMemo(() => {
@@ -83,15 +83,13 @@ function ErrorOverlayCore({
     );
 }
 
-const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
-
 /**
  * @internal
  */
 export const ErrorOverlay = memo(function ErrorOverlay(props: IErrorOverlayProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <ErrorOverlayWithIntl {...props} />
+            <ErrorOverlayCore {...props} />
         </IntlWrapper>
     );
 });

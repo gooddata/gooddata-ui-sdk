@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import AttributeListItem from "../AttributeListItem.js";
+import { AttributeListItem } from "../AttributeListItem.js";
 import * as Tooltip from "../attributeListItemTooltip/AttributeListItemTooltip.js";
 
 describe("AttributeListItem", () => {

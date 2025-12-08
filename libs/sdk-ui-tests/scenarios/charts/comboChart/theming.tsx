@@ -6,7 +6,7 @@ import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+export const theming = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

@@ -57,7 +57,7 @@ const getSectionContentKey = (section: SectionType, calculationType: Calculation
     return SECTION_CONTENT_KEYS[property];
 };
 
-function CalculationListItemInfoSection({
+export function CalculationListItemInfoSection({
     calculationType,
     section,
     contentClassNames,
@@ -76,5 +76,3 @@ function CalculationListItemInfoSection({
         </>
     );
 }
-
-export default CalculationListItemInfoSection;

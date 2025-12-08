@@ -175,44 +175,44 @@ function getDataLabelsStyle(chart: any) {
     return chart.options.plotOptions?.gdcOptions?.dataLabels?.style;
 }
 
+function applyNormalModeColorLogic(chart: any, type: string, theme: ITheme): void {
+    // Normal mode: Use custom color logic
+    if (type === VisualizationTypes.BAR) {
+        setTimeout(() => {
+            setBarDataLabelsColor(chart, theme);
+        }, 500);
+    } else if (
+        isOneOfTypes(type, [
+            VisualizationTypes.COLUMN,
+            VisualizationTypes.PIE,
+            VisualizationTypes.FUNNEL,
+            VisualizationTypes.PYRAMID,
+        ])
+    ) {
+        setTimeout(() => {
+            setColumnDataLabelsColor(chart, theme);
+        }, 500);
+    } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
+        setContrastLabelsColor(chart, theme);
+    }
+}
+
 export function extendDataLabelColors(Highcharts: any, theme: ITheme): void {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
         const type: string = getChartType(chart);
         const labelsStyle = getDataLabelsStyle(chart);
 
         const changeLabelColor = () => {
+            // Backplate mode: styles already set in config
+            if (labelsStyle === "backplate") {
+                return;
+            }
+
             if (isHighContrastMode()) {
-                if (labelsStyle === "backplate") {
-                    // Backplate mode: styles already set in config
-                    return;
-                }
                 // In WCHM: Ensure all data labels use system colors
                 ensureWCHMDataLabels(chart);
             } else {
-                if (labelsStyle === "backplate") {
-                    // Backplate mode: styles already set in config
-                    return;
-                } else {
-                    // Normal mode: Use custom color logic
-                    if (type === VisualizationTypes.BAR) {
-                        setTimeout(() => {
-                            setBarDataLabelsColor(chart, theme);
-                        }, 500);
-                    } else if (
-                        isOneOfTypes(type, [
-                            VisualizationTypes.COLUMN,
-                            VisualizationTypes.PIE,
-                            VisualizationTypes.FUNNEL,
-                            VisualizationTypes.PYRAMID,
-                        ])
-                    ) {
-                        setTimeout(() => {
-                            setColumnDataLabelsColor(chart, theme);
-                        }, 500);
-                    } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
-                        setContrastLabelsColor(chart, theme);
-                    }
-                }
+                applyNormalModeColorLogic(chart, type, theme);
             }
         };
 

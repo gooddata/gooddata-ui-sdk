@@ -1,6 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, PureComponent, ReactElement, ReactNode, createRef } from "react";
+import {
+    CSSProperties,
+    ReactElement,
+    ReactNode,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
@@ -88,124 +98,116 @@ export function renderLegend(props: ILegendProps): ReactElement {
     return <Legend {...props} />;
 }
 
-export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, IHighChartsRendererState> {
-    public static defaultProps = {
-        afterRender: () => {},
-        height: null as number,
-        legend: {
-            enabled: true,
-            responsive: false,
-            position: RIGHT,
-        },
-        chartRenderer: renderChart,
-        legendRenderer: renderLegend,
-        onLegendReady: () => {},
-        documentObj: typeof document === "undefined" ? null : document,
-    };
-
-    private highchartsRendererRef = createRef<HTMLDivElement>(); // whole component = legend + chart
-    private chartRef: IChartHTMLElement;
-    private containerId: string = `visualization-${v4()}`;
-
-    constructor(props: IHighChartsRendererProps) {
-        super(props);
-
-        this.state = {
-            legendItemsEnabled: [],
-            showFluidLegend: this.shouldShowFluid(),
-        };
+function getFlexDirection(position: string): CSSProperties["flexDirection"] {
+    if (position === TOP || position === BOTTOM) {
+        return "column";
     }
 
-    public onWindowResize = (): void => {
-        this.setState({
-            showFluidLegend: this.shouldShowFluid(),
-        });
+    return "row";
+}
 
-        this.realignPieOrDonutChart();
-    };
+function skipLeadingZeros(values: ISeriesDataItem[]) {
+    const result = [...values];
 
-    private throttledOnWindowResize = throttle(this.onWindowResize, 100);
+    while (result[0]?.y === 0) {
+        result.shift();
+    }
 
-    public shouldShowFluid(): boolean {
-        const { documentObj, legend } = this.props;
+    return result;
+}
+
+const highchartsStyle = { flex: "1 1 auto", position: "relative", overflow: "hidden" } as const;
+
+const defaultLegend: ILegendOptions = {
+    enabled: true,
+    toggleEnabled: false,
+    responsive: false,
+    position: RIGHT as PositionType,
+    format: "",
+    items: [],
+};
+
+const defaultDocumentObj = typeof document === "undefined" ? null : document;
+
+export const HighChartsRenderer = memo(function HighChartsRenderer({
+    chartOptions,
+    hcOptions,
+    documentObj = defaultDocumentObj,
+    height = null as number,
+    legend: legendProp,
+    locale,
+    theme,
+    onLegendReady = () => {},
+    legendRenderer = renderLegend,
+    chartRenderer = renderChart,
+    afterRender = () => {},
+    resetZoomButtonTooltip,
+    contentRect,
+    config,
+}: IHighChartsRendererProps): ReactElement {
+    const legend: ILegendOptions = legendProp ?? defaultLegend;
+
+    const highchartsRendererRef = useRef<HTMLDivElement>(null); // whole component = legend + chart
+    const chartRef = useRef<IChartHTMLElement>(null);
+    const containerId = useMemo(() => `visualization-${v4()}`, []);
+
+    const shouldShowFluid = useCallback((): boolean => {
         return (
             documentObj?.documentElement?.clientWidth < FLUID_LEGEND_THRESHOLD &&
             legend?.responsive !== "autoPositionWithPopup"
         );
-    }
+    }, [documentObj, legend?.responsive]);
 
-    public override UNSAFE_componentWillMount(): void {
-        this.resetLegendState(this.props);
-    }
+    const [legendItemsEnabled, setLegendItemsEnabled] = useState<boolean[]>(() => {
+        // Initialize with proper array size on first render (equivalent to UNSAFE_componentWillMount)
+        const legendItemsCount = legend?.items?.length ?? 0;
+        return new Array(legendItemsCount).fill(true);
+    });
+    const [showFluidLegend, setShowFluidLegend] = useState<boolean>(shouldShowFluid());
 
-    public override componentDidMount(): void {
-        this.props.onLegendReady({
-            legendItems: this.getItems(this.props.legend.items),
-        });
+    const realignPieOrDonutChart = useCallback(() => {
+        const { type, verticalAlign } = chartOptions;
 
-        window.addEventListener("resize", this.throttledOnWindowResize);
-    }
-
-    public override componentWillUnmount(): void {
-        this.throttledOnWindowResize.cancel();
-        window.removeEventListener("resize", this.throttledOnWindowResize);
-    }
-
-    public override UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps): void {
-        const thisLegendItems = this.props.legend?.items ?? [];
-        const nextLegendItems = nextProps.legend?.items ?? [];
-        const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
-        if (hasLegendChanged) {
-            this.resetLegendState(nextProps);
+        if (isPieOrDonutChart(type) && chartRef.current) {
+            alignChart(chartRef.current.getChart(), verticalAlign);
         }
+    }, [chartOptions]);
 
-        if (!isEqual(this.props.legend.items, nextProps.legend.items)) {
-            this.props.onLegendReady({
-                legendItems: this.getItems(nextProps.legend.items),
+    const onWindowResize = useCallback((): void => {
+        setShowFluidLegend(shouldShowFluid());
+
+        realignPieOrDonutChart();
+    }, [shouldShowFluid, realignPieOrDonutChart]);
+
+    const throttledOnWindowResize = useMemo(() => throttle(onWindowResize, 100), [onWindowResize]);
+
+    const resetLegendState = useCallback((legendItems: any[] | undefined) => {
+        const legendItemsCount = legendItems?.length ?? 0;
+        setLegendItemsEnabled(new Array(legendItemsCount).fill(true));
+    }, []);
+
+    const onLegendItemClick = useCallback((item: any): void => {
+        setLegendItemsEnabled((prev) => set<boolean[]>([...prev], item.legendIndex, !prev[item.legendIndex]));
+    }, []);
+
+    const getItems = useCallback(
+        (items: any[]): any[] => {
+            return items.map((i) => {
+                return {
+                    name: i.name,
+                    color: i.color,
+                    onClick: partial(onLegendItemClick, i),
+                };
             });
-        }
-    }
+        },
+        [onLegendItemClick],
+    );
 
-    public onLegendItemClick = (item: any): void => {
-        this.setState({
-            legendItemsEnabled: set<boolean[]>(
-                [...this.state.legendItemsEnabled],
-                item.legendIndex,
-                !this.state.legendItemsEnabled[item.legendIndex],
-            ),
-        });
-    };
+    const setChartRefCallback = useCallback((ref: IChartHTMLElement): void => {
+        chartRef.current = ref;
+    }, []);
 
-    public setChartRef = (chartRef: IChartHTMLElement): void => {
-        this.chartRef = chartRef;
-    };
-
-    public getFlexDirection(position: string): CSSProperties["flexDirection"] {
-        if (position === TOP || position === BOTTOM) {
-            return "column";
-        }
-
-        return "row";
-    }
-
-    public getItems(items: any[]): any[] {
-        return items.map((i) => {
-            return {
-                name: i.name,
-                color: i.color,
-                onClick: partial(this.onLegendItemClick, i),
-            };
-        });
-    }
-
-    public resetLegendState(props: IHighChartsRendererProps): void {
-        const legendItemsCount = props.legend?.items?.length ?? 0;
-        this.setState({
-            legendItemsEnabled: new Array(legendItemsCount).fill(true),
-        });
-    }
-
-    private onChartSelection = (event: any): undefined => {
+    const onChartSelection = useCallback((event: any): undefined => {
         const chartWrapper = event.target.renderTo.parentElement;
         const resetZoomButton = chartWrapper.querySelector(".viz-zoom-out");
         if (event.resetSelection) {
@@ -215,101 +217,164 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
         }
 
         return undefined;
-    };
+    }, []);
 
-    private skipLeadingZeros(values: ISeriesDataItem[]) {
-        const result = [...values];
+    const createChartConfig = useCallback(
+        (chartConfig: HighchartsOptions, legendItemsEnabledArr: any[]): HighchartsOptions => {
+            const { series, chart, xAxis, yAxis } = chartConfig;
 
-        while (result[0]?.y === 0) {
-            result.shift();
-        }
+            const selectionEvent = chart?.zooming?.type
+                ? {
+                      selection: onChartSelection,
+                  }
+                : {};
 
-        return result;
-    }
-
-    private createChartConfig(chartConfig: HighchartsOptions, legendItemsEnabled: any[]): HighchartsOptions {
-        const { series, chart, xAxis, yAxis } = chartConfig;
-
-        const selectionEvent = chart?.zooming?.type
-            ? {
-                  selection: this.onChartSelection,
-              }
-            : {};
-
-        const firstSeriesTypes = [
-            VisualizationTypes.PIE,
-            VisualizationTypes.DONUT,
-            VisualizationTypes.TREEMAP,
-            VisualizationTypes.FUNNEL,
-            VisualizationTypes.PYRAMID,
-            VisualizationTypes.SCATTER,
-        ];
-        const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
-
-        let items: any[] = isOneOfTypes(chart.type, firstSeriesTypes) ? (series?.[0] as any)?.data : series;
-
-        if (isFunnel(chart.type)) {
-            items = this.skipLeadingZeros(items).filter((i) => !(i.y === null || i.y === undefined));
-        }
-
-        const updatedItems = items.map((item: any) => {
-            const itemIndex = item.legendIndex;
-            const visible =
-                legendItemsEnabled[itemIndex] === undefined ? true : legendItemsEnabled[itemIndex];
-            return {
-                ...item,
-                visible: item.visible === null || item.visible === undefined ? visible : item.visible,
-            };
-        });
-
-        let updatedSeries = updatedItems;
-        if (multipleSeries) {
-            updatedSeries = [
-                {
-                    ...series?.[0],
-                    data: updatedItems,
-                },
-                ...series.slice(1),
+            const firstSeriesTypes = [
+                VisualizationTypes.PIE,
+                VisualizationTypes.DONUT,
+                VisualizationTypes.TREEMAP,
+                VisualizationTypes.FUNNEL,
+                VisualizationTypes.PYRAMID,
+                VisualizationTypes.SCATTER,
             ];
-        }
+            const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 
-        return {
-            ...chartConfig,
-            chart: {
-                ...chartConfig?.chart,
-                events: {
-                    ...chartConfig?.chart?.events,
-                    ...selectionEvent,
-                },
-            },
-            series: updatedSeries,
-            yAxis: (yAxis as any).map((ax: YAxisOptions) => ({
-                ...ax,
-                title: {
-                    ...ax?.title,
-                    style: {
-                        ...ax?.title?.style,
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
+            let items: any[] = isOneOfTypes(chart.type, firstSeriesTypes)
+                ? (series?.[0] as any)?.data
+                : series;
+
+            if (isFunnel(chart.type)) {
+                items = skipLeadingZeros(items).filter((i) => !(i.y === null || i.y === undefined));
+            }
+
+            const updatedItems = items.map((item: any) => {
+                const itemIndex = item.legendIndex;
+                const visible =
+                    legendItemsEnabledArr[itemIndex] === undefined ? true : legendItemsEnabledArr[itemIndex];
+                return {
+                    ...item,
+                    visible: item.visible === null || item.visible === undefined ? visible : item.visible,
+                };
+            });
+
+            let updatedSeries = updatedItems;
+            if (multipleSeries) {
+                updatedSeries = [
+                    {
+                        ...series?.[0],
+                        data: updatedItems,
+                    },
+                    ...series.slice(1),
+                ];
+            }
+
+            return {
+                ...chartConfig,
+                chart: {
+                    ...chartConfig?.chart,
+                    events: {
+                        ...chartConfig?.chart?.events,
+                        ...selectionEvent,
                     },
                 },
-            })),
-            // perform a shallow copy of axis
-            // (otherwise there's a highcharts internal error on smallest responsive charts)
-            xAxis: (xAxis as any).map((ax: XAxisOptions) => ({
-                ...ax,
-            })),
-        };
-    }
+                series: updatedSeries,
+                yAxis: (yAxis as any).map((ax: YAxisOptions) => ({
+                    ...ax,
+                    title: {
+                        ...ax?.title,
+                        style: {
+                            ...ax?.title?.style,
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                        },
+                    },
+                })),
+                // perform a shallow copy of axis
+                // (otherwise there's a highcharts internal error on smallest responsive charts)
+                xAxis: (xAxis as any).map((ax: XAxisOptions) => ({
+                    ...ax,
+                })),
+            };
+        },
+        [onChartSelection],
+    );
 
-    public renderLegend(
+    const getHighChartsConfigOverride = useCallback((): Partial<HighchartsOptions> => {
+        try {
+            // YAML value was automatically merged from visualization properties to chart config from where
+            // we will load it now and transform to JSON, expecting that it contains valid partial
+            // HighChart configuration.
+            const rawConfigOverride = config?.chartConfigOverride;
+            return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
+        } catch (e) {
+            console.error("Visualization properties contains invalid HighCharts config override", e);
+            return undefined;
+        }
+    }, [config?.chartConfigOverride]);
+
+    const doAfterChartRender = useCallback(
+        (chart?: HChart): void => {
+            try {
+                // Ensure we only manipulate the container when chart is fully available
+                if (chart?.container?.style) {
+                    chart.container.style.height = (height && String(height)) || "100%";
+                    chart.container.style.position = height ? "relative" : "absolute";
+                    chart.reflow();
+                }
+            } catch (e) {
+                console.error("Post-render sizing failed.", e);
+            } finally {
+                // Call original afterRender callback if provided
+                afterRender?.();
+            }
+        },
+        [height, afterRender],
+    );
+
+    const onZoomOutButtonClick = useCallback((): void => {
+        chartRef.current.getChart().zoomOut();
+    }, []);
+
+    // componentDidMount equivalent
+    useEffect(() => {
+        onLegendReady({
+            legendItems: getItems(legend.items ?? []),
+        });
+
+        window.addEventListener("resize", throttledOnWindowResize);
+
+        return () => {
+            throttledOnWindowResize.cancel();
+            window.removeEventListener("resize", throttledOnWindowResize);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // UNSAFE_componentWillReceiveProps equivalent - handle legend items changes
+    const previousLegendItemsRef = useRef<any[]>(legend?.items ?? []);
+    useEffect(() => {
+        const thisLegendItems = previousLegendItemsRef.current;
+        const nextLegendItems = legend?.items ?? [];
+        const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
+        if (hasLegendChanged) {
+            resetLegendState(nextLegendItems);
+        }
+
+        if (!isEqual(previousLegendItemsRef.current, nextLegendItems)) {
+            onLegendReady({
+                legendItems: getItems(nextLegendItems),
+            });
+        }
+
+        previousLegendItemsRef.current = nextLegendItems;
+    }, [legend?.items, resetLegendState, onLegendReady, getItems]);
+
+    const renderLegendContent = (
         legendDetails: ILegendDetails,
-        contentRect: ContentRect,
-        containerId: string,
-    ): ReactNode {
-        const { chartOptions, legend, height, legendRenderer, locale } = this.props;
+        contentRectParam: ContentRect,
+        containerIdParam: string,
+    ): ReactNode => {
         const { items, format } = legend;
-        const { showFluidLegend } = this.state;
 
         if (!legend.enabled) {
             return null;
@@ -320,7 +385,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             type = VisualizationTypes.PIE;
         }
         const onItemClick =
-            isSankeyOrDependencyWheel(type) || isWaterfall(type) ? () => {} : this.onLegendItemClick;
+            isSankeyOrDependencyWheel(type) || isWaterfall(type) ? () => {} : onLegendItemClick;
 
         const legendProps: ILegendProps = {
             responsive: legend.responsive,
@@ -328,7 +393,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             seriesMapper: legend.seriesMapper,
             series: items,
             onItemClick,
-            legendItemsEnabled: this.state.legendItemsEnabled,
+            legendItemsEnabled: legendItemsEnabled,
             heatmapLegend: isHeatmap(type),
             height,
             legendLabel: legendDetails?.name,
@@ -338,68 +403,40 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             locale,
             showFluidLegend,
             validateOverHeight: () => {},
-            contentDimensions: contentRect?.client,
-            containerId,
+            contentDimensions: contentRectParam?.client,
+            containerId: containerIdParam,
             chartFill: chartOptions.chartFill?.type,
         };
 
         return legendRenderer(legendProps);
-    }
+    };
 
-    public renderHighcharts(): ReactNode {
+    const chartConfig = useMemo(
+        () => createChartConfig(hcOptions, legendItemsEnabled),
+        [createChartConfig, hcOptions, legendItemsEnabled],
+    );
+
+    const finalChartConfig = useMemo(
+        () =>
+            config?.enableVisualizationFineTuning
+                ? mergePropertiesWithOverride(chartConfig, getHighChartsConfigOverride())
+                : chartConfig,
+        [config?.enableVisualizationFineTuning, chartConfig, getHighChartsConfigOverride],
+    );
+
+    const renderHighcharts = (): ReactNode => {
         // shrink chart to give space to legend items
-        const style = { flex: "1 1 auto", position: "relative", overflow: "hidden" };
-        const config = this.createChartConfig(this.props.hcOptions, this.state.legendItemsEnabled);
         const chartProps = {
-            domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style },
-            ref: this.setChartRef,
-            config: this.props.config?.enableVisualizationFineTuning
-                ? mergePropertiesWithOverride(config, this.getHighChartsConfigOverride())
-                : config,
-            callback: this.doAfterChartRender,
+            domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style: highchartsStyle },
+            ref: setChartRefCallback,
+            config: finalChartConfig,
+            callback: doAfterChartRender,
         };
-        return this.props.chartRenderer(chartProps as any);
-    }
-
-    private getHighChartsConfigOverride = (): Partial<HighchartsOptions> => {
-        try {
-            // YAML value was automatically merged from visualization properties to chart config from where
-            // we will load it now and transform to JSON, expecting that it contains valid partial
-            // HighChart configuration.
-            const rawConfigOverride = this.props.config?.chartConfigOverride;
-            return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
-        } catch (e) {
-            console.error("Visualization properties contains invalid HighCharts config override", e);
-            return undefined;
-        }
+        return chartRenderer(chartProps as any);
     };
 
-    private onZoomOutButtonClick = (): void => {
-        this.chartRef.getChart().zoomOut();
-    };
-
-    private doAfterChartRender = (chart?: HChart): void => {
-        try {
-            // Ensure we only manipulate the container when chart is fully available
-            if (chart?.container?.style) {
-                chart.container.style.height = (this.props.height && String(this.props.height)) || "100%";
-                chart.container.style.position = this.props.height ? "relative" : "absolute";
-                chart.reflow();
-            }
-        } catch (e) {
-            console.error("Post-render sizing failed.", e);
-        } finally {
-            // Call original afterRender callback if provided
-            this.props.afterRender?.();
-        }
-    };
-
-    private renderZoomOutButton() {
-        const {
-            hcOptions: { chart },
-            theme,
-            resetZoomButtonTooltip,
-        } = this.props;
+    const renderZoomOutButton = () => {
+        const { chart } = hcOptions;
 
         if (chart?.zooming?.type) {
             return (
@@ -411,7 +448,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
                 >
                     <button
                         className="viz-zoom-out s-zoom-out"
-                        onClick={this.onZoomOutButtonClick}
+                        onClick={onZoomOutButtonClick}
                         style={{ display: "none" }}
                     >
                         <IconUndo width={20} height={20} color={theme?.palette?.complementary?.c7} />
@@ -423,29 +460,28 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             );
         }
         return null;
-    }
+    };
 
-    private renderLoading() {
-        const container = this.highchartsRendererRef.current;
-        const { chartOptions } = this.props;
+    const renderLoading = () => {
+        const container = highchartsRendererRef.current;
         const { data } = chartOptions;
 
         const loading: ISeriesItem[] =
             data?.series?.filter((series: ISeriesItem) => {
-                return series.data.some((data?: ISeriesDataItem) => data?.loading);
+                return series.data.some((seriesData?: ISeriesDataItem) => seriesData?.loading);
             }) ?? [];
 
         if (!loading.length || !container) {
             return null;
         }
 
-        const loadingSeries = loading.reduce<number[]>((loadingSeries: number[], series: ISeriesItem) => {
-            if (!loadingSeries.includes(series.legendIndex)) {
-                loadingSeries.push(series.legendIndex);
+        const loadingSeries = loading.reduce<number[]>((loadingSeriesArr: number[], series: ISeriesItem) => {
+            if (!loadingSeriesArr.includes(series.legendIndex)) {
+                loadingSeriesArr.push(series.legendIndex);
             }
-            return loadingSeries;
+            return loadingSeriesArr;
         }, []);
-        const contentRect = container.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
 
         const elements: ReactNode[] = [];
         for (let i = 0; i < loadingSeries.length; i++) {
@@ -457,8 +493,8 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
                         key={i}
                         className="gd-chart-forecasting"
                         style={{
-                            width: contentRect.left + contentRect.width - (rect.left + rect.width),
-                            left: rect.left + rect.width - contentRect.left,
+                            width: containerRect.left + containerRect.width - (rect.left + rect.width),
+                            left: rect.left + rect.width - containerRect.left,
                         }}
                     >
                         <div className="gd-chart-forecasting-background" />
@@ -469,12 +505,11 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
         }
 
         return elements;
-    }
+    };
 
-    private renderVisualization() {
-        const { legend, chartOptions, contentRect } = this.props;
+    const renderVisualization = () => {
         const legendDetailOptions: ILegendDetailOptions = {
-            showFluidLegend: this.state.showFluidLegend,
+            showFluidLegend: showFluidLegend,
             contentRect,
             isHeatmap: isHeatmap(chartOptions.type),
             legendLabel: chartOptions.legendLabel,
@@ -483,7 +518,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             legend.position,
             legend.responsive,
             legendDetailOptions,
-            this.props.config?.respectLegendPosition,
+            config?.respectLegendPosition,
         );
         if (!legendDetails) {
             return null;
@@ -494,43 +529,26 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             "s-viz-line-family-chart-wrap",
             legend.responsive === true ? "responsive-legend" : "non-responsive-legend",
             {
-                [`flex-direction-${this.getFlexDirection(legendDetails.position)}`]: true,
+                [`flex-direction-${getFlexDirection(legendDetails.position)}`]: true,
                 "legend-position-bottom": legendDetails.position === BOTTOM,
             },
-            this.containerId,
+            containerId,
         );
 
         const legendPosition = legendDetails.position;
         const isLegendRenderedFirst: boolean =
-            legendPosition === TOP || legendPosition === LEFT || this.state.showFluidLegend;
+            legendPosition === TOP || legendPosition === LEFT || showFluidLegend;
 
         return (
-            <div className={classes} ref={this.highchartsRendererRef}>
-                {this.renderZoomOutButton()}
-                {isLegendRenderedFirst
-                    ? this.renderLegend(legendDetails, contentRect, this.containerId)
-                    : null}
-                {this.renderHighcharts()}
-                {isLegendRenderedFirst
-                    ? null
-                    : this.renderLegend(legendDetails, contentRect, this.containerId)}
-                {this.renderLoading()}
+            <div className={classes} ref={highchartsRendererRef}>
+                {renderZoomOutButton()}
+                {isLegendRenderedFirst ? renderLegendContent(legendDetails, contentRect, containerId) : null}
+                {renderHighcharts()}
+                {isLegendRenderedFirst ? null : renderLegendContent(legendDetails, contentRect, containerId)}
+                {renderLoading()}
             </div>
         );
-    }
+    };
 
-    public override render() {
-        return this.renderVisualization();
-    }
-
-    private realignPieOrDonutChart() {
-        const {
-            chartOptions: { type, verticalAlign },
-        } = this.props;
-        const { chartRef } = this;
-
-        if (isPieOrDonutChart(type) && chartRef) {
-            alignChart(chartRef.getChart(), verticalAlign);
-        }
-    }
-}
+    return renderVisualization();
+});

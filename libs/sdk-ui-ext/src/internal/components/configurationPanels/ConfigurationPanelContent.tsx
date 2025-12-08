@@ -19,11 +19,11 @@ import {
 } from "../../utils/bucketHelper.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
-import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
-import ColorsSection from "../configurationControls/colors/ColorsSection.js";
-import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
-import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
+import { AdvancedSection } from "../configurationControls/advanced/AdvancedSection.js";
+import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
+import { ForecastSection } from "../configurationControls/forecast/ForecastSection.js";
+import { InteractionsSection } from "../configurationControls/interactions/InteractionsSection.js";
+import { LegendSection } from "../configurationControls/legend/LegendSection.js";
 import {
     isInsightSupportedForAlerts,
     isInsightSupportedForScheduledExports,
@@ -47,7 +47,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     configurationPanelRenderers?: IConfigurationPanelRenderers;
 }
 
-export default abstract class ConfigurationPanelContent<
+export abstract class ConfigurationPanelContent<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
 > extends PureComponent<T> {
     public static defaultProps: IConfigurationPanelContentProps = {
@@ -155,6 +155,7 @@ export default abstract class ConfigurationPanelContent<
 
         const isAlertingEnabled = featureFlags.enableAlerting;
         const isScheduledExportsEnabled = featureFlags.enableScheduling;
+        const enableImplicitDrillToUrl = featureFlags.enableImplicitDrillToUrl;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
         const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
@@ -171,6 +172,7 @@ export default abstract class ConfigurationPanelContent<
                 supportsDrillDownConfiguration={panelConfig.supportsAttributeHierarchies}
                 supportsScheduledExportsConfiguration={supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
+                enableImplicitDrillToUrl={enableImplicitDrillToUrl}
             />
         ) : null;
     }

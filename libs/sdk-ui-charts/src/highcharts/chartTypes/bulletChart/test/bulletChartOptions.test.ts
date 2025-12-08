@@ -10,7 +10,7 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import BulletChartColorStrategy from "../bulletChartColoring.js";
+import { BulletChartColorStrategy } from "../bulletChartColoring.js";
 import { getBulletChartSeries } from "../bulletChartSeries.js";
 
 const getColorStrategy = (colorPalette: IColorPalette, dv: DataViewFacade) =>

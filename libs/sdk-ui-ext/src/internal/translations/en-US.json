@@ -1111,6 +1111,10 @@
         "value": "Drill down",
         "comment": "The text for the drill down checkbox"
     },
+    "properties.interactions.drillIntoURL": {
+        "value": "Drill into URL",
+        "comment": "The text for the drill into URL checkbox. When enabled, it renders all cells with a defined link label as a clickable hyperlinks."
+    },
     "properties.interactions.alerts": {
         "value": "Alert",
         "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization."

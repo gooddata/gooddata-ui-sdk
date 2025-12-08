@@ -3,7 +3,7 @@
 import { ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { IntlShape, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { List } from "./List.js";
 import { Button } from "../Button/index.js";
@@ -21,7 +21,6 @@ export interface IMultiSelectRenderItemProps<T> {
  * @internal
  */
 export interface IMultiSelectListProps<T> {
-    intl: IntlShape;
     height?: number;
     width?: number;
     itemHeight?: number;
@@ -48,7 +47,10 @@ export interface IMultiSelectListProps<T> {
     listClassNames?: string;
 }
 
-function MultiSelectListCore<T>({
+/**
+ * @internal
+ */
+export function MultiSelectList<T>({
     isMobile,
     width,
     height,
@@ -66,9 +68,9 @@ function MultiSelectListCore<T>({
     isSelected,
     filteredItemsCount,
     selectAllCheckbox,
-    intl,
     tagName,
 }: IMultiSelectListProps<T>) {
+    const intl = useIntl();
     const getSelectionString = useCallback(
         (selection: T[]) => {
             if (!selection.length) {
@@ -297,8 +299,3 @@ function MultiSelectListCore<T>({
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const MultiSelectList = injectIntl(MultiSelectListCore);

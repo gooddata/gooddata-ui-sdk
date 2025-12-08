@@ -960,6 +960,18 @@ export const selectEnableDashboardTabs: DashboardSelector<boolean> = createSelec
 });
 
 /**
+ * Returns whether implicit drill to url feature is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableImplicitDrillToUrl: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableImplicitDrillToUrl ?? false;
+    },
+);
+
+/**
  * Returns whether preserving filter selection during initialization is enabled.
  *
  * @alpha
@@ -983,5 +995,19 @@ export const selectExportResultPollingTimeout: DashboardSelector<number | undefi
             return state.settings.exportResultPollingTimeoutSeconds * 1000;
         }
         return undefined;
+    },
+);
+
+/**
+ * Selects whether drill to URL is enabled by default and therefore insight setting is ignored.
+ * Works with ENABLE_DRILL_TO_URL_BY_DEFAULT setting type.
+ *
+ * @alpha
+ */
+export const selectEnableDrillToUrlByDefault: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    selectEnableImplicitDrillToUrl,
+    (state, enableImplicitDrillToUrl) => {
+        return enableImplicitDrillToUrl ? (state.settings?.enableDrillToUrlByDefault ?? false) : false;
     },
 );

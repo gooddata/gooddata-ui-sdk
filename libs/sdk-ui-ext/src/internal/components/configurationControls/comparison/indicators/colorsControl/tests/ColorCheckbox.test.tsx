@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
 import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
-import ColorCheckbox from "../ColorCheckbox.js";
+import { ColorCheckbox } from "../ColorCheckbox.js";
 
 const LABEL_CHECKBOX_TEXT_QUERY = "Color";
 const CHECKBOX_SELECTOR = "input";

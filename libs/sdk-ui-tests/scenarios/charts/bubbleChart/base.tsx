@@ -14,7 +14,7 @@ export const BubbleChartWithAllMeasuresAndAttribute = {
     viewBy: ReferenceMd.Product.Name,
 };
 
-export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+export const base = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

@@ -33,6 +33,7 @@ function TooltipContentComponent() {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownButton/with tooltip",
 };

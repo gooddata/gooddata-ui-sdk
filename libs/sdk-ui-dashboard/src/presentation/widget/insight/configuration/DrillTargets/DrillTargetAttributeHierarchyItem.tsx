@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
-import AttributeHierarchyDropdown from "./AttributeHierarchyDropdown.js";
-import EmptyAttributeHierarchyInfo from "./EmptyAttributeHierarchyInfo.js";
+import { AttributeHierarchyDropdown } from "./AttributeHierarchyDropdown.js";
+import { EmptyAttributeHierarchyInfo } from "./EmptyAttributeHierarchyInfo.js";
 import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 import {
     selectAllCatalogAttributeHierarchies,
@@ -27,7 +27,7 @@ interface IDrillTargetDashboardItemProps {
     onDeleteInteraction: () => void;
 }
 
-function DrillTargetAttributeHierarchyItem({
+export function DrillTargetAttributeHierarchyItem({
     config,
     onSelect,
     onDeleteInteraction,
@@ -97,5 +97,3 @@ function DrillTargetAttributeHierarchyItem({
         </>
     );
 }
-
-export default DrillTargetAttributeHierarchyItem;

@@ -7,7 +7,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-function AddAttributeAction() {
+export function AddAttributeAction() {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute, attributes } = useAttributeHierarchyDialog();
 
@@ -27,5 +27,3 @@ function AddAttributeAction() {
         </div>
     );
 }
-
-export default AddAttributeAction;

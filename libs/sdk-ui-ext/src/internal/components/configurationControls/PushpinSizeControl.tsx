@@ -2,10 +2,10 @@
 
 import { ReactElement } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import ConfigSubsection from "./ConfigSubsection.js";
-import DropdownControl from "./DropdownControl.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { pushpinSizeDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -17,7 +17,7 @@ export interface IPushpinSizeControl {
     pushData: (data: any) => any;
 }
 
-function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) {
+function getPushpinProperty(props: IPushpinSizeControl) {
     const { minSize = "default", maxSize = "default" } = props.properties?.controls?.["points"] ?? {};
     return {
         minSize,
@@ -25,9 +25,10 @@ function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) 
     };
 }
 
-function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps): ReactElement {
+export function PushpinSizeControl(props: IPushpinSizeControl): ReactElement {
+    const intl = useIntl();
     const { minSize, maxSize } = getPushpinProperty(props);
-    const { disabled, properties, pushData, intl } = props;
+    const { disabled, properties, pushData } = props;
     const items = getTranslatedDropdownItems(pushpinSizeDropdownItems, intl);
     return (
         <ConfigSubsection title={messages["pointsSizeTitle"].id}>
@@ -54,5 +55,3 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
         </ConfigSubsection>
     );
 }
-
-export default injectIntl(PushpinSizeControl);

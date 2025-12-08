@@ -99,6 +99,7 @@ import { IListedDashboard } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
@@ -136,6 +137,7 @@ import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
+import { MetricType } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SupportedDashboardReferenceTypes } from '@gooddata/sdk-backend-spi';
@@ -666,6 +668,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
     // (undocumented)
+    deleteMetricFormatOverride(): Promise<void>;
+    // (undocumented)
     deleteTheme(): Promise<void>;
     // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
@@ -689,6 +693,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setLocale(locale: string): Promise<void>;
     // (undocumented)
     setMetadataLocale(locale: string): Promise<void>;
+    // (undocumented)
+    setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
     // (undocumented)
     setSeparators(separators: ISeparators): Promise<void>;
     // (undocumented)
@@ -1013,6 +1019,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     format(format: string): this;
     // (undocumented)
     isLocked(isLocked: boolean): this;
+    // (undocumented)
+    metricType(metricType?: MetricType): this;
     // (undocumented)
     tags(tags: string[]): this;
     // (undocumented)

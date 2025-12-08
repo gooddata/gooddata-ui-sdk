@@ -11,6 +11,7 @@ const buildInsightWidget = (name: string): IInsightWidget => ({
     title: name,
     description: "",
     ignoredDrillDownHierarchies: [],
+    ignoredDrillToUrlAttributes: [],
     ignoreDashboardFilters: [],
     ref: idRef(name),
     uri: `/${name}`,

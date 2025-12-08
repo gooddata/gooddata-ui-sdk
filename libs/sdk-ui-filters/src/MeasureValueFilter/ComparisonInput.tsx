@@ -14,7 +14,7 @@ interface IComparisonInputProps {
     separators?: ISeparators;
 }
 
-function ComparisonInput({
+export function ComparisonInput({
     value,
     usePercentage,
     disableAutofocus,
@@ -35,5 +35,3 @@ function ComparisonInput({
         />
     );
 }
-
-export default ComparisonInput;

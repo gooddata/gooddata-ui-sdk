@@ -352,7 +352,7 @@ export function convertMinMaxFromPercentToNumber(
     return { yAxis };
 }
 
-export default function getOptionalStackingConfiguration(
+export function getOptionalStackingConfiguration(
     chartOptions: IChartOptions,
     config: HighchartsOptions,
     chartConfig: IChartConfig = {},

@@ -2,8 +2,8 @@
 
 import {
     JsonApiAnalyticalDashboardOutMeta,
-    JsonApiVisualizationObjectOutMetaOrigin,
-    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    JsonApiAnalyticalDashboardOutMetaOrigin,
+    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
 } from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {
@@ -20,7 +20,7 @@ export function isInheritedObject<T = unknown>(obj: JsonApiMetadataLikeObject<T>
 
 export function getObjectOrigin<T = unknown>(
     obj: JsonApiMetadataLikeObject<T>,
-): JsonApiVisualizationObjectOutMetaOrigin {
+): JsonApiAnalyticalDashboardOutMetaOrigin {
     const { origin } = obj.meta || {};
     return origin || { originType: "NATIVE", originId: "" };
 }
@@ -29,7 +29,7 @@ export function getObjectOrigin<T = unknown>(
  * @internal
  */
 export interface OriginInfoWithId {
-    originType: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum;
+    originType: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
     originId: string;
     id: string;
 }

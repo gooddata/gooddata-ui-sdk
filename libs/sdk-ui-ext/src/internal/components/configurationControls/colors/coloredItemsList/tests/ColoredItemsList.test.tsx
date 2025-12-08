@@ -7,14 +7,13 @@ import { describe, expect, it } from "vitest";
 
 import { inputItemsMock } from "./mock.js";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
-import { InternalIntlWrapper, createInternalIntl } from "../../../../../utils/internalIntlProvider.js";
-import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList.js";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
+import { ColoredItemsList, IColoredItemsListProps } from "../ColoredItemsList.js";
 
 const defaultProps: IColoredItemsListProps = {
     colorPalette,
     inputItems: [],
     onSelect: () => {},
-    intl: createInternalIntl("en-US", {}),
     chartFillIgnoredMeasures: [],
 };
 

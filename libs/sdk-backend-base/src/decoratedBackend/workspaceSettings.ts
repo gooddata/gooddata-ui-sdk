@@ -5,7 +5,12 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+import {
+    type DashboardFiltersApplyMode,
+    IAlertDefault,
+    IMetricFormatOverrideSetting,
+    ISeparators,
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -87,5 +92,13 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async setColorPalette(colorPaletteId: string): Promise<void> {
         return this.decorated.setColorPalette(colorPaletteId);
+    }
+
+    async setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void> {
+        return this.decorated.setMetricFormatOverride(override);
+    }
+
+    async deleteMetricFormatOverride(): Promise<void> {
+        return this.decorated.deleteMetricFormatOverride();
     }
 }

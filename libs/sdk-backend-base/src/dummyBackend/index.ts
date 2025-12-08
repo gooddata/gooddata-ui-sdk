@@ -130,6 +130,7 @@ import {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
+    IMetricFormatOverrideSetting,
     INotificationChannelMetadataObject,
     IOrganizationDescriptor,
     IRelativeDateFilter,
@@ -903,6 +904,7 @@ class DummyOrganization implements IOrganization {
             getSettings: () => Promise.resolve({}),
             setAlertDefault: () => Promise.resolve(),
             setAttachmentSizeLimit: () => Promise.resolve(),
+            setMetricFormatOverride: () => Promise.resolve(),
         };
     }
 
@@ -1115,6 +1117,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     deleteColorPalette(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setMetricFormatOverride(_override: IMetricFormatOverrideSetting): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteMetricFormatOverride(): Promise<void> {
         return Promise.resolve();
     }
 }

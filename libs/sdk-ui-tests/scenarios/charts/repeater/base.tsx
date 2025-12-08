@@ -46,7 +46,7 @@ export const RepeaterWithOneAttributeAndInlineVisualisation = {
         },
     },
 };
-export default scenariosFor<IRepeaterProps>("Repeater", Repeater)
+export const base = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 800 },

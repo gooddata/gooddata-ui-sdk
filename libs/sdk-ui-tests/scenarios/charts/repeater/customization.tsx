@@ -16,4 +16,4 @@ const canvasScenarios = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("canvas", RepeaterWithOneAttributeAndInlineVisualisation, canvasCustomizer);
 
-export default [canvasScenarios];
+export const customization = [canvasScenarios];

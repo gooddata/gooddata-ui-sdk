@@ -3,7 +3,7 @@
 import { ComponentType, MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
@@ -82,7 +82,7 @@ export function InsightListItemTypeIcon({ type }: { type: string }) {
 /**
  * @internal
  */
-function InsightListItemCore({
+export function InsightListItem({
     title,
     description,
     updated,
@@ -101,9 +101,9 @@ function InsightListItemCore({
     width,
     isLocked,
     onDelete,
-    intl,
     metadataTimeZone,
-}: IInsightListItemProps & WrappedComponentProps) {
+}: IInsightListItemProps) {
+    const intl = useIntl();
     const shortenedTextRef = useRef<ShortenedText>(null);
 
     useEffect(() => {
@@ -210,8 +210,3 @@ function InsightListItemCore({
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const InsightListItem = injectIntl(InsightListItemCore);

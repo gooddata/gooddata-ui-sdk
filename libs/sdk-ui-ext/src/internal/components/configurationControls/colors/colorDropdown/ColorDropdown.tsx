@@ -2,7 +2,6 @@
 
 import { Fragment, ReactElement, ReactNode, cloneElement, memo, useCallback, useState } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -16,9 +15,9 @@ import {
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
 import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
-import ColorOverlay, { DropdownVersionType } from "./ColorOverlay.js";
-import ColorPalette from "./ColorPalette.js";
-import CustomColorButton from "./CustomColorButton.js";
+import { ColorOverlay, DropdownVersionType } from "./ColorOverlay.js";
+import { ColorPalette } from "./ColorPalette.js";
+import { CustomColorButton } from "./CustomColorButton.js";
 
 export enum IconPosition {
     Down,
@@ -41,7 +40,7 @@ export interface IColorDropdownOwnProps {
     patternFillIndex?: number | PatternFillName;
 }
 
-export type IColorDropdownProps = IColorDropdownOwnProps & WrappedComponentProps;
+export type IColorDropdownProps = IColorDropdownOwnProps;
 
 const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     r: 255,
@@ -49,7 +48,7 @@ const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     b: 0,
 };
 
-const ColorDropdown = memo(function ColorDropdown({
+export const ColorDropdown = memo(function ColorDropdown({
     selectedColorItem,
     colorPalette,
     onColorSelected: onColorSelectedProp,
@@ -209,5 +208,3 @@ const ColorDropdown = memo(function ColorDropdown({
         </Fragment>
     );
 });
-
-export default injectIntl<"intl", IColorDropdownProps>(ColorDropdown);

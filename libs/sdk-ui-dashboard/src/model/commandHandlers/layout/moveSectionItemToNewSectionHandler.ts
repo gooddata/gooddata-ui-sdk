@@ -174,6 +174,61 @@ function getItemPathWithSectionsShifted(
     return fromItemPath;
 }
 
+function computeItemSectionIndex(
+    itemPath: ILayoutItemPath | undefined,
+    toSectionIndex: number,
+    sectionIndex: number,
+): number {
+    if (itemPath !== undefined) {
+        return getSectionIndex(itemPath);
+    }
+    return toSectionIndex > sectionIndex ? sectionIndex : sectionIndex + 1;
+}
+
+function computeSourceItemIndex(
+    itemPath: ILayoutItemPath | undefined,
+    sectionIndex: number,
+    itemIndex: number,
+): ILayoutItemPath {
+    return itemPath ?? [{ sectionIndex, itemIndex }];
+}
+
+function computeDestinationItemIndex(
+    toItemIndex: ILayoutItemPath | undefined,
+    targetSectionIndex: number | undefined,
+    targetItemIndex: number | undefined,
+): ILayoutItemPath {
+    return toItemIndex ?? [{ sectionIndex: targetSectionIndex!, itemIndex: targetItemIndex! }];
+}
+
+function computeAddSectionIndex(
+    toItemIndex: ILayoutItemPath | undefined,
+    targetSectionIndex: number | undefined,
+) {
+    if (toItemIndex === undefined) {
+        return { parent: undefined, sectionIndex: targetSectionIndex! };
+    }
+    return asSectionPath(toItemIndex);
+}
+
+function computeMoveSectionItemIndex(
+    itemPathWithSectionsShifted: ILayoutItemPath | undefined,
+    itemSectionIndex: number,
+    itemIndex: number,
+): ILayoutItemPath {
+    return itemPathWithSectionsShifted ?? [{ sectionIndex: itemSectionIndex, itemIndex }];
+}
+
+function computeRemoveSectionIndex(
+    itemPathWithSectionsShifted: ILayoutItemPath | undefined,
+    itemSectionIndex: number,
+) {
+    if (itemPathWithSectionsShifted === undefined) {
+        return { parent: undefined, sectionIndex: itemSectionIndex };
+    }
+    return asSectionPath(itemPathWithSectionsShifted);
+}
+
 export function* moveSectionItemToNewSectionHandler(
     ctx: DashboardContext,
     cmd: MoveSectionItemToNewSection,
@@ -187,12 +242,7 @@ export function* moveSectionItemToNewSectionHandler(
     const { targetSectionIndex, targetItemIndex, itemToMove, toItemIndex, shouldRemoveSection } =
         validateAndResolve(commandCtx);
     const { itemIndex, sectionIndex, toSectionIndex, itemPath } = cmd.payload;
-    const itemSectionIndex =
-        itemPath === undefined
-            ? toSectionIndex > sectionIndex
-                ? sectionIndex
-                : sectionIndex + 1
-            : getSectionIndex(itemPath);
+    const itemSectionIndex = computeItemSectionIndex(itemPath, toSectionIndex, sectionIndex);
 
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
@@ -214,11 +264,12 @@ export function* moveSectionItemToNewSectionHandler(
         screen,
     );
 
-    const sourceItemIndex = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
-    const destinationItemIndex =
-        toItemIndex === undefined
-            ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
-            : toItemIndex;
+    const sourceItemIndex = computeSourceItemIndex(itemPath, sectionIndex, itemIndex);
+    const destinationItemIndex = computeDestinationItemIndex(
+        toItemIndex,
+        targetSectionIndex,
+        targetItemIndex,
+    );
 
     const rowContainerSanitizationActions = buildRowContainerSanitizationActions(
         cmd,
@@ -229,24 +280,34 @@ export function* moveSectionItemToNewSectionHandler(
         screen!,
     );
 
+    const changeWidthActions = shouldChangeSize
+        ? [
+              tabsActions.changeItemWidth({
+                  layoutPath: sourceItemIndex,
+                  width: itemWithNormalizedSize.size.xl.gridWidth,
+              }),
+          ]
+        : [];
+
+    const removeSectionActions = shouldRemoveSection
+        ? [
+              tabsActions.removeSection({
+                  index: computeRemoveSectionIndex(itemPathWithSectionsShifted, itemSectionIndex),
+                  undo: {
+                      cmd,
+                  },
+              }),
+          ]
+        : [];
+
     yield put(
         batchActions([
             // process actions not mutating layout paths first to avoid remapping of the paths in them
             ...rowContainerSanitizationActions,
-            ...(shouldChangeSize
-                ? [
-                      tabsActions.changeItemWidth({
-                          layoutPath: sourceItemIndex,
-                          width: itemWithNormalizedSize.size.xl.gridWidth,
-                      }),
-                  ]
-                : []),
+            ...changeWidthActions,
             // changes section index
             tabsActions.addSection({
-                index:
-                    toItemIndex === undefined
-                        ? { parent: undefined, sectionIndex: targetSectionIndex }
-                        : asSectionPath(toItemIndex),
+                index: computeAddSectionIndex(toItemIndex, targetSectionIndex),
                 section,
                 usedStashes: [],
                 undo: {
@@ -255,45 +316,41 @@ export function* moveSectionItemToNewSectionHandler(
             }),
             // changes item index
             tabsActions.moveSectionItem({
-                itemIndex:
-                    itemPathWithSectionsShifted === undefined
-                        ? [{ sectionIndex: itemSectionIndex, itemIndex }]
-                        : itemPathWithSectionsShifted,
+                itemIndex: computeMoveSectionItemIndex(
+                    itemPathWithSectionsShifted,
+                    itemSectionIndex,
+                    itemIndex,
+                ),
                 toItemIndex: destinationItemIndex,
                 undo: {
                     cmd,
                 },
             }),
-            ...(shouldRemoveSection
-                ? [
-                      tabsActions.removeSection({
-                          index:
-                              itemPathWithSectionsShifted === undefined
-                                  ? { parent: undefined, sectionIndex: itemSectionIndex }
-                                  : asSectionPath(itemPathWithSectionsShifted),
-                          undo: {
-                              cmd,
-                          },
-                      }),
-                  ]
-                : []),
+            ...removeSectionActions,
         ]),
     );
 
     yield call(resizeParentContainers, getParentPath(itemPath));
     yield call(resizeParentContainers, getParentPath(toItemIndex));
 
+    const resultSectionIndex = itemPath === undefined ? sectionIndex : getSectionIndex(itemPath);
+    const resultTargetSectionIndex =
+        targetSectionIndex === undefined ? getSectionIndex(toItemIndex!) : targetSectionIndex;
+    const resultItemIndex = itemPath === undefined ? itemIndex : getItemIndex(itemPath);
+    const resultTargetItemIndex =
+        targetItemIndex === undefined ? getItemIndex(toItemIndex!) : targetItemIndex;
+    const resultItemPath = computeSourceItemIndex(itemPath, sectionIndex, itemIndex);
+    const resultToItemPath = computeDestinationItemIndex(toItemIndex, targetSectionIndex, targetItemIndex);
+
     return layoutSectionItemMovedToNewSection(
         ctx,
         itemWithNormalizedSize,
-        itemPath === undefined ? sectionIndex : getSectionIndex(itemPath),
-        targetSectionIndex === undefined ? getSectionIndex(toItemIndex) : targetSectionIndex,
-        itemPath === undefined ? itemIndex : getItemIndex(itemPath),
-        targetItemIndex === undefined ? getItemIndex(toItemIndex) : targetItemIndex,
-        itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
-        toItemIndex === undefined
-            ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
-            : toItemIndex,
+        resultSectionIndex,
+        resultTargetSectionIndex,
+        resultItemIndex,
+        resultTargetItemIndex,
+        resultItemPath,
+        resultToItemPath,
         shouldRemoveSection,
         cmd.correlationId,
     );

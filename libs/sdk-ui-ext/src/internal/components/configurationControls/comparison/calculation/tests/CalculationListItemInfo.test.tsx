@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import CalculationListItemInfo from "../CalculationListItemInfo.js";
+import { CalculationListItemInfo } from "../CalculationListItemInfo.js";
 
 const CALCULATION_INFO_SELECTOR = ".calculation-item-info";
 

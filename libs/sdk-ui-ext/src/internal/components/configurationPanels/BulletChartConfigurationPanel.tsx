@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -15,14 +15,14 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
+import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
-export default class BulletChartConfigurationPanel extends ConfigurationPanelContent {
+export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData, type, insight } = this.props;
 

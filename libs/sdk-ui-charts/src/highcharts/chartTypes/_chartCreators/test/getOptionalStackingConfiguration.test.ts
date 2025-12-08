@@ -8,8 +8,9 @@ import { IChartConfig } from "../../../../interfaces/index.js";
 import { StackingType } from "../../../constants/stacking.js";
 import { CSSObject, HighchartsOptions } from "../../../lib/index.js";
 import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe.js";
-import getOptionalStackingConfiguration, {
+import {
     convertMinMaxFromPercentToNumber,
+    getOptionalStackingConfiguration,
     getParentAttributeConfiguration,
     getSanitizedStackingForSeries,
     getShowInPercentConfiguration,

@@ -11,7 +11,7 @@ import {
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals.js";
 import { scenariosFor } from "../../src/index.js";
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const autoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("auto-resizing")
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },

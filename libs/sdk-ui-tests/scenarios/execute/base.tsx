@@ -22,7 +22,7 @@ function DumpingComponent(load: WithLoadingResult) {
     );
 }
 
-export default scenariosFor<IExecuteProps>("Execute", Execute)
+export const executeScenarios = scenariosFor<IExecuteProps>("Execute", Execute)
     .withDefaultTags("mock-no-insight")
     .withDefaultTestTypes("api")
     .addScenario("single unscoped series", {

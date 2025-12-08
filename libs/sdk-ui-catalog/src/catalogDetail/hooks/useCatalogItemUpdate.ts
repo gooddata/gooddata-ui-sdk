@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { isEqual, transform } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IUser } from "@gooddata/sdk-model";
+import type { IUser, MetricType } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
@@ -23,6 +23,11 @@ export interface UseCatalogItemUpdate {
     onUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
     onError?: (error: Error) => void;
 }
+
+type PersistHandler = (
+    changes: Partial<ICatalogItem> & ICatalogItemRef,
+    newItem: ICatalogItem,
+) => Promise<void> | void;
 
 export function useCatalogItemUpdate({
     currentUser,
@@ -163,6 +168,67 @@ export function useCatalogItemUpdate({
         },
         [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
     );
+    const persistMeasureChanges = useCallback(
+        (changes: Partial<ICatalogItem> & ICatalogItemRef) =>
+            persistMeasureMetadata(backend, workspace, changes),
+        [backend, workspace],
+    );
+    const updateItemMetricType = useCallback(
+        (metricType: MetricType | undefined) => {
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    metricType,
+                }),
+                (newItem, changes) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem, changes);
+                },
+                (err) => {
+                    if (!mounted.current || !item) {
+                        return;
+                    }
+                    setItem(item);
+                    onError?.(err);
+                    onUpdate?.(item, item);
+                },
+                persistMeasureChanges,
+            );
+        },
+        [mounted, backend, currentUser, item, onError, onUpdate, persistMeasureChanges, status, workspace],
+    );
+    const updateItemFormat = useCallback(
+        (format: string | null) => {
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    format,
+                }),
+                (newItem, changes) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem, changes);
+                },
+                (err) => {
+                    if (!mounted.current || !item) {
+                        return;
+                    }
+                    setItem(item);
+                    onError?.(err);
+                    onUpdate?.(item, item);
+                },
+                persistMeasureChanges,
+            );
+        },
+        [mounted, backend, currentUser, item, onError, onUpdate, persistMeasureChanges, status, workspace],
+    );
 
     return {
         item,
@@ -172,6 +238,8 @@ export function useCatalogItemUpdate({
         updateItemDescription,
         updateItemTags,
         updateItemIsHidden,
+        updateItemMetricType,
+        updateItemFormat,
     };
 }
 
@@ -184,6 +252,7 @@ function updateItem(
     updater: () => Partial<ICatalogItem>,
     onUpdate: (newItem: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void,
     onError: (error: Error) => void,
+    persist?: PersistHandler,
 ) {
     if (disabled || !item) {
         return;
@@ -196,7 +265,11 @@ function updateItem(
     }
 
     onUpdate(newItem, changes);
-    updateCatalogItem(backend, workspace, changes).catch(onError);
+    const persistFn =
+        persist ??
+        ((itemChanges: Partial<ICatalogItem> & ICatalogItemRef) =>
+            updateCatalogItem(backend, workspace, itemChanges));
+    Promise.resolve(persistFn(changes, newItem)).catch(onError);
 }
 
 function makeUpdateToItem(
@@ -249,4 +322,38 @@ function calculateDiff<T extends object>(oldItem: Partial<T>, newItem: Partial<T
         },
         {} as Partial<T>,
     );
+}
+
+function persistMeasureMetadata(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    changes: Partial<ICatalogItem> & ICatalogItemRef,
+) {
+    if (changes.type !== "measure" || (changes.format === undefined && changes.metricType === undefined)) {
+        return Promise.resolve();
+    }
+
+    return backend
+        .workspace(workspace)
+        .measures()
+        .getMeasure(
+            {
+                type: "measure",
+                identifier: changes.identifier,
+            },
+            {
+                loadUserData: true,
+            },
+        )
+        .then((measure) =>
+            backend
+                .workspace(workspace)
+                .measures()
+                .updateMeasure({
+                    ...measure,
+                    format: changes.format ?? measure.format,
+                    metricType: changes.metricType ?? measure.metricType,
+                })
+                .then(() => undefined),
+        );
 }

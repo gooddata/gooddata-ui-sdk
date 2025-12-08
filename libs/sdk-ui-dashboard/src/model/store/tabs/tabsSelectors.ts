@@ -90,3 +90,13 @@ export const selectTabById = (tabId: string): DashboardSelector<TabState | undef
 export const selectHasTabs: DashboardSelector<boolean> = createSelector(selectTabs, (tabs) => {
     return tabs !== undefined && tabs.length > 0;
 });
+
+/**
+ * Returns the local identifier of the first tab.
+ *
+ * @alpha
+ */
+export const selectFirstTabLocalIdentifier: DashboardSelector<string | undefined> = createSelector(
+    selectTabs,
+    (tabs) => tabs?.[0]?.localIdentifier,
+);

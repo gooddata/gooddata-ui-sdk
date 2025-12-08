@@ -9,7 +9,7 @@ import { insightBucket, insightHasAttributes } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -18,17 +18,17 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
+import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ClusteringThresholdControl } from "../configurationControls/clustering/ClusteringThresholdControl.js";
 import { NumberOfClustersControl } from "../configurationControls/clustering/NumberOfClustersControl.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
-export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
+export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         const measures = getMeasuresFromMdObject(insight);

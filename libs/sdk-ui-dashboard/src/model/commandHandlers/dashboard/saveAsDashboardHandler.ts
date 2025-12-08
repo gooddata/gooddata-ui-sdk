@@ -9,7 +9,6 @@ import {
     IAccessControlAware,
     IDashboard,
     IDashboardDefinition,
-    IDashboardLayout,
     IDashboardTab,
     IFilterContext,
     ITempFilterContext,
@@ -55,7 +54,7 @@ import {
     selectFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { TabState, tabsActions } from "../../store/tabs/index.js";
-import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -109,8 +108,10 @@ function processExistingTabsForSaveAs(tabs: TabState[], useOriginalFilterContext
         const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
             tab.attributeFilterConfigs?.attributeFilterConfigs;
         const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
-        // Get this tab's specific layout from tab.layout.layout
-        const tabLayout = tab.layout?.layout ? processLayout(tab.layout.layout) : undefined;
+        // Get this tab's specific layout, filter out custom widgets, then process
+        const tabLayout = tab.layout?.layout
+            ? processLayout(filterOutCustomWidgets(tab.layout.layout))
+            : undefined;
 
         const filterContext = tab.filterContext?.filterContextDefinition
             ? ({
@@ -310,8 +311,10 @@ function* saveAs(
 
             // Update widget identities for this tab if both layouts exist
             if (stateTab?.layout?.layout && savedTab.layout) {
+                // Filter out custom widgets from state layout to match the saved layout structure
+                const stateLayoutWithoutCustomWidgets = filterOutCustomWidgets(stateTab.layout.layout);
                 const mapping = dashboardLayoutWidgetIdentityMap(
-                    stateTab.layout.layout as IDashboardLayout,
+                    stateLayoutWithoutCustomWidgets,
                     savedTab.layout,
                 );
                 actions.push(

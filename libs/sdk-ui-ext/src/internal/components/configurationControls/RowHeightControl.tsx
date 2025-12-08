@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { IPushData } from "@gooddata/sdk-ui";
 import { ChartRowHeight } from "@gooddata/sdk-ui-charts";
 
-import DropdownControl from "./DropdownControl.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { rowSizingDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";

@@ -14,7 +14,7 @@ const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const customization = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IMeasureMetadataObject, IUser, ObjRef } from "@gooddata/sdk-model";
+import { IMeasureMetadataObject, IUser, MetricType, ObjRef } from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
 import { BuilderModifications, builderFactory } from "../builder.js";
@@ -21,6 +21,11 @@ export class MeasureMetadataObjectBuilder<
 
     public format(format: string): this {
         this.item.format = format;
+        return this;
+    }
+
+    public metricType(metricType?: MetricType): this {
+        this.item.metricType = metricType;
         return this;
     }
 
